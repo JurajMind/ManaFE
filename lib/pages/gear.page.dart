@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-class AboutPage extends StatefulWidget {
+class GearPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _AboutPageState();
+    return new _GearPageState();
   }
 }
 
-class _AboutPageState extends State<AboutPage> {
+class _GearPageState extends State<GearPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Mixology'),
+        title: new Text('Gear'),
       ),
       body: new Center(
-          child: new Text('You are in Mixology page!')
+          child: new Text('You are in Gear page!')
       ),
     );
   }

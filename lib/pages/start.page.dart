@@ -14,7 +14,8 @@ class StartPage extends StatelessWidget {
             
             new Container(
               padding: new EdgeInsets.all(40.0),
-              child: new Column(
+              child: new Center(
+                child:new Column(
                 children: <Widget>[
                   new Container(
                     width: screenSize.width,
@@ -61,6 +62,8 @@ class StartPage extends StatelessWidget {
                   )
                 ],
               ),
+              ) 
+
             )
           ],
         ),

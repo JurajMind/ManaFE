@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class AboutPage extends StatefulWidget {
+class MixologyPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _AboutPageState();
+    return new _MixologyPageState();
   }
 }
 
-class _AboutPageState extends State<AboutPage> {
+class _MixologyPageState extends State<MixologyPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
