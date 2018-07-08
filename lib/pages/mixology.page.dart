@@ -10,10 +10,7 @@ class MixologyPage extends StatefulWidget {
 class _MixologyPageState extends State<MixologyPage> {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Mixology'),
-      ),
+    return new Scaffold(     
       body: new Center(
           child: new Text('You are in Mixology page!')
       ),

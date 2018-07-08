@@ -27,3 +27,8 @@ void navigate(BuildContext context, String routePath, { Map<String, dynamic> par
 void redirect(BuildContext context, String routePath) {
   Navigator.pushReplacementNamed(context, routePath);
 }
+
+//CircleRadius
+double getCircleRadius(BuildContext context){
+ return MediaQuery.of(context).size.width / 1.8;
+}

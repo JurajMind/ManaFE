@@ -1,4 +1,5 @@
 import 'package:app/components/icon_button_title.dart';
+import 'package:app/components/my_flutter_app_icons.dart';
 import 'package:app/helpers.dart';
 import 'package:app/pages/gear.page.dart';
 import 'package:app/pages/mixology.page.dart';
@@ -75,7 +76,7 @@ class _HomePageState extends State<HomePage> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.white,
           elevation: 4.0,
-          child: const Icon(Icons.add),
+          child: new Icon(MyFlutterApp.manaIcon),
           onPressed: () => setState(() {
                 _currentIndex = 2;
               }),

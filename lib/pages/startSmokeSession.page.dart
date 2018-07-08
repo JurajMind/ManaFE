@@ -1,42 +1,96 @@
 import 'package:app/components/Backgrund.dart';
+import 'package:app/helpers.dart';
+import 'package:app/pages/enterSmokeSesionCode.page.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel/carousel.dart';
+import 'package:web_socket_channel/io.dart';
 
 class StartSmokeSessionPage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return new _StartSmokeSessionState();
-  }
+  final double topWidgetHeight = 200.0;
+
+  void _openAddEntryDialog(BuildContext context) {
+  Navigator.of(context).push(new MaterialPageRoute<Null>(
+      builder: (BuildContext context) {
+        return new EnterSmokeSessionCode();
+      },
+    fullscreenDialog: true
+  ));
 }
 
-class _StartSmokeSessionState extends State<StartSmokeSessionPage> {
+
+
+ var channel;
+
+main() async { 
+  channel = new IOWebSocketChannel.connect("ws://192.168.2.204:80");
+  channel.sink.add("connected!");
+  channel.stream.listen((message) {
+   print(message);
+  });
+}
+ 
+  @override
+  StartSmokeSessionPageState createState() {
+    main();
+    return new StartSmokeSessionPageState();
+  }
+
+  
+}
+
+class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-    
-      body: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          verticalDirection: VerticalDirection.down,
-          children: <Widget>[
-            Row(
-              children: <Widget>[Icon(Icons.access_alarm)],
+      body: new Stack(
+        children: <Widget>[
+          new Positioned(
+            child: new Icon(Icons.refresh),
+            left: 10.0,
+            top: 20.0,
+          ),
+          new Positioned(
+            child: new CircleAvatar(
+                radius: getCircleRadius(context),
+                backgroundColor: Colors.green,
+                child: GestureDetector(
+                    onTap: () {
+                      widget.channel.sink.add('test');
+   // widget._openAddEntryDialog(context);
+                    },
+                    child: new Container(
+                      child: new Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          new Text(
+                            'START',
+                            style: new TextStyle(
+                                fontSize: 40.0,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          new Icon(
+                            Icons.play_arrow,
+                            size: 60.0,
+                            color: Colors.white,
+                          )
+                        ],
+                      ),
+                    ))),
+            left: (MediaQuery.of(context).size.width / 2) - getCircleRadius(context),
+            top: widget.topWidgetHeight - getCircleRadius(context),
+          ),
+          new Positioned(
+            top: 300.0,
+            child: Container(
+              width: (MediaQuery.of(context).size.width),
+              height: 200.0,
+              child: new Placeholder(),
             ),
-            InkWell(
-              child: Container(
-                padding: EdgeInsets.all(100.0),
-                decoration: new BoxDecoration(
-                    shape: BoxShape.circle, color: Colors.white),
-              ),
-            ),
-            new Text('You are in Start smoke session page!'),
-            FlatButton.icon(
-              icon: Icon(Icons.hd),
-              label: Text('test'),
-              onPressed: () => {},
-            ),
-            new LogoWidget()
-          ]),
+          )
+        ],
+      ),
     );
   }
 }
