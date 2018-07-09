@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:app/app/app.dart';
 import 'package:app/pages/start.page.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AppWidget extends StatefulWidget {
   @override
@@ -12,7 +15,13 @@ class AppWidget extends StatefulWidget {
 
 class _AppWidgetState extends State<AppWidget> {
 
-  var userLogin = false;
+bool _isAuthorized;
+
+@override
+void initState() {
+    super.initState();
+  isUserAuthorized().then( (authorized) => setState(() { _isAuthorized = authorized;}));
+}
 
 
 ThemeData _buildDarkTheme() {
@@ -45,12 +54,25 @@ TextTheme _buildTextTheme(TextTheme base) {
 }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+
+   
     return new MaterialApp(
       title: 'Manapipes',
-      home: userLogin?  new HomePage() : new StartPage(),
+      home: _isAuthorized? new HomePage() : new StartPage(),
       onGenerateRoute: App.router.generator,
       theme: this._buildDarkTheme(),
     );
   }
+
+  Future<bool> isUserAuthorized() async{
+      final storage = new FlutterSecureStorage();
+      String token = await storage.read(key: "accessToken");
+
+      if(token != null)
+      return true;
+
+      return false;
+  }
+
 }

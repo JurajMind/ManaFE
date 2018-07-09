@@ -7,6 +7,7 @@ Injector.configure(Flavor.PRO);
 
   new App(
     environment: 'local',
-    baseUri: 'http://localhost'
+    baseUri: 'http://localhost',
+    clientId: 'test'
   ).run(runApp);
 }

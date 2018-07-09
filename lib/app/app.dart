@@ -14,13 +14,16 @@ class App {
   // Application providers.
   static HttpService http;
 
+  static String clientId;
+
   // Create app.
   App({
     String environment,
-    String baseUri
+    String baseUri,
+    String clientId,
   }) {
     App.environment = environment;
-
+    App.clientId = clientId;
     // Create app http service.
     App.http = new HttpService(
       baseUri: baseUri

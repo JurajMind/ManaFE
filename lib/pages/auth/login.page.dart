@@ -7,6 +7,8 @@ import 'package:app/support/validators/string.validator.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/pages/home.page.dart';
+import 'package:app/services/authorization.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -23,8 +25,9 @@ class _LoginData {
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   _LoginData data = new _LoginData();
+  final _storage = new FlutterSecureStorage();
 
-  void submit(BuildContext context) {
+  void submit(BuildContext context) async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
 
@@ -32,9 +35,17 @@ class _LoginPageState extends State<LoginPage> {
       print('Email: ${data.email}');
       print('Password: ${data.password}');
 
-      Navigator.popUntil(context, (_) => !Navigator.canPop(context));
-      Navigator.pushReplacement(context,
-          new MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+      var token = await authorize(data.email, data.password);
+      if (token.accessToken != null) {
+        await _storage.write(key: 'accessToken', value: token.accessToken);
+        await _storage.write(key: 'refreshToken', value: token.refreshToken);
+
+        Navigator.popUntil(context, (_) => !Navigator.canPop(context));
+        Navigator.pushReplacement(
+            context,
+            new MaterialPageRoute(
+                builder: (BuildContext context) => HomePage()));
+      }
     }
   }
 
