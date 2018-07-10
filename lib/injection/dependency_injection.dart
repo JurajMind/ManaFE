@@ -1,5 +1,3 @@
-import 'package:app/services/mix_repository.dart';
-
 enum Flavor {
   MOCK,
   PRO
@@ -20,11 +18,4 @@ class Injector {
 
   Injector._internal();
 
-  MixRepository get tobaccoMixRepository {
-    switch(_flavor) {
-      case Flavor.MOCK: return new MockMixRepository();
-      default: // Flavor.PRO:
-       return new MockMixRepository();
-    }
-  }
 }

@@ -12,7 +12,7 @@ class App {
   static Router router;
 
   // Application providers.
-  static HttpService http;
+  static ApiClient http;
 
   static String clientId;
 
@@ -25,9 +25,8 @@ class App {
     App.environment = environment;
     App.clientId = clientId;
     // Create app http service.
-    App.http = new HttpService(
-      baseUri: baseUri
-    );
+    App.http = new ApiClient(
+    );  
 
     // Create a router.
     final Router router = new Router();

@@ -24,8 +24,8 @@ class _LoginData {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  final Authorize _auth = new Authorize();
   _LoginData data = new _LoginData();
-  final _storage = new FlutterSecureStorage();
 
   void submit(BuildContext context) async {
     if (_formKey.currentState.validate()) {
@@ -35,11 +35,7 @@ class _LoginPageState extends State<LoginPage> {
       print('Email: ${data.email}');
       print('Password: ${data.password}');
 
-      var token = await authorize(data.email, data.password);
-      if (token.accessToken != null) {
-        await _storage.write(key: 'accessToken', value: token.accessToken);
-        await _storage.write(key: 'refreshToken', value: token.refreshToken);
-
+      if (await _auth.authorize(data.email, data.password)) {
         Navigator.popUntil(context, (_) => !Navigator.canPop(context));
         Navigator.pushReplacement(
             context,

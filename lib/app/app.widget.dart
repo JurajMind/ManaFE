@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:app/app/app.dart';
+import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/pages/start.page.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:app/utils/theme.dart';
 
 class AppWidget extends StatefulWidget {
   @override
@@ -14,65 +16,36 @@ class AppWidget extends StatefulWidget {
 }
 
 class _AppWidgetState extends State<AppWidget> {
-
-bool _isAuthorized;
-
-@override
-void initState() {
-    super.initState();
-  isUserAuthorized().then( (authorized) => setState(() { _isAuthorized = authorized;}));
-}
-
-
-ThemeData _buildDarkTheme() {
-  const Color primaryColor = const Color(0xFF0175c2);
-  final ThemeData base = new ThemeData.dark();
-  return base.copyWith(
-    primaryColor: primaryColor,
-    buttonColor: primaryColor,
-    indicatorColor: Colors.white,
-    accentColor: const Color(0xFF13B9FD),
-    canvasColor: const Color(0xFF202124),
-    scaffoldBackgroundColor: Colors.black,
-    backgroundColor: const Color(0xFF202124),
-    errorColor: const Color(0xFFB00020),
-    buttonTheme: const ButtonThemeData(
-      textTheme: ButtonTextTheme.primary,
-    ),
-    textTheme: _buildTextTheme(base.textTheme),
-    primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
-    accentTextTheme: _buildTextTheme(base.accentTextTheme),
-  );
-}
-
-TextTheme _buildTextTheme(TextTheme base) {
-  return base.copyWith(
-    title: base.title.copyWith(
-      fontFamily: 'Montserrat',
-    ),
-  );
-}
+  bool _isAuthorized = false;
+  final mixology = MixologyBloc();
 
   @override
-  Widget build(BuildContext context){
-
-   
-    return new MaterialApp(
-      title: 'Manapipes',
-      home: _isAuthorized? new HomePage() : new StartPage(),
-      onGenerateRoute: App.router.generator,
-      theme: this._buildDarkTheme(),
-    );
+  void initState() {
+    super.initState();
+    isUserAuthorized().then((authorized) => setState(() {
+          _isAuthorized = authorized;
+        }));
   }
 
-  Future<bool> isUserAuthorized() async{
-      final storage = new FlutterSecureStorage();
-      String token = await storage.read(key: "accessToken");
-
-      if(token != null)
-      return true;
-
-      return false;
+  @override
+  Widget build(BuildContext context) {
+    return new DataProvider(
+        mixology: mixology,
+        child: MaterialApp(
+          showPerformanceOverlay: false,
+          title: 'Manapipes',
+          home: _isAuthorized ? new HomePage() : new StartPage(),
+          onGenerateRoute: App.router.generator,
+          theme: buildDarkTheme(),
+        ));
   }
 
+  Future<bool> isUserAuthorized() async {
+    final storage = new FlutterSecureStorage();
+    String token = await storage.read(key: "accessToken");
+
+    if (token != null) return true;
+
+    return false;
+  }
 }

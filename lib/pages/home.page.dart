@@ -1,6 +1,7 @@
 import 'package:app/components/icon_button_title.dart';
 import 'package:app/components/my_flutter_app_icons.dart';
 import 'package:app/helpers.dart';
+import 'package:app/module/mixology/mixology_list.dart';
 import 'package:app/pages/gear.page.dart';
 import 'package:app/pages/mixology.page.dart';
 import 'package:app/pages/places.page.dart';
@@ -89,7 +90,7 @@ class _HomePageState extends State<HomePage> {
     return new IndexedStack(
       index: _currentIndex,
       children: <Widget>[
-        new MixologyPage(),
+        new MixologyList(),
         new PlacePage(),
         new StartSmokeSessionPage(),
         new GearPage(),
