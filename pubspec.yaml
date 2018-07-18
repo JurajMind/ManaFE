@@ -10,7 +10,7 @@ dependencies:
   flutter_webview_plugin: "^0.1.5"
   flutter_launcher_icons: "^0.5.2"
   carousel: ^0.1.0
-  web_socket_channel: "^1.0.8"
+  web_socket_channel: "^1.0.7"
   flutter_secure_storage: "^3.1.0"
   rxdart: "^0.18.1"
   vibrate: "^0.0.3"
