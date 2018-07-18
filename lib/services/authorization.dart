@@ -1,47 +1,79 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:app/app/app.widget.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
 
-class Authorize{
-
+class Authorize {
+  static const String url = 'https://devmana.azurewebsites.net/token';
   final _storage = new FlutterSecureStorage();
+  String _token;
 
-Future<bool> authorize(String userName,String password) async {
-  final response = await http.post(
-    'https://devmana.azurewebsites.net/token',
-    body: { "grant_type":"password" , "username":userName,"password":password, "client_id":"test"},
-  );
-  final responseJson = json.decode(response.body);
+  Future<bool> authorize(String userName, String password) async {
+    final response = await http.post(
+      url,
+      body: {
+        "grant_type": "password",
+        "username": userName,
+        "password": password,
+        "client_id": "test"
+      },
+    );
+    final responseJson = json.decode(response.body);
+    var token = TokenResponse.fromJson(responseJson);
 
-  
-  var token = TokenResponse.fromJson(responseJson);
+    if (token.accessToken != null) {
+      await _storage.write(key: 'accessToken', value: token.accessToken);
+      await _storage.write(key: 'refreshToken', value: token.refreshToken);
+      return true;
+    }
 
-  if(token.accessToken!= null)
-  {       
-        await _storage.write(key: 'accessToken', value: token.accessToken);
-        await _storage.write(key: 'refreshToken', value: token.refreshToken);
-        return true;
+    return false;
   }
 
-  return false;
+  Future<String> getToken() async {
+    if(_token == null)
+    {
+      _token = await _storage.read(key: 'accessToken');
+    }
+    return _token;
+  }
+
+  Future<bool> refreshToken() async {
+    var refreshToken = await _storage.read(key: 'refreshToken');
+    await _storage.delete(key: 'accessToken');
+    await _storage.delete(key: 'refreshToken');
+
+    final response = await http.post(
+      url,
+      body: {
+        "grant_type": "refresh_token",
+        "refresh_token": refreshToken,
+        "client_id": "test"
+      },
+    );
+    final responseJson = json.decode(response.body);
+
+    var token = TokenResponse.fromJson(responseJson);
+    if (token.accessToken != null) {
+      await _storage.write(key: 'accessToken', value: token.accessToken);
+      await _storage.write(key: 'refreshToken', value: token.refreshToken);
+      return true;
+    }
+
+    navigatorKey.currentState.pushReplacementNamed('auth/login');
+    return false;
+  }
+
+  Future<bool> isAuthorized() async {
+    //TODO api ping
+    var token = await getToken();
+    return token != null;
+  }
 }
-
-Future<String> getToken()
-{
-  return _storage.read(key: 'accessToken');
-}
-
-Future<bool> isAuthorized() async{
-  //TODO api ping
-  var token = await getToken();
-  return token != null;
-}
-
-
-}
-
 
 class AuthorizationPost {
   String _grant_type = "grant_type";

@@ -1,5 +1,6 @@
 import 'package:app/components/Backgrund.dart';
 import 'package:app/helpers.dart';
+import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/pages/enterSmokeSesionCode.page.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel/carousel.dart';
@@ -22,11 +23,7 @@ class StartSmokeSessionPage extends StatefulWidget {
  var channel;
 
 main() async { 
-  channel = new IOWebSocketChannel.connect("ws://192.168.2.204:80");
-  channel.sink.add("connected!");
-  channel.stream.listen((message) {
-   print(message);
-  });
+
 }
  
   @override
@@ -39,8 +36,14 @@ main() async {
 }
 
 class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
+
+
   @override
   Widget build(BuildContext context) {
+
+    
+  final smokeSessionBloc = DataProvider.getSmokeSession(context);
+
     return new Scaffold(
       body: new Stack(
         children: <Widget>[
@@ -55,8 +58,7 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
                 backgroundColor: Colors.green,
                 child: GestureDetector(
                     onTap: () {
-                      widget.channel.sink.add('test');
-   // widget._openAddEntryDialog(context);
+                      smokeSessionBloc.testChannel('Test');
                     },
                     child: new Container(
                       child: new Row(
@@ -86,7 +88,12 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
             child: Container(
               width: (MediaQuery.of(context).size.width),
               height: 200.0,
-              child: new Placeholder(),
+              child: FlatButton(
+                child: Text('test'),
+                onPressed: () {
+                  smokeSessionBloc.testChannel('d');
+                },
+              )
             ),
           )
         ],

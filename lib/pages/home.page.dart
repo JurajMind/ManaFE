@@ -19,10 +19,10 @@ class HomePage extends StatefulWidget {
 //Equivalent to var hc = $.hubConnection(url,options);
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
+  int _currentIndex = 2;
 
   Widget myBottomBar() => new BottomAppBar(
-        hasNotch: true,
+    
         child: Ink(
           height: 50.0,
           child: new Row(

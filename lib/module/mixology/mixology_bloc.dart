@@ -4,9 +4,12 @@ import 'dart:math';
 import 'package:app/models/tobacco_mix.dart';
 import 'package:app/module/mixology/mixology_page.dart';
 import 'package:app/module/mixology/mixology_slice.dart';
+import 'package:app/module/smokeSession/smoke_session_bloc.dart';
+import 'package:app/services/authorization.dart';
 import 'package:app/services/http.service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:web_socket_channel/io.dart';
 
 class MixologyBloc {
   static const _mixPerPage = 10;
@@ -20,6 +23,8 @@ class MixologyBloc {
   final _mixesBeinggRequested = Set<int>();
 
   final _sliceSubject = BehaviorSubject<MixologySlice>();
+
+  int maxInt = 0x7fffffff;
 
   MixologyBloc() {
     _indexController.stream
@@ -37,7 +42,6 @@ class MixologyBloc {
   int _getPageStartFromIndex(int index) => (index ~/ _mixPerPage) * _mixPerPage;
 
   void _handleIndexes(List<int> indexes) {
-    const maxInt = 0x7fffffff;
     final int minIndex = indexes.fold(maxInt, min);
     final int maxIndex = indexes.fold(-1, max);
 
@@ -49,7 +53,7 @@ class MixologyBloc {
       if (_mixesBeinggRequested.contains(i)) continue;
 
       _mixesBeinggRequested.add(i);
-      _requestMix(i).then((page) => _handleNewMixes(page, i));
+      _requestMix(i).then((page) => _handleNewMixes(page, i, page.count != 0));
     }
 
     // Remove pages too far from current scroll position.
@@ -58,27 +62,29 @@ class MixologyBloc {
         pageIndex > maxPageIndex + _mixPerPage);
   }
 
-  void _handleNewMixes(MixologyPage page, int index) {
+  void _handleNewMixes(MixologyPage page, int index, bool haveNext) {
     _mixes[index] = page;
     _mixesBeinggRequested.remove(index);
-    _sendNewSlice();
+    _sendNewSlice(haveNext);
+
+    if (!haveNext) {
+      _mixes.removeWhere((pageIndex, _) => pageIndex > _mixes.length - 20);
+    }
   }
 
   Future<MixologyPage> _requestMix(int index) async {
-    // Simulate network delay.
-    await Future.delayed(const Duration(milliseconds: 300));
-;
-
-    final mixes = await _apiClient.fetchtobacoMix(page: index);
-
+    var page = (index / _mixPerPage).round();
+    print('page $page pageSize:$_mixPerPage');
+    final mixes =
+        await _apiClient.fetchtobacoMix(page: page, pageSize: _mixPerPage);
+    print('Finish page $page pageSize:$_mixPerPage');
     return MixologyPage(mixes, index);
   }
 
-  void _sendNewSlice() {
+  void _sendNewSlice(bool hasNext) {
     final pages = _mixes.values.toList(growable: false);
 
-    final slice = MixologySlice(pages, true);
-
+    final slice = MixologySlice(pages, hasNext);
     _sliceSubject.add(slice);
   }
 }
@@ -103,24 +109,28 @@ class MixologyProvider extends InheritedWidget {
           .mixologyBloc;
 }
 
-
 class DataProvider extends InheritedWidget {
- final MixologyBloc mixologyBloc;
+  final MixologyBloc mixologyBloc;
+  final SmokeSessionBloc smokeSessionBloc;
 
-   DataProvider({
+  DataProvider({
     Key key,
     @required MixologyBloc mixology,
+    @required SmokeSessionBloc smokeSession,
     Widget child,
   })  : assert(mixology != null),
         mixologyBloc = mixology,
+        smokeSessionBloc = smokeSession,
         super(key: key, child: child);
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) => true;
-  
-    static MixologyBloc of(BuildContext context) =>
-      (context.inheritFromWidgetOfExactType(DataProvider)
-              as DataProvider)
+
+  static MixologyBloc getMixology(BuildContext context) =>
+      (context.inheritFromWidgetOfExactType(DataProvider) as DataProvider)
           .mixologyBloc;
 
+  static SmokeSessionBloc getSmokeSession(BuildContext context) =>
+      (context.inheritFromWidgetOfExactType(DataProvider) as DataProvider)
+          .smokeSessionBloc;
 }

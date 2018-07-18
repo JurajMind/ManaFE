@@ -9,7 +9,7 @@ class MixListtem extends StatelessWidget {
       child: Placeholder(
         color: Colors.red,
       ),
-    )
+    );
   }
 
 }
