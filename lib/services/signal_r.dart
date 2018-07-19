@@ -7,51 +7,50 @@ import 'package:web_socket_channel/io.dart';
 class SignalR {
   static const String host = "devmana.azurewebsites.net";
   static const String url = 'https://$host/signalr';
-  final conectionData = '[{"name":"smokesessionhub"}]';
+  final conectionData = Uri.encodeComponent('[{"name":"smokesessionhub"}]');
   NegotiateResponse connectionInfo;
 
   IOWebSocketChannel _channel;
 
-  bool connection;
+  bool connection = false;
 
   Future<dynamic> conect() async {
     var negotiateUrl =
         url + '/negotiate?clientProtocol=1.5&connectionData=$conectionData';
-    var response = await http.get(Uri.encodeFull(negotiateUrl));
-    connection = false;
+    var response = await http.get(negotiateUrl);
+    var connection = false;
     final responseJson = json.decode(response.body);
 
     var negotiateResponse = NegotiateResponse.fromJson(responseJson);
     connectionInfo = negotiateResponse;
 
     var chanelUlr =
-        "wss://$host/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=${negotiateResponse.ConnectionToken}==&connectionData=$conectionData";
-    chanelUlr = Uri.encodeFull(chanelUlr);
-    //chanelUlr = 'wss://echo.websocket.org';
+        "wss://$host/signalr/connect?transport=webSockets&clientProtocol=${negotiateResponse.ProtocolVersion}&connectionToken=${Uri.encodeComponent(negotiateResponse.ConnectionToken)}&connectionData=$conectionData";
+
     print(chanelUlr);
+
     try {
       _channel = new IOWebSocketChannel.connect(chanelUlr);
-          _channel.stream.listen((message) async{
-        await startConnection(negotiateResponse);
+          _channel.stream.listen((message) async{      
       print('From signal ' + message);
     });
     } catch (e) {
       print(e);
     }
 
-  
+      await startConnection(negotiateResponse);
 
   }
 
   Future startConnection(NegotiateResponse negotiateResponse) async {
-    if(this.connection)
+    if(connection)
     return;
-    this.connection = true;
+    connection = true;
       var startUrl = url +
-        '/start?transport=webSockets&clientProtocol=1.5&connectionToken=${negotiateResponse.ConnectionToken}==&connectionData=$conectionData';
+        '/start?transport=webSockets&clientProtocol=1.5&connectionToken=${Uri.encodeComponent(negotiateResponse.ConnectionToken)}&connectionData=$conectionData';
     print(startUrl);
     
-    var connect = await http.get(Uri.decodeFull(startUrl));
+    var connect = await http.get(startUrl);
     
     print(connect.body);
   }
@@ -60,7 +59,7 @@ class SignalR {
 
   callServerFunction(String name, List<String> params) {
     var call = new ServerCall(A: params, M: name);
-     _channel.sink.add(call.toJson());
+    // _channel.sink.add(call.toJson()
   }
 }
 
