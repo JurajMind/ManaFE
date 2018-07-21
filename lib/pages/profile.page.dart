@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class ProfilePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
+    print('Profile');
     return new _ProfilePageState();
   }
 }

@@ -1,15 +1,12 @@
 import 'package:app/components/icon_button_title.dart';
 import 'package:app/components/my_flutter_app_icons.dart';
-import 'package:app/helpers.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/mixology/mixology_list.dart';
 import 'package:app/pages/gear.page.dart';
-import 'package:app/pages/mixology.page.dart';
 import 'package:app/pages/places.page.dart';
 import 'package:app/pages/profile.page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -26,6 +23,8 @@ class _HomePageState extends State<HomePage> {
     0: GlobalKey<NavigatorState>(),
     1: GlobalKey<NavigatorState>(),
     2: GlobalKey<NavigatorState>(),
+    3: GlobalKey<NavigatorState>(),
+    4: GlobalKey<NavigatorState>(),
   };
 
   Widget myBottomBar() => new BottomAppBar(
@@ -52,8 +51,12 @@ class _HomePageState extends State<HomePage> {
                       _currentIndex = 1;
                     }),
               ),
-              Container(
-                width: 60.0,
+              IconButton(
+                icon: Icon(Icons.settings_backup_restore),             
+                color: _currentIndex == 2 ? Colors.white : Colors.grey,
+                onPressed: () => setState(() {
+                      _currentIndex = 2;
+                    }),
               ),
               IconButtonTitle(
                 icon: Icon(Icons.settings),
@@ -78,20 +81,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final smokeSessionBloc = DataProvider.getSmokeSession(context);
+    final smokeSessionBloc = DataProvider.getSmokeSession(context);   
     smokeSessionBloc.signalR.conect();
     return new Scaffold(
-        bottomNavigationBar: myBottomBar(),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.white,
-          elevation: 4.0,
-          child: new Icon(MyFlutterApp.manaIcon),
-          onPressed: () => setState(() {
-                _currentIndex = 2;
-              }),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: myBottomBar(),        
+        resizeToAvoidBottomPadding: true,
         body: _buildBody());
+        
   }
 
   _buildBody() {
@@ -118,8 +114,6 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-
-
 class TabNavigator extends StatelessWidget {
   TabNavigator({this.navigatorKey, this.tabItem});
   final GlobalKey<NavigatorState> navigatorKey;
@@ -128,18 +122,14 @@ class TabNavigator extends StatelessWidget {
   void _push(BuildContext context, String route) {
     var routeBuilders = _routeBuilders(context);
 
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                routeBuilders[route](context)));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => routeBuilders[route](context)));
   }
 
-  Map<String, WidgetBuilder> _routeBuilders(BuildContext context,
-    ) {
-    return {
-     '/' : (context) =>  this.tabItem
-    };
+  Map<String, WidgetBuilder> _routeBuilders(
+    BuildContext context,
+  ) {
+    return {'/': (context) => this.tabItem};
   }
 
   @override

@@ -19,6 +19,9 @@ class SignalR {
   bool connection = false;
 
   Future<dynamic> conect() async {
+    if(this.connection){
+      return;
+    }
     var negotiateUrl =
         url + '/negotiate?clientProtocol=1.5&connectionData=$conectionData';
     var response = await http.get(negotiateUrl);

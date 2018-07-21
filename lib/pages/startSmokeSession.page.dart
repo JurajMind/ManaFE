@@ -44,8 +44,8 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
     
   final smokeSessionBloc = DataProvider.getSmokeSession(context);
 
-    return new Scaffold(
-      body: new Stack(
+    return new Container(
+      child: new Stack(
         children: <Widget>[
           new Positioned(
             child: new Icon(Icons.refresh),
