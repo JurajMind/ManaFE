@@ -2,6 +2,10 @@ import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/mixology/mixology_slice.dart';
 import 'package:flutter/material.dart';
 
+abstract class MainPage {
+  
+}
+
 class MixologyList extends StatelessWidget {
   static const _loadingSpace = 10;
 

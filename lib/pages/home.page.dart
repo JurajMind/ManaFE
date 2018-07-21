@@ -1,6 +1,7 @@
 import 'package:app/components/icon_button_title.dart';
 import 'package:app/components/my_flutter_app_icons.dart';
 import 'package:app/helpers.dart';
+import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/mixology/mixology_list.dart';
 import 'package:app/pages/gear.page.dart';
 import 'package:app/pages/mixology.page.dart';
@@ -8,6 +9,7 @@ import 'package:app/pages/places.page.dart';
 import 'package:app/pages/profile.page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,9 +22,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 2;
+  Map<int, GlobalKey<NavigatorState>> navigatorKeys = {
+    0: GlobalKey<NavigatorState>(),
+    1: GlobalKey<NavigatorState>(),
+    2: GlobalKey<NavigatorState>(),
+  };
 
   Widget myBottomBar() => new BottomAppBar(
-    
         child: Ink(
           height: 50.0,
           child: new Row(
@@ -72,6 +78,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final smokeSessionBloc = DataProvider.getSmokeSession(context);
+    smokeSessionBloc.signalR.conect();
     return new Scaffold(
         bottomNavigationBar: myBottomBar(),
         floatingActionButton: FloatingActionButton(
@@ -90,12 +98,60 @@ class _HomePageState extends State<HomePage> {
     return new IndexedStack(
       index: _currentIndex,
       children: <Widget>[
-        new MixologyList(),
-        new PlacePage(),
-        new StartSmokeSessionPage(),
-        new GearPage(),
-        new ProfilePage(),
+        _buildOffstageNavigator(new MixologyList(), 0),
+        _buildOffstageNavigator(new PlacePage(), 1),
+        _buildOffstageNavigator(new StartSmokeSessionPage(), 2),
+        _buildOffstageNavigator(new GearPage(), 3),
+        _buildOffstageNavigator(new ProfilePage(), 4),
       ],
     );
+  }
+
+  Widget _buildOffstageNavigator(Widget tabItem, int index) {
+    return Offstage(
+      offstage: _currentIndex != index,
+      child: TabNavigator(
+        navigatorKey: navigatorKeys[index],
+        tabItem: tabItem,
+      ),
+    );
+  }
+}
+
+
+
+class TabNavigator extends StatelessWidget {
+  TabNavigator({this.navigatorKey, this.tabItem});
+  final GlobalKey<NavigatorState> navigatorKey;
+  final Widget tabItem;
+
+  void _push(BuildContext context, String route) {
+    var routeBuilders = _routeBuilders(context);
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                routeBuilders[route](context)));
+  }
+
+  Map<String, WidgetBuilder> _routeBuilders(BuildContext context,
+    ) {
+    return {
+     '/' : (context) =>  this.tabItem
+    };
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var routeBuilders = _routeBuilders(context);
+
+    return Navigator(
+        key: navigatorKey,
+        initialRoute: '/',
+        onGenerateRoute: (routeSettings) {
+          return MaterialPageRoute(
+              builder: (context) => routeBuilders[routeSettings.name](context));
+        });
   }
 }

@@ -9,14 +9,7 @@ import 'package:web_socket_channel/io.dart';
 class StartSmokeSessionPage extends StatefulWidget {
   final double topWidgetHeight = 200.0;
 
-  void _openAddEntryDialog(BuildContext context) {
-  Navigator.of(context).push(new MaterialPageRoute<Null>(
-      builder: (BuildContext context) {
-        return new EnterSmokeSessionCode();
-      },
-    fullscreenDialog: true
-  ));
-}
+
 
 
 
@@ -37,7 +30,14 @@ main() async {
 
 class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
 
-
+  void _openAddEntryDialog(BuildContext context) {
+  Navigator.of(context).push(new MaterialPageRoute<Null>(
+      builder: (BuildContext context) {
+        return new EnterSmokeSessionCode();
+      },
+    fullscreenDialog: true
+  ));
+}
   @override
   Widget build(BuildContext context) {
 
@@ -58,7 +58,7 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
                 backgroundColor: Colors.green,
                 child: GestureDetector(
                     onTap: () {
-                      smokeSessionBloc.testChannel('Test');
+                    _openAddEntryDialog(context);
                     },
                     child: new Container(
                       child: new Row(

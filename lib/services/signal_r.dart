@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:http/http.dart' as http;
+import 'package:rxdart/rxdart.dart';
 import 'dart:async';
 
 import 'package:web_socket_channel/io.dart';
@@ -11,6 +13,8 @@ class SignalR {
   NegotiateResponse connectionInfo;
 
   IOWebSocketChannel _channel;
+
+ BehaviorSubject<SmokeSessionData> UpdateStats = new BehaviorSubject<SmokeSessionData>();
 
   bool connection = false;
 
@@ -33,34 +37,43 @@ class SignalR {
       _channel = new IOWebSocketChannel.connect(chanelUlr);
           _channel.stream.listen((message) async{      
       print('From signal ' + message);
-    });
-    } catch (e) {
-      print(e);
-    }
+      var serverCall = ClientCall.fromJson(json.decode(message));
 
-      await startConnection(negotiateResponse);
-
-  }
-
-  Future startConnection(NegotiateResponse negotiateResponse) async {
-    if(connection)
-    return;
-    connection = true;
-      var startUrl = url +
-        '/start?transport=webSockets&clientProtocol=1.5&connectionToken=${Uri.encodeComponent(negotiateResponse.ConnectionToken)}&connectionData=$conectionData';
-    print(startUrl);
-    
-    var connect = await http.get(startUrl);
-    
-    print(connect.body);
-  }
-
-  sendMsg(String data) {}
-
-  callServerFunction(String name, List<String> params) {
-    var call = new ServerCall(A: params, M: name);
-    // _channel.sink.add(call.toJson()
-  }
+      ProceedCall(serverCall);
+      
+            print(serverCall.GroupToken);
+          });
+          } catch (e) {
+            print(e);
+          }
+      
+            await startConnection(negotiateResponse);
+      
+        }
+      
+        Future startConnection(NegotiateResponse negotiateResponse) async {
+          if(connection)
+          return;
+          connection = true;
+            var startUrl = url +
+              '/start?transport=webSockets&clientProtocol=1.5&connectionToken=${Uri.encodeComponent(negotiateResponse.ConnectionToken)}&connectionData=$conectionData';
+          print(startUrl);
+          
+          var connect = await http.get(startUrl);
+          
+          print(connect.body);
+        }
+      
+        sendMsg(String data) {}
+      
+        callServerFunction({String name, List<String> params}) {
+          var call = new ServerCall(A: params, M: name);
+           _channel.sink.add(call.toJson());
+        }
+      
+        void ProceedCall(ClientCall serverCall) {
+         
+        }
 }
 
 class NegotiateResponse {
@@ -110,5 +123,56 @@ class ServerCall {
 
   ServerCall({this.I: 0, this.H = "smokesessionhub", this.A, this.M});
 
-  String toJson() => json.encode(this);
+  String toJson() {
+  var call = {};
+  call["H"] = this.H;
+  call["M"] = this.M;
+  call["A"] = this.A;
+  call["I"] = this.I;
+
+  String str = JSON.encode(call);
+  print(str);
+  return str;
+  }
 }
+
+class ClientCall {
+  final String MessageId;
+  final List<ClientMethod> Data;
+  final int Init;
+  final String GroupToken;
+
+  ClientCall({
+    this.MessageId,this.Data,this.Init,this.GroupToken
+  });
+
+  factory ClientCall.fromJson(Map<String, dynamic> json) {
+
+    var data = json["M"] as List<dynamic>;
+
+    return ClientCall(
+        MessageId: json['C'],
+        Data: data?.map((f) => ClientMethod.fromJson(jsonDecode(f)))?.toList(),
+        Init: json['S'],
+        GroupToken: json['G']);
+  }
+
+
+
+}
+
+  class ClientMethod {
+    final String Hub;
+    final String Method;
+    final List<String> Data;
+
+  ClientMethod({this.Hub,this.Method,this.Data});
+
+  
+  factory ClientMethod.fromJson(Map<String, dynamic> json) {
+    return ClientMethod(
+        Hub: json['H'],
+        Method: json['M'],
+        Data: json['A']);}
+
+  }
