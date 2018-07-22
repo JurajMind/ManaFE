@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:web_socket_channel/io.dart';
-import 'package:vibrate/vibrate.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class SmokeSessionBloc {
   Sink get test => _indexController.sink;
@@ -22,6 +22,8 @@ class SmokeSessionBloc {
   factory SmokeSessionBloc() => SmokeSessionBloc._instance;
 
   BehaviorSubject<int> smokeState = new BehaviorSubject<int>(seedValue: 0);
+  BehaviorSubject<SmokeStatisticDataModel> smokeStatistic =
+      new BehaviorSubject<SmokeStatisticDataModel>();
 
   void joinSession(String sessionCode) {
     if (sessionCode == null) {
@@ -74,25 +76,70 @@ class SmokeSessionBloc {
     smokeState.add(data.state);
   }
 
-  void handleUpdateStats(ClientMethod f) {}
+  void handleUpdateStats(ClientMethod f) {
+    var data = new SmokeStatisticDataModel(f.Data);
+    smokeStatistic.add(data);
+  }
 }
 
-
-class PuffChangeDataModel{
+class PuffChangeDataModel extends SignalData {
   int state;
   String stateName;
 
-  PuffChangeDataModel(List<dynamic> data){
-    if(data.length > 1){
-      if(data[1] is int)
-      {
+  PuffChangeDataModel(List<dynamic> data) : super(data) {
+    if (data.length > 1) {
+      if (data[1] is int) {
         state = data[1];
       }
-      if(data[0] is String){
+      if (data[0] is String) {
         {
           stateName = data[0];
         }
       }
     }
   }
+}
+
+class SmokeStatisticDataModel extends SignalData {
+  int pufCount;
+  double lastPuf;
+  DateTime lastPufTime;
+  Duration smokeDuration;
+  DateTime start;
+  Duration duration;
+  Duration longestPuf;
+
+  SmokeStatisticDataModel(List data) : super(data) {
+    if (data[0].length < 1) {
+      return;
+    }
+    var map = data[0] as Map;
+
+    pufCount = map['pufCount'];
+    final DateFormat df = new DateFormat('dd-MM-yyyy HH:mm:ss');
+    lastPuf = double.parse(map['lastPuf']);
+    lastPufTime = df.parse(map['lastPufTime']);
+    smokeDuration = stringToDuration(map['smokeDuration']);
+
+    start = df.parse(map['start']);
+
+    duration = stringToDuration(map['duration']);
+
+    longestPuf = new Duration(microseconds:  map['longestPufMilis'].round());
+  }
+}
+
+Duration stringToDuration(String sDuration) {
+  var chunks = sDuration.split(':');
+  var parts = chunks.map((f){
+    if(f.startsWith('0')){
+      return int.parse(f[1]);
+    }
+     return int.parse(f);
+    }).toList();
+  return new Duration(hours: parts[0], minutes: parts[1], seconds: parts[2]);
+}
+
+abstract class SignalData {
+  SignalData(List<dynamic> data);
 }

@@ -20,6 +20,10 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
     return new Container(
         child: Stack(
       children: <Widget>[
+        new AppBar(
+          backgroundColor: Colors.transparent,
+          
+        ),
         new Positioned(
           child: CircleAvatar(
             radius: getCircleRadius(context),
@@ -45,7 +49,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                 padding: const EdgeInsets.all(20.0),
                                 child: new TextFormField(
                                   maxLength: 5,
-                                  controller: myController,
+                                  controller: myController,                                  
                                   validator: (val) {
                                     return myController.text.length != 5
                                         ? "Session code must have 5 chars"

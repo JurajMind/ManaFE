@@ -1,4 +1,5 @@
 import 'package:app/module/mixology/mixology_bloc.dart';
+import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
 
 class SmokeSessionPage extends StatefulWidget {
@@ -19,17 +20,41 @@ StreamBuilder<int> builder = new StreamBuilder(
     return new Text(asyncSnapshot.data.toString());
   },
 );
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('SmokeSession'),
+
+StreamBuilder<SmokeStatisticDataModel> statisticBuilder = new StreamBuilder(
+  stream: smokeSessionBloc.smokeStatistic,
+  builder: (context,asyncSnapshot){
+    return asyncSnapshot.data !=null ? Column(
+      children: <Widget>[
+        Text(asyncSnapshot.data.pufCount.toString()),
+          Text(asyncSnapshot.data.lastPuf.toString()),
+            Text(asyncSnapshot.data.duration.toString())
+      ],
+    ) : Text('No data');
+  },
+);
+    return new Container(
+      
+      child: Column(
+        children: <Widget>[
+            new AppBar(
+        title: new Text('Smoke session'),
+        backgroundColor: Colors.transparent,
       ),
-      body: new Center(
-          child: Column(
-            children: <Widget>[
-              new Text('You are in Gear page!'),
-            builder
-            ],
-          )
+         new Container(
+           height: 300.0,
+           child: new Column(
+             crossAxisAlignment: CrossAxisAlignment.center,
+             mainAxisAlignment: MainAxisAlignment.center,
+             children: <Widget>[
+                new Text('You are in Gear page!'),
+                builder,
+                statisticBuilder
+             ],
+           ),
+         )
+
+        ],
       ),
     );
   }

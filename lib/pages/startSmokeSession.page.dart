@@ -43,6 +43,9 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
   ));
 
   print(sessionCode);
+  if(sessionCode == null){
+    return;
+  }
   smokeSessionBloc.joinSession(sessionCode);
   Navigator.of(context).push(new MaterialPageRoute(
         builder: (BuildContext context) {

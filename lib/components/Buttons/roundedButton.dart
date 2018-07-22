@@ -10,6 +10,7 @@ class RoundedButton extends StatelessWidget {
   final double borderWidth;
   final Color buttonColor;
   final Color textColor;
+  final Widget child;
   final TextStyle textStyle = const TextStyle(
       color: const Color(0XFFFFFFFF),
       fontSize: 16.0,
@@ -24,7 +25,8 @@ class RoundedButton extends StatelessWidget {
       this.borderWidth,
       this.width,
       this.buttonColor,
-      this.textColor });
+      this.textColor, 
+      this.child});
 
   TextStyle _getButtonTextStyle()
   {
@@ -57,7 +59,7 @@ class RoundedButton extends StatelessWidget {
               border: new Border.all(
                   color: const Color.fromRGBO(221, 221, 221, 1.0),
                   width: borderWidth)),
-          child: new Text(buttonName.toUpperCase(), style: _getButtonTextStyle()),
+          child: this.child == null ? Text(buttonName.toUpperCase(), style: _getButtonTextStyle()) : child,
         ),
       ));
     else
