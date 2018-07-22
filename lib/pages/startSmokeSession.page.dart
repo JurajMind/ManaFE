@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:app/components/Backgrund.dart';
 import 'package:app/helpers.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
+import 'package:app/module/smokeSession/smoke_session_bloc.dart';
+import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/pages/enterSmokeSesionCode.page.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel/carousel.dart';
@@ -30,12 +34,20 @@ main() async {
 
 class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
 
-  void _openAddEntryDialog(BuildContext context) {
-  Navigator.of(context).push(new MaterialPageRoute<Null>(
+  Future _openAddEntryDialog(BuildContext context, SmokeSessionBloc smokeSessionBloc) async {
+ final sessionCode = await Navigator.of(context).push(new MaterialPageRoute<String>(
       builder: (BuildContext context) {
         return new EnterSmokeSessionCode();
       },
     fullscreenDialog: true
+  ));
+
+  print(sessionCode);
+  smokeSessionBloc.joinSession(sessionCode);
+  Navigator.of(context).push(new MaterialPageRoute(
+        builder: (BuildContext context) {
+        return new SmokeSessionPage();
+      },
   ));
 }
   @override
@@ -58,7 +70,7 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
                 backgroundColor: Colors.green,
                 child: GestureDetector(
                     onTap: () {
-                    _openAddEntryDialog(context);
+                    _openAddEntryDialog(context,smokeSessionBloc);
                     },
                     child: new Container(
                       child: new Row(
