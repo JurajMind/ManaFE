@@ -1,3 +1,4 @@
+import 'package:app/services/authorization.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -9,6 +10,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+    Authorize auth = new Authorize();
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -16,7 +18,15 @@ class _ProfilePageState extends State<ProfilePage> {
         title: new Text('ProfilePage'),
       ),
       body: new Center(
-          child: new Text('You are in Mixology page!')
+          child: Column(
+            children: <Widget>[
+              new Text('You are in profile page!'),
+              new RaisedButton(
+                onPressed: () {auth.signOut();},
+                child: Text('Log off'),
+              )
+            ],
+          )
       ),
     );
   }

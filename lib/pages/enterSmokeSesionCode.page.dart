@@ -1,5 +1,6 @@
 import 'package:app/helpers.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
+import 'package:app/services/http.service.dart';
 import 'package:flutter/material.dart';
 
 class EnterSmokeSessionCode extends StatefulWidget {
@@ -11,10 +12,12 @@ class EnterSmokeSessionCode extends StatefulWidget {
 }
 
 class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
-  final double topWidgetHeight = 200.0;
+  final double topWidgetHeight = 250.0;
   String _sessionCode;
   final _formKey = GlobalKey<FormState>();
   final myController = TextEditingController();
+  final ApiClient apiClient = new ApiClient();
+  bool validating = false;
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -22,7 +25,6 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
       children: <Widget>[
         new AppBar(
           backgroundColor: Colors.transparent,
-          
         ),
         new Positioned(
           child: CircleAvatar(
@@ -49,7 +51,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                 padding: const EdgeInsets.all(20.0),
                                 child: new TextFormField(
                                   maxLength: 5,
-                                  controller: myController,                                  
+                                  controller: myController,
                                   validator: (val) {
                                     return myController.text.length != 5
                                         ? "Session code must have 5 chars"
@@ -66,12 +68,32 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                               new Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: new RaisedButton(
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    setState(() {
+                                      validating = true;
+                                    });
                                     if (_formKey.currentState.validate()) {
-                                      Navigator.pop(context, myController.text);
+                                      var result = await apiClient
+                                          .validateSessionId(myController.text);
+                                      setState(() {
+                                        validating = false;
+                                      });
+                                      if (result.id != null) {
+                                        Navigator.pop(
+                                            context, myController.text);
+                                      } else {
+                                        Scaffold
+                                            .of(context)
+                                            .showSnackBar(new SnackBar(
+                                              content: new Text(
+                                                  "Invalid session code"),
+                                            ));
+                                      }
                                     }
                                   },
-                                  child: new Text('Enter'),
+                                  child: validating
+                                      ? new Text('Validating')
+                                      : new Text('Enter'),
                                   color: Colors.red,
                                 ),
                               )

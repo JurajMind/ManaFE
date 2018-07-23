@@ -48,4 +48,36 @@ class ApiClient {
     return _getJson(url).then((json) => json['Mixes']).then(
         (data) => data.map<TobaccoMix>((mix) => TobaccoMix(mix)).toList());
   }
+
+  Future<SessionIdValidation> validateSessionId(String sessionId) {
+    var url =
+        Uri.https(baseUrl, 'api/SmokeSession/Validate', {"id": sessionId});
+
+    return _getJson(url).then((json) => SessionIdValidation.fromJson(json));
+  }
 }
+
+class SessionIdValidation extends Dto {
+  final String id;
+  final SessionState state;
+  SessionIdValidation({this.id, this.state}) : super();
+
+  SessionIdValidation.fromJson(Map<String, dynamic> map)
+      : id = map["Id"],
+        state = SessionState.values[map["Flag"]];
+}
+
+class Dto {
+  final bool success;
+  final String message;
+  final int httpResponseCode;
+
+  Dto({this.success, this.message, this.httpResponseCode});
+
+  Dto.fromJson(Map<String, dynamic> map)
+      : success = map["Success"],
+        message = map["Message"],
+        httpResponseCode = map["HttpResponseCode"];
+}
+
+enum SessionState { live, completed }

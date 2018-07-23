@@ -42,6 +42,12 @@ class Authorize {
     return _token;
   }
 
+Future signOut() async{
+  await _storage.delete(key:'accessToken');
+   navigatorKey.currentState.pushReplacementNamed('auth/login');
+}
+
+
   Future<bool> refreshToken() async {
     var refreshToken = await _storage.read(key: 'refreshToken');
     await _storage.delete(key: 'accessToken');
