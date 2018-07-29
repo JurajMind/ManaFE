@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:app/models/tobacco_mix.dart';
+
 import 'package:app/module/mixology/mixology_page.dart';
 import 'package:app/module/mixology/mixology_slice.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';

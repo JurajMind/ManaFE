@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:app/models/tobacco_mix.dart';
+import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 
 class MixologyPage {
   final List<TobaccoMix> _tobaccoMixes;

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:app/models/tobacco_mix.dart';
+import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 import 'package:app/services/authorization.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -45,8 +45,8 @@ class ApiClient {
     var url = Uri.https(baseUrl, '/api/Mixology/GetMixes',
         {"page": page.toString(), 'pageSize': pageSize.toString()});
 
-    return _getJson(url).then((json) => json['Mixes']).then(
-        (data) => data.map<TobaccoMix>((mix) => TobaccoMix(mix)).toList());
+    return _getJson(url).then((json) => json['Mixes']).then((data) =>
+        data.map<TobaccoMix>((mix) => TobaccoMix.fromJson(mix)).toList());
   }
 
   Future<SessionIdValidation> validateSessionId(String sessionId) {
