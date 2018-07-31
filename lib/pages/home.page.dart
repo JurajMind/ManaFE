@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                     }),
               ),
               IconButton(
-                icon: Icon(Icons.settings_backup_restore),             
+                icon: Icon(Icons.settings_backup_restore),
                 color: _currentIndex == 2 ? Colors.white : Colors.grey,
                 onPressed: () => setState(() {
                       _currentIndex = 2;
@@ -81,13 +81,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final smokeSessionBloc = DataProvider.getSmokeSession(context);   
+    final smokeSessionBloc = DataProvider.getSmokeSession(context);
     smokeSessionBloc.signalR.conect();
     return new Scaffold(
-        bottomNavigationBar: myBottomBar(),        
+        bottomNavigationBar: myBottomBar(),
         resizeToAvoidBottomPadding: true,
         body: _buildBody());
-        
   }
 
   _buildBody() {

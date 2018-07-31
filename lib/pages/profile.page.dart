@@ -10,24 +10,28 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-    Authorize auth = new Authorize();
+  Authorize auth = new Authorize();
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('ProfilePage'),
-      ),
-      body: new Center(
-          child: Column(
-            children: <Widget>[
-              new Text('You are in profile page!'),
-              new RaisedButton(
-                onPressed: () {auth.signOut();},
-                child: Text('Log off'),
-              )
-            ],
-          )
-      ),
+    return new Column(
+      children: <Widget>[
+        new AppBar(
+          title: new Text('ProfilePage'),
+          backgroundColor: Colors.black,
+        ),
+        new Center(
+            child: Column(
+          children: <Widget>[
+            new Text('You are in profile page!'),
+            new RaisedButton(
+              onPressed: () {
+                auth.signOut();
+              },
+              child: Text('Log off'),
+            )
+          ],
+        )),
+      ],
     );
   }
 }

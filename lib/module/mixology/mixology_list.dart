@@ -12,6 +12,20 @@ class MixologyList extends StatelessWidget {
   Widget build(BuildContext context) {
     final mixologyBloc = DataProvider.getMixology(context);
 
+    return Column(
+      children: <Widget>[
+        SizedBox(
+          height: 50.0,
+          child: AppBar(
+            title: Text('Mixology'),
+          ),
+        ),
+        buildListView(mixologyBloc),
+      ],
+    );
+  }
+
+  StreamBuilder<MixologySlice> buildListView(MixologyBloc mixologyBloc) {
     return StreamBuilder<MixologySlice>(
       stream: mixologyBloc.slice,
       initialData: MixologySlice.empty(),
@@ -80,7 +94,9 @@ class MixologyList extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: mix.tobaccos.length > 3
+                      ? MainAxisAlignment.end
+                      : MainAxisAlignment.spaceEvenly,
                   children: _createTobaccoRow(mix)),
             ),
             elevation: 8.0,

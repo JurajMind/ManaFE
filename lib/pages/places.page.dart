@@ -10,13 +10,14 @@ class PlacePage extends StatefulWidget {
 class _PlacePageState extends State<PlacePage> {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Place'),
-      ),
-      body: new Center(
-          child: new Text('You are in place page!')
-      ),
+    return new Column(
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        new AppBar(
+          title: new Text('Place'),
+        ),
+        Container(child: new Center(child: new Text('You are in place page!'))),
+      ],
     );
   }
 }
