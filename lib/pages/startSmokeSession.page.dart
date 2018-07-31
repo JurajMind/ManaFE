@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app/components/Backgrund.dart';
+import 'package:app/components/carousel.dart';
 import 'package:app/helpers.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
@@ -100,16 +101,10 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
           ),
           new Positioned(
             top: 300.0,
-            child: Container(
-              width: (MediaQuery.of(context).size.width),
-              height: 200.0,
-              child: FlatButton(
-                child: Text('test'),
-                onPressed: () {
-                  smokeSessionBloc.testChannel('d');
-                },
-              )
-            ),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height/2,
+              child: Carroussel())
           )
         ],
       ),
