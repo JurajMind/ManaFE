@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app/app/app.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
+import 'package:app/module/places/places_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/start.page.dart';
 import 'package:app/pages/home.page.dart';
@@ -17,14 +18,11 @@ class AppWidget extends StatefulWidget {
     return new _AppWidgetState();
   }
 
-    static restartApp(BuildContext context) {
+  static restartApp(BuildContext context) {
     final _AppWidgetState state =
         context.ancestorStateOfType(const TypeMatcher<_AppWidgetState>());
     state.restartApp();
   }
-
-
-  
 }
 
 class _AppWidgetState extends State<AppWidget> {
@@ -32,6 +30,8 @@ class _AppWidgetState extends State<AppWidget> {
   bool _isAuthorized = false;
   final mixology = MixologyBloc();
   final smokeSession = SmokeSessionBloc();
+  final place = PlacesBloc();
+
   @override
   void initState() {
     super.initState();
@@ -41,19 +41,18 @@ class _AppWidgetState extends State<AppWidget> {
         }));
   }
 
-   void restartApp() {
+  void restartApp() {
     this.setState(() {
       key = new UniqueKey();
     });
   }
 
-
-
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     return new DataProvider(
         mixology: mixology,
         smokeSession: smokeSession,
+        place: place,
         child: MaterialApp(
           navigatorKey: navigatorKey,
           showPerformanceOverlay: false,

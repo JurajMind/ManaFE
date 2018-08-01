@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
+import 'package:app/models/Places/place.dart';
 import 'package:app/services/authorization.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -54,6 +55,18 @@ class ApiClient {
         Uri.https(baseUrl, 'api/SmokeSession/Validate', {"id": sessionId});
 
     return _getJson(url).then((json) => SessionIdValidation.fromJson(json));
+  }
+
+  Future<List<Place>> getNearbyPlaces() {
+    var uri = Uri.https(baseUrl, 'api/Places/SearchNearby');
+
+    return _getJson(uri).then((json) {
+      var list = json['NearbyPlaces'] as List;
+
+      return list.map((f) {
+        return Place.fromJson(f);
+      }).toList();
+    });
   }
 }
 

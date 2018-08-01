@@ -16,6 +16,8 @@ class App {
 
   static String clientId;
 
+  static String baseUri;
+
   // Create app.
   App({
     String environment,
@@ -24,9 +26,9 @@ class App {
   }) {
     App.environment = environment;
     App.clientId = clientId;
+    App.baseUri = baseUri;
     // Create app http service.
-    App.http = new ApiClient(
-    );  
+    App.http = new ApiClient();
 
     // Create a router.
     final Router router = new Router();
@@ -45,8 +47,6 @@ class App {
 
   // App run.
   void run(runApp) {
-    runApp(
-      new AppWidget()
-    );
+    runApp(new AppWidget());
   }
 }

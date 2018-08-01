@@ -12,16 +12,20 @@ class MixologyList extends StatelessWidget {
   Widget build(BuildContext context) {
     final mixologyBloc = DataProvider.getMixology(context);
 
-    return Column(
-      children: <Widget>[
-        SizedBox(
-          height: 50.0,
-          child: AppBar(
-            title: Text('Mixology'),
+    return SafeArea(
+      child: Column(
+        children: <Widget>[
+          SizedBox(
+            height: 50.0,
+            child: AppBar(
+              title: Text('Mixology'),
+            ),
           ),
-        ),
-        buildListView(mixologyBloc),
-      ],
+          new Expanded(
+            child: buildListView(mixologyBloc),
+          )
+        ],
+      ),
     );
   }
 

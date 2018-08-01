@@ -27,6 +27,35 @@ class _HomePageState extends State<HomePage> {
     4: GlobalKey<NavigatorState>(),
   };
 
+  List<Widget> tabs;
+  List<FocusScopeNode> tabFocusNodes;
+
+  @override
+  void initState() {
+    super.initState();
+    tabs = new List<Widget>(5);
+    tabFocusNodes = new List<FocusScopeNode>.generate(
+      5,
+      (int index) => new FocusScopeNode(),
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _focusActiveTab();
+  }
+
+  @override
+  void didUpdateWidget(dynamic oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _focusActiveTab();
+  }
+
+  void _focusActiveTab() {
+    FocusScope.of(context).setFirstFocus(tabFocusNodes[_currentIndex]);
+  }
+
   Widget myBottomBar() => new BottomAppBar(
         child: Ink(
           height: 50.0,
@@ -42,6 +71,7 @@ class _HomePageState extends State<HomePage> {
                 tooltip: 'ss',
                 onPressed: () => setState(() {
                       _currentIndex = 0;
+                      _focusActiveTab();
                     }),
               ),
               IconButtonTitle(
@@ -50,6 +80,7 @@ class _HomePageState extends State<HomePage> {
                 color: _currentIndex == 1 ? Colors.white : Colors.grey,
                 onPressed: () => setState(() {
                       _currentIndex = 1;
+                      _focusActiveTab();
                     }),
               ),
               IconButton(
@@ -57,6 +88,7 @@ class _HomePageState extends State<HomePage> {
                 color: _currentIndex == 2 ? Colors.white : Colors.grey,
                 onPressed: () => setState(() {
                       _currentIndex = 2;
+                      _focusActiveTab();
                     }),
               ),
               IconButtonTitle(
@@ -65,6 +97,7 @@ class _HomePageState extends State<HomePage> {
                 color: _currentIndex == 3 ? Colors.white : Colors.grey,
                 onPressed: () => setState(() {
                       _currentIndex = 3;
+                      _focusActiveTab();
                     }),
               ),
               IconButtonTitle(
@@ -73,6 +106,7 @@ class _HomePageState extends State<HomePage> {
                 color: _currentIndex == 4 ? Colors.white : Colors.grey,
                 onPressed: () => setState(() {
                       _currentIndex = 4;
+                      _focusActiveTab();
                     }),
               ),
             ],
@@ -103,12 +137,23 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  @override
+  void dispose() {
+    for (FocusScopeNode focusScopeNode in tabFocusNodes) {
+      focusScopeNode.detach();
+    }
+    super.dispose();
+  }
+
   Widget _buildOffstageNavigator(Widget tabItem, int index) {
     return Offstage(
       offstage: _currentIndex != index,
-      child: TabNavigator(
-        navigatorKey: navigatorKeys[index],
-        tabItem: tabItem,
+      child: FocusScope(
+        node: tabFocusNodes[index],
+        child: TabNavigator(
+          navigatorKey: navigatorKeys[index],
+          tabItem: tabItem,
+        ),
       ),
     );
   }

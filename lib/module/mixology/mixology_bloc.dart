@@ -1,15 +1,13 @@
 import 'dart:async';
 import 'dart:math';
 
-
 import 'package:app/module/mixology/mixology_page.dart';
 import 'package:app/module/mixology/mixology_slice.dart';
+import 'package:app/module/places/places_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
-import 'package:app/services/authorization.dart';
 import 'package:app/services/http.service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:web_socket_channel/io.dart';
 
 class MixologyBloc {
   static const _mixPerPage = 10;
@@ -112,15 +110,18 @@ class MixologyProvider extends InheritedWidget {
 class DataProvider extends InheritedWidget {
   final MixologyBloc mixologyBloc;
   final SmokeSessionBloc smokeSessionBloc;
+  final PlacesBloc placeBloc;
 
   DataProvider({
     Key key,
     @required MixologyBloc mixology,
     @required SmokeSessionBloc smokeSession,
+    @required PlacesBloc place,
     Widget child,
   })  : assert(mixology != null),
         mixologyBloc = mixology,
         smokeSessionBloc = smokeSession,
+        placeBloc = place,
         super(key: key, child: child);
 
   @override
@@ -133,4 +134,8 @@ class DataProvider extends InheritedWidget {
   static SmokeSessionBloc getSmokeSession(BuildContext context) =>
       (context.inheritFromWidgetOfExactType(DataProvider) as DataProvider)
           .smokeSessionBloc;
+
+  static PlacesBloc getPlaces(BuildContext context) =>
+      (context.inheritFromWidgetOfExactType(DataProvider) as DataProvider)
+          .placeBloc;
 }
