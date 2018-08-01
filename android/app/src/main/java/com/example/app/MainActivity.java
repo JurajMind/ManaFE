@@ -1,4 +1,4 @@
-package com.example.app;
+package com.manapipes.app;
 
 import android.os.Bundle;
 

@@ -14,67 +14,53 @@ import 'package:web_socket_channel/io.dart';
 class StartSmokeSessionPage extends StatefulWidget {
   final double topWidgetHeight = 200.0;
 
+  var channel;
 
+  main() async {}
 
-
-
- var channel;
-
-main() async { 
-
-}
- 
   @override
   StartSmokeSessionPageState createState() {
     main();
     return new StartSmokeSessionPageState();
   }
-
-  
 }
 
 class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
+  Future _openAddEntryDialog(
+      BuildContext context, SmokeSessionBloc smokeSessionBloc) async {
+    final sessionCode =
+        await Navigator.of(context).push(new MaterialPageRoute<String>(
+            builder: (BuildContext context) {
+              return new EnterSmokeSessionCode();
+            },
+            fullscreenDialog: true));
 
-  Future _openAddEntryDialog(BuildContext context, SmokeSessionBloc smokeSessionBloc) async {
- final sessionCode = await Navigator.of(context).push(new MaterialPageRoute<String>(
+    print(sessionCode);
+    if (sessionCode == null) {
+      return;
+    }
+    smokeSessionBloc.joinSession(sessionCode);
+    Navigator.of(context).push(new MaterialPageRoute(
       builder: (BuildContext context) {
-        return new EnterSmokeSessionCode();
-      },
-    fullscreenDialog: true
-  ));
-
-  print(sessionCode);
-  if(sessionCode == null){
-    return;
-  }
-  smokeSessionBloc.joinSession(sessionCode);
-  Navigator.of(context).push(new MaterialPageRoute(
-        builder: (BuildContext context) {
         return new SmokeSessionPage();
       },
-  ));
-}
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    
-  final smokeSessionBloc = DataProvider.getSmokeSession(context);
+    final smokeSessionBloc = DataProvider.getSmokeSession(context);
 
     return new Container(
       child: new Stack(
         children: <Widget>[
-          new Positioned(
-            child: new Icon(Icons.refresh),
-            left: 10.0,
-            top: 20.0,
-          ),
           new Positioned(
             child: new CircleAvatar(
                 radius: getCircleRadius(context),
                 backgroundColor: Colors.green,
                 child: GestureDetector(
                     onTap: () {
-                    _openAddEntryDialog(context,smokeSessionBloc);
+                      _openAddEntryDialog(context, smokeSessionBloc);
                     },
                     child: new Container(
                       child: new Row(
@@ -96,16 +82,33 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
                         ],
                       ),
                     ))),
-            left: (MediaQuery.of(context).size.width / 2) - getCircleRadius(context),
+            left: (MediaQuery.of(context).size.width / 2) -
+                getCircleRadius(context),
             top: widget.topWidgetHeight - getCircleRadius(context),
           ),
           new Positioned(
-            top: 300.0,
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height/2,
-              child: Carroussel())
-          )
+            child: new Icon(
+              Icons.refresh,
+              size: 40.0,
+            ),
+            left: 10.0,
+            top: 40.0,
+          ),
+          new Positioned(
+              top: 300.0,
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    'NEAREST PLACE',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.green[50]),
+                  ),
+                  SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height / 2 - 60,
+                      child: Carroussel()),
+                ],
+              ))
         ],
       ),
     );

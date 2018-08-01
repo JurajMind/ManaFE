@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
   Widget myBottomBar() => new BottomAppBar(
         child: Ink(
           height: 50.0,
+          color: Colors.black,
           child: new Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,

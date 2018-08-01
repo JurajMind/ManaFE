@@ -8,22 +8,21 @@ class StartPage extends StatelessWidget {
     final Size screenSize = MediaQuery.of(context).size;
 
     return new Scaffold(
-      body: new SingleChildScrollView(
-        child: new Column(
-          children: <Widget>[
-            
-            new Container(
+        body: new Center(
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new Container(
               padding: new EdgeInsets.all(40.0),
-              child: new Center(
-                child:new Column(
+              child: new Column(
                 children: <Widget>[
                   new Container(
                     width: screenSize.width,
                     child: new RoundedButton(
                       buttonName: 'Sign up',
-                      onTap:() { 
-                         navigate(context, 'auth/register');
-                      },    
+                      onTap: () {
+                        navigate(context, 'auth/register');
+                      },
                       buttonColor: Colors.transparent,
                       borderWidth: 1.0,
                       bottomMargin: 1.0,
@@ -32,13 +31,13 @@ class StartPage extends StatelessWidget {
                     ),
                     margin: new EdgeInsets.only(top: 20.0),
                   ),
-                    new Container(
+                  new Container(
                     width: screenSize.width,
                     child: new RoundedButton(
                       buttonName: 'Facebook login',
-                      onTap:() { 
-                         navigate(context, 'auth/login');
-                      },    
+                      onTap: () {
+                        navigate(context, 'auth/login');
+                      },
                       buttonColor: Colors.white,
                       borderWidth: 1.0,
                       bottomMargin: 1.0,
@@ -61,13 +60,9 @@ class StartPage extends StatelessWidget {
                     margin: new EdgeInsets.only(top: 20.0),
                   )
                 ],
-              ),
-              ) 
-
-            )
-          ],
-        ),
+              ))
+        ],
       ),
-    );
+    ));
   }
 }
