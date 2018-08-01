@@ -16,15 +16,6 @@ class AppWidget extends StatefulWidget {
   State<StatefulWidget> createState() {
     return new _AppWidgetState();
   }
-
-    static restartApp(BuildContext context) {
-    final _AppWidgetState state =
-        context.ancestorStateOfType(const TypeMatcher<_AppWidgetState>());
-    state.restartApp();
-  }
-
-
-  
 }
 
 class _AppWidgetState extends State<AppWidget> {
@@ -41,16 +32,14 @@ class _AppWidgetState extends State<AppWidget> {
         }));
   }
 
-   void restartApp() {
+  void restartApp() {
     this.setState(() {
       key = new UniqueKey();
     });
   }
 
-
-
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     return new DataProvider(
         mixology: mixology,
         smokeSession: smokeSession,

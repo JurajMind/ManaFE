@@ -1,6 +1,7 @@
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/mixology/mixology_slice.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 abstract class MainPage {}
@@ -12,16 +13,14 @@ class MixologyList extends StatelessWidget {
   Widget build(BuildContext context) {
     final mixologyBloc = DataProvider.getMixology(context);
 
-    return Column(
-      children: <Widget>[
-        SizedBox(
-          height: 50.0,
-          child: AppBar(
-            title: Text('Mixology'),
-          ),
-        ),
-        buildListView(mixologyBloc),
-      ],
+    return CupertinoPageScaffold(
+      backgroundColor: Colors.black,
+      child: Column(
+        children: <Widget>[
+          SizedBox(
+              height: 200.0, width: 200.0, child: buildListView(mixologyBloc)),
+        ],
+      ),
     );
   }
 

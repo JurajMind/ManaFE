@@ -6,6 +6,7 @@ import 'package:app/pages/gear.page.dart';
 import 'package:app/pages/places.page.dart';
 import 'package:app/pages/profile.page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -84,10 +85,66 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final smokeSessionBloc = DataProvider.getSmokeSession(context);
     smokeSessionBloc.signalR.conect();
-    return new Scaffold(
-        bottomNavigationBar: myBottomBar(),
-        resizeToAvoidBottomPadding: true,
-        body: _buildBody());
+    return new CupertinoTabScaffold(
+        tabBar: new CupertinoTabBar(
+          backgroundColor: Colors.black,
+          activeColor: Colors.white,
+          items: const <BottomNavigationBarItem>[
+            const BottomNavigationBarItem(
+              icon: const Icon(CupertinoIcons.home),
+              title: const Text('Home'),
+            ),
+            const BottomNavigationBarItem(
+              icon: const Icon(CupertinoIcons.conversation_bubble),
+              title: const Text('Support'),
+            ),
+            const BottomNavigationBarItem(
+                icon: const Icon(
+                  CupertinoIcons.profile_circled,
+                  size: 50.0,
+                ),
+                title: const Text('')),
+            const BottomNavigationBarItem(
+              icon: const Icon(CupertinoIcons.profile_circled),
+              title: const Text('Profile'),
+            ),
+            const BottomNavigationBarItem(
+              icon: const Icon(CupertinoIcons.profile_circled),
+              title: const Text('Profile'),
+            ),
+          ],
+        ),
+        tabBuilder: (BuildContext context, int index) {
+          return new DefaultTextStyle(
+            style: const TextStyle(
+              fontFamily: '.SF UI Text',
+              fontSize: 17.0,
+              color: CupertinoColors.black,
+            ),
+            child: new CupertinoTabView(
+              builder: (BuildContext context) {
+                switch (index) {
+                  case 0:
+                    return new MixologyList();
+                    break;
+                  case 1:
+                    return new PlacePage();
+                    break;
+                  case 2:
+                    return new StartSmokeSessionPage();
+                    break;
+                  case 3:
+                    return new GearPage();
+                    break;
+                  case 4:
+                    return new ProfilePage();
+                    break;
+                  default:
+                }
+              },
+            ),
+          );
+        });
   }
 
   _buildBody() {
