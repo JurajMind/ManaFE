@@ -29,6 +29,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   final Authorize _auth = new Authorize();
   _LoginData data = new _LoginData();
   bool _loading = false;
+  final FocusNode passwordFocusNode = FocusNode();
 
   void submit(BuildContext context) async {
     if (_formKey.currentState.validate()) {
@@ -38,8 +39,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
       print('Email: ${data.email}');
       print('Password: ${data.password}');
       setState(() {
-              this._loading = true;
-            });
+        this._loading = true;
+      });
       if (await _auth.authorize(data.email, data.password)) {
         Navigator.popUntil(context, (_) => !Navigator.canPop(context));
         Navigator.pushReplacement(
@@ -63,12 +64,13 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             backgroundColor: Colors.transparent,
           ),
           new Container(
-            padding: new EdgeInsets.fromLTRB(20.0, 60.0, 20.0, 0.0),
+            padding: new EdgeInsets.fromLTRB(60.0, 60.0, 60.0, 0.0),
             child: new Form(
               key: _formKey,
               child: new Column(
                 children: <Widget>[
                   new TextFormField(
+                      autofocus: true,
                       keyboardType: TextInputType.emailAddress,
                       decoration: new InputDecoration(
                           hintText: 'you@example.com', labelText: 'E-mail'),
@@ -79,11 +81,15 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                           new MaxValidator(63)
                         ]);
                       },
+                      onFieldSubmitted: (String textInput) {
+                        FocusScope.of(context).requestFocus(passwordFocusNode);
+                      },
                       onSaved: (String value) {
                         data.email = value;
                       }),
                   new TextFormField(
                       obscureText: true,
+                      focusNode: passwordFocusNode,
                       decoration:
                           new InputDecoration(labelText: 'Enter your password'),
                       validator: (String value) {
@@ -92,6 +98,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                           new StringValidator(),
                           new MinValidator(8)
                         ]);
+                      },
+                      onFieldSubmitted: (String value){
+                        this.submit(context);
                       },
                       onSaved: (String value) {
                         data.password = value;
@@ -105,15 +114,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                             height: 50.0,
                             width: screenSize.width,
                             child: new Row(
-                        
                               mainAxisAlignment: MainAxisAlignment.center,
-                              
-                              children: <Widget>[
-                                Text('LOGING',
-                                    style: new TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold)),
+                              children: <Widget>[                             
                                 CircularProgressIndicator(),
                               ],
                             ),

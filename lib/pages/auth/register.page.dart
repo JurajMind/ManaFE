@@ -14,10 +14,11 @@ class _RegisterPageState extends State<RegisterPage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Register'),
+        backgroundColor: Colors.transparent,
       ),
       body: new SingleChildScrollView(
         child: new Center(
-          child: new MyHomePage()
+          child: new Placeholder()
         ),
       ),
     );
