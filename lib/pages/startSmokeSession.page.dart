@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel/carousel.dart';
 import 'package:web_socket_channel/io.dart';
 
+import 'package:fluro/fluro.dart';
 
 class StartSmokeSessionPage extends StatefulWidget {
   final double topWidgetHeight = 200.0;
@@ -61,6 +62,9 @@ StartSmokeSessionPageState({this.callback});
   navigateToPlace(Place place){
     var navigation = callback(1);
     navigation.currentState.push(MaterialPageRoute(
+      settings: RouteSettings(
+        
+      ),
       builder: (context) => PlaceDetailPage(place:place)
     ));
   }

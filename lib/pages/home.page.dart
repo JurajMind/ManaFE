@@ -1,3 +1,4 @@
+import 'package:app/app/app.widget.dart';
 import 'package:app/components/icon_button_title.dart';
 import 'package:app/components/my_flutter_app_icons.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
@@ -56,13 +57,12 @@ class _HomePageState extends State<HomePage> {
     FocusScope.of(context).setFirstFocus(tabFocusNodes[_currentIndex]);
   }
 
-   GlobalKey<NavigatorState> _setActiveTab(int index) {
+  GlobalKey<NavigatorState> _setActiveTab(int index) {
     setState(() {
       _currentIndex = index;
-      _focusActiveTab();    
+      _focusActiveTab();
     });
-      return navigatorKeys[index];
-    
+    return navigatorKeys[index];
   }
 
   Widget myBottomBar() => new BottomAppBar(
@@ -112,16 +112,22 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final smokeSessionBloc = DataProvider.getSmokeSession(context);
     smokeSessionBloc.signalR.conect();
-  return WillPopScope(
-       onWillPop: () async =>
-          !await navigatorKeys[_currentIndex].currentState.maybePop(),
-child:  new Scaffold(
-        bottomNavigationBar: myBottomBar(),
-        resizeToAvoidBottomPadding: true,
-        body: _buildBody())
-  );
-
-    
+    return WillPopScope(
+        onWillPop: () async {
+          if (!navigatorKeys[_currentIndex].currentState.canPop()) {
+            if (_currentIndex != 2) {
+              _setActiveTab(2);
+            } else {
+            navigatorKey.currentState.pop();
+            }
+          } else {
+            !await navigatorKeys[_currentIndex].currentState.maybePop();
+          }
+        },
+        child: new Scaffold(
+            bottomNavigationBar: myBottomBar(),
+            resizeToAvoidBottomPadding: true,
+            body: _buildBody()));
   }
 
   _buildBody() {
@@ -130,7 +136,8 @@ child:  new Scaffold(
       children: <Widget>[
         _buildOffstageNavigator(new MixologyList(), 0),
         _buildOffstageNavigator(new PlacePage(), 1),
-        _buildOffstageNavigator(new StartSmokeSessionPage(callback: _setActiveTab), 2),
+        _buildOffstageNavigator(
+            new StartSmokeSessionPage(callback: _setActiveTab), 2),
         _buildOffstageNavigator(new GearPage(), 3),
         _buildOffstageNavigator(new ProfilePage(), 4),
       ],
