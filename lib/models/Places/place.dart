@@ -1,3 +1,5 @@
+import 'package:app/app/app.dart';
+
 class Place {
   Place(
       {this.id,
@@ -14,7 +16,7 @@ class Place {
         id: json['Id'],
         name: json['Name'],
         friendlyUrl: json['FriendlyUrl'],
-        logoPath: json['LogoPath'],
+        logoPath: 'https://${App.baseUri}${json['LogoPath']}',
         address: adress,
         rating: json['Rating']);
   }

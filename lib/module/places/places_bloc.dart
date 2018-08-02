@@ -1,3 +1,4 @@
+import 'package:app/app/app.dart';
 import 'package:app/models/Places/place.dart';
 import 'package:app/services/http.service.dart';
 import 'package:rxdart/rxdart.dart';
@@ -13,7 +14,7 @@ class PlacesBloc {
   factory PlacesBloc() => PlacesBloc._instance;
 
   PlacesBloc._() {
-    ApiClient apiClient = ApiClient();
+    ApiClient apiClient = App.http;
     this.loading.add(true);
     apiClient.getNearbyPlaces().then((places) {
       this.places.add(places);

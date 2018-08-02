@@ -6,8 +6,8 @@ void main() {
   Injector.configure(Flavor.PRO);
 
   new App(
-          environment: 'local',
-          baseUri: 'dev.manapipes.com',
+          environment: 'dev',
+          baseUri: 'devmana.azurewebsites.net',
           clientId: 'test')
       .run(runApp);
 }

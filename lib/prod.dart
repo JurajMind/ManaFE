@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 void main() {
   new App(
     environment: 'production',
-    baseUri: 'https://example.com',
+    baseUri: 'app.manapipes.com',
     clientId: 'test'
   ).run(runApp);
 }

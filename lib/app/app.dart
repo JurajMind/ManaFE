@@ -28,7 +28,7 @@ class App {
     App.clientId = clientId;
     App.baseUri = baseUri;
     // Create app http service.
-    App.http = new ApiClient();
+    App.http = new ApiClient(baseUri);
 
     // Create a router.
     final Router router = new Router();

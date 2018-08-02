@@ -8,14 +8,17 @@ import 'package:app/services/authorization.dart';
 import 'package:flutter/cupertino.dart';
 
 class ApiClient {
+
+
+  
   static final _client = ApiClient._internal();
   final _http = HttpClient();
   final Authorize _authorize = new Authorize();
   ApiClient._internal();
 
-  final String baseUrl = 'devmana.azurewebsites.net';
+  final String baseUrl;  
 
-  factory ApiClient() => _client;
+  ApiClient(url): baseUrl = url;
 
   Future<dynamic> _getJson(Uri uri) async {
     var response =

@@ -56,6 +56,15 @@ class _HomePageState extends State<HomePage> {
     FocusScope.of(context).setFirstFocus(tabFocusNodes[_currentIndex]);
   }
 
+   GlobalKey<NavigatorState> _setActiveTab(int index) {
+    setState(() {
+      _currentIndex = index;
+      _focusActiveTab();    
+    });
+      return navigatorKeys[index];
+    
+  }
+
   Widget myBottomBar() => new BottomAppBar(
         child: Ink(
           height: 50.0,
@@ -69,45 +78,30 @@ class _HomePageState extends State<HomePage> {
                 text: 'Mixology',
                 color: _currentIndex == 0 ? Colors.white : Colors.grey,
                 tooltip: 'ss',
-                onPressed: () => setState(() {
-                      _currentIndex = 0;
-                      _focusActiveTab();
-                    }),
+                onPressed: () => _setActiveTab(0),
               ),
               IconButtonTitle(
                 icon: Icon(Icons.place),
                 text: 'Places',
                 color: _currentIndex == 1 ? Colors.white : Colors.grey,
-                onPressed: () => setState(() {
-                      _currentIndex = 1;
-                      _focusActiveTab();
-                    }),
+                onPressed: () => _setActiveTab(1),
               ),
               IconButton(
                 icon: Icon(Icons.settings_backup_restore),
                 color: _currentIndex == 2 ? Colors.white : Colors.grey,
-                onPressed: () => setState(() {
-                      _currentIndex = 2;
-                      _focusActiveTab();
-                    }),
+                onPressed: () => _setActiveTab(2),
               ),
               IconButtonTitle(
                 icon: Icon(Icons.settings),
                 text: 'Gear',
                 color: _currentIndex == 3 ? Colors.white : Colors.grey,
-                onPressed: () => setState(() {
-                      _currentIndex = 3;
-                      _focusActiveTab();
-                    }),
+                onPressed: () => _setActiveTab(3),
               ),
               IconButtonTitle(
                 icon: Icon(Icons.person),
                 text: 'Profile',
                 color: _currentIndex == 4 ? Colors.white : Colors.grey,
-                onPressed: () => setState(() {
-                      _currentIndex = 4;
-                      _focusActiveTab();
-                    }),
+                onPressed: () => _setActiveTab(4),
               ),
             ],
           ),
@@ -118,10 +112,16 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final smokeSessionBloc = DataProvider.getSmokeSession(context);
     smokeSessionBloc.signalR.conect();
-    return new Scaffold(
+  return WillPopScope(
+       onWillPop: () async =>
+          !await navigatorKeys[_currentIndex].currentState.maybePop(),
+child:  new Scaffold(
         bottomNavigationBar: myBottomBar(),
         resizeToAvoidBottomPadding: true,
-        body: _buildBody());
+        body: _buildBody())
+  );
+
+    
   }
 
   _buildBody() {
@@ -130,7 +130,7 @@ class _HomePageState extends State<HomePage> {
       children: <Widget>[
         _buildOffstageNavigator(new MixologyList(), 0),
         _buildOffstageNavigator(new PlacePage(), 1),
-        _buildOffstageNavigator(new StartSmokeSessionPage(), 2),
+        _buildOffstageNavigator(new StartSmokeSessionPage(callback: _setActiveTab), 2),
         _buildOffstageNavigator(new GearPage(), 3),
         _buildOffstageNavigator(new ProfilePage(), 4),
       ],

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:app/app/app.dart';
 import 'package:app/module/mixology/mixology_page.dart';
 import 'package:app/module/mixology/mixology_slice.dart';
 import 'package:app/module/places/places_bloc.dart';
@@ -14,7 +15,7 @@ class MixologyBloc {
 
   final _indexController = PublishSubject<int>();
 
-  final ApiClient _apiClient = new ApiClient();
+  final ApiClient _apiClient = App.http;
 
   final _mixes = <int, MixologyPage>{};
 

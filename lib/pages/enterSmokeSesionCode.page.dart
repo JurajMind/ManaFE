@@ -1,3 +1,4 @@
+import 'package:app/app/app.dart';
 import 'package:app/helpers.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/services/http.service.dart';
@@ -16,7 +17,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
   String _sessionCode;
   final _formKey = GlobalKey<FormState>();
   final myController = TextEditingController();
-  final ApiClient apiClient = new ApiClient();
+  final ApiClient apiClient = App.http;
   bool validating = false;
   @override
   Widget build(BuildContext context) {

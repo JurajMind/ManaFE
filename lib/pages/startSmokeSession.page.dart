@@ -3,29 +3,40 @@ import 'dart:async';
 import 'package:app/components/Backgrund.dart';
 import 'package:app/components/carousel.dart';
 import 'package:app/helpers.dart';
+import 'package:app/models/Places/place.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
+import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/pages/enterSmokeSesionCode.page.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel/carousel.dart';
 import 'package:web_socket_channel/io.dart';
 
+
 class StartSmokeSessionPage extends StatefulWidget {
   final double topWidgetHeight = 200.0;
 
-  var channel;
+  StartSmokeSessionPage({this.callback});
 
+  final GlobalKey<NavigatorState> Function(int) callback;
+
+  var channel;  
   main() async {}
 
   @override
   StartSmokeSessionPageState createState() {
     main();
-    return new StartSmokeSessionPageState();
+    return new StartSmokeSessionPageState(callback: callback);
   }
 }
 
 class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
+
+StartSmokeSessionPageState({this.callback});
+
+  final GlobalKey<NavigatorState> Function(int) callback;
+
   Future _openAddEntryDialog(
       BuildContext context, SmokeSessionBloc smokeSessionBloc) async {
     final sessionCode =
@@ -47,6 +58,13 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
     ));
   }
 
+  navigateToPlace(Place place){
+    var navigation = callback(1);
+    navigation.currentState.push(MaterialPageRoute(
+      builder: (context) => PlaceDetailPage(place:place)
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     final smokeSessionBloc = DataProvider.getSmokeSession(context);
@@ -59,8 +77,8 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
                 radius: getCircleRadius(context),
                 backgroundColor: Colors.green,
                 child: GestureDetector(
-                    onTap: () {
-                      _openAddEntryDialog(context, smokeSessionBloc);
+                    onTap: () {                  
+                       _openAddEntryDialog(context, smokeSessionBloc);
                     },
                     child: new Container(
                       child: new Row(
@@ -106,7 +124,7 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
                   SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height / 2 - 60,
-                      child: Carroussel()),
+                      child: Carroussel(navigateToDetail: navigateToPlace)),
                 ],
               ))
         ],
