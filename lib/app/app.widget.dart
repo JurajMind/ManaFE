@@ -28,6 +28,7 @@ class AppWidget extends StatefulWidget {
 class _AppWidgetState extends State<AppWidget> {
   Key key = new UniqueKey();
   bool _isAuthorized = false;
+  bool splash = true;
   final mixology = MixologyBloc();
   final smokeSession = SmokeSessionBloc();
   final place = PlacesBloc();
@@ -35,9 +36,9 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   void initState() {
     super.initState();
-
     isUserAuthorized().then((authorized) => setState(() {
           _isAuthorized = authorized;
+          splash = false;
         }));
   }
 
@@ -57,10 +58,18 @@ class _AppWidgetState extends State<AppWidget> {
           navigatorKey: navigatorKey,
           showPerformanceOverlay: false,
           title: 'Manapipes',
-          home: _isAuthorized ? new HomePage() : new StartPage(),
+          home: getMainPage(),
           onGenerateRoute: App.router.generator,
           theme: buildDarkTheme(),
         ));
+  }
+
+  Widget getMainPage() {
+    if (splash) return new SplashScreen();
+
+    if (_isAuthorized) return new HomePage();
+
+    return new StartPage();
   }
 
   Future<bool> isUserAuthorized() async {
@@ -70,5 +79,12 @@ class _AppWidgetState extends State<AppWidget> {
     if (token != null) return true;
 
     return false;
+  }
+}
+
+class SplashScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Placeholder();
   }
 }

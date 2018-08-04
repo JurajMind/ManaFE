@@ -12,16 +12,27 @@ class StartPage extends StatefulWidget {
 
 class StartPageState extends State<StartPage> with TickerProviderStateMixin {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
 
     return SafeArea(
       child: new Scaffold(
           body: AnimatedBackground(
-            vsync: this,
-             behaviour: RandomParticleBehaviour(options: ParticleOptions(baseColor: Colors.blue)),
-                      child: new Center(
-        child: new Column(
+        vsync: this,
+        behaviour: RandomParticleBehaviour(
+            options: ParticleOptions(baseColor: Colors.blue)),
+        child: new Center(
+          child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Container(
@@ -74,9 +85,9 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                     ],
                   ))
             ],
+          ),
         ),
-      ),
-          )),
+      )),
     );
   }
 }

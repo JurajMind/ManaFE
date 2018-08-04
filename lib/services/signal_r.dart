@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:app/app/app.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:http/http.dart' as http;
@@ -8,8 +9,8 @@ import 'dart:async';
 import 'package:web_socket_channel/io.dart';
 
 class SignalR {
-  static const String host = "devmana.azurewebsites.net";
-  static const String url = 'https://$host/signalr';
+  static String host = App.baseUri;
+  static String url = 'https://$host/signalr';
   final conectionData = Uri.encodeComponent('[{"name":"smokesessionhub"}]');
   NegotiateResponse connectionInfo;
 
@@ -77,8 +78,6 @@ class SignalR {
   }
 
   void ProceedCall(ClientCall serverCall) {
-    if(serverCall.Data != null)
-    clientCalls.add(serverCall);
+    if (serverCall.Data != null) clientCalls.add(serverCall);
   }
 }
-

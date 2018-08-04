@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:app/app/app.dart';
 import 'package:app/app/app.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -8,7 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 
 class Authorize {
-  static const String url = 'https://devmana.azurewebsites.net/token';
+  String url = 'https://${App.baseUri}/token';
   final _storage = new FlutterSecureStorage();
   String _token;
 
@@ -35,18 +36,16 @@ class Authorize {
   }
 
   Future<String> getToken() async {
-    if(_token == null)
-    {
+    if (_token == null) {
       _token = await _storage.read(key: 'accessToken');
     }
     return _token;
   }
 
-Future signOut() async{
-  await _storage.delete(key:'accessToken');
-   navigatorKey.currentState.pushReplacementNamed('auth/login');
-}
-
+  Future signOut() async {
+    await _storage.delete(key: 'accessToken');
+    navigatorKey.currentState.pushReplacementNamed('auth/login');
+  }
 
   Future<bool> refreshToken() async {
     var refreshToken = await _storage.read(key: 'refreshToken');

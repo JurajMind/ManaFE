@@ -1,11 +1,13 @@
 import 'package:app/models/PipeAccesory/pipe_accesory.dart';
 import 'package:app/models/PipeAccesory/tobacco.dart';
+import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 
 class SmokeSessionMetaData {
   SmokeSessionMetaData(
       {this.id,
       this.tobaccoId,
       this.tobacco,
+      this.mix,
       this.tobaccoWeight,
       this.anonymPeopleCount,
       bowlId,
@@ -18,24 +20,33 @@ class SmokeSessionMetaData {
       this.coalsCount});
 
   factory SmokeSessionMetaData.fromJson(Map<String, dynamic> json) {
-    Tobacco tobacco = Tobacco.fromJson(json['TobaccoSimpleSimpleDto']);
-    PipeAccesory bowl = PipeAccesory.fromJson(json['bowl']);
-    PipeAccesory pipe = PipeAccesory.fromJson(json['pipe']);
+    Tobacco tobacco =
+        Tobacco.fromJson(json['TobaccoSimple'] as Map<String, dynamic>);
+    PipeAccesory bowl =
+        PipeAccesory.fromJson(json['Bowl'] as Map<String, dynamic>);
+    PipeAccesory pipe =
+        PipeAccesory.fromJson(json['Pipe'] as Map<String, dynamic>);
+
+    TobaccoMix mix;
+    if (json['TobaccoMix'] != null) {
+      mix = TobaccoMix.fromJson(json['TobaccoMix'] as Map<String, dynamic>);
+    }
 
     return SmokeSessionMetaData(
-        id: json['id'],
-        tobaccoId: json['tobaccoId'],
+        id: json['Id'],
+        tobaccoId: json['TobaccoId'],
         tobacco: tobacco,
-        tobaccoWeight: json['tobaccoWeight'],
-        anonymPeopleCount: json['anonymPeopleCount'],
-        bowlId: json['bowlId'],
+        mix: mix,
+        tobaccoWeight: json['TobaccoWeight'],
+        anonymPeopleCount: json['AnonymPeopleCount'],
+        bowlId: json['BowlId'],
         bowl: bowl,
         pipe: pipe,
-        pipeId: json['pipeId'],
-        packType: PackType.values[json['packType']],
-        heatKeeper: HeatKeeper.values[json['packType']],
-        coalType: CoalType.values[json['packType']],
-        coalsCount: json['coalsCount']);
+        pipeId: json['PipeId'],
+        packType: PackType.values[json['PackType']],
+        heatKeeper: HeatKeeper.values[json['PackType']],
+        coalType: CoalType.values[json['PackType']],
+        coalsCount: json['CoalsCount']);
   }
 
   int id;
@@ -43,6 +54,8 @@ class SmokeSessionMetaData {
   int tobaccoId;
 
   Tobacco tobacco;
+
+  TobaccoMix mix;
 
   double tobaccoWeight;
 

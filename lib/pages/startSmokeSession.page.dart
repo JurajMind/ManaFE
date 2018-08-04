@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:app/components/Backgrund.dart';
 import 'package:app/components/carousel.dart';
 import 'package:app/helpers.dart';
 import 'package:app/models/Places/place.dart';
@@ -10,10 +9,6 @@ import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/pages/enterSmokeSesionCode.page.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel/carousel.dart';
-import 'package:web_socket_channel/io.dart';
-
-import 'package:fluro/fluro.dart';
 
 class StartSmokeSessionPage extends StatefulWidget {
   final double topWidgetHeight = 200.0;
@@ -22,7 +17,7 @@ class StartSmokeSessionPage extends StatefulWidget {
 
   final GlobalKey<NavigatorState> Function(int) callback;
 
-  var channel;  
+  var channel;
   main() async {}
 
   @override
@@ -33,8 +28,7 @@ class StartSmokeSessionPage extends StatefulWidget {
 }
 
 class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
-
-StartSmokeSessionPageState({this.callback});
+  StartSmokeSessionPageState({this.callback});
 
   final GlobalKey<NavigatorState> Function(int) callback;
 
@@ -59,14 +53,11 @@ StartSmokeSessionPageState({this.callback});
     ));
   }
 
-  navigateToPlace(Place place){
+  navigateToPlace(Place place) {
     var navigation = callback(1);
     navigation.currentState.push(MaterialPageRoute(
-      settings: RouteSettings(
-        
-      ),
-      builder: (context) => PlaceDetailPage(place:place)
-    ));
+        settings: RouteSettings(),
+        builder: (context) => PlaceDetailPage(place: place)));
   }
 
   @override
@@ -81,8 +72,8 @@ StartSmokeSessionPageState({this.callback});
                 radius: getCircleRadius(context),
                 backgroundColor: Colors.green,
                 child: GestureDetector(
-                    onTap: () {                  
-                       _openAddEntryDialog(context, smokeSessionBloc);
+                    onTap: () {
+                      _openAddEntryDialog(context, smokeSessionBloc);
                     },
                     child: new Container(
                       child: new Row(

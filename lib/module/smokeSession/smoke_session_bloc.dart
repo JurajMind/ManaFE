@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:app/app/app.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
+import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:intl/intl.dart';
@@ -25,13 +27,22 @@ class SmokeSessionBloc {
   BehaviorSubject<SmokeStatisticDataModel> smokeStatistic =
       new BehaviorSubject<SmokeStatisticDataModel>();
 
-  void joinSession(String sessionCode) {
+  BehaviorSubject<SmokeSessionMetaData> smokeSessionMetaData =
+      new BehaviorSubject<SmokeSessionMetaData>(
+          seedValue: new SmokeSessionMetaData());
+
+  Future joinSession(String sessionCode) async {
     if (sessionCode == null) {
       sessionCode = this.SessionId;
     }
     List<String> params = new List<String>();
     params.add(sessionCode);
     this.signalR.callServerFunction(name: 'JoinSession', params: params);
+
+    var sessionData = await App.http.getInitData(sessionCode);
+
+    smokeStatistic.add(sessionData.smokeSessionData);
+    smokeSessionMetaData.add(sessionData.metaData);
   }
 
   SmokeSessionBloc._() {
@@ -77,7 +88,7 @@ class SmokeSessionBloc {
   }
 
   void handleUpdateStats(ClientMethod f) {
-    var data = new SmokeStatisticDataModel(f.Data);
+    var data = new SmokeStatisticDataModel.fromSignal(f.Data);
     smokeStatistic.add(data);
   }
 }
@@ -109,7 +120,9 @@ class SmokeStatisticDataModel extends SignalData {
   Duration duration;
   Duration longestPuf;
 
-  SmokeStatisticDataModel(List data) : super(data) {
+  SmokeStatisticDataModel() : super(null);
+
+  SmokeStatisticDataModel.fromSignal(List data) : super(data) {
     if (data[0].length < 1) {
       return;
     }
@@ -125,18 +138,20 @@ class SmokeStatisticDataModel extends SignalData {
 
     duration = stringToDuration(map['duration']);
 
-    longestPuf = new Duration(microseconds:  map['longestPufMilis'].round());
+    longestPuf = new Duration(microseconds: map['longestPufMilis'].round());
   }
+
+  SmokeStatisticDataModel.fromJson(Map<String, dynamic> json) : super(null) {}
 }
 
 Duration stringToDuration(String sDuration) {
   var chunks = sDuration.split(':');
-  var parts = chunks.map((f){
-    if(f.startsWith('0')){
+  var parts = chunks.map((f) {
+    if (f.startsWith('0')) {
       return int.parse(f[1]);
     }
-     return int.parse(f);
-    }).toList();
+    return int.parse(f);
+  }).toList();
   return new Duration(hours: parts[0], minutes: parts[1], seconds: parts[2]);
 }
 

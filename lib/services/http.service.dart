@@ -4,23 +4,22 @@ import 'dart:io';
 
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 import 'package:app/models/Places/place.dart';
+import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/services/authorization.dart';
 import 'package:flutter/cupertino.dart';
 
 class ApiClient {
-
-
-  
   static final _client = ApiClient._internal();
   final _http = HttpClient();
   final Authorize _authorize = new Authorize();
   ApiClient._internal();
 
-  final String baseUrl;  
+  final String baseUrl;
 
-  ApiClient(url): baseUrl = url;
+  ApiClient(url) : baseUrl = url;
 
   Future<dynamic> _getJson(Uri uri) async {
+    print(uri.toString());
     var response =
         (await _http.getUrl(uri).then((HttpClientRequest request) async {
       var token = await _authorize.getToken();
@@ -32,6 +31,10 @@ class ApiClient {
       if (await _authorize.refreshToken()) {
         return _getJson(uri);
       }
+    }
+
+    if (response.statusCode != 200) {
+      print(response);
     }
 
     var transformedResponse = await response.transform(utf8.decoder).join();
@@ -58,6 +61,13 @@ class ApiClient {
         Uri.https(baseUrl, 'api/SmokeSession/Validate', {"id": sessionId});
 
     return _getJson(url).then((json) => SessionIdValidation.fromJson(json));
+  }
+
+  Future<SmokeSession> getInitData(String sessionId) {
+    var url =
+        Uri.https(baseUrl, 'api/SmokeSession/InitData', {"id": sessionId});
+    return _getJson(url).then((json) =>
+        SmokeSession.fromJson(json['SmokeSession'] as Map<String, dynamic>));
   }
 
   Future<List<Place>> getNearbyPlaces() {
