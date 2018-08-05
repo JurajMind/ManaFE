@@ -1,4 +1,6 @@
+import 'package:app/components/Mixology/mixology_expanded.dart';
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
+import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/mixology/mixology_slice.dart';
 import 'package:flutter/material.dart';
@@ -68,46 +70,18 @@ class MixologyList extends StatelessWidget {
     mix = data.elementAt(index);
 
     if (mix == null) {
-      return Center(child: CircularProgressIndicator());
+      return Center(child: Container());
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: new Column(
-        children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              mix.name != null
-                  ? Text(mix.name)
-                  : Text(
-                      'No name',
-                      style: new TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0),
-                    ),
-            ],
-          ),
-          Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25.0),
-            ),
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                  mainAxisAlignment: mix.tobaccos.length > 3
-                      ? MainAxisAlignment.end
-                      : MainAxisAlignment.spaceEvenly,
-                  children: _createTobaccoRow(mix)),
-            ),
-            elevation: 8.0,
-            margin: EdgeInsets.zero,
-          )
-        ],
-      ),
+    return MixCardExpanded(tobaccoMix: mix);
+  }
+
+  SingleChildScrollView _longMix(TobaccoMix mix) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: _createTobaccoRow(mix)),
     );
   }
 }

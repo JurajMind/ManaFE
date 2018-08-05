@@ -1,4 +1,5 @@
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
+import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/pipe_accesory_widget.dart';

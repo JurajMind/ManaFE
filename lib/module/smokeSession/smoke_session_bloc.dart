@@ -27,6 +27,9 @@ class SmokeSessionBloc {
   BehaviorSubject<SmokeStatisticDataModel> smokeStatistic =
       new BehaviorSubject<SmokeStatisticDataModel>();
 
+  BehaviorSubject<List<String>> recentSessions =
+      new BehaviorSubject<List<String>>();
+
   BehaviorSubject<SmokeSessionMetaData> smokeSessionMetaData =
       new BehaviorSubject<SmokeSessionMetaData>(
           seedValue: new SmokeSessionMetaData());
@@ -38,7 +41,9 @@ class SmokeSessionBloc {
     List<String> params = new List<String>();
     params.add(sessionCode);
     this.signalR.callServerFunction(name: 'JoinSession', params: params);
-
+    var list = new List<String>.from(recentSessions.value);
+    list.add(sessionCode);
+    recentSessions.add(list);
     var sessionData = await App.http.getInitData(sessionCode);
 
     smokeStatistic.add(sessionData.smokeSessionData);

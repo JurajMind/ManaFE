@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app/app/app.dart';
+import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';

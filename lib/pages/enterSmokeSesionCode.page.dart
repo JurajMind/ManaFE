@@ -1,5 +1,7 @@
 import 'package:app/app/app.dart';
 import 'package:app/helpers.dart';
+import 'package:app/module/data_provider.dart';
+import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/services/http.service.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,8 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
   bool validating = false;
   @override
   Widget build(BuildContext context) {
+    final smokeSessionBloc = DataProvider.getSmokeSession(context);
+
     return new Container(
         child: Stack(
       children: <Widget>[
@@ -107,12 +111,33 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
           left: (MediaQuery.of(context).size.width / 2) -
               getCircleRadius(context),
           top: topWidgetHeight - getCircleRadius(context),
-        )
+        ),
+        Positioned(
+            bottom: 20.0,
+            width: MediaQuery.of(context).size.width,
+            height: 100.0,
+            child: buildRecentSessions(smokeSessionBloc))
       ],
     ));
   }
 
   void _submit() {
     print(this._sessionCode);
+  }
+
+  StreamBuilder<List<String>> buildRecentSessions(SmokeSessionBloc bloc) {
+    return StreamBuilder<List<String>>(
+        initialData: new List<String>(),
+        stream: bloc.recentSessions.stream,
+        builder: (context, snapshot) => ListView.builder(
+              itemCount: snapshot.data.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) =>
+                  sessionCode(snapshot.data[index]),
+            ));
+  }
+
+  Widget sessionCode(String sessionCode) {
+    return Padding(padding: EdgeInsets.all(8.0), child: Text('d'));
   }
 }

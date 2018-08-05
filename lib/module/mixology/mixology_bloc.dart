@@ -23,7 +23,11 @@ class MixologyBloc {
 
   final _sliceSubject = BehaviorSubject<MixologySlice>();
 
+  final _loadingSubject = BehaviorSubject<bool>();
+
   int maxInt = 0x7fffffff;
+
+  bool haveNext = true;
 
   MixologyBloc() {
     _indexController.stream
@@ -38,9 +42,15 @@ class MixologyBloc {
 
   Stream<MixologySlice> get slice => _sliceSubject.stream;
 
+  Stream<bool> get loading => _loadingSubject.stream;
+
   int _getPageStartFromIndex(int index) => (index ~/ _mixPerPage) * _mixPerPage;
 
   void _handleIndexes(List<int> indexes) {
+    if (!haveNext) {
+      return;
+    }
+
     final int minIndex = indexes.fold(maxInt, min);
     final int maxIndex = indexes.fold(-1, max);
 
@@ -52,23 +62,17 @@ class MixologyBloc {
       if (_mixesBeinggRequested.contains(i)) continue;
 
       _mixesBeinggRequested.add(i);
-      _requestMix(i).then((page) => _handleNewMixes(page, i, page.count != 0));
+      _requestMix(i).then((page) {
+        return _handleNewMixes(page, i, page.count == _mixPerPage);
+      });
     }
-
-    // Remove pages too far from current scroll position.
-    _mixes.removeWhere((pageIndex, _) =>
-        pageIndex < minPageIndex - _mixPerPage ||
-        pageIndex > maxPageIndex + _mixPerPage);
   }
 
   void _handleNewMixes(MixologyPage page, int index, bool haveNext) {
     _mixes[index] = page;
     _mixesBeinggRequested.remove(index);
+    this.haveNext = haveNext;
     _sendNewSlice(haveNext);
-
-    if (!haveNext) {
-      _mixes.removeWhere((pageIndex, _) => pageIndex > _mixes.length - 20);
-    }
   }
 
   Future<MixologyPage> _requestMix(int index) async {
@@ -106,37 +110,4 @@ class MixologyProvider extends InheritedWidget {
       (context.inheritFromWidgetOfExactType(MixologyProvider)
               as MixologyProvider)
           .mixologyBloc;
-}
-
-class DataProvider extends InheritedWidget {
-  final MixologyBloc mixologyBloc;
-  final SmokeSessionBloc smokeSessionBloc;
-  final PlacesBloc placeBloc;
-
-  DataProvider({
-    Key key,
-    @required MixologyBloc mixology,
-    @required SmokeSessionBloc smokeSession,
-    @required PlacesBloc place,
-    Widget child,
-  })  : assert(mixology != null),
-        mixologyBloc = mixology,
-        smokeSessionBloc = smokeSession,
-        placeBloc = place,
-        super(key: key, child: child);
-
-  @override
-  bool updateShouldNotify(InheritedWidget oldWidget) => true;
-
-  static MixologyBloc getMixology(BuildContext context) =>
-      (context.inheritFromWidgetOfExactType(DataProvider) as DataProvider)
-          .mixologyBloc;
-
-  static SmokeSessionBloc getSmokeSession(BuildContext context) =>
-      (context.inheritFromWidgetOfExactType(DataProvider) as DataProvider)
-          .smokeSessionBloc;
-
-  static PlacesBloc getPlaces(BuildContext context) =>
-      (context.inheritFromWidgetOfExactType(DataProvider) as DataProvider)
-          .placeBloc;
 }

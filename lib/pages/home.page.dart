@@ -1,6 +1,7 @@
 import 'package:app/app/app.widget.dart';
 import 'package:app/components/icon_button_title.dart';
 import 'package:app/components/my_flutter_app_icons.dart';
+import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/mixology/mixology_list.dart';
 import 'package:app/pages/gear.page.dart';
@@ -118,7 +119,7 @@ class _HomePageState extends State<HomePage> {
             if (_currentIndex != 2) {
               _setActiveTab(2);
             } else {
-            navigatorKey.currentState.pop();
+              navigatorKey.currentState.pop();
             }
           } else {
             !await navigatorKeys[_currentIndex].currentState.maybePop();
