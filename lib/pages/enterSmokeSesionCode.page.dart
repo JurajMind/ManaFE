@@ -84,8 +84,13 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                         validating = false;
                                       });
                                       if (result.id != null) {
-                                        Navigator.pop(
-                                            context, myController.text);
+                                        Navigator
+                                            .of(context)
+                                            .pushReplacement(new MaterialPageRoute(
+                                          builder: (BuildContext context) {
+                                            return new SmokeSessionPage(sessionId: myController.text);
+                                          },
+                                        ));
                                       } else {
                                         Scaffold
                                             .of(context)

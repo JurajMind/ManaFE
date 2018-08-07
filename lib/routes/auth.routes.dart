@@ -16,7 +16,7 @@ class AuthRoutes {
       return new RegisterPage();
     }));
 
-    router.define('auth/start', handler: new Handler(
+    router.define('auth/home', handler: new Handler(
         handlerFunc: (BuildContext context, Map<String, dynamic> params) {
       return new StartPage();
     }));

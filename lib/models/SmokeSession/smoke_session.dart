@@ -1,5 +1,5 @@
+import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
-import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 
 class SmokeSession {
   final String sessionId;

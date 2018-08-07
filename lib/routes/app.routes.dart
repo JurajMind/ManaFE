@@ -1,3 +1,4 @@
+import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/pages/about.page.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:fluro/fluro.dart';
@@ -12,5 +13,10 @@ class AppRoutes {
     router.define('about', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
       return new AboutPage();
     }));
+
+    router.define('smokeSession', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+      return new SmokeSessionPage();
+    }));
+    
   }
 }

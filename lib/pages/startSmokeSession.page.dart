@@ -11,6 +11,23 @@ import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/pages/enterSmokeSesionCode.page.dart';
 import 'package:flutter/material.dart';
 
+class MyCustomRoute<T> extends MaterialPageRoute<T> {
+  MyCustomRoute({ WidgetBuilder builder, RouteSettings settings , bool fullscreenDialog })
+      : super(builder: builder, settings: settings,fullscreenDialog:fullscreenDialog);
+
+  @override
+  Widget buildTransitions(BuildContext context,
+      Animation<double> animation,
+      Animation<double> secondaryAnimation,
+      Widget child) {
+    if (settings.isInitialRoute)
+      return child;
+    // Fades between routes. (If you don't want any animation, 
+    // just return child.)
+    return new FadeTransition(opacity: animation, child: child);
+  }
+}
+
 class StartSmokeSessionPage extends StatefulWidget {
   final double topWidgetHeight = 200.0;
 
@@ -36,7 +53,7 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
   Future _openAddEntryDialog(
       BuildContext context, SmokeSessionBloc smokeSessionBloc) async {
     final sessionCode =
-        await Navigator.of(context).push(new MaterialPageRoute<String>(
+        await Navigator.of(context).push(new MyCustomRoute<String>(
             builder: (BuildContext context) {
               return new EnterSmokeSessionCode();
             },

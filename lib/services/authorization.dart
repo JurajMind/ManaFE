@@ -44,14 +44,16 @@ class Authorize {
 
   Future signOut() async {
     await _storage.delete(key: 'accessToken');
-    navigatorKey.currentState.pushReplacementNamed('auth/login');
+    await _storage.delete(key: 'refreshToken');
+    navigatorKey.currentState.pushReplacementNamed('auth/home');
+    _token = null;
   }
 
   Future<bool> refreshToken() async {
     var refreshToken = await _storage.read(key: 'refreshToken');
     await _storage.delete(key: 'accessToken');
     await _storage.delete(key: 'refreshToken');
-
+    _token = null;
     final response = await http.post(
       url,
       body: {

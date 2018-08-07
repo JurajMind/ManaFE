@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'package:app/app/app.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
+import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
+
 
 class SmokeSessionBloc {
   Sink get test => _indexController.sink;
   final _indexController = PublishSubject();
-  String SessionId;
+  String activeSessionId;
 
   final SignalR signalR = new SignalR();
 
@@ -28,7 +28,7 @@ class SmokeSessionBloc {
       new BehaviorSubject<SmokeStatisticDataModel>();
 
   BehaviorSubject<List<String>> recentSessions =
-      new BehaviorSubject<List<String>>();
+      new BehaviorSubject<List<String>>(seedValue: new List<String>());
 
   BehaviorSubject<SmokeSessionMetaData> smokeSessionMetaData =
       new BehaviorSubject<SmokeSessionMetaData>(
@@ -36,14 +36,22 @@ class SmokeSessionBloc {
 
   Future joinSession(String sessionCode) async {
     if (sessionCode == null) {
-      sessionCode = this.SessionId;
+      sessionCode = this.activeSessionId;
     }
+
+  if(this.activeSessionId == sessionCode){
+    return;
+  }else{
+    this.activeSessionId = sessionCode;
+
+  }
+
     List<String> params = new List<String>();
     params.add(sessionCode);
     this.signalR.callServerFunction(name: 'JoinSession', params: params);
     var list = new List<String>.from(recentSessions.value);
     list.add(sessionCode);
-    recentSessions.add(list);
+    //recentSessions.add(list);
     var sessionData = await App.http.getInitData(sessionCode);
 
     smokeStatistic.add(sessionData.smokeSessionData);
@@ -116,38 +124,6 @@ class PuffChangeDataModel extends SignalData {
   }
 }
 
-class SmokeStatisticDataModel extends SignalData {
-  int pufCount;
-  double lastPuf;
-  DateTime lastPufTime;
-  Duration smokeDuration;
-  DateTime start;
-  Duration duration;
-  Duration longestPuf;
-
-  SmokeStatisticDataModel() : super(null);
-
-  SmokeStatisticDataModel.fromSignal(List data) : super(data) {
-    if (data[0].length < 1) {
-      return;
-    }
-    var map = data[0] as Map;
-
-    pufCount = map['pufCount'];
-    final DateFormat df = new DateFormat('dd-MM-yyyy HH:mm:ss');
-    lastPuf = double.parse(map['lastPuf']);
-    lastPufTime = df.parse(map['lastPufTime']);
-    smokeDuration = stringToDuration(map['smokeDuration']);
-
-    start = df.parse(map['start']);
-
-    duration = stringToDuration(map['duration']);
-
-    longestPuf = new Duration(microseconds: map['longestPufMilis'].round());
-  }
-
-  SmokeStatisticDataModel.fromJson(Map<String, dynamic> json) : super(null) {}
-}
 
 Duration stringToDuration(String sDuration) {
   var chunks = sDuration.split(':');

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 class PipeAccesoryWidget extends StatelessWidget {
   final PipeAccesory accesory;
-
-  const PipeAccesoryWidget({Key key, this.accesory}) : super(key: key);
+  final String type;
+  const PipeAccesoryWidget({Key key, this.accesory,this.type}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +15,13 @@ class PipeAccesoryWidget extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Text(
-              accesory.type,
+              this.type,
               style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
             ),
             flex: 1,
           ),
           Expanded(
-            child: Text("${accesory.brand} ${accesory.name}"),
+            child: this.accesory != null ? Text("${accesory.brand} ${accesory.name}") : Text('No data'),
             flex: 2,
           ),
           IconButton(

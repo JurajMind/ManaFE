@@ -91,6 +91,14 @@ class TobaccoWidget extends StatelessWidget {
   }
 
   Widget tobacoBody(Tobacco tobacco) {
-    return new Placeholder();
+    if(tobacco== null){
+      return new Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Text('No tobacco'),
+      );      
+    } else {
+      return new Placeholder();
+    }
+    
   }
 }
