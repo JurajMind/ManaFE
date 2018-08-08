@@ -1,12 +1,12 @@
-import 'dart:async';
-
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/pipe_accesory_widget.dart';
+import 'package:app/pages/SmokeSession/puff_timer.dart';
 import 'package:app/pages/SmokeSession/tobacco_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 
 class SmokeSessionPage extends StatefulWidget {
   final String sessionId;
@@ -20,9 +20,9 @@ class SmokeSessionPage extends StatefulWidget {
 
 class StopWatches {
   StopWatches(this.pufStopwatch, this.sessionStopwatch);
-  
-    final Stopwatch pufStopwatch;
-    final Stopwatch sessionStopwatch;
+
+  final Stopwatch pufStopwatch;
+  final Stopwatch sessionStopwatch;
 }
 
 class _SmokeSessionPage extends State<SmokeSessionPage> {
@@ -30,10 +30,13 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
   StopWatches stopWatches;
   Dependencies dependencies;
   int action = 0;
+  ScrollController scrollController;
+
   @override
   void initState() {
-    stopWatches = new StopWatches(new Stopwatch(),new Stopwatch());
+    stopWatches = new StopWatches(new Stopwatch(), new Stopwatch());
     dependencies = new Dependencies(stopwatch: stopWatches.pufStopwatch);
+    scrollController = new ScrollController(initialScrollOffset: 200.0);
     super.initState();
   }
 
@@ -41,18 +44,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
   void didChangeDependencies() {
     smokeSessionBloc = DataProvider.getSmokeSession(context);
     smokeSessionBloc.joinSession(widget.sessionId);
-
-    smokeSessionBloc.smokeState.stream.listen( (data){
-      setState(() {
-              action = data;
-            });
-      if(data == 0){
-        this.stopWatches.pufStopwatch.reset();
-      }
-      else{
-        this.stopWatches.pufStopwatch.start();
-      }
-    });
+    dependencies.smokeSessionBloc = smokeSessionBloc;
     super.didChangeDependencies();
   }
 
@@ -103,16 +95,20 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                new HeaderItem(
+                  new HeaderItem(
                     label: 'Puff count',
                     data: asyncSnapshot.data.pufCount.toString(),
                   ),
                   Column(
                     children: <Widget>[
-                      Text('Last puff( sec )', style: TextStyle(color: Colors.grey)),
-                      action != 0 ? new PuffTimeText(dependencies: dependencies,completeTime: asyncSnapshot.data.lastPufTime.toString()): Text(asyncSnapshot.data.lastPuf.toString().padRight(3,'0'),style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),),
+                      Text('Last puff( sec )',
+                          style: TextStyle(color: Colors.grey)),
+                      new PuffTimeText(
+                          dependencies: dependencies,
+                          completeTime: asyncSnapshot.data.toString()),
+                      Text(asyncSnapshot.data.longestPuf.toString())
                     ],
-                  ),                  
+                  ),
                   new HeaderItem(
                     label: 'Duration',
                     data: durationString,
@@ -129,23 +125,71 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
             backgroundColor: Colors.transparent,
             actions: <Widget>[Icon(Icons.arrow_drop_down_circle)],
           ),
-          new Expanded(            
-            child: new Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[builder, statisticBuilder, metadataBuilder, 
-              RaisedButton(child: Text('Start'), onPressed: () {this.stopWatches.pufStopwatch.start(); setState(() {
-                              action = 1;
-                            });}),
-              RaisedButton(child: Text('Stop'), onPressed: () {this.stopWatches.pufStopwatch.start();this.stopWatches.pufStopwatch.reset(); setState(() {
-                              action = 0;
-                            });}),
-              
-              ],
-              
+          new Expanded(
+            child: SingleChildScrollView(
+              controller: scrollController,
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new SmokeColorWheel(),
+                  builder,
+                  statisticBuilder,
+                  metadataBuilder,
+                  Container(
+                    height: 200.0,
+                  ),
+                ],
+              ),
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class SmokeColorWheel extends StatefulWidget {
+  const SmokeColorWheel({
+    Key key,
+  }) : super(key: key);
+  
+
+  @override
+  SmokeColorWheelState createState() {
+    return new SmokeColorWheelState();
+  }
+}
+
+class SmokeColorWheelState extends State<SmokeColorWheel> {
+
+  List<Color> rainbow; 
+  @override
+  void initState() {
+  rainbow = new List<Color>.generate(255, (int index) => HSVColor.fromAHSV(index + .0, 0.0, index + .0, index + .0).toColor()); // [0, 1, 4]
+  super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 30.0),
+      child: new Container(
+        height: width - 40,
+        width: width - 40,
+        decoration: new BoxDecoration(
+            gradient: new LinearGradient(
+              begin: Alignment.center,
+              end: new Alignment(
+                  0.8, 0.6), // 10% of the width, so there are ten blinds.
+              colors: rainbow, // whitish to gray
+              tileMode:
+                  TileMode.repeated, // repeats the gradient over the canvas
+            ),
+            borderRadius: new BorderRadius.all(Radius.circular(width / 2)),
+            border: new Border.all(
+                color: const Color.fromRGBO(221, 221, 221, 1.0), width: 2.5)),
       ),
     );
   }
@@ -178,167 +222,5 @@ class HeaderItem extends StatelessWidget {
 
   TextStyle _labelStyle() {
     return new TextStyle(color: Colors.grey);
-  }
-}
-
-class PuffTimeText extends StatefulWidget {
-  PuffTimeText({this.dependencies,this.completeTime});
-  final Dependencies dependencies;
-  final String completeTime;
-  @override
-  State<StatefulWidget> createState() {
-    return new PuffTimeState();
-  }
-}
-
-class PuffTimeState extends State<PuffTimeText> {  
-  Timer timer;
-  int milliseconds;
-
-  void initState() {
-    timer = new Timer.periodic(
-        new Duration(milliseconds: widget.dependencies.timerMillisecondsRefreshRate),
-        callback);
-    super.initState();
-  }
-
-  void callback(Timer timer) {
-    if (milliseconds != widget.dependencies.stopwatch.elapsedMilliseconds) {
-      milliseconds = widget.dependencies.stopwatch.elapsedMilliseconds;
-      final int hundreds = (milliseconds / 10).truncate();
-      final int seconds = (hundreds / 100).truncate();
-      final int minutes = (seconds / 60).truncate();
-      final ElapsedTime elapsedTime = new ElapsedTime(
-        hundreds: hundreds,
-        seconds: seconds,
-        minutes: minutes,
-      );
-      for (final listener in widget.dependencies.timerListeners) {
-        listener(elapsedTime);
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    timer = null;
-    super.dispose();
-  }
-
-  @override
-  @override
-  Widget build(BuildContext context) {
-    return new  Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-          new RepaintBoundary(
-            child: new SizedBox(
-              height: 30.0,
-              child: new MinutesAndSeconds(dependencies: widget.dependencies),
-            ),
-          ),
-          new RepaintBoundary(
-            child: new SizedBox(
-              height: 30.0,
-              child: new Hundreds(dependencies: widget.dependencies),
-            ),
-          ),
-      ],
-    );
- 
-}
-}
-
-class Dependencies {
-
-Dependencies({this.stopwatch});
-
-  final List<ValueChanged<ElapsedTime>> timerListeners =
-      <ValueChanged<ElapsedTime>>[];
-  final TextStyle textStyle =
-      const TextStyle(fontSize: 30.0,fontWeight: FontWeight.bold);
-  final Stopwatch stopwatch;
-  final int timerMillisecondsRefreshRate = 30;
-}
-
-class ElapsedTime {
-  final int hundreds;
-  final int seconds;
-  final int minutes;
-
-  ElapsedTime({
-    this.hundreds,
-    this.seconds,
-    this.minutes,
-  });
-}
-
-class Hundreds extends StatefulWidget {
-  Hundreds({this.dependencies});
-  final Dependencies dependencies;
-
-  HundredsState createState() => new HundredsState(dependencies: dependencies);
-}
-
-class HundredsState extends State<Hundreds> {
-  HundredsState({this.dependencies});
-  final Dependencies dependencies;
-
-  int hundreds = 0;
-
-  @override
-  void initState() {
-    dependencies.timerListeners.add(onTick);
-    super.initState();
-  }
-
-  void onTick(ElapsedTime elapsed) {
-    if (elapsed.hundreds != hundreds) {
-      setState(() {
-        hundreds = elapsed.hundreds;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    String hundredsStr = (hundreds % 100).toString().padLeft(2, '0');
-    return new Text(hundredsStr, style: dependencies.textStyle);
-  }
-}
-
-class MinutesAndSeconds extends StatefulWidget {
-  MinutesAndSeconds({this.dependencies});
-  final Dependencies dependencies;
-
-  MinutesAndSecondsState createState() => new MinutesAndSecondsState(dependencies: dependencies);
-}
-
-class MinutesAndSecondsState extends State<MinutesAndSeconds> {
-  MinutesAndSecondsState({this.dependencies});
-  final Dependencies dependencies;
-  
-  int seconds = 0;
-
-  @override
-  void initState() {
-    dependencies.timerListeners.add(onTick);
-    super.initState();
-  }
-
-  void onTick(ElapsedTime elapsed) {
-    if (elapsed.seconds != seconds) {
-      setState(() {
-        
-        seconds = elapsed.seconds;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {    
-    String secondsStr = (seconds).toString().padLeft(1, '0');
-    return new Text('$secondsStr.', style: dependencies.textStyle);
   }
 }

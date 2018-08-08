@@ -4,15 +4,16 @@ import 'package:app/app/app.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
+import 'package:app/models/Stand/animation.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:rxdart/rxdart.dart';
-
 
 class SmokeSessionBloc {
   Sink get test => _indexController.sink;
   final _indexController = PublishSubject();
   String activeSessionId;
 
+  
   final SignalR signalR = new SignalR();
 
   void testChannel(String msg) {
@@ -34,17 +35,19 @@ class SmokeSessionBloc {
       new BehaviorSubject<SmokeSessionMetaData>(
           seedValue: new SmokeSessionMetaData());
 
+  BehaviorSubject<List<StandAnimation>> animations=
+      new BehaviorSubject<List<StandAnimation>>(seedValue: new List<StandAnimation>());
+
   Future joinSession(String sessionCode) async {
     if (sessionCode == null) {
       sessionCode = this.activeSessionId;
     }
 
-  if(this.activeSessionId == sessionCode){
-    return;
-  }else{
-    this.activeSessionId = sessionCode;
-
-  }
+    if (this.activeSessionId == sessionCode) {
+      return;
+    } else {
+      this.activeSessionId = sessionCode;
+    }
 
     List<String> params = new List<String>();
     params.add(sessionCode);
@@ -56,6 +59,7 @@ class SmokeSessionBloc {
 
     smokeStatistic.add(sessionData.smokeSessionData);
     smokeSessionMetaData.add(sessionData.metaData);
+    animations.add(await App.http.getAnimations(sessionData.hookah.code));    
   }
 
   SmokeSessionBloc._() {
@@ -123,7 +127,6 @@ class PuffChangeDataModel extends SignalData {
     }
   }
 }
-
 
 Duration stringToDuration(String sDuration) {
   var chunks = sDuration.split(':');

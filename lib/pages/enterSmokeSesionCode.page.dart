@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app/app/app.dart';
 import 'package:app/helpers.dart';
 import 'package:app/module/data_provider.dart';
@@ -5,6 +7,7 @@ import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/services/http.service.dart';
 import 'package:flutter/material.dart';
+import 'package:qrcode_reader/QRCodeReader.dart';
 
 class EnterSmokeSessionCode extends StatefulWidget {
   @override
@@ -77,29 +80,9 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                     setState(() {
                                       validating = true;
                                     });
-                                    if (_formKey.currentState.validate()) {
-                                      var result = await apiClient
-                                          .validateSessionId(myController.text);
-                                      setState(() {
-                                        validating = false;
-                                      });
-                                      if (result.id != null) {
-                                        Navigator
-                                            .of(context)
-                                            .pushReplacement(new MaterialPageRoute(
-                                          builder: (BuildContext context) {
-                                            return new SmokeSessionPage(sessionId: myController.text);
-                                          },
-                                        ));
-                                      } else {
-                                        Scaffold
-                                            .of(context)
-                                            .showSnackBar(new SnackBar(
-                                              content: new Text(
-                                                  "Invalid session code"),
-                                            ));
+                                      if (_formKey.currentState.validate()) {
+                                    await validateAndGo(context,myController.text);
                                       }
-                                    }
                                   },
                                   child: validating
                                       ? new Text('Validating')
@@ -121,9 +104,65 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
             bottom: 20.0,
             width: MediaQuery.of(context).size.width,
             height: 100.0,
-            child: buildRecentSessions(smokeSessionBloc))
+            child: buildRecentSessions(smokeSessionBloc)),
+        Positioned(
+          right: 20.0,
+          bottom: 200.0,
+          child: InkWell(
+            onTap: (){
+              Future<String> futureString = new QRCodeReader().scan();
+              futureString.then((smokeSessionLink) async {
+                if(smokeSessionLink.contains("/smoke/"))
+                {
+                  var sessionCode = smokeSessionLink.split('/').last;
+                  myController.text = sessionCode;
+                  await validateAndGo(context,sessionCode);  
+                }
+              });
+            },
+            borderRadius: BorderRadius.circular(10.0),
+            child: Container(
+              width: 100.0,
+              height: 100.0,
+              decoration: new BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius:
+                      new BorderRadius.all(const Radius.circular(40.0)),
+                  border: new Border.all(
+                      color: const Color.fromRGBO(221, 221, 221, 1.0),
+                      width: 2.5)),
+              child: Icon(Icons.camera),
+            ),
+          ),
+        )
       ],
     ));
+  }
+
+  Future validateAndGo(BuildContext context,String sessionId) async {
+  
+      var result = await apiClient
+          .validateSessionId(sessionId);
+      setState(() {
+        validating = false;
+      });
+      if (result.id != null) {
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(
+          builder: (BuildContext context) {
+            return new SmokeSessionPage(
+                sessionId: sessionId);
+          },
+        ));
+      } else {
+        Scaffold
+            .of(context)
+            .showSnackBar(new SnackBar(
+              content: new Text(
+                  "Invalid session code"),
+            ));
+      }
+    
   }
 
   void _submit() {

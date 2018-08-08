@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 import 'package:app/models/Places/place.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
+import 'package:app/models/Stand/animation.dart';
 import 'package:app/services/authorization.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -81,6 +82,14 @@ class ApiClient {
       }).toList();
     });
   }
+
+Future<List<StandAnimation>> getAnimations(String code) {
+var url = Uri.https(baseUrl, 'api/Animations/GetAnimations',{"id":code});
+
+ return _getJson(url).then((json) => json['Animations']).then((data) =>
+        data.map<StandAnimation>((anim) => StandAnimation.fromJson(anim)).toList());
+}
+
 }
 
 class SessionIdValidation extends Dto {
