@@ -153,7 +153,6 @@ class SmokeColorWheel extends StatefulWidget {
   const SmokeColorWheel({
     Key key,
   }) : super(key: key);
-  
 
   @override
   SmokeColorWheelState createState() {
@@ -162,12 +161,22 @@ class SmokeColorWheel extends StatefulWidget {
 }
 
 class SmokeColorWheelState extends State<SmokeColorWheel> {
+  List<Color> rainbow;
+ Offset position = new Offset(100.0, 100.0);
+  double top;
+  double bottom;
 
-  List<Color> rainbow; 
   @override
   void initState() {
-  rainbow = new List<Color>.generate(255, (int index) => HSVColor.fromAHSV(index + .0, 0.0, index + .0, index + .0).toColor()); // [0, 1, 4]
-  super.initState();
+    rainbow = new List<Color>.generate(
+        255,
+        (int index) => HSVColor
+            .fromAHSV(index + .0, 255.0, index + .0, index + .0)
+            .toColor()); // [0, 1, 4]
+
+    top = 100.0;
+    bottom = 100.0;
+    super.initState();
   }
 
   @override
@@ -175,21 +184,45 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
     double width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 30.0),
-      child: new Container(
-        height: width - 40,
-        width: width - 40,
-        decoration: new BoxDecoration(
-            gradient: new LinearGradient(
-              begin: Alignment.center,
-              end: new Alignment(
-                  0.8, 0.6), // 10% of the width, so there are ten blinds.
-              colors: rainbow, // whitish to gray
-              tileMode:
-                  TileMode.repeated, // repeats the gradient over the canvas
+      child: Stack(children: <Widget>[
+        new Container(
+          height: width - 40,
+          width: width - 40,
+          decoration: new BoxDecoration(
+              image: new DecorationImage(
+                  image: AssetImage("images/color_wheel.png"),
+                  fit: BoxFit.fill),
+              borderRadius: new BorderRadius.all(Radius.circular(width / 2)),
+              border: new Border.all(
+                  color: const Color.fromRGBO(221, 221, 221, 1.0), width: 2.5)),
+        ),
+        new Positioned(
+          top: position.dy,
+          left: position.dx,
+          child: Draggable(
+            feedback: Container(
+              child: colorPickerCircle(),
             ),
-            borderRadius: new BorderRadius.all(Radius.circular(width / 2)),
+            onDraggableCanceled: (velocity, offset){
+               setState(() => position = offset);
+            },
+            childWhenDragging: Container(),
+            child: colorPickerCircle(),
+          ),
+        )
+      ]),
+    );
+  }
+
+  SizedBox colorPickerCircle() {
+    return SizedBox(
+      height: 50.0,
+      width: 50.0,
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: new BorderRadius.all(Radius.circular(25.0)),
             border: new Border.all(
-                color: const Color.fromRGBO(221, 221, 221, 1.0), width: 2.5)),
+                color: const Color.fromRGBO(221, 221, 221, 1.0), width: 4.0)),
       ),
     );
   }
