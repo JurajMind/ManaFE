@@ -13,7 +13,6 @@ class SmokeSessionBloc {
   final _indexController = PublishSubject();
   String activeSessionId;
 
-  
   final SignalR signalR = new SignalR();
 
   void testChannel(String msg) {
@@ -35,8 +34,9 @@ class SmokeSessionBloc {
       new BehaviorSubject<SmokeSessionMetaData>(
           seedValue: new SmokeSessionMetaData());
 
-  BehaviorSubject<List<StandAnimation>> animations=
-      new BehaviorSubject<List<StandAnimation>>(seedValue: new List<StandAnimation>());
+  BehaviorSubject<List<StandAnimation>> animations =
+      new BehaviorSubject<List<StandAnimation>>(
+          seedValue: new List<StandAnimation>());
 
   Future joinSession(String sessionCode) async {
     if (sessionCode == null) {
@@ -59,7 +59,11 @@ class SmokeSessionBloc {
 
     smokeStatistic.add(sessionData.smokeSessionData);
     smokeSessionMetaData.add(sessionData.metaData);
-    animations.add(await App.http.getAnimations(sessionData.hookah.code));    
+    animations.add(await App.http.getAnimations(sessionData.hookah.code));
+  }
+
+  loadAnimation() async {
+    animations.add(await App.http.getAnimations('hookahTest1'));
   }
 
   SmokeSessionBloc._() {

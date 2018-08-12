@@ -1,9 +1,12 @@
+import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
+import 'package:app/pages/SmokeSession/animation_list.dart';
 import 'package:app/pages/SmokeSession/pipe_accesory_widget.dart';
 import 'package:app/pages/SmokeSession/puff_timer.dart';
+import 'package:app/pages/SmokeSession/smoke_color_wheel.dart';
 import 'package:app/pages/SmokeSession/tobacco_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -36,7 +39,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
   void initState() {
     stopWatches = new StopWatches(new Stopwatch(), new Stopwatch());
     dependencies = new Dependencies(stopwatch: stopWatches.pufStopwatch);
-    scrollController = new ScrollController(initialScrollOffset: 200.0);
+    scrollController = new ScrollController(initialScrollOffset: 1000.0);
     super.initState();
   }
 
@@ -50,6 +53,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     StreamBuilder<int> builder = new StreamBuilder(
       stream: smokeSessionBloc.smokeState,
       builder: (context, asyncSnapshot) {
@@ -118,111 +122,35 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
             : Text('No data');
       },
     );
+
     return new Container(
       child: Column(
         children: <Widget>[
-          new AppBar(
-            backgroundColor: Colors.transparent,
-            actions: <Widget>[Icon(Icons.arrow_drop_down_circle)],
-          ),
           new Expanded(
-            child: SingleChildScrollView(
+            child: CustomScrollView(
               controller: scrollController,
-              child: new Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new SmokeColorWheel(),
-                  builder,
-                  statisticBuilder,
-                  metadataBuilder,
-                  Container(
-                    height: 200.0,
-                  ),
-                ],
-              ),
+              physics: new SnapScrollPhysic(
+                  snaps: [size.height * 0.75, size.width, size.height * 0.75]),
+              shrinkWrap: true,
+              slivers: <Widget>[
+                new SliverList(
+                  delegate: new SliverChildListDelegate(<Widget>[
+                    AnimationsPicker(),
+                    SizedBox(
+                      height: size.height * 0.75,
+                      child: ListView(
+                        children: <Widget>[
+                          statisticBuilder,
+                          metadataBuilder,
+                        ],
+                      ),
+                    ),
+                  ]),
+                )
+              ],
             ),
           )
         ],
-      ),
-    );
-  }
-}
-
-class SmokeColorWheel extends StatefulWidget {
-  const SmokeColorWheel({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  SmokeColorWheelState createState() {
-    return new SmokeColorWheelState();
-  }
-}
-
-class SmokeColorWheelState extends State<SmokeColorWheel> {
-  List<Color> rainbow;
- Offset position = new Offset(100.0, 100.0);
-  double top;
-  double bottom;
-
-  @override
-  void initState() {
-    rainbow = new List<Color>.generate(
-        255,
-        (int index) => HSVColor
-            .fromAHSV(index + .0, 255.0, index + .0, index + .0)
-            .toColor()); // [0, 1, 4]
-
-    top = 100.0;
-    bottom = 100.0;
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 30.0),
-      child: Stack(children: <Widget>[
-        new Container(
-          height: width - 40,
-          width: width - 40,
-          decoration: new BoxDecoration(
-              image: new DecorationImage(
-                  image: AssetImage("images/color_wheel.png"),
-                  fit: BoxFit.fill),
-              borderRadius: new BorderRadius.all(Radius.circular(width / 2)),
-              border: new Border.all(
-                  color: const Color.fromRGBO(221, 221, 221, 1.0), width: 2.5)),
-        ),
-        new Positioned(
-          top: position.dy,
-          left: position.dx,
-          child: Draggable(
-            feedback: Container(
-              child: colorPickerCircle(),
-            ),
-            onDraggableCanceled: (velocity, offset){
-               setState(() => position = offset);
-            },
-            childWhenDragging: Container(),
-            child: colorPickerCircle(),
-          ),
-        )
-      ]),
-    );
-  }
-
-  SizedBox colorPickerCircle() {
-    return SizedBox(
-      height: 50.0,
-      width: 50.0,
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: new BorderRadius.all(Radius.circular(25.0)),
-            border: new Border.all(
-                color: const Color.fromRGBO(221, 221, 221, 1.0), width: 4.0)),
       ),
     );
   }

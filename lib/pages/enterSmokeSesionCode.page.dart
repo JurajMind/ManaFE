@@ -30,6 +30,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
 
     return new Container(
         child: Stack(
+      fit: StackFit.expand,
       children: <Widget>[
         new AppBar(
           backgroundColor: Colors.transparent,
@@ -80,9 +81,10 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                     setState(() {
                                       validating = true;
                                     });
-                                      if (_formKey.currentState.validate()) {
-                                    await validateAndGo(context,myController.text);
-                                      }
+                                    if (_formKey.currentState.validate()) {
+                                      await validateAndGo(
+                                          context, myController.text);
+                                    }
                                   },
                                   child: validating
                                       ? new Text('Validating')
@@ -107,16 +109,15 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
             child: buildRecentSessions(smokeSessionBloc)),
         Positioned(
           right: 20.0,
-          bottom: 200.0,
+          top: topWidgetHeight + getCircleRadius(context) / 2,
           child: InkWell(
-            onTap: (){
+            onTap: () {
               Future<String> futureString = new QRCodeReader().scan();
               futureString.then((smokeSessionLink) async {
-                if(smokeSessionLink.contains("/smoke/"))
-                {
+                if (smokeSessionLink.contains("/smoke/")) {
                   var sessionCode = smokeSessionLink.split('/').last;
                   myController.text = sessionCode;
-                  await validateAndGo(context,sessionCode);  
+                  await validateAndGo(context, sessionCode);
                 }
               });
             },
@@ -139,30 +140,22 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
     ));
   }
 
-  Future validateAndGo(BuildContext context,String sessionId) async {
-  
-      var result = await apiClient
-          .validateSessionId(sessionId);
-      setState(() {
-        validating = false;
-      });
-      if (result.id != null) {
-        Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(
-          builder: (BuildContext context) {
-            return new SmokeSessionPage(
-                sessionId: sessionId);
-          },
-        ));
-      } else {
-        Scaffold
-            .of(context)
-            .showSnackBar(new SnackBar(
-              content: new Text(
-                  "Invalid session code"),
-            ));
-      }
-    
+  Future validateAndGo(BuildContext context, String sessionId) async {
+    var result = await apiClient.validateSessionId(sessionId);
+    setState(() {
+      validating = false;
+    });
+    if (result.id != null) {
+      Navigator.of(context).pushReplacement(new MaterialPageRoute(
+        builder: (BuildContext context) {
+          return new SmokeSessionPage(sessionId: sessionId);
+        },
+      ));
+    } else {
+      Scaffold.of(context).showSnackBar(new SnackBar(
+            content: new Text("Invalid session code"),
+          ));
+    }
   }
 
   void _submit() {

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app/app/app.dart';
 import 'package:app/components/carousel.dart';
 import 'package:app/helpers.dart';
 import 'package:app/models/Places/place.dart';
@@ -12,17 +13,18 @@ import 'package:app/pages/enterSmokeSesionCode.page.dart';
 import 'package:flutter/material.dart';
 
 class MyCustomRoute<T> extends MaterialPageRoute<T> {
-  MyCustomRoute({ WidgetBuilder builder, RouteSettings settings , bool fullscreenDialog })
-      : super(builder: builder, settings: settings,fullscreenDialog:fullscreenDialog);
+  MyCustomRoute(
+      {WidgetBuilder builder, RouteSettings settings, bool fullscreenDialog})
+      : super(
+            builder: builder,
+            settings: settings,
+            fullscreenDialog: fullscreenDialog);
 
   @override
-  Widget buildTransitions(BuildContext context,
-      Animation<double> animation,
-      Animation<double> secondaryAnimation,
-      Widget child) {
-    if (settings.isInitialRoute)
-      return child;
-    // Fades between routes. (If you don't want any animation, 
+  Widget buildTransitions(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child) {
+    if (settings.isInitialRoute) return child;
+    // Fades between routes. (If you don't want any animation,
     // just return child.)
     return new FadeTransition(opacity: animation, child: child);
   }
@@ -134,6 +136,9 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.green[50]),
                   ),
+                  RaisedButton(
+                      child: Text('Test'),
+                      onPressed: () => App.router.navigateTo(context, 'test')),
                   SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height / 2 - 60,
