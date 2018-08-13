@@ -6,7 +6,7 @@ import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/smoke_color_wheel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'dart:math';
+import 'dart:math' as math;
 
 class AnimationsPicker extends StatefulWidget {
   final Stream<List<StandAnimation>> aminations;
@@ -83,34 +83,53 @@ class AnimationStatePicker extends StatefulWidget {
 }
 
 class AnimationStatePickerState extends State<AnimationStatePicker> {
+  ScrollController controller;
+
+  int _lastReportedItem = 0;
+
+  @override
+  void initState() {
+    controller = new ScrollController();    
+    super.initState();
+  }
+
   StreamBuilder<List<StandAnimation>> buildAnimationList() {
     return StreamBuilder<List<StandAnimation>>(
         stream: widget.smokeSessionBloc.animations,
         initialData: List<StandAnimation>(),
         builder: (context, snapshot) => ListView.builder(
+              controller: controller,
+              shrinkWrap: true,
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) =>
                   _createAnimation(index, snapshot.data[index], context),
             ));
   }
 
-  Widget _createAnimation(
-      int index, StandAnimation data, BuildContext context) {
-    print(data.displayName);
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        child: Center(
-          child: Text(
-            data.displayName,
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 30.0),
-          ),
-        ),
-      ),
-    );
+  _createAnimation(int index, StandAnimation data, BuildContext context) {
+    return AnimatedBuilder(
+        animation: controller,
+        builder: (context, child) {
+          double value = 1.0;
+          value = controller.offset / 1000;
+          value = (1 - (value.abs() * 0.3)).clamp(0.0, 1.0);
+
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              child: Center(
+                child: Text(
+                  data.displayName,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize:
+                          index == 2 ? Curves.easeOut.transform(value) * 30 : 30.0),
+                ),
+              ),
+            ),
+          );
+        });
   }
 
   @override
@@ -126,7 +145,19 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
               SizedBox(
                   height: size.height * 0.75,
                   child: Container(
-                    child: buildAnimationList(),
+                    child: NotificationListener(
+                        onNotification: (ScrollNotification notification) {
+                          if (notification.depth == 0 &&
+                              notification is ScrollUpdateNotification) {
+                            final FixedScrollMetrics metrics =
+                                notification.metrics;
+                            final double currentItem = getSelectedItem(metrics);
+                            print("item:$currentItem");
+                            
+                          }
+                          return false;
+                        },
+                        child: buildAnimationList()),
                   )),
               SizedBox(height: size.width, child: SmokeColorWheel()),
             ],
@@ -135,6 +166,61 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
       ),
     );
   }
+
+  
+double getSelectedItem(FixedScrollMetrics metric){
+    return math.max(0.0, metric.pixels.clamp(metric.minScrollExtent, metric.maxScrollExtent)) /
+           math.max(1.0, 30);
+}
+
+}
+
+
+class AnimationMetrics extends FixedScrollMetrics {  
+  AnimationMetrics({
+    @required double minScrollExtent,
+    @required double maxScrollExtent,
+    @required double pixels,
+    @required double viewportDimension,
+    @required AxisDirection axisDirection,
+    @required this.viewportFraction,
+  }) : super(
+          minScrollExtent: minScrollExtent,
+          maxScrollExtent: maxScrollExtent,
+          pixels: pixels,
+          viewportDimension: viewportDimension,
+          axisDirection: axisDirection,
+        );
+
+  @override
+  AnimationMetrics copyWith({
+    double minScrollExtent,
+    double maxScrollExtent,
+    double pixels,
+    double viewportDimension,
+    AxisDirection axisDirection,
+    double viewportFraction,
+  }) {
+    return new AnimationMetrics(
+      minScrollExtent: minScrollExtent ?? this.minScrollExtent,
+      maxScrollExtent: maxScrollExtent ?? this.maxScrollExtent,
+      pixels: pixels ?? this.pixels,
+      viewportDimension: viewportDimension ?? this.viewportDimension,
+      axisDirection: axisDirection ?? this.axisDirection,
+      viewportFraction: viewportFraction ?? this.viewportFraction,
+    );
+  }
+
+  /// The current page displayed in the [PageView].
+  double get item {
+    return math.max(0.0, pixels.clamp(minScrollExtent, maxScrollExtent)) /
+        math.max(1.0, viewportDimension * viewportFraction);
+  }
+
+  /// The fraction of the viewport that each page occupies.
+  ///
+  /// Used to compute [page] from the current [pixels].
+  final double viewportFraction;
 }
 
 class AnimationStateLabel extends AnimatedWidget {
@@ -173,7 +259,7 @@ class AnimationStateLabel extends AnimatedWidget {
 
   Widget _buildDot(int index) {
     double selectedness = Curves.easeOut.transform(
-      max(
+      math.max(
         0.0,
         1.0 - ((controller.page ?? controller.initialPage) - index).abs(),
       ),

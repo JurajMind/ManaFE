@@ -5,6 +5,8 @@ class StandAnimation {
 
   StandAnimation(this.id, this.displayName, this.usage);
 
+  StandAnimation.empty() : id = -1,displayName = '',usage = -1;
+
   StandAnimation.fromJson(Map<String, dynamic> json)
       : id = json['Id'],
         displayName = json['DisplayName'],

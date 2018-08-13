@@ -33,21 +33,26 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
       padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
       child: Stack(children: <Widget>[
         Center(
-          child: new Container(
-            height: width - 10,
-            width: width - 10,
-            decoration: new BoxDecoration(
-                image: new DecorationImage(
-                    image: AssetImage("images/color_wheel.png"),
-                    fit: BoxFit.fill),
-                borderRadius: new BorderRadius.all(Radius.circular(width / 2)),
-                border: new Border.all(
-                    color: const Color.fromRGBO(221, 221, 221, 1.0),
-                    width: 2.5)),
+          child: GestureDetector(            
+            onTapUp: (TapUpDetails details){ 
+              setState(() => this.position = details.globalPosition);},
+            onLongPress: () => print('longPes'),
+                      child: new Container(
+              height: width - 10,
+              width: width - 10,
+              decoration: new BoxDecoration(
+                  image: new DecorationImage(
+                      image: AssetImage("images/color_wheel.png"),
+                      fit: BoxFit.fill),
+                  borderRadius: new BorderRadius.all(Radius.circular(width / 2)),
+                  border: new Border.all(
+                      color: const Color.fromRGBO(221, 221, 221, 1.0),
+                      width: 2.5)),
+            ),
           ),
         ),
         new Positioned(
-          top: position.dy,
+          top: position.dy - 126,
           left: position.dx,
           child: Draggable(
             feedback: Container(
@@ -55,7 +60,9 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
             ),
             onDraggableCanceled: (velocity, offset) {
               setState(() => position = offset);
+
             },
+            
             childWhenDragging: Container(),
             child: colorPickerCircle(),
           ),
@@ -64,15 +71,18 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
     );
   }
 
-  SizedBox colorPickerCircle() {
-    return SizedBox(
-      height: 50.0,
-      width: 50.0,
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: new BorderRadius.all(Radius.circular(25.0)),
-            border: new Border.all(
-                color: const Color.fromRGBO(221, 221, 221, 1.0), width: 4.0)),
+  Widget colorPickerCircle() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+        height: 50.0,
+        width: 50.0,
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: new BorderRadius.all(Radius.circular(25.0)),
+              border: new Border.all(
+                  color: const Color.fromRGBO(221, 221, 221, 1.0), width: 4.0)),
+        ),
       ),
     );
   }

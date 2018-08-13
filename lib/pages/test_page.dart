@@ -32,32 +32,34 @@ class _TestPageState extends State<TestPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     final items = List<Widget>.generate(10000, (i) => Text(i.toString()));
-    return Scaffold(
-        body: new CustomScrollView(
-      controller: controller,
-      physics: new SnapScrollPhysic(
-          snaps: [size.height * 0.75, size.width, size.height * 0.75]),
-      shrinkWrap: true,
-      slivers: <Widget>[
-        new SliverList(
-          delegate: new SliverChildListDelegate(
-            <Widget>[
-              AnimationsPicker(),
-              SizedBox(
-                height: size.height * 0.75,
-                child: Container(
-                  child: ListView(
-                    controller: controller2,
-                    physics: ScrollPhysics(),
-                    children: items,
+    return SafeArea(
+          child: Scaffold(
+          body: new CustomScrollView(
+        controller: controller,
+        physics: new SnapScrollPhysic(
+            snaps: [size.height * 0.75, size.width, size.height * 0.75]),
+        shrinkWrap: true,
+        slivers: <Widget>[
+          new SliverList(
+            delegate: new SliverChildListDelegate(
+              <Widget>[
+                AnimationsPicker(),
+                SizedBox(
+                  height: size.height * 0.75,
+                  child: Container(
+                    child: ListView(
+                      controller: controller2,
+                      physics: ScrollPhysics(),
+                      children: items,
+                    ),
+                    color: Colors.blue,
                   ),
-                  color: Colors.blue,
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
-    ));
+        ],
+      )),
+    );
   }
 }

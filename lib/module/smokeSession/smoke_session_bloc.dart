@@ -63,7 +63,9 @@ class SmokeSessionBloc {
   }
 
   loadAnimation() async {
-    animations.add(await App.http.getAnimations('hookahTest1'));
+    var list = await App.http.getAnimations('hookahTest1');
+    list.insertAll(0,List<StandAnimation>.generate(10, (i) => StandAnimation.empty()));
+    animations.add(list);
   }
 
   SmokeSessionBloc._() {
