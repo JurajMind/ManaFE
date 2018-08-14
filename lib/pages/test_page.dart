@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:app/app/app.dart';
 import 'package:app/components/snap_scroll.dart';
 import 'package:app/pages/SmokeSession/animation_list.dart';
+import 'package:app/pages/SmokeSession/color_picker.dart';
 import 'package:app/pages/SmokeSession/smoke_color_wheel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,11 +23,16 @@ class _TestPageState extends State<TestPage> {
   Timer _timer;
   @override
   void initState() {
-    controller = new ScrollController();
+    controller = new ScrollController(initialScrollOffset: 200.0);
     controller2 = new ScrollController();
-
-    snapPositions = [200.0, 400.0];
     super.initState();
+  }
+
+  Color pickerColor = new Color(0xff443a49);
+  changeColor(Color color) {
+    setState(() {
+      pickerColor = color;
+    });
   }
 
   @override
@@ -33,11 +40,11 @@ class _TestPageState extends State<TestPage> {
     var size = MediaQuery.of(context).size;
     final items = List<Widget>.generate(10000, (i) => Text(i.toString()));
     return SafeArea(
-          child: Scaffold(
+      child: Scaffold(
           body: new CustomScrollView(
         controller: controller,
         physics: new SnapScrollPhysic(
-            snaps: [size.height * 0.75, size.width, size.height * 0.75]),
+            snaps: [size.height * 0.75, size.width, size.height * 0.75 - 50]),
         shrinkWrap: true,
         slivers: <Widget>[
           new SliverList(
@@ -45,14 +52,19 @@ class _TestPageState extends State<TestPage> {
               <Widget>[
                 AnimationsPicker(),
                 SizedBox(
-                  height: size.height * 0.75,
-                  child: Container(
-                    child: ListView(
-                      controller: controller2,
-                      physics: ScrollPhysics(),
-                      children: items,
-                    ),
-                    color: Colors.blue,
+                    height: size.width,
+                    child: SmokeColorWheel(
+                      onColorChanged: (color) {
+                        App.http.changeColor('emulator', color);
+                      },
+                      color: HSVColor.fromColor(Colors.red),
+                    )),
+                SizedBox(
+                  child: new ColorPicker(
+                    pickerColor: pickerColor,
+                    onColorChanged: changeColor,
+                    colorPickerWidth: 1000.0,
+                    pickerAreaHeightPercent: 0.7,
                   ),
                 ),
               ],

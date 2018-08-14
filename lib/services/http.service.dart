@@ -8,6 +8,7 @@ import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/Stand/animation.dart';
 import 'package:app/services/authorization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:dio/dio.dart';
 
 class ApiClient {
   static final _client = ApiClient._internal();
@@ -83,13 +84,25 @@ class ApiClient {
     });
   }
 
-Future<List<StandAnimation>> getAnimations(String code) {
-var url = Uri.https(baseUrl, 'api/Animations/GetAnimations',{"id":code});
+  Future changeColor(String deviceId, HSVColor color) async {
+    var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeColor');
+    Dio dio = new Dio();
+    dio.interceptor.response.onError = (DioError e) {
+      // Do something with response error
+      return e; //continue
+    };
+    var a = color.toJson();
+    var response =
+        await dio.post(uri.toString(), data: {"Color": color, "Type": 1});
+  }
 
- return _getJson(url).then((json) => json['Animations']).then((data) =>
-        data.map<StandAnimation>((anim) => StandAnimation.fromJson(anim)).toList());
-}
+  Future<List<StandAnimation>> getAnimations(String code) {
+    var url = Uri.https(baseUrl, 'api/Animations/GetAnimations', {"id": code});
 
+    return _getJson(url).then((json) => json['Animations']).then((data) => data
+        .map<StandAnimation>((anim) => StandAnimation.fromJson(anim))
+        .toList());
+  }
 }
 
 class SessionIdValidation extends Dto {

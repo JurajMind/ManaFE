@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
+import 'dart:math' as math;
+import 'package:tuple/tuple.dart';
+import 'package:flutter/material.dart';
 
 class SmokeColorWheel extends StatefulWidget {
-  const SmokeColorWheel({
-    Key key,
-  }) : super(key: key);
+  final HSVColor color;
+  final ValueChanged<HSVColor> onColorChanged;
+  const SmokeColorWheel({Key key, this.color, this.onColorChanged})
+      : super(key: key);
 
   @override
   SmokeColorWheelState createState() {
@@ -12,66 +16,99 @@ class SmokeColorWheel extends StatefulWidget {
 }
 
 class SmokeColorWheelState extends State<SmokeColorWheel> {
-  List<Color> rainbow;
-  Offset position = new Offset(100.0, 100.0);
+  Color selectedColor;
+  Offset position;
 
   @override
   void initState() {
-    rainbow = new List<Color>.generate(
-        255,
-        (int index) => HSVColor
-            .fromAHSV(index + .0, 255.0, index + .0, index + .0)
-            .toColor()); // [0, 1, 4]
-
+    selectedColor = Colors.white;
     super.initState();
   }
 
   @override
+  void didChangeDependencies() {
+    position =
+        _getOffsetFromColor(widget.color, MediaQuery.of(context).size.width);
+    super.didChangeDependencies();
+  }
+
+  Offset _getOffsetFromColor(HSVColor color, double size) {
+    var angle = 180 + color.hue - 90;
+    print(angle);
+    var distance = color.saturation * (size / 2);
+    var dy = math.sin(angle / (math.pi / 180)) * distance;
+    var dx = math.cos(angle / (math.pi / 180)) * distance;
+    return new Offset(dx, size + dy);
+  }
+
+  HSVColor _colorFromPosition(Offset position) {
+    var dx = position.dx;
+    var dy = position.dy;
+
+    var phi = math.atan2(dx, dy);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     double width = MediaQuery.of(context).size.width;
+    double heigth = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-      child: Stack(children: <Widget>[
-        Center(
-          child: GestureDetector(            
-            onTapUp: (TapUpDetails details){ 
-              setState(() => this.position = details.globalPosition);},
-            onLongPress: () => print('longPes'),
-                      child: new Container(
-              height: width - 10,
-              width: width - 10,
-              decoration: new BoxDecoration(
-                  image: new DecorationImage(
-                      image: AssetImage("images/color_wheel.png"),
-                      fit: BoxFit.fill),
-                  borderRadius: new BorderRadius.all(Radius.circular(width / 2)),
-                  border: new Border.all(
-                      color: const Color.fromRGBO(221, 221, 221, 1.0),
-                      width: 2.5)),
+      child: Stack(
+        children: <Widget>[
+          Center(
+            child: GestureDetector(
+              onTapUp: (TapUpDetails details) {
+                RenderBox getBox = context.findRenderObject();
+                Offset localOffset =
+                    getBox.globalToLocal(details.globalPosition);
+                setState(() {
+                  this.position = localOffset;
+                  var hsvColor = _position2color(localOffset, size);
+                  widget.onColorChanged(hsvColor);
+                  this.selectedColor = hsvColor.toColor();
+                });
+              },
+              onPanUpdate: (DragUpdateDetails details) {
+                RenderBox getBox = context.findRenderObject();
+                Offset localOffset =
+                    getBox.globalToLocal(details.globalPosition);
+                setState(() {
+                  this.position = localOffset;
+                });
+              },
+              child: new Container(
+                height: width - 10,
+                width: width - 10,
+                decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                        image: AssetImage("images/color_wheel.png"),
+                        fit: BoxFit.fill),
+                    borderRadius:
+                        new BorderRadius.all(Radius.circular(width / 2)),
+                    border: new Border.all(
+                        color: const Color.fromRGBO(221, 221, 221, 1.0),
+                        width: 2.5)),
+              ),
             ),
           ),
-        ),
-        new Positioned(
-          top: position.dy - 126,
-          left: position.dx,
-          child: Draggable(
-            feedback: Container(
-              child: colorPickerCircle(),
-            ),
-            onDraggableCanceled: (velocity, offset) {
-              setState(() => position = offset);
-
-            },
-            
-            childWhenDragging: Container(),
-            child: colorPickerCircle(),
-          ),
-        )
-      ]),
+          Positioned(
+            top: position.dy - 16,
+            left: position.dx - 16,
+            child: colorPickerCircle(this.selectedColor),
+          )
+        ],
+      ),
     );
   }
 
-  Widget colorPickerCircle() {
+  Offset _absoluteToRelative(Offset offset, Size size) {
+    return new Offset(offset.dx - (size.width + 16) / 2,
+        (offset.dy - (0.25 * size.height + size.width / 2 - 16)) * -1);
+  }
+
+  Widget colorPickerCircle(Color color) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
@@ -79,6 +116,7 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
         width: 50.0,
         child: Container(
           decoration: BoxDecoration(
+              color: color,
               borderRadius: new BorderRadius.all(Radius.circular(25.0)),
               border: new Border.all(
                   color: const Color.fromRGBO(221, 221, 221, 1.0), width: 4.0)),
@@ -86,4 +124,24 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
       ),
     );
   }
+}
+
+HSVColor _position2color(Offset localOffset, Size size) {
+  var radius = (size.width - 40) / 2;
+  var circleOffset = new Offset((localOffset.dx - size.width / 2) / radius,
+      ((localOffset.dy - size.width / 2) * -1) / radius);
+  print("x:${circleOffset.dx},y:${circleOffset.dy}");
+  var color = xy2polar(circleOffset.dx, circleOffset.dy);
+
+  return HSVColor.fromAHSV(1.0, doublerad2deg(color.item2), color.item1, 1.0);
+}
+
+Tuple2<double, double> xy2polar(x, y) {
+  var r = math.sqrt(x * x + y * y);
+  var phi = math.atan2(y, x);
+  return new Tuple2(r, phi);
+}
+
+doublerad2deg(double rad) {
+  return ((rad + math.pi) / (2 * math.pi)) * 360;
 }

@@ -89,7 +89,7 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
 
   @override
   void initState() {
-    controller = new ScrollController();    
+    controller = new ScrollController();
     super.initState();
   }
 
@@ -123,8 +123,9 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize:
-                          index == 2 ? Curves.easeOut.transform(value) * 30 : 30.0),
+                      fontSize: index == 2
+                          ? Curves.easeOut.transform(value) * 30
+                          : 30.0),
                 ),
               ),
             ),
@@ -140,43 +141,36 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
       child: new Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          new Column(
-            children: <Widget>[
-              SizedBox(
-                  height: size.height * 0.75,
-                  child: Container(
-                    child: NotificationListener(
-                        onNotification: (ScrollNotification notification) {
-                          if (notification.depth == 0 &&
-                              notification is ScrollUpdateNotification) {
-                            final FixedScrollMetrics metrics =
-                                notification.metrics;
-                            final double currentItem = getSelectedItem(metrics);
-                            print("item:$currentItem");
-                            
-                          }
-                          return false;
-                        },
-                        child: buildAnimationList()),
-                  )),
-              SizedBox(height: size.width, child: SmokeColorWheel()),
-            ],
-          )
+          SizedBox(
+              height: size.height * 0.75,
+              child: Container(
+                child: NotificationListener(
+                    onNotification: (ScrollNotification notification) {
+                      if (notification.depth == 0 &&
+                          notification is ScrollUpdateNotification) {
+                        final FixedScrollMetrics metrics = notification.metrics;
+                        final double currentItem = getSelectedItem(metrics);
+                        print("item:$currentItem");
+                      }
+                      return false;
+                    },
+                    child: buildAnimationList()),
+              ))
         ],
       ),
     );
   }
 
-  
-double getSelectedItem(FixedScrollMetrics metric){
-    return math.max(0.0, metric.pixels.clamp(metric.minScrollExtent, metric.maxScrollExtent)) /
-           math.max(1.0, 30);
+  double getSelectedItem(FixedScrollMetrics metric) {
+    return math.max(
+            0.0,
+            metric.pixels
+                .clamp(metric.minScrollExtent, metric.maxScrollExtent)) /
+        math.max(1.0, 30);
+  }
 }
 
-}
-
-
-class AnimationMetrics extends FixedScrollMetrics {  
+class AnimationMetrics extends FixedScrollMetrics {
   AnimationMetrics({
     @required double minScrollExtent,
     @required double maxScrollExtent,

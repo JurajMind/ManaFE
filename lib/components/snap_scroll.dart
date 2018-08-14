@@ -52,8 +52,8 @@ class SnapScrollPhysic extends ScrollPhysics {
 
     for (var i = 0; i < snaps.length; i++) {
       var snapPosition = _snapPosition(i);
-      print("snapPosition:${snapPosition}");
       if (position.pixels <= _snapPosition(i)) {
+        print("snapPosition:${i}");
         return _goToSnap(i);
       }
     }
