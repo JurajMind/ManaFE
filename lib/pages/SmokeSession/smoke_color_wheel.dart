@@ -16,12 +16,12 @@ class SmokeColorWheel extends StatefulWidget {
 }
 
 class SmokeColorWheelState extends State<SmokeColorWheel> {
-  Color selectedColor;
+  HSVColor selectedColor;
   Offset position;
 
   @override
   void initState() {
-    selectedColor = Colors.white;
+    selectedColor = HSVColor.fromColor(Colors.white);
     super.initState();
   }
 
@@ -32,21 +32,6 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
     super.didChangeDependencies();
   }
 
-  Offset _getOffsetFromColor(HSVColor color, double size) {
-    var angle = 180 + color.hue - 90;
-    print(angle);
-    var distance = color.saturation * (size / 2);
-    var dy = math.sin(angle / (math.pi / 180)) * distance;
-    var dx = math.cos(angle / (math.pi / 180)) * distance;
-    return new Offset(dx, size + dy);
-  }
-
-  HSVColor _colorFromPosition(Offset position) {
-    var dx = position.dx;
-    var dy = position.dy;
-
-    var phi = math.atan2(dx, dy);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +52,7 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
                   this.position = localOffset;
                   var hsvColor = _position2color(localOffset, size);
                   widget.onColorChanged(hsvColor);
-                  this.selectedColor = hsvColor.toColor();
+                  this.selectedColor = hsvColor;
                 });
               },
               onPanUpdate: (DragUpdateDetails details) {
@@ -76,14 +61,19 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
                     getBox.globalToLocal(details.globalPosition);
                 setState(() {
                   this.position = localOffset;
+                  var hsvColor = _position2color(localOffset, size);                 
+                  this.selectedColor = hsvColor;
                 });
               },
+              onPanEnd:(DragEndDetails details){                
+                  widget.onColorChanged(   this.selectedColor);
+              } ,
               child: new Container(
                 height: width - 10,
                 width: width - 10,
                 decoration: new BoxDecoration(
                     image: new DecorationImage(
-                        image: AssetImage("images/color_wheel.png"),
+                        image: AssetImage("images/color_wheel.png"),                        
                         fit: BoxFit.fill),
                     borderRadius:
                         new BorderRadius.all(Radius.circular(width / 2)),
@@ -96,7 +86,7 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
           Positioned(
             top: position.dy - 16,
             left: position.dx - 16,
-            child: colorPickerCircle(this.selectedColor),
+            child: colorPickerCircle(this.selectedColor.toColor()),
           )
         ],
       ),
@@ -129,12 +119,22 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
 HSVColor _position2color(Offset localOffset, Size size) {
   var radius = (size.width - 40) / 2;
   var circleOffset = new Offset((localOffset.dx - size.width / 2) / radius,
-      ((localOffset.dy - size.width / 2) * -1) / radius);
-  print("x:${circleOffset.dx},y:${circleOffset.dy}");
-  var color = xy2polar(circleOffset.dx, circleOffset.dy);
+      ((localOffset.dy - size.width / 2) * -1) / radius);  
 
-  return HSVColor.fromAHSV(1.0, doublerad2deg(color.item2), color.item1, 1.0);
+  var color = xy2polar(circleOffset.dx, circleOffset.dy);
+  print("x:${circleOffset.dx},y:${circleOffset.dy},r:${doublerad2deg(color.item2)}");
+  return  HSVColor.fromAHSV(1.0, doublerad2deg(color.item2)- 50, color.item1, 1.0);
 }
+
+
+  Offset _getOffsetFromColor(HSVColor color, double size) {
+    var angle = 180 + color.hue - 90;
+    print(angle);
+    var distance = color.saturation * (size / 2);
+    var dy = math.sin(angle / (math.pi / 180)) * distance;
+    var dx = math.cos(angle / (math.pi / 180)) * distance;
+    return new Offset(dx, size + dy);
+  }
 
 Tuple2<double, double> xy2polar(x, y) {
   var r = math.sqrt(x * x + y * y);
@@ -143,5 +143,5 @@ Tuple2<double, double> xy2polar(x, y) {
 }
 
 doublerad2deg(double rad) {
-  return ((rad + math.pi) / (2 * math.pi)) * 360;
+  return (((rad * 180) / (math.pi)));
 }

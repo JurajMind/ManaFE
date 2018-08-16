@@ -1,3 +1,4 @@
+import 'package:app/app/app.dart';
 import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
@@ -136,6 +137,14 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                 new SliverList(
                   delegate: new SliverChildListDelegate(<Widget>[
                     AnimationsPicker(),
+                                    SizedBox(
+                    height: size.width,
+                    child: SmokeColorWheel(
+                      onColorChanged: (color) {
+                        App.http.changeColor('emulator', color);
+                      },
+                      color: HSVColor.fromColor(Colors.red),
+                    )),
                     SizedBox(
                       height: size.height * 0.75,
                       child: ListView(

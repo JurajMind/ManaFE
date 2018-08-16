@@ -11,36 +11,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:dio/dio.dart';
 
 class ApiClient {
-  static final _client = ApiClient._internal();
   final _http = HttpClient();
+  final Dio _dio;
   final Authorize _authorize = new Authorize();
-  ApiClient._internal();
 
   final String baseUrl;
 
-  ApiClient(url) : baseUrl = url;
+  ApiClient(url)
+      : baseUrl = url,
+        _dio = new Dio(new Options(
+          baseUrl: url,
+          connectTimeout: 5000,
+          receiveTimeout: 3000,
+        ));
 
   Future<dynamic> _getJson(Uri uri) async {
     print(uri.toString());
-    var response =
-        (await _http.getUrl(uri).then((HttpClientRequest request) async {
-      var token = await _authorize.getToken();
-      request.headers.add('Authorization', 'Bearer $token');
-      return request.close();
-    }));
-
-    if (response.statusCode == 403) {
-      if (await _authorize.refreshToken()) {
-        return _getJson(uri);
-      }
-    }
-
-    if (response.statusCode != 200) {
-      print(response);
-    }
-
-    var transformedResponse = await response.transform(utf8.decoder).join();
-    return json.decode(transformedResponse);
+    Response response;
+    response = await _dio.get(uri.toString());    
+    return response.data;
   }
 
   Future<dynamic> _(Uri uri) async {
@@ -86,14 +75,29 @@ class ApiClient {
 
   Future changeColor(String deviceId, HSVColor color) async {
     var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeColor');
-    Dio dio = new Dio();
-    dio.interceptor.response.onError = (DioError e) {
-      // Do something with response error
-      return e; //continue
-    };
-    var a = color.toJson();
-    var response =
-        await dio.post(uri.toString(), data: {"Color": color, "Type": 1});
+
+    var data = {'Color': ColorDto(color), 'Type': 1};
+
+    var response = await _dio.post(uri.toString(),
+        data: data,
+        options: Options(
+          contentType: ContentType.JSON,
+        ));
+    debugPrint(response.data.toString());
+  }
+
+  Future<String> apiRequest(Uri url, Map jsonMap) async {
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(url);
+    var payload = utf8.encode(json.encode(jsonMap));
+    request.headers.set('content-type', 'application/json');
+    request.headers.set('Content-Length', payload.length);
+    request.add(payload);
+    HttpClientResponse response = await request.close();
+    // todo - you should check the response.statusCode
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    return reply;
   }
 
   Future<List<StandAnimation>> getAnimations(String code) {
@@ -103,6 +107,47 @@ class ApiClient {
         .map<StandAnimation>((anim) => StandAnimation.fromJson(anim))
         .toList());
   }
+
+  void init() {
+    _dio.interceptor.response.onError = (DioError error) async {
+      var token = await _authorize.getToken();
+      var tokenHeader = 'Bearer $token';
+      if (error.response?.statusCode == 401 ||
+          error.response?.statusCode == 403) {
+        Options options = error.response.request;
+        // If the token has been updated, repeat directly.
+        if (tokenHeader != options.headers["Authorization"]) {
+          options.headers["Authorization"] = tokenHeader;
+          //repeat
+          return _dio.request(options.path, options: options);
+        }
+
+        await _authorize.refreshToken();
+        token = await _authorize.getToken();
+        options.headers["Authorization"] = 'Bearer $token';
+        return _dio.request(options.path, options: options);
+      }
+      return error;
+    };
+
+    _dio.interceptor.request.onSend = (Options o) async {
+      var token = await _authorize.getToken();
+      o.headers['Authorization'] = 'Bearer $token';
+      if (o.method == "POST") {
+        o.headers['content-length'] = utf8.encode(json.encode(o.data)).length;
+      }
+      return o;
+    };
+  }
+}
+
+class ColorDto {
+  final HSVColor color;
+
+  ColorDto(this.color);
+
+  Map<String, dynamic> toJson() =>
+      {'Hue': color.hue.clamp(0, 360) * 360~/255, 'Saturation': (color.saturation.clamp(0, 1) * 255).toInt(), 'Value': 255};
 }
 
 class SessionIdValidation extends Dto {

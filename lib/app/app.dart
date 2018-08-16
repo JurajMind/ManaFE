@@ -29,7 +29,7 @@ class App {
     App.baseUri = baseUri;
     // Create app http service.
     App.http = new ApiClient(baseUri);
-
+    App.http.init();
     // Create a router.
     final Router router = new Router();
 

@@ -84,37 +84,51 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
   Widget build(BuildContext context) {
     final smokeSessionBloc = DataProvider.getSmokeSession(context);
 
-    return new Container(
+    return new SafeArea(
+      top: false,
       child: new Stack(
         children: <Widget>[
           new Positioned(
-            child: new CircleAvatar(
-                radius: getCircleRadius(context),
-                backgroundColor: Colors.green,
-                child: GestureDetector(
-                    onTap: () {
-                      _openAddEntryDialog(context, smokeSessionBloc);
-                    },
-                    child: new Container(
-                      child: new Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          new Text(
-                            'START',
-                            style: new TextStyle(
-                                fontSize: 40.0,
+            child: Hero(
+              tag: 'Circle',
+                          child: new Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(getCircleRadius(context)),                  
+                    gradient: LinearGradient(
+                      colors: [Colors.blue,Colors.black],
+                     begin: Alignment.topCenter,
+                     end:   Alignment.bottomCenter,
+                    )
+                  ),
+                  child: SizedBox(
+                    height: getCircleRadius(context)*2,
+                    width: getCircleRadius(context)*2,
+                                    child: GestureDetector(
+                        onTap: () {
+                          _openAddEntryDialog(context, smokeSessionBloc);
+                        },
+                        child: new Container(
+                          child: new Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              new Text(
+                                'START',
+                                style: new TextStyle(
+                                    fontSize: 40.0,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              new Icon(
+                                Icons.play_arrow,
+                                size: 60.0,
                                 color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                              )
+                            ],
                           ),
-                          new Icon(
-                            Icons.play_arrow,
-                            size: 60.0,
-                            color: Colors.white,
-                          )
-                        ],
-                      ),
-                    ))),
+                        )),
+                  )),
+            ),
             left: (MediaQuery.of(context).size.width / 2) -
                 getCircleRadius(context),
             top: widget.topWidgetHeight - getCircleRadius(context),
@@ -131,14 +145,15 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
               top: 300.0,
               child: Column(
                 children: <Widget>[
+                    RaisedButton(
+                      child: Text('Test'),
+                      onPressed: () => App.router.navigateTo(context, 'test')),
                   Text(
                     'NEAREST PLACE',
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.green[50]),
                   ),
-                  RaisedButton(
-                      child: Text('Test'),
-                      onPressed: () => App.router.navigateTo(context, 'test')),
+                
                   SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height / 2 - 60,

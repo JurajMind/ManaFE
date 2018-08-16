@@ -87,10 +87,16 @@ class _HomePageState extends State<HomePage> {
                 color: _currentIndex == 1 ? Colors.white : Colors.grey,
                 onPressed: () => _setActiveTab(1),
               ),
-              IconButton(
-                icon: Icon(Icons.settings_backup_restore),
-                color: _currentIndex == 2 ? Colors.white : Colors.grey,
-                onPressed: () => _setActiveTab(2),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100.0),
+                  color: Colors.white
+                ),
+                              child: IconButton(
+                  icon: Icon(Icons.settings_backup_restore),
+                  color: _currentIndex == 2 ? Colors.black : Colors.grey,
+                  onPressed: () => _setActiveTab(2),
+                ),
               ),
               IconButtonTitle(
                 icon: Icon(Icons.settings),

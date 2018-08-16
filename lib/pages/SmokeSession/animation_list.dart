@@ -43,7 +43,7 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return SizedBox(
-      height: size.height * 0.75 + size.width,
+      height: size.height * 0.75,
       child: Stack(
         children: <Widget>[
           PageView(
@@ -149,8 +149,7 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
                       if (notification.depth == 0 &&
                           notification is ScrollUpdateNotification) {
                         final FixedScrollMetrics metrics = notification.metrics;
-                        final double currentItem = getSelectedItem(metrics);
-                        print("item:$currentItem");
+                        final double currentItem = getSelectedItem(metrics);                        
                       }
                       return false;
                     },

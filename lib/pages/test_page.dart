@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:app/app/app.dart';
 import 'package:app/components/snap_scroll.dart';
 import 'package:app/pages/SmokeSession/animation_list.dart';
 import 'package:app/pages/SmokeSession/color_picker.dart';
 import 'package:app/pages/SmokeSession/smoke_color_wheel.dart';
+import 'package:app/services/http.service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -56,6 +58,7 @@ class _TestPageState extends State<TestPage> {
                     child: SmokeColorWheel(
                       onColorChanged: (color) {
                         App.http.changeColor('emulator', color);
+                        //print(json.encode(ColorDto(color)));
                       },
                       color: HSVColor.fromColor(Colors.red),
                     )),
