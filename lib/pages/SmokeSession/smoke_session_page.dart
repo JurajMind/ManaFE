@@ -75,8 +75,15 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
             TobaccoWidget(
                 tobacco: asyncSnapshot.data.tobacco,
                 tobacoMix: asyncSnapshot.data.mix),
-            PipeAccesoryWidget(accesory: asyncSnapshot.data.pipe, type: 'Pipe'),
-            PipeAccesoryWidget(accesory: asyncSnapshot.data.bowl, type: 'Bowl'),
+            PipeAccesoryWidget(
+              accesory: asyncSnapshot.data.pipe,
+              type: 'Pipe',
+              smokeSessionBloc: smokeSessionBloc,
+            ),
+            PipeAccesoryWidget(
+                accesory: asyncSnapshot.data.bowl,
+                type: 'Bowl',
+                smokeSessionBloc: smokeSessionBloc),
           ],
         );
       },
@@ -137,14 +144,14 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                 new SliverList(
                   delegate: new SliverChildListDelegate(<Widget>[
                     AnimationsPicker(),
-                                    SizedBox(
-                    height: size.width,
-                    child: SmokeColorWheel(
-                      onColorChanged: (color) {
-                        App.http.changeColor('emulator', color);
-                      },
-                      color: HSVColor.fromColor(Colors.red),
-                    )),
+                    SizedBox(
+                        height: size.width,
+                        child: SmokeColorWheel(
+                          onColorChanged: (color) {
+                            App.http.changeColor('emulator', color);
+                          },
+                          color: HSVColor.fromColor(Colors.red),
+                        )),
                     SizedBox(
                       height: size.height * 0.75,
                       child: ListView(

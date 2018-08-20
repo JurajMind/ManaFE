@@ -26,4 +26,8 @@ class PipeAccesory {
   String picture;
 
   String type;
+
+  String get fullName {
+    return "$brand $name";
+  }
 }

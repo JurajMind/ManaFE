@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:app/models/PipeAccesory/pipe_accesory.dart';
+import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 import 'package:app/models/Places/place.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
@@ -21,15 +23,46 @@ class ApiClient {
       : baseUrl = url,
         _dio = new Dio(new Options(
           baseUrl: url,
-          connectTimeout: 5000,
           receiveTimeout: 3000,
         ));
 
   Future<dynamic> _getJson(Uri uri) async {
     print(uri.toString());
     Response response;
-    response = await _dio.get(uri.toString());    
+    response = await _dio.get(uri.toString());
     return response.data;
+  }
+
+  void init() {
+    _dio.interceptor.response.onError = (DioError error) async {
+      var token = await _authorize.getToken();
+      var tokenHeader = 'Bearer $token';
+      if (error.response?.statusCode == 401 ||
+          error.response?.statusCode == 403) {
+        Options options = error.response.request;
+        // If the token has been updated, repeat directly.
+        if (tokenHeader != options.headers["Authorization"]) {
+          options.headers["Authorization"] = tokenHeader;
+          //repeat
+          return _dio.request(options.path, options: options);
+        }
+
+        await _authorize.refreshToken();
+        token = await _authorize.getToken();
+        options.headers["Authorization"] = 'Bearer $token';
+        return _dio.request(options.path, options: options);
+      }
+      return error;
+    };
+
+    _dio.interceptor.request.onSend = (Options o) async {
+      var token = await _authorize.getToken();
+      o.headers['Authorization'] = 'Bearer $token';
+      if (o.method == "POST") {
+        o.headers['content-length'] = utf8.encode(json.encode(o.data)).length;
+      }
+      return o;
+    };
   }
 
   Future<dynamic> _(Uri uri) async {
@@ -86,20 +119,6 @@ class ApiClient {
     debugPrint(response.data.toString());
   }
 
-  Future<String> apiRequest(Uri url, Map jsonMap) async {
-    HttpClient httpClient = new HttpClient();
-    HttpClientRequest request = await httpClient.postUrl(url);
-    var payload = utf8.encode(json.encode(jsonMap));
-    request.headers.set('content-type', 'application/json');
-    request.headers.set('Content-Length', payload.length);
-    request.add(payload);
-    HttpClientResponse response = await request.close();
-    // todo - you should check the response.statusCode
-    String reply = await response.transform(utf8.decoder).join();
-    httpClient.close();
-    return reply;
-  }
-
   Future<List<StandAnimation>> getAnimations(String code) {
     var url = Uri.https(baseUrl, 'api/Animations/GetAnimations', {"id": code});
 
@@ -108,36 +127,27 @@ class ApiClient {
         .toList());
   }
 
-  void init() {
-    _dio.interceptor.response.onError = (DioError error) async {
-      var token = await _authorize.getToken();
-      var tokenHeader = 'Bearer $token';
-      if (error.response?.statusCode == 401 ||
-          error.response?.statusCode == 403) {
-        Options options = error.response.request;
-        // If the token has been updated, repeat directly.
-        if (tokenHeader != options.headers["Authorization"]) {
-          options.headers["Authorization"] = tokenHeader;
-          //repeat
-          return _dio.request(options.path, options: options);
-        }
+  Future<List<PipeAccesorySimple>> searchGear(
+      String search, String type, int page, int pageSize) {
+    var url = Uri.https(baseUrl, 'api//Gear/${type}/Search/${search}',
+        {"page": page.toString(), "pageSize": pageSize.toString()});
 
-        await _authorize.refreshToken();
-        token = await _authorize.getToken();
-        options.headers["Authorization"] = 'Bearer $token';
-        return _dio.request(options.path, options: options);
-      }
-      return error;
-    };
+    return _getJson(url).then((json) {
+      return json
+          .map<PipeAccesorySimple>((data) => PipeAccesorySimple.fromJson(data))
+          .toList();
+    });
+  }
 
-    _dio.interceptor.request.onSend = (Options o) async {
-      var token = await _authorize.getToken();
-      o.headers['Authorization'] = 'Bearer $token';
-      if (o.method == "POST") {
-        o.headers['content-length'] = utf8.encode(json.encode(o.data)).length;
-      }
-      return o;
-    };
+  Future<String> getSessionId(String id) async {
+    var url = Uri.https(baseUrl, 'api/SmokeSession/GetSessionCode', {"id": id});
+    return _getJson(url).then((a) => a.toString());
+  }
+
+  Future<List<PipeAccesory>> getMyGear() async {
+    var url = Uri.https(baseUrl, 'api/Person/MyGear');
+    return _getJson(url).then((data) =>
+        data.map<PipeAccesory>((p) => PipeAccesory.fromJson(p)).toList());
   }
 }
 
@@ -146,8 +156,11 @@ class ColorDto {
 
   ColorDto(this.color);
 
-  Map<String, dynamic> toJson() =>
-      {'Hue': color.hue.clamp(0, 360) * 360~/255, 'Saturation': (color.saturation.clamp(0, 1) * 255).toInt(), 'Value': 255};
+  Map<String, dynamic> toJson() => {
+        'Hue': color.hue.clamp(0, 360) * 360 ~/ 255,
+        'Saturation': (color.saturation.clamp(0, 1) * 255).toInt(),
+        'Value': 255
+      };
 }
 
 class SessionIdValidation extends Dto {

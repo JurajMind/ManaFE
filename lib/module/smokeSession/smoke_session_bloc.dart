@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app/app/app.dart';
+import 'package:app/models/PipeAccesory/pipe_accesory.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
@@ -38,6 +39,10 @@ class SmokeSessionBloc {
       new BehaviorSubject<List<StandAnimation>>(
           seedValue: new List<StandAnimation>());
 
+  BehaviorSubject<List<PipeAccesory>> myGear =
+      new BehaviorSubject<List<PipeAccesory>>(
+          seedValue: new List<PipeAccesory>());
+
   Future joinSession(String sessionCode) async {
     if (sessionCode == null) {
       sessionCode = this.activeSessionId;
@@ -62,9 +67,15 @@ class SmokeSessionBloc {
     animations.add(await App.http.getAnimations(sessionData.hookah.code));
   }
 
+  loadMyGear() async {
+    var gear = await App.http.getMyGear();
+    myGear.add(gear);
+  }
+
   loadAnimation() async {
     var list = await App.http.getAnimations('hookahTest1');
-    list.insertAll(0,List<StandAnimation>.generate(10, (i) => StandAnimation.empty()));
+    list.insertAll(
+        0, List<StandAnimation>.generate(10, (i) => StandAnimation.empty()));
     animations.add(list);
   }
 

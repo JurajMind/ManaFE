@@ -1,11 +1,16 @@
 import 'package:app/models/PipeAccesory/pipe_accesory.dart';
+import 'package:app/module/smokeSession/smoke_session_bloc.dart';
+import 'package:app/pages/test_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PipeAccesoryWidget extends StatelessWidget {
   final PipeAccesory accesory;
   final String type;
-  const PipeAccesoryWidget({Key key, this.accesory,this.type}) : super(key: key);
+  final SmokeSessionBloc smokeSessionBloc;
+  const PipeAccesoryWidget(
+      {Key key, this.accesory, this.type, this.smokeSessionBloc})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +26,9 @@ class PipeAccesoryWidget extends StatelessWidget {
             flex: 1,
           ),
           Expanded(
-            child: this.accesory != null ? Text("${accesory.brand} ${accesory.name}") : Text('No data'),
+            child: this.accesory != null
+                ? Text("${accesory.brand} ${accesory.name}")
+                : Text('No data'),
             flex: 2,
           ),
           IconButton(
@@ -30,15 +37,8 @@ class PipeAccesoryWidget extends StatelessWidget {
                 showModalBottomSheet<void>(
                     context: context,
                     builder: (BuildContext context) {
-                      return new Container(
-                          child: new Padding(
-                              padding: const EdgeInsets.all(32.0),
-                              child: new Text(
-                                  'This is the modal bottom sheet. Click anywhere to dismiss.',
-                                  textAlign: TextAlign.center,
-                                  style: new TextStyle(
-                                      color: Theme.of(context).accentColor,
-                                      fontSize: 24.0))));
+                      return new MetadataBottomSheet(
+                          smokeSessionBloc: this.smokeSessionBloc);
                     });
               })
         ],

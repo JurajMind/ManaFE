@@ -18,6 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 //Equivalent to var hc = $.hubConnection(url,options);
+final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 2;
@@ -89,10 +90,9 @@ class _HomePageState extends State<HomePage> {
               ),
               Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100.0),
-                  color: Colors.white
-                ),
-                              child: IconButton(
+                    borderRadius: BorderRadius.circular(100.0),
+                    color: Colors.white),
+                child: IconButton(
                   icon: Icon(Icons.settings_backup_restore),
                   color: _currentIndex == 2 ? Colors.black : Colors.grey,
                   onPressed: () => _setActiveTab(2),
@@ -125,13 +125,14 @@ class _HomePageState extends State<HomePage> {
             if (_currentIndex != 2) {
               _setActiveTab(2);
             } else {
-              navigatorKey.currentState.pop();
+              return true;
             }
           } else {
             !await navigatorKeys[_currentIndex].currentState.maybePop();
           }
         },
         child: new Scaffold(
+            key: scaffoldKey,
             bottomNavigationBar: myBottomBar(),
             resizeToAvoidBottomPadding: true,
             body: _buildBody()));
