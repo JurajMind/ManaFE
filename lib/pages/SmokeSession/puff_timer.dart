@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:rxdart/src/observable.dart';
 
 class PuffTimeText extends StatefulWidget {
   PuffTimeText({this.dependencies, this.completeTime});
@@ -19,6 +20,10 @@ class PuffTimeState extends State<PuffTimeText> {
   String alternativeText = '0.00';
   bool showTimer = false;
 
+  Observable<int> stream;
+
+  StreamSubscription<int> subscription;
+
   void initState() {
     timer = new Timer.periodic(
         new Duration(
@@ -30,7 +35,8 @@ class PuffTimeState extends State<PuffTimeText> {
 
   @override
   void didChangeDependencies() {
-    widget.dependencies.smokeSessionBloc.smokeState.listen((data) {
+    subscription =
+        widget.dependencies.smokeSessionBloc.smokeStateBroadcast.listen((data) {
       if (data != 0) {
         widget.dependencies.stopwatch.reset();
         widget.dependencies.stopwatch.start();
@@ -72,7 +78,9 @@ class PuffTimeState extends State<PuffTimeText> {
   void dispose() {
     timer?.cancel();
     timer = null;
+
     super.dispose();
+    subscription.cancel();
   }
 
   @override

@@ -28,6 +28,10 @@ class SmokeSessionBloc {
   BehaviorSubject<SmokeStatisticDataModel> smokeStatistic =
       new BehaviorSubject<SmokeStatisticDataModel>();
 
+  Observable<int> get smokeStateBroadcast {
+    return this.smokeState.asBroadcastStream();
+  }
+
   BehaviorSubject<List<String>> recentSessions =
       new BehaviorSubject<List<String>>(seedValue: new List<String>());
 

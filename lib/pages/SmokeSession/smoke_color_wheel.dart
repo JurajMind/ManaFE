@@ -1,10 +1,7 @@
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
-import 'package:rxdart/rxdart.dart';
 import 'dart:math' as math;
-import 'package:tuple/tuple.dart';
 import 'package:flutter/material.dart';
 
 class SmokeColorWheel extends StatefulWidget {
@@ -22,7 +19,6 @@ class SmokeColorWheel extends StatefulWidget {
 class SmokeColorWheelState extends State<SmokeColorWheel> {
   HSVColor selectedColor;
   Offset position;
-  
 
   @override
   void initState() {
@@ -41,67 +37,55 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double width = MediaQuery.of(context).size.width;
-    double heigth = MediaQuery.of(context).size.height;
     return Stack(
       children: <Widget>[
-        Container(
+        Padding(
+          padding: EdgeInsets.all(10.0),
           child: GestureDetector(
             onTapUp: (TapUpDetails details) {
               RenderBox getBox = context.findRenderObject();
               Offset localOffset = getBox.globalToLocal(details.globalPosition);
-              var middle = ColorHelper.positionToCenter(localOffset,Offset(size.width / 2, size.height / 2));
-                            setState(() {
-              position = localOffset;
-              selectedColor = ColorHelper._position2color(middle, size.width);                
-                            });
-              
+              var middle = ColorHelper.positionToCenter(
+                  localOffset, Offset(size.width / 2, size.width / 2));
+              setState(() {
+                position = localOffset;
+                selectedColor =
+                    ColorHelper._position2color(middle, size.width / 2);
+              });
+
               //widget.onColorChanged(selectedColor);
             },
             onPanUpdate: (DragUpdateDetails details) {
               RenderBox getBox = context.findRenderObject();
               Offset localOffset = getBox.globalToLocal(details.globalPosition);
               setState(() {
-              position = localOffset;
-              selectedColor = ColorHelper._position2color(localOffset, size.width);                
-                            });
-
+                position = localOffset;
+                selectedColor =
+                    ColorHelper._position2color(localOffset, size.width / 2);
+              });
             },
-            onPanEnd: (DragEndDetails details) {              
-            widget.onColorChanged(selectedColor);
+            onPanEnd: (DragEndDetails details) {
+              widget.onColorChanged(selectedColor);
             },
-            child: new Container(
-              child: RepaintBoundary(
-                child: ClipOval(
-                  
-                                  child: Stack(
-                                    children: <Widget>[
-                                      Positioned(
-                                          height:size.height*2,
-                                          top: -size.height,
-                                          left:-size.height,
-                                          width: size.height*2,
-                                        child: Transform.rotate(
-                                          angle: 50.0,
-                                                                                  child: CustomPaint(
-                    
-                    painter: CircleGradientPainter(),
-                  ),
-                                        ),
-                                        ),
-                                    ],
-                                  ),
+            child: RepaintBoundary(
+              child: Transform.rotate(
+                angle: -2.4,
+                child: new Container(
+                  decoration: new BoxDecoration(
+                      image: new DecorationImage(
+                          image: AssetImage("images/color_wheel.png"),
+                          fit: BoxFit.fill),
+                      borderRadius:
+                          new BorderRadius.all(Radius.circular(width / 2)),
+                      border: new Border.all(
+                          color: const Color.fromRGBO(221, 221, 221, 1.0),
+                          width: 2.5)),
                 ),
               ),
-              decoration: new BoxDecoration(
-                  borderRadius:
-                      new BorderRadius.all(Radius.circular(width / 2)),
-                  border: new Border.all(
-                      color: const Color.fromRGBO(221, 221, 221, 1.0),
-                      width: 2.5)),
             ),
           ),
         ),
-        new ColorCircle(globalOffset:position,color: selectedColor)
+        new ColorCircle(globalOffset: position, color: selectedColor),
       ],
     );
   }
@@ -110,7 +94,8 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
 class ColorCircle extends StatelessWidget {
   const ColorCircle({
     Key key,
-    @required this.globalOffset, this.color,
+    @required this.globalOffset,
+    this.color,
   }) : super(key: key);
 
   final Offset globalOffset;
@@ -118,20 +103,19 @@ class ColorCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-           return Positioned(
-          top: this.globalOffset.dy,
-          left: this.globalOffset.dx,
-          child: Container(
-            width: 50.0,
-            height: 50.0,           
-            decoration: BoxDecoration(
-               color: color.toColor(),
-                borderRadius: new BorderRadius.all(Radius.circular(25.0)),
-                border: new Border.all(
-                    color: const Color.fromRGBO(221, 221, 221, 1.0),
-                    width: 4.0)),
-          ),
-        );
+    return Positioned(
+      top: this.globalOffset.dy - 20,
+      left: this.globalOffset.dx - 20,
+      child: Container(
+        width: 50.0,
+        height: 50.0,
+        decoration: BoxDecoration(
+            color: color.toColor(),
+            borderRadius: new BorderRadius.all(Radius.circular(25.0)),
+            border: new Border.all(
+                color: const Color.fromRGBO(221, 221, 221, 1.0), width: 4.0)),
+      ),
+    );
   }
 }
 
@@ -180,7 +164,7 @@ class CircleGradientPainter extends CustomPainter {
   double fromHue = 40.0;
   double toHue = 250.0;
 
-  CircleGradientPainter();  
+  CircleGradientPainter();
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -195,8 +179,7 @@ class CircleGradientPainter extends CustomPainter {
         }
 
         var paint = Paint()
-          ..color =
-             _getColor(positionToMiddle, middle.dx)
+          ..color = _getColor(positionToMiddle, middle.dx)
           ..strokeWidth = 2.0
           ..style = PaintingStyle.stroke;
         canvas.drawPoints(PointMode.points, [position], paint);
@@ -204,19 +187,16 @@ class CircleGradientPainter extends CustomPainter {
     }
   }
 
-  Color _getColor(Offset offset,double size){    
-
+  Color _getColor(Offset offset, double size) {
     var color = ColorHelper.xy2polar(offset.dx, offset.dy);
     var angle = ColorHelper.doublerad2deg(color);
     double s = 0.0;
     var step = (this.toHue - fromHue) / 180;
-    if(angle > 0)
-    {
-       s  = this.fromHue + step * angle;
-    }else{
-       s  = this.fromHue - step * angle;
+    if (angle > 0) {
+      s = this.fromHue + step * angle;
+    } else {
+      s = this.fromHue - step * angle;
     }
-    
 
     return HSVColor.fromAHSV(1.0, s, 1.0, 1.0).toColor();
   }
@@ -226,8 +206,6 @@ class CircleGradientPainter extends CustomPainter {
     return false;
   }
 }
-
-
 
 class ColorHelper {
   static double distance(Offset position) {
@@ -256,8 +234,6 @@ class ColorHelper {
 
     return HSVColor.fromAHSV(1.0, doublerad2deg(color), radius, 1.0);
   }
-
-
 
   static Offset _getOffsetFromColor(HSVColor color, double width) {
     return Offset.zero;

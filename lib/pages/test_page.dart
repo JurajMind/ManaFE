@@ -7,6 +7,7 @@ import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/animation_list.dart';
 import 'package:app/pages/SmokeSession/animation_select_page.dart';
+import 'package:app/pages/SmokeSession/gradiend_color_wheel.dart';
 import 'package:app/pages/SmokeSession/metadata_item.dart';
 import 'package:app/pages/SmokeSession/smoke_color_wheel.dart';
 import 'package:app/pages/home.page.dart';
@@ -57,15 +58,7 @@ class _TestPageState extends State<TestPage> {
             delegate: new SliverChildListDelegate(
               <Widget>[
                 AnimationsPicker(),
-                SizedBox(
-                    height: size.width,
-                    child: SmokeColorWheel(
-                      onColorChanged: (color) {
-                        App.http.changeColor('emulator', color);
-                        //print(json.encode(ColorDto(color)));
-                      },
-                      color: HSVColor.fromColor(Colors.red),
-                    )),
+                SizedBox(height: size.width, child: GradientColorWheel()),
                 SizedBox(
                     child: Column(
                   children: <Widget>[
