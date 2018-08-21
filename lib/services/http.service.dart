@@ -50,6 +50,7 @@ class ApiClient {
         await _authorize.refreshToken();
         token = await _authorize.getToken();
         options.headers["Authorization"] = 'Bearer $token';
+
         return _dio.request(options.path, options: options);
       }
       return error;
@@ -58,6 +59,7 @@ class ApiClient {
     _dio.interceptor.request.onSend = (Options o) async {
       var token = await _authorize.getToken();
       o.headers['Authorization'] = 'Bearer $token';
+      o.headers["Accept"] = "application/json";
       if (o.method == "POST") {
         o.headers['content-length'] = utf8.encode(json.encode(o.data)).length;
       }
@@ -141,7 +143,7 @@ class ApiClient {
 
   Future<String> getSessionId(String id) async {
     var url = Uri.https(baseUrl, 'api/SmokeSession/GetSessionCode', {"id": id});
-    var result =  await _dio.get(url.toString());
+    var result = await _dio.get(url.toString());
     return result.data;
   }
 

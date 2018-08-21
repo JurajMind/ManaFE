@@ -1,4 +1,5 @@
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
+import 'package:app/pages/Mixology/mix_detail_page.dart';
 import 'package:app/utils/color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,21 +28,24 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Icon(Icons.add),
-                widget.tobaccoMix.name != null
-                    ? Text(
-                        widget.tobaccoMix.name,
-                        style: new TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0),
-                      )
-                    : Text(
-                        'No name',
-                        style: new TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0),
-                      ),
+                Hero(
+                  tag: "mix_hero_${widget.tobaccoMix.id}",
+                  child: widget.tobaccoMix.name != null
+                      ? Text(
+                          widget.tobaccoMix.name,
+                          style: new TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0),
+                        )
+                      : Text(
+                          'No name',
+                          style: new TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0),
+                        ),
+                )
               ],
             ),
             Card(
@@ -52,27 +56,19 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
               child: Column(
                 children: <Widget>[
                   GestureDetector(
-                    onTap: () => setState(() {
-                          this.expanded = !this.expanded;
-                          if (expanded) {
-                            this._bodyHeight = 150.0;
-                          } else {
-                            this._bodyHeight = 0.0;
-                          }
-                        }),
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                MixDetailPage(mix: widget.tobaccoMix))),
                     child: Container(
-                      decoration: BoxDecoration(
-                     gradient: LinearGradient(
-                       colors: ColorHelper.GetRandomColors(widget.tobaccoMix.tobaccos.length),
-                       
-                     )
-                      ),
-                                          child: Padding(
+                      child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: widget.tobaccoMix.tobaccos.length > 3
                             ? _longMix(widget.tobaccoMix)
                             : Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: _createTobaccoRow(widget.tobaccoMix)),
                       ),
                     ),
@@ -119,8 +115,6 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
     return mix.tobaccos.map((item) {
       return new Column(
         children: <Widget>[
-          Text(item.item2.toString() + 'g',
-              style: TextStyle(color: Colors.grey)),
           Text(
             item.item1.name,
             style:
@@ -130,6 +124,8 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
             item.item1.brand,
             style: TextStyle(color: Colors.black),
           ),
+          Text(item.item2.toString() + 'g',
+              style: TextStyle(color: Colors.grey)),
         ],
       );
     }).toList();

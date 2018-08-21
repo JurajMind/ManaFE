@@ -34,13 +34,11 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
       fit: StackFit.expand,
       overflow: Overflow.visible,
       children: <Widget>[
-        new AppBar(
-          backgroundColor: Colors.transparent,
-        ),
         new Positioned(
-          child: GradientColorWheel( 
-            size: Size(getCircleRadius(context)*2,getCircleRadius(context)*2),           
-            defaultColors: [Colors.red,Colors.blue],
+          child: GradientColorWheel(
+            size: Size(
+                getCircleRadius(context) * 2, getCircleRadius(context) * 2),
+            defaultColors: [Colors.red, Colors.blue],
             child: Center(
                 widthFactor: 0.4,
                 child: new Padding(
@@ -102,7 +100,6 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
           ),
           left: (MediaQuery.of(context).size.width / 2) -
               getCircleRadius(context),
-          
         ),
         Positioned(
             bottom: 20.0,
@@ -116,7 +113,8 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
             onTap: () {
               Future<String> futureString = new QRCodeReader().scan();
               futureString.then((smokeSessionLink) async {
-                if (smokeSessionLink != null && smokeSessionLink.contains("/smoke/")) {
+                if (smokeSessionLink != null &&
+                    smokeSessionLink.contains("/smoke/")) {
                   var sessionCode = smokeSessionLink.split('/').last;
                   myController.text = sessionCode;
                   await validateAndGo(context, sessionCode);
@@ -137,7 +135,16 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
               child: Icon(Icons.camera),
             ),
           ),
-        )
+        ),
+        Positioned(
+            top: 10.0,
+            child: IconButton(
+              icon: Icon(
+                Icons.chevron_left,
+                size: 50.0,
+              ),
+              onPressed: () => Navigator.pop(context),
+            ))
       ],
     ));
   }

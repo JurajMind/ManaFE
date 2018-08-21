@@ -53,7 +53,7 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
                     ColorHelper.position2color(middle, size.width / 2);
               });
 
-              //widget.onColorChanged(selectedColor);
+              widget.onColorChanged(selectedColor);
             },
             onPanUpdate: (DragUpdateDetails details) {
               RenderBox getBox = context.findRenderObject();
@@ -206,4 +206,3 @@ class CircleGradientPainter extends CustomPainter {
     return false;
   }
 }
-

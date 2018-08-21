@@ -48,8 +48,6 @@ class MixologyList extends StatelessWidget {
     return mix.tobaccos.map((item) {
       return new Column(
         children: <Widget>[
-          Text(item.item2.toString() + 'g',
-              style: TextStyle(color: Colors.grey)),
           Text(
             item.item1.name,
             style:
@@ -59,6 +57,8 @@ class MixologyList extends StatelessWidget {
             item.item1.brand,
             style: TextStyle(color: Colors.black),
           ),
+          Text(item.item2.toString() + 'g',
+              style: TextStyle(color: Colors.grey)),
         ],
       );
     }).toList();

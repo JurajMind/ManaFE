@@ -4,6 +4,7 @@ import 'package:app/components/my_flutter_app_icons.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/mixology/mixology_list.dart';
+import 'package:app/pages/SmokeSession/gradiend_color_wheel.dart';
 import 'package:app/pages/gear.page.dart';
 import 'package:app/pages/places.page.dart';
 import 'package:app/pages/profile.page.dart';
@@ -88,16 +89,24 @@ class _HomePageState extends State<HomePage> {
                 color: _currentIndex == 1 ? Colors.white : Colors.grey,
                 onPressed: () => _setActiveTab(1),
               ),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100.0),
-                    color: Colors.white),
-                child: IconButton(
-                  icon: Icon(Icons.settings_backup_restore),
-                  color: _currentIndex == 2 ? Colors.black : Colors.grey,
-                  onPressed: () => _setActiveTab(2),
-                ),
-              ),
+              _currentIndex == 2
+                  ? Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100.0),
+                          color: Colors.white),
+                      child: IconButton(
+                        icon: Icon(Icons.settings_backup_restore),
+                        color: _currentIndex == 2 ? Colors.black : Colors.grey,
+                        onPressed: () => _setActiveTab(2),
+                      ),
+                    )
+                  : InkWell(
+                      onTap: () => _setActiveTab(2),
+                      child: GradientColorWheel(
+                          size: new Size(50.0, 50.0),
+                          defaultColors: [Colors.white, Colors.white],
+                          child: Icon(Icons.settings_backup_restore)),
+                    ),
               IconButtonTitle(
                 icon: Icon(Icons.settings),
                 text: 'Gear',

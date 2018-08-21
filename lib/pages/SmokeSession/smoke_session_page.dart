@@ -149,6 +149,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                         child: SmokeColorWheel(
                           onColorChanged: (color) {
                             App.http.changeColor('emulator', color);
+                            smokeSessionBloc.setColor(color.toColor());
                           },
                           color: HSVColor.fromColor(Colors.red),
                         )),
