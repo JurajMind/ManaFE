@@ -1,17 +1,18 @@
-import 'dart:async';
 import 'dart:ui';
 
-import 'package:app/pages/SmokeSession/smoke_color_wheel.dart';
+import 'package:app/module/data_provider.dart';
+import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/smoke_rotaion.dart';
+import 'package:app/utils/color.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:rxdart/rxdart.dart';
-import 'dart:math' as math;
-import 'package:tuple/tuple.dart';
 import 'package:flutter/material.dart';
 
 class GradientColorWheel extends StatefulWidget {
-  const GradientColorWheel({key}) : super(key: key);
-
+  const GradientColorWheel({key, this.defaultColors,this.child,this.size}) : super(key: key);  
+  @required
+  final List<Color> defaultColors;
+  final Widget child;
+  final Size size;
   @override
   GradientColorWheelState createState() {
     return new GradientColorWheelState();
@@ -19,20 +20,35 @@ class GradientColorWheel extends StatefulWidget {
 }
 
 class GradientColorWheelState extends State<GradientColorWheel> {
-  HSVColor selectedColor;
+  
   Offset position;
 
   @override
-  void initState() {
-    selectedColor = HSVColor.fromColor(Colors.white);
+  void initState() {    
     super.initState();
+  }
+
+    StreamBuilder<List<Color>> buildCircle(SmokeSessionBloc smokeSessionBloc,Size size) {
+    return StreamBuilder<List<Color>>(
+      stream: smokeSessionBloc.sessionColor,
+      initialData: widget.defaultColors,
+      builder: (context, snapshot) => Container(
+                            height: size.height,
+                            width: size.height,
+                            child: widget.child,
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                    colors: snapshot.data != null ? snapshot.data : widget.defaultColors))),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double width = MediaQuery.of(context).size.width;
-    double heigth = MediaQuery.of(context).size.height;
+
+    final smokeSessionBloc = DataProvider.getSmokeSession(context);
+
+    Size size = widget.size == null? MediaQuery.of(context).size : widget.size;
+    double width = MediaQuery.of(context).size.width;    
     return Stack(
       children: <Widget>[
         Container(
@@ -43,12 +59,7 @@ class GradientColorWheelState extends State<GradientColorWheel> {
                   Positioned(
                     child: SmokeRotation(
                       child: RepaintBoundary(
-                        child: Container(
-                            height: size.height,
-                            width: size.height,
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                    colors: [Colors.blue, Colors.yellow]))),
+                        child: buildCircle(smokeSessionBloc,size)
                       ),
                     ),
                   ),

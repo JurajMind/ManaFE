@@ -141,7 +141,8 @@ class ApiClient {
 
   Future<String> getSessionId(String id) async {
     var url = Uri.https(baseUrl, 'api/SmokeSession/GetSessionCode', {"id": id});
-    return _getJson(url).then((a) => a.toString());
+    var result =  await _dio.get(url.toString());
+    return result.data;
   }
 
   Future<List<PipeAccesory>> getMyGear() async {

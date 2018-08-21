@@ -7,6 +7,9 @@ import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
 import 'package:app/models/Stand/animation.dart';
 import 'package:app/services/signal_r.dart';
+import 'package:app/utils/color.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 class SmokeSessionBloc {
@@ -43,9 +46,15 @@ class SmokeSessionBloc {
       new BehaviorSubject<List<StandAnimation>>(
           seedValue: new List<StandAnimation>());
 
+  BehaviorSubject<List<Color>> sessionColor = new BehaviorSubject<List<Color>>();
+
   BehaviorSubject<List<PipeAccesory>> myGear =
       new BehaviorSubject<List<PipeAccesory>>(
           seedValue: new List<PipeAccesory>());
+
+  setColor(Color color){
+    sessionColor.add([color, ColorHelper.getOpositeColor(color)]);
+  }
 
   Future joinSession(String sessionCode) async {
     if (sessionCode == null) {

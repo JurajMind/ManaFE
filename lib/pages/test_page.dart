@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:app/app/app.dart';
 import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory.dart';
 import 'package:app/module/data_provider.dart';
@@ -9,8 +8,6 @@ import 'package:app/pages/SmokeSession/animation_list.dart';
 import 'package:app/pages/SmokeSession/animation_select_page.dart';
 import 'package:app/pages/SmokeSession/gradiend_color_wheel.dart';
 import 'package:app/pages/SmokeSession/metadata_item.dart';
-import 'package:app/pages/SmokeSession/smoke_color_wheel.dart';
-import 'package:app/pages/home.page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -58,7 +55,9 @@ class _TestPageState extends State<TestPage> {
             delegate: new SliverChildListDelegate(
               <Widget>[
                 AnimationsPicker(),
-                SizedBox(height: size.width, child: GradientColorWheel()),
+                SizedBox(height: size.width, child: GradientColorWheel(
+                  defaultColors: [Colors.red,Colors.blue],
+                )),
                 SizedBox(
                     child: Column(
                   children: <Widget>[
@@ -73,11 +72,7 @@ class _TestPageState extends State<TestPage> {
                     ),
                     RaisedButton(
                       onPressed: () {
-                        scaffoldKey.currentState
-                            .showBottomSheet((BuildContext context) {
-                          return new MetadataBottomSheet(
-                              smokeSessionBloc: smokeSessionBloc);
-                        });
+                      smokeSessionBloc.setColor(Colors.yellow);
                       },
                       child: Text('BottomModal'),
                     )

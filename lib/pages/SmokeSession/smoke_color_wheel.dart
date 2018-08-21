@@ -1,7 +1,8 @@
 import 'dart:ui';
 
+import 'package:app/utils/color.dart';
 import 'package:flutter/cupertino.dart';
-import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 class SmokeColorWheel extends StatefulWidget {
@@ -28,8 +29,7 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
 
   @override
   void didChangeDependencies() {
-    position = ColorHelper._getOffsetFromColor(
-        widget.color, MediaQuery.of(context).size.width);
+    position = Offset.zero;
     super.didChangeDependencies();
   }
 
@@ -50,7 +50,7 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
               setState(() {
                 position = localOffset;
                 selectedColor =
-                    ColorHelper._position2color(middle, size.width / 2);
+                    ColorHelper.position2color(middle, size.width / 2);
               });
 
               //widget.onColorChanged(selectedColor);
@@ -61,7 +61,7 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
               setState(() {
                 position = localOffset;
                 selectedColor =
-                    ColorHelper._position2color(localOffset, size.width / 2);
+                    ColorHelper.position2color(localOffset, size.width / 2);
               });
             },
             onPanEnd: (DragEndDetails details) {
@@ -142,7 +142,7 @@ class RainbowPainter extends CustomPainter {
 
         var paint = Paint()
           ..color =
-              ColorHelper._position2color(positionToMiddle, middle.dx).toColor()
+              ColorHelper.position2color(positionToMiddle, middle.dx).toColor()
           ..strokeWidth = 2.0
           ..style = PaintingStyle.stroke;
         canvas.drawPoints(PointMode.points, [position], paint);
@@ -207,35 +207,3 @@ class CircleGradientPainter extends CustomPainter {
   }
 }
 
-class ColorHelper {
-  static double distance(Offset position) {
-    var distance =
-        math.sqrt(position.dx * position.dx + position.dy * position.dy);
-    return distance;
-  }
-
-  static Offset positionToCenter(Offset offset, Offset middle) {
-    return new Offset(middle.dx - offset.dx, middle.dy - offset.dy);
-  }
-
-  static double xy2polar(x, y) {
-    var phi = math.atan2(y, x);
-    return phi;
-  }
-
-  static doublerad2deg(double rad) {
-    return (((rad * 180) / (math.pi)));
-  }
-
-  static HSVColor _position2color(Offset offset, double size) {
-    var radius = distance(offset) / size;
-
-    var color = xy2polar(offset.dx, offset.dy);
-
-    return HSVColor.fromAHSV(1.0, doublerad2deg(color), radius, 1.0);
-  }
-
-  static Offset _getOffsetFromColor(HSVColor color, double width) {
-    return Offset.zero;
-  }
-}

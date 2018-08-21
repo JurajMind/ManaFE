@@ -1,4 +1,5 @@
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
+import 'package:app/utils/color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -59,13 +60,21 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                             this._bodyHeight = 0.0;
                           }
                         }),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: widget.tobaccoMix.tobaccos.length > 3
-                          ? _longMix(widget.tobaccoMix)
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: _createTobaccoRow(widget.tobaccoMix)),
+                    child: Container(
+                      decoration: BoxDecoration(
+                     gradient: LinearGradient(
+                       colors: ColorHelper.GetRandomColors(widget.tobaccoMix.tobaccos.length),
+                       
+                     )
+                      ),
+                                          child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: widget.tobaccoMix.tobaccos.length > 3
+                            ? _longMix(widget.tobaccoMix)
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: _createTobaccoRow(widget.tobaccoMix)),
+                      ),
                     ),
                   ),
                   new AnimatedContainer(
