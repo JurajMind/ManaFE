@@ -103,9 +103,9 @@ class _HomePageState extends State<HomePage> {
                   : InkWell(
                       onTap: () => _setActiveTab(2),
                       child: GradientColorWheel(
-                          size: new Size(50.0, 50.0),
+                          size: new Size(48.0, 48.0),
                           defaultColors: [Colors.white, Colors.white],
-                          child: Icon(Icons.settings_backup_restore)),
+                          child: Icon(Icons.settings_backup_restore,color: Colors.grey,)),
                     ),
               IconButtonTitle(
                 icon: Icon(Icons.settings),

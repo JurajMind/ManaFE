@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:animated_background/animated_background.dart';
 import 'package:app/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 class StartPage extends StatefulWidget {
   @override
@@ -59,7 +62,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                         child: new RoundedButton(
                           buttonName: 'Facebook login',
                           onTap: () {
-                            navigate(context, 'auth/login');
+                            facebookLogin();
                           },
                           buttonColor: Colors.white,
                           borderWidth: 1.0,
@@ -89,5 +92,19 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
         ),
       )),
     );
+  }
+
+  Future facebookLogin() async {
+    var facebookLogin = new FacebookLogin();
+    var result = await facebookLogin.logInWithReadPermissions(['email','user_friends','user_posts']);
+
+    switch (result.status) {
+      case FacebookLoginStatus.loggedIn:
+        break;
+      case FacebookLoginStatus.cancelledByUser:
+        break;
+      case FacebookLoginStatus.error:      
+        break;
+    }
   }
 }

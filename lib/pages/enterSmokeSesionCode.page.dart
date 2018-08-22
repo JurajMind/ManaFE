@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app/app/app.dart';
+import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/helpers.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
@@ -76,8 +77,12 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                               ),
                               new Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: new RaisedButton(
-                                  onPressed: () async {
+                                child: new RoundedButton(
+                                  borderWidth: 2.0,
+                                  height: 50.0,
+                                  bottomMargin: 1.0,
+                                  width: 180.0,
+                                  onTap: () async {
                                     setState(() {
                                       validating = true;
                                     });
@@ -89,7 +94,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                   child: validating
                                       ? new Text('Validating')
                                       : new Text('Enter'),
-                                  color: Colors.red,
+                                  buttonColor: Colors.transparent,
                                 ),
                               )
                             ],
@@ -108,7 +113,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
             child: buildRecentSessions(smokeSessionBloc)),
         Positioned(
           right: 20.0,
-          top: topWidgetHeight + getCircleRadius(context) / 2,
+          top: topWidgetHeight + getCircleRadius(context) / 2 + 20,
           child: InkWell(
             onTap: () {
               Future<String> futureString = new QRCodeReader().scan();
@@ -120,15 +125,12 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                   await validateAndGo(context, sessionCode);
                 }
               });
-            },
-            borderRadius: BorderRadius.circular(10.0),
+            },            
             child: Container(
               width: 100.0,
               height: 100.0,
               decoration: new BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius:
-                      new BorderRadius.all(const Radius.circular(40.0)),
+                  color: Colors.grey,shape: BoxShape.circle,                  
                   border: new Border.all(
                       color: const Color.fromRGBO(221, 221, 221, 1.0),
                       width: 2.5)),

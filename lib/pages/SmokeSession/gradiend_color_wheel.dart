@@ -8,12 +8,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GradientColorWheel extends StatefulWidget {
-  const GradientColorWheel({key, this.defaultColors, this.child, this.size})
+  const GradientColorWheel({key, this.defaultColors, this.child, this.size, this.border})
       : super(key: key);
   @required
   final List<Color> defaultColors;
   final Widget child;
   final Size size;
+  final bool border;
   @override
   GradientColorWheelState createState() {
     return new GradientColorWheelState();
