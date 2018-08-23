@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:animated_background/animated_background.dart';
 import 'package:app/helpers.dart';
+import 'package:app/pages/home.page.dart';
+import 'package:app/services/authorization.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
@@ -27,84 +29,104 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-
+    final GlobalKey<ScaffoldState> _scaffoldKey =
+        new GlobalKey<ScaffoldState>();
     return SafeArea(
       child: new Scaffold(
+          key: _scaffoldKey,
           body: AnimatedBackground(
-        vsync: this,
-        behaviour: RandomParticleBehaviour(
-            options: ParticleOptions(baseColor: Colors.blue)),
-        child: new Center(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new Container(
-                  padding: new EdgeInsets.all(40.0),
-                  child: new Column(
-                    children: <Widget>[
-                      new Container(
-                        width: screenSize.width,
-                        child: new RoundedButton(
-                          buttonName: 'Sign up',
-                          onTap: () {
-                            navigate(context, 'auth/register');
-                          },
-                          buttonColor: Colors.transparent,
-                          borderWidth: 1.0,
-                          bottomMargin: 1.0,
-                          height: 50.0,
-                          width: screenSize.width,
-                        ),
-                        margin: new EdgeInsets.only(top: 20.0),
-                      ),
-                      new Container(
-                        width: screenSize.width,
-                        child: new RoundedButton(
-                          buttonName: 'Facebook login',
-                          onTap: () {
-                            facebookLogin();
-                          },
-                          buttonColor: Colors.white,
-                          borderWidth: 1.0,
-                          bottomMargin: 1.0,
-                          height: 50.0,
-                          width: screenSize.width,
-                          textColor: Colors.black,
-                        ),
-                        margin: new EdgeInsets.only(top: 20.0),
-                      ),
-                      new Container(
-                        width: screenSize.width,
-                        child: new FlatButton(
-                          child: new Text(
-                            'I alredy have an account',
+            vsync: this,
+            behaviour: RandomParticleBehaviour(
+                options: ParticleOptions(baseColor: Colors.blue)),
+            child: new Center(
+              child: new Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new Container(
+                      padding: new EdgeInsets.all(40.0),
+                      child: new Column(
+                        children: <Widget>[
+                          new Container(
+                            width: screenSize.width,
+                            child: new RoundedButton(
+                              buttonName: 'Sign up',
+                              onTap: () {
+                                navigate(context, 'auth/register');
+                              },
+                              buttonColor: Colors.transparent,
+                              borderWidth: 1.0,
+                              bottomMargin: 1.0,
+                              height: 50.0,
+                              width: screenSize.width,
+                            ),
+                            margin: new EdgeInsets.only(top: 20.0),
                           ),
-                          onPressed: () {
-                            navigate(context, 'auth/login');
-                          },
-                        ),
-                        margin: new EdgeInsets.only(top: 20.0),
-                      )
-                    ],
-                  ))
-            ],
-          ),
-        ),
-      )),
+                          new Container(
+                            width: screenSize.width,
+                            child: new RoundedButton(
+                              buttonName: 'Facebook login',
+                              onTap: () {
+                                facebookLogin(_scaffoldKey);
+                              },
+                              buttonColor: Colors.white,
+                              borderWidth: 1.0,
+                              bottomMargin: 1.0,
+                              height: 50.0,
+                              width: screenSize.width,
+                              textColor: Colors.black,
+                            ),
+                            margin: new EdgeInsets.only(top: 20.0),
+                          ),
+                          new Container(
+                            width: screenSize.width,
+                            child: new FlatButton(
+                              child: new Text(
+                                'I alredy have an account',
+                              ),
+                              onPressed: () {
+                                navigate(context, 'auth/login');
+                              },
+                            ),
+                            margin: new EdgeInsets.only(top: 20.0),
+                          )
+                        ],
+                      ))
+                ],
+              ),
+            ),
+          )),
     );
   }
 
-  Future facebookLogin() async {
+  Future facebookLogin(GlobalKey<ScaffoldState> scaffoldKey) async {
     var facebookLogin = new FacebookLogin();
-    var result = await facebookLogin.logInWithReadPermissions(['email','user_friends','user_posts']);
+    var result = await facebookLogin
+        .logInWithReadPermissions(['email', 'user_friends', 'user_posts']);
+    try {
+      switch (result.status) {
+        case FacebookLoginStatus.loggedIn:
+          {
+            var auth = new Authorize();
+            var tokenResult =
+                await auth.getLocalToken("Facebook", result.accessToken.token);
+            if (tokenResult) {
+              Navigator.pushReplacement(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (BuildContext context) => HomePage()));
+            }
+            break;
+          }
 
-    switch (result.status) {
-      case FacebookLoginStatus.loggedIn:
-        break;
-      case FacebookLoginStatus.cancelledByUser:
-        break;
-      case FacebookLoginStatus.error:      
-        break;
+        case FacebookLoginStatus.cancelledByUser:
+          break;
+        case FacebookLoginStatus.error:
+          break;
+      }
+    } catch (e) {
+      scaffoldKey.currentState.showSnackBar(new SnackBar(
+        content: new Text("Facebook login error :("),
+      ));
     }
   }
 }

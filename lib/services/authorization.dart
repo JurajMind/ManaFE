@@ -42,6 +42,17 @@ class Authorize {
     return _token;
   }
 
+  Future<bool> getLocalToken(String provider, String externalToken) async {
+    var response = await http.get(
+        "https://${App.baseUri}/Account/ObtainLocalAccessToken?provider=${provider}&externalAccessToken=${externalToken}");
+    final responseJson = json.decode(response.body);
+    var success = await writeToken(responseJson);
+    if (success) {
+      return true;
+    }
+    return false;
+  }
+
   Future signOut() async {
     await _storage.delete(key: 'accessToken');
     await _storage.delete(key: 'refreshToken');
@@ -65,14 +76,24 @@ class Authorize {
     final responseJson = json.decode(response.body);
 
     var token = TokenResponse.fromJson(responseJson);
-    if (token.accessToken != null) {
-      await _storage.write(key: 'accessToken', value: token.accessToken);
-      await _storage.write(key: 'refreshToken', value: token.refreshToken);
+
+    var success = await writeToken(token);
+    if (success) {
       return true;
     }
 
     navigatorKey.currentState.pushReplacementNamed('auth/login');
     return false;
+  }
+
+  Future<bool> writeToken(dynamic responseJson) async {
+    var token = TokenResponse.fromJson(responseJson);
+    if (token.accessToken != null) {
+      await _storage.write(key: 'accessToken', value: token.accessToken);
+      if (token.refreshToken != null)
+        await _storage.write(key: 'refreshToken', value: token.refreshToken);
+      return true;
+    }
   }
 
   Future<bool> isAuthorized() async {
@@ -108,7 +129,6 @@ class TokenResponse {
     return TokenResponse(
         accessToken: json['access_token'],
         tokenTtype: json['token_type'],
-        expiresIn: json['expires_in'],
         refreshToken: json['refresh_token'],
         userName: json['userName']);
   }
