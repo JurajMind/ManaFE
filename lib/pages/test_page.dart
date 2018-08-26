@@ -4,6 +4,7 @@ import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
+import 'package:app/pages/Places/reservation_page.dart';
 import 'package:app/pages/SmokeSession/animation_list.dart';
 import 'package:app/pages/SmokeSession/animation_select_page.dart';
 import 'package:app/pages/SmokeSession/gradiend_color_wheel.dart';
@@ -55,9 +56,11 @@ class _TestPageState extends State<TestPage> {
             delegate: new SliverChildListDelegate(
               <Widget>[
                 AnimationsPicker(),
-                SizedBox(height: size.width, child: GradientColorWheel(
-                  defaultColors: [Colors.red,Colors.blue],
-                )),
+                SizedBox(
+                    height: size.width,
+                    child: GradientColorWheel(
+                      defaultColors: [Colors.red, Colors.blue],
+                    )),
                 SizedBox(
                     child: Column(
                   children: <Widget>[
@@ -72,7 +75,11 @@ class _TestPageState extends State<TestPage> {
                     ),
                     RaisedButton(
                       onPressed: () {
-                      smokeSessionBloc.setColor(Colors.yellow);
+                        Navigator.of(context).push(new MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return new ReservationPage();
+                          },
+                        ));
                       },
                       child: Text('BottomModal'),
                     )

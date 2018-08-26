@@ -8,6 +8,7 @@ void main() {
   new App(
           environment: 'dev',
           baseUri: 'devmana.azurewebsites.net',
+          googleApiKey: '***REMOVED***',
           clientId: 'test')
       .run(runApp);
 }

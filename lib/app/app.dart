@@ -18,15 +18,18 @@ class App {
 
   static String baseUri;
 
+  static String googleApiKeys;
+
   // Create app.
-  App({
-    String environment,
-    String baseUri,
-    String clientId,
-  }) {
+  App(
+      {String environment,
+      String baseUri,
+      String clientId,
+      String googleApiKey}) {
     App.environment = environment;
     App.clientId = clientId;
     App.baseUri = baseUri;
+    App.googleApiKeys = googleApiKey;
     // Create app http service.
     App.http = new ApiClient(baseUri);
     App.http.init();

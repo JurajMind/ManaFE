@@ -453,6 +453,8 @@ class AnimationDemoHome extends StatefulWidget {
 
 class _AnimationDemoHomeState extends State<AnimationDemoHome> {
   final ScrollController _scrollController = new ScrollController();
+  final Map<String, ScrollController> pageScroll =
+      new Map<String, ScrollController>();
   final PageController _headingPageController = new PageController();
   final PageController _detailsPageController = new PageController();
   ScrollPhysics _headingScrollPhysics = const NeverScrollableScrollPhysics();
@@ -621,7 +623,7 @@ class _AnimationDemoHomeState extends State<AnimationDemoHome> {
                 // Details
                 new SliverToBoxAdapter(
                   child: new SizedBox(
-                    height: 2910.0,
+                    height: 610.0,
                     child: new NotificationListener<ScrollNotification>(
                       onNotification: (ScrollNotification notification) {
                         return _handlePageNotification(notification,
@@ -630,8 +632,7 @@ class _AnimationDemoHomeState extends State<AnimationDemoHome> {
                       child: new PageView(
                         controller: _detailsPageController,
                         children: allSections.map((Section section) {
-                          return new Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                          return new ListView(
                             children: _detailItemsFor(section).toList(),
                           );
                         }).toList(),
