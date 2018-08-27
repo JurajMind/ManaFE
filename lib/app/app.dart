@@ -3,6 +3,7 @@ import 'package:app/routes/app.routes.dart';
 import 'package:app/routes/auth.routes.dart';
 import 'package:app/services/http.service.dart';
 import 'package:fluro/fluro.dart';
+import 'package:map_view/map_view.dart';
 
 class App {
   // Application environment.
@@ -50,6 +51,7 @@ class App {
 
   // App run.
   void run(runApp) {
+     MapView.setApiKey(App.googleApiKeys);
     runApp(new AppWidget());
   }
 }

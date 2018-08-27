@@ -22,6 +22,7 @@ class MixologyList extends StatelessWidget {
             child: AppBar(
               title: Text('Mixology'),
               backgroundColor: Colors.transparent,
+              centerTitle: true,
             ),
           ),
           new Expanded(
