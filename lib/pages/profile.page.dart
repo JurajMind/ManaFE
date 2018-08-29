@@ -17,7 +17,31 @@ class _ProfilePageState extends State<ProfilePage> {
       children: <Widget>[
         new AppBar(
           title: new Text('ProfilePage'),
+          centerTitle: true,
           backgroundColor: Colors.black,
+          actions: <Widget>[
+            new PopupMenuButton(
+              onSelected: (String value){
+                switch (value){
+                  case 'settings':
+                  break;
+                  case 'signOut':
+                     auth.signOut();
+                     break;
+                }
+              },
+              itemBuilder: (BuildContext context) => [
+                PopupMenuItem(
+                  value: "settings",                  
+                  child: Text('Settings'),
+                ),
+                PopupMenuItem(
+                  value: "signOut",                  
+                  child: Text('Sign out'),
+                )
+              ],
+            )
+          ],
         ),
         new Center(
             child: Column(

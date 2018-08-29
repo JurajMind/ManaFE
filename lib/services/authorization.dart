@@ -87,7 +87,7 @@ class Authorize {
   }
 
   Future<bool> writeToken(dynamic responseJson) async {
-    var token = TokenResponse.fromJson(responseJson);
+    var token = TokenResponse.fromJson(responseJson as Map<String, dynamic>);
     if (token.accessToken != null) {
       await _storage.write(key: 'accessToken', value: token.accessToken);
       if (token.refreshToken != null)

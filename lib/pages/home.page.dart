@@ -1,12 +1,10 @@
-import 'package:app/app/app.widget.dart';
 import 'package:app/components/icon_button_title.dart';
-import 'package:app/components/my_flutter_app_icons.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/mixology/mixology_list.dart';
+import 'package:app/pages/Places/places.page.dart';
 import 'package:app/pages/SmokeSession/gradiend_color_wheel.dart';
 import 'package:app/pages/gear.page.dart';
-import 'package:app/pages/places.page.dart';
+
 import 'package:app/pages/profile.page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';
 import 'package:flutter/material.dart';
