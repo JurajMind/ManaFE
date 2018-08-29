@@ -42,8 +42,8 @@ class Address {
         number = json['Number'],
         city = json['City'],
         zip = json['Zip'],
-        lat = json['lat'],
-        lng = json['lng'];
+        lat = double.parse(json['Lat']),
+        lng = double.parse(json['Lng']);
 
   int id;
 

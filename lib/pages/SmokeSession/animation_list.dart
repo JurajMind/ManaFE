@@ -85,8 +85,8 @@ class AnimationStatePicker extends StatefulWidget {
 class AnimationStatePickerState extends State<AnimationStatePicker> {
   ScrollController controller;
 
-  int _lastReportedItem = 0;
-
+  int lastReportedItem = 0;
+  int selectedItem = 0;
   @override
   void initState() {
     controller = new ScrollController();
@@ -97,40 +97,36 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
     return StreamBuilder<List<StandAnimation>>(
         stream: widget.smokeSessionBloc.animations,
         initialData: List<StandAnimation>(),
-        builder: (context, snapshot) => ListView.builder(
-              controller: controller,
-              shrinkWrap: true,
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) =>
-                  _createAnimation(index, snapshot.data[index], context),
+        builder: (context, snapshot) => new ListWheelScrollView(
+              itemExtent: 50.0,
+              clipToSize: true,
+              diameterRatio: 10.0,
+              perspective: 0.01,
+              onSelectedItemChanged: (int index) => setState(() {
+                    selectedItem = index;
+                  }),
+              children: List.generate(
+                  snapshot.data.length,
+                  (int index) => _createAnimation(
+                      index, snapshot.data[index], context, selectedItem)),
             ));
   }
 
-  _createAnimation(int index, StandAnimation data, BuildContext context) {
-    return AnimatedBuilder(
-        animation: controller,
-        builder: (context, child) {
-          double value = 1.0;
-          value = controller.offset / 1000;
-          value = (1 - (value.abs() * 0.3)).clamp(0.0, 1.0);
-
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              child: Center(
-                child: Text(
-                  data.displayName,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: index == 2
-                          ? Curves.easeOut.transform(value) * 30
-                          : 30.0),
-                ),
-              ),
-            ),
-          );
-        });
+  _createAnimation(
+      int index, StandAnimation data, BuildContext context, int selected) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Container(
+        child: Center(
+          child: Text(data.displayName,
+              style: TextStyle(
+                color: index == selected ? Colors.white : Colors.grey,
+                fontWeight: FontWeight.bold,
+                fontSize: index == selected ? 35.0 : 25.0,
+              )),
+        ),
+      ),
+    );
   }
 
   @override
@@ -149,7 +145,7 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
                       if (notification.depth == 0 &&
                           notification is ScrollUpdateNotification) {
                         final FixedScrollMetrics metrics = notification.metrics;
-                        final double currentItem = getSelectedItem(metrics);                        
+                        final double currentItem = getSelectedItem(metrics);
                       }
                       return false;
                     },

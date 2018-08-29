@@ -46,13 +46,14 @@ class SmokeSessionBloc {
       new BehaviorSubject<List<StandAnimation>>(
           seedValue: new List<StandAnimation>());
 
-  BehaviorSubject<List<Color>> sessionColor = new BehaviorSubject<List<Color>>();
+  BehaviorSubject<List<Color>> sessionColor =
+      new BehaviorSubject<List<Color>>();
 
   BehaviorSubject<List<PipeAccesory>> myGear =
       new BehaviorSubject<List<PipeAccesory>>(
           seedValue: new List<PipeAccesory>());
 
-  setColor(Color color){
+  setColor(Color color) {
     sessionColor.add([color, ColorHelper.getOpositeColor(color)]);
   }
 
@@ -87,8 +88,6 @@ class SmokeSessionBloc {
 
   loadAnimation() async {
     var list = await App.http.getAnimations('hookahTest1');
-    list.insertAll(
-        0, List<StandAnimation>.generate(10, (i) => StandAnimation.empty()));
     animations.add(list);
   }
 

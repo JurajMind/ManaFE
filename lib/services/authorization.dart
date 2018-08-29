@@ -77,7 +77,7 @@ class Authorize {
 
     var token = TokenResponse.fromJson(responseJson);
 
-    var success = await writeToken(token);
+    var success = await writeToken(responseJson);
     if (success) {
       return true;
     }

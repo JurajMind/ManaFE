@@ -116,36 +116,42 @@ class _CarrousselState extends State<Carroussel> {
           navigateToDetail(place);
         }
       },
-      child: new Container(
-          decoration: BoxDecoration(
-            borderRadius: new BorderRadius.circular(10.0),
-            color: Colors.grey[300],
-          ),
-          margin: const EdgeInsets.all(8.0),
-          child: new Padding(
-            padding: EdgeInsets.fromLTRB(8.0, 10.0, 8.0, 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                new Text(
-                  place.name,
-                  style: new TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 20.0),
-                ),
-                new Text(
-                  place.address.toString(),
-                  style: new TextStyle(color: Colors.grey),
-                ),
-                new Flex(
-                  direction: Axis.horizontal,
-                  children: <Widget>[
-                    new Icon(Icons.ac_unit),
-                    new Text(place.rating.toString())
-                  ],
-                )
-              ],
-            ),
-          )),
+      child: Hero(
+        tag: '_picture',
+        child: new Container(
+            decoration: BoxDecoration(
+                borderRadius: new BorderRadius.circular(10.0),
+                color: Colors.grey[300],
+                image: DecorationImage(
+                    image:
+                        NetworkImage('https://picsum.photos/200/300/?random'),
+                    fit: BoxFit.cover)),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  new Text(
+                    place.name,
+                    style: new TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 20.0),
+                  ),
+                  new Text(
+                    place.address.toString(),
+                    style: new TextStyle(color: Colors.grey),
+                  ),
+                  new Flex(
+                    direction: Axis.horizontal,
+                    children: <Widget>[
+                      new Icon(Icons.ac_unit),
+                      new Text(place.rating.toString())
+                    ],
+                  )
+                ],
+              ),
+            )),
+      ),
     );
   }
 }

@@ -149,10 +149,19 @@ class _PlacePageState extends State<PlacePage> {
     return ListTile(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-        settings: RouteSettings(),
-        builder: (context) => PlaceDetailPage(place: data)));
+            settings: RouteSettings(),
+            builder: (context) => PlaceDetailPage(place: data)));
       },
-      leading: SizedBox(height: 60.0, width: 60.0, child: Placeholder()),
+      leading: SizedBox(
+          height: 60.0,
+          width: 60.0,
+          child: Hero(
+            tag: '_picture',
+            child: Image.network(
+              'https://picsum.photos/60/60',
+              fit: BoxFit.cover,
+            ),
+          )),
       title: Text(data.name),
       subtitle: Text(data.address.toString()),
     );
