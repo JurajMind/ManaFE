@@ -63,7 +63,7 @@ class MixologyBloc {
 
       _mixesBeinggRequested.add(i);
       _requestMix(i).then((page) {
-        return _handleNewMixes(page, i, page.count == _mixPerPage);
+        _handleNewMixes(page, i, page.count == _mixPerPage);
       });
     }
   }

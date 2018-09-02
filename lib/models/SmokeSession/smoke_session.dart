@@ -1,5 +1,6 @@
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
+import 'package:flutter/material.dart';
 
 class SmokeSession {
   final String sessionId;
@@ -15,8 +16,8 @@ class SmokeSession {
     var hookah = Hookah.fromJson(json['Hookah'] as Map<String, dynamic>);
     var metaData =
         SmokeSessionMetaData.fromJson(json["MetaData"] as Map<String, dynamic>);
-    var smokeSessionData = SmokeStatisticDataModel
-        .fromJson(json['Statistic'] as Map<String, dynamic>);
+    var smokeSessionData = SmokeStatisticDataModel.fromJson(
+        json['Statistic'] as Map<String, dynamic>);
     return SmokeSession(
         hookah: hookah,
         metaData: metaData,
@@ -36,4 +37,19 @@ class Hookah {
       : name = json['Name'],
         code = json['Code'],
         isOnline = json['IsOnline'];
+}
+
+class StandSettings {
+  StateSetting blow;
+  StateSetting idle;
+  StateSetting puf;
+}
+
+class StateSetting {
+  Color color;
+  int animationId;
+  int brightness;
+  int speed;
+
+  StateSetting.fromJson(Map<String, dynamic> json) {}
 }

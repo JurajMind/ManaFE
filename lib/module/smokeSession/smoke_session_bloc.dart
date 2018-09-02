@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:app/app/app.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
+import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
 import 'package:app/models/Stand/animation.dart';
@@ -42,6 +43,9 @@ class SmokeSessionBloc {
       new BehaviorSubject<SmokeSessionMetaData>(
           seedValue: new SmokeSessionMetaData());
 
+  BehaviorSubject<StandSettings> standSettings =
+      new BehaviorSubject<StandSettings>(seedValue: new StandSettings());
+
   BehaviorSubject<List<StandAnimation>> animations =
       new BehaviorSubject<List<StandAnimation>>(
           seedValue: new List<StandAnimation>());
@@ -52,8 +56,6 @@ class SmokeSessionBloc {
   BehaviorSubject<List<PipeAccesory>> myGear =
       new BehaviorSubject<List<PipeAccesory>>(
           seedValue: new List<PipeAccesory>());
-
-  
 
   setColor(Color color) {
     sessionColor.add([color, ColorHelper.getOpositeColor(color)]);
@@ -80,6 +82,7 @@ class SmokeSessionBloc {
 
     smokeStatistic.add(sessionData.smokeSessionData);
     smokeSessionMetaData.add(sessionData.metaData);
+
     animations.add(await App.http.getAnimations(sessionData.hookah.code));
   }
 

@@ -20,7 +20,6 @@ class EnterSmokeSessionCode extends StatefulWidget {
   }
 }
 
-
 class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
   final double topWidgetHeight = 200.0;
   String _sessionCode;
@@ -85,11 +84,12 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                   height: 50.0,
                                   bottomMargin: 1.0,
                                   width: 180.0,
-                                  onTap: () async {                                 
+                                  onTap: () async {
+                                    if (validating == true) return;
                                     if (_formKey.currentState.validate()) {
-                                         setState(() {
-                                      validating = true;
-                                    });
+                                      setState(() {
+                                        validating = true;
+                                      });
                                       await validateAndGo(
                                           context, myController.text);
                                     }
@@ -128,12 +128,13 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                   await validateAndGo(context, sessionCode);
                 }
               });
-            },            
+            },
             child: Container(
               width: 100.0,
               height: 100.0,
               decoration: new BoxDecoration(
-                  color: Colors.grey,shape: BoxShape.circle,                  
+                  color: Colors.grey,
+                  shape: BoxShape.circle,
                   border: new Border.all(
                       color: const Color.fromRGBO(221, 221, 221, 1.0),
                       width: 2.5)),
@@ -167,8 +168,8 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
       ));
     } else {
       Scaffold.of(context).showSnackBar(new SnackBar(
-            content: new Text("Invalid session code"),
-          ));
+        content: new Text("Invalid session code"),
+      ));
     }
   }
 
@@ -195,8 +196,8 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
 
 class UpperCaseTextFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue,
-      TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
     return new TextEditingValue(
       text: newValue.text?.toUpperCase(),
       selection: newValue.selection,

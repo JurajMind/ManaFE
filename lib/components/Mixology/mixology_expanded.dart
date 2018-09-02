@@ -21,23 +21,25 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
     // TODO: implement build
     return SingleChildScrollView(
       child: GestureDetector(
-                            onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                MixDetailPage(mix: widget.tobaccoMix))),
-              child: Padding(
+        onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MixDetailPage(mix: widget.tobaccoMix))),
+        child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: new Column(
             children: <Widget>[
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  Expanded(child: Icon(Icons.add,),flex: 1),
+                  Icon(
+                    Icons.add,
+                  ),
                   Expanded(
                     flex: 1,
-                                    child: Hero(
+                    child: Hero(
                       tag: "mix_hero_${widget.tobaccoMix.id}",
                       child: widget.tobaccoMix.name != null
                           ? Text(
@@ -56,8 +58,15 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                             ),
                     ),
                   ),
-                  Expanded(flex: 1,
-                    child: new StarRating(rating: 2.0,starCount: 5,color: Colors.white,borderColor: Colors.white,)),
+                  Expanded(
+                      flex: 1,
+                      child: new StarRating(
+                        size: 15.0,
+                        rating: 2.0,
+                        starCount: 5,
+                        color: Colors.white,
+                        borderColor: Colors.white,
+                      )),
                 ],
               ),
               Card(
