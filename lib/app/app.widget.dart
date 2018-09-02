@@ -90,6 +90,11 @@ class _AppWidgetState extends State<AppWidget> {
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
+    return Center(child: new Column(
+      children: <Widget>[
+        Text('Manapipes'),
+        CircularProgressIndicator(),
+      ],
+    ));
   }
 }

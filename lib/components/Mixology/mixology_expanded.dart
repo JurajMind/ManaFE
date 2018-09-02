@@ -3,6 +3,7 @@ import 'package:app/pages/Mixology/mix_detail_page.dart';
 import 'package:app/utils/color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating/flutter_rating.dart';
 
 class MixCardExpanded extends StatefulWidget {
   final TobaccoMix tobaccoMix;
@@ -19,49 +20,54 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: new Column(
-          children: <Widget>[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(Icons.add),
-                Hero(
-                  tag: "mix_hero_${widget.tobaccoMix.id}",
-                  child: widget.tobaccoMix.name != null
-                      ? Text(
-                          widget.tobaccoMix.name,
-                          style: new TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.0),
-                        )
-                      : Text(
-                          'No name',
-                          style: new TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.0),
-                        ),
-                )
-              ],
-            ),
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25.0),
-              ),
-              color: Colors.white,
-              child: Column(
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () => Navigator.push(
+      child: GestureDetector(
+                            onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
                                 MixDetailPage(mix: widget.tobaccoMix))),
-                    child: Container(
+              child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: new Column(
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Expanded(child: Icon(Icons.add,),flex: 1),
+                  Expanded(
+                    flex: 1,
+                                    child: Hero(
+                      tag: "mix_hero_${widget.tobaccoMix.id}",
+                      child: widget.tobaccoMix.name != null
+                          ? Text(
+                              widget.tobaccoMix.name,
+                              style: new TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0),
+                            )
+                          : Text(
+                              'No name',
+                              style: new TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0),
+                            ),
+                    ),
+                  ),
+                  Expanded(flex: 1,
+                    child: new StarRating(rating: 2.0,starCount: 5,color: Colors.white,borderColor: Colors.white,)),
+                ],
+              ),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                ),
+                color: Colors.white,
+                child: Column(
+                  children: <Widget>[
+                    Container(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: widget.tobaccoMix.tobaccos.length > 3
@@ -72,31 +78,31 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                                 children: _createTobaccoRow(widget.tobaccoMix)),
                       ),
                     ),
-                  ),
-                  new AnimatedContainer(
-                    curve: Curves.easeInOut,
-                    duration: const Duration(milliseconds: 500),
-                    height: _bodyHeight,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: Divider(
-                              height: 2.0,
-                              color: Colors.black,
-                            ),
-                          )
-                        ],
+                    new AnimatedContainer(
+                      curve: Curves.easeInOut,
+                      duration: const Duration(milliseconds: 500),
+                      height: _bodyHeight,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Divider(
+                                height: 2.0,
+                                color: Colors.black,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  )
-                ],
-              ),
-              elevation: 8.0,
-              margin: EdgeInsets.zero,
-            )
-          ],
+                    )
+                  ],
+                ),
+                elevation: 8.0,
+                margin: EdgeInsets.zero,
+              )
+            ],
+          ),
         ),
       ),
     );

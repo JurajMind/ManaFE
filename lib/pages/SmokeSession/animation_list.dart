@@ -4,7 +4,6 @@ import 'dart:math' as math;
 import 'package:app/models/Stand/animation.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
-import 'package:app/pages/SmokeSession/smoke_color_wheel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -180,7 +179,7 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
               itemExtent: 50.0,
               clipToSize: true,
               diameterRatio: 10.0,
-              perspective: 0.01,
+              perspective: 0.01,              
               onSelectedItemChanged: (int index) => setState(() {
                     selectedItem = index;
                   }),

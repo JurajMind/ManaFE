@@ -9,6 +9,7 @@ import 'package:app/pages/SmokeSession/gradiend_color_wheel.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/services/http.service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:qrcode_reader/QRCodeReader.dart';
 
 class EnterSmokeSessionCode extends StatefulWidget {
@@ -18,6 +19,7 @@ class EnterSmokeSessionCode extends StatefulWidget {
     // TODO: implement createState
   }
 }
+
 
 class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
   final double topWidgetHeight = 200.0;
@@ -60,6 +62,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                               new Padding(
                                 padding: const EdgeInsets.all(20.0),
                                 child: new TextFormField(
+                                  inputFormatters: [UpperCaseTextFormatter()],
                                   maxLength: 5,
                                   controller: myController,
                                   validator: (val) {
@@ -82,11 +85,11 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                   height: 50.0,
                                   bottomMargin: 1.0,
                                   width: 180.0,
-                                  onTap: () async {
-                                    setState(() {
+                                  onTap: () async {                                 
+                                    if (_formKey.currentState.validate()) {
+                                         setState(() {
                                       validating = true;
                                     });
-                                    if (_formKey.currentState.validate()) {
                                       await validateAndGo(
                                           context, myController.text);
                                     }
@@ -187,5 +190,16 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
 
   Widget sessionCode(String sessionCode) {
     return Padding(padding: EdgeInsets.all(8.0), child: Text('d'));
+  }
+}
+
+class UpperCaseTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue,
+      TextEditingValue newValue) {
+    return new TextEditingValue(
+      text: newValue.text?.toUpperCase(),
+      selection: newValue.selection,
+    );
   }
 }

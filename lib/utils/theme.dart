@@ -25,6 +25,7 @@ ThemeData buildDarkTheme() {
     return base.copyWith(
       title: base.title.copyWith(
         fontFamily: 'Montserrat',
+        fontWeight: FontWeight.w700
       ),
     );
   }

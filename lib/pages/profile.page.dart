@@ -16,7 +16,9 @@ class _ProfilePageState extends State<ProfilePage> {
     return new Column(
       children: <Widget>[
         new AppBar(
-          title: new Text('ProfilePage'),
+          title: new Text('ProfilePage',style: TextStyle(
+            fontWeight: FontWeight.w700
+          ),),
           centerTitle: true,
           backgroundColor: Colors.black,
           actions: <Widget>[

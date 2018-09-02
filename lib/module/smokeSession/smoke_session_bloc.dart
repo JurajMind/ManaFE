@@ -53,6 +53,8 @@ class SmokeSessionBloc {
       new BehaviorSubject<List<PipeAccesory>>(
           seedValue: new List<PipeAccesory>());
 
+  
+
   setColor(Color color) {
     sessionColor.add([color, ColorHelper.getOpositeColor(color)]);
   }
