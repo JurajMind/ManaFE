@@ -1,9 +1,9 @@
-import 'package:app/app/app.dart';
 import 'package:app/models/Places/place.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 
 class Carroussel extends StatefulWidget {
   Carroussel({this.navigateToDetail});
@@ -118,39 +118,42 @@ class _CarrousselState extends State<Carroussel> {
       },
       child: Hero(
         tag: '_picture',
-        child: new Container(
-            decoration: BoxDecoration(
-                borderRadius: new BorderRadius.circular(10.0),
-                color: Colors.grey[300],
-                image: DecorationImage(
-                    image:
-                        NetworkImage('https://picsum.photos/200/300/?random'),
-                    fit: BoxFit.cover)),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  new Text(
-                    place.name,
-                    style: new TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 20.0),
-                  ),
-                  new Text(
-                    place.address.toString(),
-                    style: new TextStyle(color: Colors.grey),
-                  ),
-                  new Flex(
-                    direction: Axis.horizontal,
-                    children: <Widget>[
-                      new Icon(Icons.ac_unit),
-                      new Text(place.rating.toString())
-                    ],
-                  )
-                ],
-              ),
-            )),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: new Container(
+              decoration: BoxDecoration(
+                  borderRadius: new BorderRadius.circular(10.0),
+                  color: Colors.grey[300],
+                  image: DecorationImage(
+                      image:
+                          CachedNetworkImageProvider(place.getPlaceImage()),
+                      fit: BoxFit.cover)),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    new Text(
+                      place.name,
+                      style: new TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20.0),
+                    ),
+                    new Text(
+                      place.address.toString(),
+                      style: new TextStyle(color: Colors.grey),
+                    ),
+                    new Flex(
+                      direction: Axis.horizontal,
+                      children: <Widget>[
+                        new Icon(Icons.ac_unit),
+                        new Text(place.rating.toString())
+                      ],
+                    )
+                  ],
+                ),
+              )),
+        ),
       ),
     );
   }

@@ -7,17 +7,21 @@ class Place {
       this.friendlyUrl,
       this.logoPath,
       this.address,
+      this.images,
       this.rating});
 
   factory Place.fromJson(Map<String, dynamic> json) {
     Map<String, dynamic> adressMap = json['Address'];
+    List<dynamic> imageMap = json['Medias'];
     var adress = Address.fromJson(adressMap);
+    var images = imageMap.map((f) => (f['Path']+".jpg") as String).toList();
     return new Place(
         id: json['Id'],
         name: json['Name'],
         friendlyUrl: json['FriendlyUrl'],
         logoPath: 'https://${App.baseUri}${json['LogoPath']}',
         address: adress,
+        images: images,
         rating: json['Rating']);
   }
   int id;
@@ -30,8 +34,19 @@ class Place {
 
   Address address;
 
+  List<String> images;
+
   int rating;
+
+  String getPlaceImage(){
+    if(images.length == 0)
+    {
+      return 'https://${App.baseUri}/Content/place/placeholder.jpg';
+    }
+    return 'https://${App.baseUri}/${images.last}';
+  }
 }
+
 
 class Address {
   Address({this.street, this.city, this.number, this.zip, this.lat, this.lng});

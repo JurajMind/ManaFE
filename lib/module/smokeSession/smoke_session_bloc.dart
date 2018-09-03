@@ -44,7 +44,7 @@ class SmokeSessionBloc {
           seedValue: new SmokeSessionMetaData());
 
   BehaviorSubject<StandSettings> standSettings =
-      new BehaviorSubject<StandSettings>(seedValue: new StandSettings());
+      new BehaviorSubject<StandSettings>(seedValue: new StandSettings.empty());
 
   BehaviorSubject<List<StandAnimation>> animations =
       new BehaviorSubject<List<StandAnimation>>(
@@ -53,6 +53,7 @@ class SmokeSessionBloc {
   BehaviorSubject<List<Color>> sessionColor =
       new BehaviorSubject<List<Color>>();
 
+  
   BehaviorSubject<List<PipeAccesory>> myGear =
       new BehaviorSubject<List<PipeAccesory>>(
           seedValue: new List<PipeAccesory>());
