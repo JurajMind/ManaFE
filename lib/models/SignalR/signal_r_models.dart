@@ -54,7 +54,7 @@ class ServerCall {
     call["A"] = this.A;
     call["I"] = this.I;
 
-    String str = JSON.encode(call);
+    String str = json.encode(call);
     print(str);
     return str;
   }

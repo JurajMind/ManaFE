@@ -7,10 +7,8 @@ class SmokeSession {
   final Hookah hookah;
   final SmokeSessionMetaData metaData;
   final SmokeStatisticDataModel smokeSessionData;
-  final StandSettings standSettings;
-
   SmokeSession(
-      {this.sessionId, this.hookah, this.metaData, this.smokeSessionData,this.standSettings, });
+      {this.sessionId, this.hookah, this.metaData, this.smokeSessionData});
 
   factory SmokeSession.fromJson(Map<String, dynamic> json) {
     var sessionId = json['SessionId'];
@@ -20,14 +18,12 @@ class SmokeSession {
     var smokeSessionData = SmokeStatisticDataModel.fromJson(
         json['Statistic'] as Map<String, dynamic>);
 
-    var standSetting = StandSettings.fromJson(json["StandSettings"] as Map<String, dynamic>);
-
     return SmokeSession(
-        hookah: hookah,
-        metaData: metaData,
-        sessionId: sessionId,
-        smokeSessionData: smokeSessionData,
-        standSettings: standSetting);
+      hookah: hookah,
+      metaData: metaData,
+      sessionId: sessionId,
+      smokeSessionData: smokeSessionData,
+    );
   }
 }
 
@@ -49,13 +45,16 @@ class StandSettings {
   StateSetting idle;
   StateSetting puf;
 
-  StandSettings.fromJson(Map<String,dynamic> json){
-    this.blow = StateSetting.fromJson(json['BlowSettings'] as Map<String,dynamic>);
-    this.idle = StateSetting.fromJson(json['IdleSettings'] as Map<String,dynamic>);
-    this.puf = StateSetting.fromJson(json['PuffSettings'] as Map<String,dynamic>);
+  StandSettings.fromJson(Map<String, dynamic> json) {
+    this.blow =
+        StateSetting.fromJson(json['BlowSettings'] as Map<String, dynamic>);
+    this.idle =
+        StateSetting.fromJson(json['IdleSettings'] as Map<String, dynamic>);
+    this.puf =
+        StateSetting.fromJson(json['PuffSettings'] as Map<String, dynamic>);
   }
 
-  StandSettings.empty(){
+  StandSettings.empty() {
     this.blow = StateSetting.empty();
     this.idle = StateSetting.empty();
     this.puf = StateSetting.empty();
@@ -68,17 +67,16 @@ class StateSetting {
   int brightness;
   int speed;
 
- StateSetting(
-      {this.color, this.animationId, this.brightness, this.speed});
+  StateSetting({this.color, this.animationId, this.brightness, this.speed});
 
-  StateSetting.empty(){
-     StateSetting(
+  StateSetting.empty() {
+    StateSetting(
       color: new HSVColor.fromColor(Colors.white),
       animationId: 0,
       speed: 100,
       brightness: 255,
     );
-  }  
+  }
 
   StateSetting.fromJson(Map<String, dynamic> json) {
     this.animationId = json['AnimationId'];
@@ -88,9 +86,9 @@ class StateSetting {
     int rawSaturation = json['Color']['Saturation'];
     int rawValue = json['Color']['Value'];
 
-    double hue = (rawHue / (255/360));
-    double saturation = (rawSaturation / (1/250));
-    double value = (rawValue / (255/360));
+    double hue = (rawHue / (255 / 360));
+    double saturation = (rawSaturation / 255);
+    double value = (rawValue / 255);
 
     this.color = new HSVColor.fromAHSV(1.0, hue, saturation, value);
   }

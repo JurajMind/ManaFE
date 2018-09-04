@@ -53,7 +53,6 @@ class SmokeSessionBloc {
   BehaviorSubject<List<Color>> sessionColor =
       new BehaviorSubject<List<Color>>();
 
-  
   BehaviorSubject<List<PipeAccesory>> myGear =
       new BehaviorSubject<List<PipeAccesory>>(
           seedValue: new List<PipeAccesory>());
@@ -80,11 +79,11 @@ class SmokeSessionBloc {
     list.add(sessionCode);
     //recentSessions.add(list);
     var sessionData = await App.http.getInitData(sessionCode);
+    standSettings.add(sessionData.item2);
+    smokeStatistic.add(sessionData.item1.smokeSessionData);
+    smokeSessionMetaData.add(sessionData.item1.metaData);
 
-    smokeStatistic.add(sessionData.smokeSessionData);
-    smokeSessionMetaData.add(sessionData.metaData);
-
-    animations.add(await App.http.getAnimations(sessionData.hookah.code));
+    animations.add(await App.http.getAnimations(sessionData.item1.hookah.code));
   }
 
   loadMyGear() async {

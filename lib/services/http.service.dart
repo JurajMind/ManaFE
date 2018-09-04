@@ -11,6 +11,7 @@ import 'package:app/models/Stand/animation.dart';
 import 'package:app/services/authorization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:dio/dio.dart';
+import 'package:tuple/tuple.dart';
 
 class ApiClient {
   final _http = HttpClient();
@@ -89,11 +90,15 @@ class ApiClient {
     return _getJson(url).then((json) => SessionIdValidation.fromJson(json));
   }
 
-  Future<SmokeSession> getInitData(String sessionId) {
+  Future<Tuple2<SmokeSession, StandSettings>> getInitData(String sessionId) {
     var url =
         Uri.https(baseUrl, 'api/SmokeSession/InitData', {"id": sessionId});
-    return _getJson(url).then((json) =>
-        SmokeSession.fromJson(json['SmokeSession'] as Map<String, dynamic>));
+    return _getJson(url).then((json) {
+      return new Tuple2(
+          SmokeSession.fromJson(json['SmokeSession'] as Map<String, dynamic>),
+          StandSettings.fromJson(
+              json['StandSettings'] as Map<String, dynamic>));
+    });
   }
 
   Future<List<Place>> getNearbyPlaces() {
