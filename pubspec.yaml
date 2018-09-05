@@ -12,7 +12,7 @@ dependencies:
   flutter_launcher_icons: "^0.5.2"
   carousel: ^0.1.0
   web_socket_channel: "^1.0.7"
-  flutter_secure_storage: "^3.1.0"
+  flutter_secure_storage: "^3.1.1"
   rxdart: "^0.18.1"
   vibrate: "^0.0.3"
   intl: ^0.15.7
@@ -22,7 +22,7 @@ dependencies:
   qrcode_reader:
     git:
       url: https://github.com/bcko/flutter_qrcode_reader.git
-  dio: 1.0.0 #latest version
+  dio: ^0.1.7
   loader_search_bar: ^0.0.2+3
   scoped_model: ^0.3.0
   charts_flutter: ^0.4.0

@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:app/app/app.dart';
 import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory.dart';
+import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Places/reservation_page.dart';
@@ -82,6 +84,13 @@ class _TestPageState extends State<TestPage> {
                         ));
                       },
                       child: Text('BottomModal'),
+                    ),
+                    RaisedButton(
+                      onPressed: () async {
+                        await App.http
+                            .changeAnimation(0, SmokeState.idle, 'emulator');
+                      },
+                      child: Text('Change animation'),
                     )
                   ],
                 )),

@@ -18,6 +18,11 @@ def keystorePropertiesFile = rootProject.file("key.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
+def devPropertiesFile = rootProject.file("debug.properties")
+def devProperties = new Properties()
+devProperties.load(new FileInputStream(devPropertiesFile))
+
+
 android {
     compileSdkVersion 27
 
@@ -42,16 +47,26 @@ signingConfigs {
         storeFile file(keystoreProperties['storeFile'])
         storePassword keystoreProperties['storePassword']
     }
+        debug {
+        keyAlias devProperties['keyAlias']
+        keyPassword devProperties['keyPassword']
+        storeFile file(devProperties['storeFile'])
+        storePassword devProperties['storePassword']
+    }
 }
 buildTypes {
     release {
-                  signingConfig signingConfigs.release
-
+            signingConfig signingConfigs.release
             minifyEnabled true
             useProguard true
-
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-    }
+        }
+    debug {
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
 }
 }
 

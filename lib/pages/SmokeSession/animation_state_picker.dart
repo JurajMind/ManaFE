@@ -1,7 +1,6 @@
 import 'package:app/models/Stand/animation.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 class AnimationStatePicker extends StatefulWidget {
   final SmokeSessionBloc smokeSessionBloc;
@@ -25,7 +24,7 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
   @override
   void initState() {
     super.initState();
-
+    _focusIndex = widget.selectedIndex;
     scrollController = new FixedExtentScrollController(
       initialItem: widget.selectedIndex,
     );

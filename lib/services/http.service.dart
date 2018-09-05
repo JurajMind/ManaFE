@@ -24,7 +24,6 @@ class ApiClient {
       : baseUrl = url,
         _dio = new Dio(new Options(
           baseUrl: url,
-          receiveTimeout: 3000,
         ));
 
   Future<dynamic> _getJson(Uri uri) async {
@@ -34,12 +33,52 @@ class ApiClient {
     return response.data;
   }
 
+  Future<dynamic> _getJsonOld(Uri uri) async {
+    var response =
+        (await _http.getUrl(uri).then((HttpClientRequest request) async {
+      var token = await _authorize.getToken();
+      request.headers.add('Authorization', 'Bearer $token');
+      return request.close();
+    }));
+
+    if (response.statusCode == 403) {
+      if (await _authorize.refreshToken()) {
+        return _getJson(uri);
+      }
+    }
+
+    var transformedResponse = await response.transform(utf8.decoder).join();
+    return json.decode(transformedResponse);
+  }
+
+  Future<dynamic> _postJsonOld(Uri uri, dynamic data) async {
+    var response =
+        (await _http.postUrl(uri).then((HttpClientRequest request) async {
+      var token = await _authorize.getToken();
+      request.headers.add('Authorization', 'Bearer $token');
+      request.headers
+          .add('content-length', utf8.encode(json.encode(data)).length);
+      List<int> bodyBytes = utf8.encode(data);
+      request.add(bodyBytes);
+      return request.close();
+    }));
+
+    if (response.statusCode == 403) {
+      if (await _authorize.refreshToken()) {
+        return _getJson(uri);
+      }
+    }
+
+    var transformedResponse = await response.transform(utf8.decoder).join();
+    return json.decode(transformedResponse);
+  }
+
   void init() {
     _dio.interceptor.response.onError = (DioError error) async {
-      var token = await _authorize.getToken();
-      var tokenHeader = 'Bearer $token';
       if (error.response?.statusCode == 401 ||
           error.response?.statusCode == 403) {
+        var token = await _authorize.getToken();
+        var tokenHeader = 'Bearer $token';
         Options options = error.response.request;
         // If the token has been updated, repeat directly.
         if (tokenHeader != options.headers["Authorization"]) {
@@ -87,7 +126,7 @@ class ApiClient {
     var url =
         Uri.https(baseUrl, 'api/SmokeSession/Validate', {"id": sessionId});
 
-    return _getJson(url).then((json) => SessionIdValidation.fromJson(json));
+    return _getJsonOld(url).then((json) => SessionIdValidation.fromJson(json));
   }
 
   Future<Tuple2<SmokeSession, StandSettings>> getInitData(String sessionId) {
@@ -114,7 +153,7 @@ class ApiClient {
   }
 
   Future changeColor(String deviceId, HSVColor color) async {
-    var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeAnimation');
+    var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeColor');
 
     var data = {'Color': ColorDto(color), 'Type': 1};
 
@@ -126,9 +165,10 @@ class ApiClient {
     debugPrint(response.data.toString());
   }
 
-  Future changeAnimation(
+  Future<bool> changeAnimation(
       int animationId, SmokeState type, String deviceId) async {
-    var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeColor');
+    print('ChangeAnimation');
+    var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeAnimation');
     var data = {
       'AnimationId': animationId,
       'Type': SmokeState.values.indexOf(type)
@@ -139,6 +179,7 @@ class ApiClient {
           contentType: ContentType.JSON,
         ));
     debugPrint(response.data.toString());
+    return true;
   }
 
   Future<List<StandAnimation>> getAnimations(String code) {

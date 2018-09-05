@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:tuple/tuple.dart';
+import 'package:vibrate/vibrate.dart';
 
 class SmokeSessionBloc {
   String hookahCode;
@@ -83,6 +84,8 @@ class SmokeSessionBloc {
     var animationId = data.item1.getStateSetting(data.item2).animationId;
     await App.http.changeAnimation(animationId, data.item2, hookahCode);
     standSettings.add(data.item1);
+
+    Vibrate.feedback(FeedbackType.light);
   }
 
   Future joinSession(String sessionCode) async {

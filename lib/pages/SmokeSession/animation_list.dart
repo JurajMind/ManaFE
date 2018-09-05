@@ -87,9 +87,6 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
   static const _kDuration = const Duration(milliseconds: 300);
   static const _kCurve = Curves.ease;
 
-  int _blowFocus = -1;
-  int _idleFocus = -1;
-  int _pufFocus = -1;
   PageController controller;
 
   SmokeSessionBloc smokeSessionBloc;
@@ -139,7 +136,9 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
           ? CircularProgressIndicator()
           : AnimationStatePicker(
               smokeSessionBloc: smokeSessionBloc,
-              selectedIndex: snapshot.data.getStateSetting(state)?.animationId,
+              selectedIndex: snapshot.data.getStateSetting(state) == null
+                  ? -1
+                  : snapshot.data.getStateSetting(state).animationId,
               onChanged: (int index) {
                 smokeSessionBloc.setAnimation(index, state);
               },
