@@ -114,10 +114,25 @@ class ApiClient {
   }
 
   Future changeColor(String deviceId, HSVColor color) async {
-    var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeColor');
+    var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeAnimation');
 
     var data = {'Color': ColorDto(color), 'Type': 1};
 
+    var response = await _dio.post(uri.toString(),
+        data: data,
+        options: Options(
+          contentType: ContentType.JSON,
+        ));
+    debugPrint(response.data.toString());
+  }
+
+  Future changeAnimation(
+      int animationId, SmokeState type, String deviceId) async {
+    var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeColor');
+    var data = {
+      'AnimationId': animationId,
+      'Type': SmokeState.values.indexOf(type)
+    };
     var response = await _dio.post(uri.toString(),
         data: data,
         options: Options(

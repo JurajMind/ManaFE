@@ -613,10 +613,12 @@ packages:
   validator:
     dependency: "direct main"
     description:
-      name: validator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.7"
+      path: "."
+      ref: HEAD
+      resolved-ref: e75f0577d5b7ebfb324de8bc86a8b3911f492bd9
+      url: "https://github.com/jodinathan/validator.dart"
+    source: git
+    version: "0.0.8"
   vector_math:
     dependency: transitive
     description:

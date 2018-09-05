@@ -12,8 +12,11 @@ import 'package:app/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:tuple/tuple.dart';
 
 class SmokeSessionBloc {
+  String hookahCode;
+
   Sink get test => _indexController.sink;
   final _indexController = PublishSubject();
   String activeSessionId;
@@ -57,8 +60,29 @@ class SmokeSessionBloc {
       new BehaviorSubject<List<PipeAccesory>>(
           seedValue: new List<PipeAccesory>());
 
+  PublishSubject<Tuple2<StandSettings, SmokeState>> futureSettings =
+      new PublishSubject<Tuple2<StandSettings, SmokeState>>();
+
+  Observable<Tuple2<StandSettings, SmokeState>> futureSettingDebounce;
+
   setColor(Color color) {
     sessionColor.add([color, ColorHelper.getOpositeColor(color)]);
+  }
+
+  setAnimation(int animationIndex, SmokeState smokeState) {
+    var curentSetting = standSettings.value;
+    var editSetting = curentSetting.getStateSetting(smokeState);
+    if (editSetting.animationId == animationIndex) return;
+
+    editSetting.animationId = animationIndex;
+    curentSetting.setStateSetting(smokeState, editSetting);
+    futureSettings.add(new Tuple2(curentSetting, smokeState));
+  }
+
+  _futureSetAnimation(Tuple2<StandSettings, SmokeState> data) async {
+    var animationId = data.item1.getStateSetting(data.item2).animationId;
+    await App.http.changeAnimation(animationId, data.item2, hookahCode);
+    standSettings.add(data.item1);
   }
 
   Future joinSession(String sessionCode) async {
@@ -82,7 +106,7 @@ class SmokeSessionBloc {
     standSettings.add(sessionData.item2);
     smokeStatistic.add(sessionData.item1.smokeSessionData);
     smokeSessionMetaData.add(sessionData.item1.metaData);
-
+    hookahCode = sessionData.item1.hookah.code;
     animations.add(await App.http.getAnimations(sessionData.item1.hookah.code));
   }
 
@@ -107,6 +131,9 @@ class SmokeSessionBloc {
     signalR.clientCalls.listen((onData) {
       proceddCalls(onData);
     });
+    futureSettingDebounce =
+        futureSettings.debounce(Duration(milliseconds: 200));
+    futureSettingDebounce.listen((onData) => _futureSetAnimation(onData));
   }
 
   proceddCalls(ClientCall onData) {

@@ -1,58 +1,13 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/Stand/animation.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
+import 'package:app/pages/SmokeSession/animation_state_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-class AnimationMetrics extends FixedScrollMetrics {
-  /// The fraction of the viewport that each page occupies.
-  ///
-  /// Used to compute [page] from the current [pixels].
-  final double viewportFraction;
-
-  AnimationMetrics({
-    @required double minScrollExtent,
-    @required double maxScrollExtent,
-    @required double pixels,
-    @required double viewportDimension,
-    @required AxisDirection axisDirection,
-    @required this.viewportFraction,
-  }) : super(
-          minScrollExtent: minScrollExtent,
-          maxScrollExtent: maxScrollExtent,
-          pixels: pixels,
-          viewportDimension: viewportDimension,
-          axisDirection: axisDirection,
-        );
-
-  /// The current page displayed in the [PageView].
-  double get item {
-    return math.max(0.0, pixels.clamp(minScrollExtent, maxScrollExtent)) /
-        math.max(1.0, viewportDimension * viewportFraction);
-  }
-
-  @override
-  AnimationMetrics copyWith({
-    double minScrollExtent,
-    double maxScrollExtent,
-    double pixels,
-    double viewportDimension,
-    AxisDirection axisDirection,
-    double viewportFraction,
-  }) {
-    return new AnimationMetrics(
-      minScrollExtent: minScrollExtent ?? this.minScrollExtent,
-      maxScrollExtent: maxScrollExtent ?? this.maxScrollExtent,
-      pixels: pixels ?? this.pixels,
-      viewportDimension: viewportDimension ?? this.viewportDimension,
-      axisDirection: axisDirection ?? this.axisDirection,
-      viewportFraction: viewportFraction ?? this.viewportFraction,
-    );
-  }
-}
 
 class AnimationsPicker extends StatefulWidget {
   final Stream<List<StandAnimation>> aminations;
@@ -128,104 +83,13 @@ class AnimationStateLabel extends AnimatedWidget {
   }
 }
 
-class AnimationStatePicker extends StatefulWidget {
-  final SmokeSessionBloc smokeSessionBloc;
-
-  AnimationStatePicker({this.smokeSessionBloc});
-
-  @override
-  AnimationStatePickerState createState() {
-    return new AnimationStatePickerState();
-  }
-}
-
-class AnimationStatePickerState extends State<AnimationStatePicker> {
-  ScrollController controller;
-
-  int lastReportedItem = 0;
-  int selectedItem = 0;
-  @override
-  Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    return SizedBox(
-      height: size.height * 0.75 + size.width,
-      child: new Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          SizedBox(
-              height: size.height * 0.75,
-              child: Container(
-                child: NotificationListener(
-                    onNotification: (ScrollNotification notification) {
-                      if (notification.depth == 0 &&
-                          notification is ScrollUpdateNotification) {
-                        final FixedScrollMetrics metrics = notification.metrics;
-                        final double currentItem = getSelectedItem(metrics);
-                      }
-                      return false;
-                    },
-                    child: buildAnimationList()),
-              ))
-        ],
-      ),
-    );
-  }
-
-  StreamBuilder<List<StandAnimation>> buildAnimationList() {
-    return StreamBuilder<List<StandAnimation>>(
-        stream: widget.smokeSessionBloc.animations,
-        initialData: List<StandAnimation>(),
-        builder: (context, snapshot) => new ListWheelScrollView(
-              itemExtent: 50.0,
-              clipToSize: true,
-              diameterRatio: 10.0,
-              perspective: 0.01,              
-              onSelectedItemChanged: (int index) => setState(() {
-                    selectedItem = index;
-                  }),
-              children: List.generate(
-                  snapshot.data.length,
-                  (int index) => _createAnimation(
-                      index, snapshot.data[index], context, selectedItem)),
-            ));
-  }
-
-  double getSelectedItem(FixedScrollMetrics metric) {
-    return math.max(
-            0.0,
-            metric.pixels
-                .clamp(metric.minScrollExtent, metric.maxScrollExtent)) /
-        math.max(1.0, 30);
-  }
-
-  @override
-  void initState() {
-    controller = new ScrollController();
-    super.initState();
-  }
-
-  _createAnimation(
-      int index, StandAnimation data, BuildContext context, int selected) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Container(
-        child: Center(
-          child: Text(data.displayName,
-              style: TextStyle(
-                color: index == selected ? Colors.white : Colors.grey,
-                fontWeight: FontWeight.bold,
-                fontSize: index == selected ? 35.0 : 25.0,
-              )),
-        ),
-      ),
-    );
-  }
-}
-
 class _AnimationsPickerState extends State<AnimationsPicker> {
   static const _kDuration = const Duration(milliseconds: 300);
   static const _kCurve = Curves.ease;
 
+  int _blowFocus = -1;
+  int _idleFocus = -1;
+  int _pufFocus = -1;
   PageController controller;
 
   SmokeSessionBloc smokeSessionBloc;
@@ -240,9 +104,12 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
           PageView(
             controller: controller,
             children: <Widget>[
-              AnimationStatePicker(smokeSessionBloc: smokeSessionBloc),
-              AnimationStatePicker(smokeSessionBloc: smokeSessionBloc),
-              AnimationStatePicker(smokeSessionBloc: smokeSessionBloc),
+              animationStatePickerBuilder(
+                  smokeSessionBloc.standSettings, SmokeState.blow),
+              animationStatePickerBuilder(
+                  smokeSessionBloc.standSettings, SmokeState.idle),
+              animationStatePickerBuilder(
+                  smokeSessionBloc.standSettings, SmokeState.puf),
             ],
           ),
           AnimationStateLabel(
@@ -258,6 +125,25 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
           )
         ],
       ),
+    );
+  }
+
+  void changeAnimation() {}
+
+  StreamBuilder<StandSettings> animationStatePickerBuilder(
+      Stream<StandSettings> stream, SmokeState state) {
+    return StreamBuilder<StandSettings>(
+      initialData: null,
+      stream: stream,
+      builder: (context, snapshot) => snapshot.data == null
+          ? CircularProgressIndicator()
+          : AnimationStatePicker(
+              smokeSessionBloc: smokeSessionBloc,
+              selectedIndex: snapshot.data.getStateSetting(state)?.animationId,
+              onChanged: (int index) {
+                smokeSessionBloc.setAnimation(index, state);
+              },
+            ),
     );
   }
 

@@ -59,7 +59,34 @@ class StandSettings {
     this.idle = StateSetting.empty();
     this.puf = StateSetting.empty();
   }
+
+  StateSetting getStateSetting(SmokeState state) {
+    switch (state) {
+      case SmokeState.blow:
+        return this.blow;
+      case SmokeState.idle:
+        return this.idle;
+      case SmokeState.puf:
+        return this.puf;
+    }
+  }
+
+  void setStateSetting(SmokeState state, StateSetting stateSetting) {
+    switch (state) {
+      case SmokeState.blow:
+        this.blow = stateSetting;
+        break;
+      case SmokeState.idle:
+        this.idle = stateSetting;
+        break;
+      case SmokeState.puf:
+        this.puf = stateSetting;
+        break;
+    }
+  }
 }
+
+enum SmokeState { idle, puf, blow }
 
 class StateSetting {
   HSVColor color;
