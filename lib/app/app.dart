@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:app/app/app.widget.dart';
 import 'package:app/routes/app.routes.dart';
 import 'package:app/routes/auth.routes.dart';
@@ -51,7 +53,19 @@ class App {
 
   // App run.
   void run(runApp) {
-     MapView.setApiKey(App.googleApiKeys);
+    MapView.setApiKey(App.googleApiKeys);
     runApp(new AppWidget());
   }
+
+  static final List<String> supportedLanguagesCodes = [
+    "en",
+    "cs",
+  ];
+
+  static Iterable<Locale> supportedLocales() =>
+      supportedLanguagesCodes.map<Locale>((language) => Locale(language, ""));
+
+  static LocaleChangeCallback onLocaleChanged;
 }
+
+typedef void LocaleChangeCallback(Locale locale);

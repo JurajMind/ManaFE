@@ -7,6 +7,7 @@ import 'package:app/pages/gear.page.dart';
 
 import 'package:app/pages/profile.page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -43,7 +44,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     super.didChangeDependencies();
     _focusActiveTab();
   }
@@ -76,14 +77,14 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               IconButtonTitle(
                 icon: Icon(Icons.refresh),
-                text: 'Mixology',
+                text: AppTranslations.of(context).text("tab_mixology"),
                 color: _currentIndex == 0 ? Colors.white : Colors.grey,
                 tooltip: 'ss',
                 onPressed: () => _setActiveTab(0),
               ),
               IconButtonTitle(
                 icon: Icon(Icons.place),
-                text: 'Places',
+                text: AppTranslations.of(context).text("tab_places"),
                 color: _currentIndex == 1 ? Colors.white : Colors.grey,
                 onPressed: () => _setActiveTab(1),
               ),
@@ -103,17 +104,20 @@ class _HomePageState extends State<HomePage> {
                       child: GradientColorWheel(
                           size: new Size(48.0, 48.0),
                           defaultColors: [Colors.white, Colors.white],
-                          child: Icon(Icons.settings_backup_restore,color: Colors.grey,)),
+                          child: Icon(
+                            Icons.settings_backup_restore,
+                            color: Colors.grey,
+                          )),
                     ),
               IconButtonTitle(
                 icon: Icon(Icons.settings),
-                text: 'Gear',
+                text: AppTranslations.of(context).text("tab_gear"),
                 color: _currentIndex == 3 ? Colors.white : Colors.grey,
                 onPressed: () => _setActiveTab(3),
               ),
               IconButtonTitle(
                 icon: Icon(Icons.person),
-                text: 'Profile',
+                text: AppTranslations.of(context).text("tab_profile"),
                 color: _currentIndex == 4 ? Colors.white : Colors.grey,
                 onPressed: () => _setActiveTab(4),
               ),

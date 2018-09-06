@@ -140,8 +140,13 @@ class ApiClient {
     });
   }
 
-  Future<List<Place>> getNearbyPlaces() {
-    var uri = Uri.https(baseUrl, 'api/Places/SearchNearby');
+  Future<List<Place>> getNearbyPlaces({double lat, double lng}) {
+    Map<String, String> queryParameters;
+    if (lat != null && lng != null) {
+      queryParameters['lat'] = lat.toString();
+      queryParameters['lng'] = lng.toString();
+    }
+    var uri = Uri.https(baseUrl, 'api/Places/SearchNearby', queryParameters);
 
     return _getJson(uri).then((json) {
       var list = json['NearbyPlaces'] as List;

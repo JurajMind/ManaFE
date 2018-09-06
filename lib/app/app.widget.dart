@@ -7,9 +7,11 @@ import 'package:app/module/places/places_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/start.page.dart';
 import 'package:app/pages/home.page.dart';
+import 'package:app/utils/translations/app_translations_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:app/utils/theme.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 final navigatorKey = new GlobalKey<NavigatorState>();
 
@@ -33,10 +35,13 @@ class _AppWidgetState extends State<AppWidget> {
   final mixology = MixologyBloc();
   final smokeSession = SmokeSessionBloc();
   final place = PlacesBloc();
+  AppTranslationsDelegate _newLocaleDelegate;
 
   @override
   void initState() {
     super.initState();
+    App.onLocaleChanged = onLocaleChange;
+    _newLocaleDelegate = AppTranslationsDelegate(newLocale: null);
     isUserAuthorized().then((authorized) => setState(() {
           _isAuthorized = authorized;
           splash = false;
@@ -49,6 +54,12 @@ class _AppWidgetState extends State<AppWidget> {
     });
   }
 
+  void onLocaleChange(Locale locale) {
+    setState(() {
+      _newLocaleDelegate = AppTranslationsDelegate(newLocale: locale);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return new DataProvider(
@@ -56,8 +67,15 @@ class _AppWidgetState extends State<AppWidget> {
         smokeSession: smokeSession,
         place: place,
         child: MaterialApp(
+          localizationsDelegates: [
+            _newLocaleDelegate,
+            //provides localised strings
+            GlobalMaterialLocalizations.delegate,
+            //provides RTL support
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: App.supportedLocales(),
           navigatorKey: navigatorKey,
-          showPerformanceOverlay: false,
           title: 'Manapipes',
           home: getMainPage(),
           onGenerateRoute: App.router.generator,
@@ -90,7 +108,8 @@ class _AppWidgetState extends State<AppWidget> {
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(child: new Column(
+    return Center(
+        child: new Column(
       children: <Widget>[
         Text('Manapipes'),
         CircularProgressIndicator(),

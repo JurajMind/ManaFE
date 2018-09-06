@@ -1,24 +1,80 @@
 import 'package:app/app/app.dart';
 import 'package:app/models/Places/place.dart';
 import 'package:app/services/http.service.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:location/location.dart';
+import 'package:map_view/map_view.dart' as map;
+import 'package:flutter/services.dart';
 
 class PlacesBloc {
+  Location _location = new Location();
+  bool _initLoad = false;
+
   BehaviorSubject<List<Place>> places =
       new BehaviorSubject<List<Place>>(seedValue: new List<Place>());
 
   BehaviorSubject<bool> loading = new BehaviorSubject(seedValue: false);
+
+  BehaviorSubject<bool> localizationnPermision =
+      new BehaviorSubject(seedValue: false);
+
+  BehaviorSubject<map.Location> location =
+      new BehaviorSubject(seedValue: new map.Location(0.0, 0.0));
 
   static final PlacesBloc _instance = new PlacesBloc._();
 
   factory PlacesBloc() => PlacesBloc._instance;
 
   PlacesBloc._() {
-    ApiClient apiClient = App.http;
     this.loading.add(true);
-    apiClient.getNearbyPlaces().then((places) {
+
+    App.http.getNearbyPlaces().then((places) {
       this.places.add(places);
       this.loading.add(false);
     });
+  }
+
+  Future<bool> loadPlaces({bool init}) async {
+    if (_initLoad && !init) {
+      return true;
+    }
+    _initLoad = true;
+    var location = await getLocation();
+    if (location == null) {
+      return false;
+    }
+    App.http
+        .getNearbyPlaces(lat: location.latitude, lng: location.longitude)
+        .then((places) {
+      this.places.add(places);
+      this.loading.add(false);
+    });
+  }
+
+  Future<bool> _getPermissionStatus() async {
+    final res = await _location.hasPermission();
+
+    localizationnPermision.add(res);
+    return res;
+  }
+
+  Future<map.Location> getLocation() async {
+    // Platform messages may fail, so we use a try/catch PlatformException.
+
+    try {
+      var _permission = await this._getPermissionStatus();
+      if (!_permission) {
+        return location.value;
+      }
+      var rawlocation = await _location.getLocation();
+      var sl = map.Location(rawlocation['latitude'], rawlocation['longitude']);
+      location.add(sl);
+      return sl;
+    } on PlatformException catch (e) {
+      if (e.code == 'PERMISSION_DENIED') {
+        location = null;
+      }
+    }
   }
 }

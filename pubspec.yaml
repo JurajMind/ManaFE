@@ -4,6 +4,8 @@ description: A new Flutter project.
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   fluro: "^1.2.1"
   validator:
     git: https://github.com/jodinathan/validator.dart
@@ -61,6 +63,9 @@ flutter:
     - images/gear/hms.jpg
     - images/gear/mygear.jpg
     - images/gear/hookah.jpg
+
+    - locale/localization_en.json
+    - locale/localization_cs.json
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

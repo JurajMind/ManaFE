@@ -4,7 +4,6 @@ import 'package:app/module/places/places_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-
 class Carroussel extends StatefulWidget {
   Carroussel({this.navigateToDetail});
 
@@ -17,6 +16,8 @@ class Carroussel extends StatefulWidget {
 
 class _CarrousselState extends State<Carroussel> {
   final void Function(Place) navigateToDetail;
+
+  PlacesBloc placeBloc;
 
   _CarrousselState({this.navigateToDetail});
 
@@ -34,6 +35,18 @@ class _CarrousselState extends State<Carroussel> {
   }
 
   @override
+  void didUpdateWidget(dynamic oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    placeBloc = DataProvider.getPlaces(context);
+    placeBloc.loadPlaces();
+  }
+
+  @override
   dispose() {
     controller.dispose();
     super.dispose();
@@ -41,8 +54,6 @@ class _CarrousselState extends State<Carroussel> {
 
   @override
   Widget build(BuildContext context) {
-    final placeBloc = DataProvider.getPlaces(context);
-
     return new Center(
         child: new Container(
       child: loadingBuilder(placeBloc),
@@ -125,8 +136,7 @@ class _CarrousselState extends State<Carroussel> {
                   borderRadius: new BorderRadius.circular(10.0),
                   color: Colors.grey[300],
                   image: DecorationImage(
-                      image:
-                          CachedNetworkImageProvider(place.getPlaceImage()),
+                      image: CachedNetworkImageProvider(place.getPlaceImage()),
                       fit: BoxFit.cover)),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
