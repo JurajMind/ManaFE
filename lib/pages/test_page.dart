@@ -11,6 +11,7 @@ import 'package:app/pages/SmokeSession/animation_list.dart';
 import 'package:app/pages/SmokeSession/animation_select_page.dart';
 import 'package:app/pages/SmokeSession/gradiend_color_wheel.dart';
 import 'package:app/pages/SmokeSession/metadata_item.dart';
+import 'package:app/pages/SmokeSession/picker_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -57,7 +58,6 @@ class _TestPageState extends State<TestPage> {
           new SliverList(
             delegate: new SliverChildListDelegate(
               <Widget>[
-                AnimationsPicker(),
                 SizedBox(
                     height: size.width,
                     child: GradientColorWheel(
@@ -85,12 +85,65 @@ class _TestPageState extends State<TestPage> {
                       },
                       child: Text('BottomModal'),
                     ),
-                    RaisedButton(
-                      onPressed: () async {
-                        await App.http
-                            .changeAnimation(0, SmokeState.idle, 'emulator');
-                      },
-                      child: Text('Change animation'),
+                    Row(
+                      children: <Widget>[
+                        RaisedButton(
+                          onPressed: () {
+                            showDialog<void>(
+                                context: context,
+                                builder: (BuildContext context) => new SizedBox(
+                                    width: 20.0,
+                                    height:
+                                        MediaQuery.of(context).size.height - 80,
+                                    child: SimpleDialog(
+                                      title: const Text('Set brightness'),
+                                      children: <Widget>[
+                                        SizedBox(
+                                          height: 400.0,
+                                          width: 200.0,
+                                          child: SpringySlider(
+                                            markCount: 12,
+                                            positiveColor: Colors.red,
+                                            negativeColor: Colors.blue,
+                                            positiveIcon: Icons.brightness_low,
+                                            negativeIcon: Icons.brightness_high,
+                                            onChanged: (value) => print(value),
+                                          ),
+                                        )
+                                      ],
+                                    )));
+                          },
+                          child: Text('Br setting'),
+                        ),
+                        RaisedButton(
+                          onPressed: () {
+                            showDialog<void>(
+                                context: context,
+                                builder: (BuildContext context) => new SizedBox(
+                                    width: 20.0,
+                                    height:
+                                        MediaQuery.of(context).size.height - 80,
+                                    child: SimpleDialog(
+                                      title: const Text('Set speed'),
+                                      children: <Widget>[
+                                        SizedBox(
+                                          height: 400.0,
+                                          width: 200.0,
+                                          child: SpringySlider(
+                                            markCount: 12,
+                                            positiveColor: Colors.red,
+                                            negativeColor: Colors.blue,
+                                            positiveIcon: Icons.av_timer,
+                                            negativeIcon: Icons.fast_forward,
+                                            onChanged: (value) => print(value),
+                                          ),
+                                        )
+                                      ],
+                                    )));
+                          },
+                          child: Text('Speed setting'),
+                        )
+                      ],
                     )
                   ],
                 )),
