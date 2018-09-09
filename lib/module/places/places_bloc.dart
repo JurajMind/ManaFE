@@ -69,6 +69,7 @@ class PlacesBloc {
       }
       var rawlocation = await _location.getLocation();
       var sl = map.Location(rawlocation['latitude'], rawlocation['longitude']);
+      if (sl == null) return null;
       location.add(sl);
       return sl;
     } on PlatformException catch (e) {

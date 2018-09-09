@@ -102,24 +102,13 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
             controller: controller,
             children: <Widget>[
               animationStatePickerBuilder(
-                  smokeSessionBloc.standSettings, SmokeState.blow),
+                  smokeSessionBloc.standSettings, SmokeState.blow, 'Blow'),
               animationStatePickerBuilder(
-                  smokeSessionBloc.standSettings, SmokeState.idle),
+                  smokeSessionBloc.standSettings, SmokeState.idle, 'Idle'),
               animationStatePickerBuilder(
-                  smokeSessionBloc.standSettings, SmokeState.puf),
+                  smokeSessionBloc.standSettings, SmokeState.puf, 'Smoke'),
             ],
           ),
-          AnimationStateLabel(
-            controller: controller,
-            labels: ['Blow', 'Idle', 'Smoke'],
-            onPageSelected: (int page) {
-              controller.animateToPage(
-                page,
-                duration: _kDuration,
-                curve: _kCurve,
-              );
-            },
-          )
         ],
       ),
     );
@@ -128,7 +117,7 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
   void changeAnimation() {}
 
   StreamBuilder<StandSettings> animationStatePickerBuilder(
-      Stream<StandSettings> stream, SmokeState state) {
+      Stream<StandSettings> stream, SmokeState state, String label) {
     return StreamBuilder<StandSettings>(
       initialData: null,
       stream: stream,

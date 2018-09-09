@@ -18,6 +18,8 @@ import 'package:vibrate/vibrate.dart';
 class SmokeSessionBloc {
   String hookahCode;
 
+  bool _loadedGear = false;
+
   Sink get test => _indexController.sink;
   final _indexController = PublishSubject();
   String activeSessionId;
@@ -113,8 +115,11 @@ class SmokeSessionBloc {
     animations.add(await App.http.getAnimations(sessionData.item1.hookah.code));
   }
 
-  loadMyGear() async {
+  loadMyGear(bool reload) async {
+    if (_loadedGear && !reload) return;
+
     var gear = await App.http.getMyGear();
+    _loadedGear = true;
     myGear.add(gear);
   }
 

@@ -67,6 +67,9 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
               diameterRatio: 10.0,
               perspective: 0.01,
               onSelectedItemChanged: (int index) {
+                if (index == 0) {
+                  print('fake');
+                }
                 widget.onChanged(index);
                 setState(() {
                   _focusIndex = index;

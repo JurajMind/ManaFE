@@ -133,11 +133,12 @@ class _CarrousselState extends State<Carroussel> {
           padding: const EdgeInsets.all(8.0),
           child: new Container(
               decoration: BoxDecoration(
-                  borderRadius: new BorderRadius.circular(10.0),
-                  color: Colors.grey[300],
-                  image: DecorationImage(
-                      image: CachedNetworkImageProvider(place.getPlaceImage()),
-                      fit: BoxFit.cover)),
+                borderRadius: new BorderRadius.circular(10.0),
+                color: Colors.grey[300],
+                //  image: DecorationImage(
+                //     image: CachedNetworkImageProvider(place.getPlaceImage()),
+                //   fit: BoxFit.cover)),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(

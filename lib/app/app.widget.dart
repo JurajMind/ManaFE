@@ -87,7 +87,6 @@ class _AppWidgetState extends State<AppWidget> {
     if (splash) return new SplashScreen();
 
     if (_isAuthorized) {
-      smokeSession.loadMyGear();
       return new HomePage();
     }
     ;

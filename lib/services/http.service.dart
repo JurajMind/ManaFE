@@ -141,7 +141,7 @@ class ApiClient {
   }
 
   Future<List<Place>> getNearbyPlaces({double lat, double lng}) {
-    Map<String, String> queryParameters;
+    Map<String, String> queryParameters = new Map<String, String>();
     if (lat != null && lng != null) {
       queryParameters['lat'] = lat.toString();
       queryParameters['lng'] = lng.toString();
@@ -172,7 +172,7 @@ class ApiClient {
 
   Future<bool> changeAnimation(
       int animationId, SmokeState type, String deviceId) async {
-    print('ChangeAnimation');
+    print('ChangeAnimation{$animationId} ${type}');
     var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeAnimation');
     var data = {
       'AnimationId': animationId,
@@ -197,7 +197,7 @@ class ApiClient {
 
   Future<List<PipeAccesorySimple>> searchGear(
       String search, String type, int page, int pageSize) {
-    var url = Uri.https(baseUrl, 'api//Gear/${type}/Search/${search}',
+    var url = Uri.https(baseUrl, 'api/Gear/${type}/Search/${search}',
         {"page": page.toString(), "pageSize": pageSize.toString()});
 
     return _getJson(url).then((json) {

@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:loader_search_bar/loader_search_bar.dart';
 import 'package:rxdart/rxdart.dart';
 
-class MetadataIdem extends StatelessWidget {
+class MetadataItem extends StatelessWidget {
   final String type;
+  final String searchType;
 
   final IconData icon;
 
@@ -15,8 +16,13 @@ class MetadataIdem extends StatelessWidget {
 
   final int selected;
 
-  const MetadataIdem(
-      {Key key, this.type, this.icon, this.pipeAccesories, this.selected})
+  const MetadataItem(
+      {Key key,
+      this.type,
+      this.icon,
+      this.pipeAccesories,
+      this.selected,
+      this.searchType})
       : super(key: key);
 
   @override
@@ -58,7 +64,12 @@ class MetadataIdem extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(Icons.search),
                   onPressed: () => showDemoDialog<void>(
-                      context: context, child: new PipeAccesorySearch()),
+                      context: context,
+                      child: new PipeAccesorySearch(
+                        type: type,
+                        searchType: searchType,
+                        ownAccesories: pipeAccesories,
+                      )),
                 ),
                 flex: 1,
               )
@@ -105,8 +116,15 @@ class MetadataIdem extends StatelessWidget {
 }
 
 class PipeAccesorySearch extends StatefulWidget {
+  final List<PipeAccesory> ownAccesories;
+  final String type;
+  final String searchType;
+
   const PipeAccesorySearch({
     Key key,
+    this.ownAccesories,
+    this.type,
+    this.searchType,
   }) : super(key: key);
 
   @override
@@ -122,6 +140,16 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
 
   bool loading = false;
 
+  List<PipeAccesorySimple> ownSimpleAccesories;
+
+  @override
+  void initStete() {
+    super.initState();
+    ownSimpleAccesories = widget.ownAccesories
+        .map((f) => PipeAccesorySimple.fromAccesory(f))
+        .toList();
+  }
+
   TextEditingController controller = new TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -133,7 +161,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
           children: <Widget>[
             AppBar(
               centerTitle: true,
-              title: Text('Search a bowl'),
+              title: Text('Search ${widget.type}'),
             ),
             Container(
               height: 50.0,
@@ -156,7 +184,8 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                             loading = true;
                           });
                           App.http
-                              .searchGear(text, 'bowl', 0, 10)
+                              .searchGear(
+                                  text, widget.searchType.toLowerCase(), 0, 10)
                               .then((value) {
                             this.searchResult.add(value);
                             setState(() {
@@ -169,7 +198,8 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                 ],
               ),
             ),
-            buildResult()
+            Expanded(
+                child: controller.text == "" ? buildDefault() : buildResult())
           ],
         ),
       ),
@@ -179,13 +209,19 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
   StreamBuilder<List<PipeAccesorySimple>> buildResult() {
     return StreamBuilder<List<PipeAccesorySimple>>(
         stream: searchResult,
-        initialData: List<PipeAccesorySimple>(),
+        initialData: ownSimpleAccesories,
         builder: (context, snapshot) => ListView.builder(
-              shrinkWrap: true,
+              shrinkWrap: false,
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) =>
                   _createResult(index, snapshot.data[index], context),
             ));
+  }
+
+  Widget buildDefault() {
+    return ListView(
+      children: ownSimpleAccesories.map((f) => _createResult(0, f, context)),
+    );
   }
 
   _createResult(int index, PipeAccesorySimple data, BuildContext context) {

@@ -1,3 +1,5 @@
+import 'package:app/models/PipeAccesory/pipe_accesory.dart';
+
 class PipeAccesorySimple {
   PipeAccesorySimple({this.id, this.name, this.brand, this.type, this.owned});
 
@@ -11,6 +13,15 @@ class PipeAccesorySimple {
         brand: json['Brand'],
         type: json['Type'],
         owned: json['Owned'] == 1);
+  }
+
+  factory PipeAccesorySimple.fromAccesory(PipeAccesory accesory) {
+    return new PipeAccesorySimple(
+        id: accesory.id,
+        name: accesory.name,
+        brand: accesory.name,
+        type: accesory.type,
+        owned: true);
   }
 
   int id;

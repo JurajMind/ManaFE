@@ -1,6 +1,7 @@
 import 'package:app/components/icon_button_title.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mixology_list.dart';
+import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Places/places.page.dart';
 import 'package:app/pages/SmokeSession/gradiend_color_wheel.dart';
 import 'package:app/pages/gear.page.dart';
@@ -33,6 +34,8 @@ class _HomePageState extends State<HomePage> {
   List<Widget> tabs;
   List<FocusScopeNode> tabFocusNodes;
 
+  SmokeSessionBloc smokeSessionBloc;
+
   @override
   void initState() {
     super.initState();
@@ -46,7 +49,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
+    smokeSessionBloc = DataProvider.getSmokeSession(context);
     _focusActiveTab();
+    smokeSessionBloc.loadMyGear(false);
   }
 
   @override
@@ -128,7 +133,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final smokeSessionBloc = DataProvider.getSmokeSession(context);
     smokeSessionBloc.signalR.conect();
     return WillPopScope(
         onWillPop: () async {
