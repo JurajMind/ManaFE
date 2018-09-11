@@ -107,7 +107,10 @@ class _TestPageState extends State<TestPage> {
                                             negativeColor: Colors.blue,
                                             positiveIcon: Icons.brightness_low,
                                             negativeIcon: Icons.brightness_high,
-                                            onChanged: (value) => print(value),
+                                            minValue: 0.0,
+                                            maxValue: 255.0,
+                                            initValue: 30.0,
+                                            onChanged: (value) => App.http.changeBrightness(value.round(), SmokeState.puf, 'emulator'),
                                           ),
                                         )
                                       ],

@@ -187,6 +187,38 @@ class ApiClient {
     return true;
   }
 
+  Future<bool> changeSpeed(int speed,SmokeState type,String deviceId) async {
+    debugPrint('Change speed {$speed} ${type}');
+     var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeSpeed');
+       var data = {
+      'Speed': speed.toString(),
+      'Type': SmokeState.values.indexOf(type)
+    };
+     var response = await _dio.post(uri.toString(),
+        data: data,
+        options: Options(
+          contentType: ContentType.JSON,
+        ));
+    debugPrint(response.data.toString());
+    return true;
+  }
+
+    Future<bool> changeBrightness(int brightness,SmokeState type,String deviceId) async {
+    debugPrint('Change brghtness {$brightness} ${type}');
+     var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeBrightness');
+       var data = {
+      'Brightness': brightness.toString(),
+      'Type': SmokeState.values.indexOf(type)
+    };
+     var response = await _dio.post(uri.toString(),
+        data: data,
+        options: Options(
+          contentType: ContentType.JSON,
+        ));
+    debugPrint(response.data.toString());
+    return true;
+  }
+
   Future<List<StandAnimation>> getAnimations(String code) {
     var url = Uri.https(baseUrl, 'api/Animations/GetAnimations', {"id": code});
 

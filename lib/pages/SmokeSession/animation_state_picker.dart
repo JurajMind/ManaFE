@@ -1,13 +1,22 @@
+import 'package:app/app/app.dart';
+import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/Stand/animation.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
+import 'package:app/pages/SmokeSession/picker_slider.dart';
 import 'package:flutter/material.dart';
 
 class AnimationStatePicker extends StatefulWidget {
   final SmokeSessionBloc smokeSessionBloc;
   final int selectedIndex;
+  final String label;
+  final SmokeState state;
   final ValueChanged<int> onChanged;
   AnimationStatePicker(
-      {this.smokeSessionBloc, this.selectedIndex, this.onChanged});
+      {this.smokeSessionBloc,
+      this.selectedIndex,
+      this.onChanged,
+      this.label,
+      this.state});
 
   @override
   AnimationStatePickerState createState() {
@@ -40,16 +49,14 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
         children: <Widget>[
           SizedBox(
               height: size.height * 0.75,
-              child: Container(
-                child: NotificationListener(
-                    onNotification: (ScrollNotification notification) {
-                      if (notification.depth == 0 &&
-                          notification is ScrollUpdateNotification) {
-                        final FixedScrollMetrics metrics = notification.metrics;
-                      }
-                      return false;
-                    },
-                    child: buildAnimationList()),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    flex: 5,
+                    child: buildAnimationList(),
+                  ),
+                  Expanded(flex: 1, child: buildBottomBar())
+                ],
               ))
         ],
       ),
@@ -80,6 +87,50 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
                   (int index) => _createAnimation(index, snapshot.data[index],
                       context, widget.selectedIndex)),
             ));
+  }
+
+  StreamBuilder<StandSettings> buildBottomBar() {
+    return StreamBuilder<StandSettings>(
+        stream: widget.smokeSessionBloc.standSettings,
+        initialData: StandSettings.empty(),
+        builder: (context, snapshot) {
+          var setting = snapshot.data.getStateSetting(widget.state);
+          return new Row(
+              children: <Widget>[
+                RaisedButton(
+                  onPressed: () {
+                    showDialog<void>(
+                        context: context,
+                        builder: (BuildContext context) => new SizedBox(
+                            width: 20.0,
+                            height: MediaQuery.of(context).size.height - 80,
+                            child: SimpleDialog(
+                              title: const Text('Set brightness'),
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 400.0,
+                                  width: 200.0,
+                                  child: SpringySlider(
+                                    markCount: 12,
+                                    positiveColor: Colors.red,
+                                    negativeColor: Colors.blue,
+                                    positiveIcon: Icons.brightness_low,
+                                    negativeIcon: Icons.brightness_high,
+                                    minValue: 0.0,
+                                    maxValue: 255.0,
+                                    initValue: setting.brightness + 0.0,
+                                    onChanged: (value) => widget.smokeSessionBloc.setBrigtness(value.round(), widget.state),
+                                  ),
+                                )
+                              ],
+                            )));
+                  },
+                  child: Text('Br setting'),
+                ),
+                Text(widget.label)
+              ],
+            );
+        });
   }
 
   _createAnimation(

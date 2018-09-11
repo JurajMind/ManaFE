@@ -125,6 +125,8 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
           ? CircularProgressIndicator()
           : AnimationStatePicker(
               smokeSessionBloc: smokeSessionBloc,
+              label: label,
+              state: state,
               selectedIndex: snapshot.data.getStateSetting(state) == null
                   ? -1
                   : snapshot.data.getStateSetting(state).animationId,
@@ -134,6 +136,7 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
             ),
     );
   }
+  
 
   @override
   void didChangeDependencies() {

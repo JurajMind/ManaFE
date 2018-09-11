@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:app/utils/numbers_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:flutter/scheduler.dart';
@@ -11,6 +12,9 @@ class SpringySlider extends StatefulWidget {
   final Color negativeColor;
   final IconData positiveIcon;
   final IconData negativeIcon;
+  final double minValue;
+  final double maxValue;
+  final double initValue;
   final ValueChanged<double> onChanged;
   SpringySlider({
     this.markCount,
@@ -19,6 +23,9 @@ class SpringySlider extends StatefulWidget {
     this.onChanged,
     this.positiveIcon,
     this.negativeIcon,
+    this.minValue = 0.0,
+    this.maxValue = 1.0,
+    this.initValue = 0.5,
   });
 
   @override
@@ -36,7 +43,8 @@ class _SpringySliderState extends State<SpringySlider>
   void initState() {
     super.initState();
     sliderController = new SpringySliderController(
-      sliderPercent: 0.2,
+      sliderPercent: NumberHelper.normalize(
+          widget.initValue, widget.minValue, widget.maxValue),
       vsync: this,
     )..addListener(() {
         setState(() {});
@@ -55,6 +63,8 @@ class _SpringySliderState extends State<SpringySlider>
       paddingTop: paddingTop,
       paddingBottom: paddingBottom,
       onChanged: widget.onChanged,
+      minValue: widget.minValue,
+      maxValue: widget.maxValue,
       child: Stack(
         children: <Widget>[
           SliderMarks(
@@ -135,6 +145,8 @@ class SliderDragger extends StatefulWidget {
   final SpringySliderController sliderController;
   final double paddingTop;
   final double paddingBottom;
+  final double minValue;
+  final double maxValue;
   final Widget child;
   final ValueChanged<double> onChanged;
   SliderDragger(
@@ -142,7 +154,9 @@ class SliderDragger extends StatefulWidget {
       this.paddingTop,
       this.paddingBottom,
       this.child,
-      this.onChanged});
+      this.onChanged,
+      this.minValue,
+      this.maxValue});
 
   @override
   _SliderDraggerState createState() => _SliderDraggerState();
@@ -190,7 +204,8 @@ class _SliderDraggerState extends State<SliderDragger> {
     startDragPercent = null;
 
     widget.sliderController.onDragEnd();
-    widget.onChanged(widget.sliderController.sliderValue);
+    widget.onChanged(NumberHelper.deNormalize(
+        widget.sliderController.sliderValue, widget.minValue, widget.maxValue));
   }
 
   @override
@@ -632,7 +647,8 @@ class Points extends StatelessWidget {
       children: <Widget>[
         FractionalTranslation(
             translation: Offset(-0.05 * percent, isAboveSlider ? 0.18 : -0.18),
-            child: Icon(this.icon, size: pointTextSize)),
+            child: Icon(this.icon, size: pointTextSize),
+          ),
       ],
     );
   }
