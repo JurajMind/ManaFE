@@ -1,9 +1,10 @@
+import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 import 'package:app/pages/Mixology/mix_detail_page.dart';
 import 'package:app/utils/color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating/flutter_rating.dart';
+
 
 class MixCardExpanded extends StatefulWidget {
   final TobaccoMix tobaccoMix;

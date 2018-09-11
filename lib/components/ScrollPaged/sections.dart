@@ -373,7 +373,7 @@ final List<Section> allSections = <Section>[
       title: 'TOBACCO',
       leftColor: _tomato,
       rightColor: _mediumPurple,
-      backgroundAsset: 'products/table.png',
+      backgroundAsset: 'images/gear/hookah.jpg',
       backgroundAssetPackage: _kGalleryAssetsPackage,
       details: SectionDetail.generateRandomBrands()),
   const Section(

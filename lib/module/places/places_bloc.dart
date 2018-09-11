@@ -1,6 +1,5 @@
 import 'package:app/app/app.dart';
 import 'package:app/models/Places/place.dart';
-import 'package:app/services/http.service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:location/location.dart';

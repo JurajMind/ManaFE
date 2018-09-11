@@ -17,7 +17,7 @@ dependencies:
   flutter_secure_storage: "^3.1.1"
   rxdart: "^0.18.1"
   vibrate: "^0.0.3"
-  intl: ^0.15.7
+  intl: ^0.15.6
   animated_background: ^0.0.4
   tuple: ^1.0.1
   percent_indicator: "^1.0.9"
@@ -34,7 +34,6 @@ dependencies:
   map_view:
     git: https://github.com/diegoveloper/flutter_google_map_view.git
   location: ^1.4.1
-  flutter_rating: ^0.0.1
   cached_network_image: "^0.4.1"
 
   # The following adds the Cupertino Icons font to your application.

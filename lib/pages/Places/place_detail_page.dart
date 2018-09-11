@@ -1,4 +1,5 @@
 import 'package:app/app/app.dart';
+import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/models/Places/place.dart';
 import 'package:flutter/material.dart';
 import 'package:map_view/map_view.dart';
@@ -40,34 +41,57 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
   @override
   Widget build(BuildContext context) {
     var mapUri = staticMapProvider.getStaticUri(
-        new Location(place.address.lat, place.address.lng), 14,
-        width: 450, height: 250, mapType: StaticMapViewType.roadmap);
+        new Location(place.address.lat, place.address.lng), 13,
+        width: 450, height: 350, mapType: StaticMapViewType.roadmap);
 
     return new Container(
         child: new CustomScrollView(
       slivers: <Widget>[
         new SliverAppBar(
+          backgroundColor: Colors.black,
+          pinned: true,
           expandedHeight: _appBarHeight,
+          bottom: PreferredSize(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      place.address.toString(),
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                    new StarRating(
+                      size: 15.0,
+                      rating: 2.0,
+                      starCount: 5,
+                      color: Colors.white,
+                      borderColor: Colors.white,
+                    )
+                  ],
+                ),
+              ),
+            ),
+            preferredSize: Size(15.0, 15.0),
+          ),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.photo_size_select_small),
             ),
           ],
           flexibleSpace: new FlexibleSpaceBar(
-            title: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  width: 200.0,
-                  child: Text(
-                    place.name,
-                    maxLines: 2,
-                    overflow: TextOverflow.clip,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
+            title: SizedBox(
+              child: Text(
+                place.name,
+                maxLines: 2,
+                overflow: TextOverflow.clip,
+                textAlign: TextAlign.center,
+              ),
             ),
             centerTitle: true,
             background: new Stack(
@@ -99,7 +123,34 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                       new Row(
                         children: <Widget>[
                           Expanded(
-                            child: Column(),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: <Widget>[
+                                  new IconLabel(
+                                    icon: Icons.watch,
+                                    child: Text(
+                                      '14:00 - 22:00',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ),
+                                  new IconLabel(
+                                    icon: Icons.hot_tub,
+                                    child: Text(
+                                      'Cats not allowed',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ),
+                                   new IconLabel(
+                                    icon: Icons.credit_card,
+                                    child: Text(
+                                      'Accepts cards',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
                             flex: 1,
                           ),
                           Expanded(
@@ -107,21 +158,75 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                             child: InkWell(
                               onTap: () => showMap(),
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Image.network(mapUri.toString()),
+                                padding: const EdgeInsets.all(10.0),
+                                child: Image
+                                    .network(mapUri.toString() + '&scale=2'),
                               ),
                             ),
                           )
                         ],
                       ),
-                      new Row(
-                        children: <Widget>[
-                          Text(
-                            'NAVIGATE',
-                            style: TextStyle(color: Colors.black),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: new Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            FlatButton(
+                              child: Text(
+                                'NAVIGATE',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              onPressed: () => print('navigate'),
+                            ),
+                            Container(
+                              height: 14.0,
+                              width: 2.0,
+                              color: Colors.grey,
+                            ),
+                            FlatButton(
+                              child: Text(
+                                'GO WITH UBER',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              onPressed: () => print('GO WITH UBER'),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(),
+                              borderRadius: BorderRadius.circular(20.0)),
+                          child: new Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              FlatButton(
+                                child: Text(
+                                  'BOOK',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                onPressed: () => print('navigate'),
+                              ),
+                              Container(
+                                height: 35.0,
+                                width: 2.0,
+                                color: Colors.grey,
+                              ),
+                              FlatButton(
+                                child: Text(
+                                  'SEE MENU',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                onPressed: () => print('GO WITH UBER'),
+                              ),
+                            ],
                           ),
-                          Text('GO WITH UBER')
-                        ],
+                        ),
                       )
                     ],
                   ),
@@ -132,5 +237,24 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
         )
       ],
     ));
+  }
+}
+
+class IconLabel extends StatelessWidget {
+  final Widget child;
+  final IconData icon;
+  const IconLabel({Key key, this.child, this.icon}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return new Row(
+      children: <Widget>[
+        Icon(
+          icon,
+          color: Colors.black,
+        ),
+        child
+      ],
+    );
   }
 }

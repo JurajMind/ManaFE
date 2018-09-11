@@ -3,7 +3,6 @@ import 'package:app/models/PipeAccesory/pipe_accesory.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:flutter/material.dart';
-import 'package:loader_search_bar/loader_search_bar.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MetadataItem extends StatelessWidget {

@@ -133,6 +133,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var smokeSessionBloc = DataProvider.getSmokeSession(context);
     smokeSessionBloc.signalR.conect();
     return WillPopScope(
         onWillPop: () async {
