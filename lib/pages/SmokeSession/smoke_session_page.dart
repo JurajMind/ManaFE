@@ -64,7 +64,8 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
       },
     );
 
-    StreamBuilder<SmokeSessionMetaData> metadataBuilder = new StreamBuilder(
+    StreamBuilder<SmokeSessionMetaData> tobaccoMetaDataBuilder =
+        new StreamBuilder(
       stream: smokeSessionBloc.smokeSessionMetaData,
       builder: (context, asyncSnapshot) {
         if (asyncSnapshot.data == null) {
@@ -73,8 +74,22 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         return Column(
           children: <Widget>[
             TobaccoWidget(
-                tobacco: asyncSnapshot.data.tobacco,
-                tobacoMix: asyncSnapshot.data.mix),
+              tobacco: asyncSnapshot.data.tobacco,
+            )
+          ],
+        );
+      },
+    );
+
+    StreamBuilder<SmokeSessionMetaDataSelection> metadataBuilder =
+        new StreamBuilder(
+      stream: smokeSessionBloc.smokeSessionDataSelection,
+      builder: (context, asyncSnapshot) {
+        if (asyncSnapshot.data == null) {
+          return CircularProgressIndicator();
+        }
+        return Column(
+          children: <Widget>[
             PipeAccesoryWidget(
               accesory: asyncSnapshot.data.pipe,
               type: 'Pipe',
@@ -83,6 +98,14 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
             PipeAccesoryWidget(
                 accesory: asyncSnapshot.data.bowl,
                 type: 'Bowl',
+                smokeSessionBloc: smokeSessionBloc),
+            PipeAccesoryWidget(
+                accesory: asyncSnapshot.data.heatManager,
+                type: 'H.M.S',
+                smokeSessionBloc: smokeSessionBloc),
+            PipeAccesoryWidget(
+                accesory: asyncSnapshot.data.coal,
+                type: 'Coals',
                 smokeSessionBloc: smokeSessionBloc),
           ],
         );
@@ -158,6 +181,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                       child: ListView(
                         children: <Widget>[
                           statisticBuilder,
+                          tobaccoMetaDataBuilder,
                           metadataBuilder,
                         ],
                       ),

@@ -1,6 +1,45 @@
 import 'package:app/models/PipeAccesory/pipe_accesory.dart';
+import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:app/models/PipeAccesory/tobacco.dart';
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
+
+class SmokeSessionMetaDataSelection {
+  int id;
+  int tobaccoId;
+  double tobaccoWeight;
+  int anonymPeopleCount;
+
+  PipeAccesorySimple bowl;
+  PipeAccesorySimple pipe;
+  PipeAccesorySimple heatManager;
+  PipeAccesorySimple coal;
+  int packType;
+
+  SmokeSessionMetaDataSelection(
+      {this.id,
+      this.tobaccoId,
+      this.tobaccoWeight,
+      this.anonymPeopleCount,
+      this.bowl,
+      this.pipe,
+      this.heatManager,
+      this.coal,
+      this.packType});
+
+  factory SmokeSessionMetaDataSelection.fromMetadata(
+      SmokeSessionMetaData metadata) {
+    return new SmokeSessionMetaDataSelection(
+        id: metadata.id,
+        tobaccoId: metadata.tobaccoId,
+        tobaccoWeight: metadata.tobaccoWeight,
+        anonymPeopleCount: metadata.anonymPeopleCount,
+        bowl: PipeAccesorySimple.fromAccesory(metadata.bowl),
+        pipe: PipeAccesorySimple.fromAccesory(metadata.pipe),
+        heatManager: PipeAccesorySimple.fromAccesory(metadata.heatManager),
+        coal: PipeAccesorySimple.fromAccesory(metadata.coals),
+        packType: PackType.values.indexOf(metadata.packType));
+  }
+}
 
 class SmokeSessionMetaData {
   SmokeSessionMetaData(
@@ -15,8 +54,10 @@ class SmokeSessionMetaData {
       this.pipeId,
       this.pipe,
       this.packType,
-      this.heatKeeper,
-      this.coalType,
+      this.heatManagerId,
+      this.heatManager,
+      this.coalId,
+      this.coals,
       this.coalsCount});
 
   factory SmokeSessionMetaData.fromJson(Map<String, dynamic> json) {
@@ -26,6 +67,10 @@ class SmokeSessionMetaData {
         PipeAccesory.fromJson(json['Bowl'] as Map<String, dynamic>);
     PipeAccesory pipe =
         PipeAccesory.fromJson(json['Pipe'] as Map<String, dynamic>);
+    PipeAccesory hms =
+        PipeAccesory.fromJson(json['HeatManagement'] as Map<String, dynamic>);
+    PipeAccesory coal =
+        PipeAccesory.fromJson(json['Coal'] as Map<String, dynamic>);
 
     TobaccoMix mix;
     if (json['TobaccoMix'] != null) {
@@ -44,9 +89,11 @@ class SmokeSessionMetaData {
         pipe: pipe,
         pipeId: json['PipeId'],
         packType: PackType.values[json['PackType']],
-        heatKeeper: HeatKeeper.values[json['PackType']],
-        coalType: CoalType.values[json['PackType']],
-        coalsCount: json['CoalsCount']);
+        heatManager: hms,
+        heatManagerId: json['HeatManagementId'],
+        coalId: json['CoalId'],
+        coals: coal,
+        coalsCount: json['CoalCount']);
   }
 
   int id;
@@ -68,6 +115,14 @@ class SmokeSessionMetaData {
   int pipeId;
 
   PipeAccesory pipe;
+
+  int coalId;
+
+  PipeAccesory coals;
+
+  int heatManagerId;
+
+  PipeAccesory heatManager;
 
   PackType packType;
   //enum packTypeEnum {  0,  1,  2,  3,  4,  };

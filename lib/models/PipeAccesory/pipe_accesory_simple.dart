@@ -16,10 +16,13 @@ class PipeAccesorySimple {
   }
 
   factory PipeAccesorySimple.fromAccesory(PipeAccesory accesory) {
+    if (accesory == null) {
+      return null;
+    }
     return new PipeAccesorySimple(
         id: accesory.id,
         name: accesory.name,
-        brand: accesory.name,
+        brand: accesory.brand,
         type: accesory.type,
         owned: true);
   }
@@ -33,4 +36,8 @@ class PipeAccesorySimple {
   String type;
 
   bool owned;
+
+  String get fullName {
+    return "$brand $name";
+  }
 }

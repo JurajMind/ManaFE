@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app/app/app.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory.dart';
+import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
@@ -19,6 +20,8 @@ class SmokeSessionBloc {
   String hookahCode;
 
   bool _loadedGear = false;
+
+  bool metaDataChanged = false;
 
   Sink get test => _indexController.sink;
   final _indexController = PublishSubject();
@@ -48,6 +51,10 @@ class SmokeSessionBloc {
   BehaviorSubject<SmokeSessionMetaData> smokeSessionMetaData =
       new BehaviorSubject<SmokeSessionMetaData>(
           seedValue: new SmokeSessionMetaData());
+
+  BehaviorSubject<SmokeSessionMetaDataSelection> smokeSessionDataSelection =
+      new BehaviorSubject<SmokeSessionMetaDataSelection>(
+          seedValue: new SmokeSessionMetaDataSelection());
 
   BehaviorSubject<StandSettings> standSettings =
       new BehaviorSubject<StandSettings>(seedValue: new StandSettings.empty());
@@ -82,7 +89,7 @@ class SmokeSessionBloc {
     futureSettings.add(new Tuple2(curentSetting, smokeState));
   }
 
-    setBrigtness(int brigtness, SmokeState smokeState) async {
+  setBrigtness(int brigtness, SmokeState smokeState) async {
     var curentSetting = standSettings.value;
     var editSetting = curentSetting.getStateSetting(smokeState);
     if (editSetting.brightness == brigtness) return;
@@ -124,6 +131,9 @@ class SmokeSessionBloc {
     standSettings.add(sessionData.item2);
     smokeStatistic.add(sessionData.item1.smokeSessionData);
     smokeSessionMetaData.add(sessionData.item1.metaData);
+    smokeSessionDataSelection.add(
+        new SmokeSessionMetaDataSelection.fromMetadata(
+            sessionData.item1.metaData));
     hookahCode = sessionData.item1.hookah.code;
     animations.add(await App.http.getAnimations(sessionData.item1.hookah.code));
   }
@@ -139,6 +149,39 @@ class SmokeSessionBloc {
   loadAnimation() async {
     var list = await App.http.getAnimations('hookahTest1');
     animations.add(list);
+  }
+
+  setMetadataAccesory(PipeAccesorySimple accesory, String type) {
+    metaDataChanged = true;
+    var selection = this.smokeSessionDataSelection.value;
+    switch (type) {
+      case 'Hookah':
+        selection.pipe = accesory;
+        break;
+
+      case 'Bowl':
+        selection.bowl = accesory;
+        break;
+
+      case 'heatmanagement':
+        selection.heatManager = accesory;
+        break;
+
+      case 'Coals':
+        selection.coal = accesory;
+        break;
+    }
+
+    this.smokeSessionDataSelection.add(selection);
+  }
+
+  saveMetaData() async {
+    if (!metaDataChanged) return;
+
+    var newMetadata = await App.http
+        .postMetadata(this.activeSessionId, smokeSessionDataSelection.value);
+    // this.smokeSessionMetaData.add(newMetadata);
+    metaDataChanged = false;
   }
 
   SmokeSessionBloc._() {

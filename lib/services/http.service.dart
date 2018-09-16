@@ -7,6 +7,7 @@ import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 import 'package:app/models/Places/place.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
+import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
 import 'package:app/models/Stand/animation.dart';
 import 'package:app/services/authorization.dart';
 import 'package:flutter/cupertino.dart';
@@ -187,14 +188,14 @@ class ApiClient {
     return true;
   }
 
-  Future<bool> changeSpeed(int speed,SmokeState type,String deviceId) async {
+  Future<bool> changeSpeed(int speed, SmokeState type, String deviceId) async {
     debugPrint('Change speed {$speed} ${type}');
-     var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeSpeed');
-       var data = {
+    var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeSpeed');
+    var data = {
       'Speed': speed.toString(),
       'Type': SmokeState.values.indexOf(type)
     };
-     var response = await _dio.post(uri.toString(),
+    var response = await _dio.post(uri.toString(),
         data: data,
         options: Options(
           contentType: ContentType.JSON,
@@ -203,14 +204,15 @@ class ApiClient {
     return true;
   }
 
-    Future<bool> changeBrightness(int brightness,SmokeState type,String deviceId) async {
+  Future<bool> changeBrightness(
+      int brightness, SmokeState type, String deviceId) async {
     debugPrint('Change brghtness {$brightness} ${type}');
-     var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeBrightness');
-       var data = {
+    var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeBrightness');
+    var data = {
       'Brightness': brightness.toString(),
       'Type': SmokeState.values.indexOf(type)
     };
-     var response = await _dio.post(uri.toString(),
+    var response = await _dio.post(uri.toString(),
         data: data,
         options: Options(
           contentType: ContentType.JSON,
@@ -249,6 +251,28 @@ class ApiClient {
     var url = Uri.https(baseUrl, 'api/Person/MyGear');
     return _getJson(url).then((data) =>
         data.map<PipeAccesory>((p) => PipeAccesory.fromJson(p)).toList());
+  }
+
+  Future<SmokeSessionMetaData> postMetadata(
+      String sessionCode, SmokeSessionMetaDataSelection value) async {
+    var url =
+        Uri.https(baseUrl, 'api/SmokeSession/${sessionCode}/SaveMetaData');
+    var data = {
+      'Id': value.id,
+      'BowlId': value.bowl != null ? value.bowl.id : null,
+      'PipeId': value.pipe != null ? value.pipe.id : null,
+      'CoalId': value.coal != null ? value.coal.id : null,
+      'HeatManagementId':
+          value.heatManager != null ? value.heatManager.id : null,
+    };
+
+    var response = await _dio.post(url.toString(),
+        data: data,
+        options: Options(
+          contentType: ContentType.JSON,
+        ));
+    debugPrint(response.data.toString());
+    return SmokeSessionMetaData.fromJson(response.data);
   }
 }
 

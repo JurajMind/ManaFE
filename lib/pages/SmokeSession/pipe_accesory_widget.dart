@@ -1,12 +1,11 @@
-import 'package:app/models/PipeAccesory/pipe_accesory.dart';
+import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
-import 'package:app/pages/test_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PipeAccesoryWidget extends StatelessWidget {
-  final PipeAccesory accesory;
+  final PipeAccesorySimple accesory;
   final String type;
   final SmokeSessionBloc smokeSessionBloc;
   const PipeAccesoryWidget(
@@ -34,13 +33,15 @@ class PipeAccesoryWidget extends StatelessWidget {
           ),
           IconButton(
               icon: Icon(Icons.add_box),
-              onPressed: () {
+              onPressed: () async {
                 showModalBottomSheet<void>(
                     context: context,
                     builder: (BuildContext context) {
                       return new MetadataBottomSheet(
                           smokeSessionBloc: this.smokeSessionBloc);
-                    });
+                    }).then((value) {
+                  this.smokeSessionBloc.saveMetaData();
+                });
               })
         ],
       ),
