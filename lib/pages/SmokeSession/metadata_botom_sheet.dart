@@ -56,11 +56,11 @@ class MetadataBottomSheet extends StatelessWidget {
             buildMetadataItem(
                 smokeSessionBloc,
                 "Coals",
-                'Coals',
+                'coal',
                 Icons.account_box,
                 smokeSessionBloc.myGear.value != null
                     ? smokeSessionBloc.myGear.value
-                        .where((a) => a.type == 'Coals')
+                        .where((a) => a.type == 'Coal')
                         .toList()
                     : new List<PipeAccesory>(),
                 (a) => a.coal),

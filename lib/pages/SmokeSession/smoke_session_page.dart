@@ -5,6 +5,7 @@ import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/animation_list.dart';
+import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
 import 'package:app/pages/SmokeSession/pipe_accesory_widget.dart';
 import 'package:app/pages/SmokeSession/puff_timer.dart';
 import 'package:app/pages/SmokeSession/smoke_color_wheel.dart';
@@ -35,12 +36,15 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
   Dependencies dependencies;
   int action = 0;
   ScrollController scrollController;
+  ScrollPhysics physics;
 
   @override
   void initState() {
     stopWatches = new StopWatches(new Stopwatch(), new Stopwatch());
     dependencies = new Dependencies(stopwatch: stopWatches.pufStopwatch);
-    scrollController = new ScrollController(initialScrollOffset: 1000.0);
+    scrollController = new ScrollController(
+      initialScrollOffset: 1000.0,
+    );
     super.initState();
   }
 
@@ -107,6 +111,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                 accesory: asyncSnapshot.data.coal,
                 type: 'Coals',
                 smokeSessionBloc: smokeSessionBloc),
+            emptyPipeAccesoryWidget(asyncSnapshot.data)
           ],
         );
       },
@@ -194,6 +199,27 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         ],
       ),
     );
+  }
+
+  emptyPipeAccesoryWidget(SmokeSessionMetaDataSelection md) {
+    if (md.pipe == null ||
+        md.bowl == null ||
+        md.coal == null ||
+        md.heatManager == null)
+      return RaisedButton(
+        child: Text('Fill metadata'),
+        onPressed: () async {
+          showModalBottomSheet<void>(
+              context: context,
+              builder: (BuildContext context) {
+                return new MetadataBottomSheet(
+                    smokeSessionBloc: this.smokeSessionBloc);
+              }).then((value) {
+            this.smokeSessionBloc.saveMetaData();
+          });
+        },
+      );
+    return Container();
   }
 }
 

@@ -14,6 +14,9 @@ class PipeAccesoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (accesory == null) {
+      return Container();
+    }
     return Padding(
       padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
       child: Row(

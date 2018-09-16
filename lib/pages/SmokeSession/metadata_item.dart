@@ -73,8 +73,9 @@ class MetadataItem extends StatelessWidget {
             ],
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: pipeAccesoryChips(pipeAccesories, null, false),
+            mainAxisAlignment: MainAxisAlignment.start,
+            children:
+                pipeAccesoryChips(pipeAccesories, selectedAccesories, false),
           )
         ],
       ),
@@ -90,17 +91,19 @@ class MetadataItem extends StatelessWidget {
     }
 
     if (firstLine) {
-      if (acc.length < 1) {
+      if (selected == null && simple.length < 1) {
         return [new Text('No owned')];
       }
       if (selected != null) {
-        acc = acc.skip(1).toList();
+        if (simple.where((a) => a.id == selected.id).length > 1)
+          simple = simple.skip(1).toList();
         return [filterChip(selected, true)];
       } else {
         return [filterChip(simple.first, false)];
       }
     } else {
-      if (selected == null) simple = simple.skip(1).toList();
+      if (selected != null && simple.length > 1)
+        simple = simple.skip(1).toList();
       if (simple.length > 2) simple = simple.take(2).toList();
       return simple.map<Widget>((a) {
         return filterChip(a, false);
@@ -114,16 +117,21 @@ class MetadataItem extends StatelessWidget {
           width: 0.66, style: BorderStyle.solid, color: Colors.white),
       borderRadius: BorderRadius.circular(20.0),
     );
-    return new FilterChip(
-      label: Text(accesory.fullName),
-      shape: shape,
-      onSelected: (value) {
-        this.bloc.setMetadataAccesory(accesory, searchType);
-      },
-      selectedColor: Colors.white,
-      labelStyle: TextStyle(color: selected ? Colors.black : Colors.white),
-      backgroundColor: Colors.black,
-      selected: selected,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
+      child: new FilterChip(
+        label: Text(accesory.fullName),
+        materialTapTargetSize: MaterialTapTargetSize.padded,
+        shape: shape,
+        onSelected: (value) {
+          this.bloc.setMetadataAccesory(accesory, searchType);
+        },
+        selectedColor: Colors.white,
+        disabledColor: Colors.black,
+        labelStyle: TextStyle(color: selected ? Colors.black : Colors.white),
+        backgroundColor: selected ? Colors.white : Colors.black,
+        selected: selected,
+      ),
     );
   }
 

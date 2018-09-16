@@ -167,7 +167,7 @@ class SmokeSessionBloc {
         selection.heatManager = accesory;
         break;
 
-      case 'Coals':
+      case 'coal':
         selection.coal = accesory;
         break;
     }
