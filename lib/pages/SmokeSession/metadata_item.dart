@@ -120,8 +120,7 @@ class MetadataItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
       child: new FilterChip(
-        label: Text(accesory.fullName),
-        materialTapTargetSize: MaterialTapTargetSize.padded,
+        label: Text(accesory.fullName),        
         shape: shape,
         onSelected: (value) {
           this.bloc.setMetadataAccesory(accesory, searchType);

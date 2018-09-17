@@ -165,13 +165,21 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
           new Expanded(
             child: CustomScrollView(
               controller: scrollController,
-              physics: new SnapScrollPhysic(
-                  snaps: [size.height * 0.75, size.width, size.height * 0.75]),
-              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: false,
               slivers: <Widget>[
                 new SliverList(
                   delegate: new SliverChildListDelegate(<Widget>[
                     AnimationsPicker(),
+                                    SizedBox(
+                  height: 40.0,
+                  child: GestureDetector(
+                    onPanUpdate: (value) =>  scrollController.jumpTo(scrollController.offset -  value.delta.dy),
+                    child: Container(
+                      color: Colors.yellow,
+                    ),
+                  ),
+                ),
                     SizedBox(
                         height: size.width,
                         child: SmokeColorWheel(
@@ -181,10 +189,19 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                           },
                           color: HSVColor.fromColor(Colors.red),
                         )),
+                SizedBox(
+                  height: 40.0,
+                  child: GestureDetector(
+                    onPanUpdate: (value) =>  scrollController.jumpTo(scrollController.offset -  value.delta.dy),
+                    child: Container(
+                      color: Colors.yellow,
+                    ),
+                  ),
+                ),
                     SizedBox(
                       height: size.height * 0.75,
                       child: ListView(
-                        children: <Widget>[
+                        children: <Widget>[                          
                           statisticBuilder,
                           tobaccoMetaDataBuilder,
                           metadataBuilder,

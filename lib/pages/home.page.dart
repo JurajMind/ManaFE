@@ -132,9 +132,7 @@ class _HomePageState extends State<HomePage> {
       );
 
   @override
-  Widget build(BuildContext context) {
-    var smokeSessionBloc = DataProvider.getSmokeSession(context);
-    smokeSessionBloc.signalR.conect();
+  Widget build(BuildContext context) {  
     return WillPopScope(
         onWillPop: () async {
           if (!navigatorKeys[_currentIndex].currentState.canPop()) {
