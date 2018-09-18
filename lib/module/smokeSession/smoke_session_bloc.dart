@@ -101,6 +101,19 @@ class SmokeSessionBloc {
     Vibrate.feedback(FeedbackType.medium);
   }
 
+  setSpeed(int speed, SmokeState smokeState) async {
+    var curentSetting = standSettings.value;
+    var editSetting = curentSetting.getStateSetting(smokeState);
+    if (editSetting.brightness == speed) return;
+
+    await App.http.changeSpeed(speed, smokeState, hookahCode);
+
+    editSetting.speed = speed;
+    curentSetting.setStateSetting(smokeState, editSetting);
+    futureSettings.add(new Tuple2(curentSetting, smokeState));
+    Vibrate.feedback(FeedbackType.medium);
+  }
+
   _futureSetAnimation(Tuple2<StandSettings, SmokeState> data) async {
     var animationId = data.item1.getStateSetting(data.item2).animationId;
     await App.http.changeAnimation(animationId, data.item2, hookahCode);

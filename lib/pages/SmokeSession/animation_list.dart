@@ -102,11 +102,11 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
             controller: controller,
             children: <Widget>[
               animationStatePickerBuilder(
-                  smokeSessionBloc.standSettings, SmokeState.blow, 'Blow'),
+                  smokeSessionBloc.standSettings, SmokeState.blow, 'PURGE'),
               animationStatePickerBuilder(
-                  smokeSessionBloc.standSettings, SmokeState.idle, 'Idle'),
+                  smokeSessionBloc.standSettings, SmokeState.idle, 'IDLE'),
               animationStatePickerBuilder(
-                  smokeSessionBloc.standSettings, SmokeState.puf, 'Smoke'),
+                  smokeSessionBloc.standSettings, SmokeState.puf, 'SMOKING'),
             ],
           ),
         ],
@@ -136,7 +136,6 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
             ),
     );
   }
-  
 
   @override
   void didChangeDependencies() {

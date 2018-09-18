@@ -18,6 +18,9 @@ class SnapScrollPhysic extends ScrollPhysics {
   }
 
   double _snapPosition(int position) {
+    if (position == 0) {
+      return 200.0;
+    }
     var result = 0.0;
     for (var i = 0; i < position; i++) {
       result += snaps[i];
@@ -49,10 +52,9 @@ class SnapScrollPhysic extends ScrollPhysics {
   double _getClosestSnap(
       ScrollPosition position, Tolerance tolerance, double velocity) {
     print("position:${position.pixels}");
-
     for (var i = 0; i < snaps.length; i++) {
       var snapPosition = _snapPosition(i);
-      if (position.pixels <= _snapPosition(i)) {
+      if (position.pixels <= snapPosition) {
         print("snapPosition:${i}");
         return _goToSnap(i);
       }
@@ -85,4 +87,10 @@ class SnapScrollPhysic extends ScrollPhysics {
           tolerance: tolerance);
     return null;
   }
+
+  @override
+  bool shouldAcceptUserOffset(ScrollMetrics position) => false;
+
+  @override
+  bool get allowImplicitScrolling => false;
 }

@@ -117,6 +117,12 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
     var text = '${data.brand} ${data.name}';
 
     return new ListTile(
+        leading: data.owned
+            ? Icon(Icons.shopping_basket)
+            : Container(
+                width: 0.0,
+                height: 10.0,
+              ),
         onTap: () => Navigator.pop(context, data),
         title: RichText(
             text: TextSpan(

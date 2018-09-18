@@ -130,6 +130,9 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         var duration = asyncSnapshot.data.duration;
         var durationString =
             '${duration.inHours}:${duration.inMinutes}:${duration.inSeconds % 10}';
+
+        var longestString =
+            '${asyncSnapshot.data.longestPuf.inMinutes}:${asyncSnapshot.data.longestPuf.inSeconds}:${asyncSnapshot.data.longestPuf.inMilliseconds}';
         return asyncSnapshot.data != null
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -146,7 +149,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                       new PuffTimeText(
                           dependencies: dependencies,
                           completeTime: asyncSnapshot.data.toString()),
-                      Text(asyncSnapshot.data.longestPuf.toString())
+                      Text(longestString)
                     ],
                   ),
                   new HeaderItem(
@@ -165,44 +168,58 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
           new Expanded(
             child: CustomScrollView(
               controller: scrollController,
-              physics: NeverScrollableScrollPhysics(),
+              physics: new SnapScrollPhysic(snaps: [
+                size.height * 0.75,
+                size.width + 40,
+                size.height * 0.75 + 40
+              ]),
               shrinkWrap: false,
               slivers: <Widget>[
                 new SliverList(
                   delegate: new SliverChildListDelegate(<Widget>[
                     AnimationsPicker(),
-                                    SizedBox(
-                  height: 40.0,
-                  child: GestureDetector(
-                    onPanUpdate: (value) =>  scrollController.jumpTo(scrollController.offset -  value.delta.dy),
-                    child: Container(
-                      color: Colors.yellow,
+                    GestureDetector(
+                      onPanUpdate: (value) => scrollController
+                          .jumpTo(scrollController.offset - value.delta.dy),
+                      child: Container(
+                        color: Colors.transparent,
+                        height: 40.0,
+                        width: size.width,
+                        child: Center(
+                            child: Text(
+                          '...',
+                          style: TextStyle(
+                              fontSize: 40.0, fontWeight: FontWeight.w700),
+                        )),
+                      ),
                     ),
-                  ),
-                ),
                     SizedBox(
                         height: size.width,
                         child: SmokeColorWheel(
-                          onColorChanged: (color) {                           
+                          onColorChanged: (color) {
                             smokeSessionBloc.setColor(color.toColor());
                           },
                           color: HSVColor.fromColor(Colors.red),
                         )),
-                SizedBox(
-                  height: 40.0,
-                  width: size.width,
-                  
-                  child: GestureDetector(
-                    onPanUpdate: (value) =>  scrollController.jumpTo(scrollController.offset -  value.delta.dy),
-                    
-                      child: Text('...'),
+                    GestureDetector(
+                      onPanUpdate: (value) => scrollController
+                          .jumpTo(scrollController.offset - value.delta.dy),
+                      child: Container(
+                        color: Colors.transparent,
+                        height: 40.0,
+                        width: size.width,
+                        child: Center(
+                            child: Text(
+                          '...',
+                          style: TextStyle(
+                              fontSize: 40.0, fontWeight: FontWeight.w700),
+                        )),
+                      ),
                     ),
-                
-                ),
                     SizedBox(
                       height: size.height * 0.75,
                       child: ListView(
-                        children: <Widget>[                          
+                        children: <Widget>[
                           statisticBuilder,
                           tobaccoMetaDataBuilder,
                           metadataBuilder,

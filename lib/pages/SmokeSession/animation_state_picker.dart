@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:app/app/app.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/Stand/animation.dart';
@@ -96,41 +97,91 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
         builder: (context, snapshot) {
           var setting = snapshot.data.getStateSetting(widget.state);
           return new Row(
-              children: <Widget>[
-                RaisedButton(
-                  onPressed: () {
-                    showDialog<void>(
-                        context: context,
-                        builder: (BuildContext context) => new SizedBox(
-                            width: 20.0,
-                            height: MediaQuery.of(context).size.height - 80,
-                            child: SimpleDialog(
-                              title: const Text('Set brightness'),
-                              children: <Widget>[
-                                SizedBox(
-                                  height: 400.0,
-                                  width: 200.0,
-                                  child: SpringySlider(
-                                    markCount: 12,
-                                    positiveColor: Colors.red,
-                                    negativeColor: Colors.blue,
-                                    positiveIcon: Icons.brightness_low,
-                                    negativeIcon: Icons.brightness_high,
-                                    minValue: 0.0,
-                                    maxValue: 255.0,
-                                    initValue: setting.brightness + 0.0,
-                                    onChanged: (value) => widget.smokeSessionBloc.setBrigtness(value.round(), widget.state),
-                                  ),
-                                )
-                              ],
-                            )));
-                  },
-                  child: Text('Br setting'),
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              InkWell(
+                onTap: () => showBrDialog(context, setting),
+                child: Container(
+                  padding: EdgeInsets.all(8.0),
+                  decoration:
+                      BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+                  child: Icon(Icons.settings_brightness),
                 ),
-                Text(widget.label)
-              ],
-            );
+              ),
+              Text(
+                widget.label,
+                style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w700),
+              ),
+              InkWell(
+                onTap: () => showSpeedDialog(context, setting),
+                child: Container(
+                  padding: EdgeInsets.all(8.0),
+                  decoration:
+                      BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+                  child: Icon(Icons.shutter_speed),
+                ),
+              ),
+            ],
+          );
         });
+  }
+
+  Future<void> showBrDialog(BuildContext context, StateSetting setting) {
+    return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) => new SizedBox(
+            width: 20.0,
+            height: MediaQuery.of(context).size.height - 80,
+            child: SimpleDialog(
+              title: const Text('Set brightness'),
+              children: <Widget>[
+                SizedBox(
+                  height: 400.0,
+                  width: 200.0,
+                  child: SpringySlider(
+                    markCount: 12,
+                    positiveColor: Colors.red,
+                    negativeColor: Colors.blue,
+                    positiveIcon: Icons.brightness_low,
+                    negativeIcon: Icons.brightness_high,
+                    minValue: 0.0,
+                    maxValue: 255.0,
+                    initValue: setting.brightness + 0.0,
+                    onChanged: (value) => widget.smokeSessionBloc
+                        .setBrigtness(value.round(), widget.state),
+                  ),
+                )
+              ],
+            )));
+  }
+
+  Future<void> showSpeedDialog(BuildContext context, StateSetting setting) {
+    return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) => new SizedBox(
+            width: 20.0,
+            height: MediaQuery.of(context).size.height - 80,
+            child: SimpleDialog(
+              title: const Text('Set speed'),
+              children: <Widget>[
+                SizedBox(
+                  height: 400.0,
+                  width: 200.0,
+                  child: SpringySlider(
+                    markCount: 12,
+                    positiveColor: Colors.red,
+                    negativeColor: Colors.blue,
+                    positiveIcon: Icons.slow_motion_video,
+                    negativeIcon: Icons.shutter_speed,
+                    minValue: 0.0,
+                    maxValue: 600.0,
+                    initValue: setting.speed + 0.0,
+                    onChanged: (value) => widget.smokeSessionBloc
+                        .setSpeed(value.round(), widget.state),
+                  ),
+                )
+              ],
+            )));
   }
 
   _createAnimation(
