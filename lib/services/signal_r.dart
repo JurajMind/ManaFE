@@ -20,7 +20,7 @@ class SignalR {
       
         bool connection = false;
       
-        Future<dynamic> conect() async {
+        Future<dynamic> connect() async {
           if (this.connection) {
             return;
           }

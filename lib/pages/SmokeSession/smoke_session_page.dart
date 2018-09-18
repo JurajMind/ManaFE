@@ -183,20 +183,21 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                     SizedBox(
                         height: size.width,
                         child: SmokeColorWheel(
-                          onColorChanged: (color) {
-                            App.http.changeColor('emulator', color);
+                          onColorChanged: (color) {                           
                             smokeSessionBloc.setColor(color.toColor());
                           },
                           color: HSVColor.fromColor(Colors.red),
                         )),
                 SizedBox(
                   height: 40.0,
+                  width: size.width,
+                  
                   child: GestureDetector(
                     onPanUpdate: (value) =>  scrollController.jumpTo(scrollController.offset -  value.delta.dy),
-                    child: Container(
-                      color: Colors.yellow,
+                    
+                      child: Text('...'),
                     ),
-                  ),
+                
                 ),
                     SizedBox(
                       height: size.height * 0.75,

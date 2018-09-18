@@ -11,7 +11,6 @@ import 'package:app/models/Stand/animation.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:app/utils/color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:tuple/tuple.dart';
 import 'package:vibrate/vibrate.dart';
@@ -30,7 +29,7 @@ class SmokeSessionBloc {
   final SignalR signalR = new SignalR();
 
   void testChannel(String msg) {
-    signalR.conect();
+    signalR.connect();
   }
 
   static final SmokeSessionBloc _instance = new SmokeSessionBloc._();
@@ -191,10 +190,12 @@ class SmokeSessionBloc {
         // Don't update when there is no need.
         .where((batch) => batch.isNotEmpty)
         .listen(_handleIndexes);
-
-    signalR.clientCalls.listen((onData) {
-      proceddCalls(onData);
+    signalR.connect().then((value) {
+      signalR.clientCalls.listen((onData) {
+        proceddCalls(onData);
+      });
     });
+
     futureSettingDebounce =
         futureSettings.debounce(Duration(milliseconds: 200));
     futureSettingDebounce.listen((onData) => _futureSetAnimation(onData));
