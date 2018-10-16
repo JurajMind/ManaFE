@@ -15,7 +15,7 @@ class SignalR {
 
   IOWebSocketChannel _channel;
 
-  BehaviorSubject<SmokeSessionData> UpdateStats =
+  BehaviorSubject<SmokeSessionData> updateStats =
       new BehaviorSubject<SmokeSessionData>();
       
         bool connection = false;
@@ -27,7 +27,7 @@ class SignalR {
           var negotiateUrl =
               url + '/negotiate?clientProtocol=1.5&connectionData=$conectionData';
           var response = await http.get(negotiateUrl);
-          var connection = false;
+          connection = false;
           final responseJson = json.decode(response.body);
       
           var negotiateResponse = NegotiateResponse.fromJson(responseJson);
@@ -44,7 +44,7 @@ class SignalR {
               print('From signal ' + message);
               var serverCall = ClientCall.fromJson(json.decode(message));
       
-              ProceedCall(serverCall);
+              proceedCall(serverCall);
       
               print(serverCall.GroupToken);
             });
@@ -76,7 +76,7 @@ class SignalR {
           _channel.sink.add(call.toJson());
         }
       
-        void ProceedCall(ClientCall serverCall) {
+        void proceedCall(ClientCall serverCall) {
           if (serverCall.Data != null) clientCalls.add(serverCall);
         }
       }

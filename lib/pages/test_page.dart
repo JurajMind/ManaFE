@@ -43,7 +43,6 @@ class _TestPageState extends State<TestPage> {
   Widget build(BuildContext context) {
     final smokeSessionBloc = DataProvider.getSmokeSession(context);
     var size = MediaQuery.of(context).size;
-    final items = List<Widget>.generate(10000, (i) => Text(i.toString()));
     return SafeArea(
       child: Scaffold(
           body: new CustomScrollView(

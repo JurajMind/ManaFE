@@ -44,7 +44,7 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return SizedBox(
-      height: size.height * 0.75 + size.width,
+      height: size.height * 0.75 + 50,
       child: new Stack(
         fit: StackFit.expand,
         children: <Widget>[
@@ -68,26 +68,27 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
     return StreamBuilder<List<StandAnimation>>(
         stream: widget.smokeSessionBloc.animations,
         initialData: List<StandAnimation>(),
-        builder: (context, snapshot) => new ListWheelScrollView(
-              itemExtent: 50.0,
-              controller: scrollController,
-              clipToSize: true,
-              diameterRatio: 10.0,
-              perspective: 0.01,
-              onSelectedItemChanged: (int index) {
-                if (index == 0) {
-                  print('fake');
-                }
-                widget.onChanged(index);
-                setState(() {
-                  _focusIndex = index;
-                });
-              },
-              children: List.generate(
-                  snapshot.data.length,
-                  (int index) => _createAnimation(index, snapshot.data[index],
-                      context, widget.selectedIndex)),
-            ));
+        builder: (context, snapshot) => snapshot.data.length == 0 ? Container() : ListWheelScrollView(
+
+                itemExtent: 50.0,
+                controller: scrollController,
+                clipToSize: true,
+                diameterRatio: 10.0,
+                perspective: 0.01,
+                onSelectedItemChanged: (int index) {
+        if (index == 0) {
+          print('fake');
+        }
+        widget.onChanged(index);
+        setState(() {
+          _focusIndex = index;
+        });
+                },
+                children: List.generate(
+          snapshot.data.length,
+          (int index) => _createAnimation(index, snapshot.data[index],
+              context, widget.selectedIndex)),
+              ));
   }
 
   StreamBuilder<StandSettings> buildBottomBar() {

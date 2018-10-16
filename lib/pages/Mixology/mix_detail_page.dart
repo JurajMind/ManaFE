@@ -34,7 +34,7 @@ class MixDetailPageState extends State<MixDetailPage> {
 
   @override
   initState() {
-    colors = ColorHelper.GetRandomColors(2);
+    colors = ColorHelper.getRandomColors(2);
     super.initState();
   }
 

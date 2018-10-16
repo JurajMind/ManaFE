@@ -3,10 +3,8 @@ import 'dart:convert';
 
 import 'package:app/app/app.dart';
 import 'package:app/app/app.widget.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:path/path.dart';
 
 class Authorize {
   String url = 'https://${App.baseUri}/token';
@@ -104,7 +102,7 @@ class Authorize {
 }
 
 class AuthorizationPost {
-  String _grant_type = "grant_type";
+  var _grant_type = "grant_type";
   final String username;
   final String password;
 

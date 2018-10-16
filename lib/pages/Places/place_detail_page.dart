@@ -1,6 +1,7 @@
 import 'package:app/app/app.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/models/Places/place.dart';
+import 'package:app/pages/Places/reservation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:map_view/map_view.dart';
 
@@ -15,8 +16,41 @@ class PlaceDetailPage extends StatefulWidget {
   }
 }
 
-class _PlaceDetailState extends State<PlaceDetailPage> {
+class _PlaceDetailState extends State<PlaceDetailPage>
+    with TickerProviderStateMixin {
+  @override
+  void initState() {
+    super.initState();
+    buttonController = new AnimationController(
+        duration: new Duration(milliseconds: 3000), vsync: this);
+    buttomZoomOut = new Tween(
+      begin: 70.0,
+      end: 400.0,
+    ).animate(
+      new CurvedAnimation(
+        parent: buttonController,
+        curve: new Interval(
+          0.500,
+          0.800,
+          curve: Curves.ease,
+        ),
+      ),
+    );
+    buttomZoomOut.addListener(() {
+      setState(() {});
+    });
+  }
+
+  Future<Null> _playAnimation() async {
+    try {
+      await buttonController.forward();
+      await buttonController.reverse();
+    } on TickerCanceled {}
+  }
+
   final double _appBarHeight = 256.0;
+  AnimationController buttonController;
+  Animation buttomZoomOut;
   MapView mapView = new MapView();
   final Place place;
   var staticMapProvider = new StaticMapProvider(App.googleApiKeys);
@@ -44,13 +78,20 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
         new Location(place.address.lat, place.address.lng), 13,
         width: 450, height: 350, mapType: StaticMapViewType.roadmap);
 
+    buttonController.addListener(() {
+      if (buttonController.isCompleted) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ReservationPage()));
+      }
+    });
+
     return new Container(
         child: new CustomScrollView(
       slivers: <Widget>[
         new SliverAppBar(
           backgroundColor: Colors.black,
           pinned: true,
-          expandedHeight: _appBarHeight,
+          expandedHeight: _appBarHeight - buttomZoomOut.value,
           bottom: PreferredSize(
             child: Container(
               width: MediaQuery.of(context).size.width,
@@ -59,11 +100,14 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      place.address.toString(),
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        color: Colors.white,
+                    Hero(
+                      tag: 'placeName',
+                      child: Text(
+                        place.address.toString(),
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     new StarRating(
@@ -114,129 +158,154 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
             Container(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.0)),
-                  child: new Column(
-                    children: <Widget>[
-                      new Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Padding(
+                child: buttomZoomOut.value >= 200
+                    ? new Container(
+                        height: buttomZoomOut.value,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20.0)),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20.0)),
+                        child: new Column(
+                          children: <Widget>[
+                            new Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: <Widget>[
+                                        new IconLabel(
+                                          icon: Icons.watch,
+                                          child: Text(
+                                            buttomZoomOut.value.toString(),
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                        ),
+                                        new IconLabel(
+                                          icon: Icons.hot_tub,
+                                          child: Text(
+                                            'Cats not allowed',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                        ),
+                                        new IconLabel(
+                                          icon: Icons.credit_card,
+                                          child: Text(
+                                            'Accepts cards',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  flex: 1,
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: InkWell(
+                                    onTap: () => showMap(),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Image.network(
+                                          mapUri.toString() + '&scale=2'),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Column(
+                              child: new Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
-                                  new IconLabel(
-                                    icon: Icons.watch,
+                                  FlatButton(
                                     child: Text(
-                                      '14:00 - 22:00',
+                                      'NAVIGATE',
                                       style: TextStyle(color: Colors.black),
                                     ),
+                                    onPressed: () => print('navigate'),
                                   ),
-                                  new IconLabel(
-                                    icon: Icons.hot_tub,
-                                    child: Text(
-                                      'Cats not allowed',
-                                      style: TextStyle(color: Colors.black),
-                                    ),
+                                  Container(
+                                    height: 14.0,
+                                    width: 2.0,
+                                    color: Colors.grey,
                                   ),
-                                   new IconLabel(
-                                    icon: Icons.credit_card,
+                                  FlatButton(
                                     child: Text(
-                                      'Accepts cards',
+                                      'GO WITH UBER',
                                       style: TextStyle(color: Colors.black),
                                     ),
-                                  )
+                                    onPressed: () => print('GO WITH UBER'),
+                                  ),
                                 ],
                               ),
                             ),
-                            flex: 1,
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: InkWell(
-                              onTap: () => showMap(),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Image
-                                    .network(mapUri.toString() + '&scale=2'),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  30.0, 10.0, 30.0, 10.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(),
+                                    borderRadius: BorderRadius.circular(20.0)),
+                                child: new Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    FlatButton(
+                                        child: Text(
+                                          'BOOK',
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        onPressed: () => _openAddEntryDialog()),
+                                    Container(
+                                      height: 35.0,
+                                      width: 2.0,
+                                      color: Colors.grey,
+                                    ),
+                                    FlatButton(
+                                      child: Text(
+                                        'SEE MENU',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      onPressed: () => print('GO WITH UBER'),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          )
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: new Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            FlatButton(
-                              child: Text(
-                                'NAVIGATE',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                              onPressed: () => print('navigate'),
-                            ),
-                            Container(
-                              height: 14.0,
-                              width: 2.0,
-                              color: Colors.grey,
-                            ),
-                            FlatButton(
-                              child: Text(
-                                'GO WITH UBER',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                              onPressed: () => print('GO WITH UBER'),
-                            ),
+                            )
                           ],
                         ),
                       ),
-                      Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(),
-                              borderRadius: BorderRadius.circular(20.0)),
-                          child: new Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              FlatButton(
-                                child: Text(
-                                  'BOOK',
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                                onPressed: () => print('navigate'),
-                              ),
-                              Container(
-                                height: 35.0,
-                                width: 2.0,
-                                color: Colors.grey,
-                              ),
-                              FlatButton(
-                                child: Text(
-                                  'SEE MENU',
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                                onPressed: () => print('GO WITH UBER'),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
               ),
             )
           ]),
         )
       ],
     ));
+  }
+
+  void _openAddEntryDialog() {
+  Navigator.of(context).push(new MaterialPageRoute<Null>(
+      builder: (BuildContext context) {
+        return new ReservationPage();
+      },
+    fullscreenDialog: true
+  ));
+}
+
+  dispose() {
+    buttonController.dispose();
+    super.dispose();
   }
 }
 

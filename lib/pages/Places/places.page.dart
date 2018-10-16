@@ -113,7 +113,7 @@ class _PlacePageState extends State<PlacePage> {
         initialData: null,
         builder: (context, snapshot) {
           return ListView.builder(
-            itemCount: snapshot.data.length,
+            itemCount: snapshot.data == null ? 0 : snapshot.data.length,
             itemBuilder: (context, index) =>
                 _createPlaceItem(index, snapshot.data[index]),
           );

@@ -25,8 +25,12 @@ class ColorHelper {
     var radius = distance(offset) / size;
 
     var color = xy2polar(offset.dx, offset.dy);
+    var hue = doublerad2deg(color);
 
-    return HSVColor.fromAHSV(1.0, doublerad2deg(color), radius, 1.0);
+    if(hue < 0){
+      hue = 180 - hue;
+    }
+    return HSVColor.fromAHSV(1.0, hue%360, radius, 1.0);
   }
 
   static Offset getOffsetFromColor(HSVColor color, double width) {
@@ -35,12 +39,12 @@ class ColorHelper {
 
   static Color getOpositeColor(Color color){
     var hsv  = HSVColor.fromColor(color);
-    return HSVColor.fromAHSV(1.0, hsv.hue + 180 , hsv.saturation, 1.0).toColor();
+    return HSVColor.fromAHSV(1.0, (hsv.hue + 180) % 360  , hsv.saturation, 1.0).toColor();
   }
 
-  static List<Color> GetRandomColors(int count){
+  static List<Color> getRandomColors(int count){
     var random = new math.Random();
     var intitColor = random.nextInt(360);
-    return List<Color>.generate(count, (int index) => new HSVColor.fromAHSV(1.0, intitColor + index * 360/count, 1.0, 1.0).toColor());
+    return List<Color>.generate(count, (int index) => new HSVColor.fromAHSV(1.0, intitColor+0.0, 1.0, 1.0).toColor());
   }
 }

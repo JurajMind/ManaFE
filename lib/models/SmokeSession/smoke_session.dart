@@ -69,6 +69,7 @@ class StandSettings {
       case SmokeState.puf:
         return this.puf;
     }
+    return null;
   }
 
   void setStateSetting(SmokeState state, StateSetting stateSetting) {
