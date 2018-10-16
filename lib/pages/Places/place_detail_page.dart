@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app/app/app.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/models/Places/place.dart';
@@ -295,13 +297,12 @@ class _PlaceDetailState extends State<PlaceDetailPage>
   }
 
   void _openAddEntryDialog() {
-  Navigator.of(context).push(new MaterialPageRoute<Null>(
-      builder: (BuildContext context) {
-        return new ReservationPage();
-      },
-    fullscreenDialog: true
-  ));
-}
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+        builder: (BuildContext context) {
+          return new ReservationPage();
+        },
+        fullscreenDialog: true));
+  }
 
   dispose() {
     buttonController.dispose();
