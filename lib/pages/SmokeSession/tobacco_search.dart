@@ -5,36 +5,36 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
-class PipeAccesorySearch extends StatefulWidget {
+class TobaccoSearch extends StatefulWidget {
   final List<PipeAccesory> ownAccesories;
   final String type;
-  final String searchType;
 
-  const PipeAccesorySearch({
+
+  const TobaccoSearch({
     Key key,
     this.ownAccesories,
     this.type,
-    this.searchType,
   }) : super(key: key);
 
   @override
-  PipeAccesorySearchState createState() {
-    return new PipeAccesorySearchState();
+  TobaccoSearchState createState() {
+    return new TobaccoSearchState();
   }
 }
 
-class PipeAccesorySearchState extends State<PipeAccesorySearch> {
+class TobaccoSearchState extends State<TobaccoSearch> {
   BehaviorSubject<List<PipeAccesorySimple>> searchResult =
       new BehaviorSubject<List<PipeAccesorySimple>>(
           seedValue: new List<PipeAccesorySimple>());
 
   bool loading = false;
-
+  List<PipeAccesorySimple> selectedTobacco;
   List<PipeAccesorySimple> ownSimpleAccesories;
 
   @override
   void initState() {
     super.initState();
+    selectedTobacco = new List<PipeAccesorySimple>();
     ownSimpleAccesories = widget.ownAccesories
         .map((f) => PipeAccesorySimple.fromAccesory(f))
         .toList();
@@ -71,10 +71,22 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                   TextField(controller: controller, onSubmitted: submitSearch),
             ),
             Expanded(
-                child: controller.text == "" ? buildDefault() : buildResult())
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[controller.text == "" ? buildDefault() : buildResult()],
+                ))
           ],
         ),
       ),
+    );
+  }
+
+  Widget _selectBox(){
+    if(this.selectedTobacco.length == 0){
+      return Container();
+    }
+    return new Row(
+      children: this.selectedTobacco.map((t) => _selectedTobacco(t)),
     );
   }
 
@@ -85,7 +97,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
     });
     this.searchResult.add(new List<PipeAccesorySimple>());
     App.http
-        .searchGear(text, widget.searchType.toLowerCase(), 0, 1000)
+        .searchGear(text, 'tobacco', 0, 1000)
         .then((value) {
       this.searchResult.add(value);
       setState(() {
@@ -112,18 +124,31 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
     );
   }
 
+  Widget _getLeading(PipeAccesorySimple data){
+    if(this.selectedTobacco.where((a) => a.id == data.id).length > 0){
+      return Icon(Icons.check_circle_outline);
+    }
+    if(data.owned){
+      return Icon(Icons.shopping_basket);
+    }
+    return Icon(Icons.check_box_outline_blank);
+  }
   ListTile _createResult(
       int index, PipeAccesorySimple data, BuildContext context) {
     var text = '${data.brand} ${data.name}';
 
     return new ListTile(
-        leading: data.owned
-            ? Icon(Icons.shopping_basket)
-            : Container(
-                width: 0.0,
-                height: 10.0,
-              ),
-        onTap: () => Navigator.pop(context, data),
+        leading: _getLeading(data),
+        onTap: () {
+          setState(() {
+            if(selectedTobacco.contains(data)){
+              selectedTobacco.remove(data);
+            }else{
+  selectedTobacco.add(data);
+            }
+                    
+                    });
+        },
         title: RichText(
             text: TextSpan(
                 style: TextStyle(
@@ -171,4 +196,8 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
     }
     return result;
   }
+}
+
+Widget _selectedTobacco(PipeAccesorySimple t) {
+  return new Text(t.fullName);
 }

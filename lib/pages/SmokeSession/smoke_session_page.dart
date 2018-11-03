@@ -1,4 +1,3 @@
-import 'package:app/app/app.dart';
 import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
@@ -199,7 +198,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                           onColorChanged: (color) {
                             smokeSessionBloc.setColor(color.toColor());
                           },
-                          color: HSVColor.fromColor(Colors.red),
+                          color: smokeSessionBloc.standSettings.value.idle.color,
                         )),
                     GestureDetector(
                       onPanUpdate: (value) => scrollController

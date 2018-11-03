@@ -80,7 +80,7 @@ class _CarrousselState extends State<Carroussel> {
                 });
               },
               controller: controller,
-              itemCount: 5,
+              itemCount: snapshot.data  != null ? 5 : 0,
               itemBuilder: (context, index) =>
                   builder(index, snapshot.data[index]),
             ));

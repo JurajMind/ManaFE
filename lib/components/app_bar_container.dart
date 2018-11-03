@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 
-class AppBarContainer extends StatelessWidget{
+class AppBarContainer extends StatefulWidget{
   
   Widget child;
   PreferredSizeWidget appBar;
   AppBarContainer({this.child,this.appBar});
-  
 
+  @override
+  AppBarContainerState createState() {
+    return new AppBarContainerState();
+  }
+}
+
+class AppBarContainerState extends State<AppBarContainer> {
   @override
   Widget build(BuildContext context) {
    return new Container(
@@ -20,5 +26,4 @@ class AppBarContainer extends StatelessWidget{
       ],
     )
   }
-
 }

@@ -1,5 +1,8 @@
+import 'package:app/models/PipeAccesory/pipe_accesory.dart';
+import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:app/models/PipeAccesory/tobacco.dart';
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
+import 'package:app/pages/SmokeSession/tobacco_search.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -44,7 +47,16 @@ class TobaccoWidget extends StatelessWidget {
                       : tobacoBody(tobacco),
                 ),
                 Expanded(
-                  child: Icon(Icons.add_box),
+                  child: IconButton(
+                    icon: Icon(Icons.add_box),
+                     onPressed: () => showDemoDialog(
+                      context: context,
+                      child: new TobaccoSearch(
+                        
+                        ownAccesories: new List<PipeAccesory>(),
+                      )),
+                  ),
+                 
                   flex: 1,
                 )
               ],
@@ -53,6 +65,17 @@ class TobaccoWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+    void showDemoDialog({BuildContext context, Widget child}) {
+    showDialog<PipeAccesorySimple>(
+      context: context,
+      builder: (BuildContext context) => child,
+    ).then<void>((PipeAccesorySimple value) {
+      if (value != null) {
+    
+      }
+    });
   }
 
   Widget tobacoMixBody(TobaccoMix tobacoMix) {
@@ -91,7 +114,7 @@ class TobaccoWidget extends StatelessWidget {
   }
 
   Widget tobacoBody(Tobacco tobacco) {
-    if(tobacco== null){
+    if(tobacco == null){
       return new Padding(
         padding: EdgeInsets.all(8.0),
         child: Text('No tobacco'),
