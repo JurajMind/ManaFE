@@ -26,7 +26,7 @@ PODS:
     - Flutter
   - map_view (0.0.12):
     - Flutter
-    - GoogleMaps (= 2.7.0)
+    - GoogleMaps
   - path_provider (0.0.1):
     - Flutter
   - qrcode_reader (0.0.1):
@@ -87,7 +87,7 @@ SPEC CHECKSUMS:
   flutter_webview_plugin: 116575b48572029304775b768e9f15ebfc316274
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   location: 26c90953ad5916331d0d1d913898779910416487
-  map_view: f839c5dba92698dd49dfe3c8d2410ead406eae42
+  map_view: 9653e5e5b090355507a711908240eb353566b616
   path_provider: 09407919825bfe3c2deae39453b7a5b44f467873
   qrcode_reader: da11877390dff62dd3783964618d666a857e34c8
   shared_preferences: 5a1d487c427ee18fcd3ea1f2a131569481834b53
