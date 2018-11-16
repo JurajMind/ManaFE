@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:app/app/app.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/Stand/animation.dart';
+import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/picker_slider.dart';
 import 'package:flutter/material.dart';
@@ -68,26 +69,27 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
     return StreamBuilder<List<StandAnimation>>(
         stream: widget.smokeSessionBloc.animations,
         initialData: List<StandAnimation>(),
-        builder: (context, snapshot) => snapshot.data.length == 0 ? Container() : ListWheelScrollView(
-
+        builder: (context, snapshot) => snapshot.data.length == 0
+            ? Container()
+            : ListWheelScrollView(
                 itemExtent: 50.0,
                 controller: scrollController,
                 clipToSize: true,
                 diameterRatio: 10.0,
                 perspective: 0.01,
                 onSelectedItemChanged: (int index) {
-        if (index == 0) {
-          print('fake');
-        }
-        widget.onChanged(index);
-        setState(() {
-          _focusIndex = index;
-        });
+                  if (index == 0) {
+                    print('fake');
+                  }
+                  widget.onChanged(index);
+                  setState(() {
+                    _focusIndex = index;
+                  });
                 },
                 children: List.generate(
-          snapshot.data.length,
-          (int index) => _createAnimation(index, snapshot.data[index],
-              context, widget.selectedIndex)),
+                    snapshot.data.length,
+                    (int index) => _createAnimation(index, snapshot.data[index],
+                        context, widget.selectedIndex)),
               ));
   }
 

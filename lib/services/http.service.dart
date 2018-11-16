@@ -9,6 +9,8 @@ import 'package:app/models/Places/place.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
 import 'package:app/models/Stand/animation.dart';
+import 'package:app/models/Stand/deviceSetting.dart';
+import 'package:app/models/Stand/preset.dart';
 import 'package:app/services/authorization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:dio/dio.dart';
@@ -273,6 +275,12 @@ class ApiClient {
         ));
     debugPrint(response.data.toString());
     return SmokeSessionMetaData.fromJson(response.data);
+  }
+
+  Future<List<PipeAccesory>> getMyPreset() async {
+    var url = Uri.https(baseUrl, 'api/Device/Preset/Preset/GetPreset');
+    return _getJson(url).then((data) =>
+        data.map<DevicePreset>((p) => DevicePreset.fromJson(p)).toList());
   }
 }
 

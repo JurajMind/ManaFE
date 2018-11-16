@@ -67,7 +67,7 @@ class _ReservationPageState extends State<ReservationPage> {
                         ),
                         Card(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
                               Padding(
@@ -110,6 +110,35 @@ class _ReservationPageState extends State<ReservationPage> {
                                         "18:00",
                                         "18:30",
                                         "19:00",
+                                        "19:30"
+                                      ],
+                                      onChanged: (value) {
+                                        print(value);
+                                        setState(() {
+                                          selectedTime = value;
+                                        });
+                                      },
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.fromLTRB(5.0, 4.0, 5.0, 2.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(
+                                      'Duration',
+                                      style: TextStyle(color: Colors.grey),
+                                    ),
+                                    WheelPicker.string(
+                                      initialValue: selectedTime,
+                                      minValue: 1,
+                                      maxValue: 4,
+                                      stringItems: [
+                                        "2:00",
+                                        "3:00",
+                                        "4:00",
                                         "19:30"
                                       ],
                                       onChanged: (value) {

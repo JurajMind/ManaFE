@@ -45,24 +45,14 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
             onTapUp: (TapUpDetails details) {
               RenderBox getBox = context.findRenderObject();
               Offset localOffset = getBox.globalToLocal(details.globalPosition);
-              var middle = ColorHelper.positionToCenter(
-                  localOffset, Offset(size.width / 2, size.width / 2));
-              setState(() {
-                position = localOffset;
-                selectedColor =
-                    ColorHelper.position2color(middle, size.width / 2);
-              });
+              colorUpdate(localOffset, size);
 
               widget.onColorChanged(selectedColor);
             },
             onPanUpdate: (DragUpdateDetails details) {
               RenderBox getBox = context.findRenderObject();
               Offset localOffset = getBox.globalToLocal(details.globalPosition);
-              setState(() {
-                position = localOffset;
-                selectedColor =
-                    ColorHelper.position2color(localOffset, size.width / 2);
-              });
+              colorUpdate(localOffset, size);
             },
             onPanEnd: (DragEndDetails details) {
               widget.onColorChanged(selectedColor);
@@ -88,6 +78,15 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
         new ColorCircle(globalOffset: position, color: selectedColor),
       ],
     );
+  }
+
+  void colorUpdate(Offset localOffset, Size size) {
+    var middle = ColorHelper.positionToCenter(
+        localOffset, Offset(size.width / 2, size.width / 2));
+    setState(() {
+      position = localOffset;
+      selectedColor = ColorHelper.position2color(middle, size.width / 2);
+    });
   }
 }
 
