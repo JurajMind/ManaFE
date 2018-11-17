@@ -103,7 +103,7 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
           PageView(
             controller: controller,
             children: <Widget>[
-              //     PresetPicker(),
+              PresetPicker(),
               animationStatePickerBuilder(
                   smokeSessionBloc.standSettings, SmokeState.blow, 'PURGE'),
               animationStatePickerBuilder(
