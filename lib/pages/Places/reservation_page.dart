@@ -2,7 +2,6 @@ import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Callendar/flutter_calendar.dart';
 import 'package:app/components/Pickers/WheelPicker/wheelPicker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 
 class ReservationPage extends StatefulWidget {
   @override

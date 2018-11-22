@@ -4,6 +4,7 @@ import 'package:app/app/app.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/places/places_bloc.dart';
+import 'package:app/module/smokeSession/preset_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/start.page.dart';
 import 'package:app/pages/home.page.dart';
@@ -34,6 +35,7 @@ class _AppWidgetState extends State<AppWidget> {
   bool splash = true;
   final mixology = MixologyBloc();
   final smokeSession = SmokeSessionBloc();
+  final devicePreset = DevicePresetBloc();
   final place = PlacesBloc();
   AppTranslationsDelegate _newLocaleDelegate;
 
@@ -65,6 +67,7 @@ class _AppWidgetState extends State<AppWidget> {
     return new DataProvider(
         mixology: mixology,
         smokeSession: smokeSession,
+        devicePreset: devicePreset,
         place: place,
         child: MaterialApp(
           localizationsDelegates: [
@@ -89,7 +92,6 @@ class _AppWidgetState extends State<AppWidget> {
     if (_isAuthorized) {
       return new HomePage();
     }
-    ;
 
     return new StartPage();
   }

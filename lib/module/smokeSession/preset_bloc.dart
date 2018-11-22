@@ -1,7 +1,14 @@
-class PresetBloc {
-  static final PresetBloc _instance = new PresetBloc._();
+import 'package:app/models/Stand/preset.dart';
+import 'package:rxdart/rxdart.dart';
 
-  factory PresetBloc() => PresetBloc._instance;
+class DevicePresetBloc {
+  static final DevicePresetBloc _instance = new DevicePresetBloc._();
 
-  PresetBloc._() {}
+  factory DevicePresetBloc() => DevicePresetBloc._instance;
+
+  DevicePresetBloc._() {}
+
+  BehaviorSubject<List<DevicePreset>> devicePresets =
+      new BehaviorSubject<List<DevicePreset>>(
+          seedValue: new List<DevicePreset>());
 }

@@ -91,7 +91,7 @@ packages:
       name: cookie_jar
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.6"
+    version: "0.0.7"
   crypto:
     dependency: transitive
     description:
@@ -148,13 +148,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
-  flutter_calendar_carousel:
-    dependency: "direct main"
-    description:
-      name: flutter_calendar_carousel
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.0"
   flutter_facebook_login:
     dependency: "direct main"
     description:
@@ -195,13 +188,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_webview_plugin:
-    dependency: "direct main"
-    description:
-      name: flutter_webview_plugin
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.1+2"
   front_end:
     dependency: transitive
     description:
@@ -286,13 +272,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.6+5"
-  loader_search_bar:
-    dependency: "direct main"
-    description:
-      name: loader_search_bar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.3"
   location:
     dependency: "direct main"
     description:
@@ -435,13 +414,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.18.1"
-  scoped_model:
-    dependency: "direct main"
-    description:
-      name: scoped_model
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0"
   shared_preferences:
     dependency: transitive
     description:
@@ -653,5 +625,5 @@ packages:
     source: hosted
     version: "2.1.15"
 sdks:
-  dart: ">=2.1.0-dev.5.0 <=2.1.0-dev.9.3.flutter-9c07fb64c4"
+  dart: ">=2.1.0-dev.5.0 <=2.1.0-dev.9.4.flutter-f9ebf21297"
   flutter: ">=0.1.4 <2.0.0"

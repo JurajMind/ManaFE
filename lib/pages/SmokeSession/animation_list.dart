@@ -4,7 +4,9 @@ import 'dart:math' as math;
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/Stand/animation.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
+import 'package:app/models/Stand/preset.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/smokeSession/preset_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/animation_state_picker.dart';
 import 'package:app/pages/SmokeSession/preset_picker.dart';
@@ -93,6 +95,8 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
 
   SmokeSessionBloc smokeSessionBloc;
 
+  DevicePresetBloc devicePresetBloc;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -103,7 +107,7 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
           PageView(
             controller: controller,
             children: <Widget>[
-              PresetPicker(),
+              devicePresetPickerBuilder(),
               animationStatePickerBuilder(
                   smokeSessionBloc.standSettings, SmokeState.blow, 'PURGE'),
               animationStatePickerBuilder(
@@ -140,9 +144,19 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
     );
   }
 
+  StreamBuilder<List<DevicePreset>> devicePresetPickerBuilder() {
+    return StreamBuilder<List<DevicePreset>>(
+        initialData: null,
+        stream: devicePresetBloc.devicePresets,
+        builder: (context, snapshot) => snapshot.data == null
+            ? CircularProgressIndicator()
+            : CircularProgressIndicator());
+  }
+
   @override
   void didChangeDependencies() {
     smokeSessionBloc = DataProvider.getSmokeSession(context);
+    devicePresetBloc = DataProvider.getDevicePresets(context);
     smokeSessionBloc.loadAnimation();
     super.didChangeDependencies();
   }

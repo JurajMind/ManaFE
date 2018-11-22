@@ -35,7 +35,7 @@ class PlacesBloc {
   }
 
   Future<bool> loadPlaces({bool init}) async {
-    if (_initLoad && !init) {
+    if (_initLoad && (int == null || !init)) {
       return true;
     }
     _initLoad = true;
