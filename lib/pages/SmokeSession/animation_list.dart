@@ -150,7 +150,10 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
         stream: devicePresetBloc.devicePresets,
         builder: (context, snapshot) => snapshot.data == null
             ? CircularProgressIndicator()
-            : CircularProgressIndicator());
+            : PresetPicker(
+                presetBloc: devicePresetBloc,
+                selectedIndex: 0,
+              ));
   }
 
   @override
@@ -158,6 +161,7 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
     smokeSessionBloc = DataProvider.getSmokeSession(context);
     devicePresetBloc = DataProvider.getDevicePresets(context);
     smokeSessionBloc.loadAnimation();
+    devicePresetBloc.loadPresets();
     super.didChangeDependencies();
   }
 

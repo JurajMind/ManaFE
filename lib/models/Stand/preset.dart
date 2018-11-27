@@ -4,13 +4,12 @@ class DevicePreset {
   final int id;
   final String name;
   final int personId;
-  final StandSettings setting;
 
-  DevicePreset(this.id, this.name, this.personId, this.setting);
+  DevicePreset(this.id, this.name, this.personId);
 
   DevicePreset.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
-        personId = json['Usage'],
-        setting = StandSettings.fromJson(['setting'] as Map<String, dynamic>);
+        personId = json['Usage'];
+  // setting =             StandSettings.fromJson(json['setting'] as Map<String, dynamic>);
 }

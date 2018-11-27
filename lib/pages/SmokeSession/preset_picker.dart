@@ -1,15 +1,13 @@
-import 'package:app/models/SmokeSession/smoke_session.dart';
-import 'package:app/models/Stand/animation.dart';
-import 'package:app/models/Stand/deviceSetting.dart';
-import 'package:app/module/smokeSession/smoke_session_bloc.dart';
+import 'package:app/models/Stand/preset.dart';
+import 'package:app/module/smokeSession/preset_bloc.dart';
 import 'package:flutter/material.dart';
 
 class PresetPicker extends StatefulWidget {
-  final SmokeSessionBloc smokeSessionBloc;
+  final DevicePresetBloc presetBloc;
   final int selectedIndex;
 
   final ValueChanged<int> onChanged;
-  PresetPicker({this.smokeSessionBloc, this.selectedIndex, this.onChanged});
+  PresetPicker({this.presetBloc, this.selectedIndex, this.onChanged});
 
   @override
   PresetPickerState createState() {
@@ -56,10 +54,10 @@ class PresetPickerState extends State<PresetPicker> {
     );
   }
 
-  StreamBuilder<List<StandAnimation>> buildAnimationList() {
-    return StreamBuilder<List<StandAnimation>>(
-        stream: widget.smokeSessionBloc.animations,
-        initialData: List<StandAnimation>(),
+  StreamBuilder<List<DevicePreset>> buildAnimationList() {
+    return StreamBuilder<List<DevicePreset>>(
+        stream: widget.presetBloc.devicePresets,
+        initialData: List<DevicePreset>(),
         builder: (context, snapshot) => snapshot.data.length == 0
             ? Container()
             : ListWheelScrollView(
@@ -77,23 +75,31 @@ class PresetPickerState extends State<PresetPicker> {
                     _focusIndex = index;
                   });
                 },
-                children: List.generate(
-                    snapshot.data.length,
-                    (int index) => _createAnimation(index, snapshot.data[index],
-                        context, widget.selectedIndex)),
+                children: createAnimationList(snapshot.data),
               ));
   }
 
-  StreamBuilder<StandSettings> buildBottomBar() {
-    return StreamBuilder<StandSettings>(
-        stream: widget.smokeSessionBloc.standSettings,
-        initialData: StandSettings.empty(),
+  List<Widget> createAnimationList(List<DevicePreset> presets) {
+    var children = List.generate(
+        presets.length,
+        (int index) => _createPreset(
+            index, presets[index], context, widget.selectedIndex));
+    children.add(
+        _createPreset(-1, new DevicePreset(-1, 'No preset', 0), context, 0));
+
+    return children;
+  }
+
+  StreamBuilder<List<DevicePreset>> buildBottomBar() {
+    return StreamBuilder<List<DevicePreset>>(
+        stream: widget.presetBloc.devicePresets,
+        initialData: null,
         builder: (context, snapshot) {
           return new Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Text(
-                'Preset',
+                'Presets',
                 style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w700),
               ),
             ],
@@ -101,8 +107,8 @@ class PresetPickerState extends State<PresetPicker> {
         });
   }
 
-  _createAnimation(
-      int index, StandAnimation data, BuildContext context, int selected) {
+  Widget _createPreset(
+      int index, DevicePreset data, BuildContext context, int selected) {
     if (!_init && data.id == selected) {
       _init = true;
       scrollController.jumpToItem(index);
@@ -112,7 +118,7 @@ class PresetPickerState extends State<PresetPicker> {
       padding: const EdgeInsets.all(20.0),
       child: Container(
         child: Center(
-          child: Text(data.displayName,
+          child: Text(data.name,
               style: TextStyle(
                 color: index == selected ? Colors.white : Colors.grey,
                 fontWeight: FontWeight.bold,

@@ -10,7 +10,7 @@ import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/services/http.service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:qrcode_reader/QRCodeReader.dart';
+import 'package:qrcode_reader/qrcode_reader.dart';
 
 class EnterSmokeSessionCode extends StatefulWidget {
   @override

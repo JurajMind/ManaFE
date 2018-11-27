@@ -277,8 +277,8 @@ class ApiClient {
     return SmokeSessionMetaData.fromJson(response.data);
   }
 
-  Future<List<PipeAccesory>> getMyPreset() async {
-    var url = Uri.https(baseUrl, 'api/Device/Preset/Preset/GetPreset');
+  Future<List<DevicePreset>> getDevicePresets() async {
+    var url = Uri.https(baseUrl, 'api/Device/Preset/Preset/GetUserPresets');
     return _getJson(url).then((data) =>
         data.map<DevicePreset>((p) => DevicePreset.fromJson(p)).toList());
   }
