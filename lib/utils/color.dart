@@ -23,7 +23,7 @@ class ColorHelper {
 
   static HSVColor position2color(Offset offset, double size) {
     var radius = distance(offset) / size;
-
+    
     var color = xy2polar(offset.dx, offset.dy);
     var hue = doublerad2deg(color);
 
