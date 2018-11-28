@@ -65,6 +65,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   GlobalKey<NavigatorState> _setActiveTab(int index) {
+    if(index == _currentIndex && index == 2)
+    {
+      navigatorKeys[index].currentState.pop();
+    }
     setState(() {
       _currentIndex = index;
       _focusActiveTab();
