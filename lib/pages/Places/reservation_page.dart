@@ -2,6 +2,7 @@ import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Callendar/flutter_calendar.dart';
 import 'package:app/components/Pickers/WheelPicker/wheelPicker.dart';
 import 'package:flutter/material.dart';
+import 'package:vibrate/vibrate.dart';
 
 class ReservationPage extends StatefulWidget {
   @override
@@ -16,6 +17,7 @@ class _ReservationPageState extends State<ReservationPage> {
   DateTime _currentDate = DateTime(2018, 8, 1);
   int peopleCount = 2;
   int selectedTime = 1;
+  int duration = 2;
   List<DateTime> _markedDate = [DateTime(2018, 9, 20), DateTime(2018, 10, 11)];
   PageController pageController = new PageController(initialPage: 0);
   void _showDatePicker() async {
@@ -84,6 +86,7 @@ class _ReservationPageState extends State<ReservationPage> {
                                       maxValue: 10,
                                       onChanged: (value) {
                                         print(value);
+                                           Vibrate.feedback(FeedbackType.light);
                                         setState(() {
                                           peopleCount = value;
                                         });
@@ -112,6 +115,7 @@ class _ReservationPageState extends State<ReservationPage> {
                                         "19:30"
                                       ],
                                       onChanged: (value) {
+                                           Vibrate.feedback(FeedbackType.light);
                                         print(value);
                                         setState(() {
                                           selectedTime = value;
@@ -131,19 +135,20 @@ class _ReservationPageState extends State<ReservationPage> {
                                       style: TextStyle(color: Colors.grey),
                                     ),
                                     WheelPicker.string(
-                                      initialValue: selectedTime,
+                                      initialValue: duration,
                                       minValue: 1,
                                       maxValue: 4,
                                       stringItems: [
                                         "2:00",
                                         "3:00",
                                         "4:00",
-                                        "19:30"
+                                        "5:00",
                                       ],
                                       onChanged: (value) {
                                         print(value);
+                                           Vibrate.feedback(FeedbackType.light);
                                         setState(() {
-                                          selectedTime = value;
+                                          duration = value;
                                         });
                                       },
                                     )

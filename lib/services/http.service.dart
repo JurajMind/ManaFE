@@ -103,7 +103,7 @@ class ApiClient {
       var token = await _authorize.getToken();
       o.headers['Authorization'] = 'Bearer $token';
       o.headers["Accept"] = "application/json";
-      if (o.method == "POST") {
+      if (o.method == "POST" && o.data != null) {
         o.headers['content-length'] = utf8.encode(json.encode(o.data)).length;
       }
       return o;
@@ -278,9 +278,20 @@ class ApiClient {
   }
 
   Future<List<DevicePreset>> getDevicePresets() async {
-    var url = Uri.https(baseUrl, 'api/Device/Preset/Preset/GetUserPresets');
+    var url = Uri.https(baseUrl, 'api/Device/Preset/GetUserPresets');
     return _getJson(url).then((data) =>
         data.map<DevicePreset>((p) => DevicePreset.fromJson(p)).toList());
+  }
+
+  Future<bool> setDevicePreset(String sessionId, int presetId) async {
+    print('Set preset on session {$sessionId}:${presetId.toString()}');
+    var url = Uri.https(
+        baseUrl, '/api/Device/Preset/${presetId.toString()}/Use/$sessionId');
+    var response = await _dio.post(url.toString(),
+    data:null,
+        options: Options(contentType: ContentType.JSON));
+
+    return true;
   }
 }
 

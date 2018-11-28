@@ -9,6 +9,7 @@ import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
 import 'package:app/models/Stand/animation.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
+import 'package:app/models/Stand/preset.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:app/utils/color.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +75,19 @@ class SmokeSessionBloc {
       new PublishSubject<Tuple2<StandSettings, SmokeState>>();
 
   Observable<Tuple2<StandSettings, SmokeState>> futureSettingDebounce;
+
+
+BehaviorSubject<List<DevicePreset>> devicePresets =
+      new BehaviorSubject<List<DevicePreset>>(
+          seedValue: new List<DevicePreset>());
+
+  BehaviorSubject<DevicePreset> selectedPreset =
+      new BehaviorSubject<DevicePreset>(
+          seedValue: DevicePreset.empty());
+
+  PublishSubject<DevicePreset> futureDevicePreset = new PublishSubject<DevicePreset>();
+  Observable<DevicePreset> futureDevicePresetDebounce;
+
 
   setColor(Color color) {
     sessionColor.add([color, ColorHelper.getOpositeColor(color)]);
@@ -213,6 +227,9 @@ class SmokeSessionBloc {
     futureSettingDebounce =
         futureSettings.debounce(Duration(milliseconds: 200));
     futureSettingDebounce.listen((onData) => _futureSetAnimation(onData));
+
+        futureDevicePresetDebounce = futureDevicePreset.debounce(Duration(microseconds: 200));
+        futureDevicePresetDebounce.listen((onData) => _futureSetPreset(onData));
   }
 
   proceddCalls(ClientCall onData) {
@@ -247,6 +264,17 @@ class SmokeSessionBloc {
   void handleUpdateStats(ClientMethod f) {
     var data = new SmokeStatisticDataModel.fromSignal(f.Data);
     smokeStatistic.add(data);
+  }
+
+    loadPresets() async {
+    var presets = await App.http.getDevicePresets();
+    devicePresets.add(presets);
+  }
+
+  Future _futureSetPreset(DevicePreset newPreset) async {
+   await App.http.setDevicePreset(this.activeSessionId, newPreset.id);
+   selectedPreset.add(newPreset);
+   Vibrate.feedback(FeedbackType.light);
   }
 }
 

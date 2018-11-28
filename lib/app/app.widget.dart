@@ -4,7 +4,6 @@ import 'package:app/app/app.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/places/places_bloc.dart';
-import 'package:app/module/smokeSession/preset_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/start.page.dart';
 import 'package:app/pages/home.page.dart';
@@ -13,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:app/utils/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:onesignal/onesignal.dart';
+
 
 final navigatorKey = new GlobalKey<NavigatorState>();
 
@@ -35,13 +36,18 @@ class _AppWidgetState extends State<AppWidget> {
   bool splash = true;
   final mixology = MixologyBloc();
   final smokeSession = SmokeSessionBloc();
-  final devicePreset = DevicePresetBloc();
   final place = PlacesBloc();
   AppTranslationsDelegate _newLocaleDelegate;
+  String _debugLabelString = "";
+  String _emailAddress;
+  bool _enableConsentButton = false;
+   // CHANGE THIS parameter to true if you want to test GDPR privacy consent
+  bool _requireConsent = false;
 
   @override
   void initState() {
     super.initState();
+     initPlatformState();
     App.onLocaleChanged = onLocaleChange;
     _newLocaleDelegate = AppTranslationsDelegate(newLocale: null);
     isUserAuthorized().then((authorized) => setState(() {
@@ -67,7 +73,6 @@ class _AppWidgetState extends State<AppWidget> {
     return new DataProvider(
         mixology: mixology,
         smokeSession: smokeSession,
-        devicePreset: devicePreset,
         place: place,
         child: MaterialApp(
           localizationsDelegates: [
@@ -103,6 +108,61 @@ class _AppWidgetState extends State<AppWidget> {
     if (token != null) return true;
 
     return false;
+  }
+
+ Future<void> initPlatformState() async {
+    if (!mounted) return;
+
+    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+
+    OneSignal.shared.setRequiresUserPrivacyConsent(_requireConsent);
+
+    var settings = {
+      OSiOSSettings.autoPrompt: false,
+      OSiOSSettings.promptBeforeOpeningPushUrl: true
+    };
+
+    OneSignal.shared.setNotificationReceivedHandler((notification) {
+      this.setState(() {
+        _debugLabelString =
+            "Received notification: \n${notification.jsonRepresentation().replaceAll("\\n", "\n")}";
+      });
+    });
+
+    OneSignal.shared
+        .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+      this.setState(() {
+        _debugLabelString =
+            "Opened notification: \n${result.notification.jsonRepresentation().replaceAll("\\n", "\n")}";
+      });
+    });
+
+    OneSignal.shared
+        .setSubscriptionObserver((OSSubscriptionStateChanges changes) {
+      print("SUBSCRIPTION STATE CHANGED: ${changes.jsonRepresentation()}");
+    });
+
+    OneSignal.shared.setPermissionObserver((OSPermissionStateChanges changes) {
+      print("PERMISSION STATE CHANGED: ${changes.jsonRepresentation()}");
+    });
+
+    OneSignal.shared.setEmailSubscriptionObserver(
+        (OSEmailSubscriptionStateChanges changes) {
+      print("EMAIL SUBSCRIPTION STATE CHANGED ${changes.jsonRepresentation()}");
+    });
+
+    // NOTE: Replace with your own app ID from https://www.onesignal.com
+    await OneSignal.shared
+        .init("f3335ca8-8fc9-4e91-b9f8-324717b86d3c", iOSSettings: settings);
+
+    OneSignal.shared
+        .setInFocusDisplayType(OSNotificationDisplayType.notification);
+
+    bool requiresConsent = await OneSignal.shared.requiresUserPrivacyConsent();
+
+    this.setState(() {
+      _enableConsentButton = requiresConsent;
+    });
   }
 }
 

@@ -6,7 +6,6 @@ import 'package:app/models/Stand/animation.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/models/Stand/preset.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/module/smokeSession/preset_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/animation_state_picker.dart';
 import 'package:app/pages/SmokeSession/preset_picker.dart';
@@ -24,69 +23,6 @@ class AnimationsPicker extends StatefulWidget {
   }
 }
 
-class AnimationStateLabel extends AnimatedWidget {
-  static const double _kDotSize = 20.0;
-  static const double _kMaxZoom = 1.1;
-  static const double _kDotSpacing = 25.0;
-  final PageController controller;
-
-  final List<String> labels;
-  final ValueChanged<int> onPageSelected;
-
-  // The base size of the dots
-  final Color color;
-
-  // The increase in the size of the selected dot
-  AnimationStateLabel({
-    this.controller,
-    this.labels,
-    this.onPageSelected,
-    this.color: Colors.white,
-  }) : super(listenable: controller);
-
-  // The distance between the center of each dot
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 20.0,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [Colors.black, Colors.transparent])),
-      child: new Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: new List<Widget>.generate(labels.length, _buildDot),
-      ),
-    );
-  }
-
-  Widget _buildDot(int index) {
-    double selectedness = Curves.easeOut.transform(
-      math.max(
-        0.0,
-        1.0 - ((controller.page ?? controller.initialPage) - index).abs(),
-      ),
-    );
-    double zoom = 1.0 + (_kMaxZoom - 1.0) * selectedness;
-    return new Expanded(
-      flex: 1,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-        child: new Center(
-          child: new InkWell(
-            onTap: () => onPageSelected(index),
-            child: Text(
-              labels[index],
-              style: new TextStyle(
-                  fontSize: 25.0 * zoom,
-                  fontWeight: FontWeight.bold,
-                  color: controller.page == index ? Colors.white : Colors.grey),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _AnimationsPickerState extends State<AnimationsPicker> {
   static const _kDuration = const Duration(milliseconds: 300);
   static const _kCurve = Curves.ease;
@@ -95,7 +31,7 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
 
   SmokeSessionBloc smokeSessionBloc;
 
-  DevicePresetBloc devicePresetBloc;
+  int selectedPresetIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -147,21 +83,24 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
   StreamBuilder<List<DevicePreset>> devicePresetPickerBuilder() {
     return StreamBuilder<List<DevicePreset>>(
         initialData: null,
-        stream: devicePresetBloc.devicePresets,
+        stream: smokeSessionBloc.devicePresets,
         builder: (context, snapshot) => snapshot.data == null
             ? CircularProgressIndicator()
             : PresetPicker(
-                presetBloc: devicePresetBloc,
-                selectedIndex: 0,
+                presetBloc: smokeSessionBloc,
+                onChanged:(DevicePreset preset) { this.devicePresetSetChanged(preset,snapshot.data);},                
               ));
+  }
+
+  void devicePresetSetChanged(DevicePreset newPreset,List<DevicePreset> presets){
+    smokeSessionBloc.futureDevicePreset.add(newPreset);
   }
 
   @override
   void didChangeDependencies() {
     smokeSessionBloc = DataProvider.getSmokeSession(context);
-    devicePresetBloc = DataProvider.getDevicePresets(context);
     smokeSessionBloc.loadAnimation();
-    devicePresetBloc.loadPresets();
+    smokeSessionBloc.loadPresets();
     super.didChangeDependencies();
   }
 

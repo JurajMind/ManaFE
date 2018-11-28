@@ -12,4 +12,8 @@ class DevicePreset {
         name = json['name'],
         personId = json['Usage'];
   // setting =             StandSettings.fromJson(json['setting'] as Map<String, dynamic>);
+
+
+  DevicePreset.empty() :id = -1,name= '',personId = 0;
+  
 }

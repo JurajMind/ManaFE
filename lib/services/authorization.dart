@@ -5,6 +5,7 @@ import 'package:app/app/app.dart';
 import 'package:app/app/app.widget.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:onesignal/onesignal.dart';
 
 class Authorize {
   String url = 'https://${App.baseUri}/token';
@@ -21,16 +22,10 @@ class Authorize {
         "client_id": "test"
       },
     );
+ 
     final responseJson = json.decode(response.body);
-    var token = TokenResponse.fromJson(responseJson);
+      return await writeToken(responseJson);
 
-    if (token.accessToken != null) {
-      await _storage.write(key: 'accessToken', value: token.accessToken);
-      await _storage.write(key: 'refreshToken', value: token.refreshToken);
-      return true;
-    }
-
-    return false;
   }
 
   Future<String> getToken() async {
@@ -38,6 +33,10 @@ class Authorize {
       _token = await _storage.read(key: 'accessToken');
     }
     return _token;
+  }
+
+  Future<String> getUserName() async {
+   return await _storage.read(key: 'userName');
   }
 
   Future<bool> getLocalToken(String provider, String externalToken) async {
@@ -54,6 +53,7 @@ class Authorize {
   Future signOut() async {
     await _storage.delete(key: 'accessToken');
     await _storage.delete(key: 'refreshToken');
+    await _storage.delete(key: 'userName');
     navigatorKey.currentState.pushReplacementNamed('auth/home');
     _token = null;
   }
@@ -72,9 +72,7 @@ class Authorize {
       },
     );
     final responseJson = json.decode(response.body);
-
-    var token = TokenResponse.fromJson(responseJson);
-
+  
     var success = await writeToken(responseJson);
     if (success) {
       return true;
@@ -90,15 +88,23 @@ class Authorize {
       await _storage.write(key: 'accessToken', value: token.accessToken);
       if (token.refreshToken != null)
         await _storage.write(key: 'refreshToken', value: token.refreshToken);
-      return true;
-    }
-  }
 
-  Future<bool> isAuthorized() async {
-    //TODO api ping
-    var token = await getToken();
-    return token != null;
-  }
+      await _storage.write(key: 'userName', value:token.userName);
+      OneSignal.shared.sendTag('user_id', token.userName);
+          
+          return true;
+        }
+        return false;
+      }
+    
+      Future<bool> isAuthorized() async {
+        //TODO api ping
+        var token = await getToken();
+        return token != null;
+      }
+    }
+    
+    class _requireConsent {
 }
 
 class AuthorizationPost {

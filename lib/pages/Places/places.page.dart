@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:app/app/app.dart';
 import 'package:app/models/Places/place.dart';
@@ -8,8 +7,6 @@ import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:map_view/map_view.dart';
 import 'package:rxdart/src/subjects/behavior_subject.dart';
-import 'package:location/location.dart' as geo;
-import 'package:flutter/services.dart';
 
 class PlacePage extends StatefulWidget {
   @override
