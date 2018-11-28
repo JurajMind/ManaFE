@@ -67,7 +67,7 @@ class PresetPickerState extends State<PresetPicker> {
                   if (index == 0) {
                     print('fake');
                   }
-                  widget.onChanged(snapshot.data[index]);
+                  widget.onChanged(index == 0 ? DevicePreset.empty() : snapshot.data[index - 1]);
                   setState(() {
                     _focusIndex = index;
                   });
@@ -85,7 +85,7 @@ class PresetPickerState extends State<PresetPicker> {
         (int index) =>
             _createPreset(index, presets[index], context, presetBloc));
     children.insert(
-        0, _createPreset(-1, DevicePreset.empty(), context, presetBloc));
+        0, _createPreset(-1, DevicePreset(-1, ' ', -1), context, presetBloc));
 
     return children;
   }
@@ -114,11 +114,7 @@ class PresetPickerState extends State<PresetPicker> {
       stream: presetBloc.selectedPreset,
       builder: (context,snapshop){
         var selected = snapshop.data.id == data.id;
-        if(selected){
-           _init = true;
-        scrollController.jumpToItem(index);
-        _focusIndex = index;
-        }
+       
 
             return Padding(
       padding: const EdgeInsets.all(20.0),
@@ -128,7 +124,7 @@ class PresetPickerState extends State<PresetPicker> {
               style: TextStyle(
                 color: selected ? Colors.white : Colors.grey,
                 fontWeight: FontWeight.bold,
-                fontSize: data.id == _focusIndex ? 35.0 : 25.0,
+                fontSize: index + 1 == _focusIndex ? 35.0 : 25.0,
               )),
         ),
       ),

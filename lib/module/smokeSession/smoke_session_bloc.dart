@@ -228,7 +228,7 @@ BehaviorSubject<List<DevicePreset>> devicePresets =
         futureSettings.debounce(Duration(milliseconds: 200));
     futureSettingDebounce.listen((onData) => _futureSetAnimation(onData));
 
-        futureDevicePresetDebounce = futureDevicePreset.debounce(Duration(microseconds: 200));
+        futureDevicePresetDebounce = futureDevicePreset.debounce(Duration(milliseconds: 200));
         futureDevicePresetDebounce.listen((onData) => _futureSetPreset(onData));
   }
 
@@ -272,6 +272,7 @@ BehaviorSubject<List<DevicePreset>> devicePresets =
   }
 
   Future _futureSetPreset(DevicePreset newPreset) async {
+    if(newPreset.id != -1)
    await App.http.setDevicePreset(this.activeSessionId, newPreset.id);
    selectedPreset.add(newPreset);
    Vibrate.feedback(FeedbackType.light);
