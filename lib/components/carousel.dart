@@ -42,8 +42,10 @@ class _CarrousselState extends State<Carroussel> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    placeBloc = DataProvider.getPlaces(context);
-    placeBloc.loadPlaces();
+    if (placeBloc == null) {
+      placeBloc = DataProvider.getPlaces(context);
+      placeBloc.loadPlaces();
+    }
   }
 
   @override
@@ -80,7 +82,7 @@ class _CarrousselState extends State<Carroussel> {
                 });
               },
               controller: controller,
-              itemCount: snapshot.data  != null ? snapshot.data.length : 0,
+              itemCount: snapshot.data != null ? snapshot.data.length : 0,
               itemBuilder: (context, index) =>
                   builder(index, snapshot.data[index]),
             ));
@@ -133,12 +135,11 @@ class _CarrousselState extends State<Carroussel> {
           padding: const EdgeInsets.all(8.0),
           child: new Container(
               decoration: BoxDecoration(
-                borderRadius: new BorderRadius.circular(10.0),
-                color: Colors.grey[300],
+                  borderRadius: new BorderRadius.circular(10.0),
+                  color: Colors.grey[300],
                   image: DecorationImage(
-                     image: CachedNetworkImageProvider(place.getPlaceImage()),
-                   fit: BoxFit.cover)),
-              
+                      image: CachedNetworkImageProvider(place.getPlaceImage()),
+                      fit: BoxFit.cover)),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(

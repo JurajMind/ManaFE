@@ -76,21 +76,21 @@ class SmokeSessionBloc {
 
   Observable<Tuple2<StandSettings, SmokeState>> futureSettingDebounce;
 
-
-BehaviorSubject<List<DevicePreset>> devicePresets =
+  BehaviorSubject<List<DevicePreset>> devicePresets =
       new BehaviorSubject<List<DevicePreset>>(
           seedValue: new List<DevicePreset>());
 
   BehaviorSubject<DevicePreset> selectedPreset =
-      new BehaviorSubject<DevicePreset>(
-          seedValue: DevicePreset.empty());
+      new BehaviorSubject<DevicePreset>(seedValue: DevicePreset.empty());
 
-  PublishSubject<DevicePreset> futureDevicePreset = new PublishSubject<DevicePreset>();
+  PublishSubject<DevicePreset> futureDevicePreset =
+      new PublishSubject<DevicePreset>();
   Observable<DevicePreset> futureDevicePresetDebounce;
 
-
-  setColor(Color color) {
+  setColor(Color color) async {
     sessionColor.add([color, ColorHelper.getOpositeColor(color)]);
+    await App.http.changeColor(this.hookahCode, new HSVColor.fromColor(color));
+    Vibrate.feedback(FeedbackType.medium);
   }
 
   setAnimation(int animationIndex, SmokeState smokeState) {
@@ -228,8 +228,9 @@ BehaviorSubject<List<DevicePreset>> devicePresets =
         futureSettings.debounce(Duration(milliseconds: 200));
     futureSettingDebounce.listen((onData) => _futureSetAnimation(onData));
 
-        futureDevicePresetDebounce = futureDevicePreset.debounce(Duration(milliseconds: 200));
-        futureDevicePresetDebounce.listen((onData) => _futureSetPreset(onData));
+    futureDevicePresetDebounce =
+        futureDevicePreset.debounce(Duration(milliseconds: 200));
+    futureDevicePresetDebounce.listen((onData) => _futureSetPreset(onData));
   }
 
   proceddCalls(ClientCall onData) {
@@ -266,16 +267,16 @@ BehaviorSubject<List<DevicePreset>> devicePresets =
     smokeStatistic.add(data);
   }
 
-    loadPresets() async {
+  loadPresets() async {
     var presets = await App.http.getDevicePresets();
     devicePresets.add(presets);
   }
 
   Future _futureSetPreset(DevicePreset newPreset) async {
-    if(newPreset.id != -1)
-   await App.http.setDevicePreset(this.activeSessionId, newPreset.id);
-   selectedPreset.add(newPreset);
-   Vibrate.feedback(FeedbackType.light);
+    if (newPreset.id != -1)
+      await App.http.setDevicePreset(this.activeSessionId, newPreset.id);
+    selectedPreset.add(newPreset);
+    Vibrate.feedback(FeedbackType.light);
   }
 }
 
