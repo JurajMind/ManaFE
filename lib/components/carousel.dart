@@ -80,7 +80,7 @@ class _CarrousselState extends State<Carroussel> {
                 });
               },
               controller: controller,
-              itemCount: snapshot.data  != null ? 5 : 0,
+              itemCount: snapshot.data  != null ? snapshot.data.length : 0,
               itemBuilder: (context, index) =>
                   builder(index, snapshot.data[index]),
             ));
@@ -135,10 +135,10 @@ class _CarrousselState extends State<Carroussel> {
               decoration: BoxDecoration(
                 borderRadius: new BorderRadius.circular(10.0),
                 color: Colors.grey[300],
-                //  image: DecorationImage(
-                //     image: CachedNetworkImageProvider(place.getPlaceImage()),
-                //   fit: BoxFit.cover)),
-              ),
+                  image: DecorationImage(
+                     image: CachedNetworkImageProvider(place.getPlaceImage()),
+                   fit: BoxFit.cover)),
+              
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(

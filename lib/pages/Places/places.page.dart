@@ -4,6 +4,7 @@ import 'package:app/models/Places/place.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:map_view/map_view.dart';
 import 'package:rxdart/src/subjects/behavior_subject.dart';
@@ -132,8 +133,9 @@ class _PlacePageState extends State<PlacePage> {
           width: 60.0,
           child: Hero(
             tag: '_picture',
-            child: Image.network(
-              'https://picsum.photos/60/60',
+            child: new Image(
+              image: new CachedNetworkImageProvider( data.getPlaceImage()),                
+              
               fit: BoxFit.cover,
             ),
           )),

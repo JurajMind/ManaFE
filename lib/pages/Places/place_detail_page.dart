@@ -4,6 +4,7 @@ import 'package:app/app/app.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/models/Places/place.dart';
 import 'package:app/pages/Places/reservation_page.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:map_view/map_view.dart';
 
@@ -145,8 +146,8 @@ class _PlaceDetailState extends State<PlaceDetailPage>
               children: <Widget>[
                 Hero(
                   tag: '_picture',
-                  child: new Image.network(
-                    'https://picsum.photos/600/300',
+                  child: new Image(
+                    image: new CachedNetworkImageProvider( place.getPlaceImage()),                  
                     fit: BoxFit.cover,
                     height: _appBarHeight,
                   ),

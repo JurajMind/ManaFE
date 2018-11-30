@@ -14,7 +14,7 @@ class Place {
     Map<String, dynamic> adressMap = json['Address'];
     List<dynamic> imageMap = json['Medias'];
     var adress = Address.fromJson(adressMap);
-    var images = imageMap.map((f) => (f['Path']+".jpg") as String).toList();
+    var images = imageMap.map((f) => (f['Path']+"original.jpg") as String).toList();
     return new Place(
         id: json['Id'],
         name: json['Name'],
