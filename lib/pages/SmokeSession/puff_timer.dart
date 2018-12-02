@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:rxdart/src/observable.dart';
+import 'package:rxdart/rxdart.dart';
 
 class PuffTimeText extends StatefulWidget {
   PuffTimeText({this.dependencies, this.completeTime});

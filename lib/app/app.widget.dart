@@ -12,8 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:app/utils/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:onesignal/onesignal.dart';
-
 
 final navigatorKey = new GlobalKey<NavigatorState>();
 
@@ -41,13 +39,13 @@ class _AppWidgetState extends State<AppWidget> {
   String _debugLabelString = "";
   String _emailAddress;
   bool _enableConsentButton = false;
-   // CHANGE THIS parameter to true if you want to test GDPR privacy consent
+  // CHANGE THIS parameter to true if you want to test GDPR privacy consent
   bool _requireConsent = false;
 
   @override
   void initState() {
     super.initState();
-     initPlatformState();
+    // initPlatformState();
     App.onLocaleChanged = onLocaleChange;
     _newLocaleDelegate = AppTranslationsDelegate(newLocale: null);
     isUserAuthorized().then((authorized) => setState(() {
@@ -110,7 +108,7 @@ class _AppWidgetState extends State<AppWidget> {
     return false;
   }
 
- Future<void> initPlatformState() async {
+/*  Future<void> initPlatformState() async {
     if (!mounted) return;
 
     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
@@ -163,7 +161,7 @@ class _AppWidgetState extends State<AppWidget> {
     this.setState(() {
       _enableConsentButton = requiresConsent;
     });
-  }
+  }*/
 }
 
 class SplashScreen extends StatelessWidget {

@@ -5,7 +5,6 @@ import 'package:app/app/app.dart';
 import 'package:app/app/app.widget.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:onesignal/onesignal.dart';
 
 class Authorize {
   String url = 'https://${App.baseUri}/token';
@@ -22,10 +21,9 @@ class Authorize {
         "client_id": "test"
       },
     );
- 
-    final responseJson = json.decode(response.body);
-      return await writeToken(responseJson);
 
+    final responseJson = json.decode(response.body);
+    return await writeToken(responseJson);
   }
 
   Future<String> getToken() async {
@@ -36,7 +34,7 @@ class Authorize {
   }
 
   Future<String> getUserName() async {
-   return await _storage.read(key: 'userName');
+    return await _storage.read(key: 'userName');
   }
 
   Future<bool> getLocalToken(String provider, String externalToken) async {
@@ -72,7 +70,7 @@ class Authorize {
       },
     );
     final responseJson = json.decode(response.body);
-  
+
     var success = await writeToken(responseJson);
     if (success) {
       return true;
@@ -89,23 +87,22 @@ class Authorize {
       if (token.refreshToken != null)
         await _storage.write(key: 'refreshToken', value: token.refreshToken);
 
-      await _storage.write(key: 'userName', value:token.userName);
-      OneSignal.shared.sendTag('user_id', token.userName);
-          
-          return true;
-        }
-        return false;
-      }
-    
-      Future<bool> isAuthorized() async {
-        //TODO api ping
-        var token = await getToken();
-        return token != null;
-      }
+      await _storage.write(key: 'userName', value: token.userName);
+      // OneSignal.shared.sendTag('user_id', token.userName);
+
+      return true;
     }
-    
-    class _requireConsent {
+    return false;
+  }
+
+  Future<bool> isAuthorized() async {
+    //TODO api ping
+    var token = await getToken();
+    return token != null;
+  }
 }
+
+class _requireConsent {}
 
 class AuthorizationPost {
   var _grant_type = "grant_type";
