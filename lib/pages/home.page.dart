@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/components/icon_button_title.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mixology_list.dart';
@@ -67,7 +69,10 @@ class _HomePageState extends State<HomePage> {
   GlobalKey<NavigatorState> _setActiveTab(int index) {
     if(index == _currentIndex && index == 2)
     {
+      if (!Platform.isIOS) {
       navigatorKeys[index].currentState.pop();
+}
+
     }
     setState(() {
       _currentIndex = index;

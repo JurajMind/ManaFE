@@ -99,14 +99,15 @@ class ApiClient {
       return error;
     };
 
-    _dio.interceptor.request.onSend = (Options o) async {
+    _dio.interceptor.request.onSend = (Options options) async {
       var token = await _authorize.getToken();
-      o.headers['Authorization'] = 'Bearer $token';
-      o.headers["Accept"] = "application/json";
-      if (o.method == "POST" && o.data != null) {
-        o.headers['content-length'] = utf8.encode(json.encode(o.data)).length;
-      }
-      return o;
+      options.headers['Authorization'] = 'Bearer $token';
+      options.headers["Accept"] = "application/json";
+       if (options.data is! String && options.contentType.mimeType == ContentType.json.mimeType && options.data != null) {
+        options.data = jsonEncode(options.data);
+        options.headers['Content-Length'] = options.data.length.toString();
+    }
+    return options;
     };
   }
 
@@ -114,7 +115,7 @@ class ApiClient {
     var response = await (await _http.getUrl(uri)).close();
     var transformedResponse = await response.transform(utf8.decoder).join();
     return json.decode(transformedResponse);
-  }
+ } 
 
   Future<List<TobaccoMix>> fetchtobacoMix(
       {int page: 0, String category: "popular", int pageSize: 10}) async {
