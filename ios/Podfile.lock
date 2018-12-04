@@ -5,17 +5,15 @@ PODS:
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
-  - FBSDKCoreKit (4.36.0):
-    - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.36.0):
+  - FBSDKCoreKit (4.38.1):
+    - Bolts (~> 1.9)
+  - FBSDKLoginKit (4.38.1):
     - FBSDKCoreKit
   - Flutter (1.0.0)
   - flutter_facebook_login (0.0.1):
-    - FBSDKLoginKit (~> 4.29)
+    - FBSDKLoginKit (~> 4.32)
     - Flutter
   - flutter_secure_storage (3.1.1):
-    - Flutter
-  - flutter_webview_plugin (0.0.1):
     - Flutter
   - GoogleMaps (2.7.0):
     - GoogleMaps/Maps (= 2.7.0)
@@ -37,10 +35,9 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - Flutter (from `.symlinks/flutter/ios`)
+  - Flutter (from `.symlinks/flutter/ios-release`)
   - flutter_facebook_login (from `.symlinks/plugins/flutter_facebook_login/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
-  - flutter_webview_plugin (from `.symlinks/plugins/flutter_webview_plugin/ios`)
   - location (from `.symlinks/plugins/location/ios`)
   - map_view (from `.symlinks/plugins/map_view/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
@@ -57,13 +54,11 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: ".symlinks/flutter/ios-release"
   flutter_facebook_login:
     :path: ".symlinks/plugins/flutter_facebook_login/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
-  flutter_webview_plugin:
-    :path: ".symlinks/plugins/flutter_webview_plugin/ios"
   location:
     :path: ".symlinks/plugins/location/ios"
   map_view:
@@ -79,12 +74,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
-  FBSDKCoreKit: 3b8e6570eedb443f9fc4af196a7bf39f18e3a3d8
-  FBSDKLoginKit: 8bccb6064708ab2f4251a7fc4e3b6d8d00ad91ba
+  FBSDKCoreKit: 8d47857400e2f5bdea697a80daff882e91c84ef6
+  FBSDKLoginKit: 4621c690d9dd8628031a4791497062183ea34b0d
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
-  flutter_facebook_login: e3d2f0a348889fe0f49c302bc044b8cc66c691be
+  flutter_facebook_login: 5aa824f2a8b1e008810b20a9d4cf4166a7efe73a
   flutter_secure_storage: cbb73e37aa0c66689fe63799a9619ac66849b8fa
-  flutter_webview_plugin: 116575b48572029304775b768e9f15ebfc316274
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   location: 26c90953ad5916331d0d1d913898779910416487
   map_view: 9653e5e5b090355507a711908240eb353566b616

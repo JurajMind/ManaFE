@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/components/icon_button_title.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mixology_list.dart';
@@ -8,7 +10,6 @@ import 'package:app/pages/gear.page.dart';
 
 import 'package:app/pages/profile.page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';
-import 'package:app/support/mana_icons_icons.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 
@@ -66,8 +67,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   GlobalKey<NavigatorState> _setActiveTab(int index) {
-    if (index == _currentIndex && index == 2) {
+    if(index == _currentIndex && index == 2)
+    {
+      if (!Platform.isIOS) {
       navigatorKeys[index].currentState.pop();
+}
+
     }
     setState(() {
       _currentIndex = index;
@@ -85,7 +90,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               IconButtonTitle(
-                icon: Icon(ManaIcons.leaf),
+                icon: Icon(Icons.refresh),
                 text: AppTranslations.of(context).text("tab_mixology"),
                 color: _currentIndex == 0 ? Colors.white : Colors.grey,
                 tooltip: 'ss',
@@ -99,25 +104,27 @@ class _HomePageState extends State<HomePage> {
               ),
               _currentIndex == 2
                   ? Container(
-                      child: GradientColorWheel(
-                          size: new Size(48.0, 48.0),
-                          defaultColors: [Colors.white, Colors.white],
-                          child: Icon(
-                            ManaIcons.manam,
-                            color: Colors.black,
-                          )))
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100.0),
+                          color: Colors.white),
+                      child: IconButton(
+                        icon: Icon(Icons.settings_backup_restore),
+                        color: _currentIndex == 2 ? Colors.black : Colors.grey,
+                        onPressed: () => _setActiveTab(2),
+                      ),
+                    )
                   : InkWell(
                       onTap: () => _setActiveTab(2),
                       child: GradientColorWheel(
                           size: new Size(48.0, 48.0),
                           defaultColors: [Colors.white, Colors.white],
                           child: Icon(
-                            ManaIcons.manam,
-                            color: Colors.black38,
+                            Icons.settings_backup_restore,
+                            color: Colors.grey,
                           )),
                     ),
               IconButtonTitle(
-                icon: Icon(ManaIcons.hookah),
+                icon: Icon(Icons.settings),
                 text: AppTranslations.of(context).text("tab_gear"),
                 color: _currentIndex == 3 ? Colors.white : Colors.grey,
                 onPressed: () => _setActiveTab(3),
@@ -134,7 +141,7 @@ class _HomePageState extends State<HomePage> {
       );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  
     return WillPopScope(
         onWillPop: () async {
           if (!navigatorKeys[_currentIndex].currentState.canPop()) {

@@ -198,9 +198,20 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
 }
 
 class UpperCaseTextFormatter extends TextInputFormatter {
+  WhitelistingTextInputFormatter formatter = WhitelistingTextInputFormatter(new RegExp(r'[A-Z0-9]*'));
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
+   TextEditingValue formattedValue = formatter.formatEditUpdate(oldValue, newValue);
+    if(oldValue.text == newValue.text){
+      return newValue;
+    }
+    final int newTextLength = formattedValue.text.length;
+
+    int selectionIndex = formattedValue.selection.end;
+    int usedSubstringIndex = 0;
+    final StringBuffer newText = new StringBuffer();
+
     return new TextEditingValue(
       text: newValue.text?.toUpperCase(),
       selection: newValue.selection,

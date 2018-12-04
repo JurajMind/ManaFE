@@ -103,8 +103,14 @@ class ApiClient {
       var token = await _authorize.getToken();
       o.headers['Authorization'] = 'Bearer $token';
       o.headers["Accept"] = "application/json";
+      o.headers['content-type'] = 'application/json';
+      print(o.data);
       if (o.method == "POST" && o.data != null) {
-        o.headers['content-length'] = utf8.encode(json.encode(o.data)).length;
+        if (Platform.isIOS) {
+          
+        } else {
+          o.headers['content-length'] = utf8.encode(json.encode(o.data)).length;
+        }
       }
       return o;
     };
@@ -288,8 +294,7 @@ class ApiClient {
     var url = Uri.https(
         baseUrl, '/api/Device/Preset/${presetId.toString()}/Use/$sessionId');
     var response = await _dio.post(url.toString(),
-    data:null,
-        options: Options(contentType: ContentType.JSON));
+        data: null, options: Options(contentType: ContentType.JSON));
 
     return true;
   }
