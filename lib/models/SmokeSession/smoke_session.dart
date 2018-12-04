@@ -25,7 +25,7 @@ class SmokeSession {
 
   factory SmokeSession.fromJson(Map<String, dynamic> json) {
     var sessionId = json['SessionId'];
-    var hookah = Hookah.fromJson(json['Hookah'] as Map<String, dynamic>);
+    var hookah = Hookah.fromJson(json['Device'] as Map<String, dynamic>);
     var metaData =
         SmokeSessionMetaData.fromJson(json["MetaData"] as Map<String, dynamic>);
     var smokeSessionData = SmokeStatisticDataModel.fromJson(

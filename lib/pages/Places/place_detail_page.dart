@@ -60,9 +60,14 @@ class _PlaceDetailState extends State<PlaceDetailPage>
   _PlaceDetailState(this.place);
 
   showMap() {
-    mapView.addMarker(new Marker("3", widget.place.name,
-        widget.place.address.lat, widget.place.address.lng,
-        color: Colors.purple));
+    mapView.onMapReady.listen((_) {
+      mapView.addMarker(new Marker(
+        "1",
+        widget.place.name,
+        widget.place.address.lat,
+        widget.place.address.lng,
+      ));
+    });
 
     mapView.show(
         new MapOptions(

@@ -107,9 +107,8 @@ class ApiClient {
       print(o.data);
       if (o.method == "POST" && o.data != null) {
         if (Platform.isIOS) {
-          
         } else {
-          o.headers['content-length'] = utf8.encode(json.encode(o.data)).length;
+          // o.headers['content-length'] = utf8.encode(json.encode(o.data)).length;
         }
       }
       return o;
@@ -145,7 +144,7 @@ class ApiClient {
       return new Tuple2(
           SmokeSession.fromJson(json['SmokeSession'] as Map<String, dynamic>),
           StandSettings.fromJson(
-              json['StandSettings'] as Map<String, dynamic>));
+              json['DeviceSettings'] as Map<String, dynamic>));
     });
   }
 

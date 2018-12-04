@@ -24,7 +24,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
   final double topWidgetHeight = 200.0;
   String _sessionCode;
   final _formKey = GlobalKey<FormState>();
-  final myController = TextEditingController(text: 'FT9GF');
+  final myController = TextEditingController(text: 'N1118');
   final ApiClient apiClient = App.http;
   bool validating = false;
   @override
@@ -198,12 +198,14 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
 }
 
 class UpperCaseTextFormatter extends TextInputFormatter {
-  WhitelistingTextInputFormatter formatter = WhitelistingTextInputFormatter(new RegExp(r'[A-Z0-9]*'));
+  WhitelistingTextInputFormatter formatter =
+      WhitelistingTextInputFormatter(new RegExp(r'[A-Z0-9]*'));
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-   TextEditingValue formattedValue = formatter.formatEditUpdate(oldValue, newValue);
-    if(oldValue.text == newValue.text){
+    TextEditingValue formattedValue =
+        formatter.formatEditUpdate(oldValue, newValue);
+    if (oldValue.text == newValue.text) {
       return newValue;
     }
     final int newTextLength = formattedValue.text.length;
