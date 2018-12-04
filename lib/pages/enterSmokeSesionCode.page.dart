@@ -138,7 +138,10 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                   border: new Border.all(
                       color: const Color.fromRGBO(221, 221, 221, 1.0),
                       width: 2.5)),
-              child: Icon(Icons.camera),
+              child: Icon(
+                Icons.linked_camera,
+                size: 50.0,
+              ),
             ),
           ),
         ),

@@ -10,6 +10,7 @@ import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/pages/enterSmokeSesionCode.page.dart';
+import 'package:app/support/mana_icons_icons.dart';
 import 'package:flutter/material.dart';
 
 class MyCustomRoute<T> extends MaterialPageRoute<T> {
@@ -91,19 +92,19 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
           new Positioned(
             child: Hero(
               tag: 'Circle',
-                          child: new Container(
+              child: new Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(getCircleRadius(context)),                  
-                    gradient: LinearGradient(
-                      colors: [Colors.blue,Colors.black],
-                     begin: Alignment.topCenter,
-                     end:   Alignment.bottomCenter,
-                    )
-                  ),
+                      borderRadius:
+                          BorderRadius.circular(getCircleRadius(context)),
+                      gradient: LinearGradient(
+                        colors: [Colors.blue, Colors.black],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      )),
                   child: SizedBox(
-                    height: getCircleRadius(context)*2,
-                    width: getCircleRadius(context)*2,
-                                    child: GestureDetector(
+                    height: getCircleRadius(context) * 2,
+                    width: getCircleRadius(context) * 2,
+                    child: GestureDetector(
                         onTap: () {
                           _openAddEntryDialog(context, smokeSessionBloc);
                         },
@@ -135,25 +136,21 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
           ),
           new Positioned(
             child: new Icon(
-              Icons.refresh,
+              ManaIcons.manam,
               size: 40.0,
             ),
             left: 10.0,
             top: 40.0,
           ),
           new Positioned(
-              top: 300.0,
+              top: 320.0,
               child: Column(
                 children: <Widget>[
-                    RaisedButton(
-                      child: Text('Test'),
-                      onPressed: () => App.router.navigateTo(context, 'test')),
                   Text(
                     'NEAREST PLACE',
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.green[50]),
                   ),
-                
                   SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height / 2 - 60,

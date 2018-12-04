@@ -65,6 +65,7 @@ flutter:
     - images/gear/hms.jpg
     - images/gear/mygear.jpg
     - images/gear/hookah.jpg
+    - images/gear/tobacco.jpg
     - images/stats.png
 
     - locale/localization_en.json
@@ -83,6 +84,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
+    - family: ManaIcons
+      fonts:
+        - asset: fonts/Mana-Icons.ttf
     - family: Montserrat
       fonts:
         - asset: fonts/Montserrat-Regular.ttf
@@ -90,10 +94,6 @@ flutter:
           style: italic
         - asset: fonts/Montserrat-Bold.ttf
           weight: 700
-
-    - family: MyFlutterApp
-      fonts:
-        - asset: fonts/MyFlutterApp.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

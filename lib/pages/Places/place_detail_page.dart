@@ -60,6 +60,10 @@ class _PlaceDetailState extends State<PlaceDetailPage>
   _PlaceDetailState(this.place);
 
   showMap() {
+    mapView.addMarker(new Marker("3", widget.place.name,
+        widget.place.address.lat, widget.place.address.lng,
+        color: Colors.purple));
+
     mapView.show(
         new MapOptions(
             mapViewType: MapViewType.normal,
@@ -73,6 +77,16 @@ class _PlaceDetailState extends State<PlaceDetailPage>
             hideToolbar: false,
             title: widget.place.name),
         toolbarActions: [new ToolbarAction("Close", 1)]);
+
+    mapView.onToolbarAction.listen((id) {
+      if (id == 1) {
+        _handleDismiss();
+      }
+    });
+  }
+
+  _handleDismiss() async {
+    mapView.dismiss();
   }
 
   @override
@@ -133,10 +147,11 @@ class _PlaceDetailState extends State<PlaceDetailPage>
           ],
           flexibleSpace: new FlexibleSpaceBar(
             title: SizedBox(
+              width: 250.0,
               child: Text(
                 place.name,
                 maxLines: 2,
-                overflow: TextOverflow.clip,
+                overflow: TextOverflow.fade,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -147,7 +162,8 @@ class _PlaceDetailState extends State<PlaceDetailPage>
                 Hero(
                   tag: '_picture',
                   child: new Image(
-                    image: new CachedNetworkImageProvider( place.getPlaceImage()),                  
+                    image:
+                        new CachedNetworkImageProvider(place.getPlaceImage()),
                     fit: BoxFit.cover,
                     height: _appBarHeight,
                   ),
