@@ -6,6 +6,7 @@ import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/picker_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:vibrate/vibrate.dart';
 
 class AnimationStatePicker extends StatefulWidget {
   final SmokeSessionBloc smokeSessionBloc;
@@ -84,6 +85,7 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
                   widget.onChanged(index);
                   setState(() {
                     _focusIndex = index;
+                     Vibrate.feedback(FeedbackType.selection);
                   });
                 },
                 children: List.generate(
@@ -178,7 +180,7 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
                     negativeIcon: Icons.shutter_speed,
                     minValue: 0.0,
                     maxValue: 600.0,
-                    initValue: setting.speed + 0.0,
+                    initValue: 600.0 - setting.speed,
                     onChanged: (value) => widget.smokeSessionBloc
                         .setSpeed(value.round(), widget.state),
                   ),
