@@ -7,8 +7,8 @@ import 'package:app/utils/color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class GradientColorWheel extends StatefulWidget {
-  const GradientColorWheel(
+class GradientColorWheelRotate extends StatefulWidget {
+  const GradientColorWheelRotate(
       {key, this.defaultColors, this.child, this.size, this.border})
       : super(key: key);
   @required
@@ -17,12 +17,12 @@ class GradientColorWheel extends StatefulWidget {
   final Size size;
   final bool border;
   @override
-  GradientColorWheelState createState() {
-    return new GradientColorWheelState();
+  GradientColorWheelRotateState createState() {
+    return new GradientColorWheelRotateState();
   }
 }
 
-class GradientColorWheelState extends State<GradientColorWheel> {
+class GradientColorWheelRotateState extends State<GradientColorWheelRotate> {
   Offset position;
 
   @override
@@ -57,7 +57,9 @@ class GradientColorWheelState extends State<GradientColorWheel> {
     Size size = widget.size == null ? MediaQuery.of(context).size : widget.size;
 
     return Container(
-      child: RepaintBoundary(child: buildCircle(smokeSessionBloc, size)),
+      child: SmokeRotation(
+        child: RepaintBoundary(child: buildCircle(smokeSessionBloc, size)),
+      ),
     );
   }
 }

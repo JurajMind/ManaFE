@@ -6,6 +6,7 @@ import 'package:app/module/mixology/mixology_list.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Places/places.page.dart';
 import 'package:app/pages/SmokeSession/gradiend_color_wheel.dart';
+import 'package:app/pages/SmokeSession/gradiend_color_wheel_rotate.dart';
 import 'package:app/pages/gear.page.dart';
 
 import 'package:app/pages/profile.page.dart';
@@ -104,7 +105,7 @@ class _HomePageState extends State<HomePage> {
               _currentIndex == 2
                   ? InkWell(
                       onTap: () => _setActiveTab(2),
-                      child: GradientColorWheel(
+                      child: GradientColorWheelRotate(
                           size: new Size(48.0, 48.0),
                           defaultColors: [Colors.white, Colors.white],
                           child: Icon(
@@ -114,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                     )
                   : InkWell(
                       onTap: () => _setActiveTab(2),
-                      child: GradientColorWheel(
+                      child: GradientColorWheelRotate(
                           size: new Size(48.0, 48.0),
                           defaultColors: [Colors.white, Colors.white],
                           child: Icon(

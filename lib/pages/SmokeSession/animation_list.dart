@@ -45,11 +45,11 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
             children: <Widget>[
               devicePresetPickerBuilder(),
               animationStatePickerBuilder(
-                  smokeSessionBloc.standSettings, SmokeState.blow, 'PURGE'),
-              animationStatePickerBuilder(
                   smokeSessionBloc.standSettings, SmokeState.idle, 'IDLE'),
               animationStatePickerBuilder(
                   smokeSessionBloc.standSettings, SmokeState.puf, 'SMOKING'),
+              animationStatePickerBuilder(
+                  smokeSessionBloc.standSettings, SmokeState.blow, 'PURGE'),
             ],
           ),
         ],
@@ -88,11 +88,14 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
             ? CircularProgressIndicator()
             : PresetPicker(
                 presetBloc: smokeSessionBloc,
-                onChanged:(DevicePreset preset) { this.devicePresetSetChanged(preset,snapshot.data);},                
+                onChanged: (DevicePreset preset) {
+                  this.devicePresetSetChanged(preset, snapshot.data);
+                },
               ));
   }
 
-  void devicePresetSetChanged(DevicePreset newPreset,List<DevicePreset> presets){
+  void devicePresetSetChanged(
+      DevicePreset newPreset, List<DevicePreset> presets) {
     smokeSessionBloc.futureDevicePreset.add(newPreset);
   }
 

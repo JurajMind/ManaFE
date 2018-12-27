@@ -15,7 +15,7 @@ class MetadataBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 400.0,
+      height: 800.0,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: new ListView(

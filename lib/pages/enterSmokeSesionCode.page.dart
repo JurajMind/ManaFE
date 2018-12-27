@@ -24,7 +24,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
   final double topWidgetHeight = 200.0;
   String _sessionCode;
   final _formKey = GlobalKey<FormState>();
-  final myController = TextEditingController(text: 'N1118');
+  final myController = TextEditingController(text: 'W40YI');
   final ApiClient apiClient = App.http;
   bool validating = false;
   @override

@@ -17,69 +17,65 @@ class SignalR {
 
   BehaviorSubject<SmokeSessionData> updateStats =
       new BehaviorSubject<SmokeSessionData>();
-      
-        bool connection = false;
-      
-        Future<dynamic> connect() async {
-          if (this.connection) {
-            return;
-          }
-          var negotiateUrl =
-              url + '/negotiate?clientProtocol=1.5&connectionData=$conectionData';
-          var response = await http.get(negotiateUrl);
-          connection = false;
-          final responseJson = json.decode(response.body);
-      
-          var negotiateResponse = NegotiateResponse.fromJson(responseJson);
-          connectionInfo = negotiateResponse;
-      
-          var chanelUlr =
-              "wss://$host/signalr/connect?transport=webSockets&clientProtocol=${negotiateResponse.ProtocolVersion}&connectionToken=${Uri.encodeComponent(negotiateResponse.ConnectionToken)}&connectionData=$conectionData";
-      
-          print(chanelUlr);
-      
-          try {
-            _channel = new IOWebSocketChannel.connect(chanelUlr);
-            _channel.stream.listen((message) async {
-              print('From signal ' + message);
-              var serverCall = ClientCall.fromJson(json.decode(message));
-      
-              proceedCall(serverCall);
-      
-              print(serverCall.GroupToken);
-            });
-          } catch (e) {
-            print(e);
-          }
-      
-          await startConnection(negotiateResponse);
-        }
-      
-        Future startConnection(NegotiateResponse negotiateResponse) async {
-          if (connection) return;
-          connection = true;
-          var startUrl = url +
-              '/start?transport=webSockets&clientProtocol=1.5&connectionToken=${Uri.encodeComponent(negotiateResponse.ConnectionToken)}&connectionData=$conectionData';
-          print(startUrl);
-      
-          var connect = await http.get(startUrl);
-      
-          print(connect.body);
-        }
-      
-        BehaviorSubject<ClientCall> clientCalls = new BehaviorSubject<ClientCall>();
-      
-        sendMsg(String data) {}
-      
-        callServerFunction({String name, List<String> params}) {
-          var call = new ServerCall(A: params, M: name);
-          _channel.sink.add(call.toJson());
-        }
-      
-        void proceedCall(ClientCall serverCall) {
-          if (serverCall.Data != null) clientCalls.add(serverCall);
-        }
-      }
-      
-      class SmokeSessionData {
+
+  bool connection = false;
+
+  Future<dynamic> connect() async {
+    if (this.connection) {
+      return;
+    }
+    var negotiateUrl =
+        url + '/negotiate?clientProtocol=1.5&connectionData=$conectionData';
+    var response = await http.get(negotiateUrl);
+    connection = false;
+    final responseJson = json.decode(response.body);
+
+    var negotiateResponse = NegotiateResponse.fromJson(responseJson);
+    connectionInfo = negotiateResponse;
+
+    var chanelUlr =
+        "wss://$host/signalr/connect?transport=webSockets&clientProtocol=${negotiateResponse.ProtocolVersion}&connectionToken=${Uri.encodeComponent(negotiateResponse.ConnectionToken)}&connectionData=$conectionData";
+
+    print(chanelUlr);
+
+    try {
+      _channel = new IOWebSocketChannel.connect(chanelUlr);
+      _channel.stream.listen((message) async {
+        print('From signal ' + message);
+        var serverCall = ClientCall.fromJson(json.decode(message));
+        proceedCall(serverCall);
+      });
+    } catch (e) {
+      print(e);
+    }
+
+    await startConnection(negotiateResponse);
+  }
+
+  Future startConnection(NegotiateResponse negotiateResponse) async {
+    if (connection) return;
+    connection = true;
+    var startUrl = url +
+        '/start?transport=webSockets&clientProtocol=1.5&connectionToken=${Uri.encodeComponent(negotiateResponse.ConnectionToken)}&connectionData=$conectionData';
+    print(startUrl);
+
+    var connect = await http.get(startUrl);
+
+    print(connect.body);
+  }
+
+  BehaviorSubject<ClientCall> clientCalls = new BehaviorSubject<ClientCall>();
+
+  sendMsg(String data) {}
+
+  callServerFunction({String name, List<String> params}) {
+    var call = new ServerCall(A: params, M: name);
+    _channel.sink.add(call.toJson());
+  }
+
+  void proceedCall(ClientCall serverCall) {
+    if (serverCall.Data != null) clientCalls.add(serverCall);
+  }
 }
+
+class SmokeSessionData {}

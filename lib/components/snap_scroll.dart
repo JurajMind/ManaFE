@@ -89,8 +89,8 @@ class SnapScrollPhysic extends ScrollPhysics {
   }
 
   @override
-  bool shouldAcceptUserOffset(ScrollMetrics position) => false;
+  bool shouldAcceptUserOffset(ScrollMetrics position) => true;
 
   @override
-  bool get allowImplicitScrolling => false;
+  bool get allowImplicitScrolling => true;
 }

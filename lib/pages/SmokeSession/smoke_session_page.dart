@@ -1,3 +1,4 @@
+import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
@@ -9,6 +10,7 @@ import 'package:app/pages/SmokeSession/pipe_accesory_widget.dart';
 import 'package:app/pages/SmokeSession/puff_timer.dart';
 import 'package:app/pages/SmokeSession/smoke_color_wheel.dart';
 import 'package:app/pages/SmokeSession/tobacco_widget.dart';
+import 'package:app/pages/home.page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
@@ -32,7 +34,7 @@ class StopWatches {
 class _SmokeSessionPage extends State<SmokeSessionPage> {
   SmokeSessionBloc smokeSessionBloc;
   StopWatches stopWatches;
-  Dependencies dependencies;
+  PufTimerDependencies dependencies;
   int action = 0;
   ScrollController scrollController;
   ScrollPhysics physics;
@@ -40,7 +42,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
   @override
   void initState() {
     stopWatches = new StopWatches(new Stopwatch(), new Stopwatch());
-    dependencies = new Dependencies(stopwatch: stopWatches.pufStopwatch);
+
     scrollController = new ScrollController(
       initialScrollOffset: 1000.0,
     );
@@ -50,9 +52,17 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
   @override
   void didChangeDependencies() {
     smokeSessionBloc = DataProvider.getSmokeSession(context);
+    dependencies = new PufTimerDependencies(
+        stopWatches.pufStopwatch, this.smokeSessionBloc);
     smokeSessionBloc.joinSession(widget.sessionId);
     dependencies.smokeSessionBloc = smokeSessionBloc;
     super.didChangeDependencies();
+  }
+
+  @override
+  dispose() {
+    this.dependencies.dispose();
+    super.dispose();
   }
 
   @override
@@ -78,6 +88,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
           children: <Widget>[
             TobaccoWidget(
               tobacco: asyncSnapshot.data.tobacco,
+              smokeSessionBloc: smokeSessionBloc,
             )
           ],
         );
@@ -128,22 +139,22 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         }
         var duration = asyncSnapshot.data.duration;
         var durationString =
-            '${duration.inHours}:${duration.inMinutes}:${duration.inSeconds % 10}';
+            '${duration.inHours}:${duration.inMinutes % 60}:${duration.inSeconds % 100}';
 
         var longestString =
-            '${asyncSnapshot.data.longestPuf.inMinutes}:${asyncSnapshot.data.longestPuf.inSeconds}:${asyncSnapshot.data.longestPuf.inMilliseconds}';
+            '${asyncSnapshot.data.longestPuf.inMinutes == 0 ? "" : asyncSnapshot.data.longestPuf.inMinutes.toString() + ':'}${asyncSnapshot.data.longestPuf.inSeconds}.${asyncSnapshot.data.longestPuf.inMilliseconds.toString()}';
         return asyncSnapshot.data != null
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   new HeaderItem(
-                    label: 'Puff count',
+                    label: 'Puf count',
                     data: asyncSnapshot.data.pufCount.toString(),
                   ),
                   Column(
                     children: <Widget>[
-                      Text('Last puff( sec )',
+                      Text('Last puf (sec)',
                           style: TextStyle(color: Colors.grey)),
                       new PuffTimeText(
                           dependencies: dependencies,
@@ -166,7 +177,6 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         children: <Widget>[
           new Expanded(
             child: CustomScrollView(
-              controller: scrollController,
               physics: new SnapScrollPhysic(snaps: [
                 size.height * 0.75,
                 size.width + 40,
@@ -177,51 +187,32 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                 new SliverList(
                   delegate: new SliverChildListDelegate(<Widget>[
                     AnimationsPicker(),
+                    SizedBox(
+                      height: 20.0,
+                    ),
                     GestureDetector(
-                      onPanUpdate: (value) => scrollController
-                          .jumpTo(scrollController.offset - value.delta.dy),
-                      child: Container(
-                        color: Colors.transparent,
-                        height: 40.0,
-                        width: size.width,
-                        child: Center(
-                            child: Text(
-                          '...',
-                          style: TextStyle(
-                              fontSize: 40.0, fontWeight: FontWeight.w700),
-                        )),
-                      ),
+                      onVerticalDragStart: (s) => print('tap'),
+                      onVerticalDragEnd: (s) => print('tap end'),
+                      child: SizedBox(
+                          height: size.width,
+                          child: SmokeColorWheel(
+                            onColorChanged: (color) {
+                              smokeSessionBloc.setColor(color.toColor());
+                            },
+                            color:
+                                smokeSessionBloc.standSettings.value.idle.color,
+                          )),
                     ),
                     SizedBox(
-                        height: size.width,
-                        child: SmokeColorWheel(
-                          onColorChanged: (color) {
-                            smokeSessionBloc.setColor(color.toColor());
-                          },
-                          color: smokeSessionBloc.standSettings.value.idle.color,
-                        )),
-                    GestureDetector(
-                      onPanUpdate: (value) => scrollController
-                          .jumpTo(scrollController.offset - value.delta.dy),
-                      child: Container(
-                        color: Colors.transparent,
-                        height: 40.0,
-                        width: size.width,
-                        child: Center(
-                            child: Text(
-                          '...',
-                          style: TextStyle(
-                              fontSize: 40.0, fontWeight: FontWeight.w700),
-                        )),
-                      ),
+                      height: 20.0,
                     ),
                     SizedBox(
                       height: size.height * 0.75,
-                      child: ListView(
+                      child: Column(
                         children: <Widget>[
                           statisticBuilder,
                           tobaccoMetaDataBuilder,
-                          metadataBuilder,
+                          metadataBuilder
                         ],
                       ),
                     ),
@@ -240,20 +231,47 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         md.bowl == null ||
         md.coal == null ||
         md.heatManager == null)
-      return RaisedButton(
+      return RoundedButton(
         child: Text('Fill metadata'),
-        onPressed: () async {
-          showModalBottomSheet<void>(
-              context: context,
-              builder: (BuildContext context) {
-                return new MetadataBottomSheet(
-                    smokeSessionBloc: this.smokeSessionBloc);
-              }).then((value) {
-            this.smokeSessionBloc.saveMetaData();
-          });
+        width: 200.0,
+        borderWidth: 1.0,
+        bottomMargin: 1.0,
+        height: 50.0,
+        onTap: () async {
+          showBottomModal();
         },
       );
     return Container();
+  }
+
+  void staticModal() {
+    scaffoldKey.currentState
+        .showBottomSheet((context) {
+          return new Container(
+            height: MediaQuery.of(context).size.height,
+            color: Colors.greenAccent,
+            child: new Center(
+              child: new Text("Hi BottomSheet"),
+            ),
+          );
+        })
+        .closed
+        .whenComplete(() {
+          if (mounted) {
+            setState(() {});
+          }
+        });
+  }
+
+  void showBottomModal() {
+    showModalBottomSheet<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return new MetadataBottomSheet(
+              smokeSessionBloc: this.smokeSessionBloc);
+        }).then((value) {
+      this.smokeSessionBloc.saveMetaData();
+    });
   }
 }
 

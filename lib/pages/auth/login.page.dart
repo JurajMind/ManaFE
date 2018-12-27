@@ -8,9 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:app/services/authorization.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-import 'package:animated_background/animated_background.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -47,6 +44,15 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             context,
             new MaterialPageRoute(
                 builder: (BuildContext context) => HomePage()));
+      } else {
+        final snackBar = SnackBar(content: Text('Wrong email or password'));
+
+        setState(() {
+          this._loading = false;
+        });
+
+// Find the Scaffold in the Widget tree and use it to show a SnackBar
+        Scaffold.of(context).showSnackBar(snackBar);
       }
     }
   }
@@ -63,90 +69,93 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             title: new Text('Log in'),
             backgroundColor: Colors.transparent,
           ),
-          new Container(
-            padding: new EdgeInsets.fromLTRB(60.0, 60.0, 60.0, 0.0),
-            child: new Form(
-              key: _formKey,
-              child: new Column(
-                children: <Widget>[
-                  new TextFormField(
-                      autofocus: true,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: new InputDecoration(
-                          hintText: 'you@example.com', labelText: 'E-mail'),
-                      validator: (String value) {
-                        return validate(value, 'E-mail Address', [
-                          new RequiredValidator(),
-                          new EmailValidator(),
-                          new MaxValidator(63)
-                        ]);
-                      },
-                      onFieldSubmitted: (String textInput) {
-                        FocusScope.of(context).requestFocus(passwordFocusNode);
-                      },
-                      onSaved: (String value) {
-                        data.email = value;
-                      }),
-                  new TextFormField(
-                      obscureText: true,
-                      focusNode: passwordFocusNode,
-                      decoration:
-                          new InputDecoration(labelText: 'Enter your password'),
-                      validator: (String value) {
-                        return validate(value, 'Password', [
-                          new RequiredValidator(),
-                          new StringValidator(),
-                          new MinValidator(8)
-                        ]);
-                      },
-                      onFieldSubmitted: (String value){
-                        this.submit(context);
-                      },
-                      onSaved: (String value) {
-                        data.password = value;
-                      }),
-                  new Container(
-                    width: screenSize.width,
-                    child: _loading
-                        ? new RoundedButton(
-                            borderWidth: 1.0,
-                            bottomMargin: 1.0,
-                            height: 50.0,
-                            width: screenSize.width,
-                            child: new Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[                             
-                                CircularProgressIndicator(),
-                              ],
+          Builder(builder: (BuildContext context) {
+            return new Container(
+              padding: new EdgeInsets.fromLTRB(60.0, 60.0, 60.0, 0.0),
+              child: new Form(
+                key: _formKey,
+                child: new Column(
+                  children: <Widget>[
+                    new TextFormField(
+                        autofocus: true,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: new InputDecoration(
+                            hintText: 'you@example.com', labelText: 'E-mail'),
+                        validator: (String value) {
+                          return validate(value, 'E-mail Address', [
+                            new RequiredValidator(),
+                            new EmailValidator(),
+                            new MaxValidator(63)
+                          ]);
+                        },
+                        onFieldSubmitted: (String textInput) {
+                          FocusScope.of(context)
+                              .requestFocus(passwordFocusNode);
+                        },
+                        onSaved: (String value) {
+                          data.email = value;
+                        }),
+                    new TextFormField(
+                        obscureText: true,
+                        focusNode: passwordFocusNode,
+                        decoration: new InputDecoration(
+                            labelText: 'Enter your password'),
+                        validator: (String value) {
+                          return validate(value, 'Password', [
+                            new RequiredValidator(),
+                            new StringValidator(),
+                            new MinValidator(6)
+                          ]);
+                        },
+                        onFieldSubmitted: (String value) {
+                          this.submit(context);
+                        },
+                        onSaved: (String value) {
+                          data.password = value;
+                        }),
+                    new Container(
+                      width: screenSize.width,
+                      child: _loading
+                          ? new RoundedButton(
+                              borderWidth: 1.0,
+                              bottomMargin: 1.0,
+                              height: 50.0,
+                              width: screenSize.width,
+                              child: new Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  CircularProgressIndicator(),
+                                ],
+                              ),
+                            )
+                          : new RoundedButton(
+                              buttonName: 'Login',
+                              onTap: () => this.submit(context),
+                              buttonColor: Colors.transparent,
+                              borderWidth: 1.0,
+                              bottomMargin: 1.0,
+                              height: 50.0,
+                              width: screenSize.width,
                             ),
-                          )
-                        : new RoundedButton(
-                            buttonName: 'Login',
-                            onTap: () => this.submit(context),
-                            buttonColor: Colors.transparent,
-                            borderWidth: 1.0,
-                            bottomMargin: 1.0,
-                            height: 50.0,
-                            width: screenSize.width,
-                          ),
-                    margin: new EdgeInsets.only(top: 20.0),
-                  ),
-                  new Container(
-                    width: screenSize.width,
-                    child: new FlatButton(
-                      child: new Text(
-                        'Create an account',
-                      ),
-                      onPressed: () {
-                        navigate(context, 'auth/register');
-                      },
+                      margin: new EdgeInsets.only(top: 20.0),
                     ),
-                    margin: new EdgeInsets.only(top: 20.0),
-                  ),
-                ],
+                    new Container(
+                      width: screenSize.width,
+                      child: new FlatButton(
+                        child: new Text(
+                          'Create an account',
+                        ),
+                        onPressed: () {
+                          navigate(context, 'auth/register');
+                        },
+                      ),
+                      margin: new EdgeInsets.only(top: 20.0),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          )
+            );
+          })
         ],
       )),
     );
