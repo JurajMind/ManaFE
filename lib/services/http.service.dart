@@ -95,6 +95,9 @@ class ApiClient {
         options.headers["Authorization"] = 'Bearer $token';
 
         return _dio.request(options.path, options: options);
+      } else {
+        print(error.message);
+        print(error.response);
       }
       return error;
     };
@@ -151,8 +154,8 @@ class ApiClient {
   Future<List<Place>> getNearbyPlaces({double lat, double lng}) {
     Map<String, String> queryParameters = new Map<String, String>();
     if (lat != null && lng != null) {
-      queryParameters['lat'] = lat.toString();
-      queryParameters['lng'] = lng.toString();
+      queryParameters['lat'] = '0'; // lat.toString();
+      queryParameters['lng'] = '0'; //lng.toString();
     }
     var uri = Uri.https(baseUrl, 'api/Places/SearchNearby', queryParameters);
 

@@ -22,6 +22,10 @@ class Authorize {
       },
     );
 
+    if (response.statusCode != 200) {
+      return false;
+    }
+
     final responseJson = json.decode(response.body);
     return await writeToken(responseJson);
   }

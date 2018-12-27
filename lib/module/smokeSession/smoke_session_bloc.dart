@@ -257,7 +257,6 @@ class SmokeSessionBloc {
   }
 
   void handlePufChange(ClientMethod f) {
-    print(f);
     var data = new PuffChangeDataModel(f.Data);
     smokeState.add(data.state);
   }

@@ -28,15 +28,15 @@ class SmokeStatisticDataModel extends SignalData {
 
     duration = stringToDuration(map['duration']);
 
-    longestPuf = new Duration(microseconds: map['longestPufMilis'].round());
+    longestPuf = new Duration(milliseconds: map['longestPufMilis'].round());
   }
 
   SmokeStatisticDataModel.fromJson(Map<String, dynamic> json) : super(null) {
     try {
       pufCount = json['PufCount'];
 
-      if(json['LastPuf'] == null) return;
-            
+      if (json['LastPuf'] == null) return;
+
       final DateFormat df = new DateFormat('dd-MM-yyyy HH:mm:ss');
       lastPuf = double.parse(json['LastPuf']);
       lastPufTime = df.parse(json['LastPufTime']);

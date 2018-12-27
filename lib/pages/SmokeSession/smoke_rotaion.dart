@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 
 class SmokeRotation extends StatefulWidget {
   final Widget child;
+  final Widget innerChild;
 
-  const SmokeRotation({Key key, this.child}) : super(key: key);
+  const SmokeRotation({Key key, this.child, this.innerChild}) : super(key: key);
 
   @override
   _SmokeRotationState createState() => new _SmokeRotationState();
@@ -36,9 +37,9 @@ class _SmokeRotationState extends State<SmokeRotation>
 
     subscription = smokeSessionBloc.smokeStateBroadcast.listen((data) {
       if (data == 0) {
-        animationController.stop();
+        animationController.reset();
       } else {
-        animationController.repeat();
+        animationController.forward();
       }
     });
 

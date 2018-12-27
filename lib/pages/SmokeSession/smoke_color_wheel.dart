@@ -42,6 +42,7 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
         Padding(
           padding: EdgeInsets.all(10.0),
           child: GestureDetector(
+            onTapDown: (d) => print('tap'),
             onTapUp: (TapUpDetails details) {
               RenderBox getBox = context.findRenderObject();
               Offset localOffset = getBox.globalToLocal(details.globalPosition);
@@ -83,10 +84,9 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
   void colorUpdate(Offset localOffset, Size size) {
     var middle = ColorHelper.positionToCenter(
         localOffset, Offset(size.width / 2, size.width / 2));
-         var radius = ColorHelper.distance(middle) / (size.width/2);
-         print(radius);
-         if(radius > 1)
-          return;
+    var radius = ColorHelper.distance(middle) / (size.width / 2);
+    print(radius);
+    if (radius > 1) return;
     setState(() {
       position = localOffset;
       selectedColor = ColorHelper.position2color(middle, size.width / 2);

@@ -2,64 +2,96 @@ import 'dart:async';
 
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
 
-class PuffTimeText extends StatefulWidget {
+class PuffTimeText extends StatelessWidget {
   PuffTimeText({this.dependencies, this.completeTime});
-  final Dependencies dependencies;
+  final PufTimerDependencies dependencies;
   final String completeTime;
   @override
-  State<StatefulWidget> createState() {
-    return new PuffTimeState();
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Offstage(
+          offstage: !this.dependencies.showTimer,
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new RepaintBoundary(
+                child: new SizedBox(
+                  height: 30.0,
+                  child: new MinutesAndSeconds(dependencies: this.dependencies),
+                ),
+              ),
+              new RepaintBoundary(
+                child: new SizedBox(
+                  height: 30.0,
+                  child: new Hundreds(dependencies: this.dependencies),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Offstage(
+            offstage: this.dependencies.showTimer,
+            child: SizedBox(
+              height: 30.0,
+              child: Text(this.dependencies.alternativeText,
+                  style: this.dependencies.textStyle),
+            ))
+      ],
+    );
   }
 }
 
-class PuffTimeState extends State<PuffTimeText> {
-  Timer timer;
-  int milliseconds;
-  String alternativeText = '0.00';
-  bool showTimer = false;
-
-  Observable<int> stream;
-
+class PufTimerDependencies {
   StreamSubscription<int> subscription;
+  bool showTimer;
+  Timer timer;
+  String alternativeText;
+  int milliseconds;
 
-  void initState() {
-    timer = new Timer.periodic(
-        new Duration(
-            milliseconds: widget.dependencies.timerMillisecondsRefreshRate),
+  PufTimerDependencies(stopwatch, smokeSessionBloc) {
+    this.stopwatch = stopwatch;
+    this.timer = new Timer.periodic(
+        new Duration(milliseconds: this.timerMillisecondsRefreshRate),
         callback);
 
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    subscription =
-        widget.dependencies.smokeSessionBloc.smokeStateBroadcast.listen((data) {
+    subscription = smokeSessionBloc.smokeStateBroadcast.listen((data) {
       if (data != 0) {
-        widget.dependencies.stopwatch.reset();
-        widget.dependencies.stopwatch.start();
-        setState(() {
-          showTimer = true;
-        });
+        print('start timer');
+        this.stopwatch.reset();
+        this.stopwatch.start();
+
+        showTimer = true;
       }
       if (data == 0) {
-        widget.dependencies.stopwatch.stop();
-        setState(() {
-          showTimer = false;
-        });
+        this.stopwatch.stop();
+        print('end timer');
+        showTimer = false;
       }
     });
 
-    widget.dependencies.smokeSessionBloc.smokeStatistic
-        .listen((data) => alternativeText = data.lastPuf.toString());
-    super.didChangeDependencies();
+    smokeSessionBloc.smokeStatistic
+        .listen((data) => alternativeText = data.lastPuf.toStringAsFixed(2));
   }
 
+  dispose() {
+    this.timer.cancel();
+  }
+
+  final List<ValueChanged<ElapsedTime>> timerListeners =
+      <ValueChanged<ElapsedTime>>[];
+
+  final TextStyle textStyle =
+      const TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold);
+  Stopwatch stopwatch;
+  SmokeSessionBloc smokeSessionBloc;
+  final int timerMillisecondsRefreshRate = 30;
+
   void callback(Timer timer) {
-    if (milliseconds != widget.dependencies.stopwatch.elapsedMilliseconds) {
-      milliseconds = widget.dependencies.stopwatch.elapsedMilliseconds;
+    if (milliseconds != this.stopwatch.elapsedMilliseconds) {
+      milliseconds = this.stopwatch.elapsedMilliseconds;
       final int hundreds = (milliseconds / 10).truncate();
       final int seconds = (hundreds / 100).truncate();
       final int minutes = (seconds / 60).truncate();
@@ -68,66 +100,11 @@ class PuffTimeState extends State<PuffTimeText> {
         seconds: seconds,
         minutes: minutes,
       );
-      for (final listener in widget.dependencies.timerListeners) {
+      for (final listener in this.timerListeners) {
         listener(elapsedTime);
       }
     }
   }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    timer = null;
-
-    super.dispose();
-    subscription.cancel();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Offstage(
-          offstage: !this.showTimer,
-          child: new Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new RepaintBoundary(
-                child: new SizedBox(
-                  height: 30.0,
-                  child:
-                      new MinutesAndSeconds(dependencies: widget.dependencies),
-                ),
-              ),
-              new RepaintBoundary(
-                child: new SizedBox(
-                  height: 30.0,
-                  child: new Hundreds(dependencies: widget.dependencies),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Offstage(
-            offstage: this.showTimer,
-            child: Text(this.alternativeText,
-                style: widget.dependencies.textStyle))
-      ],
-    );
-  }
-}
-
-class Dependencies {
-  Dependencies({this.stopwatch});
-
-  final List<ValueChanged<ElapsedTime>> timerListeners =
-      <ValueChanged<ElapsedTime>>[];
-
-  final TextStyle textStyle =
-      const TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold);
-  final Stopwatch stopwatch;
-  SmokeSessionBloc smokeSessionBloc;
-  final int timerMillisecondsRefreshRate = 30;
 }
 
 class ElapsedTime {
@@ -144,14 +121,14 @@ class ElapsedTime {
 
 class Hundreds extends StatefulWidget {
   Hundreds({this.dependencies});
-  final Dependencies dependencies;
+  final PufTimerDependencies dependencies;
 
   HundredsState createState() => new HundredsState(dependencies: dependencies);
 }
 
 class HundredsState extends State<Hundreds> {
   HundredsState({this.dependencies});
-  final Dependencies dependencies;
+  final PufTimerDependencies dependencies;
 
   int hundreds = 0;
 
@@ -174,11 +151,17 @@ class HundredsState extends State<Hundreds> {
     String hundredsStr = (hundreds % 100).toString().padLeft(2, '0');
     return new Text(hundredsStr, style: dependencies.textStyle);
   }
+
+  @override
+  void dispose() {
+    dependencies.timerListeners.remove(onTick);
+    super.dispose();
+  }
 }
 
 class MinutesAndSeconds extends StatefulWidget {
   MinutesAndSeconds({this.dependencies});
-  final Dependencies dependencies;
+  final PufTimerDependencies dependencies;
 
   MinutesAndSecondsState createState() =>
       new MinutesAndSecondsState(dependencies: dependencies);
@@ -186,7 +169,7 @@ class MinutesAndSeconds extends StatefulWidget {
 
 class MinutesAndSecondsState extends State<MinutesAndSeconds> {
   MinutesAndSecondsState({this.dependencies});
-  final Dependencies dependencies;
+  final PufTimerDependencies dependencies;
 
   int seconds = 0;
 
@@ -208,5 +191,11 @@ class MinutesAndSecondsState extends State<MinutesAndSeconds> {
   Widget build(BuildContext context) {
     String secondsStr = (seconds).toString().padLeft(1, '0');
     return new Text('$secondsStr.', style: dependencies.textStyle);
+  }
+
+  @override
+  void dispose() {
+    dependencies.timerListeners.remove(onTick);
+    super.dispose();
   }
 }
