@@ -302,8 +302,23 @@ class ApiClient {
     return true;
   }
 
-  Future<Map<String, BrandGroup>> getBrands() async {
+  Future<Map<String, List<BrandGroup>>> getGearBrans() async {
     var url = Uri.https(baseUrl, '/api/Gear/Brands');
+    var response = await _dio.get(url.toString());
+    var result = Map<String, List<BrandGroup>>();
+    for (var key in response.data.keys) {
+      print(key);
+      var list = response.data[key] as List<dynamic>;
+      var brands = list.map((f) {
+        var brandMap = f as Map<String, dynamic>;
+        var brand = BrandGroup.fromJson(brandMap);
+        return brand;
+      }).toList();
+
+      result[key] = brands;
+    }
+
+    return result;
   }
 }
 

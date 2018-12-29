@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:flutter/material.dart';
 
 import 'sections.dart';
@@ -152,5 +153,23 @@ class SectionDetailView extends StatelessWidget {
       decoration: new BoxDecoration(color: Colors.black),
       child: item,
     );
+  }
+}
+
+class BrandGroupWidget extends StatelessWidget {
+  final BrandGroup brandGroup;
+
+  const BrandGroupWidget({Key key, this.brandGroup}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return new DecoratedBox(
+        decoration: new BoxDecoration(color: Colors.black),
+        child: new ListTile(
+          title: new Text(brandGroup.name),
+          subtitle: new Text(brandGroup.itemCount.toString()),
+          leading:
+              new SizedBox(width: 32.0, height: 32.0, child: Placeholder()),
+        ));
   }
 }

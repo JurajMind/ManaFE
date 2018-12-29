@@ -5,11 +5,9 @@ import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mixology_list.dart';
 import 'package:app/module/person/person_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
+import 'package:app/pages/Gear/gear.page.dart';
 import 'package:app/pages/Places/places.page.dart';
-import 'package:app/pages/SmokeSession/gradiend_color_wheel.dart';
 import 'package:app/pages/SmokeSession/gradiend_color_wheel_rotate.dart';
-import 'package:app/pages/gear.page.dart';
-
 import 'package:app/pages/profile.page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';
 import 'package:app/support/mana_icons_icons.dart';

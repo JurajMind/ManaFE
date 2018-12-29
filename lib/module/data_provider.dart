@@ -1,3 +1,4 @@
+import 'package:app/module/general/gear_bloc.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/person/person_bloc.dart';
 import 'package:app/module/places/places_bloc.dart';
@@ -9,6 +10,7 @@ class DataProvider extends InheritedWidget {
   final SmokeSessionBloc smokeSessionBloc;
   final PlacesBloc placeBloc;
   final PersonBloc personBloc;
+  final GearBloc gearBloc;
 
   DataProvider({
     Key key,
@@ -17,6 +19,7 @@ class DataProvider extends InheritedWidget {
         smokeSessionBloc = new SmokeSessionBloc(),
         placeBloc = new PlacesBloc(),
         personBloc = new PersonBloc(),
+        gearBloc = new GearBloc(),
         super(key: key, child: child);
 
   @override

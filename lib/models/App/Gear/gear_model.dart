@@ -11,7 +11,7 @@ class BrandGroup {
         id: json['Id'],
         name: json['Name'],
         picture: json['Picture'],
-        itemCount: json['TypItemCounte']);
+        itemCount: json['ItemCount']);
   }
 
   String id;

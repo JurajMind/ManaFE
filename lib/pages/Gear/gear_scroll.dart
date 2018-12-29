@@ -7,6 +7,8 @@
 
 import 'dart:math' as math;
 
+import 'package:app/module/data_provider.dart';
+import 'package:app/module/general/gear_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -527,15 +529,8 @@ class _AnimationDemoHomeState extends State<AnimationDemoHome> {
     return false;
   }
 
-  Iterable<Widget> _detailItemsFor(Section section) {
-    final Iterable<Widget> detailItems =
-        section.details.map((SectionDetail detail) {
-      return new SectionDetailView(detail: detail);
-    });
-    return ListTile.divideTiles(context: context, tiles: detailItems);
-  }
-
-  Iterable<Widget> _allHeadingItems(double maxHeight, double midScrollOffset) {
+  Iterable<Widget> _allHeadingItems(
+      double maxHeight, double midScrollOffset, List<Section> allSections) {
     final List<Widget> sectionCards = <Widget>[];
     for (int index = 0; index < allSections.length; index++) {
       sectionCards.add(new LayoutId(
@@ -577,7 +572,9 @@ class _AnimationDemoHomeState extends State<AnimationDemoHome> {
     final double statusBarHeight = mediaQueryData.padding.top;
     final double screenHeight = mediaQueryData.size.height;
     final double appBarMaxHeight = screenHeight - statusBarHeight - 50;
-
+    DataProvider dataProvider = DataProvider.getData(context);
+    GearBloc gearBloc = dataProvider.gearBloc;
+    List<Section> allSections = getAllSections(gearBloc);
     // The scroll offset that reveals the appBarMidHeight appbar.
     final double appBarMidScrollOffset =
         statusBarHeight + appBarMaxHeight - _kAppBarMidHeight;
@@ -614,8 +611,8 @@ class _AnimationDemoHomeState extends State<AnimationDemoHome> {
                       child: new PageView(
                         physics: _headingScrollPhysics,
                         controller: _headingPageController,
-                        children: _allHeadingItems(
-                            appBarMaxHeight, appBarMidScrollOffset),
+                        children: _allHeadingItems(appBarMaxHeight,
+                            appBarMidScrollOffset, allSections),
                       ),
                     ),
                   ),
@@ -632,9 +629,11 @@ class _AnimationDemoHomeState extends State<AnimationDemoHome> {
                       child: new PageView(
                         controller: _detailsPageController,
                         children: allSections.map((Section section) {
-                          return new ListView(
-                            children: _detailItemsFor(section).toList(),
-                          );
+                          return section.children == null
+                              ? new SingleChildScrollView(child: section.child)
+                              : new ListView(
+                                  children: section.children,
+                                );
                         }).toList(),
                       ),
                     ),
