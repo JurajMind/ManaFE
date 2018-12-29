@@ -1,5 +1,6 @@
 import 'package:app/models/PipeAccesory/pipe_accesory.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
+import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/metadata_item.dart';
 import 'package:flutter/material.dart';
@@ -7,13 +8,15 @@ import 'package:flutter/material.dart';
 class MetadataBottomSheet extends StatelessWidget {
   const MetadataBottomSheet({
     Key key,
-    @required this.smokeSessionBloc,
+    @required this.dataProvider,
   }) : super(key: key);
 
-  final SmokeSessionBloc smokeSessionBloc;
+  final DataProvider dataProvider;
 
   @override
   Widget build(BuildContext context) {
+    var smokeSessionBloc = dataProvider.smokeSessionBloc;
+    var personBloc = dataProvider.personBloc;
     return Container(
       height: 800.0,
       child: Padding(
@@ -25,8 +28,8 @@ class MetadataBottomSheet extends StatelessWidget {
                 "Pipe",
                 'Hookah',
                 Icons.refresh,
-                smokeSessionBloc.myGear.value != null
-                    ? smokeSessionBloc.myGear.value
+                personBloc.myGear.value != null
+                    ? personBloc.myGear.value
                         .where((a) => a.type == 'Hookah')
                         .toList()
                     : new List<PipeAccesory>(),
@@ -36,8 +39,8 @@ class MetadataBottomSheet extends StatelessWidget {
                 "Bowl",
                 'Bowl',
                 Icons.refresh,
-                smokeSessionBloc.myGear.value != null
-                    ? smokeSessionBloc.myGear.value
+                personBloc.myGear.value != null
+                    ? personBloc.myGear.value
                         .where((a) => a.type == 'Bowl')
                         .toList()
                     : new List<PipeAccesory>(),
@@ -47,8 +50,8 @@ class MetadataBottomSheet extends StatelessWidget {
                 "Heat managment",
                 'heatmanagement',
                 Icons.refresh,
-                smokeSessionBloc.myGear.value != null
-                    ? smokeSessionBloc.myGear.value
+                personBloc.myGear.value != null
+                    ? personBloc.myGear.value
                         .where((a) => a.type == 'HeatManagement')
                         .toList()
                     : new List<PipeAccesory>(),
@@ -58,8 +61,8 @@ class MetadataBottomSheet extends StatelessWidget {
                 "Coals",
                 'coal',
                 Icons.account_box,
-                smokeSessionBloc.myGear.value != null
-                    ? smokeSessionBloc.myGear.value
+                personBloc.myGear.value != null
+                    ? personBloc.myGear.value
                         .where((a) => a.type == 'Coal')
                         .toList()
                     : new List<PipeAccesory>(),

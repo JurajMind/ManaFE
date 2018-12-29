@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app/components/icon_button_title.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mixology_list.dart';
+import 'package:app/module/person/person_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Places/places.page.dart';
 import 'package:app/pages/SmokeSession/gradiend_color_wheel.dart';
@@ -39,6 +40,7 @@ class _HomePageState extends State<HomePage> {
   List<FocusScopeNode> tabFocusNodes;
 
   SmokeSessionBloc smokeSessionBloc;
+  PersonBloc personBloc;
 
   @override
   void initState() {
@@ -54,8 +56,9 @@ class _HomePageState extends State<HomePage> {
   void didChangeDependencies() async {
     super.didChangeDependencies();
     smokeSessionBloc = DataProvider.getSmokeSession(context);
+    personBloc = DataProvider.getData(context).personBloc;
     _focusActiveTab();
-    smokeSessionBloc.loadMyGear(false);
+    personBloc.loadMyGear(false);
   }
 
   @override

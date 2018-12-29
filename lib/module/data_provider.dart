@@ -1,4 +1,5 @@
 import 'package:app/module/mixology/mixology_bloc.dart';
+import 'package:app/module/person/person_bloc.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,17 +8,15 @@ class DataProvider extends InheritedWidget {
   final MixologyBloc mixologyBloc;
   final SmokeSessionBloc smokeSessionBloc;
   final PlacesBloc placeBloc;
+  final PersonBloc personBloc;
 
   DataProvider({
     Key key,
-    @required MixologyBloc mixology,
-    @required SmokeSessionBloc smokeSession,
-    @required PlacesBloc place,
     Widget child,
-  })  : assert(mixology != null),
-        mixologyBloc = mixology,
-        smokeSessionBloc = smokeSession,
-        placeBloc = place,
+  })  : mixologyBloc = new MixologyBloc(),
+        smokeSessionBloc = new SmokeSessionBloc(),
+        placeBloc = new PlacesBloc(),
+        personBloc = new PersonBloc(),
         super(key: key, child: child);
 
   @override
@@ -34,6 +33,9 @@ class DataProvider extends InheritedWidget {
   static PlacesBloc getPlaces(BuildContext context) =>
       (context.inheritFromWidgetOfExactType(DataProvider) as DataProvider)
           .placeBloc;
+
+  static DataProvider getData(BuildContext context) =>
+      context.inheritFromWidgetOfExactType(DataProvider);
 }
 
 class AppBloc {}

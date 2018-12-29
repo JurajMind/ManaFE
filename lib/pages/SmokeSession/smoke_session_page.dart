@@ -32,7 +32,7 @@ class StopWatches {
 }
 
 class _SmokeSessionPage extends State<SmokeSessionPage> {
-  SmokeSessionBloc smokeSessionBloc;
+  DataProvider dataProvider;
   StopWatches stopWatches;
   PufTimerDependencies dependencies;
   int action = 0;
@@ -51,11 +51,11 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
 
   @override
   void didChangeDependencies() {
-    smokeSessionBloc = DataProvider.getSmokeSession(context);
+    dataProvider = DataProvider.getData(context);
     dependencies = new PufTimerDependencies(
-        stopWatches.pufStopwatch, this.smokeSessionBloc);
-    smokeSessionBloc.joinSession(widget.sessionId);
-    dependencies.smokeSessionBloc = smokeSessionBloc;
+        stopWatches.pufStopwatch, this.dataProvider.smokeSessionBloc);
+    dataProvider.smokeSessionBloc.joinSession(widget.sessionId);
+    dependencies.smokeSessionBloc = dataProvider.smokeSessionBloc;
     super.didChangeDependencies();
   }
 
@@ -69,7 +69,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     StreamBuilder<int> builder = new StreamBuilder(
-      stream: smokeSessionBloc.smokeState,
+      stream: dataProvider.smokeSessionBloc.smokeState,
       builder: (context, asyncSnapshot) {
         return asyncSnapshot.data != 0
             ? new CircularProgressIndicator()
@@ -79,7 +79,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
 
     StreamBuilder<SmokeSessionMetaData> tobaccoMetaDataBuilder =
         new StreamBuilder(
-      stream: smokeSessionBloc.smokeSessionMetaData,
+      stream: dataProvider.smokeSessionBloc.smokeSessionMetaData,
       builder: (context, asyncSnapshot) {
         if (asyncSnapshot.data == null) {
           return CircularProgressIndicator();
@@ -88,7 +88,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
           children: <Widget>[
             TobaccoWidget(
               tobacco: asyncSnapshot.data.tobacco,
-              smokeSessionBloc: smokeSessionBloc,
+              smokeSessionBloc: dataProvider.smokeSessionBloc,
             )
           ],
         );
@@ -97,7 +97,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
 
     StreamBuilder<SmokeSessionMetaDataSelection> metadataBuilder =
         new StreamBuilder(
-      stream: smokeSessionBloc.smokeSessionDataSelection,
+      stream: dataProvider.smokeSessionBloc.smokeSessionDataSelection,
       builder: (context, asyncSnapshot) {
         if (asyncSnapshot.data == null) {
           return CircularProgressIndicator();
@@ -107,20 +107,20 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
             PipeAccesoryWidget(
               accesory: asyncSnapshot.data.pipe,
               type: 'Pipe',
-              smokeSessionBloc: smokeSessionBloc,
+              dataProvider: dataProvider,
             ),
             PipeAccesoryWidget(
                 accesory: asyncSnapshot.data.bowl,
                 type: 'Bowl',
-                smokeSessionBloc: smokeSessionBloc),
+                dataProvider: dataProvider),
             PipeAccesoryWidget(
                 accesory: asyncSnapshot.data.heatManager,
                 type: 'H.M.S',
-                smokeSessionBloc: smokeSessionBloc),
+                dataProvider: dataProvider),
             PipeAccesoryWidget(
                 accesory: asyncSnapshot.data.coal,
                 type: 'Coals',
-                smokeSessionBloc: smokeSessionBloc),
+                dataProvider: dataProvider),
             emptyPipeAccesoryWidget(asyncSnapshot.data)
           ],
         );
@@ -128,7 +128,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
     );
 
     StreamBuilder<SmokeStatisticDataModel> statisticBuilder = new StreamBuilder(
-      stream: smokeSessionBloc.smokeStatistic,
+      stream: dataProvider.smokeSessionBloc.smokeStatistic,
       builder: (context, asyncSnapshot) {
         if (asyncSnapshot.data == null) {
           return CircularProgressIndicator();
@@ -197,10 +197,11 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                           height: size.width,
                           child: SmokeColorWheel(
                             onColorChanged: (color) {
-                              smokeSessionBloc.setColor(color.toColor());
+                              dataProvider.smokeSessionBloc
+                                  .setColor(color.toColor());
                             },
-                            color:
-                                smokeSessionBloc.standSettings.value.idle.color,
+                            color: dataProvider.smokeSessionBloc.standSettings
+                                .value.idle.color,
                           )),
                     ),
                     SizedBox(
@@ -268,9 +269,10 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         context: context,
         builder: (BuildContext context) {
           return new MetadataBottomSheet(
-              smokeSessionBloc: this.smokeSessionBloc);
+            dataProvider: this.dataProvider,
+          );
         }).then((value) {
-      this.smokeSessionBloc.saveMetaData();
+      this.dataProvider.smokeSessionBloc.saveMetaData();
     });
   }
 }

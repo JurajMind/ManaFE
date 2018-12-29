@@ -20,8 +20,6 @@ import 'package:vibrate/vibrate.dart';
 class SmokeSessionBloc {
   String hookahCode;
 
-  bool _loadedGear = false;
-
   bool metaDataChanged = false;
 
   Sink get test => _indexController.sink;
@@ -66,10 +64,6 @@ class SmokeSessionBloc {
 
   BehaviorSubject<List<Color>> sessionColor =
       new BehaviorSubject<List<Color>>();
-
-  BehaviorSubject<List<PipeAccesory>> myGear =
-      new BehaviorSubject<List<PipeAccesory>>(
-          seedValue: new List<PipeAccesory>());
 
   PublishSubject<Tuple2<StandSettings, SmokeState>> futureSettings =
       new PublishSubject<Tuple2<StandSettings, SmokeState>>();
@@ -163,14 +157,6 @@ class SmokeSessionBloc {
             sessionData.item1.metaData));
     hookahCode = sessionData.item1.hookah.code;
     animations.add(await App.http.getAnimations(sessionData.item1.hookah.code));
-  }
-
-  loadMyGear(bool reload) async {
-    if (_loadedGear && !reload) return;
-
-    var gear = await App.http.getMyGear();
-    _loadedGear = true;
-    myGear.add(gear);
   }
 
   loadAnimation() async {

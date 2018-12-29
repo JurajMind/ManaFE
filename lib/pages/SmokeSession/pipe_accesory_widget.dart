@@ -1,4 +1,5 @@
 import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
+import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,9 +8,9 @@ import 'package:flutter/material.dart';
 class PipeAccesoryWidget extends StatelessWidget {
   final PipeAccesorySimple accesory;
   final String type;
-  final SmokeSessionBloc smokeSessionBloc;
+  final DataProvider dataProvider;
   const PipeAccesoryWidget(
-      {Key key, this.accesory, this.type, this.smokeSessionBloc})
+      {Key key, this.accesory, this.type, this.dataProvider})
       : super(key: key);
 
   @override
@@ -41,9 +42,9 @@ class PipeAccesoryWidget extends StatelessWidget {
                     context: context,
                     builder: (BuildContext context) {
                       return new MetadataBottomSheet(
-                          smokeSessionBloc: this.smokeSessionBloc);
+                          dataProvider: this.dataProvider);
                     }).then((value) {
-                  this.smokeSessionBloc.saveMetaData();
+                  this.dataProvider.smokeSessionBloc.saveMetaData();
                 });
               })
         ],

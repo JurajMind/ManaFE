@@ -32,9 +32,6 @@ class _AppWidgetState extends State<AppWidget> {
   Key key = new UniqueKey();
   bool _isAuthorized = false;
   bool splash = true;
-  final mixology = MixologyBloc();
-  final smokeSession = SmokeSessionBloc();
-  final place = PlacesBloc();
   AppTranslationsDelegate _newLocaleDelegate;
   String _debugLabelString = "";
   String _emailAddress;
@@ -69,24 +66,21 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   Widget build(BuildContext context) {
     return new DataProvider(
-        mixology: mixology,
-        smokeSession: smokeSession,
-        place: place,
         child: MaterialApp(
-          localizationsDelegates: [
-            _newLocaleDelegate,
-            //provides localised strings
-            GlobalMaterialLocalizations.delegate,
-            //provides RTL support
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          supportedLocales: App.supportedLocales(),
-          navigatorKey: navigatorKey,
-          title: 'Manapipes',
-          home: getMainPage(),
-          onGenerateRoute: App.router.generator,
-          theme: buildDarkTheme(),
-        ));
+      localizationsDelegates: [
+        _newLocaleDelegate,
+        //provides localised strings
+        GlobalMaterialLocalizations.delegate,
+        //provides RTL support
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: App.supportedLocales(),
+      navigatorKey: navigatorKey,
+      title: 'Manapipes',
+      home: getMainPage(),
+      onGenerateRoute: App.router.generator,
+      theme: buildDarkTheme(),
+    ));
   }
 
   Widget getMainPage() {

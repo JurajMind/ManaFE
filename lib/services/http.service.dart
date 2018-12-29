@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
@@ -299,6 +300,10 @@ class ApiClient {
         data: null, options: Options(contentType: ContentType.JSON));
 
     return true;
+  }
+
+  Future<Map<String, BrandGroup>> getBrands() async {
+    var url = Uri.https(baseUrl, '/api/Gear/Brands');
   }
 }
 
