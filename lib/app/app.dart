@@ -6,6 +6,7 @@ import 'package:app/routes/auth.routes.dart';
 import 'package:app/services/http.service.dart';
 import 'package:fluro/fluro.dart';
 import 'package:map_view/map_view.dart';
+import 'package:flutter/services.dart';
 
 class App {
   // Application environment.

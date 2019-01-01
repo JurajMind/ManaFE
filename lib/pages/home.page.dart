@@ -13,6 +13,7 @@ import 'package:app/pages/startSmokeSession.page.dart';
 import 'package:app/support/mana_icons_icons.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -48,6 +49,11 @@ class _HomePageState extends State<HomePage> {
       5,
       (int index) => new FocusScopeNode(),
     );
+
+    SystemChannels.lifecycle.setMessageHandler((msg) {
+      debugPrint('SystemChannels> $msg');
+      if (msg == AppLifecycleState.resumed.toString()) {}
+    });
   }
 
   @override

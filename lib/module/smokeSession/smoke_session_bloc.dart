@@ -142,6 +142,16 @@ class SmokeSessionBloc {
       this.activeSessionId = sessionCode;
     }
 
+    await _joinSession(sessionCode);
+  }
+
+  Future rejoinSession() async {
+    if (this.activeSessionId != null) {
+      await _joinSession(this.activeSessionId);
+    }
+  }
+
+  Future _joinSession(String sessionCode) async {
     List<String> params = new List<String>();
     params.add(sessionCode);
     this.signalR.callServerFunction(name: 'JoinSession', params: params);
