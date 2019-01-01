@@ -20,6 +20,6 @@ class _GearPageState extends State<GearPage> {
   Widget build(BuildContext context) {
     final gearBloc = DataProvider.getData(context).gearBloc;
     gearBloc.loadGearBrans();
-    return new AnimationDemoHome();
+    return new GearScrollHome();
   }
 }

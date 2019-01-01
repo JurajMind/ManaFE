@@ -27,6 +27,7 @@ const Curve _kScrollCurve = Curves.fastOutSlowIn;
 // heading. The appbar's height can be reduced to no more than _kAppBarMinHeight.
 const double _kAppBarMinHeight = 90.0;
 const double _kAppBarMidHeight = 256.0;
+const double _kAppBarMaxHeight = 610.0;
 // The AppBar's max height depends on the screen, see _AnimationDemoHomeState._buildBody()
 
 // Initially occupies the same space as the status bar and gets smaller as
@@ -444,16 +445,16 @@ class _SnappingScrollPhysics extends ClampingScrollPhysics {
   }
 }
 
-class AnimationDemoHome extends StatefulWidget {
-  const AnimationDemoHome({Key key}) : super(key: key);
+class GearScrollHome extends StatefulWidget {
+  const GearScrollHome({Key key}) : super(key: key);
 
   static const String routeName = '/animation';
 
   @override
-  _AnimationDemoHomeState createState() => new _AnimationDemoHomeState();
+  _GearScrollHomeState createState() => new _GearScrollHomeState();
 }
 
-class _AnimationDemoHomeState extends State<AnimationDemoHome> {
+class _GearScrollHomeState extends State<GearScrollHome> {
   final ScrollController _scrollController = new ScrollController();
   final Map<String, ScrollController> pageScroll =
       new Map<String, ScrollController>();
@@ -461,6 +462,7 @@ class _AnimationDemoHomeState extends State<AnimationDemoHome> {
   final PageController _detailsPageController = new PageController();
   ScrollPhysics _headingScrollPhysics = const NeverScrollableScrollPhysics();
   ValueNotifier<double> selectedIndex = new ValueNotifier<double>(0.0);
+  ScrollPhysics innerScrollPhysics = NeverScrollableScrollPhysics();
 
   @override
   Widget build(BuildContext context) {
@@ -486,6 +488,11 @@ class _AnimationDemoHomeState extends State<AnimationDemoHome> {
   bool _handleScrollNotification(
       ScrollNotification notification, double midScrollOffset) {
     if (notification.depth == 0 && notification is ScrollUpdateNotification) {
+      if (_scrollController.position.pixels >= _kAppBarMaxHeight) {
+        setState(() {
+          innerScrollPhysics = ClampingScrollPhysics();
+        });
+      }
       final ScrollPhysics physics =
           _scrollController.position.pixels >= midScrollOffset
               ? const PageScrollPhysics()
@@ -518,6 +525,17 @@ class _AnimationDemoHomeState extends State<AnimationDemoHome> {
     }
   }
 
+  bool _handleInnerNotification(notification, ScrollController controller) {
+    if (notification.depth == 0 && notification is ScrollUpdateNotification) {
+      if (controller.position.pixels <= 0.1) {
+        setState(() {
+          innerScrollPhysics = NeverScrollableScrollPhysics();
+        });
+      }
+    }
+    return false;
+  }
+
   bool _handlePageNotification(ScrollNotification notification,
       PageController leader, PageController follower) {
     if (notification.depth == 0 && notification is ScrollUpdateNotification) {
@@ -526,6 +544,7 @@ class _AnimationDemoHomeState extends State<AnimationDemoHome> {
         follower.position.jumpToWithoutSettling(
             leader.position.pixels); // ignore: deprecated_member_use
     }
+    if (notification.depth == 1 && notification is ScrollStartNotification) {}
     return false;
   }
 
@@ -574,7 +593,11 @@ class _AnimationDemoHomeState extends State<AnimationDemoHome> {
     final double appBarMaxHeight = screenHeight - statusBarHeight - 50;
     DataProvider dataProvider = DataProvider.getData(context);
     GearBloc gearBloc = dataProvider.gearBloc;
-    List<Section> allSections = getAllSections(gearBloc);
+    Map<int, ScrollController> innerScrollControllers =
+        new Map<int, ScrollController>();
+    innerScrollControllers[1] = ScrollController();
+    List<Section> allSections =
+        getAllSections(gearBloc, innerScrollPhysics, innerScrollControllers);
     // The scroll offset that reveals the appBarMidHeight appbar.
     final double appBarMidScrollOffset =
         statusBarHeight + appBarMaxHeight - _kAppBarMidHeight;
@@ -620,7 +643,7 @@ class _AnimationDemoHomeState extends State<AnimationDemoHome> {
                 // Details
                 new SliverToBoxAdapter(
                   child: new SizedBox(
-                    height: 610.0,
+                    height: _kAppBarMaxHeight,
                     child: new NotificationListener<ScrollNotification>(
                       onNotification: (ScrollNotification notification) {
                         return _handlePageNotification(notification,
@@ -629,11 +652,15 @@ class _AnimationDemoHomeState extends State<AnimationDemoHome> {
                       child: new PageView(
                         controller: _detailsPageController,
                         children: allSections.map((Section section) {
-                          return section.children == null
-                              ? new SingleChildScrollView(child: section.child)
-                              : new ListView(
-                                  children: section.children,
-                                );
+                          return NotificationListener<ScrollNotification>(
+                              onNotification:
+                                  (ScrollNotification notification) {
+                                _handleInnerNotification(
+                                    notification,
+                                    innerScrollControllers[
+                                        _detailsPageController.page]);
+                              },
+                              child: section.child);
                         }).toList(),
                       ),
                     ),

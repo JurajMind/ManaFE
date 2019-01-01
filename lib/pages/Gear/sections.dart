@@ -37,7 +37,8 @@ class Section {
       this.leftColor,
       this.rightColor,
       this.child,
-      this.children});
+      this.children,
+      this.scrollController});
   final String title;
   final String backgroundAsset;
   final String backgroundAssetPackage;
@@ -45,6 +46,7 @@ class Section {
   final Color rightColor;
   final Widget child;
   final List<Widget> children;
+  final ScrollController scrollController;
 
   @override
   bool operator ==(Object other) {
@@ -57,7 +59,8 @@ class Section {
   int get hashCode => title.hashCode;
 }
 
-List<Section> getAllSections(GearBloc bloc) {
+List<Section> getAllSections(GearBloc bloc, ScrollPhysics physics,
+    Map<int, ScrollController> controllers) {
   return <Section>[
     const Section(
         title: 'MY GEAR',
@@ -72,11 +75,14 @@ List<Section> getAllSections(GearBloc bloc) {
         rightColor: _mediumPurple,
         backgroundAsset: 'images/gear/tobacco.jpg',
         backgroundAssetPackage: _kGalleryAssetsPackage,
-        children: bloc.tobacco.value.map<Widget>((t) {
-          return BrandGroupWidget(
-            brandGroup: t,
-          );
-        }).toList()),
+        child: ListView(
+            physics: physics,
+            controller: controllers[1],
+            children: List.generate(100, (int index) {
+              return new ListTile(
+                title: new Text(index.toString()),
+              );
+            }))),
     const Section(
       title: 'HOOKAH',
       leftColor: _mySin,
