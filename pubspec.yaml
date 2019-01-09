@@ -1,7 +1,7 @@
 name: app
 description: A new Flutter project.
 
-dependencies:
+dependencies: 
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -28,6 +28,8 @@ dependencies:
   cached_network_image: '^0.4.1'
   date_utils: ^0.1.0
   flutter_launcher_icons: ^0.6.1
+  openapi:
+    path: ./openapi
   # onesignal: ^1.0.3
 
 flutter_icons:

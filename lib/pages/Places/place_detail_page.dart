@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:app/app/app.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/models/Places/place.dart';
+import 'package:app/pages/Places/menu.page.dart';
 import 'package:app/pages/Places/reservation_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -298,10 +299,14 @@ class _PlaceDetailState extends State<PlaceDetailPage>
                                     ),
                                     FlatButton(
                                       child: Text(
-                                        'SEE MENU',
+                                        'MENU',
                                         style: TextStyle(color: Colors.black),
                                       ),
-                                      onPressed: () => print('GO WITH UBER'),
+                                      onPressed: () {
+                                         Navigator.of(context).push(MaterialPageRoute(
+            settings: RouteSettings(),
+            builder: (context) => MenuPage(place: widget.place)));
+                                      },
                                     ),
                                   ],
                                 ),

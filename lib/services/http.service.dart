@@ -16,6 +16,7 @@ import 'package:app/services/authorization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:dio/dio.dart';
 import 'package:tuple/tuple.dart';
+import 'package:openapi/api.dart';
 
 class ApiClient {
   final _http = HttpClient();
@@ -319,6 +320,11 @@ class ApiClient {
     }
 
     return result;
+  }
+
+  Future<PlaceMenuDto> getPlaceMenu(int id) async{
+     var url = Uri.https(baseUrl, '/api/Places/${id}/Menu');
+     return await _dio.get(url.toString()).then((data) => PlaceMenuDto.fromJson(data.data));
   }
 }
 

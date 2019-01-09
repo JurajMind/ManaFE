@@ -3,7 +3,6 @@ import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/animation_list.dart';
 import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
 import 'package:app/pages/SmokeSession/pipe_accesory_widget.dart';
