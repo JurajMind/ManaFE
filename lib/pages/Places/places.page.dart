@@ -6,7 +6,7 @@ import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:map_view/map_view.dart';
-import 'package:rxdart/src/subjects/behavior_subject.dart';
+import 'package:rxdart/rxdart.dart';
 
 class PlacePage extends StatefulWidget {
   @override

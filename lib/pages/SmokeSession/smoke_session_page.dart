@@ -181,6 +181,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                 size.width + 40,
                 size.height * 0.75 + 40
               ]),
+              controller: scrollController,
               shrinkWrap: false,
               slivers: <Widget>[
                 new SliverList(

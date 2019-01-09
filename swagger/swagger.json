@@ -5,15 +5,11 @@
     "title": "smartHookah"
   },
   "host": "localhost:44324",
-  "schemes": [
-    "https"
-  ],
+  "schemes": ["https"],
   "paths": {
     "/api/Account/Register": {
       "post": {
-        "tags": [
-          "Account"
-        ],
+        "tags": ["Account"],
         "operationId": "Account_Register",
         "consumes": [
           "application/json",
@@ -50,9 +46,7 @@
     },
     "/api/Account/ForgotPassword": {
       "post": {
-        "tags": [
-          "Account"
-        ],
+        "tags": ["Account"],
         "operationId": "Account_ForgotPassword",
         "consumes": [
           "application/json",
@@ -89,9 +83,7 @@
     },
     "/api/Anim/{id}": {
       "post": {
-        "tags": [
-          "Anim"
-        ],
+        "tags": ["Anim"],
         "operationId": "Anim_DefaultAction",
         "consumes": [],
         "produces": [
@@ -120,15 +112,10 @@
     },
     "/api/Animations/GetAnimations": {
       "get": {
-        "tags": [
-          "Animation"
-        ],
+        "tags": ["Animation"],
         "operationId": "Animation_GetAnimations",
         "consumes": [],
-        "produces": [
-          "application/json",
-          "text/json"
-        ],
+        "produces": ["application/json", "text/json"],
         "parameters": [
           {
             "name": "id",
@@ -149,9 +136,7 @@
     },
     "/api/Device/{id}/ChangeAnimation": {
       "post": {
-        "tags": [
-          "Device"
-        ],
+        "tags": ["Device"],
         "operationId": "Device_ChangeAnimation",
         "consumes": [
           "application/json",
@@ -194,9 +179,7 @@
     },
     "/api/Device/{id}/ChangeBrightness": {
       "post": {
-        "tags": [
-          "Device"
-        ],
+        "tags": ["Device"],
         "operationId": "Device_ChangeBrightness",
         "consumes": [
           "application/json",
@@ -239,9 +222,7 @@
     },
     "/api/Device/{id}/ChangeColor": {
       "post": {
-        "tags": [
-          "Device"
-        ],
+        "tags": ["Device"],
         "operationId": "Device_ChangeColor",
         "consumes": [
           "application/json",
@@ -284,9 +265,7 @@
     },
     "/api/Device/{id}/ChangeSpeed": {
       "post": {
-        "tags": [
-          "Device"
-        ],
+        "tags": ["Device"],
         "operationId": "Device_ChangeSpeed",
         "consumes": [
           "application/json",
@@ -329,9 +308,7 @@
     },
     "/api/Device/{id}/Sleep": {
       "post": {
-        "tags": [
-          "Device"
-        ],
+        "tags": ["Device"],
         "operationId": "Device_Sleep",
         "consumes": [],
         "produces": [
@@ -360,9 +337,7 @@
     },
     "/api/Device/{id}/Restart": {
       "post": {
-        "tags": [
-          "Device"
-        ],
+        "tags": ["Device"],
         "operationId": "Device_Restart",
         "consumes": [],
         "produces": [
@@ -391,9 +366,7 @@
     },
     "/api/Device/{id}/ChangeMode": {
       "post": {
-        "tags": [
-          "Device"
-        ],
+        "tags": ["Device"],
         "operationId": "Device_ChangeMode",
         "consumes": [
           "application/json",
@@ -437,9 +410,7 @@
     },
     "/api/Device/{id}/ShowQrCode": {
       "post": {
-        "tags": [
-          "Device"
-        ],
+        "tags": ["Device"],
         "operationId": "Device_ShowQrCode",
         "consumes": [],
         "produces": [
@@ -468,9 +439,7 @@
     },
     "/api/Device/{id}/GetSetting": {
       "get": {
-        "tags": [
-          "Device"
-        ],
+        "tags": ["Device"],
         "operationId": "Device_GetSetting",
         "consumes": [],
         "produces": [
@@ -499,9 +468,7 @@
     },
     "/api/Device/Preset/{id}/GetPreset": {
       "get": {
-        "tags": [
-          "DevicePreset"
-        ],
+        "tags": ["DevicePreset"],
         "operationId": "DevicePreset_GetPreset",
         "consumes": [],
         "produces": [
@@ -531,9 +498,7 @@
     },
     "/api/Device/Preset/GetUserPresets": {
       "get": {
-        "tags": [
-          "DevicePreset"
-        ],
+        "tags": ["DevicePreset"],
         "operationId": "DevicePreset_GetUserPresets",
         "consumes": [],
         "produces": [
@@ -557,9 +522,7 @@
     },
     "/api/Device/Preset/{sessionCode}/SavePresetFromSession": {
       "post": {
-        "tags": [
-          "DevicePreset"
-        ],
+        "tags": ["DevicePreset"],
         "operationId": "DevicePreset_SaveSessionPreset",
         "consumes": [],
         "produces": [
@@ -606,9 +569,7 @@
     },
     "/api/Device/Preset/SavePresetFromDevice/{deviceId}": {
       "post": {
-        "tags": [
-          "DevicePreset"
-        ],
+        "tags": ["DevicePreset"],
         "operationId": "DevicePreset_SaveDevicePreset",
         "consumes": [],
         "produces": [
@@ -655,9 +616,7 @@
     },
     "/api/Device/Preset/{presetId}/SetDefault": {
       "post": {
-        "tags": [
-          "DevicePreset"
-        ],
+        "tags": ["DevicePreset"],
         "operationId": "DevicePreset_SetDefault",
         "consumes": [],
         "produces": [],
@@ -679,9 +638,7 @@
     },
     "/api/Device/Preset/UseDefault/{sessionId}": {
       "post": {
-        "tags": [
-          "DevicePreset"
-        ],
+        "tags": ["DevicePreset"],
         "operationId": "DevicePreset_UseDefault",
         "consumes": [],
         "produces": [],
@@ -702,9 +659,7 @@
     },
     "/api/Device/Preset/{presetId}/Use/{sessionId}": {
       "post": {
-        "tags": [
-          "DevicePreset"
-        ],
+        "tags": ["DevicePreset"],
         "operationId": "DevicePreset_UsePreset",
         "consumes": [],
         "produces": [],
@@ -732,9 +687,7 @@
     },
     "/api/Device/Preset/{id}/Delete": {
       "delete": {
-        "tags": [
-          "DevicePreset"
-        ],
+        "tags": ["DevicePreset"],
         "operationId": "DevicePreset_DeletePreset",
         "consumes": [],
         "produces": [
@@ -764,9 +717,7 @@
     },
     "/api/EndSession/{id}": {
       "post": {
-        "tags": [
-          "EndSession"
-        ],
+        "tags": ["EndSession"],
         "operationId": "EndSession_DefaultAction",
         "consumes": [],
         "produces": [
@@ -795,9 +746,7 @@
     },
     "/api/Gear/{id}/Vote": {
       "post": {
-        "tags": [
-          "Gear"
-        ],
+        "tags": ["Gear"],
         "operationId": "Gear_Vote",
         "consumes": [
           "application/json",
@@ -842,9 +791,7 @@
     },
     "/api/Gear/{type}/Search/{search}": {
       "get": {
-        "tags": [
-          "Gear"
-        ],
+        "tags": ["Gear"],
         "operationId": "Gear_Search",
         "consumes": [],
         "produces": [
@@ -896,9 +843,7 @@
     },
     "/api/Gear/Brands": {
       "get": {
-        "tags": [
-          "Gear"
-        ],
+        "tags": ["Gear"],
         "operationId": "Gear_GetBrands",
         "consumes": [],
         "produces": [
@@ -957,9 +902,7 @@
     },
     "/api/Mixology/GetMixes": {
       "get": {
-        "tags": [
-          "Mixology"
-        ],
+        "tags": ["Mixology"],
         "operationId": "Mixology_GetMixes",
         "consumes": [],
         "produces": [
@@ -1014,9 +957,7 @@
     },
     "/api/Mixology/GetMixCreators": {
       "get": {
-        "tags": [
-          "Mixology"
-        ],
+        "tags": ["Mixology"],
         "operationId": "Mixology_GetFeaturedMixCreators",
         "consumes": [],
         "produces": [
@@ -1065,15 +1006,10 @@
     },
     "/api/Mixology/{id}/GetMix": {
       "get": {
-        "tags": [
-          "Mixology"
-        ],
+        "tags": ["Mixology"],
         "operationId": "Mixology_GetTobaccoMix",
         "consumes": [],
-        "produces": [
-          "application/json",
-          "text/json"
-        ],
+        "produces": ["application/json", "text/json"],
         "parameters": [
           {
             "name": "id",
@@ -1095,9 +1031,7 @@
     },
     "/api/Mixology/{id}/GetTastes": {
       "get": {
-        "tags": [
-          "Mixology"
-        ],
+        "tags": ["Mixology"],
         "operationId": "Mixology_GetTobaccoMixTastes",
         "consumes": [],
         "produces": [
@@ -1133,9 +1067,7 @@
     },
     "/api/Mixology/AddToMix": {
       "post": {
-        "tags": [
-          "Mixology"
-        ],
+        "tags": ["Mixology"],
         "operationId": "Mixology_AddToMix",
         "consumes": [
           "application/json",
@@ -1144,10 +1076,7 @@
           "text/xml",
           "application/x-www-form-urlencoded"
         ],
-        "produces": [
-          "application/json",
-          "text/json"
-        ],
+        "produces": ["application/json", "text/json"],
         "parameters": [
           {
             "name": "newMix",
@@ -1170,9 +1099,7 @@
     },
     "/api/Mixology/{id}/Vote": {
       "post": {
-        "tags": [
-          "Mixology"
-        ],
+        "tags": ["Mixology"],
         "operationId": "Mixology_Vote",
         "consumes": [
           "application/json",
@@ -1217,9 +1144,7 @@
     },
     "/api/Mixology/RemoveMix": {
       "delete": {
-        "tags": [
-          "Mixology"
-        ],
+        "tags": ["Mixology"],
         "operationId": "Mixology_RemoveMix",
         "consumes": [],
         "produces": [
@@ -1249,9 +1174,7 @@
     },
     "/api/Person/GetPersonActiveData": {
       "get": {
-        "tags": [
-          "Person"
-        ],
+        "tags": ["Person"],
         "operationId": "Person_GetPersonActiveData",
         "consumes": [],
         "produces": [
@@ -1272,9 +1195,7 @@
     },
     "/api/Person/MyGear": {
       "get": {
-        "tags": [
-          "Person"
-        ],
+        "tags": ["Person"],
         "operationId": "Person_MyGear",
         "consumes": [],
         "produces": [
@@ -1306,9 +1227,7 @@
     },
     "/api/Ping/{id}": {
       "get": {
-        "tags": [
-          "Ping"
-        ],
+        "tags": ["Ping"],
         "operationId": "Ping_DefaultAction",
         "consumes": [],
         "produces": [
@@ -1343,9 +1262,7 @@
     },
     "/api/PlaceCalendar/SavePlaceDay": {
       "post": {
-        "tags": [
-          "PlaceCalendar"
-        ],
+        "tags": ["PlaceCalendar"],
         "operationId": "PlaceCalendar_SavePlaceDay",
         "consumes": [
           "application/json",
@@ -1382,9 +1299,7 @@
     },
     "/api/PlaceCalendar/SavePlaceEvent": {
       "post": {
-        "tags": [
-          "PlaceCalendar"
-        ],
+        "tags": ["PlaceCalendar"],
         "operationId": "PlaceCalendar_SavePlaceEvent",
         "consumes": [
           "application/json",
@@ -1421,9 +1336,7 @@
     },
     "/api/PlaceCalendar/CreateEventFromFacebook": {
       "get": {
-        "tags": [
-          "PlaceCalendar"
-        ],
+        "tags": ["PlaceCalendar"],
         "operationId": "PlaceCalendar_CreatePlaceEventFromFacebook",
         "consumes": [],
         "produces": [
@@ -1452,9 +1365,7 @@
     },
     "/api/PlaceCalendar/GetCalendar": {
       "get": {
-        "tags": [
-          "PlaceCalendar"
-        ],
+        "tags": ["PlaceCalendar"],
         "operationId": "PlaceCalendar_GetPlaceCalendar",
         "consumes": [],
         "produces": [
@@ -1490,9 +1401,7 @@
     },
     "/api/PlaceCalendar/GetPlaceDay": {
       "get": {
-        "tags": [
-          "PlaceCalendar"
-        ],
+        "tags": ["PlaceCalendar"],
         "operationId": "PlaceCalendar_GetPlaceDay",
         "consumes": [],
         "produces": [
@@ -1542,9 +1451,7 @@
     },
     "/api/PlaceCalendar/GetPlaceEvent": {
       "get": {
-        "tags": [
-          "PlaceCalendar"
-        ],
+        "tags": ["PlaceCalendar"],
         "operationId": "PlaceCalendar_GetPlaceEvent",
         "consumes": [],
         "produces": [
@@ -1574,9 +1481,7 @@
     },
     "/api/PlaceCalendar/FindEventsBy": {
       "get": {
-        "tags": [
-          "PlaceCalendar"
-        ],
+        "tags": ["PlaceCalendar"],
         "operationId": "PlaceCalendar_FindEventsBy",
         "consumes": [],
         "produces": [
@@ -1626,9 +1531,7 @@
     },
     "/api/PlaceCalendar/DeletePlaceDay": {
       "delete": {
-        "tags": [
-          "PlaceCalendar"
-        ],
+        "tags": ["PlaceCalendar"],
         "operationId": "PlaceCalendar_DeletePlaceDay",
         "consumes": [],
         "produces": [
@@ -1658,9 +1561,7 @@
     },
     "/api/PlaceCalendar/DeletePlaceEvent": {
       "delete": {
-        "tags": [
-          "PlaceCalendar"
-        ],
+        "tags": ["PlaceCalendar"],
         "operationId": "PlaceCalendar_DeletePlaceEvent",
         "consumes": [],
         "produces": [
@@ -1690,9 +1591,7 @@
     },
     "/api/Places/{id}/Menu": {
       "get": {
-        "tags": [
-          "Places"
-        ],
+        "tags": ["Places"],
         "operationId": "Places_GetPlaceMenu",
         "consumes": [],
         "produces": [
@@ -1722,9 +1621,7 @@
     },
     "/api/Places/GetPlaceInfo": {
       "get": {
-        "tags": [
-          "Places"
-        ],
+        "tags": ["Places"],
         "operationId": "Places_GetPlaceInfo",
         "consumes": [],
         "produces": [
@@ -1754,9 +1651,7 @@
     },
     "/api/Places/SearchNearby": {
       "get": {
-        "tags": [
-          "Places"
-        ],
+        "tags": ["Places"],
         "operationId": "Places_SearchNearby",
         "consumes": [],
         "produces": [
@@ -1807,9 +1702,7 @@
     },
     "/api/Puf/lag/{id}": {
       "post": {
-        "tags": [
-          "Puf"
-        ],
+        "tags": ["Puf"],
         "operationId": "Puf_Lag",
         "consumes": [],
         "produces": [
@@ -1838,9 +1731,7 @@
     },
     "/api/Puf/{id}": {
       "post": {
-        "tags": [
-          "Puf"
-        ],
+        "tags": ["Puf"],
         "operationId": "Puf_DefaultAction",
         "consumes": [],
         "produces": [
@@ -1869,9 +1760,7 @@
     },
     "/api/QRCode/{id}": {
       "get": {
-        "tags": [
-          "QRCode"
-        ],
+        "tags": ["QRCode"],
         "operationId": "QRCode_DefaultAction",
         "consumes": [],
         "produces": [
@@ -1900,9 +1789,7 @@
     },
     "/api/Reservations/{id}/Manage": {
       "get": {
-        "tags": [
-          "Reservation"
-        ],
+        "tags": ["Reservation"],
         "operationId": "Reservation_GetManagereservationsInfo",
         "consumes": [],
         "produces": [
@@ -1939,9 +1826,7 @@
     },
     "/api/Reservations/Create": {
       "post": {
-        "tags": [
-          "Reservation"
-        ],
+        "tags": ["Reservation"],
         "operationId": "Reservation_Create",
         "consumes": [
           "application/json",
@@ -1978,9 +1863,7 @@
     },
     "/api/SentToDevice/{id}": {
       "post": {
-        "tags": [
-          "SentToDevice"
-        ],
+        "tags": ["SentToDevice"],
         "operationId": "SentToDevice_DefaultAction",
         "consumes": [],
         "produces": [],
@@ -2013,9 +1896,7 @@
     },
     "/api/SmokeSession/Validate": {
       "get": {
-        "tags": [
-          "SmokeSession"
-        ],
+        "tags": ["SmokeSession"],
         "operationId": "SmokeSession_Validate",
         "consumes": [],
         "produces": [
@@ -2044,9 +1925,7 @@
     },
     "/api/SmokeSession/GetSessionCode": {
       "get": {
-        "tags": [
-          "SmokeSession"
-        ],
+        "tags": ["SmokeSession"],
         "operationId": "SmokeSession_GetSessionCode",
         "consumes": [],
         "produces": [
@@ -2075,9 +1954,7 @@
     },
     "/api/SmokeSession/InitData": {
       "get": {
-        "tags": [
-          "SmokeSession"
-        ],
+        "tags": ["SmokeSession"],
         "operationId": "SmokeSession_InitData",
         "consumes": [],
         "produces": [
@@ -2106,9 +1983,7 @@
     },
     "/api/SmokeSession/GetMetaData": {
       "get": {
-        "tags": [
-          "SmokeSession"
-        ],
+        "tags": ["SmokeSession"],
         "operationId": "SmokeSession_GetMetaData",
         "consumes": [],
         "produces": [
@@ -2138,9 +2013,7 @@
     },
     "/api/SmokeSession/{id}/SaveMetaData": {
       "post": {
-        "tags": [
-          "SmokeSession"
-        ],
+        "tags": ["SmokeSession"],
         "operationId": "SmokeSession_SaveMetaData",
         "consumes": [
           "application/json",
@@ -2183,9 +2056,7 @@
     },
     "/api/StandPicture/{id}": {
       "get": {
-        "tags": [
-          "StandPicture"
-        ],
+        "tags": ["StandPicture"],
         "operationId": "StandPicture_DefaultAction",
         "consumes": [],
         "produces": [
@@ -2214,9 +2085,7 @@
     },
     "/api/Statistics/GetStatistics": {
       "get": {
-        "tags": [
-          "Statistics"
-        ],
+        "tags": ["Statistics"],
         "operationId": "Statistics_GetStatistics",
         "consumes": [],
         "produces": [
@@ -2253,9 +2122,7 @@
     },
     "/api/Tobacco/{id}/GetTobacco": {
       "get": {
-        "tags": [
-          "Tobacco"
-        ],
+        "tags": ["Tobacco"],
         "operationId": "Tobacco_GetTobacco",
         "consumes": [],
         "produces": [
@@ -2285,9 +2152,7 @@
     },
     "/api/Tobacco/search": {
       "get": {
-        "tags": [
-          "Tobacco"
-        ],
+        "tags": ["Tobacco"],
         "operationId": "Tobacco_Search",
         "consumes": [
           "application/json",
@@ -2334,13 +2199,7 @@
             "required": false,
             "type": "integer",
             "format": "int32",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4
-            ]
+            "enum": [0, 1, 2, 3, 4]
           },
           {
             "name": "filter.brand",
@@ -2366,10 +2225,7 @@
             "required": false,
             "type": "integer",
             "format": "int32",
-            "enum": [
-              0,
-              1
-            ]
+            "enum": [0, 1]
           }
         ],
         "responses": {
@@ -2387,9 +2243,7 @@
     },
     "/api/Tobacco/{id}/GetAllInfo": {
       "get": {
-        "tags": [
-          "Tobacco"
-        ],
+        "tags": ["Tobacco"],
         "operationId": "Tobacco_GetTobaccoInfo",
         "consumes": [],
         "produces": [
@@ -2419,9 +2273,7 @@
     },
     "/api/Tobacco/{id}/GetTaste": {
       "get": {
-        "tags": [
-          "Tobacco"
-        ],
+        "tags": ["Tobacco"],
         "operationId": "Tobacco_GetTobaccoTaste",
         "consumes": [],
         "produces": [
@@ -2454,9 +2306,7 @@
     },
     "/api/Tobacco/{id}/GetStatistics": {
       "get": {
-        "tags": [
-          "Tobacco"
-        ],
+        "tags": ["Tobacco"],
         "operationId": "Tobacco_GetTobaccoSatistics",
         "consumes": [],
         "produces": [
@@ -2486,9 +2336,7 @@
     },
     "/api/Tobacco/{id}/GetReviews": {
       "get": {
-        "tags": [
-          "Tobacco"
-        ],
+        "tags": ["Tobacco"],
         "operationId": "Tobacco_GetTobaccoReviews",
         "consumes": [],
         "produces": [
@@ -2535,9 +2383,7 @@
     },
     "/api/Tobacco/{id}/GetSessions": {
       "get": {
-        "tags": [
-          "Tobacco"
-        ],
+        "tags": ["Tobacco"],
         "operationId": "Tobacco_GetTobaccoSessions",
         "consumes": [],
         "produces": [
@@ -2585,10 +2431,7 @@
   },
   "definitions": {
     "UserModel": {
-      "required": [
-        "Password",
-        "Email"
-      ],
+      "required": ["Password", "Email"],
       "type": "object",
       "properties": {
         "ConfirmPassword": {
@@ -2608,9 +2451,7 @@
       }
     },
     "smartHookahModelsForgotPasswordViewModel": {
-      "required": [
-        "Email"
-      ],
+      "required": ["Email"],
       "type": "object",
       "properties": {
         "Email": {
@@ -2659,14 +2500,7 @@
         },
         "Usage": {
           "format": "int32",
-          "enum": [
-            0,
-            1,
-            2,
-            4,
-            6,
-            7
-          ],
+          "enum": [0, 1, 2, 4, 6, 7],
           "type": "integer"
         }
       }
@@ -2680,11 +2514,7 @@
         },
         "Type": {
           "format": "int32",
-          "enum": [
-            0,
-            1,
-            2
-          ],
+          "enum": [0, 1, 2],
           "type": "integer"
         }
       }
@@ -2700,11 +2530,7 @@
         },
         "Type": {
           "format": "int32",
-          "enum": [
-            0,
-            1,
-            2
-          ],
+          "enum": [0, 1, 2],
           "type": "integer"
         }
       }
@@ -2717,11 +2543,7 @@
         },
         "Type": {
           "format": "int32",
-          "enum": [
-            0,
-            1,
-            2
-          ],
+          "enum": [0, 1, 2],
           "type": "integer"
         }
       }
@@ -2754,11 +2576,7 @@
         },
         "Type": {
           "format": "int32",
-          "enum": [
-            0,
-            1,
-            2
-          ],
+          "enum": [0, 1, 2],
           "type": "integer"
         }
       }
@@ -3255,13 +3073,7 @@
         },
         "State": {
           "format": "int32",
-          "enum": [
-            0,
-            1,
-            2,
-            3,
-            4
-          ],
+          "enum": [0, 1, 2, 3, 4],
           "type": "integer"
         },
         "Price": {
@@ -3287,11 +3099,7 @@
         },
         "Type": {
           "format": "int32",
-          "enum": [
-            0,
-            1,
-            2
-          ],
+          "enum": [0, 1, 2],
           "type": "integer"
         }
       }
@@ -3428,13 +3236,7 @@
         },
         "PackType": {
           "format": "int32",
-          "enum": [
-            0,
-            1,
-            2,
-            3,
-            4
-          ],
+          "enum": [0, 1, 2, 3, 4],
           "type": "integer"
         },
         "CoalCount": {
@@ -3606,10 +3408,7 @@
         },
         "Type": {
           "format": "int32",
-          "enum": [
-            0,
-            1
-          ],
+          "enum": [0, 1],
           "type": "integer"
         },
         "IsDefault": {
@@ -3812,13 +3611,9 @@
           }
         },
         "Prices": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "object",
-            "additionalProperties": {
-              "format": "double",
-              "type": "number"
-            }
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PriceGroupItems"
           }
         }
       }
@@ -3855,6 +3650,22 @@
         "Price": {
           "format": "double",
           "type": "number"
+        }
+      }
+    },
+    "PriceGroupItems": {
+      "type": "object",
+      "properties": {
+        "GroupId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Price": {
+          "type": "object",
+          "additionalProperties": {
+            "format": "double",
+            "type": "number"
+          }
         }
       }
     },
@@ -4099,10 +3910,7 @@
         },
         "Flag": {
           "format": "int32",
-          "enum": [
-            0,
-            1
-          ],
+          "enum": [0, 1],
           "type": "integer"
         },
         "Success": {
@@ -4218,13 +4026,7 @@
         },
         "SortBy": {
           "format": "int32",
-          "enum": [
-            0,
-            1,
-            2,
-            3,
-            4
-          ],
+          "enum": [0, 1, 2, 3, 4],
           "type": "integer"
         },
         "Brand": {
@@ -4238,10 +4040,7 @@
         },
         "SortDirection": {
           "format": "int32",
-          "enum": [
-            0,
-            1
-          ],
+          "enum": [0, 1],
           "type": "integer"
         }
       }
@@ -4353,13 +4152,7 @@
         },
         "PackType": {
           "format": "int32",
-          "enum": [
-            0,
-            1,
-            2,
-            3,
-            4
-          ],
+          "enum": [0, 1, 2, 3, 4],
           "type": "integer"
         },
         "Quality": {

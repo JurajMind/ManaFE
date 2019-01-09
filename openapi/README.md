@@ -170,6 +170,7 @@ Class | Method | HTTP request | Description
  - [PlaceEventCollection](docs\/PlaceEventCollection.md)
  - [PlaceMenuDto](docs\/PlaceMenuDto.md)
  - [PlaceSimpleDto](docs\/PlaceSimpleDto.md)
+ - [PriceGroupItems](docs\/PriceGroupItems.md)
  - [ReservationDto](docs\/ReservationDto.md)
  - [ReservationManageDto](docs\/ReservationManageDto.md)
  - [SeatDto](docs\/SeatDto.md)

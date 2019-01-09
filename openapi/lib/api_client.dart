@@ -111,6 +111,8 @@ class ApiClient {
           return PlaceMenuDto.fromJson(value);
         case 'PlaceSimpleDto':
           return PlaceSimpleDto.fromJson(value);
+        case 'PriceGroupItems':
+          return PriceGroupItems.fromJson(value);
         case 'ReservationDto':
           return ReservationDto.fromJson(value);
         case 'ReservationManageDto':

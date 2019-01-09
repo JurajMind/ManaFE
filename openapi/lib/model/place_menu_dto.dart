@@ -14,7 +14,7 @@ class PlaceMenuDto {
   
   List<SmartHookahControllersPriceGroupDto> priceGroup = [];
   
-  Map<String, Map<String, double>> prices = {};
+  List<PriceGroupItems> prices = [];
   PlaceMenuDto();
 
   @override
@@ -30,7 +30,7 @@ class PlaceMenuDto {
     basePrice = json['BasePrice'];
     currency = json['Currency'];
     priceGroup = SmartHookahControllersPriceGroupDto.listFromJson(json['PriceGroup']);
-    prices = Map.mapFromJson(json['Prices']);
+    prices = PriceGroupItems.listFromJson(json['Prices']);
   }
 
   Map<String, dynamic> toJson() {

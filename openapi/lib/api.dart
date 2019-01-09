@@ -70,6 +70,7 @@ part 'model/place_event.dart';
 part 'model/place_event_collection.dart';
 part 'model/place_menu_dto.dart';
 part 'model/place_simple_dto.dart';
+part 'model/price_group_items.dart';
 part 'model/reservation_dto.dart';
 part 'model/reservation_manage_dto.dart';
 part 'model/seat_dto.dart';

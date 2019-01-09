@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **basePrice** | **double** |  | [optional] [default to null]
 **currency** | **String** |  | [optional] [default to null]
 **priceGroup** | [**List&lt;SmartHookahControllersPriceGroupDto&gt;**](SmartHookahControllersPriceGroupDto.md) |  | [optional] [default to []]
-**prices** | [**Map&lt;String, Map&lt;String, double&gt;&gt;**](Map.md) |  | [optional] [default to {}]
+**prices** | [**List&lt;PriceGroupItems&gt;**](PriceGroupItems.md) |  | [optional] [default to []]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
