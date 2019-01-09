@@ -73,6 +73,7 @@ part 'model/place_simple_dto.dart';
 part 'model/reservation_dto.dart';
 part 'model/reservation_manage_dto.dart';
 part 'model/seat_dto.dart';
+part 'model/smart_hookah_controllers_price_group_dto.dart';
 part 'model/smart_hookah_helpers_animation.dart';
 part 'model/smart_hookah_models_address.dart';
 part 'model/smart_hookah_models_color.dart';

@@ -7,11 +7,19 @@ class PlaceMenuDto {
   List<TobaccoMixSimpleDto> tobaccoMixes = [];
   
   List<SmartHookahModelsOrderExtraDto> orderExtras = [];
+  
+  double basePrice = null;
+  
+  String currency = null;
+  
+  List<SmartHookahControllersPriceGroupDto> priceGroup = [];
+  
+  Map<String, Map<String, double>> prices = {};
   PlaceMenuDto();
 
   @override
   String toString() {
-    return 'PlaceMenuDto[accessories=$accessories, tobaccoMixes=$tobaccoMixes, orderExtras=$orderExtras, ]';
+    return 'PlaceMenuDto[accessories=$accessories, tobaccoMixes=$tobaccoMixes, orderExtras=$orderExtras, basePrice=$basePrice, currency=$currency, priceGroup=$priceGroup, prices=$prices, ]';
   }
 
   PlaceMenuDto.fromJson(Map<String, dynamic> json) {
@@ -19,13 +27,21 @@ class PlaceMenuDto {
     accessories = PipeAccesorySimpleDto.listFromJson(json['Accessories']);
     tobaccoMixes = TobaccoMixSimpleDto.listFromJson(json['TobaccoMixes']);
     orderExtras = SmartHookahModelsOrderExtraDto.listFromJson(json['OrderExtras']);
+    basePrice = json['BasePrice'];
+    currency = json['Currency'];
+    priceGroup = SmartHookahControllersPriceGroupDto.listFromJson(json['PriceGroup']);
+    prices = Map.mapFromJson(json['Prices']);
   }
 
   Map<String, dynamic> toJson() {
     return {
       'Accessories': accessories,
       'TobaccoMixes': tobaccoMixes,
-      'OrderExtras': orderExtras
+      'OrderExtras': orderExtras,
+      'BasePrice': basePrice,
+      'Currency': currency,
+      'PriceGroup': priceGroup,
+      'Prices': prices
     };
   }
 

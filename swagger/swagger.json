@@ -1,0 +1,4392 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "smartHookah"
+  },
+  "host": "localhost:44324",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/api/Account/Register": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "operationId": "Account_Register",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "userModel",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Account/ForgotPassword": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "operationId": "Account_ForgotPassword",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "model",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/smartHookahModelsForgotPasswordViewModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Anim/{id}": {
+      "post": {
+        "tags": [
+          "Anim"
+        ],
+        "operationId": "Anim_DefaultAction",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/Animations/GetAnimations": {
+      "get": {
+        "tags": [
+          "Animation"
+        ],
+        "operationId": "Animation_GetAnimations",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Animations"
+            }
+          }
+        }
+      }
+    },
+    "/api/Device/{id}/ChangeAnimation": {
+      "post": {
+        "tags": [
+          "Device"
+        ],
+        "operationId": "Device_ChangeAnimation",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "model",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/smartHookahModelsParameterObjectsChangeAnimation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Device/{id}/ChangeBrightness": {
+      "post": {
+        "tags": [
+          "Device"
+        ],
+        "operationId": "Device_ChangeBrightness",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "model",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/smartHookahModelsParameterObjectsChangeBrightness"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Device/{id}/ChangeColor": {
+      "post": {
+        "tags": [
+          "Device"
+        ],
+        "operationId": "Device_ChangeColor",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "model",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/smartHookahModelsParameterObjectsChangeColor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Device/{id}/ChangeSpeed": {
+      "post": {
+        "tags": [
+          "Device"
+        ],
+        "operationId": "Device_ChangeSpeed",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "model",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/smartHookahModelsParameterObjectsChangeSpeed"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Device/{id}/Sleep": {
+      "post": {
+        "tags": [
+          "Device"
+        ],
+        "operationId": "Device_Sleep",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Device/{id}/Restart": {
+      "post": {
+        "tags": [
+          "Device"
+        ],
+        "operationId": "Device_Restart",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Device/{id}/ChangeMode": {
+      "post": {
+        "tags": [
+          "Device"
+        ],
+        "operationId": "Device_ChangeMode",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "mode",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Device/{id}/ShowQrCode": {
+      "post": {
+        "tags": [
+          "Device"
+        ],
+        "operationId": "Device_ShowQrCode",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Device/{id}/GetSetting": {
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "operationId": "Device_GetSetting",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeviceSettingDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Device/Preset/{id}/GetPreset": {
+      "get": {
+        "tags": [
+          "DevicePreset"
+        ],
+        "operationId": "DevicePreset_GetPreset",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DevicePresetDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Device/Preset/GetUserPresets": {
+      "get": {
+        "tags": [
+          "DevicePreset"
+        ],
+        "operationId": "DevicePreset_GetUserPresets",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DevicePresetDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Device/Preset/{sessionCode}/SavePresetFromSession": {
+      "post": {
+        "tags": [
+          "DevicePreset"
+        ],
+        "operationId": "DevicePreset_SaveSessionPreset",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "sessionCode",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "addToPerson",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "setDefault",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DevicePresetDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Device/Preset/SavePresetFromDevice/{deviceId}": {
+      "post": {
+        "tags": [
+          "DevicePreset"
+        ],
+        "operationId": "DevicePreset_SaveDevicePreset",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "addToPerson",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "setDefault",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DevicePresetDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Device/Preset/{presetId}/SetDefault": {
+      "post": {
+        "tags": [
+          "DevicePreset"
+        ],
+        "operationId": "DevicePreset_SetDefault",
+        "consumes": [],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "presetId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/Device/Preset/UseDefault/{sessionId}": {
+      "post": {
+        "tags": [
+          "DevicePreset"
+        ],
+        "operationId": "DevicePreset_UseDefault",
+        "consumes": [],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/Device/Preset/{presetId}/Use/{sessionId}": {
+      "post": {
+        "tags": [
+          "DevicePreset"
+        ],
+        "operationId": "DevicePreset_UsePreset",
+        "consumes": [],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "presetId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/Device/Preset/{id}/Delete": {
+      "delete": {
+        "tags": [
+          "DevicePreset"
+        ],
+        "operationId": "DevicePreset_DeletePreset",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/EndSession/{id}": {
+      "post": {
+        "tags": [
+          "EndSession"
+        ],
+        "operationId": "EndSession_DefaultAction",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/Gear/{id}/Vote": {
+      "post": {
+        "tags": [
+          "Gear"
+        ],
+        "operationId": "Gear_Vote",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "value",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Gear/{type}/Search/{search}": {
+      "get": {
+        "tags": [
+          "Gear"
+        ],
+        "operationId": "Gear_Search",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "search",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GearServiceSearchPipeAccesory"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Gear/Brands": {
+      "get": {
+        "tags": [
+          "Gear"
+        ],
+        "operationId": "Gear_GetBrands",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Bowl": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/BrandGroupDto"
+                  }
+                },
+                "Tobacco": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/BrandGroupDto"
+                  }
+                },
+                "TobaccoMix": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/BrandGroupDto"
+                  }
+                },
+                "Heatmanagement": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/BrandGroupDto"
+                  }
+                },
+                "Hookah": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/BrandGroupDto"
+                  }
+                },
+                "Coal": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/BrandGroupDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Mixology/GetMixes": {
+      "get": {
+        "tags": [
+          "Mixology"
+        ],
+        "operationId": "Mixology_GetMixes",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "author",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MixList"
+            }
+          }
+        }
+      }
+    },
+    "/api/Mixology/GetMixCreators": {
+      "get": {
+        "tags": [
+          "Mixology"
+        ],
+        "operationId": "Mixology_GetFeaturedMixCreators",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MixCreators"
+            }
+          }
+        }
+      }
+    },
+    "/api/Mixology/{id}/GetMix": {
+      "get": {
+        "tags": [
+          "Mixology"
+        ],
+        "operationId": "Mixology_GetTobaccoMix",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TobaccoMixSimpleDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Mixology/{id}/GetTastes": {
+      "get": {
+        "tags": [
+          "Mixology"
+        ],
+        "operationId": "Mixology_GetTobaccoMixTastes",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/TobaccoTasteDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Mixology/AddToMix": {
+      "post": {
+        "tags": [
+          "Mixology"
+        ],
+        "operationId": "Mixology_AddToMix",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "newMix",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Mix"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TobaccoMixSimpleDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Mixology/{id}/Vote": {
+      "post": {
+        "tags": [
+          "Mixology"
+        ],
+        "operationId": "Mixology_Vote",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "value",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Mixology/RemoveMix": {
+      "delete": {
+        "tags": [
+          "Mixology"
+        ],
+        "operationId": "Mixology_RemoveMix",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "mixId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Dto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Person/GetPersonActiveData": {
+      "get": {
+        "tags": [
+          "Person"
+        ],
+        "operationId": "Person_GetPersonActiveData",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PersonActiveDataDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Person/MyGear": {
+      "get": {
+        "tags": [
+          "Person"
+        ],
+        "operationId": "Person_MyGear",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PipeAccesorySimpleDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Ping/{id}": {
+      "get": {
+        "tags": [
+          "Ping"
+        ],
+        "operationId": "Ping_DefaultAction",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/api/PlaceCalendar/SavePlaceDay": {
+      "post": {
+        "tags": [
+          "PlaceCalendar"
+        ],
+        "operationId": "PlaceCalendar_SavePlaceDay",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "placeDay",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PlaceDay"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Dto"
+            }
+          }
+        }
+      }
+    },
+    "/api/PlaceCalendar/SavePlaceEvent": {
+      "post": {
+        "tags": [
+          "PlaceCalendar"
+        ],
+        "operationId": "PlaceCalendar_SavePlaceEvent",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "placeEvent",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PlaceEvent"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Dto"
+            }
+          }
+        }
+      }
+    },
+    "/api/PlaceCalendar/CreateEventFromFacebook": {
+      "get": {
+        "tags": [
+          "PlaceCalendar"
+        ],
+        "operationId": "PlaceCalendar_CreatePlaceEventFromFacebook",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Dto"
+            }
+          }
+        }
+      }
+    },
+    "/api/PlaceCalendar/GetCalendar": {
+      "get": {
+        "tags": [
+          "PlaceCalendar"
+        ],
+        "operationId": "PlaceCalendar_GetPlaceCalendar",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "placeId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "privacyType",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlaceCalendar"
+            }
+          }
+        }
+      }
+    },
+    "/api/PlaceCalendar/GetPlaceDay": {
+      "get": {
+        "tags": [
+          "PlaceCalendar"
+        ],
+        "operationId": "PlaceCalendar_GetPlaceDay",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "placeId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "dayId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "dayDate",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "privacyType",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlaceDay"
+            }
+          }
+        }
+      }
+    },
+    "/api/PlaceCalendar/GetPlaceEvent": {
+      "get": {
+        "tags": [
+          "PlaceCalendar"
+        ],
+        "operationId": "PlaceCalendar_GetPlaceEvent",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlaceEvent"
+            }
+          }
+        }
+      }
+    },
+    "/api/PlaceCalendar/FindEventsBy": {
+      "get": {
+        "tags": [
+          "PlaceCalendar"
+        ],
+        "operationId": "PlaceCalendar_FindEventsBy",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "placeId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "startsAfter",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "endsBefore",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "privacyType",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlaceEventCollection"
+            }
+          }
+        }
+      }
+    },
+    "/api/PlaceCalendar/DeletePlaceDay": {
+      "delete": {
+        "tags": [
+          "PlaceCalendar"
+        ],
+        "operationId": "PlaceCalendar_DeletePlaceDay",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "dayId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Dto"
+            }
+          }
+        }
+      }
+    },
+    "/api/PlaceCalendar/DeletePlaceEvent": {
+      "delete": {
+        "tags": [
+          "PlaceCalendar"
+        ],
+        "operationId": "PlaceCalendar_DeletePlaceEvent",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Dto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Places/{id}/Menu": {
+      "get": {
+        "tags": [
+          "Places"
+        ],
+        "operationId": "Places_GetPlaceMenu",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlaceMenuDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Places/GetPlaceInfo": {
+      "get": {
+        "tags": [
+          "Places"
+        ],
+        "operationId": "Places_GetPlaceInfo",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlaceDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Places/SearchNearby": {
+      "get": {
+        "tags": [
+          "Places"
+        ],
+        "operationId": "Places_SearchNearby",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "lng",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "float"
+          },
+          {
+            "name": "lat",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "float"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/NearbyPlacesDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Puf/lag/{id}": {
+      "post": {
+        "tags": [
+          "Puf"
+        ],
+        "operationId": "Puf_Lag",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/Puf/{id}": {
+      "post": {
+        "tags": [
+          "Puf"
+        ],
+        "operationId": "Puf_DefaultAction",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/QRCode/{id}": {
+      "get": {
+        "tags": [
+          "QRCode"
+        ],
+        "operationId": "QRCode_DefaultAction",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Reservations/{id}/Manage": {
+      "get": {
+        "tags": [
+          "Reservation"
+        ],
+        "operationId": "Reservation_GetManagereservationsInfo",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ReservationManageDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Reservations/Create": {
+      "post": {
+        "tags": [
+          "Reservation"
+        ],
+        "operationId": "Reservation_Create",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "reservation",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReservationDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/api/SentToDevice/{id}": {
+      "post": {
+        "tags": [
+          "SentToDevice"
+        ],
+        "operationId": "SentToDevice_DefaultAction",
+        "consumes": [],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "command",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/SmokeSession/Validate": {
+      "get": {
+        "tags": [
+          "SmokeSession"
+        ],
+        "operationId": "SmokeSession_Validate",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Validation"
+            }
+          }
+        }
+      }
+    },
+    "/api/SmokeSession/GetSessionCode": {
+      "get": {
+        "tags": [
+          "SmokeSession"
+        ],
+        "operationId": "SmokeSession_GetSessionCode",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/SmokeSession/InitData": {
+      "get": {
+        "tags": [
+          "SmokeSession"
+        ],
+        "operationId": "SmokeSession_InitData",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/InitDataDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/SmokeSession/GetMetaData": {
+      "get": {
+        "tags": [
+          "SmokeSession"
+        ],
+        "operationId": "SmokeSession_GetMetaData",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SmokeSessionMetaDataDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/SmokeSession/{id}/SaveMetaData": {
+      "post": {
+        "tags": [
+          "SmokeSession"
+        ],
+        "operationId": "SmokeSession_SaveMetaData",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "model",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SmokeSessionMetaDataDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SmokeSessionMetaDataDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/StandPicture/{id}": {
+      "get": {
+        "tags": [
+          "StandPicture"
+        ],
+        "operationId": "StandPicture_DefaultAction",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Statistics/GetStatistics": {
+      "get": {
+        "tags": [
+          "Statistics"
+        ],
+        "operationId": "Statistics_GetStatistics",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PersonStatisticsOverallDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Tobacco/{id}/GetTobacco": {
+      "get": {
+        "tags": [
+          "Tobacco"
+        ],
+        "operationId": "Tobacco_GetTobacco",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TobaccoSimpleDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Tobacco/search": {
+      "get": {
+        "tags": [
+          "Tobacco"
+        ],
+        "operationId": "Tobacco_Search",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "filter.tastes",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "filter.sortBy",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          {
+            "name": "filter.brand",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filter.owned",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "filter.smoked",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "filter.sortDirection",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "enum": [
+              0,
+              1
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TobaccoDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Tobacco/{id}/GetAllInfo": {
+      "get": {
+        "tags": [
+          "Tobacco"
+        ],
+        "operationId": "Tobacco_GetTobaccoInfo",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TobaccoInformationDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Tobacco/{id}/GetTaste": {
+      "get": {
+        "tags": [
+          "Tobacco"
+        ],
+        "operationId": "Tobacco_GetTobaccoTaste",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TobaccoTasteDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Tobacco/{id}/GetStatistics": {
+      "get": {
+        "tags": [
+          "Tobacco"
+        ],
+        "operationId": "Tobacco_GetTobaccoSatistics",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PipeAccessoryStatisticsDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Tobacco/{id}/GetReviews": {
+      "get": {
+        "tags": [
+          "Tobacco"
+        ],
+        "operationId": "Tobacco_GetTobaccoReviews",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TobaccoReviewDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Tobacco/{id}/GetSessions": {
+      "get": {
+        "tags": [
+          "Tobacco"
+        ],
+        "operationId": "Tobacco_GetTobaccoSessions",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SmokeSessionSimpleDto"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "UserModel": {
+      "required": [
+        "Password",
+        "Email"
+      ],
+      "type": "object",
+      "properties": {
+        "ConfirmPassword": {
+          "type": "string"
+        },
+        "Password": {
+          "maxLength": 100,
+          "minLength": 6,
+          "type": "string"
+        },
+        "UserName": {
+          "type": "string"
+        },
+        "Email": {
+          "type": "string"
+        }
+      }
+    },
+    "smartHookahModelsForgotPasswordViewModel": {
+      "required": [
+        "Email"
+      ],
+      "type": "object",
+      "properties": {
+        "Email": {
+          "type": "string"
+        }
+      }
+    },
+    "Animations": {
+      "type": "object",
+      "properties": {
+        "Animations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/smartHookahHelpersAnimation"
+          }
+        },
+        "Success": {
+          "type": "boolean"
+        },
+        "Message": {
+          "type": "string"
+        },
+        "HttpResponseCode": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "smartHookahHelpersAnimation": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "DisplayName": {
+          "type": "string"
+        },
+        "VersionFrom": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "VersionTo": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Usage": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2,
+            4,
+            6,
+            7
+          ],
+          "type": "integer"
+        }
+      }
+    },
+    "smartHookahModelsParameterObjectsChangeAnimation": {
+      "type": "object",
+      "properties": {
+        "AnimationId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Type": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2
+          ],
+          "type": "integer"
+        }
+      }
+    },
+    "smartHookahModelsParameterObjectsChangeBrightness": {
+      "type": "object",
+      "properties": {
+        "Brightness": {
+          "format": "int32",
+          "maximum": 255,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "Type": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2
+          ],
+          "type": "integer"
+        }
+      }
+    },
+    "smartHookahModelsParameterObjectsChangeColor": {
+      "type": "object",
+      "properties": {
+        "Color": {
+          "$ref": "#/definitions/smartHookahModelsColor"
+        },
+        "Type": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2
+          ],
+          "type": "integer"
+        }
+      }
+    },
+    "smartHookahModelsColor": {
+      "type": "object",
+      "properties": {
+        "Hue": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Saturation": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Value": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "smartHookahModelsParameterObjectsChangeSpeed": {
+      "type": "object",
+      "properties": {
+        "Speed": {
+          "format": "int32",
+          "maximum": 255,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "Type": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2
+          ],
+          "type": "integer"
+        }
+      }
+    },
+    "DeviceSettingDto": {
+      "type": "object",
+      "properties": {
+        "PuffSettings": {
+          "$ref": "#/definitions/ActionSettings"
+        },
+        "BlowSettings": {
+          "$ref": "#/definitions/ActionSettings"
+        },
+        "IdleSettings": {
+          "$ref": "#/definitions/ActionSettings"
+        }
+      }
+    },
+    "ActionSettings": {
+      "type": "object",
+      "properties": {
+        "Color": {
+          "$ref": "#/definitions/smartHookahModelsColor"
+        },
+        "AnimationId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Brightness": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Speed": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "DevicePresetDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "personId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "setting": {
+          "$ref": "#/definitions/DeviceSettingDto"
+        }
+      }
+    },
+    "GearServiceSearchPipeAccesory": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Brand": {
+          "type": "string"
+        },
+        "Type": {
+          "type": "string"
+        },
+        "Owned": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "BrandGroupDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string"
+        },
+        "Picture": {
+          "type": "string"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "ItemCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "MixList": {
+      "type": "object",
+      "properties": {
+        "Mixes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Mix"
+          }
+        },
+        "Success": {
+          "type": "boolean"
+        },
+        "Message": {
+          "type": "string"
+        },
+        "HttpResponseCode": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "Mix": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "AccName": {
+          "type": "string"
+        },
+        "Tobaccos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TobaccoInMix"
+          }
+        },
+        "Used": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Overall": {
+          "format": "double",
+          "type": "number"
+        }
+      }
+    },
+    "TobaccoInMix": {
+      "type": "object",
+      "properties": {
+        "Tobacco": {
+          "$ref": "#/definitions/TobaccoSimpleDto"
+        },
+        "Fraction": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "TobaccoSimpleDto": {
+      "type": "object",
+      "properties": {
+        "Likes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PipeAccesoryLikeDto"
+          }
+        },
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Brand": {
+          "type": "string"
+        },
+        "BrandId": {
+          "type": "string"
+        },
+        "Picture": {
+          "type": "string"
+        },
+        "Type": {
+          "type": "string"
+        },
+        "LikeCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "DisLikeCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "PipeAccesoryLikeDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "PersonId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "PipeAccessoryId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Value": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "MixCreators": {
+      "type": "object",
+      "properties": {
+        "MixCreatorsList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MixCreator"
+          }
+        },
+        "Success": {
+          "type": "boolean"
+        },
+        "Message": {
+          "type": "string"
+        },
+        "HttpResponseCode": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "MixCreator": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "DisplayName": {
+          "type": "string"
+        },
+        "Picture": {
+          "type": "string"
+        },
+        "MixCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "TobaccoMixSimpleDto": {
+      "type": "object",
+      "properties": {
+        "Likes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PipeAccesoryLikeDto"
+          }
+        },
+        "Tobaccos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TobaccoInMix"
+          }
+        },
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Brand": {
+          "type": "string"
+        },
+        "BrandId": {
+          "type": "string"
+        },
+        "Picture": {
+          "type": "string"
+        },
+        "Type": {
+          "type": "string"
+        },
+        "LikeCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "DisLikeCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "TobaccoTasteDto": {
+      "type": "object",
+      "properties": {
+        "CzName": {
+          "type": "string"
+        },
+        "EngName": {
+          "type": "string"
+        },
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "OriginalName": {
+          "type": "string"
+        }
+      }
+    },
+    "Dto": {
+      "type": "object",
+      "properties": {
+        "Success": {
+          "type": "boolean"
+        },
+        "Message": {
+          "type": "string"
+        },
+        "HttpResponseCode": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "PersonActiveDataDto": {
+      "type": "object",
+      "properties": {
+        "Devices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeviceSimpleDto"
+          }
+        },
+        "ActiveSmokeSessions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SmokeSessionSimpleDto"
+          }
+        },
+        "ActiveReservations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReservationDto"
+          }
+        },
+        "ActiveHookahOrders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HookahOrderDto"
+          }
+        },
+        "GameProfile": {
+          "$ref": "#/definitions/GameProfileSimpleDto"
+        }
+      }
+    },
+    "DeviceSimpleDto": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Code": {
+          "type": "string"
+        },
+        "IsOnline": {
+          "type": "boolean"
+        }
+      }
+    },
+    "SmokeSessionSimpleDto": {
+      "type": "object",
+      "properties": {
+        "SessionId": {
+          "type": "string"
+        },
+        "Device": {
+          "$ref": "#/definitions/DeviceSimpleDto"
+        },
+        "Statistic": {
+          "$ref": "#/definitions/DynamicSmokeStatisticRawDto"
+        },
+        "MetaData": {
+          "$ref": "#/definitions/SmokeSessionMetaDataDto"
+        },
+        "Place": {
+          "$ref": "#/definitions/PlaceSimpleDto"
+        }
+      }
+    },
+    "ReservationDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Created": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "PersonId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "PlaceId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Started": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "End": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "Persons": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Duration": {
+          "type": "string"
+        },
+        "Time": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "Text": {
+          "type": "string"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "DisplayName": {
+          "type": "string",
+          "readOnly": true
+        },
+        "Status": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Seats": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "HookahOrderDto": {
+      "type": "object",
+      "properties": {
+        "Created": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "PlaceId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "PersonId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "SmokeSessionMetaDataId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "SmokeSessionMetaData": {
+          "$ref": "#/definitions/SmokeSessionMetaDataDto"
+        },
+        "SmokeSessionId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "SmokeSession": {
+          "$ref": "#/definitions/SmokeSessionSimpleDto"
+        },
+        "ExtraInfo": {
+          "type": "string"
+        },
+        "State": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "type": "integer"
+        },
+        "Price": {
+          "format": "double",
+          "type": "number"
+        },
+        "Currency": {
+          "type": "string"
+        },
+        "SeatId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Seat": {
+          "$ref": "#/definitions/SeatDto"
+        },
+        "ReservationId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Reservation": {
+          "$ref": "#/definitions/ReservationDto"
+        },
+        "Type": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2
+          ],
+          "type": "integer"
+        }
+      }
+    },
+    "GameProfileSimpleDto": {
+      "type": "object",
+      "properties": {
+        "PersonId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Level": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "TestLevel": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "LvlProgress": {
+          "format": "double",
+          "type": "number"
+        },
+        "Experience": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "Clouds": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Picture": {
+          "$ref": "#/definitions/GamePictureDto"
+        }
+      }
+    },
+    "DynamicSmokeStatisticRawDto": {
+      "type": "object",
+      "properties": {
+        "PufCount": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "LastPuf": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "LastPufTime": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "SmokeDuration": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "LongestPuf": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "Start": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "Duration": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "LongestPufMilis": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        }
+      }
+    },
+    "SmokeSessionMetaDataDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "TobaccoId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Tobacco": {
+          "$ref": "#/definitions/PipeAccesorySimpleDto"
+        },
+        "TobaccoMix": {
+          "$ref": "#/definitions/Mix"
+        },
+        "TobaccoWeight": {
+          "format": "double",
+          "type": "number"
+        },
+        "AnonymPeopleCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "BowlId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Bowl": {
+          "$ref": "#/definitions/PipeAccesorySimpleDto"
+        },
+        "PipeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Pipe": {
+          "$ref": "#/definitions/PipeAccesorySimpleDto"
+        },
+        "CoalId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Coal": {
+          "$ref": "#/definitions/PipeAccesorySimpleDto"
+        },
+        "HeatManagementId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "HeatManagement": {
+          "$ref": "#/definitions/PipeAccesorySimpleDto"
+        },
+        "PackType": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "type": "integer"
+        },
+        "CoalCount": {
+          "format": "double",
+          "type": "number"
+        }
+      }
+    },
+    "PlaceSimpleDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "FriendlyUrl": {
+          "type": "string"
+        },
+        "LogoPath": {
+          "type": "string"
+        },
+        "Address": {
+          "$ref": "#/definitions/smartHookahModelsAddress"
+        },
+        "BusinessHours": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OpeningDay"
+          }
+        },
+        "Rating": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Medias": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MediaDto"
+          }
+        }
+      }
+    },
+    "SeatDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Code": {
+          "type": "string"
+        },
+        "Capacity": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "GamePictureDto": {
+      "type": "object",
+      "properties": {
+        "PictureUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "PipeAccesorySimpleDto": {
+      "type": "object",
+      "properties": {
+        "Likes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PipeAccesoryLikeDto"
+          }
+        },
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Brand": {
+          "type": "string"
+        },
+        "BrandId": {
+          "type": "string"
+        },
+        "Picture": {
+          "type": "string"
+        },
+        "Type": {
+          "type": "string"
+        },
+        "LikeCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "DisLikeCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "smartHookahModelsAddress": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Street": {
+          "type": "string"
+        },
+        "City": {
+          "type": "string"
+        },
+        "Number": {
+          "type": "string"
+        },
+        "ZIP": {
+          "type": "string"
+        },
+        "Lat": {
+          "type": "string"
+        },
+        "Lng": {
+          "type": "string"
+        },
+        "Location": {
+          "$ref": "#/definitions/SystemDataEntitySpatialDbGeography"
+        }
+      }
+    },
+    "OpeningDay": {
+      "type": "object",
+      "properties": {
+        "Day": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "OpenTime": {
+          "type": "string"
+        },
+        "CloseTime": {
+          "type": "string"
+        }
+      }
+    },
+    "MediaDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Created": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "Path": {
+          "type": "string"
+        },
+        "Type": {
+          "format": "int32",
+          "enum": [
+            0,
+            1
+          ],
+          "type": "integer"
+        },
+        "IsDefault": {
+          "type": "boolean"
+        },
+        "Extension": {
+          "type": "string",
+          "readOnly": true
+        },
+        "FileName": {
+          "type": "string",
+          "readOnly": true
+        },
+        "GetDirectory": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "SystemDataEntitySpatialDbGeography": {
+      "type": "object",
+      "properties": {
+        "Geography": {
+          "$ref": "#/definitions/SystemDataEntitySpatialDbGeographyWellKnownValue"
+        }
+      }
+    },
+    "SystemDataEntitySpatialDbGeographyWellKnownValue": {
+      "type": "object",
+      "properties": {
+        "CoordinateSystemId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "WellKnownText": {
+          "type": "string"
+        },
+        "WellKnownBinary": {
+          "format": "byte",
+          "type": "string"
+        }
+      }
+    },
+    "PlaceDay": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "PlaceId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Day": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "OpenHour": {
+          "type": "string"
+        },
+        "CloseHour": {
+          "type": "string"
+        },
+        "PlaceEvents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlaceEvent"
+          }
+        },
+        "Success": {
+          "type": "boolean"
+        },
+        "Message": {
+          "type": "string"
+        },
+        "HttpResponseCode": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "PlaceEvent": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "PlaceDayId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Title": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "Start": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "End": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "PrivacyType": {
+          "type": "string"
+        },
+        "FacebookUrl": {
+          "type": "string"
+        },
+        "Success": {
+          "type": "boolean"
+        },
+        "Message": {
+          "type": "string"
+        },
+        "HttpResponseCode": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "PlaceCalendar": {
+      "type": "object",
+      "properties": {
+        "PlaceDays": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlaceDay"
+          }
+        },
+        "Success": {
+          "type": "boolean"
+        },
+        "Message": {
+          "type": "string"
+        },
+        "HttpResponseCode": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "PlaceEventCollection": {
+      "type": "object",
+      "properties": {
+        "EventCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlaceEvent"
+          }
+        },
+        "Success": {
+          "type": "boolean"
+        },
+        "Message": {
+          "type": "string"
+        },
+        "HttpResponseCode": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "PlaceMenuDto": {
+      "type": "object",
+      "properties": {
+        "Accessories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PipeAccesorySimpleDto"
+          }
+        },
+        "TobaccoMixes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TobaccoMixSimpleDto"
+          }
+        },
+        "OrderExtras": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/smartHookahModelsOrderExtraDto"
+          }
+        },
+        "BasePrice": {
+          "format": "double",
+          "type": "number"
+        },
+        "Currency": {
+          "type": "string"
+        },
+        "PriceGroup": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/smartHookahControllersPriceGroupDto"
+          }
+        },
+        "Prices": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "smartHookahModelsOrderExtraDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Currency": {
+          "type": "string"
+        },
+        "Price": {
+          "format": "double",
+          "type": "number"
+        },
+        "Name": {
+          "type": "string"
+        }
+      }
+    },
+    "smartHookahControllersPriceGroupDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Price": {
+          "format": "double",
+          "type": "number"
+        }
+      }
+    },
+    "PlaceDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "LogoPath": {
+          "type": "string"
+        },
+        "ShortDescriptions": {
+          "type": "string"
+        },
+        "Descriptions": {
+          "type": "string"
+        },
+        "FriendlyUrl": {
+          "type": "string"
+        },
+        "AddressId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Address": {
+          "$ref": "#/definitions/AddressDto"
+        },
+        "BusinessHours": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BusinessHoursDto"
+          }
+        },
+        "PhoneNumber": {
+          "type": "string"
+        },
+        "Facebook": {
+          "type": "string"
+        },
+        "BaseHookahPrice": {
+          "format": "double",
+          "type": "number"
+        },
+        "Currency": {
+          "type": "string"
+        },
+        "Seats": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SeatDto"
+          }
+        },
+        "TobaccoReviews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TobaccoReviewDto"
+          }
+        },
+        "Medias": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MediaDto"
+          }
+        },
+        "AllowReservation": {
+          "type": "boolean"
+        },
+        "MinimumReservationTime": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "FranchiseId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Franchise": {
+          "$ref": "#/definitions/FranchiseDto"
+        }
+      }
+    },
+    "AddressDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Street": {
+          "type": "string"
+        },
+        "City": {
+          "type": "string"
+        },
+        "Number": {
+          "type": "string"
+        },
+        "ZIP": {
+          "type": "string"
+        },
+        "Lat": {
+          "type": "string"
+        },
+        "Lng": {
+          "type": "string"
+        }
+      }
+    },
+    "BusinessHoursDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "PlaceId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Day": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "OpenTine": {
+          "type": "string"
+        },
+        "CloseTime": {
+          "type": "string"
+        }
+      }
+    },
+    "TobaccoReviewDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Quality": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Taste": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Smoke": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Overall": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Text": {
+          "type": "string"
+        },
+        "SmokeSessionId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "FranchiseDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Uril": {
+          "type": "string"
+        }
+      }
+    },
+    "NearbyPlacesDto": {
+      "type": "object",
+      "properties": {
+        "NearbyPlaces": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlaceSimpleDto"
+          }
+        },
+        "Success": {
+          "type": "boolean"
+        },
+        "Message": {
+          "type": "string"
+        },
+        "HttpResponseCode": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ReservationManageDto": {
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "endTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "TimeSlotSize": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Date": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "Tables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SeatDto"
+          }
+        },
+        "Reservations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReservationDto"
+          }
+        }
+      }
+    },
+    "Validation": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string"
+        },
+        "Flag": {
+          "format": "int32",
+          "enum": [
+            0,
+            1
+          ],
+          "type": "integer"
+        },
+        "Success": {
+          "type": "boolean"
+        },
+        "Message": {
+          "type": "string"
+        },
+        "HttpResponseCode": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "InitDataDto": {
+      "type": "object",
+      "properties": {
+        "SmokeSession": {
+          "$ref": "#/definitions/SmokeSessionSimpleDto"
+        },
+        "DeviceSettings": {
+          "$ref": "#/definitions/DeviceSettingDto"
+        }
+      }
+    },
+    "PersonStatisticsOverallDto": {
+      "type": "object",
+      "properties": {
+        "TimeStatistics": {
+          "$ref": "#/definitions/SmokeSessionTimeStatisticsDto"
+        },
+        "AccessoriesUsage": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PipeAccessoryUsageDto"
+          }
+        },
+        "SmokeSessions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SmokeSessionSimpleDto"
+          }
+        }
+      }
+    },
+    "SmokeSessionTimeStatisticsDto": {
+      "type": "object",
+      "properties": {
+        "SessionsCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "SessionsDuration": {
+          "type": "string"
+        },
+        "SmokeDuration": {
+          "type": "string"
+        },
+        "PuffCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "DayOfWeekDistribution": {
+          "type": "object",
+          "additionalProperties": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "SessionStartTimeDistribution": {
+          "type": "object",
+          "additionalProperties": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "PipeAccessoryUsageDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "BrandName": {
+          "type": "string"
+        },
+        "AccName": {
+          "type": "string"
+        },
+        "Type": {
+          "type": "string"
+        },
+        "Used": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Owned": {
+          "type": "boolean"
+        }
+      }
+    },
+    "smartHookahServicesGearTobaccoFilter": {
+      "type": "object",
+      "properties": {
+        "Tastes": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "SortBy": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "type": "integer"
+        },
+        "Brand": {
+          "type": "string"
+        },
+        "Owned": {
+          "type": "boolean"
+        },
+        "Smoked": {
+          "type": "boolean"
+        },
+        "SortDirection": {
+          "format": "int32",
+          "enum": [
+            0,
+            1
+          ],
+          "type": "integer"
+        }
+      }
+    },
+    "TobaccoDto": {
+      "type": "object",
+      "properties": {
+        "Likes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PipeAccesoryLikeDto"
+          }
+        },
+        "Used": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Brand": {
+          "type": "string"
+        },
+        "BrandId": {
+          "type": "string"
+        },
+        "Picture": {
+          "type": "string"
+        },
+        "Type": {
+          "type": "string"
+        },
+        "LikeCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "DisLikeCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "TobaccoInformationDto": {
+      "type": "object",
+      "properties": {
+        "Tobacco": {
+          "$ref": "#/definitions/TobaccoSimpleDto"
+        },
+        "TobaccoTastes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TobaccoTasteDto"
+          }
+        },
+        "PersonTobaccoStats": {
+          "$ref": "#/definitions/PipeAccessoryStatisticsDto"
+        },
+        "AllTobaccoStats": {
+          "$ref": "#/definitions/PipeAccessoryStatisticsDto"
+        },
+        "SmokeSessions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SmokeSessionSimpleDto"
+          }
+        },
+        "Reviews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TobaccoReviewDto"
+          }
+        }
+      }
+    },
+    "PipeAccessoryStatisticsDto": {
+      "type": "object",
+      "properties": {
+        "Used": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Weight": {
+          "format": "double",
+          "type": "number"
+        },
+        "PipeAccessoryId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "SmokeDurationTicks": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "PufCount": {
+          "format": "double",
+          "type": "number"
+        },
+        "BlowCount": {
+          "format": "double",
+          "type": "number"
+        },
+        "SessionDurationTick": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "PackType": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "type": "integer"
+        },
+        "Quality": {
+          "format": "double",
+          "type": "number"
+        },
+        "Taste": {
+          "format": "double",
+          "type": "number"
+        },
+        "Smoke": {
+          "format": "double",
+          "type": "number"
+        },
+        "Overall": {
+          "format": "double",
+          "type": "number"
+        },
+        "SmokeTimePercentil": {
+          "format": "double",
+          "type": "number"
+        },
+        "SessionTimePercentil": {
+          "format": "double",
+          "type": "number"
+        }
+      }
+    }
+  }
+}

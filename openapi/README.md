@@ -58,7 +58,7 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://devmana.azurewebsites.net*
+All URIs are relative to *https://localhost:44324*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -173,6 +173,7 @@ Class | Method | HTTP request | Description
  - [ReservationDto](docs\/ReservationDto.md)
  - [ReservationManageDto](docs\/ReservationManageDto.md)
  - [SeatDto](docs\/SeatDto.md)
+ - [SmartHookahControllersPriceGroupDto](docs\/SmartHookahControllersPriceGroupDto.md)
  - [SmartHookahHelpersAnimation](docs\/SmartHookahHelpersAnimation.md)
  - [SmartHookahModelsAddress](docs\/SmartHookahModelsAddress.md)
  - [SmartHookahModelsColor](docs\/SmartHookahModelsColor.md)
