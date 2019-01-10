@@ -1,13 +1,14 @@
-import 'package:app/models/Places/place.dart';
+import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:openapi/api.dart';
 
 class Carroussel extends StatefulWidget {
   Carroussel({this.navigateToDetail});
 
-  final void Function(Place) navigateToDetail;
+  final void Function(PlaceSimpleDto) navigateToDetail;
 
   @override
   _CarrousselState createState() =>
@@ -15,7 +16,7 @@ class Carroussel extends StatefulWidget {
 }
 
 class _CarrousselState extends State<Carroussel> {
-  final void Function(Place) navigateToDetail;
+  final void Function(PlaceSimpleDto) navigateToDetail;
 
   PlacesBloc placeBloc;
 
@@ -71,8 +72,8 @@ class _CarrousselState extends State<Carroussel> {
     );
   }
 
-  StreamBuilder<List<Place>> buildPlacePages(PlacesBloc bloc) {
-    return StreamBuilder<List<Place>>(
+  StreamBuilder<List<PlaceSimpleDto>> buildPlacePages(PlacesBloc bloc) {
+    return StreamBuilder<List<PlaceSimpleDto>>(
         initialData: null,
         stream: bloc.places,
         builder: (context, snapshot) => PageView.builder(
@@ -88,7 +89,7 @@ class _CarrousselState extends State<Carroussel> {
             ));
   }
 
-  builder(int index, Place place) {
+  builder(int index, PlaceSimpleDto place) {
     return new AnimatedBuilder(
         animation: controller,
         builder: (context, child) {
@@ -109,7 +110,7 @@ class _CarrousselState extends State<Carroussel> {
         child: buildInkWell(index, place));
   }
 
-  InkWell buildInkWell(int index, Place place) {
+  InkWell buildInkWell(int index, PlaceSimpleDto place) {
     return new InkWell(
       onTap: () {
         print('curent');
@@ -138,7 +139,8 @@ class _CarrousselState extends State<Carroussel> {
                   borderRadius: new BorderRadius.circular(10.0),
                   color: Colors.grey[300],
                   image: DecorationImage(
-                      image: CachedNetworkImageProvider(place.getPlaceImage()),
+                      image: CachedNetworkImageProvider(
+                          Extensions.getPlaceImage(place)),
                       fit: BoxFit.cover)),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -152,7 +154,7 @@ class _CarrousselState extends State<Carroussel> {
                           fontWeight: FontWeight.bold, fontSize: 20.0),
                     ),
                     new Text(
-                      place.address.toString(),
+                      Extensions.adress(place.address),
                       style: new TextStyle(color: Colors.grey),
                     ),
                     new Flex(

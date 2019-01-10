@@ -2,15 +2,16 @@ import 'dart:async';
 
 import 'package:app/app/app.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
-import 'package:app/models/Places/place.dart';
+import 'package:app/models/extensions.dart';
 import 'package:app/pages/Places/menu.page.dart';
 import 'package:app/pages/Places/reservation_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:map_view/map_view.dart';
+import 'package:openapi/api.dart';
 
 class PlaceDetailPage extends StatefulWidget {
-  final Place place;
+  final PlaceSimpleDto place;
 
   PlaceDetailPage({this.place});
 
@@ -56,7 +57,7 @@ class _PlaceDetailState extends State<PlaceDetailPage>
   AnimationController buttonController;
   Animation buttomZoomOut;
   MapView mapView = new MapView();
-  final Place place;
+  final PlaceSimpleDto place;
   var staticMapProvider = new StaticMapProvider(App.googleApiKeys);
   _PlaceDetailState(this.place);
 
@@ -65,8 +66,8 @@ class _PlaceDetailState extends State<PlaceDetailPage>
       mapView.addMarker(new Marker(
         "1",
         widget.place.name,
-        widget.place.address.lat,
-        widget.place.address.lng,
+        double.parse(place.address.lat),
+        double.parse(place.address.lng),
       ));
     });
 
@@ -168,8 +169,8 @@ class _PlaceDetailState extends State<PlaceDetailPage>
                 Hero(
                   tag: '_picture',
                   child: new Image(
-                    image:
-                        new CachedNetworkImageProvider(place.getPlaceImage()),
+                    image: new CachedNetworkImageProvider(
+                        Extensions.getPlaceImage(place)),
                     fit: BoxFit.cover,
                     height: _appBarHeight,
                   ),
@@ -303,9 +304,11 @@ class _PlaceDetailState extends State<PlaceDetailPage>
                                         style: TextStyle(color: Colors.black),
                                       ),
                                       onPressed: () {
-                                         Navigator.of(context).push(MaterialPageRoute(
-            settings: RouteSettings(),
-            builder: (context) => MenuPage(place: widget.place)));
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                settings: RouteSettings(),
+                                                builder: (context) => MenuPage(
+                                                    place: widget.place)));
                                       },
                                     ),
                                   ],

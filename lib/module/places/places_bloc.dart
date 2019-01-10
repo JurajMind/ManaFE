@@ -1,6 +1,6 @@
 import 'package:app/app/app.dart';
-import 'package:app/models/Places/place.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:location/location.dart';
 import 'package:map_view/map_view.dart' as map;
@@ -10,8 +10,9 @@ class PlacesBloc {
   Location _location = new Location();
   bool _initLoad = false;
 
-  BehaviorSubject<List<Place>> places =
-      new BehaviorSubject<List<Place>>(seedValue: new List<Place>());
+  BehaviorSubject<List<PlaceSimpleDto>> places =
+      new BehaviorSubject<List<PlaceSimpleDto>>(
+          seedValue: new List<PlaceSimpleDto>());
 
   BehaviorSubject<bool> loading = new BehaviorSubject(seedValue: false);
 

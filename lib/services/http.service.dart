@@ -6,7 +6,6 @@ import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
-import 'package:app/models/Places/place.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
 import 'package:app/models/Stand/animation.dart';
@@ -153,7 +152,7 @@ class ApiClient {
     });
   }
 
-  Future<List<Place>> getNearbyPlaces({double lat, double lng}) {
+  Future<List<PlaceSimpleDto>> getNearbyPlaces({double lat, double lng}) {
     Map<String, String> queryParameters = new Map<String, String>();
     if (lat != null && lng != null) {
       queryParameters['lat'] = '0'; // lat.toString();
@@ -165,7 +164,7 @@ class ApiClient {
       var list = json['NearbyPlaces'] as List;
 
       return list.map((f) {
-        return Place.fromJson(f);
+        return PlaceSimpleDto.fromJson(f);
       }).toList();
     });
   }
@@ -322,9 +321,11 @@ class ApiClient {
     return result;
   }
 
-  Future<PlaceMenuDto> getPlaceMenu(int id) async{
-     var url = Uri.https(baseUrl, '/api/Places/${id}/Menu');
-     return await _dio.get(url.toString()).then((data) => PlaceMenuDto.fromJson(data.data));
+  Future<PlaceMenuDto> getPlaceMenu(int id) async {
+    var url = Uri.https(baseUrl, '/api/Places/${id}/Menu');
+    return await _dio
+        .get(url.toString())
+        .then((data) => PlaceMenuDto.fromJson(data.data));
   }
 }
 

@@ -1,17 +1,15 @@
 import 'dart:async';
 
-import 'package:app/app/app.dart';
 import 'package:app/components/carousel.dart';
 import 'package:app/helpers.dart';
-import 'package:app/models/Places/place.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/pages/enterSmokeSesionCode.page.dart';
 import 'package:app/support/mana_icons_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:openapi/api.dart';
 
 class MyCustomRoute<T> extends MaterialPageRoute<T> {
   MyCustomRoute(
@@ -74,7 +72,7 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
     ));
   }
 
-  navigateToPlace(Place place) {
+  navigateToPlace(PlaceSimpleDto place) {
     var navigation = callback(1);
     navigation.currentState.push(MaterialPageRoute(
         settings: RouteSettings(),

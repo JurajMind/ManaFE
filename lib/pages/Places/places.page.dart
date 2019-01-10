@@ -1,11 +1,12 @@
 import 'package:app/app/app.dart';
-import 'package:app/models/Places/place.dart';
+import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:map_view/map_view.dart';
+import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PlacePage extends StatefulWidget {
@@ -38,7 +39,7 @@ class _PlacePageState extends State<PlacePage> {
         .value
         .map(
           (place) => new Marker(place.id.toString(), place.name,
-              place.address.lat, place.address.lng,
+              double.parse(place.address.lat), double.parse(place.address.lng),
               color: Colors.blue),
         )
         .toList());
@@ -111,7 +112,8 @@ class _PlacePageState extends State<PlacePage> {
     );
   }
 
-  StreamBuilder<List<Place>> placeBuilder(BehaviorSubject<List<Place>> places) {
+  StreamBuilder<List<PlaceSimpleDto>> placeBuilder(
+      BehaviorSubject<List<PlaceSimpleDto>> places) {
     return StreamBuilder(
         stream: places,
         initialData: null,
@@ -147,7 +149,7 @@ class _PlacePageState extends State<PlacePage> {
         });
   }
 
-  Widget _createPlaceItem(int index, Place data) {
+  Widget _createPlaceItem(int index, PlaceSimpleDto data) {
     return ListTile(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -160,12 +162,13 @@ class _PlacePageState extends State<PlacePage> {
           child: Hero(
             tag: '_picture',
             child: new Image(
-              image: new CachedNetworkImageProvider(data.getPlaceImage()),
+              image: new CachedNetworkImageProvider(
+                  Extensions.getPlaceImage(data)),
               fit: BoxFit.cover,
             ),
           )),
       title: Text(data.name),
-      subtitle: Text(data.address.toString()),
+      subtitle: Text(Extensions.adress(data.address)),
     );
   }
 }

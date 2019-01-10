@@ -1,4 +1,3 @@
-import 'package:app/models/Places/place.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/menu_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -7,7 +6,7 @@ import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MenuPage extends StatefulWidget {
-  final Place place;
+  final PlaceSimpleDto place;
   MenuPage({this.place});
 
   @override
