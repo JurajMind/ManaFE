@@ -115,10 +115,7 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
                             children: <Widget>[
                               new Text(
                                 'START',
-                                style: new TextStyle(
-                                    fontSize: 40.0,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+                                style: Theme.of(context).textTheme.title,
                               ),
                               new Icon(
                                 Icons.play_arrow,

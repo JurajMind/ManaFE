@@ -530,6 +530,8 @@ class _GearScrollHomeState extends State<GearScrollHome> {
       if (controller.position.pixels <= 0.1) {
         setState(() {
           innerScrollPhysics = NeverScrollableScrollPhysics();
+      
+   
         });
       }
     }

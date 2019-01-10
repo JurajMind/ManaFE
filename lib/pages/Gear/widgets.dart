@@ -51,7 +51,7 @@ class SectionTitle extends StatelessWidget {
     fontFamily: 'Montserrat',
     inherit: false,
     fontSize: 24.0,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w700,
     color: Colors.white,
     textBaseline: TextBaseline.alphabetic,
   );

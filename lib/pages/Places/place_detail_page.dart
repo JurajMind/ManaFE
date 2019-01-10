@@ -3,25 +3,38 @@ import 'dart:async';
 import 'package:app/app/app.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/models/Places/place.dart';
+import 'package:app/module/data_provider.dart';
+import 'package:app/module/places/place_bloc.dart';
 import 'package:app/pages/Places/menu.page.dart';
 import 'package:app/pages/Places/reservation_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:map_view/map_view.dart';
+import 'package:openapi/api.dart';
 
 class PlaceDetailPage extends StatefulWidget {
   final Place place;
+  final PlaceBloc placeBloc;
 
-  PlaceDetailPage({this.place});
+  PlaceDetailPage({this.place, this.placeBloc});
 
   @override
   State<StatefulWidget> createState() {
-    return new _PlaceDetailState(place);
+    return new _PlaceDetailState(place, placeBloc);
   }
 }
 
 class _PlaceDetailState extends State<PlaceDetailPage>
     with TickerProviderStateMixin {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (placeBloc == null) {
+      placeBloc = DataProvider.getData(context).placeSingleBloc;
+      placeBloc.loadPlace(place: this.place);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -57,8 +70,9 @@ class _PlaceDetailState extends State<PlaceDetailPage>
   Animation buttomZoomOut;
   MapView mapView = new MapView();
   final Place place;
+  PlaceBloc placeBloc;
   var staticMapProvider = new StaticMapProvider(App.googleApiKeys);
-  _PlaceDetailState(this.place);
+  _PlaceDetailState(this.place, this.placeBloc);
 
   showMap() {
     mapView.onMapReady.listen((_) {
@@ -201,34 +215,7 @@ class _PlaceDetailState extends State<PlaceDetailPage>
                                 Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        new IconLabel(
-                                          icon: Icons.watch,
-                                          child: Text(
-                                            buttomZoomOut.value.toString(),
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                        ),
-                                        new IconLabel(
-                                          icon: Icons.hot_tub,
-                                          child: Text(
-                                            'Cats not allowed',
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                        ),
-                                        new IconLabel(
-                                          icon: Icons.credit_card,
-                                          child: Text(
-                                            'Accepts cards',
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                        )
-                                      ],
-                                    ),
+                                    child: buildPlaceInfo(),
                                   ),
                                   flex: 1,
                                 ),
@@ -303,9 +290,11 @@ class _PlaceDetailState extends State<PlaceDetailPage>
                                         style: TextStyle(color: Colors.black),
                                       ),
                                       onPressed: () {
-                                         Navigator.of(context).push(MaterialPageRoute(
-            settings: RouteSettings(),
-            builder: (context) => MenuPage(place: widget.place)));
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                settings: RouteSettings(),
+                                                builder: (context) => MenuPage(
+                                                    place: widget.place)));
                                       },
                                     ),
                                   ],
@@ -321,6 +310,61 @@ class _PlaceDetailState extends State<PlaceDetailPage>
         )
       ],
     ));
+  }
+
+  Widget buildPlaceInfo() {
+    return StreamBuilder<PlaceDto>(
+        initialData: null,
+        stream: placeBloc.placeInfo,
+        builder: (context, snapshot) {
+         return  snapshot.data == null?
+         SizedBox(
+           child:  CircularProgressIndicator(),
+           width: 50.0,
+           height: 50.0,
+         ) :
+
+            
+             Column(
+              children: <Widget>[
+                new IconLabel(
+                  icon: Icons.watch,
+                  child: Text(
+         buttomZoomOut.value.toString(),
+         style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                snapshot.data.phoneNumber != null ?new IconLabel(
+                  icon: Icons.phone,
+                  child: Text(
+                   snapshot.data.phoneNumber,
+         style: TextStyle(color: Colors.black),
+                  ),
+                ) : Container(),
+                   snapshot.data.phoneNumber != null ?new IconLabel(
+                  icon: Icons.face,
+                  child: Text(
+                   snapshot.data.facebook,
+         style: TextStyle(color: Colors.black),
+                  ),
+                ) : Container(),
+                new IconLabel(
+                  icon: Icons.hot_tub,
+                  child: Text(
+         'Cats not allowed',
+         style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                new IconLabel(
+                  icon: Icons.credit_card,
+                  child: Text(
+         'Accepts cards',
+         style: TextStyle(color: Colors.black),
+                  ),
+                )
+              ],
+            );
+        });
   }
 
   void _openAddEntryDialog() {

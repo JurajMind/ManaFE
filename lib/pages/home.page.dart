@@ -41,9 +41,11 @@ class _HomePageState extends State<HomePage> {
   SmokeSessionBloc smokeSessionBloc;
   PersonBloc personBloc;
 
+
   @override
   void initState() {
     super.initState();
+    
     tabs = new List<Widget>(5);
     tabFocusNodes = new List<FocusScopeNode>.generate(
       5,
@@ -55,6 +57,8 @@ class _HomePageState extends State<HomePage> {
       if (msg == AppLifecycleState.resumed.toString()) {}
     });
   }
+
+
 
   @override
   void didChangeDependencies() async {
@@ -90,59 +94,62 @@ class _HomePageState extends State<HomePage> {
 
   Widget myBottomBar() => new BottomAppBar(
         child: Ink(
-          height: 50.0,
+          height: 60.0,
           color: Colors.black,
-          child: new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              IconButtonTitle(
-                icon: Icon(ManaIcons.leaf),
-                text: AppTranslations.of(context).text("tab_mixology"),
-                color: _currentIndex == 0 ? Colors.white : Colors.grey,
-                tooltip: 'ss',
-                onPressed: () => _setActiveTab(0),
-              ),
-              IconButtonTitle(
-                icon: Icon(Icons.place),
-                text: AppTranslations.of(context).text("tab_places"),
-                color: _currentIndex == 1 ? Colors.white : Colors.grey,
-                onPressed: () => _setActiveTab(1),
-              ),
-              _currentIndex == 2
-                  ? InkWell(
-                      onTap: () => _setActiveTab(2),
-                      child: GradientColorWheelRotate(
-                          size: new Size(48.0, 48.0),
-                          defaultColors: [Colors.white, Colors.white],
-                          child: Icon(
-                            ManaIcons.manam,
-                            color: Colors.black,
-                          )),
-                    )
-                  : InkWell(
-                      onTap: () => _setActiveTab(2),
-                      child: GradientColorWheelRotate(
-                          size: new Size(48.0, 48.0),
-                          defaultColors: [Colors.white, Colors.white],
-                          child: Icon(
-                            ManaIcons.manam,
-                            color: Colors.grey,
-                          )),
-                    ),
-              IconButtonTitle(
-                icon: Icon(ManaIcons.hookah),
-                text: AppTranslations.of(context).text("tab_gear"),
-                color: _currentIndex == 3 ? Colors.white : Colors.grey,
-                onPressed: () => _setActiveTab(3),
-              ),
-              IconButtonTitle(
-                icon: Icon(Icons.person),
-                text: AppTranslations.of(context).text("tab_profile"),
-                color: _currentIndex == 4 ? Colors.white : Colors.grey,
-                onPressed: () => _setActiveTab(4),
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+            child: new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                IconButtonTitle(
+                  icon: Icon(ManaIcons.leaf),
+                  text: AppTranslations.of(context).text("tab_mixology"),
+                  color: _currentIndex == 0 ? Colors.white : Colors.grey,
+                  tooltip: 'ss',
+                  onPressed: () => _setActiveTab(0),
+                ),
+                IconButtonTitle(
+                  icon: Icon(Icons.place),
+                  text: AppTranslations.of(context).text("tab_places"),
+                  color: _currentIndex == 1 ? Colors.white : Colors.grey,
+                  onPressed: () => _setActiveTab(1),
+                ),
+                _currentIndex == 2
+                    ? InkWell(
+                        onTap: () => _setActiveTab(2),
+                        child: GradientColorWheelRotate(
+                            size: new Size(50.0, 50.0),
+                            defaultColors: [Colors.white, Colors.white],
+                            child: Icon(
+                              ManaIcons.manam,
+                              color: Colors.black,
+                            )),
+                      )
+                    : InkWell(
+                        onTap: () => _setActiveTab(2),
+                        child: GradientColorWheelRotate(
+                                 size: new Size(50.0, 50.0),
+                            defaultColors: [Colors.white, Colors.white],
+                            child: Icon(
+                              ManaIcons.manam,
+                              color: Colors.grey,
+                            )),
+                      ),
+                IconButtonTitle(
+                  icon: Icon(ManaIcons.hookah),
+                  text: AppTranslations.of(context).text("tab_gear"),
+                  color: _currentIndex == 3 ? Colors.white : Colors.grey,
+                  onPressed: () => _setActiveTab(3),
+                ),
+                IconButtonTitle(
+                  icon: Icon(Icons.person),
+                  text: AppTranslations.of(context).text("tab_profile"),
+                  color: _currentIndex == 4 ? Colors.white : Colors.grey,
+                  onPressed: () => _setActiveTab(4),
+                ),
+              ],
+            ),
           ),
         ),
       );
