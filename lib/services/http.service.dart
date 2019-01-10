@@ -327,6 +327,11 @@ class ApiClient {
         .get(url.toString())
         .then((data) => PlaceMenuDto.fromJson(data.data));
   }
+
+  Future<PlaceDto> getPlaceInfo(int id) async{
+     var url = Uri.https(baseUrl, '/api/Places/${id}/Menu');
+     return await _dio.get(url.toString()).then((data) => PlaceDto.fromJson(data.data));
+  }
 }
 
 class ColorDto {

@@ -2,6 +2,7 @@ import 'package:app/module/general/gear_bloc.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/person/person_bloc.dart';
 import 'package:app/module/places/menu_bloc.dart';
+import 'package:app/module/places/place_bloc.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,6 +14,7 @@ class DataProvider extends InheritedWidget {
   final MenuBloc menuBloc;
   final PersonBloc personBloc;
   final GearBloc gearBloc;
+  final PlaceBloc placeSingleBloc;
 
   DataProvider({
     Key key,
@@ -23,6 +25,7 @@ class DataProvider extends InheritedWidget {
         personBloc = new PersonBloc(),
         gearBloc = new GearBloc(),
         menuBloc = new MenuBloc(),
+        placeSingleBloc = new PlaceBloc(),
         super(key: key, child: child);
 
   @override

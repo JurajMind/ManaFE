@@ -15,7 +15,14 @@ ThemeData buildDarkTheme() {
       buttonTheme: const ButtonThemeData(
         textTheme: ButtonTextTheme.primary,
       ),
-      textTheme: _buildTextTheme(base.textTheme),
+    textTheme: TextTheme(
+      headline: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+      title: TextStyle(fontSize: 36.0, fontWeight: FontWeight.w700),
+      body1: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+      subtitle: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w700, fontFamily: 'Montserrat' ),
+      display1:  TextStyle(fontSize: 20.0, fontWeight: FontWeight.w700, fontFamily: 'Montserrat' )
+
+    ),
       primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
       accentTextTheme: _buildTextTheme(base.accentTextTheme),
     );

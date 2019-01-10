@@ -45,17 +45,11 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                       child: widget.tobaccoMix.name != null
                           ? Text(
                               widget.tobaccoMix.name,
-                              style: new TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16.0),
+                              style: Theme.of(context).textTheme.title,
                             )
                           : Text(
                               'No name',
-                              style: new TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16.0),
+                              style: Theme.of(context).textTheme.subtitle,
                             ),
                     ),
                   ),

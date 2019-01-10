@@ -1,6 +1,7 @@
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/places_bloc.dart';
+import 'package:app/support/mana_icons_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:openapi/api.dart';
@@ -150,8 +151,7 @@ class _CarrousselState extends State<Carroussel> {
                   children: <Widget>[
                     new Text(
                       place.name,
-                      style: new TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 20.0),
+                      style: Theme.of(context).textTheme.display1,
                     ),
                     new Text(
                       Extensions.adress(place.address),
@@ -160,7 +160,7 @@ class _CarrousselState extends State<Carroussel> {
                     new Flex(
                       direction: Axis.horizontal,
                       children: <Widget>[
-                        new Icon(Icons.ac_unit),
+                        new Icon(ManaIcons.hookah),
                         new Text(place.rating.toString())
                       ],
                     )

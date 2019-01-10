@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:app/app/app.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/models/extensions.dart';
+import 'package:app/module/data_provider.dart';
+import 'package:app/module/places/place_bloc.dart';
 import 'package:app/pages/Places/menu.page.dart';
 import 'package:app/pages/Places/reservation_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -12,17 +14,27 @@ import 'package:openapi/api.dart';
 
 class PlaceDetailPage extends StatefulWidget {
   final PlaceSimpleDto place;
+  final PlaceBloc placeBloc;
 
-  PlaceDetailPage({this.place});
+  PlaceDetailPage({this.place, this.placeBloc});
 
   @override
   State<StatefulWidget> createState() {
-    return new _PlaceDetailState(place);
+    return new _PlaceDetailState(place, placeBloc);
   }
 }
 
 class _PlaceDetailState extends State<PlaceDetailPage>
     with TickerProviderStateMixin {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (placeBloc == null) {
+      placeBloc = DataProvider.getData(context).placeSingleBloc;
+      placeBloc.loadPlace(place: this.place);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -58,8 +70,9 @@ class _PlaceDetailState extends State<PlaceDetailPage>
   Animation buttomZoomOut;
   MapView mapView = new MapView();
   final PlaceSimpleDto place;
+  PlaceBloc placeBloc;
   var staticMapProvider = new StaticMapProvider(App.googleApiKeys);
-  _PlaceDetailState(this.place);
+  _PlaceDetailState(this.place, this.placeBloc);
 
   showMap() {
     mapView.onMapReady.listen((_) {
@@ -99,8 +112,12 @@ class _PlaceDetailState extends State<PlaceDetailPage>
   @override
   Widget build(BuildContext context) {
     var mapUri = staticMapProvider.getStaticUri(
-        new Location(place.address.lat, place.address.lng), 13,
-        width: 450, height: 350, mapType: StaticMapViewType.roadmap);
+        new Location(
+            double.parse(place.address.lat), double.parse(place.address.lng)),
+        13,
+        width: 450,
+        height: 350,
+        mapType: StaticMapViewType.roadmap);
 
     buttonController.addListener(() {
       if (buttonController.isCompleted) {
@@ -202,34 +219,7 @@ class _PlaceDetailState extends State<PlaceDetailPage>
                                 Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        new IconLabel(
-                                          icon: Icons.watch,
-                                          child: Text(
-                                            buttomZoomOut.value.toString(),
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                        ),
-                                        new IconLabel(
-                                          icon: Icons.hot_tub,
-                                          child: Text(
-                                            'Cats not allowed',
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                        ),
-                                        new IconLabel(
-                                          icon: Icons.credit_card,
-                                          child: Text(
-                                            'Accepts cards',
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                        )
-                                      ],
-                                    ),
+                                    child: buildPlaceInfo(),
                                   ),
                                   flex: 1,
                                 ),
@@ -239,8 +229,13 @@ class _PlaceDetailState extends State<PlaceDetailPage>
                                     onTap: () => showMap(),
                                     child: Padding(
                                       padding: const EdgeInsets.all(10.0),
-                                      child: Image.network(
-                                          mapUri.toString() + '&scale=2'),
+                                      child: new CachedNetworkImage(
+                                        imageUrl:
+                                            mapUri.toString() + '&scale=2',
+                                        placeholder:
+                                            new CircularProgressIndicator(),
+                                        errorWidget: new Icon(Icons.error),
+                                      ),
                                     ),
                                   ),
                                 )
@@ -324,6 +319,63 @@ class _PlaceDetailState extends State<PlaceDetailPage>
         )
       ],
     ));
+  }
+
+  Widget buildPlaceInfo() {
+    return StreamBuilder<PlaceDto>(
+        initialData: null,
+        stream: placeBloc.placeInfo,
+        builder: (context, snapshot) {
+          return snapshot.data == null
+              ? SizedBox(
+                  child: CircularProgressIndicator(),
+                  width: 50.0,
+                  height: 50.0,
+                )
+              : Column(
+                  children: <Widget>[
+                    new IconLabel(
+                      icon: Icons.watch,
+                      child: Text(
+                        buttomZoomOut.value.toString(),
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                    snapshot.data.phoneNumber != null
+                        ? new IconLabel(
+                            icon: Icons.phone,
+                            child: Text(
+                              snapshot.data.phoneNumber,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          )
+                        : Container(),
+                    snapshot.data.phoneNumber != null
+                        ? new IconLabel(
+                            icon: Icons.face,
+                            child: Text(
+                              snapshot.data.facebook,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          )
+                        : Container(),
+                    new IconLabel(
+                      icon: Icons.hot_tub,
+                      child: Text(
+                        'Cats not allowed',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                    new IconLabel(
+                      icon: Icons.credit_card,
+                      child: Text(
+                        'Accepts cards',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    )
+                  ],
+                );
+        });
   }
 
   void _openAddEntryDialog() {
