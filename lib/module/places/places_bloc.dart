@@ -31,17 +31,7 @@ class PlacesBloc {
   }
 
   Future loadPlaces() async {
-    try {
-      var db = await App.cache.getDatabase();
-      var value = await db.get('places');
-      var it = json.decode(value);
-      var fromCache = PlaceSimpleDto.listFromJson(it);
-      this.places.add(fromCache);
-      this.loading.add(false);
-    } catch (e) {
-      print('error');
-      print(e);
-    }
+    await loadPlacesFromCache();
 
     var location = await getLocation();
     if (location == null) {
@@ -55,6 +45,24 @@ class PlacesBloc {
       var key = await db.put(json.encode(places), 'places');
       this.loading.add(false);
     });
+  }
+
+  Future loadPlacesFromCache() async {
+    try {
+      var db = await App.cache.getDatabase();
+      var value = await db.get('places');
+      if (value == null) {
+        return;
+      }
+
+      var it = json.decode(value);
+      var fromCache = PlaceSimpleDto.listFromJson(it);
+      this.places.add(fromCache);
+      this.loading.add(false);
+    } catch (e) {
+      print('error');
+      print(e);
+    }
   }
 
   Future<bool> _getPermissionStatus() async {
