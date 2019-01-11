@@ -99,23 +99,28 @@ class _HomePageState extends State<HomePage> {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
             child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                IconButtonTitle(
-                  icon: Icon(ManaIcons.leaf),
-                  text: AppTranslations.of(context).text("tab_mixology"),
-                  color: _currentIndex == 0 ? Colors.white : Colors.grey,
-                  tooltip: 'ss',
-                  onPressed: () => _setActiveTab(0),
+                Expanded(flex: 1,
+                                  child: IconButtonTitle(
+                    icon: Icon(ManaIcons.leaf),
+                    text: AppTranslations.of(context).text("tab_mixology"),
+                    color: _currentIndex == 0 ? Colors.white : Colors.grey,
+                    tooltip: 'ss',
+                    onPressed: () => _setActiveTab(0),
+                  ),
                 ),
-                IconButtonTitle(
-                  icon: Icon(Icons.place),
-                  text: AppTranslations.of(context).text("tab_places"),
-                  color: _currentIndex == 1 ? Colors.white : Colors.grey,
-                  onPressed: () => _setActiveTab(1),
+                Expanded(
+                  flex:1,
+                                  child: IconButtonTitle(
+                    icon: Icon(Icons.place),
+                    text: AppTranslations.of(context).text("tab_places"),
+                    color: _currentIndex == 1 ? Colors.white : Colors.grey,
+                    onPressed: () => _setActiveTab(1),
+                  ),
                 ),
-                _currentIndex == 2
+                Expanded(flex:1,child:_currentIndex == 2
                     ? InkWell(
                         onTap: () => _setActiveTab(2),
                         child: GradientColorWheelRotate(
@@ -135,18 +140,22 @@ class _HomePageState extends State<HomePage> {
                               ManaIcons.manam,
                               color: Colors.grey,
                             )),
-                      ),
-                IconButtonTitle(
-                  icon: Icon(ManaIcons.hookah),
-                  text: AppTranslations.of(context).text("tab_gear"),
-                  color: _currentIndex == 3 ? Colors.white : Colors.grey,
-                  onPressed: () => _setActiveTab(3),
+                      )),
+                Expanded(flex:1,
+                                  child: IconButtonTitle(
+                    icon: Icon(ManaIcons.hookah),
+                    text: AppTranslations.of(context).text("tab_gear"),
+                    color: _currentIndex == 3 ? Colors.white : Colors.grey,
+                    onPressed: () => _setActiveTab(3),
+                  ),
                 ),
-                IconButtonTitle(
-                  icon: Icon(Icons.person),
-                  text: AppTranslations.of(context).text("tab_profile"),
-                  color: _currentIndex == 4 ? Colors.white : Colors.grey,
-                  onPressed: () => _setActiveTab(4),
+                Expanded( flex:1,
+                                  child: IconButtonTitle(
+                    icon: Icon(Icons.person),
+                    text: AppTranslations.of(context).text("tab_profile"),
+                    color: _currentIndex == 4 ? Colors.white : Colors.grey,
+                    onPressed: () => _setActiveTab(4),
+                  ),
                 ),
               ],
             ),

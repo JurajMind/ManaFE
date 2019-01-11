@@ -33,7 +33,7 @@ class PlacesBloc {
   Future loadPlaces() async {
     await loadPlacesFromCache();
 
-    var location = await getLocation();
+    map.Location location = null;// await getLocation();
     if (location == null) {
       location = new map.Location(0.0, 0.0);
     }

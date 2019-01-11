@@ -92,7 +92,7 @@ class _PlaceDetailState extends State<PlaceDetailPage>
             showCompassButton: true,
             initialCameraPosition: new CameraPosition(
                 new Location(
-                    widget.place.address.lat, widget.place.address.lng),
+                    double.parse(widget.place.address.lat), double.parse(widget.place.address.lng)),
                 15.0),
             hideToolbar: false,
             title: widget.place.name),
@@ -144,7 +144,7 @@ class _PlaceDetailState extends State<PlaceDetailPage>
                     Hero(
                       tag: 'placeName',
                       child: Text(
-                        place.address.toString(),
+                        Extensions.adress(place.address),
                         style: TextStyle(
                           fontSize: 15.0,
                           color: Colors.white,
