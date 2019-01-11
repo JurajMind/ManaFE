@@ -11,6 +11,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:map_view/map_view.dart';
 import 'package:openapi/api.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PlaceDetailPage extends StatefulWidget {
   final PlaceSimpleDto place;
@@ -144,7 +145,7 @@ class _PlaceDetailState extends State<PlaceDetailPage>
                     Hero(
                       tag: 'placeName',
                       child: Text(
-                        place.address.toString(),
+                        Extensions.adress(place.address),
                         style: TextStyle(
                           fontSize: 15.0,
                           color: Colors.white,
@@ -322,60 +323,58 @@ class _PlaceDetailState extends State<PlaceDetailPage>
   }
 
   Widget buildPlaceInfo() {
-    return StreamBuilder<PlaceDto>(
-        initialData: null,
-        stream: placeBloc.placeInfo,
-        builder: (context, snapshot) {
-          return snapshot.data == null
-              ? SizedBox(
-                  child: CircularProgressIndicator(),
-                  width: 50.0,
-                  height: 50.0,
-                )
-              : Column(
-                  children: <Widget>[
-                    new IconLabel(
-                      icon: Icons.watch,
-                      child: Text(
-                        buttomZoomOut.value.toString(),
-                        style: TextStyle(color: Colors.black),
+    return widget.place == null
+        ? SizedBox(
+            child: CircularProgressIndicator(),
+            width: 50.0,
+            height: 50.0,
+          )
+        : Column(
+            children: <Widget>[
+              new IconLabel(
+                icon: Icons.watch,
+                child: Text(
+                  buttomZoomOut.value.toString(),
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+              widget.place.phoneNumber != null
+                  ? InkWell(
+                      onTap: () => launch('tel://${widget.place.phoneNumber}'),
+                      child: new IconLabel(
+                        icon: Icons.phone,
+                        child: Text(
+                          widget.place.phoneNumber,
+                          style: TextStyle(color: Colors.black),
+                        ),
                       ),
-                    ),
-                    snapshot.data.phoneNumber != null
-                        ? new IconLabel(
-                            icon: Icons.phone,
-                            child: Text(
-                              snapshot.data.phoneNumber,
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          )
-                        : Container(),
-                    snapshot.data.phoneNumber != null
-                        ? new IconLabel(
-                            icon: Icons.face,
-                            child: Text(
-                              snapshot.data.facebook,
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          )
-                        : Container(),
-                    new IconLabel(
-                      icon: Icons.hot_tub,
+                    )
+                  : Container(),
+              place.facebook != null
+                  ? new IconLabel(
+                      icon: Icons.face,
                       child: Text(
-                        'Cats not allowed',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                    new IconLabel(
-                      icon: Icons.credit_card,
-                      child: Text(
-                        'Accepts cards',
+                        place.facebook,
                         style: TextStyle(color: Colors.black),
                       ),
                     )
-                  ],
-                );
-        });
+                  : Container(),
+              new IconLabel(
+                icon: Icons.hot_tub,
+                child: Text(
+                  'Cats not allowed',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+              new IconLabel(
+                icon: Icons.credit_card,
+                child: Text(
+                  'Accepts cards',
+                  style: TextStyle(color: Colors.black),
+                ),
+              )
+            ],
+          );
   }
 
   void _openAddEntryDialog() {

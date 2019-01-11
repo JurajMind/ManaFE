@@ -141,15 +141,22 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
               top: 320.0,
               child: Column(
                 children: <Widget>[
-                  Text(
-                    'NEAREST PLACE',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.green[50]),
-                  ),
                   SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height / 2 - 60,
-                      child: Carroussel(navigateToDetail: navigateToPlace)),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            'NEAREST PLACE',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green[50]),
+                          ),
+                          Expanded(
+                              child: Carroussel(
+                                  navigateToDetail: navigateToPlace)),
+                        ],
+                      )),
                 ],
               ))
         ],

@@ -16,6 +16,8 @@ Name | Type | Description | Notes
 **businessHours** | [**List&lt;OpeningDay&gt;**](OpeningDay.md) |  | [optional] [default to []]
 **rating** | **int** |  | [optional] [default to null]
 **medias** | [**List&lt;MediaDto&gt;**](MediaDto.md) |  | [optional] [default to []]
+**phoneNumber** | **String** |  | [optional] [default to null]
+**facebook** | **String** |  | [optional] [default to null]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

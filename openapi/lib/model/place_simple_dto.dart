@@ -17,11 +17,15 @@ class PlaceSimpleDto {
   int rating = null;
   
   List<MediaDto> medias = [];
+  
+  String phoneNumber = null;
+  
+  String facebook = null;
   PlaceSimpleDto();
 
   @override
   String toString() {
-    return 'PlaceSimpleDto[id=$id, name=$name, friendlyUrl=$friendlyUrl, logoPath=$logoPath, address=$address, businessHours=$businessHours, rating=$rating, medias=$medias, ]';
+    return 'PlaceSimpleDto[id=$id, name=$name, friendlyUrl=$friendlyUrl, logoPath=$logoPath, address=$address, businessHours=$businessHours, rating=$rating, medias=$medias, phoneNumber=$phoneNumber, facebook=$facebook, ]';
   }
 
   PlaceSimpleDto.fromJson(Map<String, dynamic> json) {
@@ -34,6 +38,8 @@ class PlaceSimpleDto {
     businessHours = OpeningDay.listFromJson(json['BusinessHours']);
     rating = json['Rating'];
     medias = MediaDto.listFromJson(json['Medias']);
+    phoneNumber = json['PhoneNumber'];
+    facebook = json['Facebook'];
   }
 
   Map<String, dynamic> toJson() {
@@ -45,7 +51,9 @@ class PlaceSimpleDto {
       'Address': address,
       'BusinessHours': businessHours,
       'Rating': rating,
-      'Medias': medias
+      'Medias': medias,
+      'PhoneNumber': phoneNumber,
+      'Facebook': facebook
     };
   }
 

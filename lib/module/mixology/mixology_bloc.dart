@@ -11,7 +11,7 @@ import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MixologyBloc {
-  static const _mixPerPage = 10;
+  static const _mixPerPage = 50;
 
   final _indexController = PublishSubject<int>();
 
