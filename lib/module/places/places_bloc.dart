@@ -5,10 +5,10 @@ import 'package:rxdart/rxdart.dart';
 import 'package:location/location.dart';
 import 'package:map_view/map_view.dart' as map;
 import 'package:flutter/services.dart';
+import 'dart:convert';
 
 class PlacesBloc {
   Location _location = new Location();
-  bool _initLoad = false;
 
   BehaviorSubject<List<PlaceSimpleDto>> places =
       new BehaviorSubject<List<PlaceSimpleDto>>(
@@ -28,26 +28,31 @@ class PlacesBloc {
 
   PlacesBloc._() {
     this.loading.add(true);
-
-    App.http.getNearbyPlaces().then((places) {
-      this.places.add(places);
-      this.loading.add(false);
-    });
   }
 
-  Future<bool> loadPlaces({bool init}) async {
-    if (_initLoad && (int == null || !init)) {
-      return true;
+  Future loadPlaces() async {
+    try {
+      var db = await App.cache.getDatabase();
+      var value = await db.get('places');
+      var it = json.decode(value);
+      var fromCache = PlaceSimpleDto.listFromJson(it);
+      this.places.add(fromCache);
+      this.loading.add(false);
+    } catch (e) {
+      print('error');
+      print(e);
     }
-    _initLoad = true;
+
     var location = await getLocation();
     if (location == null) {
-      return false;
+      location = new map.Location(0.0, 0.0);
     }
-    App.http
+    await App.http
         .getNearbyPlaces(lat: location.latitude, lng: location.longitude)
-        .then((places) {
+        .then((places) async {
       this.places.add(places);
+      var db = await App.cache.getDatabase();
+      var key = await db.put(json.encode(places), 'places');
       this.loading.add(false);
     });
   }

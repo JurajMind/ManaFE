@@ -1,27 +1,38 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 
 class Cache {
   Database database;
-  Future _doneFuture;
-  Future get initializationDone => _doneFuture;
 
-  Future _init() async {
-    String dbPath = join(dirname(Platform.script.toFilePath()), "sample.db");
+  Completer<Database> _completer;
+
+  Cache();
+
+  /// Get the opened database
+  Future<Database> getDatabase() async {
+    if (_completer == null) {
+      _completer = Completer();
+      _openDatabase();
+    }
+    return _completer.future;
+  }
+
+  Future<Database> _openDatabase() async {
+    final directory = await getApplicationDocumentsDirectory();
+    String dbPath = join(directory.path, "sample.db");
+    var file = new File(dbPath);
+    file.createSync();
+
     database = await databaseFactoryIo.openDatabase(dbPath);
+    _completer.complete(database);
     print("init db");
+    return database;
   }
 
-  static final Cache _singleton = new Cache._internal();
-
-  factory Cache() {
-    return _singleton;
-  }
-
-  Cache._internal() {
-    _init();
-  }
+  Cache._internal() {}
 }

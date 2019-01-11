@@ -42,11 +42,11 @@ class _CarrousselState extends State<Carroussel> {
   }
 
   @override
-  void didChangeDependencies() {
+  Future didChangeDependencies() async {
     super.didChangeDependencies();
     if (placeBloc == null) {
       placeBloc = DataProvider.getPlaces(context);
-      placeBloc.loadPlaces();
+      await placeBloc.loadPlaces();
     }
   }
 

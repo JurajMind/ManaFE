@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:app/app/app.widget.dart';
+import 'package:app/module/cached.bloc.dart';
 import 'package:app/routes/app.routes.dart';
 import 'package:app/routes/auth.routes.dart';
 import 'package:app/services/http.service.dart';
@@ -17,6 +18,8 @@ class App {
 
   // Application providers.
   static ApiClient http;
+
+  static Cache cache;
 
   static String clientId;
 
@@ -37,6 +40,7 @@ class App {
     // Create app http service.
     App.http = new ApiClient(baseUri);
     App.http.init();
+    App.cache = new Cache();
     // Create a router.
     final Router router = new Router();
 

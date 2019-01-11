@@ -36,7 +36,7 @@ class _ReservationPageState extends State<ReservationPage> {
         data: ThemeData.light(),
         child: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0), color: Colors.white),
+              borderRadius: BorderRadius.circular(32.0), color: Colors.white),
           child: new Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
@@ -86,7 +86,7 @@ class _ReservationPageState extends State<ReservationPage> {
                                       maxValue: 10,
                                       onChanged: (value) {
                                         print(value);
-                                           Vibrate.feedback(FeedbackType.light);
+                                        Vibrate.feedback(FeedbackType.light);
                                         setState(() {
                                           peopleCount = value;
                                         });
@@ -115,7 +115,7 @@ class _ReservationPageState extends State<ReservationPage> {
                                         "19:30"
                                       ],
                                       onChanged: (value) {
-                                           Vibrate.feedback(FeedbackType.light);
+                                        Vibrate.feedback(FeedbackType.light);
                                         print(value);
                                         setState(() {
                                           selectedTime = value;
@@ -146,7 +146,7 @@ class _ReservationPageState extends State<ReservationPage> {
                                       ],
                                       onChanged: (value) {
                                         print(value);
-                                           Vibrate.feedback(FeedbackType.light);
+                                        Vibrate.feedback(FeedbackType.light);
                                         setState(() {
                                           duration = value;
                                         });
