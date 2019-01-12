@@ -8,6 +8,7 @@ import 'dart:async';
 import 'package:web_socket_channel/io.dart';
 
 class SignalR {
+  static final SignalR _singleton = new SignalR._internal();
   static String host = App.baseUri;
   static String url = 'https://$host/signalr';
   final conectionData = Uri.encodeComponent('[{"name":"smokesessionhub"}]');
@@ -15,10 +16,12 @@ class SignalR {
 
   IOWebSocketChannel _channel;
 
-  BehaviorSubject<SmokeSessionData> updateStats =
-      new BehaviorSubject<SmokeSessionData>();
-
   bool connection = false;
+
+  factory SignalR() {
+    return _singleton;
+  }
+  SignalR._internal() {}
 
   Future<dynamic> connect() async {
     if (this.connection) {

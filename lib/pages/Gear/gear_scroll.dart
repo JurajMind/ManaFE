@@ -530,8 +530,6 @@ class _GearScrollHomeState extends State<GearScrollHome> {
       if (controller.position.pixels <= 0.1) {
         setState(() {
           innerScrollPhysics = NeverScrollableScrollPhysics();
-      
-   
         });
       }
     }
@@ -597,7 +595,12 @@ class _GearScrollHomeState extends State<GearScrollHome> {
     GearBloc gearBloc = dataProvider.gearBloc;
     Map<int, ScrollController> innerScrollControllers =
         new Map<int, ScrollController>();
+    innerScrollControllers[0] = ScrollController();
     innerScrollControllers[1] = ScrollController();
+    innerScrollControllers[2] = ScrollController();
+    innerScrollControllers[3] = ScrollController();
+    innerScrollControllers[4] = ScrollController();
+    innerScrollControllers[5] = ScrollController();
     List<Section> allSections =
         getAllSections(gearBloc, innerScrollPhysics, innerScrollControllers);
     // The scroll offset that reveals the appBarMidHeight appbar.

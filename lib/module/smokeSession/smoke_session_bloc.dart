@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:app/app/app.dart';
+import 'package:app/app/app.widget.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
+import 'package:app/models/SignalR/device_online.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
@@ -10,6 +12,8 @@ import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
 import 'package:app/models/Stand/animation.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/models/Stand/preset.dart';
+import 'package:app/pages/SmokeSession/smoke_session_page.dart';
+import 'package:app/pages/home.page.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:app/utils/color.dart';
 import 'package:flutter/material.dart';
@@ -170,7 +174,7 @@ class SmokeSessionBloc {
   }
 
   loadAnimation() async {
-    var list = await App.http.getAnimations('hookahTest1');
+    var list = await App.http.getAnimations(hookahCode);
     animations.add(list);
   }
 
@@ -221,11 +225,11 @@ class SmokeSessionBloc {
     });
 
     futureSettingDebounce =
-        futureSettings.debounce(Duration(milliseconds: 200));
+        futureSettings.debounce(Duration(milliseconds: 800));
     futureSettingDebounce.listen((onData) => _futureSetAnimation(onData));
 
     futureDevicePresetDebounce =
-        futureDevicePreset.debounce(Duration(milliseconds: 200));
+        futureDevicePreset.debounce(Duration(milliseconds: 800));
     futureDevicePresetDebounce.listen((onData) => _futureSetPreset(onData));
   }
 
@@ -244,6 +248,11 @@ class SmokeSessionBloc {
             handleUpdateStats(f);
             break;
           }
+        case 'deviceOnline':
+          {
+            handleDeviceOnline(f);
+            break;
+          }
       }
     });
   }
@@ -260,6 +269,22 @@ class SmokeSessionBloc {
   void handleUpdateStats(ClientMethod f) {
     var data = new SmokeStatisticDataModel.fromSignal(f.Data);
     smokeStatistic.add(data);
+  }
+
+  void handleDeviceOnline(ClientMethod f) {
+    var data = new DeviceOnline.fromSignal(f.Data);
+    final snackBar = SnackBar(
+      content: Text('${data.deviceName} come online'),
+      action: SnackBarAction(
+        label: 'TO SESSION',
+        onPressed: () => {},
+        // onPressed: () => navigatorKey.currentState
+        //        .push(new MaterialPageRoute(builder: (BuildContext context) {
+        //      return new SmokeSessionPage(sessionId: data.sessionCode);
+        //    })),
+      ),
+    );
+    scaffoldKey.currentState.showSnackBar(snackBar);
   }
 
   loadPresets() async {

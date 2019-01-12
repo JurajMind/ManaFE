@@ -58,6 +58,7 @@ part 'model/mix_list.dart';
 part 'model/nearby_places_dto.dart';
 part 'model/opening_day.dart';
 part 'model/person_active_data_dto.dart';
+part 'model/person_info_dto.dart';
 part 'model/person_statistics_overall_dto.dart';
 part 'model/pipe_accesory_like_dto.dart';
 part 'model/pipe_accesory_simple_dto.dart';

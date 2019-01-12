@@ -1,4 +1,4 @@
-# openapi.model.DeviceSimpleDto
+# openapi.model.PersonInfoDto
 
 ## Load the model package
 ```dart
@@ -8,11 +8,10 @@ import 'package:openapi/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **String** |  | [optional] [default to null]
-**code** | **String** |  | [optional] [default to null]
-**isOnline** | **bool** |  | [optional] [default to null]
-**type** | **int** |  | [optional] [default to null]
-**version** | **int** |  | [optional] [default to null]
+**displayName** | **String** |  | [optional] [default to null]
+**email** | **String** |  | [optional] [default to null]
+**managedPlaces** | [**List&lt;PlaceSimpleDto&gt;**](PlaceSimpleDto.md) |  | [optional] [default to []]
+**roles** | **List&lt;String&gt;** |  | [optional] [default to []]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

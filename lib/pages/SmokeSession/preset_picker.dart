@@ -67,7 +67,9 @@ class PresetPickerState extends State<PresetPicker> {
                   if (index == 0) {
                     print('fake');
                   }
-                  widget.onChanged(index == 0 ? DevicePreset.empty() : snapshot.data[index - 1]);
+                  widget.onChanged(index == 0
+                      ? DevicePreset.empty()
+                      : snapshot.data[index - 1]);
                   setState(() {
                     _focusIndex = index;
                   });
@@ -98,41 +100,41 @@ class PresetPickerState extends State<PresetPicker> {
           return new Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
+              Container(
+                width: 20.0,
+              ),
               Text(
-                'Presets',
+                'PRESETS',
                 style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w700),
               ),
+              Icon(Icons.chevron_right),
             ],
           );
         });
   }
 
-  StreamBuilder<DevicePreset> _createPreset(int index, DevicePreset data, BuildContext context, SmokeSessionBloc presetBloc) {
-
+  StreamBuilder<DevicePreset> _createPreset(int index, DevicePreset data,
+      BuildContext context, SmokeSessionBloc presetBloc) {
     return StreamBuilder<DevicePreset>(
       initialData: DevicePreset.empty(),
       stream: presetBloc.selectedPreset,
-      builder: (context,snapshop){
+      builder: (context, snapshop) {
         var selected = snapshop.data.id == data.id;
-       
 
-            return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Container(
-        child: Center(
-          child: Text(data.name,
-              style: TextStyle(
-                color: selected ? Colors.white : Colors.grey,
-                fontWeight: FontWeight.bold,
-                fontSize: index + 1 == _focusIndex ? 35.0 : 25.0,
-              )),
-        ),
-      ),
-    );
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Container(
+            child: Center(
+              child: Text(data.name,
+                  style: TextStyle(
+                    color: selected ? Colors.white : Colors.grey,
+                    fontWeight: FontWeight.bold,
+                    fontSize: index + 1 == _focusIndex ? 35.0 : 25.0,
+                  )),
+            ),
+          ),
+        );
       },
     );
-
-    
-
   }
 }

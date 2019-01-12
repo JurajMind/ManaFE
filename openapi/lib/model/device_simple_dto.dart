@@ -7,11 +7,16 @@ class DeviceSimpleDto {
   String code = null;
   
   bool isOnline = null;
+  
+  int type = null;
+  //enum typeEnum {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10,  11,  12,  13,  };{
+  
+  int version = null;
   DeviceSimpleDto();
 
   @override
   String toString() {
-    return 'DeviceSimpleDto[name=$name, code=$code, isOnline=$isOnline, ]';
+    return 'DeviceSimpleDto[name=$name, code=$code, isOnline=$isOnline, type=$type, version=$version, ]';
   }
 
   DeviceSimpleDto.fromJson(Map<String, dynamic> json) {
@@ -19,13 +24,17 @@ class DeviceSimpleDto {
     name = json['Name'];
     code = json['Code'];
     isOnline = json['IsOnline'];
+    type = json['Type'];
+    version = json['Version'];
   }
 
   Map<String, dynamic> toJson() {
     return {
       'Name': name,
       'Code': code,
-      'IsOnline': isOnline
+      'IsOnline': isOnline,
+      'Type': type,
+      'Version': version
     };
   }
 

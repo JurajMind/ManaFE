@@ -18,7 +18,7 @@ class ApiClient {
   final _regList = RegExp(r'^List<(.*)>$');
   final _regMap = RegExp(r'^Map<String,(.*)>$');
 
-  ApiClient({this.basePath: "https://localhost:44324"}) {
+  ApiClient({this.basePath: "https://devmana.azurewebsites.net"}) {
     // Setup authentications (key: authentication name, value: authentication).
   }
 
@@ -87,6 +87,8 @@ class ApiClient {
           return OpeningDay.fromJson(value);
         case 'PersonActiveDataDto':
           return PersonActiveDataDto.fromJson(value);
+        case 'PersonInfoDto':
+          return PersonInfoDto.fromJson(value);
         case 'PersonStatisticsOverallDto':
           return PersonStatisticsOverallDto.fromJson(value);
         case 'PipeAccesoryLikeDto':

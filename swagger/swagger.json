@@ -4,7 +4,7 @@
     "version": "v1",
     "title": "smartHookah"
   },
-  "host": "localhost:44324",
+  "host": "devmana.azurewebsites.net",
   "schemes": [
     "https"
   ],
@@ -1200,7 +1200,7 @@
         }
       }
     },
-    "/api/Person/GetPersonActiveData": {
+    "/api/Person/InitData": {
       "get": {
         "tags": [
           "Person"
@@ -1218,6 +1218,29 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/PersonActiveDataDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Person/Info": {
+      "get": {
+        "tags": [
+          "Person"
+        ],
+        "operationId": "Person_GetPersonInfo",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PersonInfoDto"
             }
           }
         }
@@ -3030,6 +3053,30 @@
         },
         "IsOnline": {
           "type": "boolean"
+        },
+        "Type": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "type": "integer"
+        },
+        "Version": {
+          "format": "int32",
+          "type": "integer"
         }
       }
     },
@@ -3553,6 +3600,29 @@
         "WellKnownBinary": {
           "format": "byte",
           "type": "string"
+        }
+      }
+    },
+    "PersonInfoDto": {
+      "type": "object",
+      "properties": {
+        "DisplayName": {
+          "type": "string"
+        },
+        "Email": {
+          "type": "string"
+        },
+        "ManagedPlaces": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlaceSimpleDto"
+          }
+        },
+        "Roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },

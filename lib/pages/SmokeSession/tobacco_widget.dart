@@ -24,7 +24,7 @@ class TobaccoWidget extends StatelessWidget {
           new StreamBuilder<SmokeStatisticDataModel>(
             stream: smokeSessionBloc.smokeStatistic,
             builder: (context, snapShot) {
-              double percentage = (snapShot.data.pufCount / 300) * 100;
+              double percentage = ((snapShot?.data?.pufCount ?? 0) / 300) * 100;
 
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

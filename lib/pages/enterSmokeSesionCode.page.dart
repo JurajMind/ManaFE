@@ -24,7 +24,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
   final double topWidgetHeight = 200.0;
   String _sessionCode;
   final _formKey = GlobalKey<FormState>();
-  final myController = TextEditingController(text: 'W40YI');
+  final myController = TextEditingController(text: 'VV49Y');
   final ApiClient apiClient = App.http;
   bool validating = false;
   @override
@@ -61,6 +61,9 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                               new Padding(
                                 padding: const EdgeInsets.all(20.0),
                                 child: new TextFormField(
+                                  maxLines: 1,
+                                  textCapitalization:
+                                      TextCapitalization.characters,
                                   inputFormatters: [UpperCaseTextFormatter()],
                                   maxLength: 5,
                                   controller: myController,
@@ -74,6 +77,20 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                   autocorrect: false,
                                   decoration: new InputDecoration(
                                     labelText: "Session code",
+                                    labelStyle: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                    focusedBorder: const OutlineInputBorder(
+                                      // width: 0.0 produces a thin "hairline" border
+                                      borderSide: const BorderSide(
+                                          color: Colors.white, width: 3.0),
+                                    ),
+                                    enabledBorder: const OutlineInputBorder(
+                                      // width: 0.0 produces a thin "hairline" border
+                                      borderSide: const BorderSide(
+                                          color: Colors.white, width: 3.0),
+                                    ),
+                                    border: const OutlineInputBorder(),
                                   ),
                                 ),
                               ),

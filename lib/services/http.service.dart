@@ -173,7 +173,7 @@ class ApiClient {
     var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeColor');
 
     var data = {'Color': ColorDto(color), 'Type': 1};
-
+    print('color ${ColorDto(color).toJson()}');
     var response = await _dio.post(uri.toString(),
         data: data,
         options: Options(
@@ -258,10 +258,15 @@ class ApiClient {
     return result.data;
   }
 
-  Future<List<PipeAccesory>> getMyGear() async {
+  Future<List<PipeAccesorySimpleDto>> getMyGear() async {
     var url = Uri.https(baseUrl, 'api/Person/MyGear');
-    return _getJson(url).then((data) =>
-        data.map<PipeAccesory>((p) => PipeAccesory.fromJson(p)).toList());
+    return _getJson(url)
+        .then((data) => PipeAccesorySimpleDto.listFromJson(data));
+  }
+
+  Future<PersonActiveDataDto> getPersonInitData() async {
+    var url = Uri.https(baseUrl, 'api/Person/InitData');
+    return _getJson(url).then((data) => PersonActiveDataDto.fromJson(data));
   }
 
   Future<SmokeSessionMetaData> postMetadata(
@@ -323,14 +328,26 @@ class ApiClient {
 
   Future<PlaceMenuDto> getPlaceMenu(int id) async {
     var url = Uri.https(baseUrl, '/api/Places/${id}/Menu');
-    return await _dio
-        .get(url.toString())
-        .then((data) => PlaceMenuDto.fromJson(data.data));
+    return await _dio.get(url.toString()).then((data) {
+      return PlaceMenuDto.fromJson(data.data);
+    });
   }
 
-  Future<PlaceDto> getPlaceInfo(int id) async{
-     var url = Uri.https(baseUrl, '/api/Places/${id}/Menu');
-     return await _dio.get(url.toString()).then((data) => PlaceDto.fromJson(data.data));
+  Future<PlaceDto> getPlaceInfo(int id) async {
+    var url = Uri.https(baseUrl, '/api/Places/${id}/Menu');
+    return await _dio
+        .get(url.toString())
+        .then((data) => PlaceDto.fromJson(data.data));
+  }
+
+  Future restartDevice(String id) async {
+    var url = Uri.https(baseUrl, '/api/Device/${id}/Restart');
+    return await _dio.post(url.toString());
+  }
+
+  Future sleepDevice(String id) async {
+    var url = Uri.https(baseUrl, '/api/Device/${id}/Sleep');
+    return await _dio.post(url.toString());
   }
 }
 
@@ -340,8 +357,8 @@ class ColorDto {
   ColorDto(this.color);
 
   Map<String, dynamic> toJson() => {
-        'Hue': color.hue.clamp(0, 360) * 360 ~/ 255,
-        'Saturation': (color.saturation.clamp(0, 1) * 255).toInt(),
+        'Hue': ((color.hue / 360) * 255).round(),
+        'Saturation': (color.saturation * 255).round(),
         'Value': 255
       };
 }

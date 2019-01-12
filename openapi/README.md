@@ -58,7 +58,7 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://localhost:44324*
+All URIs are relative to *https://devmana.azurewebsites.net*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -94,7 +94,8 @@ Class | Method | HTTP request | Description
 *MixologyApi* | [**mixologyGetTobaccoMixTastes**](docs\/MixologyApi.md#mixologygettobaccomixtastes) | **GET** /api/Mixology/{id}/GetTastes | 
 *MixologyApi* | [**mixologyRemoveMix**](docs\/MixologyApi.md#mixologyremovemix) | **DELETE** /api/Mixology/RemoveMix | 
 *MixologyApi* | [**mixologyVote**](docs\/MixologyApi.md#mixologyvote) | **POST** /api/Mixology/{id}/Vote | 
-*PersonApi* | [**personGetPersonActiveData**](docs\/PersonApi.md#persongetpersonactivedata) | **GET** /api/Person/GetPersonActiveData | 
+*PersonApi* | [**personGetPersonActiveData**](docs\/PersonApi.md#persongetpersonactivedata) | **GET** /api/Person/InitData | 
+*PersonApi* | [**personGetPersonInfo**](docs\/PersonApi.md#persongetpersoninfo) | **GET** /api/Person/Info | 
 *PersonApi* | [**personMyGear**](docs\/PersonApi.md#personmygear) | **GET** /api/Person/MyGear | 
 *PingApi* | [**pingDefaultAction**](docs\/PingApi.md#pingdefaultaction) | **GET** /api/Ping/{id} | 
 *PlaceCalendarApi* | [**placeCalendarCreatePlaceEventFromFacebook**](docs\/PlaceCalendarApi.md#placecalendarcreateplaceeventfromfacebook) | **GET** /api/PlaceCalendar/CreateEventFromFacebook | 
@@ -158,6 +159,7 @@ Class | Method | HTTP request | Description
  - [NearbyPlacesDto](docs\/NearbyPlacesDto.md)
  - [OpeningDay](docs\/OpeningDay.md)
  - [PersonActiveDataDto](docs\/PersonActiveDataDto.md)
+ - [PersonInfoDto](docs\/PersonInfoDto.md)
  - [PersonStatisticsOverallDto](docs\/PersonStatisticsOverallDto.md)
  - [PipeAccesoryLikeDto](docs\/PipeAccesoryLikeDto.md)
  - [PipeAccesorySimpleDto](docs\/PipeAccesorySimpleDto.md)

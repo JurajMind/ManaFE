@@ -47,6 +47,13 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                       child: new Column(
                         children: <Widget>[
                           new Container(
+                            child: Image.asset(
+                              'images/logo.png',
+                              fit: BoxFit.scaleDown,
+                              height: 300.0,
+                            ),
+                          ),
+                          new Container(
                             width: screenSize.width,
                             child: new RoundedButton(
                               buttonName: 'Sign up',

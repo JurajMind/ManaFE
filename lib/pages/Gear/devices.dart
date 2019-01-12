@@ -1,0 +1,88 @@
+import 'package:app/models/extensions.dart';
+import 'package:app/module/data_provider.dart';
+import 'package:app/pages/Device/device_detail.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:openapi/api.dart';
+
+class Devices extends StatelessWidget {
+  final ScrollController scrollController;
+  final ScrollPhysics scrollPhysics;
+
+  Devices({Key key, this.scrollController, this.scrollPhysics})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var personBloc = DataProvider.getData(context).personBloc;
+    return Container(
+      child: StreamBuilder<List<DeviceSimpleDto>>(
+        stream: personBloc.devices,
+        initialData: null,
+        builder: (context, snapshot) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GridView.builder(
+              controller: scrollController,
+              physics: scrollPhysics,
+              gridDelegate:
+                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, index) {
+                var device = snapshot.data[index];
+                return InkWell(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      settings: RouteSettings(),
+                      builder: (context) => DeviceDetailPage(device: device))),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Card(
+                      elevation: 3.0,
+                      child: Container(
+                        child: new DecoratedBox(
+                            decoration: new BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              gradient: new LinearGradient(
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight,
+                                  colors: Extensions.deviceAccentColor(
+                                      device.type)),
+                            ),
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Center(
+                                    child: Text(
+                                      device.name,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.black,
+                                          fontSize: 20.0),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          Extensions.devicePicture(
+                                              device.type)),
+                                      colorFilter: ColorFilter.mode(
+                                          const Color.fromRGBO(
+                                              255, 255, 255, 0.545),
+                                          BlendMode.modulate),
+                                      fit: BoxFit.cover)),
+                            )),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        },
+      ),
+    );
+  }
+}

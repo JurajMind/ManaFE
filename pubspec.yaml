@@ -73,6 +73,13 @@ flutter:
     - images/gear/tobacco.jpg
     - images/stats.png
 
+    - images/devices/white.jpg
+    - images/devices/black.jpg
+    - images/devices/wood.jpg
+    - images/devices/prototype.jpg
+
+    - images/logo.png
+
     - locale/localization_en.json
     - locale/localization_cs.json
   #  - images/a_dot_ham.jpeg

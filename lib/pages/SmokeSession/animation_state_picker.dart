@@ -85,7 +85,7 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
                   widget.onChanged(index);
                   setState(() {
                     _focusIndex = index;
-                     Vibrate.feedback(FeedbackType.selection);
+                    Vibrate.feedback(FeedbackType.selection);
                   });
                 },
                 children: List.generate(
@@ -104,6 +104,7 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
           return new Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
+              Icon(Icons.chevron_left),
               InkWell(
                 onTap: () => showBrDialog(context, setting),
                 child: Container(
@@ -126,6 +127,11 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
                   child: Icon(Icons.shutter_speed),
                 ),
               ),
+              widget.label == "PURGE"
+                  ? Container(
+                      width: 20.0,
+                    )
+                  : Icon(Icons.chevron_right),
             ],
           );
         });

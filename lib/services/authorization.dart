@@ -7,9 +7,17 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class Authorize {
+  static final Authorize _singleton = new Authorize._internal();
   String url = 'https://${App.baseUri}/token';
   final _storage = new FlutterSecureStorage();
   String _token;
+  String _userName;
+
+  factory Authorize() {
+    return _singleton;
+  }
+
+  Authorize._internal();
 
   Future<bool> authorize(String userName, String password) async {
     final response = await http.post(
@@ -38,7 +46,10 @@ class Authorize {
   }
 
   Future<String> getUserName() async {
-    return await _storage.read(key: 'userName');
+    if (_userName == null) {
+      _userName = await _storage.read(key: 'userName');
+    }
+    return _userName;
   }
 
   Future<bool> getLocalToken(String provider, String externalToken) async {

@@ -27,6 +27,12 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
   static const _kDuration = const Duration(milliseconds: 300);
   static const _kCurve = Curves.ease;
 
+  @override
+  initState() {
+    super.initState();
+    controller = new PageController(initialPage: 1);
+  }
+
   PageController controller;
 
   SmokeSessionBloc smokeSessionBloc;
@@ -105,11 +111,5 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
     smokeSessionBloc.loadAnimation();
     smokeSessionBloc.loadPresets();
     super.didChangeDependencies();
-  }
-
-  @override
-  void initState() {
-    controller = new PageController();
-    super.initState();
   }
 }

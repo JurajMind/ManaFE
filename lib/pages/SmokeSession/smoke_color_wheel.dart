@@ -60,7 +60,7 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
             },
             child: RepaintBoundary(
               child: Transform.rotate(
-                angle: 90.0,
+                angle: 0.2,
                 child: new Container(
                   decoration: new BoxDecoration(
                       image: new DecorationImage(

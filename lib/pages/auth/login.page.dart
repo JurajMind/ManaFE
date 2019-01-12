@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           child: new Column(
         children: <Widget>[
           new AppBar(
-            title: new Text('Log in'),
+            title: new Text('LOG IN'),
             backgroundColor: Colors.transparent,
           ),
           Builder(builder: (BuildContext context) {
