@@ -3,10 +3,11 @@ import 'package:app/models/PipeAccesory/pipe_accesory.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PipeAccesorySearch extends StatefulWidget {
-  final List<PipeAccesory> ownAccesories;
+  final List<PipeAccesorySimpleDto> ownAccesories;
   final String type;
   final String searchType;
 
@@ -24,20 +25,19 @@ class PipeAccesorySearch extends StatefulWidget {
 }
 
 class PipeAccesorySearchState extends State<PipeAccesorySearch> {
-  BehaviorSubject<List<PipeAccesorySimple>> searchResult =
-      new BehaviorSubject<List<PipeAccesorySimple>>(
-          seedValue: new List<PipeAccesorySimple>());
+  BehaviorSubject<List<PipeAccesorySimpleDto>> searchResult =
+      new BehaviorSubject<List<PipeAccesorySimpleDto>>(
+          seedValue: new List<PipeAccesorySimpleDto>());
 
   bool loading = false;
 
-  List<PipeAccesorySimple> ownSimpleAccesories;
+  List<PipeAccesorySimpleDto> ownSimpleAccesories;
 
   @override
   void initState() {
     super.initState();
-    ownSimpleAccesories = widget.ownAccesories
-        .map((f) => PipeAccesorySimple.fromAccesory(f))
-        .toList();
+    ownSimpleAccesories = widget.ownAccesories;
+        
   }
 
   @override
@@ -83,7 +83,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
     setState(() {
       loading = true;
     });
-    this.searchResult.add(new List<PipeAccesorySimple>());
+    this.searchResult.add(new List<PipeAccesorySimpleDto>());
     App.http
         .searchGear(text, widget.searchType.toLowerCase(), 0, 1000)
         .then((value) {
@@ -94,10 +94,10 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
     });
   }
 
-  StreamBuilder<List<PipeAccesorySimple>> buildResult() {
-    return StreamBuilder<List<PipeAccesorySimple>>(
+  StreamBuilder<List<PipeAccesorySimpleDto>> buildResult() {
+    return StreamBuilder<List<PipeAccesorySimpleDto>>(
         stream: searchResult,
-        initialData: new List<PipeAccesorySimple>(),
+        initialData: new List<PipeAccesorySimpleDto>(),
         builder: (context, snapshot) => new ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) =>
@@ -113,11 +113,11 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
   }
 
   ListTile _createResult(
-      int index, PipeAccesorySimple data, BuildContext context) {
+      int index, PipeAccesorySimpleDto data, BuildContext context) {
     var text = '${data.brand} ${data.name}';
 
     return new ListTile(
-        leading: data.owned
+        leading: false
             ? Icon(Icons.shopping_basket)
             : Container(
                 width: 0.0,

@@ -4,6 +4,7 @@ import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/accesory_search.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:flutter/material.dart';
+import 'package:openapi/api.dart';
 
 class MetadataItem extends StatelessWidget {
   final String type;
@@ -11,9 +12,9 @@ class MetadataItem extends StatelessWidget {
 
   final IconData icon;
 
-  final List<PipeAccesory> pipeAccesories;
+  final List<PipeAccesorySimpleDto> pipeAccesories;
 
-  final PipeAccesorySimple selectedAccesories;
+  final PipeAccesorySimpleDto selectedAccesories;
 
   final SmokeSessionBloc bloc;
 
@@ -83,22 +84,29 @@ class MetadataItem extends StatelessWidget {
   }
 
   List<Widget> pipeAccesoryChips(
-      List<PipeAccesory> acc, PipeAccesorySimple selected, firstLine) {
-    var simple = acc.map((f) => PipeAccesorySimple.fromAccesory(f)).toList();
+      List<PipeAccesorySimpleDto> acc, PipeAccesorySimpleDto selected, firstLine) {
+   
+   var simple = new List<PipeAccesorySimpleDto>.from(acc);
 
+if(acc.length == 0){
+
+}
     if (selected != null) {
-      simple = simple.where((a) => a.id != selected.id).toList();
+      simple = acc.where((a) => a.id != selected.id).toList();
     }
 
     if (firstLine) {
       if (selected == null && simple.length < 1) {
         return [new Text('No owned')];
       }
-      if (selected != null) {
+      if (selected.id != null) {
         if (simple.where((a) => a.id == selected.id).length > 1)
           simple = simple.skip(1).toList();
         return [filterChip(selected, true)];
       } else {
+        if(simple.length == 0){
+          return [Container()];
+        }
         return [filterChip(simple.first, false)];
       }
     } else {
@@ -111,16 +119,20 @@ class MetadataItem extends StatelessWidget {
     }
   }
 
-  Widget filterChip(PipeAccesorySimple accesory, bool selected) {
+  Widget filterChip(PipeAccesorySimpleDto accesory, bool selected) {
     final shape = new RoundedRectangleBorder(
       side: const BorderSide(
           width: 0.66, style: BorderStyle.solid, color: Colors.white),
       borderRadius: BorderRadius.circular(20.0),
     );
+    var name = '';
+    if(accesory.name != null){
+      name = '${accesory.brand} ${accesory.name}';
+    }
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
       child: new FilterChip(
-        label: Text(accesory.fullName),
+        label: Text(name),
         shape: shape,
         onSelected: (value) {
           this.bloc.setMetadataAccesory(accesory, searchType);
@@ -135,10 +147,10 @@ class MetadataItem extends StatelessWidget {
   }
 
   void showDemoDialog({BuildContext context, Widget child}) {
-    showDialog<PipeAccesorySimple>(
+    showDialog<PipeAccesorySimpleDto>(
       context: context,
       builder: (BuildContext context) => child,
-    ).then<void>((PipeAccesorySimple value) {
+    ).then<void>((PipeAccesorySimpleDto value) {
       if (value != null) {
         this.bloc.setMetadataAccesory(value, searchType);
       }

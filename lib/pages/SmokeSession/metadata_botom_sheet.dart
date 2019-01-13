@@ -4,6 +4,7 @@ import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/metadata_item.dart';
 import 'package:flutter/material.dart';
+import 'package:openapi/api.dart';
 
 class MetadataBottomSheet extends StatelessWidget {
   const MetadataBottomSheet({
@@ -32,7 +33,7 @@ class MetadataBottomSheet extends StatelessWidget {
                     ? personBloc.myGear.value
                         .where((a) => a.type == 'Hookah')
                         .toList()
-                    : new List<PipeAccesory>(),
+                    : new List<PipeAccesorySimpleDto>(),
                 (a) => a.pipe),
             buildMetadataItem(
                 smokeSessionBloc,
@@ -78,7 +79,7 @@ class MetadataBottomSheet extends StatelessWidget {
       String type,
       String searchType,
       IconData icon,
-      List<PipeAccesory> ownedAccesory,
+      List<PipeAccesorySimpleDto> ownedAccesory,
       Function(SmokeSessionMetaDataSelection) selectFunction) {
     return StreamBuilder<SmokeSessionMetaDataSelection>(
       initialData: null,

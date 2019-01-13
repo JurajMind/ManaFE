@@ -17,6 +17,7 @@ import 'package:app/pages/home.page.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:app/utils/color.dart';
 import 'package:flutter/material.dart';
+import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:tuple/tuple.dart';
 import 'package:vibrate/vibrate.dart';
@@ -178,7 +179,7 @@ class SmokeSessionBloc {
     animations.add(list);
   }
 
-  setMetadataAccesory(PipeAccesorySimple accesory, String type) {
+  setMetadataAccesory(PipeAccesorySimpleDto accesory, String type) {
     metaDataChanged = true;
     var selection = this.smokeSessionDataSelection.value;
     switch (type) {

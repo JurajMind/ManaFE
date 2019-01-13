@@ -4,9 +4,10 @@ import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:openapi/api.dart';
 
 class PipeAccesoryWidget extends StatelessWidget {
-  final PipeAccesorySimple accesory;
+  final PipeAccesorySimpleDto accesory;
   final String type;
   final DataProvider dataProvider;
   const PipeAccesoryWidget(
@@ -30,7 +31,7 @@ class PipeAccesoryWidget extends StatelessWidget {
             flex: 1,
           ),
           Expanded(
-            child: this.accesory != null
+            child: this.accesory.id != null
                 ? Text("${accesory.brand} ${accesory.name}")
                 : Text('No data'),
             flex: 2,

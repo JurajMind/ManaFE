@@ -240,14 +240,14 @@ class ApiClient {
         .toList());
   }
 
-  Future<List<PipeAccesorySimple>> searchGear(
+  Future<List<PipeAccesorySimpleDto>> searchGear(
       String search, String type, int page, int pageSize) {
     var url = Uri.https(baseUrl, 'api/Gear/$type/Search/$search',
         {"page": page.toString(), "pageSize": pageSize.toString()});
 
     return _getJson(url).then((json) {
       return json
-          .map<PipeAccesorySimple>((data) => PipeAccesorySimple.fromJson(data))
+          .map<PipeAccesorySimpleDto>((data) => PipeAccesorySimpleDto.fromJson(data))
           .toList();
     });
   }

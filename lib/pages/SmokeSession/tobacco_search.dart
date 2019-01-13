@@ -3,10 +3,11 @@ import 'package:app/models/PipeAccesory/pipe_accesory.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
 class TobaccoSearch extends StatefulWidget {
-  final List<PipeAccesory> ownAccesories;
+  final List<PipeAccesorySimpleDto> ownAccesories;
   final String type;
 
 
@@ -23,21 +24,19 @@ class TobaccoSearch extends StatefulWidget {
 }
 
 class TobaccoSearchState extends State<TobaccoSearch> {
-  BehaviorSubject<List<PipeAccesorySimple>> searchResult =
-      new BehaviorSubject<List<PipeAccesorySimple>>(
-          seedValue: new List<PipeAccesorySimple>());
+  BehaviorSubject<List<PipeAccesorySimpleDto>> searchResult =
+      new BehaviorSubject<List<PipeAccesorySimpleDto>>(
+          seedValue: new List<PipeAccesorySimpleDto>());
 
   bool loading = false;
-  List<PipeAccesorySimple> selectedTobacco;
-  List<PipeAccesorySimple> ownSimpleAccesories;
+  List<PipeAccesorySimpleDto> selectedTobacco;
+  List<PipeAccesorySimpleDto> ownSimpleAccesories;
 
   @override
   void initState() {
     super.initState();
-    selectedTobacco = new List<PipeAccesorySimple>();
-    ownSimpleAccesories = widget.ownAccesories
-        .map((f) => PipeAccesorySimple.fromAccesory(f))
-        .toList();
+    selectedTobacco = new List<PipeAccesorySimpleDto>();
+    ownSimpleAccesories = widget.ownAccesories;      
   }
 
   @override
@@ -95,7 +94,7 @@ class TobaccoSearchState extends State<TobaccoSearch> {
     setState(() {
       loading = true;
     });
-    this.searchResult.add(new List<PipeAccesorySimple>());
+    this.searchResult.add(new List<PipeAccesorySimpleDto>());
     App.http
         .searchGear(text, 'tobacco', 0, 1000)
         .then((value) {
@@ -106,10 +105,10 @@ class TobaccoSearchState extends State<TobaccoSearch> {
     });
   }
 
-  StreamBuilder<List<PipeAccesorySimple>> buildResult() {
-    return StreamBuilder<List<PipeAccesorySimple>>(
+  StreamBuilder<List<PipeAccesorySimpleDto>> buildResult() {
+    return StreamBuilder<List<PipeAccesorySimpleDto>>(
         stream: searchResult,
-        initialData: new List<PipeAccesorySimple>(),
+        initialData: new List<PipeAccesorySimpleDto>(),
         builder: (context, snapshot) => new ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) =>
@@ -124,17 +123,17 @@ class TobaccoSearchState extends State<TobaccoSearch> {
     );
   }
 
-  Widget _getLeading(PipeAccesorySimple data){
+  Widget _getLeading(PipeAccesorySimpleDto data){
     if(this.selectedTobacco.where((a) => a.id == data.id).length > 0){
       return Icon(Icons.check_circle_outline);
     }
-    if(data.owned){
+    if(false){
       return Icon(Icons.shopping_basket);
     }
     return Icon(Icons.check_box_outline_blank);
   }
   ListTile _createResult(
-      int index, PipeAccesorySimple data, BuildContext context) {
+      int index, PipeAccesorySimpleDto data, BuildContext context) {
     var text = '${data.brand} ${data.name}';
 
     return new ListTile(
@@ -198,6 +197,6 @@ class TobaccoSearchState extends State<TobaccoSearch> {
   }
 }
 
-Widget _selectedTobacco(PipeAccesorySimple t) {
-  return new Text(t.fullName);
+Widget _selectedTobacco(PipeAccesorySimpleDto t) {
+  return new Text(t.name);
 }

@@ -6,6 +6,7 @@ import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/tobacco_search.dart';
 import 'package:flutter/material.dart';
+import 'package:openapi/api.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class TobaccoWidget extends StatelessWidget {
@@ -62,7 +63,7 @@ class TobaccoWidget extends StatelessWidget {
                     onPressed: () => showDemoDialog(
                         context: context,
                         child: new TobaccoSearch(
-                          ownAccesories: new List<PipeAccesory>(),
+                          ownAccesories: new List<PipeAccesorySimpleDto>(),
                         )),
                   ),
                   flex: 1,
