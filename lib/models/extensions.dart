@@ -6,13 +6,20 @@ class Extensions {
   static String getPlaceImage(PlaceSimpleDto place) {
     var image = place?.medias?.first?.path;
     if (image == null) {
-      return 'https://${App.baseUri}/Content/place/placeholder.jpg';
+      return 'https://${App.baseUri}/Content/Placeholder/place.jpg';
     }
     return 'https://${App.baseUri}${image}original.jpg';
   }
 
   static String adress(SmartHookahModelsAddress adress) {
     return '${adress.street} ${adress.number} ${adress.city}';
+  }
+
+  static String accesoryPicture(PipeAccesorySimpleDto accesory) {
+    if (accesory.picture == null) {
+      return "https://${App.baseUri}/Content/Placeholder/${accesory.type}.jpg";
+    }
+    return 'https://${App.baseUri}${accesory.picture}';
   }
 
   static String deviceVersion(int version) {

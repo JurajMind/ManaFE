@@ -1,3 +1,4 @@
+import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/menu_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -159,7 +160,7 @@ class _MenuPageState extends State<MenuPage> {
             child: Hero(
               tag: '_picture',
               child: new CachedNetworkImage(
-                imageUrl: "http://via.placeholder.com/350x150",
+                imageUrl: Extensions.accesoryPicture(data),
                 placeholder: new CircularProgressIndicator(),
                 errorWidget: new Icon(Icons.error),
                 fit: BoxFit.fill,

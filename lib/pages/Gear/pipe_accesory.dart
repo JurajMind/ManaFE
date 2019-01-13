@@ -1,3 +1,4 @@
+import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class PipeAccesoryList extends StatelessWidget {
                   height: 60,
                   width: 60,
                   child: new CachedNetworkImage(
-                    imageUrl: "http://via.placeholder.com/350x150",
+                    imageUrl: Extensions.accesoryPicture(data),
                     placeholder: new CircularProgressIndicator(),
                     errorWidget: new Icon(Icons.error),
                     fit: BoxFit.fill,

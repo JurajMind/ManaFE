@@ -5,7 +5,6 @@ import 'package:app/utils/color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 class MixCardExpanded extends StatefulWidget {
   final TobaccoMix tobaccoMix;
   MixCardExpanded({this.tobaccoMix});
@@ -45,7 +44,7 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                       child: widget.tobaccoMix.name != null
                           ? Text(
                               widget.tobaccoMix.name,
-                              style: Theme.of(context).textTheme.title,
+                              style: Theme.of(context).textTheme.subtitle,
                             )
                           : Text(
                               'No name',
