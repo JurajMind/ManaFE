@@ -6,6 +6,7 @@ import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/place_bloc.dart';
 import 'package:app/pages/Places/menu.page.dart';
+import 'package:app/pages/Places/place_detail_map.dart';
 import 'package:app/pages/Places/reservation_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -92,8 +93,8 @@ class _PlaceDetailState extends State<PlaceDetailPage>
             showMyLocationButton: true,
             showCompassButton: true,
             initialCameraPosition: new CameraPosition(
-                new Location(
-                    double.parse(widget.place.address.lat), double.parse(widget.place.address.lng)),
+                new Location(double.parse(widget.place.address.lat),
+                    double.parse(widget.place.address.lng)),
                 15.0),
             hideToolbar: false,
             title: widget.place.name),
@@ -227,7 +228,11 @@ class _PlaceDetailState extends State<PlaceDetailPage>
                                 Expanded(
                                   flex: 1,
                                   child: InkWell(
-                                    onTap: () => showMap(),
+                                    onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PageDetailMap())),
                                     child: Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: new CachedNetworkImage(
