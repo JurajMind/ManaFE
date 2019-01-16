@@ -16,7 +16,7 @@ ThemeData buildDarkTheme() {
       textTheme: ButtonTextTheme.primary,
     ),
     textTheme: TextTheme(
-        headline: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+        headline: TextStyle(fontSize: 42.0, fontWeight: FontWeight.w700),
         title: TextStyle(fontSize: 36.0, fontWeight: FontWeight.w700),
         body1: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
         subtitle: TextStyle(

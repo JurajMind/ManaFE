@@ -228,11 +228,7 @@ class _PlaceDetailState extends State<PlaceDetailPage>
                                 Expanded(
                                   flex: 1,
                                   child: InkWell(
-                                    onTap: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                PageDetailMap())),
+                                    onTap: () =>_launchMapsUrl(double.parse(place.address.lat),double.parse(place.address.lng)),
                                     child: Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: new CachedNetworkImage(
@@ -394,6 +390,15 @@ class _PlaceDetailState extends State<PlaceDetailPage>
     buttonController.dispose();
     super.dispose();
   }
+
+  void _launchMapsUrl(double lat, double lon) async {
+  final url = 'https://www.google.com/maps/search/?api=1&query=$lat,$lon';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 }
 
 class IconLabel extends StatelessWidget {
