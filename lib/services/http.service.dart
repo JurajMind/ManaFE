@@ -134,6 +134,16 @@ class ApiClient {
         data.map<TobaccoMix>((mix) => TobaccoMix.fromJson(mix)).toList());
   }
 
+    Future<List<TobaccoMix>> fetchMixCreator(
+      {int page: 0, String category: "popular", int pageSize: 10}) async {
+    var url = Uri.https(baseUrl, '/api/Mixology/GetMixes',
+        {"page": page.toString(), 'pageSize': pageSize.toString()});
+
+    return _getJson(url).then((json) => json['Mixes']).then((data) =>
+        data.map<TobaccoMix>((mix) => TobaccoMix.fromJson(mix)).toList());
+  }
+
+
   Future<SessionIdValidation> validateSessionId(String sessionId) {
     var url =
         Uri.https(baseUrl, 'api/SmokeSession/Validate', {"id": sessionId});
