@@ -18,7 +18,7 @@ class _RegistrationData {
 
 class _RegisterPageState extends State<RegisterPage> {
   PageController controller;
-  HSVColor color = HSVColor.fromColor(Colors.orange);
+  HSVColor color = HSVColor.fromColor(Colors.orange);  
   Offset animOffset = Offset(0.0, 0.0);
   final FocusNode passwordFocusNode = FocusNode();
   _RegistrationData data = new _RegistrationData();
@@ -28,20 +28,27 @@ class _RegisterPageState extends State<RegisterPage> {
     super.initState();
     controller = new PageController();
     controller.addListener(() {
+        final Size screenSize = MediaQuery.of(context).size;
       setState(() {
         animOffset = Offset(
             controller.position.pixels / 3, controller.position.pixels / 10);
         color =
-            color.withHue((color.hue + controller.position.pixels / 300) % 360);
+            color.withHue((color.hue + (controller.position.pixels / (screenSize.width* 1.2))) % 360);
       });
     });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
 
     return new Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
       body: Form(
         child: CustomPaint(
           painter: BgPainter(
@@ -79,7 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
           SizedBox(height: 48.0),
           new TextFormField(
-              autofocus: true,
+              autofocus: false,
               keyboardType: TextInputType.emailAddress,
               decoration:
                   new InputDecoration(hintText: 'your name', labelText: 'Name'),
@@ -90,18 +97,22 @@ class _RegisterPageState extends State<RegisterPage> {
                 data.email = value;
               }),
           SizedBox(height: 48.0),
-          new RoundedButton(
-            buttonName: 'Next',
-            onTap: () => controller.jumpToPage(2),
-            buttonColor: Colors.transparent,
-            borderWidth: 2.0,
-            bottomMargin: 1.0,
-            height: 50.0,
-            width: screenSize.width,
-          ),
+          nextRoundedButton(screenSize),
         ],
       ),
     );
+  }
+
+  RoundedButton nextRoundedButton(Size screenSize) {
+    return new RoundedButton(
+          buttonName: 'Next',
+          onTap: () => nextPage(),
+          buttonColor: Colors.transparent,
+          borderWidth: 2.0,
+          bottomMargin: 1.0,
+          height: 50.0,
+          width: screenSize.width,
+        );
   }
 
   Widget emailPage(Size screenSize, BuildContext context) {
@@ -129,15 +140,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 data.email = value;
               }),
           SizedBox(height: 48.0),
-          new RoundedButton(
-            buttonName: 'Next',
-            onTap: () => controller.jumpToPage(2),
-            buttonColor: Colors.transparent,
-            borderWidth: 2.0,
-            bottomMargin: 1.0,
-            height: 50.0,
-            width: screenSize.width,
-          ),
+                  nextRoundedButton(screenSize),
         ],
       ),
     );
@@ -180,15 +183,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 data.email = value;
               }),
           SizedBox(height: 48.0),
-          new RoundedButton(
-            buttonName: 'Next',
-            onTap: () => controller.jumpToPage(2),
-            buttonColor: Colors.transparent,
-            borderWidth: 2.0,
-            bottomMargin: 1.0,
-            height: 50.0,
-            width: screenSize.width,
-          ),
+                   nextRoundedButton(screenSize),
         ],
       ),
     );
@@ -201,6 +196,7 @@ class _RegisterPageState extends State<RegisterPage> {
         shrinkWrap: true,
         slivers: <Widget>[
           SliverAppBar(
+            leading: Container(),
             expandedHeight: 300.0,
             backgroundColor: Colors.transparent,
             centerTitle: true,
@@ -229,7 +225,7 @@ class _RegisterPageState extends State<RegisterPage> {
             new Text(''),
             new RoundedButton(
               buttonName: 'ACCEPT & REGISTER',
-              onTap: () => controller.jumpToPage(2),
+              onTap: () => nextPage(),
               buttonColor: Colors.transparent,
               borderWidth: 2.0,
               bottomMargin: 1.0,
@@ -240,5 +236,15 @@ class _RegisterPageState extends State<RegisterPage> {
         ],
       ),
     );
+  }
+
+  Widget finalPage(Size screenSize, BuildContext context){
+    return Center();
+
+  }
+
+  nextPage(){
+    var currentPage  = controller.page  + 1;
+    controller.animateToPage(currentPage.round(),duration: Duration(milliseconds: 300),curve: Curves.ease);
   }
 }

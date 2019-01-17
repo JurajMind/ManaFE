@@ -7,8 +7,55 @@ import 'package:flutter/material.dart';
 
 abstract class MainPage {}
 
-class MixologyList extends StatelessWidget {
+class MixologyList extends StatefulWidget {
+
+  @override
+  MixologyListState createState() {
+    return new MixologyListState();
+  }
+}
+
+class MixologyListState extends State<MixologyList> {
+  int curentView = 0;
   static const _loadingSpace = 10;
+  static const Map<int, String> labels = {
+    0: 'My mixes',
+    1: 'Featured mixes',
+    2: 'Mixes wizzard'
+  };
+
+  void _showDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                mixTypeSelector(context, 0),
+                mixTypeSelector(context, 1),
+                mixTypeSelector(context, 2),
+              ],
+            ),
+          );
+        });
+  }
+
+  InkWell mixTypeSelector(BuildContext context, int index) {
+    return InkWell(
+      onTap: () {setState(() {
+            curentView = index;
+          }
+          );
+          Navigator.of(context).pop();},
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(labels[index].toUpperCase(),
+            style: Theme.of(context).textTheme.display1),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,20 +67,43 @@ class MixologyList extends StatelessWidget {
           SizedBox(
             height: 50.0,
             child: AppBar(
-              title: Text('Mixology'),
+              title: Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(labels[curentView]),
+                    IconButton(
+                      icon: Icon(Icons.arrow_drop_down),
+                      onPressed: () => _showDialog(context),
+                    )
+                  ],
+                ),
+              ),
               backgroundColor: Colors.transparent,
               centerTitle: true,
             ),
           ),
           new Expanded(
-            child: buildListView(mixologyBloc),
+            child: getContent(mixologyBloc),
           )
         ],
       ),
     );
   }
 
-  StreamBuilder<MixologySlice> buildListView(MixologyBloc mixologyBloc) {
+  Widget getContent(MixologyBloc mixologyBloc){
+   switch (curentView) {
+      case 0:
+       return myMixesbuild(mixologyBloc);
+      case 1:
+        return Placeholder();
+      case 2:
+        return Placeholder();
+    }
+     return Placeholder();
+  }
+
+  StreamBuilder<MixologySlice> myMixesbuild(MixologyBloc mixologyBloc) {
     return StreamBuilder<MixologySlice>(
       stream: mixologyBloc.slice,
       initialData: MixologySlice.empty(),
@@ -44,6 +114,8 @@ class MixologyList extends StatelessWidget {
           ),
     );
   }
+  
+
 
   List<Widget> _createTobaccoRow(TobaccoMix mix) {
     return mix.tobaccos.map((item) {
