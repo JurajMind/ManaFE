@@ -38,15 +38,9 @@ class PipeAccesoryList extends StatelessWidget {
               var data = filtered[index];
               return ListTile(
                 leading: SizedBox(
-                  height: 60,
-                  width: 60,
-                  child: new CachedNetworkImage(
-                    imageUrl: Extensions.accesoryPicture(data),
-                    placeholder: new CircularProgressIndicator(),
-                    errorWidget: new Icon(Icons.error),
-                    fit: BoxFit.fill,
-                  ),
-                ),
+                    height: 60,
+                    width: 60,
+                    child: Extensions.accesoryPicture(data)),
                 subtitle: Text(data.brand),
                 title: Text(data.name),
               );

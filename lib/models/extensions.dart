@@ -1,4 +1,5 @@
 import 'package:app/app/app.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
@@ -15,11 +16,38 @@ class Extensions {
     return '${adress.street} ${adress.number} ${adress.city}';
   }
 
-  static String accesoryPicture(PipeAccesorySimpleDto accesory) {
-    if (accesory.picture == null) {
-      return "https://${App.baseUri}/Content/Placeholder/${accesory.type}.jpg";
+  static Widget accesoryPicture(PipeAccesorySimpleDto accesory) {
+    if (accesory.picture != null) {
+      return CachedNetworkImage(
+          fit: BoxFit.fill,
+          fadeOutDuration: Duration(milliseconds: 1),
+          imageUrl: 'https://${App.baseUri}${accesory.picture}',
+          errorWidget: defaultAccesoryPicture(accesory),
+          placeholder: defaultAccesoryPicture(accesory));
     }
-    return 'https://${App.baseUri}${accesory.picture}';
+    return defaultAccesoryPicture(accesory);
+  }
+
+  static Widget defaultAccesoryPicture(PipeAccesorySimpleDto accesory) {
+    var imgPath = '';
+    switch (accesory.type) {
+      case 'Bowl':
+        imgPath = 'images/types/bowl.png';
+        break;
+      case 'Coal':
+        imgPath = 'images/types/coal.png';
+        break;
+      case 'HeatManagement':
+        imgPath = 'images/types/heatmanagment.png';
+        break;
+      case 'Tobacco':
+        imgPath = 'images/types/tobacco.png';
+        break;
+      case 'Hookah':
+        imgPath = 'images/types/hookah.png';
+        break;
+    }
+    return Image.asset(imgPath);
   }
 
   static String deviceVersion(int version) {

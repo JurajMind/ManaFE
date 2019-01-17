@@ -2,12 +2,11 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:app/app/app.dart';
+import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 import 'package:app/module/mixology/mixology_page.dart';
 import 'package:app/module/mixology/mixology_slice.dart';
-import 'package:app/module/places/places_bloc.dart';
-import 'package:app/module/smokeSession/smoke_session_bloc.dart';
-import 'package:app/services/http.service.dart';
 import 'package:flutter/widgets.dart';
+import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MixologyBloc {
@@ -15,13 +14,18 @@ class MixologyBloc {
 
   final _indexController = PublishSubject<int>();
 
-  final ApiClient _apiClient = App.http;
+  final _apiClient = App.http;
 
   final _mixes = <int, MixologyPage>{};
 
   final _mixesBeinggRequested = Set<int>();
 
   final _sliceSubject = BehaviorSubject<MixologySlice>();
+
+  final mixCreator = BehaviorSubject<List<MixCreator>>(seedValue: null);
+
+  final Map<String, BehaviorSubject<List<TobaccoMix>>> mixCreatorMixes =
+      new Map<String, BehaviorSubject<List<TobaccoMix>>>();
 
   final _loadingSubject = BehaviorSubject<bool>();
 
@@ -30,6 +34,7 @@ class MixologyBloc {
   bool haveNext = true;
 
   MixologyBloc() {
+    loadMixCreator();
     _indexController.stream
         // Don't try to update too frequently.
         .bufferTime(Duration(milliseconds: 500))
@@ -82,6 +87,17 @@ class MixologyBloc {
         await _apiClient.fetchtobacoMix(page: page, pageSize: _mixPerPage);
     print('Finish page $page pageSize:$_mixPerPage');
     return MixologyPage(mixes, index);
+  }
+
+  Future loadMixCreator() async {
+    final creators = await _apiClient.getMixCreator();
+    this.mixCreator.add(creators);
+  }
+
+  Future loadCreatorMixes(String creatorName) async {
+    this.mixCreatorMixes[creatorName] = new BehaviorSubject<List<TobaccoMix>>();
+    final mixes = await _apiClient.fetchtobacoMix(author: creatorName);
+    this.mixCreatorMixes[creatorName].add(mixes);
   }
 
   void _sendNewSlice(bool hasNext) {

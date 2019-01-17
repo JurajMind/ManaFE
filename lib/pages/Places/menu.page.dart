@@ -157,15 +157,8 @@ class _MenuPageState extends State<MenuPage> {
         leading: SizedBox(
             height: 60.0,
             width: 60.0,
-            child: Hero(
-              tag: '_picture',
-              child: new CachedNetworkImage(
-                imageUrl: Extensions.accesoryPicture(data),
-                placeholder: new CircularProgressIndicator(),
-                errorWidget: new Icon(Icons.error),
-                fit: BoxFit.fill,
-              ),
-            )),
+            child:
+                Hero(tag: '_picture', child: Extensions.accesoryPicture(data))),
         title: Text(data.name),
         subtitle: Text(data.brand),
       ),

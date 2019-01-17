@@ -1,6 +1,7 @@
 import 'package:app/components/Mixology/mixology_expanded.dart';
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/mixology/feature_mix.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/mixology/mixology_slice.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,6 @@ import 'package:flutter/material.dart';
 abstract class MainPage {}
 
 class MixologyList extends StatefulWidget {
-
   @override
   MixologyListState createState() {
     return new MixologyListState();
@@ -20,7 +20,7 @@ class MixologyListState extends State<MixologyList> {
   static const _loadingSpace = 10;
   static const Map<int, String> labels = {
     0: 'My mixes',
-    1: 'Featured mixes',
+    1: 'Featured mix creators',
     2: 'Mixes wizzard'
   };
 
@@ -28,15 +28,23 @@ class MixologyListState extends State<MixologyList> {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                mixTypeSelector(context, 0),
-                mixTypeSelector(context, 1),
-                mixTypeSelector(context, 2),
-              ],
+          return Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () => Navigator.of(context).pop(),
+              child: Center(
+                child: Container(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      mixTypeSelector(context, 0),
+                      mixTypeSelector(context, 1),
+                      mixTypeSelector(context, 2),
+                    ],
+                  ),
+                ),
+              ),
             ),
           );
         });
@@ -44,13 +52,14 @@ class MixologyListState extends State<MixologyList> {
 
   InkWell mixTypeSelector(BuildContext context, int index) {
     return InkWell(
-      onTap: () {setState(() {
-            curentView = index;
-          }
-          );
-          Navigator.of(context).pop();},
+      onTap: () {
+        setState(() {
+          curentView = index;
+        });
+        Navigator.of(context).pop();
+      },
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(top: 20.0),
         child: Text(labels[index].toUpperCase(),
             style: Theme.of(context).textTheme.display1),
       ),
@@ -68,15 +77,15 @@ class MixologyListState extends State<MixologyList> {
             height: 50.0,
             child: AppBar(
               title: Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(labels[curentView]),
-                    IconButton(
-                      icon: Icon(Icons.arrow_drop_down),
-                      onPressed: () => _showDialog(context),
-                    )
-                  ],
+                child: InkWell(
+                  onTap: () => _showDialog(context),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(labels[curentView]),
+                      Icon(Icons.arrow_drop_down)
+                    ],
+                  ),
                 ),
               ),
               backgroundColor: Colors.transparent,
@@ -91,16 +100,16 @@ class MixologyListState extends State<MixologyList> {
     );
   }
 
-  Widget getContent(MixologyBloc mixologyBloc){
-   switch (curentView) {
+  Widget getContent(MixologyBloc mixologyBloc) {
+    switch (curentView) {
       case 0:
-       return myMixesbuild(mixologyBloc);
+        return myMixesbuild(mixologyBloc);
       case 1:
-        return Placeholder();
+        return FeatureMixCreator();
       case 2:
         return Placeholder();
     }
-     return Placeholder();
+    return Placeholder();
   }
 
   StreamBuilder<MixologySlice> myMixesbuild(MixologyBloc mixologyBloc) {
@@ -114,8 +123,6 @@ class MixologyListState extends State<MixologyList> {
           ),
     );
   }
-  
-
 
   List<Widget> _createTobaccoRow(TobaccoMix mix) {
     return mix.tobaccos.map((item) {

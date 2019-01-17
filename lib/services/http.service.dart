@@ -126,23 +126,28 @@ class ApiClient {
   }
 
   Future<List<TobaccoMix>> fetchtobacoMix(
-      {int page: 0, String category: "popular", int pageSize: 10}) async {
-    var url = Uri.https(baseUrl, '/api/Mixology/GetMixes',
-        {"page": page.toString(), 'pageSize': pageSize.toString()});
+      {int page: 0,
+      String category: "popular",
+      int pageSize: 10,
+      String author}) async {
+    var params = Map<String, String>();
+    params['page'] = page.toString();
+    params['pageSize'] = pageSize.toString();
+    if (author != null) {
+      params['author'] = author;
+    }
+    var url = Uri.https(baseUrl, '/api/Mixology/GetMixes', params);
 
     return _getJson(url).then((json) => json['Mixes']).then((data) =>
         data.map<TobaccoMix>((mix) => TobaccoMix.fromJson(mix)).toList());
   }
 
-    Future<List<TobaccoMix>> fetchMixCreator(
-      {int page: 0, String category: "popular", int pageSize: 10}) async {
-    var url = Uri.https(baseUrl, '/api/Mixology/GetMixes',
-        {"page": page.toString(), 'pageSize': pageSize.toString()});
-
-    return _getJson(url).then((json) => json['Mixes']).then((data) =>
-        data.map<TobaccoMix>((mix) => TobaccoMix.fromJson(mix)).toList());
+  Future<List<MixCreator>> getMixCreator() async {
+    var url = Uri.https(baseUrl, '/api/Mixology/GetMixCreators');
+    return _getJson(url)
+        .then((json) => MixCreators.fromJson(json))
+        .then((m) => m.mixCreatorsList);
   }
-
 
   Future<SessionIdValidation> validateSessionId(String sessionId) {
     var url =
@@ -257,7 +262,8 @@ class ApiClient {
 
     return _getJson(url).then((json) {
       return json
-          .map<PipeAccesorySimpleDto>((data) => PipeAccesorySimpleDto.fromJson(data))
+          .map<PipeAccesorySimpleDto>(
+              (data) => PipeAccesorySimpleDto.fromJson(data))
           .toList();
     });
   }

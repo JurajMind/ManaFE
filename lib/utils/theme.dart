@@ -24,7 +24,7 @@ ThemeData buildDarkTheme() {
             fontWeight: FontWeight.w700,
             fontFamily: 'Montserrat'),
         display1: TextStyle(
-            fontSize: 20.0,
+            fontSize: 21.0,
             fontWeight: FontWeight.w700,
             fontFamily: 'Montserrat')),
     primaryTextTheme: _buildTextTheme(base.primaryTextTheme),

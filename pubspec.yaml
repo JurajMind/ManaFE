@@ -37,7 +37,6 @@ dependencies:
   google_maps_flutter: ^0.0.3+3
   tinycolor: ^1.0.2
 
-
 flutter_icons:
   android: true
   ios: 'Example-Icon'
@@ -82,6 +81,12 @@ flutter:
     - images/devices/prototype.jpg
 
     - images/logo.png
+
+    - images/types/bowl.png
+    - images/types/coal.png
+    - images/types/heatmanagment.png
+    - images/types/hookah.png
+    - images/types/tobacco.png
 
     - locale/localization_en.json
     - locale/localization_cs.json

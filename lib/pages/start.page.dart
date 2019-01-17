@@ -45,12 +45,13 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                   new Container(
                       padding: new EdgeInsets.all(40.0),
                       child: new Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           new Container(
                             child: Image.asset(
                               'images/logo.png',
                               fit: BoxFit.scaleDown,
-                              height: 300.0,
+                              height: 200.0,
                             ),
                           ),
                           new Container(
