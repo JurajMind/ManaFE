@@ -71,89 +71,77 @@ class _ReservationPageState extends State<ReservationPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
-                              Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(10.0, 4.0, 10.0, 2.0),
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(
-                                      'Peoples',
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                    WheelPicker.integer(
-                                      initialValue: peopleCount,
-                                      minValue: 1,
-                                      maxValue: 10,
-                                      onChanged: (value) {
-                                        print(value);
-                                        Vibrate.feedback(FeedbackType.light);
-                                        setState(() {
-                                          peopleCount = value;
-                                        });
-                                      },
-                                    )
-                                  ],
-                                ),
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    'Peoples',
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                  WheelPicker.integer(
+                                    initialValue: peopleCount,
+                                    minValue: 1,
+                                    maxValue: 10,
+                                    onChanged: (value) {
+                                      print(value);
+                                      Vibrate.feedback(FeedbackType.light);
+                                      setState(() {
+                                        peopleCount = value;
+                                      });
+                                    },
+                                  )
+                                ],
                               ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(10.0, 4.0, 10.0, 2.0),
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(
-                                      'Time',
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                    WheelPicker.string(
-                                      initialValue: selectedTime,
-                                      minValue: 1,
-                                      maxValue: 4,
-                                      stringItems: [
-                                        "18:00",
-                                        "18:30",
-                                        "19:00",
-                                        "19:30"
-                                      ],
-                                      onChanged: (value) {
-                                        Vibrate.feedback(FeedbackType.light);
-                                        print(value);
-                                        setState(() {
-                                          selectedTime = value;
-                                        });
-                                      },
-                                    )
-                                  ],
-                                ),
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    'Time',
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                  WheelPicker.string(
+                                    initialValue: selectedTime,
+                                    minValue: 1,
+                                    maxValue: 4,
+                                    stringItems: [
+                                      "18:00",
+                                      "18:30",
+                                      "19:00",
+                                      "19:30"
+                                    ],
+                                    onChanged: (value) {
+                                      Vibrate.feedback(FeedbackType.light);
+                                      print(value);
+                                      setState(() {
+                                        selectedTime = value;
+                                      });
+                                    },
+                                  )
+                                ],
                               ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(5.0, 4.0, 5.0, 2.0),
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(
-                                      'Duration',
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                    WheelPicker.string(
-                                      initialValue: duration,
-                                      minValue: 1,
-                                      maxValue: 4,
-                                      stringItems: [
-                                        "2:00",
-                                        "3:00",
-                                        "4:00",
-                                        "5:00",
-                                      ],
-                                      onChanged: (value) {
-                                        print(value);
-                                        Vibrate.feedback(FeedbackType.light);
-                                        setState(() {
-                                          duration = value;
-                                        });
-                                      },
-                                    )
-                                  ],
-                                ),
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    'Duration',
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                  WheelPicker.string(
+                                    initialValue: duration,
+                                    minValue: 1,
+                                    maxValue: 4,
+                                    stringItems: [
+                                      "2:00",
+                                      "3:00",
+                                      "4:00",
+                                      "5:00",
+                                    ],
+                                    onChanged: (value) {
+                                      print(value);
+                                      Vibrate.feedback(FeedbackType.light);
+                                      setState(() {
+                                        duration = value;
+                                      });
+                                    },
+                                  )
+                                ],
                               )
                             ],
                           ),
