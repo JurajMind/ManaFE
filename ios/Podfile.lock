@@ -15,6 +15,9 @@ PODS:
     - Flutter
   - flutter_secure_storage (3.1.1):
     - Flutter
+  - google_maps_flutter (0.0.1):
+    - Flutter
+    - GoogleMaps
   - GoogleMaps (2.7.0):
     - GoogleMaps/Maps (= 2.7.0)
   - GoogleMaps/Base (2.7.0)
@@ -31,6 +34,8 @@ PODS:
     - Flutter
   - shared_preferences (0.0.1):
     - Flutter
+  - url_launcher (0.0.1):
+    - Flutter
   - vibrate (0.0.1):
     - Flutter
 
@@ -38,11 +43,13 @@ DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios-release`)
   - flutter_facebook_login (from `.symlinks/plugins/flutter_facebook_login/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
+  - google_maps_flutter (from `.symlinks/plugins/google_maps_flutter/ios`)
   - location (from `.symlinks/plugins/location/ios`)
   - map_view (from `.symlinks/plugins/map_view/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - qrcode_reader (from `.symlinks/plugins/qrcode_reader/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
   - vibrate (from `.symlinks/plugins/vibrate/ios`)
 
 SPEC REPOS:
@@ -59,6 +66,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_facebook_login/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
+  google_maps_flutter:
+    :path: ".symlinks/plugins/google_maps_flutter/ios"
   location:
     :path: ".symlinks/plugins/location/ios"
   map_view:
@@ -69,6 +78,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/qrcode_reader/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
+  url_launcher:
+    :path: ".symlinks/plugins/url_launcher/ios"
   vibrate:
     :path: ".symlinks/plugins/vibrate/ios"
 
@@ -79,12 +90,14 @@ SPEC CHECKSUMS:
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
   flutter_facebook_login: 5aa824f2a8b1e008810b20a9d4cf4166a7efe73a
   flutter_secure_storage: cbb73e37aa0c66689fe63799a9619ac66849b8fa
+  google_maps_flutter: 6449d5918d3f1a69a37dc9c557bbad7bb9bcf0e9
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   location: 26c90953ad5916331d0d1d913898779910416487
   map_view: 9653e5e5b090355507a711908240eb353566b616
   path_provider: 09407919825bfe3c2deae39453b7a5b44f467873
   qrcode_reader: da11877390dff62dd3783964618d666a857e34c8
   shared_preferences: 5a1d487c427ee18fcd3ea1f2a131569481834b53
+  url_launcher: 92b89c1029a0373879933c21642958c874539095
   vibrate: 8d9cb77859e02b88730c44a9907f561ddca25ca1
 
 PODFILE CHECKSUM: 284201c400393a333b72d937a5838f3f536ffb7f
