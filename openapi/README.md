@@ -115,6 +115,7 @@ Class | Method | HTTP request | Description
 *QRCodeApi* | [**qRCodeDefaultAction**](docs\/QRCodeApi.md#qrcodedefaultaction) | **GET** /api/QRCode/{id} | 
 *ReservationApi* | [**reservationCreate**](docs\/ReservationApi.md#reservationcreate) | **POST** /api/Reservations/Create | 
 *ReservationApi* | [**reservationGetManagereservationsInfo**](docs\/ReservationApi.md#reservationgetmanagereservationsinfo) | **GET** /api/Reservations/{id}/Manage | 
+*ReservationApi* | [**reservationGetReservationUsage**](docs\/ReservationApi.md#reservationgetreservationusage) | **GET** /api/Reservations/{id}/Usage | 
 *SentToDeviceApi* | [**sentToDeviceDefaultAction**](docs\/SentToDeviceApi.md#senttodevicedefaultaction) | **POST** /api/SentToDevice/{id} | 
 *SmokeSessionApi* | [**smokeSessionGetMetaData**](docs\/SmokeSessionApi.md#smokesessiongetmetadata) | **GET** /api/SmokeSession/GetMetaData | 
 *SmokeSessionApi* | [**smokeSessionGetSessionCode**](docs\/SmokeSessionApi.md#smokesessiongetsessioncode) | **GET** /api/SmokeSession/GetSessionCode | 
@@ -175,6 +176,7 @@ Class | Method | HTTP request | Description
  - [PriceGroupItems](docs\/PriceGroupItems.md)
  - [ReservationDto](docs\/ReservationDto.md)
  - [ReservationManageDto](docs\/ReservationManageDto.md)
+ - [ReservationsTimeSlot](docs\/ReservationsTimeSlot.md)
  - [SeatDto](docs\/SeatDto.md)
  - [SmartHookahControllersPriceGroupDto](docs\/SmartHookahControllersPriceGroupDto.md)
  - [SmartHookahHelpersAnimation](docs\/SmartHookahHelpersAnimation.md)
@@ -187,6 +189,7 @@ Class | Method | HTTP request | Description
  - [SmartHookahModelsParameterObjectsChangeColor](docs\/SmartHookahModelsParameterObjectsChangeColor.md)
  - [SmartHookahModelsParameterObjectsChangeSpeed](docs\/SmartHookahModelsParameterObjectsChangeSpeed.md)
  - [SmartHookahServicesGearTobaccoFilter](docs\/SmartHookahServicesGearTobaccoFilter.md)
+ - [SmartHookahServicesPlaceReservationUsageDto](docs\/SmartHookahServicesPlaceReservationUsageDto.md)
  - [SmokeSessionMetaDataDto](docs\/SmokeSessionMetaDataDto.md)
  - [SmokeSessionSimpleDto](docs\/SmokeSessionSimpleDto.md)
  - [SmokeSessionTimeStatisticsDto](docs\/SmokeSessionTimeStatisticsDto.md)

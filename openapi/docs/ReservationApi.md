@@ -11,6 +11,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**reservationCreate**](ReservationApi.md#reservationCreate) | **POST** /api/Reservations/Create | 
 [**reservationGetManagereservationsInfo**](ReservationApi.md#reservationGetManagereservationsInfo) | **GET** /api/Reservations/{id}/Manage | 
+[**reservationGetReservationUsage**](ReservationApi.md#reservationGetReservationUsage) | **GET** /api/Reservations/{id}/Usage | 
 
 
 # **reservationCreate**
@@ -85,6 +86,49 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ReservationManageDto**](ReservationManageDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **reservationGetReservationUsage**
+> SmartHookahServicesPlaceReservationUsageDto reservationGetReservationUsage(id, date)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new ReservationApi();
+var id = 56; // int | 
+var date = 2013-10-20T19:20:30+01:00; // DateTime | 
+
+try { 
+    var result = api_instance.reservationGetReservationUsage(id, date);
+    print(result);
+} catch (e) {
+    print("Exception when calling ReservationApi->reservationGetReservationUsage: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**|  | [default to null]
+ **date** | **DateTime**|  | [default to null]
+
+### Return type
+
+[**SmartHookahServicesPlaceReservationUsageDto**](SmartHookahServicesPlaceReservationUsageDto.md)
 
 ### Authorization
 
