@@ -1,6 +1,7 @@
 import 'package:app/components/Mixology/mixology_expanded.dart';
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/mixology/mix_card_expanded_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
@@ -31,11 +32,17 @@ class CreatorMixPage extends StatelessWidget {
               ),
               Expanded(
                 child: snapshot.data == null
-                    ? CircularProgressIndicator()
+                    ? ListView.builder(
+                      itemCount: 10,
+                      itemBuilder: (context,index){
+                        return MixCardExpandedShimmer();
+                      },
+                    )
                     : ListView.builder(
                         itemCount: snapshot.data?.length ?? 0,
                         itemBuilder: (context, index) {
                           var item = snapshot.data[index];
+                          
                           return MixCardExpanded(tobaccoMix: item);
                         }),
               ),

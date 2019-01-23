@@ -1,7 +1,6 @@
-import 'package:app/models/extensions.dart';
+import 'package:app/components/PipeAccesory/pipe_accesory_list_item.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/menu_bloc.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
@@ -22,7 +21,6 @@ class _MenuPageState extends State<MenuPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _pageController = new PageController();
   }
@@ -117,7 +115,12 @@ class _MenuPageState extends State<MenuPage> {
         stream: accesorries,
         initialData: null,
         builder: (context, snapshot) {
-          return ListView.builder(
+          return  snapshot == null? ListView.builder(
+            itemCount: 10,
+            itemBuilder: (context,index){
+              return new PipeAccesoryListItemShimmer();
+            },
+          ): ListView.builder(
             itemBuilder: (context, index) =>
                 _createPlaceItem(index, snapshot.data[index]),
             itemCount: snapshot.data == null ? 0 : snapshot.data.length,
@@ -148,20 +151,8 @@ class _MenuPageState extends State<MenuPage> {
   }
 
   Widget _createPlaceItem(int index, PipeAccesorySimpleDto data) {
-    return Container(
-      margin: EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-          color: Colors.black45, borderRadius: BorderRadius.circular(20.0)),
-      child: ListTile(
-        trailing: Icon(Icons.chevron_right),
-        leading: SizedBox(
-            height: 60.0,
-            width: 60.0,
-            child:
-                Hero(tag: '_picture', child: Extensions.accesoryPicture(data))),
-        title: Text(data.name),
-        subtitle: Text(data.brand),
-      ),
-    );
+    return new PipeAccesoryListItem(pipeAccesory: data,);
   }
 }
+
+

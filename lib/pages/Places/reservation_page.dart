@@ -1,7 +1,10 @@
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Callendar/flutter_calendar.dart';
 import 'package:app/components/Pickers/WheelPicker/wheelPicker.dart';
+import 'package:app/module/data_provider.dart';
+import 'package:app/pages/Places/labeled_value.dart';
 import 'package:flutter/material.dart';
+import 'package:openapi/api.dart';
 import 'package:vibrate/vibrate.dart';
 
 class ReservationPage extends StatefulWidget {
@@ -14,22 +17,18 @@ class ReservationPage extends StatefulWidget {
 class _ReservationPageState extends State<ReservationPage> {
   final _textController = TextEditingController();
 
-  DateTime _currentDate = DateTime(2018, 8, 1);
-  int peopleCount = 2;
+  DateTime currentDate = DateTime.now();
+  int selectedPersons = 2;
   int selectedTime = 1;
-  int duration = 2;
+  int selectedDuration = 2;
+  int selectedTimeValue;
+  static const durations = ["2:00", "3:00", "4:00", "5:00"];
   List<DateTime> _markedDate = [DateTime(2018, 9, 20), DateTime(2018, 10, 11)];
   PageController pageController = new PageController(initialPage: 0);
-  void _showDatePicker() async {
-    final DateTime selectedDate = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: new DateTime(2015, 8),
-        lastDate: new DateTime(2101));
-  }
 
   @override
   Widget build(BuildContext context) {
+    var placeBloc = DataProvider.getData(context).placeSingleBloc;
     return SafeArea(
       child: Theme(
         isMaterialAppTheme: true,
@@ -51,118 +50,194 @@ class _ReservationPageState extends State<ReservationPage> {
                 backgroundColor: Colors.white,
               ),
               Flexible(
-                child: ListView(
-                  scrollDirection: Axis.vertical,
+                child: PageView(
+                  controller: pageController,
                   children: <Widget>[
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    ListView(
+                      scrollDirection: Axis.vertical,
                       children: <Widget>[
-                        Card(
-                          child: new Calendar(
-                            isExpandable: true,
-                            onDateSelected: (date) {
-                              print(date.toString());
-                            },
-                          ),
-                        ),
-                        Card(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Column(
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Card(
+                              child: new Calendar(
+                                initialCalendarDateOverride: currentDate,
+                                isExpandable: true,
+                                onDateSelected: (date) {
+                                  setState(() {
+                                    currentDate = date;
+                                  });
+
+                                  placeBloc.loadReservationInfo(date);
+                                },
+                              ),
+                            ),
+                            Card(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
-                                  Text(
-                                    'Peoples',
-                                    style: TextStyle(color: Colors.grey),
+                                  Column(
+                                    children: <Widget>[
+                                      Text(
+                                        'Peoples',
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                      WheelPicker.integer(
+                                        initialValue: selectedPersons,
+                                        minValue: 1,
+                                        maxValue: 10,
+                                        onChanged: (value) {
+                                          print(value);
+                                          Vibrate.feedback(FeedbackType.light);
+                                          setState(() {
+                                            selectedPersons = value;
+                                          });
+                                        },
+                                      )
+                                    ],
                                   ),
-                                  WheelPicker.integer(
-                                    initialValue: peopleCount,
-                                    minValue: 1,
-                                    maxValue: 10,
-                                    onChanged: (value) {
-                                      print(value);
-                                      Vibrate.feedback(FeedbackType.light);
-                                      setState(() {
-                                        peopleCount = value;
-                                      });
-                                    },
+                                  Column(
+                                    children: <Widget>[
+                                      Text(
+                                        'Time',
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                      StreamBuilder<List<ReservationsTimeSlot>>(
+                                        stream: placeBloc.reservationInfo,
+                                        initialData: null,
+                                        builder: (context, snapShot) {
+                                          return snapShot.data == null
+                                              ? Container()
+                                              : WheelPicker.string(
+                                                  initialValue: selectedTime,
+                                                  minValue: 1,
+                                                  maxValue:
+                                                      snapShot.data.length,
+                                                  stringItems: snapShot.data
+                                                      .map((s) => s.text)
+                                                      .toList(),
+                                                  onChanged: (value) {
+                                                    Vibrate.feedback(
+                                                        FeedbackType.light);
+                                                    print(value);
+                                                    setState(() {
+                                                      selectedTime = value;
+                                                      selectedTimeValue =
+                                                          snapShot
+                                                              .data[value - 1]
+                                                              .value;
+                                                    });
+                                                  },
+                                                );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: <Widget>[
+                                      Text(
+                                        'Duration',
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                      WheelPicker.string(
+                                        initialValue: selectedDuration,
+                                        minValue: 1,
+                                        maxValue: 4,
+                                        stringItems: durations,
+                                        onChanged: (value) {
+                                          print(value);
+                                          Vibrate.feedback(FeedbackType.light);
+                                          setState(() {
+                                            selectedDuration = value;
+                                          });
+                                        },
+                                      )
+                                    ],
                                   )
                                 ],
                               ),
-                              Column(
-                                children: <Widget>[
-                                  Text(
-                                    'Time',
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                  WheelPicker.string(
-                                    initialValue: selectedTime,
-                                    minValue: 1,
-                                    maxValue: 4,
-                                    stringItems: [
-                                      "18:00",
-                                      "18:30",
-                                      "19:00",
-                                      "19:30"
-                                    ],
-                                    onChanged: (value) {
-                                      Vibrate.feedback(FeedbackType.light);
-                                      print(value);
-                                      setState(() {
-                                        selectedTime = value;
-                                      });
-                                    },
-                                  )
-                                ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: new RoundedButton(
+                                buttonName: 'Next',
+                                onTap: () {
+                                  pageController.jumpToPage(1);
+                                },
+                                buttonColor: Colors.black,
+                                borderWidth: 0.0,
+                                bottomMargin: 0.0,
+                                height: 40.0,
+                                width: 200.0,
                               ),
-                              Column(
-                                children: <Widget>[
-                                  Text(
-                                    'Duration',
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                  WheelPicker.string(
-                                    initialValue: duration,
-                                    minValue: 1,
-                                    maxValue: 4,
-                                    stringItems: [
-                                      "2:00",
-                                      "3:00",
-                                      "4:00",
-                                      "5:00",
-                                    ],
-                                    onChanged: (value) {
-                                      print(value);
-                                      Vibrate.feedback(FeedbackType.light);
-                                      setState(() {
-                                        duration = value;
-                                      });
-                                    },
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: new RoundedButton(
-                            buttonName: 'Reserve',
-                            onTap: () {},
-                            buttonColor: Colors.black,
-                            borderWidth: 0.0,
-                            bottomMargin: 0.0,
-                            height: 40.0,
-                            width: 200.0,
-                          ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                     Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              LabeledValue(
+                                label: 'Date:',
+                                value: currentDate.toString(),
+                              ),
+                              LabeledValue(
+                                label: 'Time:',
+                                value: selectedTimeValue.toString(),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              LabeledValue(
+                                label: 'Persons:',
+                                value: selectedPersons.toString(),
+                              ),
+                              LabeledValue(
+                                label: 'Duration:',
+                                value: durations[selectedDuration],
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              new RoundedButton(
+                                buttonName: 'Back',
+                                onTap: () {
+                                  pageController.jumpToPage(0);
+                                },
+                                textColor: Colors.red,
+                                buttonColor: Colors.transparent,
+                                borderWidth: 2.0,
+                                bottomMargin: 2.0,
+                                height: 40.0,
+                                width: 150.0,
+                              ),
+                              new RoundedButton(
+                                buttonName: 'Finish',
+                                onTap: () {
+                                  pageController.jumpToPage(2);
+                                },
+                                buttonColor: Colors.black,
+                                borderWidth: 0.0,
+                                bottomMargin: 0.0,
+                                height: 40.0,
+                                width: 150.0,
+                              ),
+                            ],
+                          )
+                        ],
                       ),
                     )
                   ],

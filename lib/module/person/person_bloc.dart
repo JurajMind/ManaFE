@@ -10,7 +10,7 @@ class PersonBloc {
 
   BehaviorSubject<List<PipeAccesorySimpleDto>> myGear =
       new BehaviorSubject<List<PipeAccesorySimpleDto>>(
-          seedValue: new List<PipeAccesorySimpleDto>());
+          seedValue: null);
 
   BehaviorSubject<List<PipeAccesorySimpleDto>> hookahs =
       new BehaviorSubject<List<PipeAccesorySimpleDto>>(

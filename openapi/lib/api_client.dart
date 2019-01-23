@@ -119,6 +119,8 @@ class ApiClient {
           return ReservationDto.fromJson(value);
         case 'ReservationManageDto':
           return ReservationManageDto.fromJson(value);
+        case 'ReservationsTimeSlot':
+          return ReservationsTimeSlot.fromJson(value);
         case 'SeatDto':
           return SeatDto.fromJson(value);
         case 'SmartHookahControllersPriceGroupDto':
@@ -143,6 +145,8 @@ class ApiClient {
           return SmartHookahModelsParameterObjectsChangeSpeed.fromJson(value);
         case 'SmartHookahServicesGearTobaccoFilter':
           return SmartHookahServicesGearTobaccoFilter.fromJson(value);
+        case 'SmartHookahServicesPlaceReservationUsageDto':
+          return SmartHookahServicesPlaceReservationUsageDto.fromJson(value);
         case 'SmokeSessionMetaDataDto':
           return SmokeSessionMetaDataDto.fromJson(value);
         case 'SmokeSessionSimpleDto':

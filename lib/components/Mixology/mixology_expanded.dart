@@ -1,7 +1,6 @@
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 import 'package:app/pages/Mixology/mix_detail_page.dart';
-import 'package:app/utils/color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +17,7 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
   bool expanded = false;
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+
     return SingleChildScrollView(
       child: GestureDetector(
         onTap: () => Navigator.push(
@@ -38,7 +37,7 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                     Icons.add,
                   ),
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: Hero(
                       tag: "mix_hero_${widget.tobaccoMix.id}",
                       child: widget.tobaccoMix.name != null

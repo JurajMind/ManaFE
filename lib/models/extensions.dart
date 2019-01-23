@@ -20,7 +20,9 @@ class Extensions {
     if (accesory.picture != null) {
       return CachedNetworkImage(
           fit: BoxFit.fill,
-          fadeOutDuration: Duration(milliseconds: 1),
+          fadeOutDuration: Duration(milliseconds: 0),
+          fadeInCurve: Curves.linear,
+          
           imageUrl: 'https://${App.baseUri}${accesory.picture}',
           errorWidget: defaultAccesoryPicture(accesory),
           placeholder: defaultAccesoryPicture(accesory));

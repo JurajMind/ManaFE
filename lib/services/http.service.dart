@@ -14,6 +14,7 @@ import 'package:app/models/Stand/preset.dart';
 import 'package:app/services/authorization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:dio/dio.dart';
+import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
 import 'package:openapi/api.dart';
 
@@ -347,6 +348,15 @@ class ApiClient {
     return await _dio.get(url.toString()).then((data) {
       return PlaceMenuDto.fromJson(data.data);
     });
+  }
+
+  Future<SmartHookahServicesPlaceReservationUsageDto> getPlaceReservationInfo(int id, DateTime date) async {
+var url = Uri.https(baseUrl, '/api/Reservations/$id/Usage');
+ var formatter = new DateFormat('yyyy-MM-dd');
+  String formatted = formatter.format(date);
+return await _dio.get(url.toString(),data: {'date':formatted}).then((data){
+  return SmartHookahServicesPlaceReservationUsageDto.fromJson(data.data);
+});
   }
 
   Future<PlaceDto> getPlaceInfo(int id) async {

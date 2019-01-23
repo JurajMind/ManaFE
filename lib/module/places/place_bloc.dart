@@ -7,10 +7,13 @@ import 'package:location/location.dart';
 class PlaceBloc {
   Location _location = new Location();
   bool _initLoad = false;
+  PlaceSimpleDto _place;
 
   BehaviorSubject<PlaceSimpleDto> place = new BehaviorSubject(seedValue: null);
 
   BehaviorSubject<PlaceDto> placeInfo = new BehaviorSubject(seedValue: null);
+
+  BehaviorSubject<List<ReservationsTimeSlot>> reservationInfo = new BehaviorSubject(seedValue: null);
 
   static final PlaceBloc _instance = new PlaceBloc._();
 
@@ -19,10 +22,18 @@ class PlaceBloc {
   PlaceBloc._() {}
 
   Future loadPlace({PlaceSimpleDto place}) async {
+    _place = place;
     if (this.place.value == null || place.id != this.place.value.id) {
       placeInfo.add(null);
       this.place.add(place);
     }
-    await App.http.getPlaceInfo(place.id).then((data) => placeInfo.add(data));
+    var placeInfoTask = App.http.getPlaceInfo(place.id).then((data) => placeInfo.add(data));
+    var placeReservationTask = loadReservationInfo(DateTime.now()) ;
+
+    await Future.wait([placeInfoTask,placeReservationTask]);
+  }
+
+  Future loadReservationInfo(DateTime date) async{
+    await App.http.getPlaceReservationInfo(_place.id, date).then((data) => reservationInfo.add(data.timeSlots));
   }
 }
