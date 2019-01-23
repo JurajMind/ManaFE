@@ -17,11 +17,12 @@ class ReservationPage extends StatefulWidget {
 class _ReservationPageState extends State<ReservationPage> {
   final _textController = TextEditingController();
 
-  DateTime _currentDate = DateTime(2018, 8, 1);
-  int peopleCount = 2;
+  DateTime currentDate = DateTime.now();
+  int selectedPersons = 2;
   int selectedTime = 1;
-  int duration = 2;
-  static const times = ["2:00", "3:00", "4:00", "5:00"];
+  int selectedDuration = 2;
+  int selectedTimeValue;
+  static const durations = ["2:00", "3:00", "4:00", "5:00"];
   List<DateTime> _markedDate = [DateTime(2018, 9, 20), DateTime(2018, 10, 11)];
   PageController pageController = new PageController(initialPage: 0);
 
@@ -61,10 +62,14 @@ class _ReservationPageState extends State<ReservationPage> {
                           children: <Widget>[
                             Card(
                               child: new Calendar(
+                                initialCalendarDateOverride: currentDate,
                                 isExpandable: true,
                                 onDateSelected: (date) {
+                                  setState(() {
+                                    currentDate = date;
+                                  });
+
                                   placeBloc.loadReservationInfo(date);
-                                  print(date.toString());
                                 },
                               ),
                             ),
@@ -81,14 +86,14 @@ class _ReservationPageState extends State<ReservationPage> {
                                         style: TextStyle(color: Colors.grey),
                                       ),
                                       WheelPicker.integer(
-                                        initialValue: peopleCount,
+                                        initialValue: selectedPersons,
                                         minValue: 1,
                                         maxValue: 10,
                                         onChanged: (value) {
                                           print(value);
                                           Vibrate.feedback(FeedbackType.light);
                                           setState(() {
-                                            peopleCount = value;
+                                            selectedPersons = value;
                                           });
                                         },
                                       )
@@ -102,25 +107,31 @@ class _ReservationPageState extends State<ReservationPage> {
                                       ),
                                       StreamBuilder<List<ReservationsTimeSlot>>(
                                         stream: placeBloc.reservationInfo,
-                                        initialData:
-                                            new List<ReservationsTimeSlot>(),
+                                        initialData: null,
                                         builder: (context, snapShot) {
-                                          return WheelPicker.string(
-                                            initialValue: selectedTime,
-                                            minValue: 1,
-                                            maxValue: snapShot.data.length,
-                                            stringItems: snapShot.data
-                                                .map((s) => s.text)
-                                                .toList(),
-                                            onChanged: (value) {
-                                              Vibrate.feedback(
-                                                  FeedbackType.light);
-                                              print(value);
-                                              setState(() {
-                                                selectedTime = value;
-                                              });
-                                            },
-                                          );
+                                          return snapShot.data == null
+                                              ? Container()
+                                              : WheelPicker.string(
+                                                  initialValue: selectedTime,
+                                                  minValue: 1,
+                                                  maxValue:
+                                                      snapShot.data.length,
+                                                  stringItems: snapShot.data
+                                                      .map((s) => s.text)
+                                                      .toList(),
+                                                  onChanged: (value) {
+                                                    Vibrate.feedback(
+                                                        FeedbackType.light);
+                                                    print(value);
+                                                    setState(() {
+                                                      selectedTime = value;
+                                                      selectedTimeValue =
+                                                          snapShot
+                                                              .data[value - 1]
+                                                              .value;
+                                                    });
+                                                  },
+                                                );
                                         },
                                       ),
                                     ],
@@ -132,15 +143,15 @@ class _ReservationPageState extends State<ReservationPage> {
                                         style: TextStyle(color: Colors.grey),
                                       ),
                                       WheelPicker.string(
-                                        initialValue: duration,
+                                        initialValue: selectedDuration,
                                         minValue: 1,
                                         maxValue: 4,
-                                        stringItems: times,
+                                        stringItems: durations,
                                         onChanged: (value) {
                                           print(value);
                                           Vibrate.feedback(FeedbackType.light);
                                           setState(() {
-                                            duration = value;
+                                            selectedDuration = value;
                                           });
                                         },
                                       )
@@ -154,7 +165,7 @@ class _ReservationPageState extends State<ReservationPage> {
                               child: new RoundedButton(
                                 buttonName: 'Next',
                                 onTap: () {
-                                  pageController.jumpToPage(2);
+                                  pageController.jumpToPage(1);
                                 },
                                 buttonColor: Colors.black,
                                 borderWidth: 0.0,
@@ -171,10 +182,32 @@ class _ReservationPageState extends State<ReservationPage> {
                       child: Column(
                         children: <Widget>[
                           Row(
-                            children: <Widget>[LabeledValue(
-                              label: 'When:',
-                              value: '21.1.2019 15:30',
-                            )],
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              LabeledValue(
+                                label: 'Date:',
+                                value: currentDate.toString(),
+                              ),
+                              LabeledValue(
+                                label: 'Time:',
+                                value: selectedTimeValue.toString(),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              LabeledValue(
+                                label: 'Persons:',
+                                value: selectedPersons.toString(),
+                              ),
+                              LabeledValue(
+                                label: 'Duration:',
+                                value: durations[selectedDuration],
+                              ),
+                            ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -182,7 +215,7 @@ class _ReservationPageState extends State<ReservationPage> {
                               new RoundedButton(
                                 buttonName: 'Back',
                                 onTap: () {
-                                  pageController.jumpToPage(1);
+                                  pageController.jumpToPage(0);
                                 },
                                 textColor: Colors.red,
                                 buttonColor: Colors.transparent,

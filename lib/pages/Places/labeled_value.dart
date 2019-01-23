@@ -8,8 +8,8 @@ class LabeledValue extends StatelessWidget  {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      Text(label),
-      Text(value)
+      Text(label,style:Theme.of(context).copyWith(textTheme:TextTheme(title: TextStyle(color: Colors.black))).textTheme.title ,),
+      Text(value,style:Theme.of(context).copyWith(textTheme:TextTheme(title: TextStyle(color: Colors.black))).textTheme.title ,),
     ]);
   }
 

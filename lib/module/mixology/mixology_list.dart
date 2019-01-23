@@ -1,10 +1,13 @@
 import 'package:app/components/Mixology/mixology_expanded.dart';
+import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/feature_mix.dart';
+import 'package:app/module/mixology/mix_card_expanded_shimmer.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/mixology/mixology_slice.dart';
 import 'package:flutter/material.dart';
+
 
 abstract class MainPage {}
 
@@ -151,9 +154,9 @@ class MixologyListState extends State<MixologyList> {
     mix = data.elementAt(index);
 
     if (mix == null) {
-      return Center(child: Container());
+      return Center(
+          child: new MixCardExpandedShimmer());
     }
-
     return MixCardExpanded(tobaccoMix: mix);
   }
 

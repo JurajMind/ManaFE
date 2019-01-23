@@ -36,6 +36,7 @@ dependencies:
   url_launcher: ^4.0.3
   google_maps_flutter: ^0.0.3+3
   tinycolor: ^1.0.2
+  shimmer: ^1.0.0
 
 flutter_icons:
   android: true
