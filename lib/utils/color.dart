@@ -34,10 +34,6 @@ class ColorHelper {
     return HSVColor.fromAHSV(1.0, hue % 360, radius, 1.0);
   }
 
-  static Offset getOffsetFromColor(HSVColor color, double width) {
-    return Offset.zero;
-  }
-
   static Color getOpositeColor(Color color) {
     var hsv = HSVColor.fromColor(color);
     return HSVColor.fromAHSV(1.0, (hsv.hue + 180) % 360, hsv.saturation, 1.0)
@@ -51,5 +47,12 @@ class ColorHelper {
         count,
         (int index) =>
             new HSVColor.fromAHSV(1.0, intitColor + 0.0, 1.0, 1.0).toColor());
+  }
+
+  static Offset colorToPosition(HSVColor selectedColor, Size size) {
+    var angle = selectedColor.hue / (2 * math.pi);
+    var x = math.tan(angle) * size.width / 2;
+    var y = 1 / (math.tan(angle) * size.width / 2);
+    return new Offset(x, y);
   }
 }

@@ -192,8 +192,6 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                       height: 20.0,
                     ),
                     GestureDetector(
-                      onVerticalDragStart: (s) => print('tap'),
-                      onVerticalDragEnd: (s) => print('tap end'),
                       child: SizedBox(
                           height: size.width,
                           child: SmokeColorWheel(

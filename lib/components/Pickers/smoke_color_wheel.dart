@@ -23,13 +23,14 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
 
   @override
   void initState() {
-    selectedColor = HSVColor.fromColor(Colors.white);
+    selectedColor = widget.color ?? HSVColor.fromColor(Colors.white);
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    position = Offset.zero;
+    Size size = MediaQuery.of(context).size;
+    position = ColorHelper.colorToPosition(selectedColor, size);
     super.didChangeDependencies();
   }
 

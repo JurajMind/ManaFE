@@ -1,4 +1,6 @@
 import 'package:app/app/app.dart';
+import 'package:app/models/SignalR/device_online.dart';
+import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:openapi/api.dart';
@@ -7,6 +9,33 @@ import 'package:rxdart/rxdart.dart';
 class PersonBloc {
   bool _loadedGear = false;
   bool _loadedInit = false;
+  final SignalR _signalR = new SignalR();
+
+  static final PersonBloc _instance = new PersonBloc._();
+
+  factory PersonBloc() => PersonBloc._instance;
+
+  PersonBloc._() {
+    _signalR.connect().then((value) {
+      _signalR.clientCalls.listen((onData) {
+        proceddCalls(onData);
+      });
+    });
+  }
+
+  proceddCalls(ClientCall onData) {
+    if (onData.Data == null) return;
+
+    onData.Data.forEach((f) {
+      switch (f.Method) {
+        case 'deviceOnline':
+          {
+            handleDeviceOnline(f);
+            break;
+          }
+      }
+    });
+  }
 
   BehaviorSubject<List<PipeAccesorySimpleDto>> myGear =
       new BehaviorSubject<List<PipeAccesorySimpleDto>>(seedValue: null);
@@ -61,5 +90,10 @@ class PersonBloc {
       params.add(await auth.getUserName());
       signal.callServerFunction(name: 'JoinPerson', params: params);
     } catch (e) {}
+  }
+
+  void handleDeviceOnline(ClientMethod f) {
+    var data = new DeviceOnline.fromSignal(f.Data);
+    this.addSmokeSession(data.sessionCode);
   }
 }

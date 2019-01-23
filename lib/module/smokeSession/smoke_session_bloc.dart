@@ -1,9 +1,6 @@
 import 'dart:async';
 
 import 'package:app/app/app.dart';
-import 'package:app/app/app.widget.dart';
-import 'package:app/models/PipeAccesory/pipe_accesory.dart';
-import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:app/models/SignalR/device_online.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
@@ -12,7 +9,6 @@ import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
 import 'package:app/models/Stand/animation.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/models/Stand/preset.dart';
-import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:app/utils/color.dart';
