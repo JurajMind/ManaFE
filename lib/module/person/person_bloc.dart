@@ -9,8 +9,7 @@ class PersonBloc {
   bool _loadedInit = false;
 
   BehaviorSubject<List<PipeAccesorySimpleDto>> myGear =
-      new BehaviorSubject<List<PipeAccesorySimpleDto>>(
-          seedValue: null);
+      new BehaviorSubject<List<PipeAccesorySimpleDto>>(seedValue: null);
 
   BehaviorSubject<List<PipeAccesorySimpleDto>> hookahs =
       new BehaviorSubject<List<PipeAccesorySimpleDto>>(
@@ -28,6 +27,9 @@ class PersonBloc {
       new BehaviorSubject<List<SmokeSessionSimpleDto>>(
           seedValue: new List<SmokeSessionSimpleDto>());
 
+  BehaviorSubject<List<String>> smokeSessionsCodes =
+      new BehaviorSubject<List<String>>(seedValue: new List<String>());
+
   loadMyGear(bool reload) async {
     if (_loadedGear && !reload) return;
     _loadedGear = true;
@@ -36,12 +38,21 @@ class PersonBloc {
     myGear.add(gear);
   }
 
+  addSmokeSession(String smokeSessionId) {
+    var newCodes = smokeSessionsCodes.value;
+    newCodes.insert(0, smokeSessionId);
+    newCodes = newCodes.toSet().toList();
+    this.smokeSessionsCodes.add(newCodes);
+  }
+
   loadInitData({bool reload = false}) async {
     if (_loadedInit && !reload) return;
     _loadedInit = true;
     var init = await App.http.getPersonInitData();
     devices.add(init.devices);
     smokeSessions.add(init.activeSmokeSessions);
+    smokeSessionsCodes
+        .add(init.activeSmokeSessions.map((f) => f.sessionId).toList());
     _loadedInit = true;
     try {
       var signal = new SignalR();

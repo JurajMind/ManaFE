@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app/models/App/Gear/gear_model.dart';
-import 'package:app/models/PipeAccesory/pipe_accesory.dart';
-import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
@@ -350,17 +348,19 @@ class ApiClient {
     });
   }
 
-  Future<SmartHookahServicesPlaceReservationUsageDto> getPlaceReservationInfo(int id, DateTime date) async {
-var url = Uri.https(baseUrl, '/api/Reservations/$id/Usage');
- var formatter = new DateFormat('yyyy-MM-dd');
-  String formatted = formatter.format(date);
-return await _dio.get(url.toString(),data: {'date':formatted}).then((data){
-  return SmartHookahServicesPlaceReservationUsageDto.fromJson(data.data);
-});
+  Future<SmartHookahServicesPlaceReservationUsageDto> getPlaceReservationInfo(
+      int id, DateTime date) async {
+    var url = Uri.https(baseUrl, '/api/Reservations/$id/Usage');
+    var formatter = new DateFormat('yyyy-MM-dd');
+    String formatted = formatter.format(date);
+    return await _dio
+        .get(url.toString(), data: {'date': formatted}).then((data) {
+      return SmartHookahServicesPlaceReservationUsageDto.fromJson(data.data);
+    });
   }
 
   Future<PlaceDto> getPlaceInfo(int id) async {
-    var url = Uri.https(baseUrl, '/api/Places/${id}/Menu');
+    var url = Uri.https(baseUrl, '/api/Places/GetPlaceInfo/${id}');
     return await _dio
         .get(url.toString())
         .then((data) => PlaceDto.fromJson(data.data));

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:app/app/app.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/Stand/animation.dart';
 import 'package:app/models/Stand/deviceSetting.dart';

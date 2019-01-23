@@ -115,16 +115,18 @@ class _MenuPageState extends State<MenuPage> {
         stream: accesorries,
         initialData: null,
         builder: (context, snapshot) {
-          return  snapshot == null? ListView.builder(
-            itemCount: 10,
-            itemBuilder: (context,index){
-              return new PipeAccesoryListItemShimmer();
-            },
-          ): ListView.builder(
-            itemBuilder: (context, index) =>
-                _createPlaceItem(index, snapshot.data[index]),
-            itemCount: snapshot.data == null ? 0 : snapshot.data.length,
-          );
+          return snapshot == null
+              ? ListView.builder(
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return new PipeAccesoryListItemShimmer();
+                  },
+                )
+              : ListView.builder(
+                  itemBuilder: (context, index) =>
+                      _createPlaceItem(index, snapshot.data[index]),
+                  itemCount: snapshot.data == null ? 0 : snapshot.data.length,
+                );
         });
   }
 
@@ -151,8 +153,8 @@ class _MenuPageState extends State<MenuPage> {
   }
 
   Widget _createPlaceItem(int index, PipeAccesorySimpleDto data) {
-    return new PipeAccesoryListItem(pipeAccesory: data,);
+    return new PipeAccesoryListItem(
+      pipeAccesory: data,
+    );
   }
 }
-
-

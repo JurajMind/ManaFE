@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
+import 'package:app/components/SmokeSession/smoke_session_carousel.dart';
 import 'package:app/helpers.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
@@ -14,10 +15,7 @@ import 'package:qrcode_reader/qrcode_reader.dart';
 
 class EnterSmokeSessionCode extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return new EnterSmokeSessionCodeState();
-    // TODO: implement createState
-  }
+  State<StatefulWidget> createState() => new EnterSmokeSessionCodeState();
 }
 
 class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
@@ -29,8 +27,6 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
   bool validating = false;
   @override
   Widget build(BuildContext context) {
-    final smokeSessionBloc = DataProvider.getSmokeSession(context);
-
     return new SafeArea(
         child: Stack(
       fit: StackFit.expand,
@@ -130,7 +126,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
             bottom: 20.0,
             width: MediaQuery.of(context).size.width,
             height: 100.0,
-            child: buildRecentSessions(smokeSessionBloc)),
+            child: SmokeSessionCarousel()),
         Positioned(
           right: 20.0,
           top: topWidgetHeight + getCircleRadius(context) / 2 + 20,
@@ -170,7 +166,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                 size: 50.0,
               ),
               onPressed: () => Navigator.pop(context),
-            ))
+            )),
       ],
     ));
   }
@@ -181,6 +177,8 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
       validating = false;
     });
     if (result.id != null) {
+      final personBloc = DataProvider.getData(context).personBloc;
+      personBloc.addSmokeSession(sessionId);
       Navigator.of(context).pushReplacement(new MaterialPageRoute(
         builder: (BuildContext context) {
           return new SmokeSessionPage(sessionId: sessionId);
@@ -195,18 +193,6 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
 
   void _submit() {
     print(this._sessionCode);
-  }
-
-  StreamBuilder<List<String>> buildRecentSessions(SmokeSessionBloc bloc) {
-    return StreamBuilder<List<String>>(
-        initialData: new List<String>(),
-        stream: bloc.recentSessions.stream,
-        builder: (context, snapshot) => ListView.builder(
-              itemCount: snapshot.data.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) =>
-                  sessionCode(snapshot.data[index]),
-            ));
   }
 
   Widget sessionCode(String sessionCode) {

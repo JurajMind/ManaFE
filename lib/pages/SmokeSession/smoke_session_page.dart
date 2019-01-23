@@ -1,4 +1,5 @@
 import 'package:app/components/Buttons/roundedButton.dart';
+import 'package:app/components/Pickers/smoke_color_wheel.dart';
 import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
@@ -7,7 +8,7 @@ import 'package:app/pages/SmokeSession/animation_list.dart';
 import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
 import 'package:app/pages/SmokeSession/pipe_accesory_widget.dart';
 import 'package:app/pages/SmokeSession/puff_timer.dart';
-import 'package:app/pages/SmokeSession/smoke_color_wheel.dart';
+
 import 'package:app/pages/SmokeSession/tobacco_widget.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:flutter/material.dart';

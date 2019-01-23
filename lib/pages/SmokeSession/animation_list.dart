@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:app/components/Pickers/animation_state_picker.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/Stand/animation.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/models/Stand/preset.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
-import 'package:app/pages/SmokeSession/animation_state_picker.dart';
 import 'package:app/pages/SmokeSession/preset_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

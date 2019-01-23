@@ -37,11 +37,6 @@ class _CarrousselState extends State<Carroussel> {
   }
 
   @override
-  void didUpdateWidget(dynamic oldWidget) {
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
   Future didChangeDependencies() async {
     super.didChangeDependencies();
     if (placeBloc == null) {
