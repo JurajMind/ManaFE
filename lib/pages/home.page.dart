@@ -91,13 +91,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget myBottomBar() => new BottomAppBar(
+        shape: CircularNotchedRectangle(),
         child: Ink(
-          height: 60.0,
+          height: 55.0,
           color: Colors.black,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+            padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
             child: new Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(
@@ -184,7 +186,7 @@ class _HomePageState extends State<HomePage> {
         child: new Scaffold(
             key: scaffoldKey,
             bottomNavigationBar: myBottomBar(),
-            resizeToAvoidBottomPadding: true,
+            resizeToAvoidBottomPadding: false,
             body: _buildBody()));
   }
 

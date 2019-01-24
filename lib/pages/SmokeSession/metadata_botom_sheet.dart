@@ -19,6 +19,7 @@ class MetadataBottomSheet extends StatelessWidget {
     var smokeSessionBloc = dataProvider.smokeSessionBloc;
     var personBloc = dataProvider.personBloc;
     return Container(
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
       height: 800.0,
       child: Padding(
         padding: const EdgeInsets.all(8.0),

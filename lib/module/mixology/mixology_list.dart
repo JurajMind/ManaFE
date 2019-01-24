@@ -8,7 +8,6 @@ import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/mixology/mixology_slice.dart';
 import 'package:flutter/material.dart';
 
-
 abstract class MainPage {}
 
 class MixologyList extends StatefulWidget {
@@ -154,8 +153,7 @@ class MixologyListState extends State<MixologyList> {
     mix = data.elementAt(index);
 
     if (mix == null) {
-      return Center(
-          child: new MixCardExpandedShimmer());
+      return Center(child: new MixCardExpandedShimmer());
     }
     return MixCardExpanded(tobaccoMix: mix);
   }

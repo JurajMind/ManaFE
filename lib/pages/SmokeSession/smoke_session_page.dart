@@ -44,7 +44,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
     stopWatches = new StopWatches(new Stopwatch(), new Stopwatch());
 
     scrollController = new ScrollController(
-      initialScrollOffset: 1000.0,
+      initialScrollOffset: 600.0,
     );
     super.initState();
   }
@@ -56,7 +56,6 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         stopWatches.pufStopwatch, this.dataProvider.smokeSessionBloc);
     dataProvider.smokeSessionBloc.joinSession(widget.sessionId);
     dependencies.smokeSessionBloc = dataProvider.smokeSessionBloc;
-    super.didChangeDependencies();
   }
 
   @override
@@ -207,12 +206,24 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                       height: 20.0,
                     ),
                     SizedBox(
-                      height: size.height * 0.75,
+                      height: size.height,
                       child: Column(
                         children: <Widget>[
                           statisticBuilder,
                           tobaccoMetaDataBuilder,
-                          metadataBuilder
+                          metadataBuilder,
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: new RoundedButton(
+                              child: Text('REVIEW'),
+                              onTap: () {},
+                              buttonColor: Colors.transparent,
+                              borderWidth: 1.0,
+                              bottomMargin: 1.0,
+                              height: 40.0,
+                              width: (MediaQuery.of(context).size.width) * 0.8,
+                            ),
+                          )
                         ],
                       ),
                     ),

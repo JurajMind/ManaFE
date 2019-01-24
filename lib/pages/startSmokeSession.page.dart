@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app/components/Common/circle_painter.dart';
 import 'package:app/components/carousel.dart';
 import 'package:app/helpers.dart';
 import 'package:app/module/data_provider.dart';
@@ -46,10 +47,31 @@ class StartSmokeSessionPage extends StatefulWidget {
   }
 }
 
-class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
+class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
+    with SingleTickerProviderStateMixin {
   StartSmokeSessionPageState({this.callback});
 
+  AnimationController _animationController;
+  Animation _colorTween;
+
   final GlobalKey<NavigatorState> Function(int) callback;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 15000));
+    _colorTween = ColorTween(begin: Colors.indigo[900], end: Colors.blue)
+        .animate(_animationController);
+    _animationController.forward();
+    _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _animationController.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        _animationController.forward();
+      }
+    });
+  }
 
   Future _openAddEntryDialog(
       BuildContext context, SmokeSessionBloc smokeSessionBloc) async {
@@ -85,81 +107,72 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
 
     return new SafeArea(
       top: false,
-      child: new Stack(
-        children: <Widget>[
-          new Positioned(
-            child: Hero(
-              tag: 'Circle',
-              child: new Container(
-                  decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.circular(getCircleRadius(context)),
-                      gradient: LinearGradient(
-                        colors: [Colors.blue, Colors.black],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                      )),
-                  child: SizedBox(
-                    height: getCircleRadius(context) * 2,
-                    width: getCircleRadius(context) * 2,
-                    child: GestureDetector(
-                        onTap: () {
-                          _openAddEntryDialog(context, smokeSessionBloc);
-                        },
-                        child: new Container(
-                          child: new Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              new Text(
-                                'START',
-                                style: Theme.of(context).textTheme.title,
-                              ),
-                              new Icon(
-                                Icons.play_arrow,
-                                size: 60.0,
-                                color: Colors.white,
-                              )
-                            ],
-                          ),
-                        )),
-                  )),
-            ),
-            left: (MediaQuery.of(context).size.width / 2) -
-                getCircleRadius(context),
-            top: widget.topWidgetHeight - getCircleRadius(context),
-          ),
-          new Positioned(
-            child: new Icon(
-              ManaIcons.manam,
-              size: 40.0,
-            ),
-            left: 10.0,
-            top: 40.0,
-          ),
-          new Positioned(
-              top: 320.0,
-              child: Column(
+      child: AnimatedBuilder(
+        animation: _colorTween,
+        builder: (context, child) => CustomPaint(
+              painter: CirclePainter(_colorTween.value),
+              child: new Column(
                 children: <Widget>[
-                  SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height / 2 - 60,
+                  SizedBox.fromSize(
+                    size: Size(20.0, 40.0),
+                  ),
+                  new Expanded(
+                    child: Hero(
+                      tag: 'Circle',
+                      child: new Container(
+                          child: SizedBox(
+                        height: getCircleRadius(context) * 2,
+                        width: getCircleRadius(context) * 2,
+                        child: GestureDetector(
+                            onTap: () {
+                              _openAddEntryDialog(context, smokeSessionBloc);
+                            },
+                            child: new Container(
+                              child: new Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  new Text(
+                                    'START',
+                                    style: Theme.of(context).textTheme.title,
+                                  ),
+                                  new Icon(
+                                    Icons.play_arrow,
+                                    size: 60.0,
+                                    color: Colors.white,
+                                  )
+                                ],
+                              ),
+                            )),
+                      )),
+                    ),
+                  ),
+                  new Expanded(
+                      flex: 1,
                       child: Column(
                         children: <Widget>[
-                          Text(
-                            'NEAREST PLACE',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.green[50]),
-                          ),
-                          Expanded(
-                              child: Carroussel(
-                                  navigateToDetail: navigateToPlace)),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height:
+                                  MediaQuery.of(context).size.height / 2 - 60,
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                    'NEAREST PLACE',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.green[50]),
+                                  ),
+                                  Expanded(
+                                      child: Carroussel(
+                                          navigateToDetail: navigateToPlace)),
+                                ],
+                              )),
                         ],
-                      )),
+                      ))
                 ],
-              ))
-        ],
+              ),
+            ),
       ),
     );
   }

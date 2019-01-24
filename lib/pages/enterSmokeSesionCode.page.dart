@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
+import 'package:app/components/Common/circle_painter.dart';
 import 'package:app/components/SmokeSession/smoke_session_carousel.dart';
 import 'package:app/helpers.dart';
 import 'package:app/module/data_provider.dart';
@@ -27,148 +28,160 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
   bool validating = false;
   @override
   Widget build(BuildContext context) {
+    final smokeSessionBloc = DataProvider.getSmokeSession(context);
+
     return new SafeArea(
-        child: Stack(
-      fit: StackFit.expand,
-      overflow: Overflow.visible,
-      children: <Widget>[
-        new Positioned(
-          child: GradientColorWheel(
-            size: Size(
-                getCircleRadius(context) * 2, getCircleRadius(context) * 2),
-            defaultColors: [Colors.red, Colors.blue],
-            child: Center(
-                widthFactor: 0.4,
-                child: new Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: new Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new Text(
-                          "Enter session code",
-                          textScaleFactor: 2.0,
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        new Form(
-                          key: _formKey,
+        top: false,
+        child: CustomPaint(
+          painter: CirclePainter(Colors.red),
+          child: Stack(
+            fit: StackFit.expand,
+            overflow: Overflow.visible,
+            children: <Widget>[
+              new Positioned(
+                child: Container(
+                  height: getCircleRadius(context) * 2,
+                  width: getCircleRadius(context) * 2,
+                  child: Center(
+                      widthFactor: 0.4,
+                      child: new Padding(
+                          padding: const EdgeInsets.all(20.0),
                           child: new Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              new Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: new TextFormField(
-                                  maxLines: 1,
-                                  textCapitalization:
-                                      TextCapitalization.characters,
-                                  inputFormatters: [UpperCaseTextFormatter()],
-                                  maxLength: 5,
-                                  controller: myController,
-                                  validator: (val) {
-                                    return myController.text.length != 5
-                                        ? "Session code must have 5 chars"
-                                        : null;
-                                  },
-                                  style: TextStyle(fontSize: 20.0),
-                                  textAlign: TextAlign.center,
-                                  autocorrect: false,
-                                  decoration: new InputDecoration(
-                                    labelText: "Session code",
-                                    labelStyle: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                    focusedBorder: const OutlineInputBorder(
-                                      // width: 0.0 produces a thin "hairline" border
-                                      borderSide: const BorderSide(
-                                          color: Colors.white, width: 3.0),
-                                    ),
-                                    enabledBorder: const OutlineInputBorder(
-                                      // width: 0.0 produces a thin "hairline" border
-                                      borderSide: const BorderSide(
-                                          color: Colors.white, width: 3.0),
-                                    ),
-                                    border: const OutlineInputBorder(),
-                                  ),
-                                ),
+                              new Text(
+                                "Enter session code",
+                                textScaleFactor: 2.0,
+                                style: TextStyle(color: Colors.white),
                               ),
-                              new Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: new RoundedButton(
-                                  borderWidth: 2.0,
-                                  height: 50.0,
-                                  bottomMargin: 1.0,
-                                  width: 180.0,
-                                  onTap: () async {
-                                    if (validating == true) return;
-                                    if (_formKey.currentState.validate()) {
-                                      setState(() {
-                                        validating = true;
-                                      });
-                                      await validateAndGo(
-                                          context, myController.text);
-                                    }
-                                  },
-                                  child: validating
-                                      ? new Text('Validating')
-                                      : new Text('Enter'),
-                                  buttonColor: Colors.transparent,
+                              new Form(
+                                key: _formKey,
+                                child: new Column(
+                                  children: <Widget>[
+                                    new Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: new TextFormField(
+                                        maxLines: 1,
+                                        textCapitalization:
+                                            TextCapitalization.characters,
+                                        inputFormatters: [
+                                          UpperCaseTextFormatter()
+                                        ],
+                                        maxLength: 5,
+                                        controller: myController,
+                                        validator: (val) {
+                                          return myController.text.length != 5
+                                              ? "Session code must have 5 chars"
+                                              : null;
+                                        },
+                                        style: TextStyle(fontSize: 20.0),
+                                        textAlign: TextAlign.center,
+                                        autocorrect: false,
+                                        decoration: new InputDecoration(
+                                          labelText: "Session code",
+                                          labelStyle: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                            // width: 0.0 produces a thin "hairline" border
+                                            borderSide: const BorderSide(
+                                                color: Colors.white,
+                                                width: 3.0),
+                                          ),
+                                          enabledBorder:
+                                              const OutlineInputBorder(
+                                            // width: 0.0 produces a thin "hairline" border
+                                            borderSide: const BorderSide(
+                                                color: Colors.white,
+                                                width: 3.0),
+                                          ),
+                                          border: const OutlineInputBorder(),
+                                        ),
+                                      ),
+                                    ),
+                                    new Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: new RoundedButton(
+                                        borderWidth: 2.0,
+                                        height: 50.0,
+                                        bottomMargin: 1.0,
+                                        width: 180.0,
+                                        onTap: () async {
+                                          if (validating == true) return;
+                                          if (_formKey.currentState
+                                              .validate()) {
+                                            setState(() {
+                                              validating = true;
+                                            });
+                                            await validateAndGo(
+                                                context, myController.text);
+                                          }
+                                        },
+                                        child: validating
+                                            ? new Text('Validating')
+                                            : new Text('Enter'),
+                                        buttonColor: Colors.transparent,
+                                      ),
+                                    )
+                                  ],
                                 ),
                               )
                             ],
-                          ),
-                        )
-                      ],
-                    ))),
-          ),
-          left: (MediaQuery.of(context).size.width / 2) -
-              getCircleRadius(context),
-        ),
-        Positioned(
-            bottom: 20.0,
-            width: MediaQuery.of(context).size.width,
-            height: 100.0,
-            child: SmokeSessionCarousel()),
-        Positioned(
-          right: 20.0,
-          top: topWidgetHeight + getCircleRadius(context) / 2 + 20,
-          child: InkWell(
-            onTap: () {
-              Future<String> futureString = new QRCodeReader().scan();
-              futureString.then((smokeSessionLink) async {
-                if (smokeSessionLink != null &&
-                    smokeSessionLink.contains("/smoke/")) {
-                  var sessionCode = smokeSessionLink.split('/').last;
-                  myController.text = sessionCode;
-                  await validateAndGo(context, sessionCode);
-                }
-              });
-            },
-            child: Container(
-              width: 100.0,
-              height: 100.0,
-              decoration: new BoxDecoration(
-                  color: Colors.grey,
-                  shape: BoxShape.circle,
-                  border: new Border.all(
-                      color: const Color.fromRGBO(221, 221, 221, 1.0),
-                      width: 2.5)),
-              child: Icon(
-                Icons.linked_camera,
-                size: 50.0,
+                          ))),
+                ),
+                left: (MediaQuery.of(context).size.width / 2) -
+                    getCircleRadius(context),
               ),
-            ),
-          ),
-        ),
-        Positioned(
-            top: 10.0,
-            child: IconButton(
-              icon: Icon(
-                Icons.chevron_left,
-                size: 50.0,
+              Positioned(
+                  bottom: 20.0,
+                  width: MediaQuery.of(context).size.width,
+                  height: 100.0,
+                  child: SmokeSessionCarousel()),
+              Positioned(
+                right: 20.0,
+                top: topWidgetHeight + getCircleRadius(context) / 2 + 20,
+                child: InkWell(
+                  onTap: () {
+                    Future<String> futureString = new QRCodeReader().scan();
+                    futureString.then((smokeSessionLink) async {
+                      if (smokeSessionLink != null &&
+                          smokeSessionLink.contains("/smoke/")) {
+                        var sessionCode = smokeSessionLink.split('/').last;
+                        myController.text = sessionCode;
+                        await validateAndGo(context, sessionCode);
+                      }
+                    });
+                  },
+                  child: Container(
+                    width: 100.0,
+                    height: 100.0,
+                    decoration: new BoxDecoration(
+                        color: Colors.grey,
+                        shape: BoxShape.circle,
+                        border: new Border.all(
+                            color: const Color.fromRGBO(221, 221, 221, 1.0),
+                            width: 2.5)),
+                    child: Icon(
+                      Icons.linked_camera,
+                      size: 50.0,
+                    ),
+                  ),
+                ),
               ),
-              onPressed: () => Navigator.pop(context),
-            )),
-      ],
-    ));
+              Positioned(
+                  top: 10.0,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.chevron_left,
+                      size: 50.0,
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                  )),
+            ],
+          ),
+        ));
   }
 
   Future validateAndGo(BuildContext context, String sessionId) async {
@@ -177,8 +190,6 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
       validating = false;
     });
     if (result.id != null) {
-      final personBloc = DataProvider.getData(context).personBloc;
-      personBloc.addSmokeSession(sessionId);
       Navigator.of(context).pushReplacement(new MaterialPageRoute(
         builder: (BuildContext context) {
           return new SmokeSessionPage(sessionId: sessionId);

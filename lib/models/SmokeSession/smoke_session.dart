@@ -1,6 +1,5 @@
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
-import 'package:flutter/material.dart';
 
 class Hookah {
   String name;

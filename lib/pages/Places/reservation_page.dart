@@ -4,9 +4,12 @@ import 'package:app/components/Pickers/WheelPicker/wheelPicker.dart';
 
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Places/labeled_value.dart';
+import 'package:app/utils/date_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
+import 'package:tuple/tuple.dart';
 import 'package:vibrate/vibrate.dart';
+import 'package:date_format/date_format.dart';
 
 class ReservationPage extends StatefulWidget {
   @override
@@ -18,14 +21,20 @@ class ReservationPage extends StatefulWidget {
 class _ReservationPageState extends State<ReservationPage> {
   final _textController = TextEditingController();
 
-  DateTime currentDate = DateTime.now();
+  DateTime currentDate;
   int selectedPersons = 2;
   int selectedTime = 1;
   int selectedDuration = 2;
   int selectedTimeValue;
-  static const durations = ["2:00", "3:00", "4:00", "5:00"];
+  static const durations = ["2:30", "3:00", "3:30", "4:00"];
   List<DateTime> _markedDate = [DateTime(2018, 9, 20), DateTime(2018, 10, 11)];
   PageController pageController = new PageController(initialPage: 0);
+
+  @override
+  initState() {
+    super.initState();
+    currentDate = DateTime.now();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +59,7 @@ class _ReservationPageState extends State<ReservationPage> {
                 ),
                 backgroundColor: Colors.white,
               ),
-              Flexible(
+              Expanded(
                 child: PageView(
                   controller: pageController,
                   children: <Widget>[
@@ -62,6 +71,7 @@ class _ReservationPageState extends State<ReservationPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Card(
+                              elevation: 2.0,
                               child: new Calendar(
                                 initialCalendarDateOverride: currentDate,
                                 isExpandable: true,
@@ -75,6 +85,7 @@ class _ReservationPageState extends State<ReservationPage> {
                               ),
                             ),
                             Card(
+                              elevation: 2.0,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -110,15 +121,23 @@ class _ReservationPageState extends State<ReservationPage> {
                                         stream: placeBloc.reservationInfo,
                                         initialData: null,
                                         builder: (context, snapShot) {
+                                          if (snapShot.data != null &&
+                                              DateHelper.CompareDate(
+                                                  currentDate,
+                                                  DateTime.now())) {
+                                            // selectedTime = 4;
+                                          } else {}
+
                                           return snapShot.data == null
                                               ? Container()
-                                              : WheelPicker.string(
+                                              : WheelPicker.tuple(
                                                   initialValue: selectedTime,
                                                   minValue: 1,
                                                   maxValue:
                                                       snapShot.data.length,
-                                                  stringItems: snapShot.data
-                                                      .map((s) => s.text)
+                                                  tupleItems: snapShot.data
+                                                      .map((s) => new Tuple2(
+                                                          s.text, s.reserved))
                                                       .toList(),
                                                   onChanged: (value) {
                                                     Vibrate.feedback(
@@ -179,36 +198,62 @@ class _ReservationPageState extends State<ReservationPage> {
                         ),
                       ],
                     ),
-                    Container(
+                    SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              LabeledValue(
-                                label: 'Date:',
-                                value: currentDate.toString(),
-                              ),
-                              LabeledValue(
-                                label: 'Time:',
-                                value: selectedTimeValue.toString(),
-                              ),
-                            ],
+                          Card(
+                            elevation: 2.0,
+                            margin: EdgeInsets.all(8.0),
+                            child: Column(
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    LabeledValue(
+                                      label: 'Date:',
+                                      value: formatDate(currentDate,
+                                          [dd, '.', mm, '.', yyyy]),
+                                    ),
+                                    LabeledValue(
+                                      label: 'Time:',
+                                      value: selectedTimeValue.toString(),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    LabeledValue(
+                                      label: 'Persons:',
+                                      value: selectedPersons.toString(),
+                                    ),
+                                    LabeledValue(
+                                      label: 'Duration:',
+                                      value: durations[selectedDuration],
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              LabeledValue(
-                                label: 'Persons:',
-                                value: selectedPersons.toString(),
+                          Card(
+                            margin: EdgeInsets.all(8.0),
+                            elevation: 2.0,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: <Widget>[
+                                  TextField(
+                                    decoration: new InputDecoration(
+                                      labelText: "Name",
+                                    ),
+                                  ),
+                                  TextField(
+                                    decoration: new InputDecoration(
+                                        labelText: "Reservation note"),
+                                    maxLines: 5,
+                                  )
+                                ],
                               ),
-                              LabeledValue(
-                                label: 'Duration:',
-                                value: durations[selectedDuration],
-                              ),
-                            ],
+                            ),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -226,7 +271,7 @@ class _ReservationPageState extends State<ReservationPage> {
                                 width: 150.0,
                               ),
                               new RoundedButton(
-                                buttonName: 'Finish',
+                                buttonName: 'Reserve',
                                 onTap: () {
                                   pageController.jumpToPage(2);
                                 },
@@ -237,10 +282,10 @@ class _ReservationPageState extends State<ReservationPage> {
                                 width: 150.0,
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:tuple/tuple.dart';
 
 /// Created by Marcin Szałek
 
@@ -40,6 +41,7 @@ class WheelPicker extends StatelessWidget {
         stringScrollController = null,
         _listViewHeight = 3 * itemExtent,
         stringItems = null,
+        tupleItems = null,
         super(key: key);
 
   WheelPicker.string({
@@ -66,6 +68,35 @@ class WheelPicker extends StatelessWidget {
         ),
         decimalScrollController = null,
         stringScrollController = null,
+        _listViewHeight = 3 * itemExtent,
+        tupleItems = null,
+        super(key: key);
+
+  WheelPicker.tuple({
+    Key key,
+    @required int initialValue,
+    @required this.minValue,
+    @required this.maxValue,
+    @required this.onChanged,
+    @required this.tupleItems,
+    this.itemExtent = DEFAULT_ITEM_EXTENT,
+    this.listViewWidth = DEFAULT_LISTVIEW_WIDTH,
+    this.step = 1,
+  })  : assert(initialValue != null),
+        assert(minValue != null),
+        assert(maxValue != null),
+        assert(maxValue > minValue),
+        assert(initialValue >= minValue && initialValue <= maxValue),
+        assert(step > 0),
+        selectedIntValue = initialValue,
+        selectedDecimalValue = -1,
+        decimalPlaces = 0,
+        intScrollController = new ScrollController(
+          initialScrollOffset: (initialValue - minValue) ~/ step * itemExtent,
+        ),
+        decimalScrollController = null,
+        stringScrollController = null,
+        stringItems = null,
         _listViewHeight = 3 * itemExtent,
         super(key: key);
 
@@ -102,6 +133,7 @@ class WheelPicker extends StatelessWidget {
         step = 1,
         stringItems = null,
         stringScrollController = null,
+        tupleItems = null,
         super(key: key);
 
   ///called when selected value changes
@@ -114,6 +146,8 @@ class WheelPicker extends StatelessWidget {
   final int maxValue;
 
   final List<String> stringItems;
+
+  final List<Tuple2<String, bool>> tupleItems;
 
   ///inidcates how many decimal places to show
   /// e.g. 0=>[1,2,3...], 1=>[1.0, 1.1, 1.2...]  2=>[1.00, 1.01, 1.02...]
@@ -180,16 +214,14 @@ class WheelPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
 
+    if (tupleItems != null) {
+      return _tupleListView(themeData);
+    }
     if (decimalPlaces == 0) {
       return _integerListView(themeData);
-    } else {
-      return new Row(
-        children: <Widget>[
-          _integerListView(themeData),
-          _decimalListView(themeData),
-        ],
-        mainAxisAlignment: MainAxisAlignment.center,
-      );
+    }
+    if (stringItems != null) {
+      return _integerListView(themeData);
     }
   }
 
@@ -234,79 +266,41 @@ class WheelPicker extends StatelessWidget {
     );
   }
 
-  Widget _decimalListView(ThemeData themeData) {
+  Widget _tupleListView(ThemeData themeData) {
     TextStyle defaultStyle = themeData.textTheme.body1;
-    TextStyle selectedStyle = themeData.textTheme.headline
-        .copyWith(color: themeData.accentColor, fontWeight: FontWeight.w700);
+    TextStyle selectedStyle =
+        themeData.textTheme.headline.copyWith(color: themeData.accentColor);
 
-    int itemCount =
-        selectedIntValue == maxValue ? 3 : math.pow(10, decimalPlaces) + 2;
+    int itemCount = (maxValue - minValue) ~/ step + 3;
 
     return new NotificationListener(
       child: new Container(
         height: _listViewHeight,
         width: listViewWidth,
         child: new ListView.builder(
-          controller: decimalScrollController,
+          controller: intScrollController,
           itemExtent: itemExtent,
           itemCount: itemCount,
+          cacheExtent: _calculateCacheExtent(itemCount),
           itemBuilder: (BuildContext context, int index) {
-            final int value = index - 1;
+            final int value = _intValueFromIndex(index);
 
             //define special style for selected (middle) element
             final TextStyle itemStyle =
-                value == selectedDecimalValue ? selectedStyle : defaultStyle;
+                value == selectedIntValue ? selectedStyle : defaultStyle;
 
             bool isExtra = index == 0 || index == itemCount - 1;
 
             return isExtra
                 ? new Container() //empty first and last element
                 : new Center(
-                    child: new Text(
-                        value.toString().padLeft(decimalPlaces, '0'),
-                        style: itemStyle),
+                    child:
+                        new Text(tupleItems[value - 1].item1, style: itemStyle),
                   );
           },
         ),
       ),
-      onNotification: _onDecimalNotification,
-    );
-  }
-
-  Widget _stringtView(ThemeData themeData) {
-    TextStyle defaultStyle = themeData.textTheme.body1;
-    TextStyle selectedStyle = themeData.textTheme.headline
-        .copyWith(color: themeData.accentColor, fontWeight: FontWeight.w700);
-
-    int itemCount =
-        selectedIntValue == maxValue ? 3 : math.pow(10, decimalPlaces) + 2;
-
-    return new NotificationListener(
-      child: new Container(
-        height: _listViewHeight,
-        width: listViewWidth,
-        child: new ListView.builder(
-          controller: stringScrollController,
-          itemExtent: itemExtent,
-          itemCount: itemCount,
-          itemBuilder: (BuildContext context, int index) {
-            final int value = index - 1;
-
-            //define special style for selected (middle) element
-            final TextStyle itemStyle =
-                value == selectedDecimalValue ? selectedStyle : defaultStyle;
-
-            bool isExtra = index == 0 || index == itemCount - 1;
-
-            return isExtra
-                ? new Container() //empty first and last element
-                : new Center(
-                    child: new Text(stringItems[value], style: itemStyle),
-                  );
-          },
-        ),
-      ),
-      onNotification: _onDecimalNotification,
+      onNotification: _onIntegerNotification,
     );
   }
 
@@ -426,109 +420,5 @@ class WheelPicker extends StatelessWidget {
   _animate(ScrollController scrollController, double value) {
     scrollController.animateTo(value,
         duration: new Duration(seconds: 1), curve: new ElasticOutCurve());
-  }
-}
-
-///Returns AlertDialog as a Widget so it is designed to be used in showDialog method
-class NumberPickerDialog extends StatefulWidget {
-  final int minValue;
-  final int maxValue;
-  final int initialIntegerValue;
-  final double initialDoubleValue;
-  final int decimalPlaces;
-  final Widget title;
-  final EdgeInsets titlePadding;
-  final Widget confirmWidget;
-  final Widget cancelWidget;
-  final int step;
-
-  ///constructor for integer values
-  NumberPickerDialog.integer({
-    @required this.minValue,
-    @required this.maxValue,
-    @required this.initialIntegerValue,
-    this.title,
-    this.titlePadding,
-    this.step = 1,
-    Widget confirmWidget,
-    Widget cancelWidget,
-  })  : confirmWidget = confirmWidget ?? new Text("OK"),
-        cancelWidget = cancelWidget ?? new Text("CANCEL"),
-        decimalPlaces = 0,
-        initialDoubleValue = -1.0;
-
-  ///constructor for decimal values
-  NumberPickerDialog.decimal({
-    @required this.minValue,
-    @required this.maxValue,
-    @required this.initialDoubleValue,
-    this.decimalPlaces = 1,
-    this.title,
-    this.titlePadding,
-    Widget confirmWidget,
-    Widget cancelWidget,
-  })  : confirmWidget = confirmWidget ?? new Text("OK"),
-        cancelWidget = cancelWidget ?? new Text("CANCEL"),
-        initialIntegerValue = -1,
-        step = 1;
-
-  @override
-  State<NumberPickerDialog> createState() =>
-      new _NumberPickerDialogControllerState(
-          initialIntegerValue, initialDoubleValue);
-}
-
-class _NumberPickerDialogControllerState extends State<NumberPickerDialog> {
-  int selectedIntValue;
-  double selectedDoubleValue;
-
-  _NumberPickerDialogControllerState(
-      this.selectedIntValue, this.selectedDoubleValue);
-
-  _handleValueChanged(num value) {
-    if (value is int) {
-      setState(() => selectedIntValue = value);
-    } else {
-      setState(() => selectedDoubleValue = value);
-    }
-  }
-
-  WheelPicker _buildNumberPicker() {
-    if (widget.decimalPlaces > 0) {
-      return new WheelPicker.decimal(
-          initialValue: selectedDoubleValue,
-          minValue: widget.minValue,
-          maxValue: widget.maxValue,
-          decimalPlaces: widget.decimalPlaces,
-          onChanged: _handleValueChanged);
-    } else {
-      return new WheelPicker.integer(
-        initialValue: selectedIntValue,
-        minValue: widget.minValue,
-        maxValue: widget.maxValue,
-        step: widget.step,
-        onChanged: _handleValueChanged,
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new AlertDialog(
-      title: widget.title,
-      titlePadding: widget.titlePadding,
-      content: _buildNumberPicker(),
-      actions: [
-        new FlatButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: widget.cancelWidget,
-        ),
-        new FlatButton(
-            onPressed: () => Navigator.of(context).pop(widget.decimalPlaces > 0
-                ? selectedDoubleValue
-                : selectedIntValue),
-            child: widget.confirmWidget),
-      ],
-    );
   }
 }
