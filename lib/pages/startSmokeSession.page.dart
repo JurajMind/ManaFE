@@ -80,7 +80,7 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
             builder: (BuildContext context) {
               return new EnterSmokeSessionCode();
             },
-            fullscreenDialog: true));
+            fullscreenDialog: false));
 
     print(sessionCode);
     if (sessionCode == null) {
@@ -113,10 +113,9 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
               painter: CirclePainter(_colorTween.value),
               child: new Column(
                 children: <Widget>[
-                  SizedBox.fromSize(
-                    size: Size(20.0, 40.0),
-                  ),
+                  new Expanded(flex: 1, child: Container()),
                   new Expanded(
+                    flex: 4,
                     child: Hero(
                       tag: 'Circle',
                       child: new Container(
@@ -148,7 +147,7 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
                     ),
                   ),
                   new Expanded(
-                      flex: 1,
+                      flex: 4,
                       child: Column(
                         children: <Widget>[
                           SizedBox(

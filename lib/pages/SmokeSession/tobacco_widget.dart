@@ -1,10 +1,10 @@
-import 'package:app/models/PipeAccesory/pipe_accesory.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:app/models/PipeAccesory/tobacco.dart';
 import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
-import 'package:app/pages/SmokeSession/tobacco_search.dart';
+import 'package:app/pages/SmokeSession/tobacco_edit.dart';
+
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -59,13 +59,8 @@ class TobaccoWidget extends StatelessWidget {
                 ),
                 Expanded(
                   child: IconButton(
-                    icon: Icon(Icons.add_box),
-                    onPressed: () => showDemoDialog(
-                        context: context,
-                        child: new TobaccoSearch(
-                          ownAccesories: new List<PipeAccesorySimpleDto>(),
-                        )),
-                  ),
+                      icon: Icon(Icons.add_box),
+                      onPressed: () => showTobaccoDialog(context: context)),
                   flex: 1,
                 )
               ],
@@ -76,13 +71,17 @@ class TobaccoWidget extends StatelessWidget {
     );
   }
 
-  void showDemoDialog({BuildContext context, Widget child}) {
-    showDialog<PipeAccesorySimple>(
-      context: context,
-      builder: (BuildContext context) => child,
-    ).then<void>((PipeAccesorySimple value) {
-      if (value != null) {}
-    });
+  Future showTobaccoDialog({BuildContext context}) async {
+    PipeAccesorySimple save = await Navigator.of(context)
+        .push(new MaterialPageRoute<PipeAccesorySimple>(
+            builder: (BuildContext context) {
+              return new TobaccoEditWidget(
+                tobacco:
+                    this.smokeSessionBloc.smokeSessionMetaData.value.tobacco,
+                mix: this.smokeSessionBloc.smokeSessionMetaData.value.mix,
+              );
+            },
+            fullscreenDialog: true));
   }
 
   Widget tobacoMixBody(TobaccoMix tobacoMix) {

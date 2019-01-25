@@ -10,7 +10,6 @@ class TobaccoSearch extends StatefulWidget {
   final List<PipeAccesorySimpleDto> ownAccesories;
   final String type;
 
-
   const TobaccoSearch({
     Key key,
     this.ownAccesories,
@@ -21,6 +20,15 @@ class TobaccoSearch extends StatefulWidget {
   TobaccoSearchState createState() {
     return new TobaccoSearchState();
   }
+}
+
+Future showTobaccoSearchDialog({BuildContext context}) async {
+  PipeAccesorySimple save = await Navigator.of(context)
+      .push(new MaterialPageRoute<PipeAccesorySimple>(
+          builder: (BuildContext context) {
+            return new TobaccoSearch();
+          },
+          fullscreenDialog: true));
 }
 
 class TobaccoSearchState extends State<TobaccoSearch> {
@@ -36,7 +44,7 @@ class TobaccoSearchState extends State<TobaccoSearch> {
   void initState() {
     super.initState();
     selectedTobacco = new List<PipeAccesorySimpleDto>();
-    ownSimpleAccesories = widget.ownAccesories;      
+    ownSimpleAccesories = widget.ownAccesories;
   }
 
   @override
@@ -71,17 +79,19 @@ class TobaccoSearchState extends State<TobaccoSearch> {
             ),
             Expanded(
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[controller.text == "" ? buildDefault() : buildResult()],
-                ))
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                controller.text == "" ? buildDefault() : buildResult()
+              ],
+            ))
           ],
         ),
       ),
     );
   }
 
-  Widget _selectBox(){
-    if(this.selectedTobacco.length == 0){
+  Widget _selectBox() {
+    if (this.selectedTobacco.length == 0) {
       return Container();
     }
     return new Row(
@@ -95,9 +105,7 @@ class TobaccoSearchState extends State<TobaccoSearch> {
       loading = true;
     });
     this.searchResult.add(new List<PipeAccesorySimpleDto>());
-    App.http
-        .searchGear(text, 'tobacco', 0, 1000)
-        .then((value) {
+    App.http.searchGear(text, 'tobacco', 0, 1000).then((value) {
       this.searchResult.add(value);
       setState(() {
         loading = false;
@@ -123,15 +131,16 @@ class TobaccoSearchState extends State<TobaccoSearch> {
     );
   }
 
-  Widget _getLeading(PipeAccesorySimpleDto data){
-    if(this.selectedTobacco.where((a) => a.id == data.id).length > 0){
+  Widget _getLeading(PipeAccesorySimpleDto data) {
+    if (this.selectedTobacco.where((a) => a.id == data.id).length > 0) {
       return Icon(Icons.check_circle_outline);
     }
-    if(false){
+    if (false) {
       return Icon(Icons.shopping_basket);
     }
     return Icon(Icons.check_box_outline_blank);
   }
+
   ListTile _createResult(
       int index, PipeAccesorySimpleDto data, BuildContext context) {
     var text = '${data.brand} ${data.name}';
@@ -140,13 +149,12 @@ class TobaccoSearchState extends State<TobaccoSearch> {
         leading: _getLeading(data),
         onTap: () {
           setState(() {
-            if(selectedTobacco.contains(data)){
+            if (selectedTobacco.contains(data)) {
               selectedTobacco.remove(data);
-            }else{
-  selectedTobacco.add(data);
+            } else {
+              selectedTobacco.add(data);
             }
-                    
-                    });
+          });
         },
         title: RichText(
             text: TextSpan(

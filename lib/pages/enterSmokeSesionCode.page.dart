@@ -34,11 +34,14 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
         top: false,
         child: CustomPaint(
           painter: CirclePainter(Colors.red),
-          child: Stack(
-            fit: StackFit.expand,
-            overflow: Overflow.visible,
+          child: Column(
             children: <Widget>[
-              new Positioned(
+              new AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0.0,
+              ),
+              new Expanded(
+                flex: 4,
                 child: Container(
                   height: getCircleRadius(context) * 2,
                   width: getCircleRadius(context) * 2,
@@ -101,29 +104,81 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                         ),
                                       ),
                                     ),
-                                    new Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: new RoundedButton(
-                                        borderWidth: 2.0,
-                                        height: 50.0,
-                                        bottomMargin: 1.0,
-                                        width: 180.0,
-                                        onTap: () async {
-                                          if (validating == true) return;
-                                          if (_formKey.currentState
-                                              .validate()) {
-                                            setState(() {
-                                              validating = true;
-                                            });
-                                            await validateAndGo(
-                                                context, myController.text);
-                                          }
-                                        },
-                                        child: validating
-                                            ? new Text('Validating')
-                                            : new Text('Enter'),
-                                        buttonColor: Colors.transparent,
-                                      ),
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          flex: 1,
+                                          child: Container(),
+                                        ),
+                                        Expanded(
+                                          flex: 4,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0, right: 8.0),
+                                            child: new RoundedButton(
+                                              borderWidth: 2.0,
+                                              height: 50.0,
+                                              bottomMargin: 1.0,
+                                              width: 180.0,
+                                              onTap: () async {
+                                                if (validating == true) return;
+                                                if (_formKey.currentState
+                                                    .validate()) {
+                                                  setState(() {
+                                                    validating = true;
+                                                  });
+                                                  await validateAndGo(context,
+                                                      myController.text);
+                                                }
+                                              },
+                                              child: validating
+                                                  ? new Text('Validating')
+                                                  : new Text('Enter'),
+                                              buttonColor: Colors.transparent,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: InkWell(
+                                              onTap: () {
+                                                Future<String> futureString =
+                                                    new QRCodeReader().scan();
+                                                futureString.then(
+                                                    (smokeSessionLink) async {
+                                                  if (smokeSessionLink !=
+                                                          null &&
+                                                      smokeSessionLink.contains(
+                                                          "/smoke/")) {
+                                                    var sessionCode =
+                                                        smokeSessionLink
+                                                            .split('/')
+                                                            .last;
+                                                    myController.text =
+                                                        sessionCode;
+                                                    await validateAndGo(
+                                                        context, sessionCode);
+                                                  }
+                                                });
+                                              },
+                                              child: Container(
+                                                width: 50.0,
+                                                height: 50.0,
+                                                decoration: new BoxDecoration(
+                                                    color: Colors.grey,
+                                                    shape: BoxShape.circle,
+                                                    border: new Border.all(
+                                                        color: const Color
+                                                                .fromRGBO(
+                                                            221, 221, 221, 1.0),
+                                                        width: 2.5)),
+                                                child: Icon(
+                                                  Icons.linked_camera,
+                                                  size: 20.0,
+                                                ),
+                                              )),
+                                        )
+                                      ],
                                     )
                                   ],
                                 ),
@@ -131,54 +186,8 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                             ],
                           ))),
                 ),
-                left: (MediaQuery.of(context).size.width / 2) -
-                    getCircleRadius(context),
               ),
-              Positioned(
-                  bottom: 20.0,
-                  width: MediaQuery.of(context).size.width,
-                  height: 100.0,
-                  child: SmokeSessionCarousel()),
-              Positioned(
-                right: 20.0,
-                top: topWidgetHeight + getCircleRadius(context) / 2 + 20,
-                child: InkWell(
-                  onTap: () {
-                    Future<String> futureString = new QRCodeReader().scan();
-                    futureString.then((smokeSessionLink) async {
-                      if (smokeSessionLink != null &&
-                          smokeSessionLink.contains("/smoke/")) {
-                        var sessionCode = smokeSessionLink.split('/').last;
-                        myController.text = sessionCode;
-                        await validateAndGo(context, sessionCode);
-                      }
-                    });
-                  },
-                  child: Container(
-                    width: 100.0,
-                    height: 100.0,
-                    decoration: new BoxDecoration(
-                        color: Colors.grey,
-                        shape: BoxShape.circle,
-                        border: new Border.all(
-                            color: const Color.fromRGBO(221, 221, 221, 1.0),
-                            width: 2.5)),
-                    child: Icon(
-                      Icons.linked_camera,
-                      size: 50.0,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                  top: 10.0,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.chevron_left,
-                      size: 50.0,
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                  )),
+              Expanded(flex: 2, child: SmokeSessionCarousel()),
             ],
           ),
         ));

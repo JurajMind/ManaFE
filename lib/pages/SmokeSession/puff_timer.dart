@@ -13,7 +13,8 @@ class PuffTimeText extends StatelessWidget {
     return Row(
       children: <Widget>[
         Offstage(
-          offstage: !this.dependencies.showTimer,
+          offstage: this.dependencies.showTimer == null ||
+              !this.dependencies.showTimer,
           child: new Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -46,9 +47,9 @@ class PuffTimeText extends StatelessWidget {
 
 class PufTimerDependencies {
   StreamSubscription<int> subscription;
-  bool showTimer;
+  bool showTimer = false;
   Timer timer;
-  String alternativeText;
+  String alternativeText = '';
   int milliseconds;
 
   PufTimerDependencies(stopwatch, smokeSessionBloc) {
