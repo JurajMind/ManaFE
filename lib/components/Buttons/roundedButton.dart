@@ -25,21 +25,15 @@ class RoundedButton extends StatelessWidget {
       this.borderWidth,
       this.width,
       this.buttonColor,
-      this.textColor, 
+      this.textColor,
       this.child});
 
-  TextStyle _getButtonTextStyle()
-  {
-    if(this.textColor == null)
-    {
+  TextStyle _getButtonTextStyle() {
+    if (this.textColor == null) {
       return this.textStyle;
-    }
-    else{
+    } else {
       return new TextStyle(
-      color: this.textColor,
-      fontSize: 16.0,
-      fontWeight: FontWeight.bold);
-
+          color: this.textColor, fontSize: 16.0, fontWeight: FontWeight.bold);
     }
   }
 
@@ -47,6 +41,7 @@ class RoundedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     if (borderWidth != 0.0)
       return (new InkWell(
+        borderRadius: BorderRadius.circular(30.0),
         onTap: onTap,
         child: new Container(
           width: width,
@@ -59,7 +54,9 @@ class RoundedButton extends StatelessWidget {
               border: new Border.all(
                   color: const Color.fromRGBO(221, 221, 221, 1.0),
                   width: borderWidth)),
-          child: this.child == null ? Text(buttonName.toUpperCase(), style: _getButtonTextStyle()) : child,
+          child: this.child == null
+              ? Text(buttonName.toUpperCase(), style: _getButtonTextStyle())
+              : child,
         ),
       ));
     else

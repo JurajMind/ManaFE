@@ -12,11 +12,13 @@ class SmokeSessionMetaDataSelection {
   PipeAccesorySimpleDto pipe;
   PipeAccesorySimpleDto heatManager;
   PipeAccesorySimpleDto coal;
+  PipeAccesorySimpleDto tobacco;
   int packType;
 
   SmokeSessionMetaDataSelection(
       {this.id,
       this.tobaccoId,
+      this.tobacco,
       this.tobaccoWeight,
       this.anonymPeopleCount,
       this.bowl,
@@ -30,6 +32,7 @@ class SmokeSessionMetaDataSelection {
     return new SmokeSessionMetaDataSelection(
         id: metadata.id,
         tobaccoId: metadata.tobaccoId,
+        tobacco: metadata.tobacco,
         tobaccoWeight: metadata.tobaccoWeight,
         anonymPeopleCount: metadata.anonymPeopleCount,
         bowl: metadata.bowl,
@@ -60,20 +63,21 @@ class SmokeSessionMetaData {
       this.coalsCount});
 
   factory SmokeSessionMetaData.fromJson(Map<String, dynamic> json) {
-    Tobacco tobacco =
-        Tobacco.fromJson(json['TobaccoSimple'] as Map<String, dynamic>);
+    PipeAccesorySimpleDto tobacco = PipeAccesorySimpleDto.fromJson(
+        json['TobaccoSimple'] as Map<String, dynamic>);
     PipeAccesorySimpleDto bowl =
         PipeAccesorySimpleDto.fromJson(json['Bowl'] as Map<String, dynamic>);
     PipeAccesorySimpleDto pipe =
         PipeAccesorySimpleDto.fromJson(json['Pipe'] as Map<String, dynamic>);
-    PipeAccesorySimpleDto hms =
-        PipeAccesorySimpleDto.fromJson(json['HeatManagement'] as Map<String, dynamic>);
+    PipeAccesorySimpleDto hms = PipeAccesorySimpleDto.fromJson(
+        json['HeatManagement'] as Map<String, dynamic>);
     PipeAccesorySimpleDto coal =
         PipeAccesorySimpleDto.fromJson(json['Coal'] as Map<String, dynamic>);
 
-    TobaccoMix mix;
+    TobaccoMixSimpleDto mix;
     if (json['TobaccoMix'] != null) {
-      mix = TobaccoMix.fromJson(json['TobaccoMix'] as Map<String, dynamic>);
+      mix = TobaccoMixSimpleDto.fromJson(
+          json['TobaccoMix'] as Map<String, dynamic>);
     }
 
     return SmokeSessionMetaData(
@@ -99,9 +103,9 @@ class SmokeSessionMetaData {
 
   int tobaccoId;
 
-  Tobacco tobacco;
+  PipeAccesorySimpleDto tobacco;
 
-  TobaccoMix mix;
+  TobaccoMixSimpleDto mix;
 
   double tobaccoWeight;
 

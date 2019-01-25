@@ -175,6 +175,13 @@ class SmokeSessionBloc {
     animations.add(list);
   }
 
+  setTobacco(PipeAccesorySimpleDto accesory) {
+    metaDataChanged = true;
+    var selection = this.smokeSessionMetaData.value;
+    selection.tobacco = accesory;
+    this.smokeSessionMetaData.add(selection);
+  }
+
   setMetadataAccesory(PipeAccesorySimpleDto accesory, String type) {
     metaDataChanged = true;
     var selection = this.smokeSessionDataSelection.value;

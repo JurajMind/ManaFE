@@ -10,8 +10,8 @@ import 'package:openapi/api.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class TobaccoWidget extends StatelessWidget {
-  final Tobacco tobacco;
-  final TobaccoMix tobacoMix;
+  final PipeAccesorySimpleDto tobacco;
+  final TobaccoMixSimpleDto tobacoMix;
   final SmokeSessionBloc smokeSessionBloc;
 
   const TobaccoWidget({this.tobacco, this.tobacoMix, this.smokeSessionBloc});
@@ -55,7 +55,7 @@ class TobaccoWidget extends StatelessWidget {
                   flex: 5,
                   child: this.tobacoMix != null
                       ? tobacoMixBody(tobacoMix)
-                      : tobacoBody(tobacco),
+                      : tobacoBody(context, tobacco),
                 ),
                 Expanded(
                   child: IconButton(
@@ -84,7 +84,7 @@ class TobaccoWidget extends StatelessWidget {
             fullscreenDialog: true));
   }
 
-  Widget tobacoMixBody(TobaccoMix tobacoMix) {
+  Widget tobacoMixBody(TobaccoMixSimpleDto tobacoMix) {
     return Column(
       children: <Widget>[
         tobacoMix.name != null ? Text(tobacoMix.name) : Container(),
@@ -97,7 +97,7 @@ class TobaccoWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: tobacoMix.tobaccos.map((f) {
-                return tobacoMixPart(f.item1);
+                return Placeholder();
               }).toList(),
             ),
           ),
@@ -106,7 +106,7 @@ class TobaccoWidget extends StatelessWidget {
     );
   }
 
-  Column tobacoMixPart(Tobacco tobacco) {
+  Column tobacoMixPart(PipeAccesorySimple tobacco) {
     return Column(
       children: <Widget>[
         Text(
@@ -119,14 +119,22 @@ class TobaccoWidget extends StatelessWidget {
     );
   }
 
-  Widget tobacoBody(Tobacco tobacco) {
-    if (tobacco == null) {
+  Widget tobacoBody(BuildContext context, PipeAccesorySimpleDto tobacco) {
+    if (tobacco == null || tobacco.id == null) {
       return new Padding(
         padding: EdgeInsets.all(8.0),
         child: Text('No tobacco'),
       );
     } else {
-      return new Placeholder();
+      return Row(
+        children: <Widget>[
+          Text(
+            tobacco.name,
+            style: Theme.of(context).textTheme.display2,
+          ),
+          Text(' ' + tobacco.brand)
+        ],
+      );
     }
   }
 }

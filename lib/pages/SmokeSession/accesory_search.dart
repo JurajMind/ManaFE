@@ -37,7 +37,6 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
   void initState() {
     super.initState();
     ownSimpleAccesories = widget.ownAccesories;
-        
   }
 
   @override
@@ -54,6 +53,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
       width: 300.0,
       height: 300.0,
       child: Material(
+        color: Colors.black,
         child: Column(
           children: <Widget>[
             AppBar(

@@ -61,7 +61,7 @@ class MetadataItem extends StatelessWidget {
               Expanded(
                 child: IconButton(
                   icon: Icon(Icons.search),
-                  onPressed: () => showDemoDialog(
+                  onPressed: () => showSearchDialog(
                       context: context,
                       child: new PipeAccesorySearch(
                         type: type,
@@ -83,14 +83,11 @@ class MetadataItem extends StatelessWidget {
     );
   }
 
-  List<Widget> pipeAccesoryChips(
-      List<PipeAccesorySimpleDto> acc, PipeAccesorySimpleDto selected, firstLine) {
-   
-   var simple = new List<PipeAccesorySimpleDto>.from(acc);
+  List<Widget> pipeAccesoryChips(List<PipeAccesorySimpleDto> acc,
+      PipeAccesorySimpleDto selected, firstLine) {
+    var simple = new List<PipeAccesorySimpleDto>.from(acc);
 
-if(acc.length == 0){
-
-}
+    if (acc.length == 0) {}
     if (selected != null) {
       simple = acc.where((a) => a.id != selected.id).toList();
     }
@@ -104,7 +101,7 @@ if(acc.length == 0){
           simple = simple.skip(1).toList();
         return [filterChip(selected, true)];
       } else {
-        if(simple.length == 0){
+        if (simple.length == 0) {
           return [Container()];
         }
         return [filterChip(simple.first, false)];
@@ -126,7 +123,7 @@ if(acc.length == 0){
       borderRadius: BorderRadius.circular(20.0),
     );
     var name = '';
-    if(accesory.name != null){
+    if (accesory.name != null) {
       name = '${accesory.brand} ${accesory.name}';
     }
     return Padding(
@@ -146,7 +143,7 @@ if(acc.length == 0){
     );
   }
 
-  void showDemoDialog({BuildContext context, Widget child}) {
+  void showSearchDialog({BuildContext context, Widget child}) {
     showDialog<PipeAccesorySimpleDto>(
       context: context,
       builder: (BuildContext context) => child,
