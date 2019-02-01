@@ -27,7 +27,7 @@ class Devices extends StatelessWidget {
               physics: scrollPhysics,
               gridDelegate:
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              itemCount: snapshot.data.length,
+              itemCount: snapshot.data?.length ?? 0,
               itemBuilder: (context, index) {
                 var device = snapshot.data[index];
                 return InkWell(

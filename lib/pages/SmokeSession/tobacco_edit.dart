@@ -1,7 +1,5 @@
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/SmokeSession/tobacco_slider.dart';
-import 'package:app/models/PipeAccesory/tobacco.dart';
-import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/SmokeSession/accesory_search.dart';
 import 'package:app/utils/theme.dart';

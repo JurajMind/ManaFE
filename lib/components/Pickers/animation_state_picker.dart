@@ -37,7 +37,7 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
     super.initState();
     _focusIndex = widget.selectedIndex;
     scrollController = new FixedExtentScrollController(
-      initialItem: widget.selectedIndex,
+      initialItem: widget.selectedIndex ?? 0,
     );
   }
 

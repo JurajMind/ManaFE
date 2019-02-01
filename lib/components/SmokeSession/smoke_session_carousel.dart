@@ -34,7 +34,7 @@ class _SmokeSessionCarouselState extends State<SmokeSessionCarousel> {
       stream: personBloc.smokeSessionsCodes,
       builder: (context, snapshot) => PageView.builder(
           controller: controller,
-          itemCount: snapshot.data.length ?? 3,
+          itemCount: snapshot.data?.length ?? 0,
           itemBuilder: (context, index) {
             var data = snapshot.data == null ? null : snapshot.data[index];
             return AnimatedBuilder(

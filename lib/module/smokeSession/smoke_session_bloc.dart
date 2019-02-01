@@ -180,6 +180,7 @@ class SmokeSessionBloc {
     var selection = this.smokeSessionMetaData.value;
     selection.tobacco = accesory;
     this.smokeSessionMetaData.add(selection);
+    saveMetaData();
   }
 
   setMetadataAccesory(PipeAccesorySimpleDto accesory, String type) {
