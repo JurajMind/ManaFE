@@ -1,7 +1,8 @@
+import 'package:app/components/Mixology/mixology_expanded.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:app/models/PipeAccesory/tobacco.dart';
-import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
+import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/tobacco_edit.dart';
 
@@ -53,7 +54,8 @@ class TobaccoWidget extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   flex: 5,
-                  child: this.tobacoMix != null
+                  child: this.tobacoMix?.tobaccos != null &&
+                          this.tobacoMix.tobaccos.length > 0
                       ? tobacoMixBody(tobacoMix)
                       : tobacoBody(context, tobacco),
                 ),
@@ -72,37 +74,31 @@ class TobaccoWidget extends StatelessWidget {
   }
 
   Future showTobaccoDialog({BuildContext context}) async {
-    PipeAccesorySimple save = await Navigator.of(context)
-        .push(new MaterialPageRoute<PipeAccesorySimple>(
+    TobaccoEditModel tobacco = await Navigator.of(context)
+        .push(new MaterialPageRoute<TobaccoEditModel>(
             builder: (BuildContext context) {
               return new TobaccoEditWidget(
+                tobaccoWeight: this
+                    .smokeSessionBloc
+                    .smokeSessionMetaData
+                    .value
+                    .tobaccoWeight
+                    .toInt(),
                 tobacco:
                     this.smokeSessionBloc.smokeSessionMetaData.value.tobacco,
-                mix: this.smokeSessionBloc.smokeSessionMetaData.value.mix,
+                mix:
+                    this.smokeSessionBloc.smokeSessionMetaData.value.tobaccoMix,
               );
             },
             fullscreenDialog: true));
+
+    if (tobacco != null) this.smokeSessionBloc.setTobacco(tobacco);
   }
 
   Widget tobacoMixBody(TobaccoMixSimpleDto tobacoMix) {
-    return Column(
-      children: <Widget>[
-        tobacoMix.name != null ? Text(tobacoMix.name) : Container(),
-        new Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(const Radius.circular(30.0)),
-              color: Colors.white),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: tobacoMix.tobaccos.map((f) {
-                return Placeholder();
-              }).toList(),
-            ),
-          ),
-        ),
-      ],
+    return MixCardExpanded(
+      tobaccoMix: tobacoMix,
+      noTitle: true,
     );
   }
 

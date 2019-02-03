@@ -1,4 +1,5 @@
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/mixology/mixology_list.dart';
 import 'package:app/module/mixology/mixology_page_new.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +20,29 @@ class FeatureMixCreator extends StatelessWidget {
               var item = snapshot.data[index];
               return ListTile(
                 onTap: () {
-                  mixologyBloc.loadCreatorMixes(item.name);
-                  Navigator.of(context).push(new MaterialPageRoute(
-                      builder: (context) => CreatorMixPage(
-                            creator: item,
-                          )));
+                  mixologyBloc.loadCreatorMixes(item.name, 0);
+                  Navigator.of(context)
+                      .push(new MaterialPageRoute(builder: (context) {
+                    return SafeArea(
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: 50.0,
+                            child: AppBar(
+                              backgroundColor: Colors.black,
+                              title: Text(item.displayName),
+                            ),
+                          ),
+                          Expanded(
+                            child: PaggingMixListView(
+                              mixologyBloc: mixologyBloc,
+                              mixCreator: item.name,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }));
                 },
                 trailing: Icon(Icons.chevron_right),
                 leading: SizedBox(

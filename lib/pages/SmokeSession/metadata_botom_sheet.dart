@@ -1,5 +1,4 @@
 import 'package:app/models/PipeAccesory/pipe_accesory.dart';
-import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/metadata_item.dart';
@@ -45,7 +44,7 @@ class MetadataBottomSheet extends StatelessWidget {
                     ? personBloc.myGear.value
                         .where((a) => a.type == 'Bowl')
                         .toList()
-                    : new List<PipeAccesory>(),
+                    : new List<PipeAccesorySimpleDto>(),
                 (a) => a.bowl),
             buildMetadataItem(
                 smokeSessionBloc,
@@ -56,8 +55,8 @@ class MetadataBottomSheet extends StatelessWidget {
                     ? personBloc.myGear.value
                         .where((a) => a.type == 'HeatManagement')
                         .toList()
-                    : new List<PipeAccesory>(),
-                (a) => a.heatManager),
+                    : new List<PipeAccesorySimpleDto>(),
+                (a) => a.heatManagement),
             buildMetadataItem(
                 smokeSessionBloc,
                 "Coals",
@@ -67,7 +66,7 @@ class MetadataBottomSheet extends StatelessWidget {
                     ? personBloc.myGear.value
                         .where((a) => a.type == 'Coal')
                         .toList()
-                    : new List<PipeAccesory>(),
+                    : new List<PipeAccesorySimpleDto>(),
                 (a) => a.coal),
           ],
         ),
@@ -75,16 +74,16 @@ class MetadataBottomSheet extends StatelessWidget {
     );
   }
 
-  StreamBuilder<SmokeSessionMetaDataSelection> buildMetadataItem(
+  StreamBuilder<SmokeSessionMetaDataDto> buildMetadataItem(
       SmokeSessionBloc bloc,
       String type,
       String searchType,
       IconData icon,
       List<PipeAccesorySimpleDto> ownedAccesory,
-      Function(SmokeSessionMetaDataSelection) selectFunction) {
-    return StreamBuilder<SmokeSessionMetaDataSelection>(
+      Function(SmokeSessionMetaDataDto) selectFunction) {
+    return StreamBuilder<SmokeSessionMetaDataDto>(
       initialData: null,
-      stream: bloc.smokeSessionDataSelection,
+      stream: bloc.smokeSessionMetaData,
       builder: (context, snapshot) => snapshot.data == null
           ? new Container()
           : new MetadataItem(

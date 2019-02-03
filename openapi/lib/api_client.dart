@@ -73,14 +73,10 @@ class ApiClient {
           return InlineResponse200.fromJson(value);
         case 'MediaDto':
           return MediaDto.fromJson(value);
-        case 'Mix':
-          return Mix.fromJson(value);
         case 'MixCreator':
           return MixCreator.fromJson(value);
         case 'MixCreators':
           return MixCreators.fromJson(value);
-        case 'MixList':
-          return MixList.fromJson(value);
         case 'NearbyPlacesDto':
           return NearbyPlacesDto.fromJson(value);
         case 'OpeningDay':
@@ -95,6 +91,8 @@ class ApiClient {
           return PipeAccesoryLikeDto.fromJson(value);
         case 'PipeAccesorySimpleDto':
           return PipeAccesorySimpleDto.fromJson(value);
+        case 'PipeAccessoryDetailsDto':
+          return PipeAccessoryDetailsDto.fromJson(value);
         case 'PipeAccessoryStatisticsDto':
           return PipeAccessoryStatisticsDto.fromJson(value);
         case 'PipeAccessoryUsageDto':
@@ -171,6 +169,8 @@ class ApiClient {
           return TobaccoSimpleDto.fromJson(value);
         case 'TobaccoTasteDto':
           return TobaccoTasteDto.fromJson(value);
+        case 'UsedWithDto':
+          return UsedWithDto.fromJson(value);
         case 'UserModel':
           return UserModel.fromJson(value);
         case 'Validation':

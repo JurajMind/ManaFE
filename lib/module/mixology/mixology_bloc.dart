@@ -1,92 +1,38 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:app/app/app.dart';
-import 'package:app/models/PipeAccesory/tobacco_mix.dart';
-import 'package:app/module/mixology/mixology_page.dart';
-import 'package:app/module/mixology/mixology_slice.dart';
+
 import 'package:flutter/widgets.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MixologyBloc {
-  static const _mixPerPage = 50;
-
-  final _indexController = PublishSubject<int>();
+  static const _mixPerPage = 10;
 
   final _apiClient = App.http;
 
-  final _mixes = <int, MixologyPage>{};
-
-  final _mixesBeinggRequested = Set<int>();
-
-  final _sliceSubject = BehaviorSubject<MixologySlice>();
+  final _cache = Map<int, TobaccoMixSimpleDto>();
+  final _downloaders = Map<int, Future<List<TobaccoMixSimpleDto>>>();
 
   final mixCreator = BehaviorSubject<List<MixCreator>>(seedValue: null);
 
-  final Map<String, BehaviorSubject<List<TobaccoMix>>> mixCreatorMixes =
-      new Map<String, BehaviorSubject<List<TobaccoMix>>>();
+  final Map<String, BehaviorSubject<List<TobaccoMixSimpleDto>>>
+      mixCreatorMixes =
+      new Map<String, BehaviorSubject<List<TobaccoMixSimpleDto>>>();
 
-  final _loadingSubject = BehaviorSubject<bool>();
-
+  final Map<String, int> mixCreatorMixesPages = new Map<String, int>();
+  final List<String> fullLoaded = new List<String>();
   int maxInt = 0x7fffffff;
 
   bool haveNext = true;
 
-  MixologyBloc() {
+  static final MixologyBloc _instance = new MixologyBloc._();
+
+  factory MixologyBloc() => MixologyBloc._instance;
+
+  MixologyBloc._() {
     loadMixCreator();
-    _indexController.stream
-        // Don't try to update too frequently.
-        .bufferTime(Duration(milliseconds: 500))
-        // Don't update when there is no need.
-        .where((batch) => batch.isNotEmpty)
-        .listen(_handleIndexes);
-  }
-
-  Sink<int> get index => _indexController.sink;
-
-  Stream<MixologySlice> get slice => _sliceSubject.stream;
-
-  Stream<bool> get loading => _loadingSubject.stream;
-
-  int _getPageStartFromIndex(int index) => (index ~/ _mixPerPage) * _mixPerPage;
-
-  void _handleIndexes(List<int> indexes) {
-    if (!haveNext) {
-      return;
-    }
-
-    final int minIndex = indexes.fold(maxInt, min);
-    final int maxIndex = indexes.fold(-1, max);
-
-    final minPageIndex = _getPageStartFromIndex(minIndex);
-    final maxPageIndex = _getPageStartFromIndex(maxIndex);
-
-    for (int i = minPageIndex; i <= maxPageIndex; i += _mixPerPage) {
-      if (_mixes.containsKey(i)) continue;
-      if (_mixesBeinggRequested.contains(i)) continue;
-
-      _mixesBeinggRequested.add(i);
-      _requestMix(i).then((page) {
-        _handleNewMixes(page, i, page.count == _mixPerPage);
-      });
-    }
-  }
-
-  void _handleNewMixes(MixologyPage page, int index, bool haveNext) {
-    _mixes[index] = page;
-    _mixesBeinggRequested.remove(index);
-    this.haveNext = haveNext;
-    _sendNewSlice(haveNext);
-  }
-
-  Future<MixologyPage> _requestMix(int index) async {
-    var page = (index / _mixPerPage).round();
-    print('page $page pageSize:$_mixPerPage');
-    final mixes =
-        await _apiClient.fetchtobacoMix(page: page, pageSize: _mixPerPage);
-    print('Finish page $page pageSize:$_mixPerPage');
-    return MixologyPage(mixes, index);
+    loadCreatorMixes('me', 0);
   }
 
   Future loadMixCreator() async {
@@ -94,17 +40,52 @@ class MixologyBloc {
     this.mixCreator.add(creators);
   }
 
-  Future loadCreatorMixes(String creatorName) async {
-    this.mixCreatorMixes[creatorName] = new BehaviorSubject<List<TobaccoMix>>();
-    final mixes = await _apiClient.fetchtobacoMix(author: creatorName);
-    this.mixCreatorMixes[creatorName].add(mixes);
+  Future loadCreatorMixesNextPage(String creatorName) async {
+    if (fullLoaded.contains(creatorName)) {
+      return;
+    }
+
+    if (this.mixCreatorMixesPages[creatorName] == null) return;
+    var nextPage = this.mixCreatorMixesPages[creatorName] + 1;
+    await this.loadCreatorMixes(creatorName, nextPage);
   }
 
-  void _sendNewSlice(bool hasNext) {
-    final pages = _mixes.values.toList(growable: false);
+  Future loadCreatorMixes(String creatorName, int page) async {
+    if (this.mixCreatorMixes[creatorName] == null) {
+      this.mixCreatorMixes[creatorName] =
+          new BehaviorSubject<List<TobaccoMixSimpleDto>>();
+    }
 
-    final slice = MixologySlice(pages, hasNext);
-    _sliceSubject.add(slice);
+    //Data alredy loded
+    if (this.mixCreatorMixesPages[creatorName] != null &&
+        this.mixCreatorMixesPages[creatorName] > page) {
+      return;
+    }
+
+    // add fake data
+    var fakeMixes = this.mixCreatorMixes[creatorName].value ??
+        new List<TobaccoMixSimpleDto>();
+    fakeMixes.addAll(Iterable.generate(_mixPerPage, (_) => null));
+    this.mixCreatorMixes[creatorName].add(fakeMixes);
+
+    this.mixCreatorMixesPages[creatorName] = page;
+    final mixes = await _apiClient.fetchtobacoMix(
+        author: creatorName, page: page, pageSize: _mixPerPage);
+    var oldMixes = this.mixCreatorMixes[creatorName].value;
+    oldMixes.removeWhere((t) => t == null);
+    if (mixes.length < _mixPerPage) {
+      fullLoaded.add(creatorName);
+    }
+    if (oldMixes == null) {
+      oldMixes = new List<TobaccoMixSimpleDto>();
+    }
+    oldMixes.addAll(mixes);
+    this.mixCreatorMixes[creatorName].add(oldMixes);
+  }
+
+  Future<TobaccoMixSimpleDto> saveMix(TobaccoMixSimpleDto mix) async {
+    var savedMix = await App.http.saveMix(mix);
+    return savedMix;
   }
 }
 

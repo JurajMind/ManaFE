@@ -11,6 +11,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**reservationCreate**](ReservationApi.md#reservationCreate) | **POST** /api/Reservations/Create | 
 [**reservationGetManagereservationsInfo**](ReservationApi.md#reservationGetManagereservationsInfo) | **GET** /api/Reservations/{id}/Manage | 
+[**reservationGetPersonReservations**](ReservationApi.md#reservationGetPersonReservations) | **GET** /api/Reservations/Person | 
 [**reservationGetReservationUsage**](ReservationApi.md#reservationGetReservationUsage) | **GET** /api/Reservations/{id}/Usage | 
 
 
@@ -86,6 +87,43 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ReservationManageDto**](ReservationManageDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **reservationGetPersonReservations**
+> List<ReservationDto> reservationGetPersonReservations()
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new ReservationApi();
+
+try { 
+    var result = api_instance.reservationGetPersonReservations();
+    print(result);
+} catch (e) {
+    print("Exception when calling ReservationApi->reservationGetPersonReservations: $e\n");
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**List<ReservationDto>**](ReservationDto.md)
 
 ### Authorization
 

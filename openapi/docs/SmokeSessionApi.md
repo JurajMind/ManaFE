@@ -26,7 +26,7 @@ Method | HTTP request | Description
 import 'package:openapi/api.dart';
 
 var api_instance = new SmokeSessionApi();
-var id = 56; // int | 
+var id = id_example; // String | 
 
 try { 
     var result = api_instance.smokeSessionGetMetaData(id);
@@ -40,7 +40,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | [default to null]
+ **id** | **String**|  | [default to null]
 
 ### Return type
 

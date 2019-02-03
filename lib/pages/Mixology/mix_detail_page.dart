@@ -1,12 +1,13 @@
 import 'package:app/models/PipeAccesory/tobacco.dart';
-import 'package:app/models/PipeAccesory/tobacco_mix.dart';
+
 import 'package:app/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter_sparkline/flutter_sparkline.dart';
+import 'package:openapi/api.dart';
 
 class MixDetailPage extends StatefulWidget {
-  final TobaccoMix mix;
+  final TobaccoMixSimpleDto mix;
 
   const MixDetailPage({Key key, this.mix}) : super(key: key);
 
@@ -19,15 +20,16 @@ class MixDetailPageState extends State<MixDetailPage> {
   var data = [0.0, 1.0, 1.5, 2.0, 0.0, 0.0, -0.5, -1.0, -0.5, 0.0, 0.0];
 
   List<Color> colors;
-  List<charts.Series<Tobacco, int>> _createSampleData() {
+  List<charts.Series<TobaccoSimpleDto, int>> _createSampleData() {
     return [
-      new charts.Series<Tobacco, int>(
+      new charts.Series<TobaccoSimpleDto, int>(
         id: 'Tobacco mix',
-        domainFn: (Tobacco sales, _) => sales.id,
-        measureFn: (Tobacco sales, _) => sales.id,
-        data: widget.mix.tobaccos.map((f) => f.item1).toList(),
+        domainFn: (TobaccoSimpleDto sales, _) => sales.id,
+        measureFn: (TobaccoSimpleDto sales, _) => sales.id,
+        data: widget.mix.tobaccos.map((f) => f.tobacco).toList(),
         // Set a label accessor to control the text of the arc label.
-        labelAccessorFn: (Tobacco row, _) => '${row.name}: ${row.brand}',
+        labelAccessorFn: (TobaccoSimpleDto row, _) =>
+            '${row.name}: ${row.brand}',
       )
     ];
   }

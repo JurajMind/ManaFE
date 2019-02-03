@@ -15,6 +15,7 @@ class SignalR {
   NegotiateResponse connectionInfo;
 
   IOWebSocketChannel _channel;
+  Completer<dynamic> _completer;
 
   bool connection = false;
 
@@ -24,6 +25,14 @@ class SignalR {
   SignalR._internal() {}
 
   Future<dynamic> connect() async {
+    if (_completer == null) {
+      _completer = Completer();
+      _connect();
+    }
+    return _completer.future;
+  }
+
+  Future<dynamic> _connect() async {
     if (this.connection) {
       return;
     }

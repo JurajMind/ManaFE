@@ -10,6 +10,7 @@ All URIs are relative to *https://devmana.azurewebsites.net*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**gearGetBrands**](GearApi.md#gearGetBrands) | **GET** /api/Gear/Brands | 
+[**gearGetDetails**](GearApi.md#gearGetDetails) | **GET** /api/Gear/{id}/Detail | 
 [**gearSearch**](GearApi.md#gearSearch) | **GET** /api/Gear/{type}/Search/{search} | 
 [**gearVote**](GearApi.md#gearVote) | **POST** /api/Gear/{id}/Vote | 
 
@@ -39,6 +40,47 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**InlineResponse200**](InlineResponse200.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **gearGetDetails**
+> PipeAccessoryDetailsDto gearGetDetails(id)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new GearApi();
+var id = 56; // int | 
+
+try { 
+    var result = api_instance.gearGetDetails(id);
+    print(result);
+} catch (e) {
+    print("Exception when calling GearApi->gearGetDetails: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**|  | [default to null]
+
+### Return type
+
+[**PipeAccessoryDetailsDto**](PipeAccessoryDetailsDto.md)
 
 ### Authorization
 

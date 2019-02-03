@@ -2,7 +2,6 @@ import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Pickers/smoke_color_wheel.dart';
 import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
-import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/SmokeSession/animation_list.dart';
 import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
@@ -13,6 +12,7 @@ import 'package:app/pages/SmokeSession/tobacco_widget.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:openapi/api.dart';
 
 class SmokeSessionPage extends StatefulWidget {
   final String sessionId;
@@ -76,7 +76,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
       },
     );
 
-    StreamBuilder<SmokeSessionMetaData> tobaccoMetaDataBuilder =
+    StreamBuilder<SmokeSessionMetaDataDto> tobaccoMetaDataBuilder =
         new StreamBuilder(
       stream: dataProvider.smokeSessionBloc.smokeSessionMetaData,
       builder: (context, asyncSnapshot) {
@@ -87,6 +87,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
           children: <Widget>[
             TobaccoWidget(
               tobacco: asyncSnapshot.data.tobacco,
+              tobacoMix: asyncSnapshot.data.tobaccoMix,
               smokeSessionBloc: dataProvider.smokeSessionBloc,
             )
           ],
@@ -94,9 +95,8 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
       },
     );
 
-    StreamBuilder<SmokeSessionMetaDataSelection> metadataBuilder =
-        new StreamBuilder(
-      stream: dataProvider.smokeSessionBloc.smokeSessionDataSelection,
+    StreamBuilder<SmokeSessionMetaDataDto> metadataBuilder = new StreamBuilder(
+      stream: dataProvider.smokeSessionBloc.smokeSessionMetaData,
       builder: (context, asyncSnapshot) {
         if (asyncSnapshot.data == null) {
           return CircularProgressIndicator();
@@ -113,7 +113,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                 type: 'Bowl',
                 dataProvider: dataProvider),
             PipeAccesoryWidget(
-                accesory: asyncSnapshot.data.heatManager,
+                accesory: asyncSnapshot.data.heatManagement,
                 type: 'H.M.S',
                 dataProvider: dataProvider),
             PipeAccesoryWidget(
@@ -237,11 +237,11 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
     );
   }
 
-  emptyPipeAccesoryWidget(SmokeSessionMetaDataSelection md) {
+  emptyPipeAccesoryWidget(SmokeSessionMetaDataDto md) {
     if (md.pipe == null ||
         md.bowl == null ||
         md.coal == null ||
-        md.heatManager == null)
+        md.heatManagement == null)
       return RoundedButton(
         child: Text('Fill metadata'),
         width: 200.0,

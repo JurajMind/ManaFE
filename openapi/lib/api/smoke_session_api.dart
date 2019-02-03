@@ -10,7 +10,7 @@ class SmokeSessionApi {
   /// 
   ///
   /// 
-  Future<SmokeSessionMetaDataDto> smokeSessionGetMetaData(int id) async {
+  Future<SmokeSessionMetaDataDto> smokeSessionGetMetaData(String id) async {
     Object postBody;
 
     // verify required params are set

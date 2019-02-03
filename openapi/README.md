@@ -85,6 +85,7 @@ Class | Method | HTTP request | Description
 *DevicePresetApi* | [**devicePresetUsePreset**](docs\/DevicePresetApi.md#devicepresetusepreset) | **POST** /api/Device/Preset/{presetId}/Use/{sessionId} | 
 *EndSessionApi* | [**endSessionDefaultAction**](docs\/EndSessionApi.md#endsessiondefaultaction) | **POST** /api/EndSession/{id} | 
 *GearApi* | [**gearGetBrands**](docs\/GearApi.md#geargetbrands) | **GET** /api/Gear/Brands | 
+*GearApi* | [**gearGetDetails**](docs\/GearApi.md#geargetdetails) | **GET** /api/Gear/{id}/Detail | 
 *GearApi* | [**gearSearch**](docs\/GearApi.md#gearsearch) | **GET** /api/Gear/{type}/Search/{search} | 
 *GearApi* | [**gearVote**](docs\/GearApi.md#gearvote) | **POST** /api/Gear/{id}/Vote | 
 *MixologyApi* | [**mixologyAddToMix**](docs\/MixologyApi.md#mixologyaddtomix) | **POST** /api/Mixology/AddToMix | 
@@ -115,6 +116,7 @@ Class | Method | HTTP request | Description
 *QRCodeApi* | [**qRCodeDefaultAction**](docs\/QRCodeApi.md#qrcodedefaultaction) | **GET** /api/QRCode/{id} | 
 *ReservationApi* | [**reservationCreate**](docs\/ReservationApi.md#reservationcreate) | **POST** /api/Reservations/Create | 
 *ReservationApi* | [**reservationGetManagereservationsInfo**](docs\/ReservationApi.md#reservationgetmanagereservationsinfo) | **GET** /api/Reservations/{id}/Manage | 
+*ReservationApi* | [**reservationGetPersonReservations**](docs\/ReservationApi.md#reservationgetpersonreservations) | **GET** /api/Reservations/Person | 
 *ReservationApi* | [**reservationGetReservationUsage**](docs\/ReservationApi.md#reservationgetreservationusage) | **GET** /api/Reservations/{id}/Usage | 
 *SentToDeviceApi* | [**sentToDeviceDefaultAction**](docs\/SentToDeviceApi.md#senttodevicedefaultaction) | **POST** /api/SentToDevice/{id} | 
 *SmokeSessionApi* | [**smokeSessionGetMetaData**](docs\/SmokeSessionApi.md#smokesessiongetmetadata) | **GET** /api/SmokeSession/GetMetaData | 
@@ -153,10 +155,8 @@ Class | Method | HTTP request | Description
  - [InitDataDto](docs\/InitDataDto.md)
  - [InlineResponse200](docs\/InlineResponse200.md)
  - [MediaDto](docs\/MediaDto.md)
- - [Mix](docs\/Mix.md)
  - [MixCreator](docs\/MixCreator.md)
  - [MixCreators](docs\/MixCreators.md)
- - [MixList](docs\/MixList.md)
  - [NearbyPlacesDto](docs\/NearbyPlacesDto.md)
  - [OpeningDay](docs\/OpeningDay.md)
  - [PersonActiveDataDto](docs\/PersonActiveDataDto.md)
@@ -164,6 +164,7 @@ Class | Method | HTTP request | Description
  - [PersonStatisticsOverallDto](docs\/PersonStatisticsOverallDto.md)
  - [PipeAccesoryLikeDto](docs\/PipeAccesoryLikeDto.md)
  - [PipeAccesorySimpleDto](docs\/PipeAccesorySimpleDto.md)
+ - [PipeAccessoryDetailsDto](docs\/PipeAccessoryDetailsDto.md)
  - [PipeAccessoryStatisticsDto](docs\/PipeAccessoryStatisticsDto.md)
  - [PipeAccessoryUsageDto](docs\/PipeAccessoryUsageDto.md)
  - [PlaceCalendar](docs\/PlaceCalendar.md)
@@ -202,6 +203,7 @@ Class | Method | HTTP request | Description
  - [TobaccoReviewDto](docs\/TobaccoReviewDto.md)
  - [TobaccoSimpleDto](docs\/TobaccoSimpleDto.md)
  - [TobaccoTasteDto](docs\/TobaccoTasteDto.md)
+ - [UsedWithDto](docs\/UsedWithDto.md)
  - [UserModel](docs\/UserModel.md)
  - [Validation](docs\/Validation.md)
 

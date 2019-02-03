@@ -3,9 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app/models/App/Gear/gear_model.dart';
-import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
-import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
 import 'package:app/models/Stand/animation.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/models/Stand/preset.dart';
@@ -25,14 +23,14 @@ class ApiClient {
 
   ApiClient(url)
       : baseUrl = url,
-        _dio = new Dio(new Options(
+        _dio = new Dio(new BaseOptions(
           baseUrl: url,
         ));
 
   Future<dynamic> _getJson(Uri uri) async {
     print(uri.toString());
     Response response;
-    response = await _dio.get(uri.toString());
+    response = await _dio.getUri(uri);
     return response.data;
   }
 
@@ -77,45 +75,45 @@ class ApiClient {
   }
 
   void init() {
-    _dio.interceptor.response.onError = (DioError error) async {
+    _dio.interceptors.add(InterceptorsWrapper(onError: (DioError error) async {
       if (error.response?.statusCode == 401 ||
           error.response?.statusCode == 403) {
         var token = await _authorize.getToken();
         var tokenHeader = 'Bearer $token';
-        Options options = error.response.request;
+        RequestOptions options = error.response.request;
         // If the token has been updated, repeat directly.
         if (tokenHeader != options.headers["Authorization"]) {
           options.headers["Authorization"] = tokenHeader;
           //repeat
           return _dio.request(options.path, options: options);
         }
-
+        _dio.lock();
+        _dio.interceptors.responseLock.lock();
+        _dio.interceptors.errorLock.lock();
         await _authorize.refreshToken();
         token = await _authorize.getToken();
         options.headers["Authorization"] = 'Bearer $token';
-
+        _dio.unlock();
+        _dio.interceptors.responseLock.unlock();
+        _dio.interceptors.errorLock.unlock();
         return _dio.request(options.path, options: options);
       } else {
         print(error.message);
         print(error.response);
+        print(error.response.request.path);
       }
       return error;
-    };
+    }));
 
-    _dio.interceptor.request.onSend = (Options o) async {
+    _dio.interceptors
+        .add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
       var token = await _authorize.getToken();
-      o.headers['Authorization'] = 'Bearer $token';
-      o.headers["Accept"] = "application/json";
-      o.headers['content-type'] = 'application/json';
-      print(o.data);
-      if (o.method == "POST" && o.data != null) {
-        if (Platform.isIOS) {
-        } else {
-          // o.headers['content-length'] = utf8.encode(json.encode(o.data)).length;
-        }
-      }
-      return o;
-    };
+      options.headers['Authorization'] = 'Bearer $token';
+      options.headers["Accept"] = "application/json";
+      options.headers['content-type'] = 'application/json';
+      print(options.data);
+      return options;
+    }));
   }
 
   Future<dynamic> _(Uri uri) async {
@@ -124,7 +122,7 @@ class ApiClient {
     return json.decode(transformedResponse);
   }
 
-  Future<List<TobaccoMix>> fetchtobacoMix(
+  Future<List<TobaccoMixSimpleDto>> fetchtobacoMix(
       {int page: 0,
       String category: "popular",
       int pageSize: 10,
@@ -132,13 +130,15 @@ class ApiClient {
     var params = Map<String, String>();
     params['page'] = page.toString();
     params['pageSize'] = pageSize.toString();
+    params['orderBy'] = 'name';
+    params['order'] = 'asc';
     if (author != null) {
       params['author'] = author;
     }
     var url = Uri.https(baseUrl, '/api/Mixology/GetMixes', params);
 
-    return _getJson(url).then((json) => json['Mixes']).then((data) =>
-        data.map<TobaccoMix>((mix) => TobaccoMix.fromJson(mix)).toList());
+    return _getJson(url)
+        .then((json) => TobaccoMixSimpleDto.listFromJson(json).toList());
   }
 
   Future<List<MixCreator>> getMixCreator() async {
@@ -171,6 +171,8 @@ class ApiClient {
     if (lat != null && lng != null) {
       queryParameters['lat'] = '0'; // lat.toString();
       queryParameters['lng'] = '0'; //lng.toString();
+      queryParameters['page'] = '0';
+      queryParameters['pageSize'] = '10';
     }
     var uri = Uri.https(baseUrl, 'api/Places/SearchNearby', queryParameters);
 
@@ -284,8 +286,8 @@ class ApiClient {
     return _getJson(url).then((data) => PersonActiveDataDto.fromJson(data));
   }
 
-  Future<SmokeSessionMetaData> postMetadata(
-      String sessionCode, SmokeSessionMetaDataSelection value) async {
+  Future<SmokeSessionMetaDataDto> postMetadata(
+      String sessionCode, SmokeSessionMetaDataDto value) async {
     var url =
         Uri.https(baseUrl, 'api/SmokeSession/${sessionCode}/SaveMetaData');
     var data = {
@@ -294,16 +296,17 @@ class ApiClient {
       'PipeId': value.pipe != null ? value.pipe.id : null,
       'CoalId': value.coal != null ? value.coal.id : null,
       'HeatManagementId':
-          value.heatManager != null ? value.heatManager.id : null,
+          value.heatManagement != null ? value.heatManagement.id : null,
+      'TobbacoId': value.tobaccoId,
     };
 
     var response = await _dio.post(url.toString(),
-        data: data,
+        data: value.toJson(),
         options: Options(
           contentType: ContentType.JSON,
         ));
     debugPrint(response.data.toString());
-    return SmokeSessionMetaData.fromJson(response.data);
+    return SmokeSessionMetaDataDto.fromJson(response.data);
   }
 
   Future<List<DevicePreset>> getDevicePresets() async {
@@ -354,7 +357,7 @@ class ApiClient {
     var formatter = new DateFormat('yyyy-MM-dd');
     String formatted = formatter.format(date);
     return await _dio
-        .get(url.toString(), data: {'date': formatted}).then((data) {
+        .get(url.toString(), queryParameters: {'date': formatted}).then((data) {
       return SmartHookahServicesPlaceReservationUsageDto.fromJson(data.data);
     });
   }
@@ -374,6 +377,12 @@ class ApiClient {
   Future sleepDevice(String id) async {
     var url = Uri.https(baseUrl, '/api/Device/${id}/Sleep');
     return await _dio.post(url.toString());
+  }
+
+  Future<TobaccoMixSimpleDto> saveMix(TobaccoMixSimpleDto mix) async {
+    var url = Uri.https(baseUrl, 'POST /api/Mixology/AddToMix');
+    var result = await _dio.post(url.toString());
+    return TobaccoMixSimpleDto.fromJson(result.data);
   }
 }
 

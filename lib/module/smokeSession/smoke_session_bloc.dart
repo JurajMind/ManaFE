@@ -5,7 +5,7 @@ import 'package:app/models/SignalR/device_online.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
-import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
+import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/models/Stand/animation.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/models/Stand/preset.dart';
@@ -48,13 +48,9 @@ class SmokeSessionBloc {
   BehaviorSubject<List<String>> recentSessions =
       new BehaviorSubject<List<String>>(seedValue: new List<String>());
 
-  BehaviorSubject<SmokeSessionMetaData> smokeSessionMetaData =
-      new BehaviorSubject<SmokeSessionMetaData>(
-          seedValue: new SmokeSessionMetaData());
-
-  BehaviorSubject<SmokeSessionMetaDataSelection> smokeSessionDataSelection =
-      new BehaviorSubject<SmokeSessionMetaDataSelection>(
-          seedValue: new SmokeSessionMetaDataSelection());
+  BehaviorSubject<SmokeSessionMetaDataDto> smokeSessionMetaData =
+      new BehaviorSubject<SmokeSessionMetaDataDto>(
+          seedValue: new SmokeSessionMetaDataDto());
 
   BehaviorSubject<StandSettings> standSettings =
       new BehaviorSubject<StandSettings>(seedValue: new StandSettings.empty());
@@ -140,6 +136,7 @@ class SmokeSessionBloc {
     if (this.activeSessionId == sessionCode) {
       return;
     } else {
+      await _leaveOldSession(this.activeSessionId);
       this.activeSessionId = sessionCode;
     }
 
@@ -163,9 +160,6 @@ class SmokeSessionBloc {
     standSettings.add(sessionData.item2);
     smokeStatistic.add(sessionData.item1.smokeSessionData);
     smokeSessionMetaData.add(sessionData.item1.metaData);
-    smokeSessionDataSelection.add(
-        new SmokeSessionMetaDataSelection.fromMetadata(
-            sessionData.item1.metaData));
     hookahCode = sessionData.item1.hookah.code;
     animations.add(await App.http.getAnimations(sessionData.item1.hookah.code));
   }
@@ -175,44 +169,61 @@ class SmokeSessionBloc {
     animations.add(list);
   }
 
-  setTobacco(PipeAccesorySimpleDto accesory) {
+  setTobacco(TobaccoEditModel setModel) {
     metaDataChanged = true;
     var selection = this.smokeSessionMetaData.value;
-    selection.tobacco = accesory;
+    if (setModel.mix == null) {
+      selection.tobacco = setModel.tobacco;
+      selection.tobaccoWeight = setModel.weight.toDouble();
+    } else {
+      selection.tobaccoMix = setModel.mix;
+      selection.tobacco = null;
+    }
+
     this.smokeSessionMetaData.add(selection);
     saveMetaData();
   }
 
   setMetadataAccesory(PipeAccesorySimpleDto accesory, String type) {
     metaDataChanged = true;
-    var selection = this.smokeSessionDataSelection.value;
+    var selection = this.smokeSessionMetaData.value;
     switch (type) {
       case 'Hookah':
         selection.pipe = accesory;
+        selection.pipeId = accesory.id;
         break;
 
       case 'Bowl':
         selection.bowl = accesory;
+        selection.bowlId = accesory.id;
         break;
 
       case 'heatmanagement':
-        selection.heatManager = accesory;
+        selection.heatManagement = accesory;
+        selection.heatManagementId = accesory.id;
         break;
 
       case 'coal':
         selection.coal = accesory;
+        selection.coalId = accesory.id;
         break;
     }
 
-    this.smokeSessionDataSelection.add(selection);
+    this.smokeSessionMetaData.add(selection);
   }
 
   saveMetaData() async {
     if (!metaDataChanged) return;
+    var metadataOld = smokeSessionMetaData.value;
 
     var newMetadata = await App.http
-        .postMetadata(this.activeSessionId, smokeSessionDataSelection.value);
+        .postMetadata(this.activeSessionId, smokeSessionMetaData.value);
     // this.smokeSessionMetaData.add(newMetadata);
+    if (newMetadata.tobaccoMix?.id != metadataOld.tobaccoMix?.id) {
+      metadataOld.tobaccoMix.id = newMetadata.tobaccoMix?.id;
+      this.smokeSessionMetaData.add(metadataOld);
+    }
+    //this.smokeSessionMetaData.add(newMetadata);
     metaDataChanged = false;
   }
 
@@ -223,10 +234,8 @@ class SmokeSessionBloc {
         // Don't update when there is no need.
         .where((batch) => batch.isNotEmpty)
         .listen(_handleIndexes);
-    signalR.connect().then((value) {
-      signalR.clientCalls.listen((onData) {
-        proceddCalls(onData);
-      });
+    signalR.clientCalls.listen((onData) {
+      proceddCalls(onData);
     });
 
     futureSettingDebounce =
@@ -302,6 +311,12 @@ class SmokeSessionBloc {
       await App.http.setDevicePreset(this.hookahCode, newPreset.id);
     selectedPreset.add(newPreset);
     Vibrate.feedback(FeedbackType.light);
+  }
+
+  _leaveOldSession(String activeSessionId) {
+    List<String> params = new List<String>();
+    params.add(activeSessionId);
+    this.signalR.callServerFunction(name: 'LeaveSession', params: params);
   }
 }
 

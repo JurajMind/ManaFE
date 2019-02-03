@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 
 # **mixologyAddToMix**
-> TobaccoMixSimpleDto mixologyAddToMix(mix)
+> TobaccoMixSimpleDto mixologyAddToMix(tobaccoMixSimpleDto)
 
 
 
@@ -28,10 +28,10 @@ Method | HTTP request | Description
 import 'package:openapi/api.dart';
 
 var api_instance = new MixologyApi();
-var mix = new Mix(); // Mix | 
+var tobaccoMixSimpleDto = new TobaccoMixSimpleDto(); // TobaccoMixSimpleDto | 
 
 try { 
-    var result = api_instance.mixologyAddToMix(mix);
+    var result = api_instance.mixologyAddToMix(tobaccoMixSimpleDto);
     print(result);
 } catch (e) {
     print("Exception when calling MixologyApi->mixologyAddToMix: $e\n");
@@ -42,7 +42,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **mix** | [**Mix**](Mix.md)|  | 
+ **tobaccoMixSimpleDto** | [**TobaccoMixSimpleDto**](TobaccoMixSimpleDto.md)|  | 
 
 ### Return type
 
@@ -54,7 +54,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
+ - **Content-Type**: application/json, text/json, application/x-www-form-urlencoded
  - **Accept**: application/json, text/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -107,7 +107,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **mixologyGetMixes**
-> MixList mixologyGetMixes(page, pageSize, author, orderBy, order)
+> List<TobaccoMixSimpleDto> mixologyGetMixes(page, pageSize, author, orderBy, order)
 
 
 
@@ -142,7 +142,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**MixList**](MixList.md)
+[**List<TobaccoMixSimpleDto>**](TobaccoMixSimpleDto.md)
 
 ### Authorization
 

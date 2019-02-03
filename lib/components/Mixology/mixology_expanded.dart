@@ -1,12 +1,13 @@
 import 'package:app/components/StarRating/star_ratting.dart';
-import 'package:app/models/PipeAccesory/tobacco_mix.dart';
 import 'package:app/pages/Mixology/mix_detail_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:openapi/api.dart';
 
 class MixCardExpanded extends StatefulWidget {
-  final TobaccoMix tobaccoMix;
-  MixCardExpanded({this.tobaccoMix});
+  final TobaccoMixSimpleDto tobaccoMix;
+  final bool noTitle;
+  MixCardExpanded({this.tobaccoMix, this.noTitle = false});
 
   @override
   _MixologyExpandedState createState() => new _MixologyExpandedState();
@@ -17,7 +18,6 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
   bool expanded = false;
   @override
   Widget build(BuildContext context) {
-
     return SingleChildScrollView(
       child: GestureDetector(
         onTap: () => Navigator.push(
@@ -33,9 +33,11 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  Icon(
-                    Icons.add,
-                  ),
+                  widget.noTitle
+                      ? Container()
+                      : Icon(
+                          Icons.add,
+                        ),
                   Expanded(
                     flex: 2,
                     child: Hero(
@@ -51,15 +53,17 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                             ),
                     ),
                   ),
-                  Expanded(
-                      flex: 1,
-                      child: new StarRating(
-                        size: 15.0,
-                        rating: 2.0,
-                        starCount: 5,
-                        color: Colors.white,
-                        borderColor: Colors.white,
-                      )),
+                  widget.noTitle
+                      ? Container()
+                      : Expanded(
+                          flex: 1,
+                          child: new StarRating(
+                            size: 15.0,
+                            rating: 2.0,
+                            starCount: 5,
+                            color: Colors.white,
+                            borderColor: Colors.white,
+                          )),
                 ],
               ),
               Card(
@@ -110,7 +114,7 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
     );
   }
 
-  SingleChildScrollView _longMix(TobaccoMix mix) {
+  SingleChildScrollView _longMix(TobaccoMixSimpleDto mix) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -119,20 +123,20 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
     );
   }
 
-  List<Widget> _createTobaccoRow(TobaccoMix mix) {
+  List<Widget> _createTobaccoRow(TobaccoMixSimpleDto mix) {
     return mix.tobaccos.map((item) {
       return new Column(
         children: <Widget>[
           Text(
-            item.item1.name,
+            item.tobacco?.name ?? 'd',
             style:
                 new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
           ),
           Text(
-            item.item1.brand,
+            item.tobacco?.brand ?? 'b',
             style: TextStyle(color: Colors.black),
           ),
-          Text(item.item2.toString() + 'g',
+          Text(item.fraction.toString() + 'g',
               style: TextStyle(color: Colors.grey)),
         ],
       );

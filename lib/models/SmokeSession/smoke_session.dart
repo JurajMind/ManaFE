@@ -1,5 +1,5 @@
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
-import 'package:app/models/SmokeSession/smoke_session_meta_data.dart';
+import 'package:openapi/api.dart';
 
 class Hookah {
   String name;
@@ -17,7 +17,7 @@ class Hookah {
 class SmokeSession {
   final String sessionId;
   final Hookah hookah;
-  final SmokeSessionMetaData metaData;
+  final SmokeSessionMetaDataDto metaData;
   final SmokeStatisticDataModel smokeSessionData;
   SmokeSession(
       {this.sessionId, this.hookah, this.metaData, this.smokeSessionData});
@@ -25,8 +25,8 @@ class SmokeSession {
   factory SmokeSession.fromJson(Map<String, dynamic> json) {
     var sessionId = json['SessionId'];
     var hookah = Hookah.fromJson(json['Device'] as Map<String, dynamic>);
-    var metaData =
-        SmokeSessionMetaData.fromJson(json["MetaData"] as Map<String, dynamic>);
+    var metaData = SmokeSessionMetaDataDto.fromJson(
+        json["MetaData"] as Map<String, dynamic>);
     var smokeSessionData = SmokeStatisticDataModel.fromJson(
         json['Statistic'] as Map<String, dynamic>);
 

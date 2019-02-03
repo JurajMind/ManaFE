@@ -10,12 +10,12 @@ class MixologyApi {
   /// 
   ///
   /// 
-  Future<TobaccoMixSimpleDto> mixologyAddToMix(Mix mix) async {
-    Object postBody = mix;
+  Future<TobaccoMixSimpleDto> mixologyAddToMix(TobaccoMixSimpleDto tobaccoMixSimpleDto) async {
+    Object postBody = tobaccoMixSimpleDto;
 
     // verify required params are set
-    if(mix == null) {
-     throw new ApiException(400, "Missing required param: mix");
+    if(tobaccoMixSimpleDto == null) {
+     throw new ApiException(400, "Missing required param: tobaccoMixSimpleDto");
     }
 
     // create path and map variables
@@ -26,7 +26,7 @@ class MixologyApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+    List<String> contentTypes = ["application/json","text/json","application/x-www-form-urlencoded"];
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
     List<String> authNames = [];
@@ -119,7 +119,7 @@ class MixologyApi {
   /// 
   ///
   /// 
-  Future<MixList> mixologyGetMixes({ int page, int pageSize, String author, String orderBy, String order }) async {
+  Future<List<TobaccoMixSimpleDto>> mixologyGetMixes({ int page, int pageSize, String author, String orderBy, String order }) async {
     Object postBody;
 
     // verify required params are set
@@ -173,7 +173,7 @@ class MixologyApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'MixList') as MixList;
+      return (apiClient.deserialize(response.body, 'List<TobaccoMixSimpleDto>') as List).map((item) => item as TobaccoMixSimpleDto).toList();
     } else {
       return null;
     }

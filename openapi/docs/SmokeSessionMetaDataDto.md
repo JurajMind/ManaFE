@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **id** | **int** |  | [optional] [default to null]
 **tobaccoId** | **int** |  | [optional] [default to null]
 **tobacco** | [**PipeAccesorySimpleDto**](PipeAccesorySimpleDto.md) |  | [optional] [default to null]
-**tobaccoMix** | [**Mix**](Mix.md) |  | [optional] [default to null]
+**tobaccoMix** | [**TobaccoMixSimpleDto**](TobaccoMixSimpleDto.md) |  | [optional] [default to null]
 **tobaccoWeight** | **double** |  | [optional] [default to null]
 **anonymPeopleCount** | **int** |  | [optional] [default to null]
 **bowlId** | **int** |  | [optional] [default to null]

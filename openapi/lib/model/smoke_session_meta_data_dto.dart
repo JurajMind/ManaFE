@@ -8,7 +8,7 @@ class SmokeSessionMetaDataDto {
   
   PipeAccesorySimpleDto tobacco = null;
   
-  Mix tobaccoMix = null;
+  TobaccoMixSimpleDto tobaccoMix = null;
   
   double tobaccoWeight = null;
   
@@ -46,7 +46,7 @@ class SmokeSessionMetaDataDto {
     id = json['Id'];
     tobaccoId = json['TobaccoId'];
     tobacco = new PipeAccesorySimpleDto.fromJson(json['Tobacco']);
-    tobaccoMix = new Mix.fromJson(json['TobaccoMix']);
+    tobaccoMix = new TobaccoMixSimpleDto.fromJson(json['TobaccoMix']);
     tobaccoWeight = json['TobaccoWeight'];
     anonymPeopleCount = json['AnonymPeopleCount'];
     bowlId = json['BowlId'];
