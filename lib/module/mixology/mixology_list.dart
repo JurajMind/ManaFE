@@ -1,13 +1,14 @@
 import 'package:app/components/Mixology/mixology_expanded.dart';
+import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/feature_mix.dart';
 import 'package:app/module/mixology/mix_card_expanded_shimmer.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
+import 'package:app/pages/Mixology/mix_detail_page.dart';
+import 'package:app/pages/SmokeSession/tobacco_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
-
-abstract class MainPage {}
 
 class MixologyList extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ class MixologyList extends StatefulWidget {
 
 class MixologyListState extends State<MixologyList> {
   int curentView = 0;
-  static const _loadingSpace = 10;
+
   static const Map<int, String> labels = {
     0: 'My mixes',
     1: 'Featured mix creators',
@@ -67,6 +68,27 @@ class MixologyListState extends State<MixologyList> {
     );
   }
 
+  Future showTobaccoDialog(
+      {BuildContext context, MixologyBloc mixologyBloc}) async {
+    TobaccoEditModel tobacco = await Navigator.of(context)
+        .push(new MaterialPageRoute<TobaccoEditModel>(
+            builder: (BuildContext context) {
+              return new TobaccoEditWidget(
+                tobaccoWeight: 0,
+                tobacco: null,
+                mix: null,
+              );
+            },
+            fullscreenDialog: true));
+    if (tobacco.mix != null && tobacco.mix.tobaccos.length > 0)
+      mixologyBloc.saveMix(tobacco.mix).then((onValue) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MixDetailPage(mix: onValue)));
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     final mixologyBloc = DataProvider.getMixology(context);
@@ -77,6 +99,15 @@ class MixologyListState extends State<MixologyList> {
           SizedBox(
             height: 50.0,
             child: AppBar(
+              actions: <Widget>[
+                curentView == 0
+                    ? IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: () => showTobaccoDialog(
+                            context: context, mixologyBloc: mixologyBloc),
+                      )
+                    : Container()
+              ],
               title: Center(
                 child: InkWell(
                   onTap: () => _showDialog(context),
