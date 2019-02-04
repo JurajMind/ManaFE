@@ -76,7 +76,7 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                     Container(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: widget.tobaccoMix.tobaccos.length > 3
+                        child: widget.tobaccoMix.tobaccos.length > 2
                             ? _longMix(widget.tobaccoMix)
                             : Row(
                                 mainAxisAlignment:
@@ -116,29 +116,32 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
 
   SingleChildScrollView _longMix(TobaccoMixSimpleDto mix) {
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
+      scrollDirection: Axis.vertical,
       child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: _createTobaccoRow(mix)),
     );
   }
 
   List<Widget> _createTobaccoRow(TobaccoMixSimpleDto mix) {
     return mix.tobaccos.map((item) {
-      return new Column(
-        children: <Widget>[
-          Text(
-            item.tobacco?.name ?? 'd',
-            style:
-                new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-          ),
-          Text(
-            item.tobacco?.brand ?? 'b',
-            style: TextStyle(color: Colors.black),
-          ),
-          Text(item.fraction.toString() + 'g',
-              style: TextStyle(color: Colors.grey)),
-        ],
+      return Padding(
+        padding: const EdgeInsets.only(left:4.0,right: 4.0),
+        child: new Column(
+          children: <Widget>[
+            Text(
+              item.tobacco?.name ?? 'd',
+              style:
+                  new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+            ),
+            Text(
+              item.tobacco?.brand ?? 'b',
+              style: TextStyle(color: Colors.black),
+            ),
+            Text(item.fraction.toString() + 'g',
+                style: TextStyle(color: Colors.grey)),
+          ],
+        ),
       );
     }).toList();
   }

@@ -173,6 +173,12 @@ class _FatSliderState extends State<FatSlider>
     }
   }
 
+  void _onHorizontalDragCancel() {
+     if (_isInteractive) {
+      _animationController.reverse();
+    }
+  }
+
   void _onHorizontalDragStart(DragStartDetails details) {
     if (_isInteractive) {
       if (widget.onChangeStart != null) {
@@ -322,7 +328,7 @@ class _FatSliderState extends State<FatSlider>
 
         //Popped up position of slider thumb.
         final RelativeRect endRect = RelativeRect.fromLTRB(
-            thumbPositionLeft, -65.0, thumbPositionRight, 65.0);
+            thumbPositionLeft, -50.0, thumbPositionRight, 50.0);
 
         //Describes the position of the thumb slider.
         //Mainly useful to animate the thumb popping up.
@@ -365,6 +371,7 @@ class _FatSliderState extends State<FatSlider>
                   ),
                   child: GestureDetector(
                     onHorizontalDragDown: _onHorizontalDragDown,
+                    onHorizontalDragCancel: _onHorizontalDragCancel,
                     onHorizontalDragStart: _onHorizontalDragStart,
                     onHorizontalDragUpdate: _onHorizontalDragUpdate,
                     onHorizontalDragEnd: _onHorizontalDragEnd,

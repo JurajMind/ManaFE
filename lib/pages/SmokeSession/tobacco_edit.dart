@@ -41,7 +41,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
   void initState() {
     super.initState();
 
-        if (widget?.mix?.tobaccos != null) {
+    if (widget?.mix?.tobaccos != null) {
       for (var tobacco in widget.mix.tobaccos) {
         this.addTobacco(
             PipeAccesoryFromTobacco.tobaccoToSimple(tobacco.tobacco),
@@ -54,8 +54,6 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
     if (widget.tobacco?.id != null) {
       this.addTobacco(widget.tobacco, widget.tobaccoWeight.toDouble());
     }
-
-
   }
 
   void showSearchDialog({BuildContext context, Widget child}) {
@@ -115,6 +113,9 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
         .where((s) => s.type == "Tobacco")
         .toList();
 
+    var sugestedTobacco =
+        ownedTobacco.where((t) => !tobaccoList.contains(t)).toList();
+
     var tobaccoWidgetList = this.tobaccoList.map((item) {
       return Column(
         children: <Widget>[
@@ -149,7 +150,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
 
     var listWidgets = new List<Widget>();
     listWidgets.addAll(tobaccoWidgetList);
-    listWidgets.add(Column(
+    if (tobaccoList.length <4 ) listWidgets.add(Column(
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -162,19 +163,26 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: <Widget>[
-              Expanded(
-                  flex: 2,
-                  child: new SuggestedTobacco(
-                    tobacco: ownedTobacco[0],
-                    onPressed: () => setState(() {
-                          addTobacco(ownedTobacco[0], 5);
-                        }),
-                  )),
-              Expanded(
-                  flex: 2,
-                  child: new SuggestedTobacco(
-                    tobacco: ownedTobacco[1],
-                  )),
+              sugestedTobacco.length >= 1
+                  ? Expanded(
+                      flex: 2,
+                      child: new SuggestedTobacco(
+                        tobacco: sugestedTobacco[0],
+                        onPressed: () => setState(() {
+                              addTobacco(sugestedTobacco[0], 5);
+                            }),
+                      ))
+                  : Container(),
+              sugestedTobacco.length >= 2
+                  ? Expanded(
+                      flex: 2,
+                      child: new SuggestedTobacco(
+                        tobacco: sugestedTobacco[1],
+                        onPressed: () => setState(() {
+                              addTobacco(sugestedTobacco[1], 5);
+                            }),
+                      ))
+                  : Container(),
               Expanded(
                 child: IconButton(
                   icon: Icon(Icons.search),
@@ -244,6 +252,8 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
   }
 
   void addTobacco(PipeAccesorySimpleDto tobacco, double weight) {
+    if(tobaccoList.length ==4 )
+    return;
     setState(() {
       if (tobaccoList.where((t) => t.id == tobacco.id).length == 0) {
         tobaccoList.add(tobacco);
@@ -277,28 +287,31 @@ class SuggestedTobacco extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(left: 20.0),
-          child: Container(
-            width: 150.0,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey,
-                width: 1, //                   <--- border width here
+          child: InkWell(
+            onTap: onPressed,
+            child: Container(
+              width: 150.0,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 1, //                   <--- border width here
+                ),
+                borderRadius: BorderRadius.horizontal(
+                  left: Radius.circular(40.0),
+                  right: Radius.circular(40.0),
+                ),
               ),
-              borderRadius: BorderRadius.horizontal(
-                left: Radius.circular(40.0),
-                right: Radius.circular(40.0),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    tobacco.name,
-                    style: Theme.of(context).textTheme.display4,
-                  ),
-                  Text(tobacco.brand)
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      tobacco.name,
+                      style: Theme.of(context).textTheme.display4,
+                    ),
+                    Text(tobacco.brand)
+                  ],
+                ),
               ),
             ),
           ),
@@ -318,10 +331,7 @@ class SuggestedTobacco extends StatelessWidget {
                   right: Radius.circular(40.0),
                 ),
               ),
-              child: InkWell(
-                child: Icon(Icons.add),
-                onTap: onPressed,
-              )),
+              child: Icon(Icons.add)),
         )
       ],
     );

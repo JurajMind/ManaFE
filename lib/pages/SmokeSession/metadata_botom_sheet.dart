@@ -19,11 +19,16 @@ class MetadataBottomSheet extends StatelessWidget {
     var personBloc = dataProvider.personBloc;
     return Container(
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
-      height: 800.0,
+      height: MediaQuery.of(context).size.height * 0.6,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: new ListView(
           children: <Widget>[
+            Container(
+           
+              child: SizedBox(height: 25.0,
+              child: Center(child: Icon(Icons.arrow_drop_down,size: 40.0,)),),
+            ),
             buildMetadataItem(
                 smokeSessionBloc,
                 "Pipe",
