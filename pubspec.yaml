@@ -22,7 +22,7 @@ dependencies:
   charts_flutter: ^0.4.0
   flutter_sparkline:
     git: https://github.com/xqwzts/flutter_sparkline.git
-  flutter_facebook_login: ^1.1.1
+  flutter_facebook_login: ^1.2.0
   map_view: ^0.0.14
   location: ^1.4.1
   cached_network_image: '^0.4.1'

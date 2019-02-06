@@ -85,7 +85,19 @@ class MixologyBloc {
 
   Future<TobaccoMixSimpleDto> saveMix(TobaccoMixSimpleDto mix) async {
     var savedMix = await App.http.saveMix(mix);
+    var myMixes = this.mixCreatorMixes['me'].value;
+    myMixes.add(savedMix);
+
+    this.mixCreatorMixes['me'].add(myMixes);
     return savedMix;
+  }
+
+  Future deleteMix(TobaccoMixSimpleDto mix) async {
+    await App.http.deleteMix(mix);
+    var myMixes = this.mixCreatorMixes['me'].value;
+    myMixes.removeWhere((m) => m.id == mix.id);
+
+    this.mixCreatorMixes['me'].add(myMixes);
   }
 }
 
