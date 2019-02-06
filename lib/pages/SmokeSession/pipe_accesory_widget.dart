@@ -42,8 +42,11 @@ class PipeAccesoryWidget extends StatelessWidget {
                 showModalBottomSheet<void>(
                     context: context,
                     builder: (BuildContext context) {
-                      return new MetadataBottomSheet(
-                          dataProvider: this.dataProvider);
+                      return Theme(
+                              data: Theme.of(context).copyWith(canvasColor: Colors.teal),
+                                              child: new MetadataBottomSheet(
+                            dataProvider: this.dataProvider),
+                      );
                     }).then((value) {
                   this.dataProvider.smokeSessionBloc.saveMetaData();
                 });

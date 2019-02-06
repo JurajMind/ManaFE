@@ -188,7 +188,8 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                   delegate: new SliverChildListDelegate(<Widget>[
                     AnimationsPicker(),
                     SizedBox(
-                      height: 20.0,
+                      height: 30.0,
+                      child: Center(child: Icon(Icons.arrow_drop_up),),
                     ),
                     GestureDetector(
                       child: SizedBox(
@@ -203,7 +204,8 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                           )),
                     ),
                     SizedBox(
-                      height: 20.0,
+                      height: 30.0,
+                      child: Center(child: Icon(Icons.arrow_drop_down),),
                     ),
                     SizedBox(
                       height: size.height,

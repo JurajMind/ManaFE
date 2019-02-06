@@ -18,65 +18,65 @@ class MetadataBottomSheet extends StatelessWidget {
     var smokeSessionBloc = dataProvider.smokeSessionBloc;
     var personBloc = dataProvider.personBloc;
     return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
-      height: MediaQuery.of(context).size.height * 0.6,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: new ListView(
-          children: <Widget>[
-            Container(
-           
-              child: SizedBox(height: 25.0,
-              child: Center(child: Icon(Icons.arrow_drop_down,size: 40.0,)),),
-            ),
-            buildMetadataItem(
-                smokeSessionBloc,
-                "Pipe",
-                'Hookah',
-                Icons.refresh,
-                personBloc.myGear.value != null
-                    ? personBloc.myGear.value
-                        .where((a) => a.type == 'Hookah')
-                        .toList()
-                    : new List<PipeAccesorySimpleDto>(),
-                (a) => a.pipe),
-            buildMetadataItem(
-                smokeSessionBloc,
-                "Bowl",
-                'Bowl',
-                Icons.refresh,
-                personBloc.myGear.value != null
-                    ? personBloc.myGear.value
-                        .where((a) => a.type == 'Bowl')
-                        .toList()
-                    : new List<PipeAccesorySimpleDto>(),
-                (a) => a.bowl),
-            buildMetadataItem(
-                smokeSessionBloc,
-                "Heat managment",
-                'heatmanagement',
-                Icons.refresh,
-                personBloc.myGear.value != null
-                    ? personBloc.myGear.value
-                        .where((a) => a.type == 'HeatManagement')
-                        .toList()
-                    : new List<PipeAccesorySimpleDto>(),
-                (a) => a.heatManagement),
-            buildMetadataItem(
-                smokeSessionBloc,
-                "Coals",
-                'coal',
-                Icons.account_box,
-                personBloc.myGear.value != null
-                    ? personBloc.myGear.value
-                        .where((a) => a.type == 'Coal')
-                        .toList()
-                    : new List<PipeAccesorySimpleDto>(),
-                (a) => a.coal),
-          ],
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
+        height: MediaQuery.of(context).size.height * 0.6,
+        child: Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: new ListView(
+      children: <Widget>[
+        Container(
+       
+          child: SizedBox(height: 25.0,
+          child: Center(child: Icon(Icons.arrow_drop_down,size: 40.0,)),),
         ),
-      ),
-    );
+        buildMetadataItem(
+            smokeSessionBloc,
+            "Pipe",
+            'Hookah',
+            Icons.refresh,
+            personBloc.myGear.value != null
+                ? personBloc.myGear.value
+                    .where((a) => a.type == 'Hookah')
+                    .toList()
+                : new List<PipeAccesorySimpleDto>(),
+            (a) => a.pipe),
+        buildMetadataItem(
+            smokeSessionBloc,
+            "Bowl",
+            'Bowl',
+            Icons.refresh,
+            personBloc.myGear.value != null
+                ? personBloc.myGear.value
+                    .where((a) => a.type == 'Bowl')
+                    .toList()
+                : new List<PipeAccesorySimpleDto>(),
+            (a) => a.bowl),
+        buildMetadataItem(
+            smokeSessionBloc,
+            "Heat managment",
+            'heatmanagement',
+            Icons.refresh,
+            personBloc.myGear.value != null
+                ? personBloc.myGear.value
+                    .where((a) => a.type == 'HeatManagement')
+                    .toList()
+                : new List<PipeAccesorySimpleDto>(),
+            (a) => a.heatManagement),
+        buildMetadataItem(
+            smokeSessionBloc,
+            "Coals",
+            'coal',
+            Icons.account_box,
+            personBloc.myGear.value != null
+                ? personBloc.myGear.value
+                    .where((a) => a.type == 'Coal')
+                    .toList()
+                : new List<PipeAccesorySimpleDto>(),
+            (a) => a.coal),
+      ],
+    ),
+        ),
+      );
   }
 
   StreamBuilder<SmokeSessionMetaDataDto> buildMetadataItem(

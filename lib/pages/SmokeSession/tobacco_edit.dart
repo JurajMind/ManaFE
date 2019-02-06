@@ -114,7 +114,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
         .toList();
 
     var sugestedTobacco =
-        ownedTobacco.where((t) => !tobaccoList.contains(t)).toList();
+        ownedTobacco.where((t) => tobaccoList.where((d) => t.id == d.id).length == 0).toList();
 
     var tobaccoWidgetList = this.tobaccoList.map((item) {
       return Column(
@@ -305,9 +305,14 @@ class SuggestedTobacco extends StatelessWidget {
                 padding: const EdgeInsets.all(5.0),
                 child: Column(
                   children: <Widget>[
-                    Text(
-                      tobacco.name,
-                      style: Theme.of(context).textTheme.display4,
+                    Padding(
+                      padding: const EdgeInsets.only(left:8.0),
+                      child: Text(
+                        tobacco.name,
+                        style: Theme.of(context).textTheme.display4,
+                        maxLines: 1,
+                            overflow: TextOverflow.ellipsis
+                      ),
                     ),
                     Text(tobacco.brand)
                   ],
