@@ -5,13 +5,13 @@ PODS:
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
-  - FBSDKCoreKit (4.38.1):
+  - FBSDKCoreKit (4.40.0):
     - Bolts (~> 1.9)
-  - FBSDKLoginKit (4.38.1):
+  - FBSDKLoginKit (4.39.1):
     - FBSDKCoreKit
   - Flutter (1.0.0)
   - flutter_facebook_login (0.0.1):
-    - FBSDKLoginKit (~> 4.32)
+    - FBSDKLoginKit (= 4.39.1)
     - Flutter
   - flutter_secure_storage (3.1.1):
     - Flutter
@@ -85,10 +85,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
-  FBSDKCoreKit: 8d47857400e2f5bdea697a80daff882e91c84ef6
-  FBSDKLoginKit: 4621c690d9dd8628031a4791497062183ea34b0d
+  FBSDKCoreKit: ae214474b25033399c131dc81d258e412582a2ba
+  FBSDKLoginKit: c3079d9a4db27c492287b1eed7a4272b28cf8a59
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
-  flutter_facebook_login: 5aa824f2a8b1e008810b20a9d4cf4166a7efe73a
+  flutter_facebook_login: 2915660b59f2bf5a06ca4363563c7b77bad750a1
   flutter_secure_storage: cbb73e37aa0c66689fe63799a9619ac66849b8fa
   google_maps_flutter: 6449d5918d3f1a69a37dc9c557bbad7bb9bcf0e9
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
