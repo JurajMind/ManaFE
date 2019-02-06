@@ -380,9 +380,15 @@ class ApiClient {
   }
 
   Future<TobaccoMixSimpleDto> saveMix(TobaccoMixSimpleDto mix) async {
-    var url = Uri.https(baseUrl, 'POST /api/Mixology/AddToMix');
-    var result = await _dio.post(url.toString());
+    var url = Uri.https(baseUrl, '/api/Mixology/AddToMix');
+    var result = await _dio.post(url.toString(), data: mix);
     return TobaccoMixSimpleDto.fromJson(result.data);
+  }
+
+  Future deleteMix(TobaccoMixSimpleDto mix) async {
+    var url = Uri.https(
+        baseUrl, '/api/Mixology/RemoveMix', {'mixId': mix.id.toString()});
+    var result = await _dio.deleteUri(url);
   }
 }
 

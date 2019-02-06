@@ -1,4 +1,5 @@
 import 'package:app/pages/Settings/language_selector_page.dart';
+
 import 'package:app/services/authorization.dart';
 import 'package:flutter/material.dart';
 
@@ -45,6 +46,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       PopupMenuItem(
                         value: "signOut",
                         child: Text('Sign out'),
+                      ),
+                      PopupMenuItem(
+                        value: "health",
+                        child: Text('Test'),
                       )
                     ],
               )
