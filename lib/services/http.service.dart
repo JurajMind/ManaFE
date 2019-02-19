@@ -390,6 +390,27 @@ class ApiClient {
         baseUrl, '/api/Mixology/RemoveMix', {'mixId': mix.id.toString()});
     var result = await _dio.deleteUri(url);
   }
+
+  Future<bool> register(UserModel userData) async {
+    var url = Uri.https(
+      baseUrl,
+      '/api/Account/Register',
+    );
+    var result = await _dio.post(url.toString(),
+        data: null,
+        options: Options(
+          contentType: ContentType.JSON,
+        ));
+
+    if (result.statusCode == 200) {
+      var auth = Authorize();
+      var authResult = await auth.writeToken(result.data);
+      if (authResult) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
 
 class ColorDto {
