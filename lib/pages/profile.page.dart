@@ -2,6 +2,7 @@ import 'package:app/pages/Settings/language_selector_page.dart';
 
 import 'package:app/services/authorization.dart';
 import 'package:flutter/material.dart';
+import 'package:app/pages/Statistic/statistic_page.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -36,6 +37,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     case 'signOut':
                       auth.signOut();
                       break;
+                    case 'test':
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => StatisticPage()));
+                      break;
                   }
                 },
                 itemBuilder: (BuildContext context) => [
@@ -48,8 +53,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Text('Sign out'),
                       ),
                       PopupMenuItem(
-                        value: "health",
-                        child: Text('Test'),
+                        value: "test",
+                        child: Text('Test statistic'),
                       )
                     ],
               )

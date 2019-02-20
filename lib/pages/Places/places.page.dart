@@ -12,7 +12,7 @@ import 'package:rxdart/rxdart.dart';
 
 class PlacePage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
+  State<PlacePage> createState() {
     return new _PlacePageState();
   }
 }

@@ -26,8 +26,8 @@ class SmokeSessionTimeStatisticsDto {
     sessionsDuration = json['SessionsDuration'];
     smokeDuration = json['SmokeDuration'];
     puffCount = json['PuffCount'];
-    dayOfWeekDistribution = json['DayOfWeekDistribution'];
-    sessionStartTimeDistribution = json['SessionStartTimeDistribution'];
+    dayOfWeekDistribution = new Map<String, int>.from(json['DayOfWeekDistribution']);
+    sessionStartTimeDistribution = new Map<String, int>.from(json['SessionStartTimeDistribution']);
   }
 
   Map<String, dynamic> toJson() {

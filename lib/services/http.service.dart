@@ -390,6 +390,15 @@ class ApiClient {
         baseUrl, '/api/Mixology/RemoveMix', {'mixId': mix.id.toString()});
     var result = await _dio.deleteUri(url);
   }
+
+  Future<PersonStatisticsOverallDto> getStatistic(DateTime from, DateTime to) async {
+    final f = new DateFormat('yyyy-MM-dd');
+    var url = Uri.https(baseUrl,'/api/Statistics/GetStatistics',{
+      'from': f.format(from), 'to': f.format(to)
+    });
+
+    return await _dio.getUri(url).then((data) => PersonStatisticsOverallDto.fromJson(data.data) );
+  }
 }
 
 class ColorDto {
