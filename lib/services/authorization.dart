@@ -5,6 +5,7 @@ import 'package:app/app/app.dart';
 import 'package:app/app/app.widget.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:openapi/api.dart';
 
 class Authorize {
   static final Authorize _singleton = new Authorize._internal();
@@ -93,6 +94,26 @@ class Authorize {
 
     navigatorKey.currentState.pushReplacementNamed('auth/login');
     return false;
+  }
+
+  Future<String> register(UserModel userData) async {
+    _token = null;
+    final response = await http.post(
+      'https://${App.baseUri}/api/Account/Register',
+      body: {
+        "Email": userData.email,
+        "UserName": userData.userName,
+        "Password": userData.password,
+        "ConfirmPassword": userData.confirmPassword,
+      },
+    );
+    final responseJson = json.decode(response.body);
+
+    var success = await writeToken(responseJson);
+    if (success) {
+      return null;
+    }
+    return "ERROR";
   }
 
   Future<bool> writeToken(dynamic responseJson) async {
