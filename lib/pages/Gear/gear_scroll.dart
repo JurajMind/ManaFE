@@ -463,6 +463,13 @@ class _GearScrollHomeState extends State<GearScrollHome> {
   ScrollPhysics _headingScrollPhysics = const NeverScrollableScrollPhysics();
   ValueNotifier<double> selectedIndex = new ValueNotifier<double>(0.0);
   ScrollPhysics innerScrollPhysics = NeverScrollableScrollPhysics();
+  int curentView = 0;
+
+  onViewChanged(int newView){
+    setState(() {
+     curentView =newView; 
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -602,7 +609,7 @@ class _GearScrollHomeState extends State<GearScrollHome> {
     innerScrollControllers[4] = ScrollController();
     innerScrollControllers[5] = ScrollController();
     List<Section> allSections =
-        getAllSections(gearBloc, innerScrollPhysics, innerScrollControllers);
+        getAllSections(gearBloc, innerScrollPhysics, innerScrollControllers,curentView,onViewChanged);
     // The scroll offset that reveals the appBarMidHeight appbar.
     final double appBarMidScrollOffset =
         statusBarHeight + appBarMaxHeight - _kAppBarMidHeight;

@@ -1,3 +1,4 @@
+import 'package:app/components/Common/big_select.dart';
 import 'package:app/components/Mixology/mixology_expanded.dart';
 import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/module/data_provider.dart';
@@ -25,48 +26,6 @@ class MixologyListState extends State<MixologyList> {
     1: 'Featured mix creators',
     2: 'Mixes wizzard'
   };
-
-  void _showDialog(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () => Navigator.of(context).pop(),
-              child: Center(
-                child: Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      mixTypeSelector(context, 0),
-                      mixTypeSelector(context, 1),
-                      mixTypeSelector(context, 2),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-        });
-  }
-
-  InkWell mixTypeSelector(BuildContext context, int index) {
-    return InkWell(
-      onTap: () {
-        setState(() {
-          curentView = index;
-        });
-        Navigator.of(context).pop();
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(top: 20.0),
-        child: Text(labels[index].toUpperCase(),
-            style: Theme.of(context).textTheme.display1),
-      ),
-    );
-  }
 
   Future showTobaccoDialog(
       {BuildContext context, MixologyBloc mixologyBloc}) async {
@@ -99,7 +58,7 @@ class MixologyListState extends State<MixologyList> {
           SizedBox(
             height: 50.0,
             child: AppBar(
-              actions: <Widget>[
+              actions: <Widget>[  
                 curentView == 0
                     ? IconButton(
                         icon: Icon(Icons.add),
@@ -109,16 +68,9 @@ class MixologyListState extends State<MixologyList> {
                     : Container()
               ],
               title: Center(
-                child: InkWell(
-                  onTap: () => _showDialog(context),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Text(labels[curentView]),
-                      Icon(Icons.arrow_drop_down)
-                    ],
-                  ),
-                ),
+                child: BigSelect(curentView: curentView,labels:labels,onSelected: (val){setState(() {
+                 curentView =  val;
+                });},)
               ),
               backgroundColor: Colors.transparent,
               centerTitle: true,

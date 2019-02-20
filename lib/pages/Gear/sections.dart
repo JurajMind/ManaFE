@@ -57,7 +57,8 @@ class Section {
 }
 
 List<Section> getAllSections(GearBloc bloc, ScrollPhysics physics,
-    Map<int, ScrollController> controllers) {
+    Map<int, ScrollController> controllers,int currentView,ValueChanged<int> onViewChanged) {
+
   return <Section>[
     Section(
         title: 'DEVICES',
@@ -74,6 +75,8 @@ List<Section> getAllSections(GearBloc bloc, ScrollPhysics physics,
         rightColor: _mediumPurple,
         backgroundAsset: 'images/gear/tobacco.jpg',
         child: PipeAccesoryList(
+          currentView: currentView,
+          onViewChanged: onViewChanged,
           scrollController: controllers[1],
           scrollPhysics: physics,
           type: "Tobacco",
@@ -84,6 +87,8 @@ List<Section> getAllSections(GearBloc bloc, ScrollPhysics physics,
       rightColor: _tomato,
       backgroundAsset: 'images/gear/hookah.jpg',
       child: PipeAccesoryList(
+        currentView: currentView,
+          onViewChanged: onViewChanged,
         scrollController: controllers[2],
         scrollPhysics: physics,
         type: "Hookah",
@@ -95,6 +100,8 @@ List<Section> getAllSections(GearBloc bloc, ScrollPhysics physics,
         rightColor: _tomato,
         backgroundAsset: 'images/gear/bowls.jpg',
         child: PipeAccesoryList(
+          currentView: currentView,
+          onViewChanged: onViewChanged,
           scrollController: controllers[3],
           scrollPhysics: physics,
           type: "Bowl",
@@ -105,6 +112,8 @@ List<Section> getAllSections(GearBloc bloc, ScrollPhysics physics,
         rightColor: Colors.blue,
         backgroundAsset: 'images/gear/hms.jpg',
         child: PipeAccesoryList(
+          currentView: currentView,
+          onViewChanged: onViewChanged,
           scrollController: controllers[4],
           scrollPhysics: physics,
           type: "HeatManagement",
@@ -115,6 +124,8 @@ List<Section> getAllSections(GearBloc bloc, ScrollPhysics physics,
         rightColor: Colors.red,
         backgroundAsset: 'images/gear/coals.jpg',
         child: PipeAccesoryList(
+          currentView: currentView,
+          onViewChanged: onViewChanged,
           scrollController: controllers[5],
           scrollPhysics: physics,
           type: "Coal",

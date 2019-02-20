@@ -1,4 +1,5 @@
 import 'package:app/app/app.dart';
+import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -28,6 +29,19 @@ class Extensions {
           placeholder: defaultAccesoryPicture(accesory));
     }
     return defaultAccesoryPicture(accesory);
+  }
+
+    static Widget brandPicture(BrandGroup brand) {
+    if (brand.picture != null) {
+      return CachedNetworkImage(
+          fit: BoxFit.fill,
+          fadeOutDuration: Duration(milliseconds: 0),
+          fadeInCurve: Curves.linear,
+          
+          imageUrl: 'https://${App.baseUri}${brand.picture}');
+         
+    }
+    return Container();
   }
 
   static Widget defaultAccesoryPicture(PipeAccesorySimpleDto accesory) {

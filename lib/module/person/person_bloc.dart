@@ -40,6 +40,8 @@ class PersonBloc {
   BehaviorSubject<List<PipeAccesorySimpleDto>> myGear =
       new BehaviorSubject<List<PipeAccesorySimpleDto>>(seedValue: null);
 
+  BehaviorSubject<int> gearDisplayType = new BehaviorSubject<int>(seedValue: 0);
+
   BehaviorSubject<List<PipeAccesorySimpleDto>> hookahs =
       new BehaviorSubject<List<PipeAccesorySimpleDto>>(
           seedValue: new List<PipeAccesorySimpleDto>());
