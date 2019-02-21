@@ -257,9 +257,13 @@ class ApiClient {
   }
 
   Future<List<PipeAccesorySimpleDto>> searchGear(
-      String search, String type, int page, int pageSize) {
-    var url = Uri.https(baseUrl, 'api/Gear/$type/Search/$search',
-        {"page": page.toString(), "pageSize": pageSize.toString()});
+      String search, String type, int page, int pageSize,
+      {String searchType = "All"}) {
+    var url = Uri.https(baseUrl, 'api/Gear/$type/Search/$search', {
+      "page": page.toString(),
+      "pageSize": pageSize.toString(),
+      "searchType": searchType
+    });
 
     return _getJson(url).then((json) {
       return json

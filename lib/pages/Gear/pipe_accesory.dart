@@ -76,6 +76,7 @@ class PipeAccesoryList extends StatelessWidget {
               if (index == 0) {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     Expanded(
                         flex: 1,
@@ -84,10 +85,12 @@ class PipeAccesoryList extends StatelessWidget {
                         )),
                     Expanded(
                         flex: 2,
-                        child: BigSelect(
-                          labels: labels,
-                          curentView: currentView,
-                          onSelected: onViewChanged,
+                        child: Center(
+                          child: BigSelect(
+                            labels: labels,
+                            curentView: currentView,
+                            onSelected: onViewChanged,
+                          ),
                         )),
                     Expanded(
                         flex: 1,
@@ -172,16 +175,34 @@ class PipeAccesoryList extends StatelessWidget {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    BigSelect(
-                      labels: labels,
-                      curentView: currentView,
-                      onSelected: onViewChanged,
+                    Expanded(
+                      flex: 1,
+                      child: IconButton(
+                        icon: Icon(Icons.search),
+                      ),
                     ),
+                    Expanded(
+                      flex: 2,
+                      child: Center(
+                        child: BigSelect(
+                          labels: labels,
+                          curentView: currentView,
+                          onSelected: onViewChanged,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(),
+                    )
                   ],
                 );
               }
               var data = snapshot.data[index - 1];
-              return new BrandListItem(brand: data);
+              return new BrandListItem(
+                brand: data,
+                brandType: type,
+              );
             });
       },
     );

@@ -1,5 +1,6 @@
 import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
+import 'package:app/components/Common/bg_painter.dart';
 import 'package:app/components/Common/shadow_text.dart';
 import 'package:app/helpers.dart';
 import 'package:app/pages/home.page.dart';
@@ -8,7 +9,6 @@ import 'package:app/support/validators/email.validator.dart';
 import 'package:app/support/validators/max.validator.dart';
 import 'package:app/support/validators/required.validator.dart';
 import 'package:flutter/material.dart';
-import 'package:app/components/Common/bg_painter.dart';
 import 'package:flutter/services.dart';
 import 'package:openapi/api.dart';
 
@@ -35,29 +35,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final password2Controller = TextEditingController();
 
   var _passwordAutoValidate = false;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    controller = new PageController();
-    controller.addListener(() {
-      final Size screenSize = MediaQuery.of(context).size;
-      setState(() {
-        animOffset = Offset(
-            controller.position.pixels / 3, controller.position.pixels / 10);
-        color = color.withHue((color.hue +
-                (controller.position.pixels / (screenSize.width * 5))) %
-            360);
-      });
-    });
-    loadAsset();
-  }
-
-  Future loadAsset() async {
-    termOfUssage = await rootBundle.loadString('assets/term_of_ussage.txt');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,50 +68,6 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget namePage(Size screenSize, BuildContext context) {
-    return Center(
-      child: ListView(
-        shrinkWrap: true,
-        padding: EdgeInsets.only(left: 24.0, right: 24.0),
-        children: <Widget>[
-          ShadowText(
-            'NAME',
-            style: Theme.of(context).textTheme.headline,
-            textScaleFactor: 1.0,
-            softWrap: true,
-          ),
-          SizedBox(height: 48.0),
-          new TextFormField(
-              autofocus: false,
-              controller: nameController,
-              keyboardType: TextInputType.emailAddress,
-              decoration:
-                  new InputDecoration(hintText: 'your name', labelText: 'Name'),
-              onFieldSubmitted: (String textInput) {
-                data.userName = textInput;
-              },
-              onSaved: (String value) {
-                data.userName = value;
-              }),
-          SizedBox(height: 48.0),
-          nextRoundedButton(screenSize),
-        ],
-      ),
-    );
-  }
-
-  RoundedButton nextRoundedButton(Size screenSize) {
-    return new RoundedButton(
-      buttonName: 'Next',
-      onTap: () => nextPage(),
-      buttonColor: Colors.transparent,
-      borderWidth: 2.0,
-      bottomMargin: 1.0,
-      height: 50.0,
-      width: screenSize.width,
     );
   }
 
@@ -181,51 +114,27 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Widget passwordPage(Size screenSize, BuildContext context) {
-    return Center(
-      child: ListView(
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        padding: EdgeInsets.only(left: 24.0, right: 24.0),
-        children: <Widget>[
-          ShadowText(
-            'PASSWORD',
-            style: Theme.of(context).textTheme.headline,
-            textScaleFactor: 1.0,
-            softWrap: true,
-          ),
-          SizedBox(height: 48.0),
-          new TextFormField(
-              autovalidate: _passwordAutoValidate,
-              autofocus: true,
-              controller: passwordController,
-              keyboardType: TextInputType.emailAddress,
-              decoration: new InputDecoration(
-                  hintText: 'Password', labelText: 'Password'),
-              onFieldSubmitted: (String textInput) {
-                data.password = textInput;
-              },
-              onEditingComplete: () {},
-              onSaved: (String value) {
-                data.password = value;
-              }),
-          new TextFormField(
-              autovalidate: _passwordAutoValidate,
-              controller: password2Controller,
-              keyboardType: TextInputType.emailAddress,
-              decoration: new InputDecoration(
-                  hintText: 'Confirm password', labelText: 'Confirm password'),
-              onFieldSubmitted: (String textInput) {
-                data.confirmPassword = textInput;
-              },
-              onSaved: (String value) {
-                data.confirmPassword = value;
-              }),
-          SizedBox(height: 48.0),
-          nextRoundedButton(screenSize),
-        ],
-      ),
-    );
+  Widget finalPage(Size screenSize, BuildContext context) {
+    return Center();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    controller = new PageController();
+    controller.addListener(() {
+      final Size screenSize = MediaQuery.of(context).size;
+      setState(() {
+        animOffset = Offset(
+            controller.position.pixels / 3, controller.position.pixels / 10);
+        color = color.withHue((color.hue +
+                (controller.position.pixels / (screenSize.width * 5))) %
+            360);
+      });
+    });
+    loadAsset();
   }
 
   Widget lawPage(Size screenSize, BuildContext context) {
@@ -286,8 +195,105 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Widget finalPage(Size screenSize, BuildContext context) {
-    return Center();
+  Future loadAsset() async {
+    termOfUssage = await rootBundle.loadString('assets/term_of_ussage.txt');
+  }
+
+  Widget namePage(Size screenSize, BuildContext context) {
+    return Center(
+      child: ListView(
+        shrinkWrap: true,
+        padding: EdgeInsets.only(left: 24.0, right: 24.0),
+        children: <Widget>[
+          ShadowText(
+            'NAME',
+            style: Theme.of(context).textTheme.headline,
+            textScaleFactor: 1.0,
+            softWrap: true,
+          ),
+          SizedBox(height: 48.0),
+          new TextFormField(
+              autofocus: false,
+              controller: nameController,
+              keyboardType: TextInputType.emailAddress,
+              decoration:
+                  new InputDecoration(hintText: 'your name', labelText: 'Name'),
+              onFieldSubmitted: (String textInput) {
+                data.userName = textInput;
+              },
+              onSaved: (String value) {
+                data.userName = value;
+              }),
+          SizedBox(height: 48.0),
+          nextRoundedButton(screenSize),
+        ],
+      ),
+    );
+  }
+
+  nextPage() {
+    var currentPage = controller.page + 1;
+    controller.animateToPage(currentPage.round(),
+        duration: Duration(milliseconds: 300), curve: Curves.ease);
+  }
+
+  RoundedButton nextRoundedButton(Size screenSize) {
+    return new RoundedButton(
+      buttonName: 'Next',
+      onTap: () => nextPage(),
+      buttonColor: Colors.transparent,
+      borderWidth: 2.0,
+      bottomMargin: 1.0,
+      height: 50.0,
+      width: screenSize.width,
+    );
+  }
+
+  Widget passwordPage(Size screenSize, BuildContext context) {
+    return Center(
+      child: ListView(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        padding: EdgeInsets.only(left: 24.0, right: 24.0),
+        children: <Widget>[
+          ShadowText(
+            'PASSWORD',
+            style: Theme.of(context).textTheme.headline,
+            textScaleFactor: 1.0,
+            softWrap: true,
+          ),
+          SizedBox(height: 48.0),
+          new TextFormField(
+              autovalidate: _passwordAutoValidate,
+              autofocus: true,
+              controller: passwordController,
+              keyboardType: TextInputType.emailAddress,
+              decoration: new InputDecoration(
+                  hintText: 'Password', labelText: 'Password'),
+              onFieldSubmitted: (String textInput) {
+                data.password = textInput;
+              },
+              onEditingComplete: () {},
+              onSaved: (String value) {
+                data.password = value;
+              }),
+          new TextFormField(
+              autovalidate: _passwordAutoValidate,
+              controller: password2Controller,
+              keyboardType: TextInputType.emailAddress,
+              decoration: new InputDecoration(
+                  hintText: 'Confirm password', labelText: 'Confirm password'),
+              onFieldSubmitted: (String textInput) {
+                data.confirmPassword = textInput;
+              },
+              onSaved: (String value) {
+                data.confirmPassword = value;
+              }),
+          SizedBox(height: 48.0),
+          nextRoundedButton(screenSize),
+        ],
+      ),
+    );
   }
 
   register(BuildContext context) async {
@@ -305,11 +311,5 @@ class _RegisterPageState extends State<RegisterPage> {
       Navigator.pushReplacement(context,
           new MaterialPageRoute(builder: (BuildContext context) => HomePage()));
     }
-  }
-
-  nextPage() {
-    var currentPage = controller.page + 1;
-    controller.animateToPage(currentPage.round(),
-        duration: Duration(milliseconds: 300), curve: Curves.ease);
   }
 }
