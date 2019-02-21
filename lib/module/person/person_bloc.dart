@@ -76,6 +76,14 @@ class PersonBloc {
     this.smokeSessionsCodes.add(newCodes);
   }
 
+  Future addMyGear(PipeAccesorySimpleDto accesory, int count) async {
+    PipeAccesorySimpleDto addedAccesory =
+        await App.http.addMyGear(accesory.id, count);
+    var oldGear = this.myGear.value;
+    oldGear.add(addedAccesory);
+    this.myGear.add(oldGear.toSet().toList());
+  }
+
   loadInitData({bool reload = false}) async {
     if (_loadedInit && !reload) return;
     _loadedInit = true;

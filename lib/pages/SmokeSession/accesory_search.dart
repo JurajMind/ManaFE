@@ -1,6 +1,4 @@
 import 'package:app/app/app.dart';
-import 'package:app/models/PipeAccesory/pipe_accesory.dart';
-import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -67,8 +65,14 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                       )
               ],
               centerTitle: true,
-              title:
-                  TextField(controller: controller, onSubmitted: submitSearch),
+              title: TextField(
+                decoration:
+                    new InputDecoration(hintText: "Search ${widget.type}"),
+                controller: controller,
+                onSubmitted: submitSearch,
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.search,
+              ),
             ),
             Expanded(
                 child: controller.text == "" ? buildDefault() : buildResult())

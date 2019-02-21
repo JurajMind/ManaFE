@@ -391,13 +391,22 @@ class ApiClient {
     var result = await _dio.deleteUri(url);
   }
 
-  Future<PersonStatisticsOverallDto> getStatistic(DateTime from, DateTime to) async {
+  Future<PersonStatisticsOverallDto> getStatistic(
+      DateTime from, DateTime to) async {
     final f = new DateFormat('yyyy-MM-dd');
-    var url = Uri.https(baseUrl,'/api/Statistics/GetStatistics',{
-      'from': f.format(from), 'to': f.format(to)
-    });
+    var url = Uri.https(baseUrl, '/api/Statistics/GetStatistics',
+        {'from': f.format(from), 'to': f.format(to)});
 
-    return await _dio.getUri(url).then((data) => PersonStatisticsOverallDto.fromJson(data.data) );
+    return await _dio
+        .getUri(url)
+        .then((data) => PersonStatisticsOverallDto.fromJson(data.data));
+  }
+
+  Future<PipeAccesorySimpleDto> addMyGear(int id, int count) async {
+    var url = Uri.https(baseUrl, '/api/Person/MyGear/$id/Add/$count');
+    return await _dio
+        .postUri(url)
+        .then((data) => PipeAccesorySimpleDto.fromJson(data.data));
   }
 }
 
