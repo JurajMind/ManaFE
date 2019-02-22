@@ -4,6 +4,10 @@ import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
 class GearBloc {
+  static final GearBloc _instance = new GearBloc._();
+
+  factory GearBloc() => GearBloc._instance;
+
   BehaviorSubject<List<BrandGroup>> tobacco =
       new BehaviorSubject<List<BrandGroup>>(seedValue: null);
 
@@ -21,6 +25,10 @@ class GearBloc {
 
   BehaviorSubject<List<PipeAccesorySimpleDto>> brandAccesory =
       new BehaviorSubject<List<PipeAccesorySimpleDto>>(seedValue: null);
+
+  GearBloc._() {
+    this.loadGearBrans();
+  }
 
   loadGearBrans() async {
     var gear = await App.http.getGearBrans();
@@ -48,7 +56,7 @@ class GearBloc {
         return this.hookah;
       case "Bowl":
         return this.bowls;
-      case "Heatmanagement":
+      case "HeatManagement":
         return this.hms;
       case "Coal":
         return this.coals;

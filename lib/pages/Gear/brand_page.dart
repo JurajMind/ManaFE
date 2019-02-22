@@ -47,7 +47,7 @@ class _BrandPageState extends State<BrandPage> {
                   : SliverList(
                       delegate: SliverChildBuilderDelegate(
                           (context, index) => PipeAccesoryListItemShimmer(),
-                          childCount: 10),
+                          childCount: widget.brand.itemCount),
                     );
             })
       ],

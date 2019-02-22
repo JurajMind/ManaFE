@@ -74,7 +74,7 @@ class StateSetting {
     int rawSaturation = json['Color']['Saturation'];
     int rawValue = json['Color']['Value'];
 
-    double hue = (rawHue / (255 / 360));
+    double hue = (rawHue / (255) * 360);
     double saturation = (rawSaturation / 255);
     double value = (rawValue / 255);
 

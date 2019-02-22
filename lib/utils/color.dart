@@ -51,8 +51,8 @@ class ColorHelper {
 
   static Offset colorToPosition(HSVColor selectedColor, Size size) {
     var angle = selectedColor.hue / (2 * math.pi);
-    var x = math.tan(angle) * size.width / 2;
-    var y = 1 / (math.tan(angle) * size.width / 2);
-    return new Offset(x, y);
+    var x = math.cos(angle) * (size.width / 2);
+    var y = (math.sin(angle)) * size.width / 2;
+    return new Offset(0, 0);
   }
 }

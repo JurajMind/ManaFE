@@ -134,9 +134,12 @@ class SmokeSessionBloc {
     }
 
     if (this.activeSessionId == sessionCode) {
-      return;
+      await loadSessionData();
     } else {
-      await _leaveOldSession(this.activeSessionId);
+      if (this.activeSessionId != null) {
+        await _leaveOldSession(this.activeSessionId);
+      }
+
       this.activeSessionId = sessionCode;
     }
 
@@ -156,7 +159,11 @@ class SmokeSessionBloc {
     var list = new List<String>.from(recentSessions.value);
     list.add(sessionCode);
     //recentSessions.add(list);
-    var sessionData = await App.http.getInitData(sessionCode);
+    await loadSessionData();
+  }
+
+  Future loadSessionData() async {
+    var sessionData = await App.http.getInitData(this.activeSessionId);
     standSettings.add(sessionData.item2);
     smokeStatistic.add(sessionData.item1.smokeSessionData);
     smokeSessionMetaData.add(sessionData.item1.metaData);

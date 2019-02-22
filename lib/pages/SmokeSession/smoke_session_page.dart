@@ -2,6 +2,7 @@ import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Pickers/smoke_color_wheel.dart';
 import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
+import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/SmokeSession/animation_list.dart';
 import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
@@ -12,6 +13,7 @@ import 'package:app/pages/SmokeSession/tobacco_widget.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
 import 'package:openapi/api.dart';
 
 class SmokeSessionPage extends StatefulWidget {
@@ -56,6 +58,12 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         stopWatches.pufStopwatch, this.dataProvider.smokeSessionBloc);
     dataProvider.smokeSessionBloc.joinSession(widget.sessionId);
     dependencies.smokeSessionBloc = dataProvider.smokeSessionBloc;
+    SystemChannels.lifecycle.setMessageHandler((msg) {
+      debugPrint('SystemChannels> $msg');
+      if (msg == AppLifecycleState.resumed.toString()) {
+        dataProvider.smokeSessionBloc.loadSessionData();
+      }
+    });
   }
 
   @override
@@ -189,23 +197,32 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                     AnimationsPicker(),
                     SizedBox(
                       height: 30.0,
-                      child: Center(child: Icon(Icons.arrow_drop_up),),
+                      child: Center(
+                        child: Icon(Icons.arrow_drop_up),
+                      ),
                     ),
                     GestureDetector(
                       child: SizedBox(
                           height: size.width,
-                          child: SmokeColorWheel(
-                            onColorChanged: (color) {
-                              dataProvider.smokeSessionBloc
-                                  .setColor(color.toColor());
-                            },
-                            color: dataProvider.smokeSessionBloc.standSettings
-                                .value.idle.color,
-                          )),
+                          child: StreamBuilder<StandSettings>(
+                              stream:
+                                  dataProvider.smokeSessionBloc.standSettings,
+                              builder: (context, snapshot) {
+                                print(snapshot.data.idle.color);
+                                return SmokeColorWheel(
+                                  onColorChanged: (color) {
+                                    dataProvider.smokeSessionBloc
+                                        .setColor(color.toColor());
+                                  },
+                                  color: snapshot?.data?.idle?.color,
+                                );
+                              })),
                     ),
                     SizedBox(
                       height: 30.0,
-                      child: Center(child: Icon(Icons.arrow_drop_down),),
+                      child: Center(
+                        child: Icon(Icons.arrow_drop_down),
+                      ),
                     ),
                     SizedBox(
                       height: size.height,

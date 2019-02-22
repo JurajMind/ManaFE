@@ -195,7 +195,6 @@ class ApiClient {
         options: Options(
           contentType: ContentType.JSON,
         ));
-    debugPrint(response.data.toString());
   }
 
   Future<bool> changeAnimation(

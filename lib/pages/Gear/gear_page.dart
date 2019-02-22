@@ -1,4 +1,3 @@
-import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Gear/gear_scroll.dart';
 import 'package:flutter/material.dart';
 
@@ -16,10 +15,7 @@ class _GearPageState extends State<GearPage> {
   }
 
   @override
-  FocusNode _focusNode = new FocusNode();
   Widget build(BuildContext context) {
-    final gearBloc = DataProvider.getData(context).gearBloc;
-    gearBloc.loadGearBrans();
     return new GearScrollHome();
   }
 }

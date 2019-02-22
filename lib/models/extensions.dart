@@ -23,7 +23,6 @@ class Extensions {
           fit: BoxFit.fill,
           fadeOutDuration: Duration(milliseconds: 0),
           fadeInCurve: Curves.linear,
-          
           imageUrl: 'https://${App.baseUri}${accesory.picture}',
           errorWidget: defaultAccesoryPicture(accesory),
           placeholder: defaultAccesoryPicture(accesory));
@@ -31,15 +30,13 @@ class Extensions {
     return defaultAccesoryPicture(accesory);
   }
 
-    static Widget brandPicture(BrandGroup brand) {
+  static Widget brandPicture(BrandGroup brand) {
     if (brand.picture != null) {
       return CachedNetworkImage(
           fit: BoxFit.fill,
           fadeOutDuration: Duration(milliseconds: 0),
           fadeInCurve: Curves.linear,
-          
           imageUrl: 'https://${App.baseUri}${brand.picture}');
-         
     }
     return Container();
   }
@@ -56,10 +53,16 @@ class Extensions {
       case 'HeatManagement':
         imgPath = 'images/types/heatmanagment.png';
         break;
+      case 'HeatManagment':
+        imgPath = 'images/types/heatmanagment.png';
+        break;
       case 'Tobacco':
         imgPath = 'images/types/tobacco.png';
         break;
       case 'Hookah':
+        imgPath = 'images/types/hookah.png';
+        break;
+      case 'Pipe':
         imgPath = 'images/types/hookah.png';
         break;
     }
