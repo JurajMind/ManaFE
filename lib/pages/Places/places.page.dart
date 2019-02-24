@@ -3,6 +3,7 @@ import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/place_bloc.dart';
 import 'package:app/module/places/places_bloc.dart';
+import 'package:app/pages/Places/Reservations/reservations_page.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -119,7 +120,15 @@ class _PlacePageState extends State<PlacePage> {
             ),
           ),
           SliverList(
-            delegate: new SliverChildListDelegate(<Widget>[Placeholder()]),
+            delegate: new SliverChildListDelegate(<Widget>[
+              FlatButton(
+                child: Text('All reservations'),
+                onPressed: () => Navigator.of(context).push(
+                        new MaterialPageRoute(builder: (BuildContext context) {
+                      return new ReservationsPage();
+                    })),
+              )
+            ]),
           ),
           reservationBuilder(personBloc.myReservations),
           placeBuilder(placesBloc.places)

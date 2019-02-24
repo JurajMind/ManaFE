@@ -405,6 +405,17 @@ class ApiClient {
         .then((data) => PersonStatisticsOverallDto.fromJson(data.data));
   }
 
+  Future<List<ReservationDto>> getReservations(
+      DateTime from, DateTime to) async {
+    final f = new DateFormat('yyyy-MM-dd');
+    var url = Uri.https(baseUrl, '/api/Reservations/Reservations',
+        {'from': f.format(from), 'to': f.format(to)});
+
+    return await _dio
+        .getUri(url)
+        .then((data) => ReservationDto.listFromJson(data.data));
+  }
+
   Future<PipeAccesorySimpleDto> addMyGear(int id, int count) async {
     var url = Uri.https(baseUrl, '/api/Person/MyGear/$id/Add/$count');
     return await _dio

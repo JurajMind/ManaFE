@@ -1,33 +1,34 @@
 part of openapi.api;
 
 class ReservationDto {
-  
   int id = null;
-  
+
   DateTime created = null;
-  
+
   int personId = null;
-  
+
   int placeId = null;
-  
+
+  String placeName = null;
+
   DateTime started = null;
-  
+
   DateTime end = null;
-  
+
   int persons = null;
-  
+
   String duration = null;
-  
+
   DateTime time = null;
-  
+
   String text = null;
-  
+
   String name = null;
-  
+
   String displayName = null;
-  
+
   int status = null;
-  
+
   List<int> seats = [];
   ReservationDto();
 
@@ -42,6 +43,7 @@ class ReservationDto {
     created = json['Created'] == null ? null : DateTime.parse(json['Created']);
     personId = json['PersonId'];
     placeId = json['PlaceId'];
+    placeName = json['PlaceName'];
     started = json['Started'] == null ? null : DateTime.parse(json['Started']);
     end = json['End'] == null ? null : DateTime.parse(json['End']);
     persons = json['Persons'];
@@ -60,6 +62,7 @@ class ReservationDto {
       'Created': created == null ? '' : created.toUtc().toIso8601String(),
       'PersonId': personId,
       'PlaceId': placeId,
+      'PlaceName': placeName,
       'Started': started == null ? '' : started.toUtc().toIso8601String(),
       'End': end == null ? '' : end.toUtc().toIso8601String(),
       'Persons': persons,
@@ -74,15 +77,17 @@ class ReservationDto {
   }
 
   static List<ReservationDto> listFromJson(List<dynamic> json) {
-    return json == null ? new List<ReservationDto>() : json.map((value) => new ReservationDto.fromJson(value)).toList();
+    return json == null
+        ? new List<ReservationDto>()
+        : json.map((value) => new ReservationDto.fromJson(value)).toList();
   }
 
   static Map<String, ReservationDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, ReservationDto>();
     if (json != null && json.length > 0) {
-      json.forEach((String key, dynamic value) => map[key] = new ReservationDto.fromJson(value));
+      json.forEach((String key, dynamic value) =>
+          map[key] = new ReservationDto.fromJson(value));
     }
     return map;
   }
 }
-

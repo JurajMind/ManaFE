@@ -1,6 +1,7 @@
 import 'package:app/module/general/gear_bloc.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/person/person_bloc.dart';
+import 'package:app/module/person/reservations_bloc.dart';
 import 'package:app/module/person/statistic_bloc.dart';
 import 'package:app/module/places/menu_bloc.dart';
 import 'package:app/module/places/place_bloc.dart';
@@ -17,6 +18,7 @@ class DataProvider extends InheritedWidget {
   final GearBloc gearBloc;
   final PlaceBloc placeSingleBloc;
   final StatisticBloc statisticBloc;
+  final ReservationBloc reservationBloc;
 
   DataProvider({
     Key key,
@@ -29,6 +31,7 @@ class DataProvider extends InheritedWidget {
         menuBloc = new MenuBloc(),
         placeSingleBloc = new PlaceBloc(),
         statisticBloc = new StatisticBloc(),
+        reservationBloc = new ReservationBloc(),
         super(key: key, child: child);
 
   @override
