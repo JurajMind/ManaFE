@@ -53,17 +53,12 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
 
   @override
   void didChangeDependencies() {
+    super.didChangeDependencies();
     dataProvider = DataProvider.getData(context);
     dependencies = new PufTimerDependencies(
         stopWatches.pufStopwatch, this.dataProvider.smokeSessionBloc);
     dataProvider.smokeSessionBloc.joinSession(widget.sessionId);
     dependencies.smokeSessionBloc = dataProvider.smokeSessionBloc;
-    SystemChannels.lifecycle.setMessageHandler((msg) {
-      debugPrint('SystemChannels> $msg');
-      if (msg == AppLifecycleState.resumed.toString()) {
-        dataProvider.smokeSessionBloc.loadSessionData();
-      }
-    });
   }
 
   @override
@@ -208,7 +203,6 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                               stream:
                                   dataProvider.smokeSessionBloc.standSettings,
                               builder: (context, snapshot) {
-                                print(snapshot.data.idle.color);
                                 return SmokeColorWheel(
                                   onColorChanged: (color) {
                                     dataProvider.smokeSessionBloc

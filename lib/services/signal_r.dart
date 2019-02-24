@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:app/app/app.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
 import 'dart:async';
@@ -13,7 +15,7 @@ class SignalR {
   static String url = 'https://$host/signalr';
   final conectionData = Uri.encodeComponent('[{"name":"smokesessionhub"}]');
   NegotiateResponse connectionInfo;
-
+  DateTime lastPing = DateTime.now();
   IOWebSocketChannel _channel;
   Completer<dynamic> _completer;
 
@@ -54,6 +56,11 @@ class SignalR {
       _channel = new IOWebSocketChannel.connect(chanelUlr);
       _channel.stream.listen((message) async {
         print('From signal ' + message);
+        if (message == "{}") {
+          // ping msg
+          lastPing = DateTime.now();
+          print('PingTime ' + lastPing.toString());
+        }
         var serverCall = ClientCall.fromJson(json.decode(message));
         proceedCall(serverCall);
       });
@@ -87,6 +94,18 @@ class SignalR {
 
   void proceedCall(ClientCall serverCall) {
     if (serverCall.Data != null) clientCalls.add(serverCall);
+  }
+
+  Future reconect() async {
+    if (lastPing.add(new Duration(seconds: 30)).microsecondsSinceEpoch >
+        DateTime.now().microsecondsSinceEpoch) {
+      debugPrint('not reconecting');
+      return;
+    }
+    await _connect();
+    var reconectCall = new ClientCall(Data: new List<ClientMethod>());
+    reconectCall.Data.add(new ClientMethod(Method: "reconect"));
+    clientCalls.add(reconectCall);
   }
 }
 

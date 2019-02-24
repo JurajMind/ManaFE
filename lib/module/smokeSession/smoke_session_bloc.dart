@@ -168,7 +168,10 @@ class SmokeSessionBloc {
     smokeStatistic.add(sessionData.item1.smokeSessionData);
     smokeSessionMetaData.add(sessionData.item1.metaData);
     hookahCode = sessionData.item1.hookah.code;
-    animations.add(await App.http.getAnimations(sessionData.item1.hookah.code));
+    if (animations.value == null) {
+      animations
+          .add(await App.http.getAnimations(sessionData.item1.hookah.code));
+    }
   }
 
   loadAnimation() async {
@@ -274,6 +277,12 @@ class SmokeSessionBloc {
             handleDeviceOnline(f);
             break;
           }
+        case 'reconect':
+          {
+            rejoinSession();
+            this.loadSessionData();
+            break;
+          }
       }
     });
   }
@@ -324,6 +333,7 @@ class SmokeSessionBloc {
     List<String> params = new List<String>();
     params.add(activeSessionId);
     this.signalR.callServerFunction(name: 'LeaveSession', params: params);
+    animations.add(null);
   }
 }
 

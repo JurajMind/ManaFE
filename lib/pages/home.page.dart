@@ -10,6 +10,7 @@ import 'package:app/pages/Places/places.page.dart';
 import 'package:app/pages/SmokeSession/gradiend_color_wheel_rotate.dart';
 import 'package:app/pages/profile.page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';
+import 'package:app/services/signal_r.dart';
 import 'package:app/support/mana_icons_icons.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
@@ -50,11 +51,6 @@ class _HomePageState extends State<HomePage> {
       5,
       (int index) => new FocusScopeNode(),
     );
-
-    SystemChannels.lifecycle.setMessageHandler((msg) {
-      debugPrint('SystemChannels> $msg');
-      if (msg == AppLifecycleState.resumed.toString()) {}
-    });
   }
 
   @override
@@ -65,6 +61,13 @@ class _HomePageState extends State<HomePage> {
     _focusActiveTab();
     personBloc.loadMyGear(false);
     personBloc.loadInitData();
+    SystemChannels.lifecycle.setMessageHandler((msg) {
+      debugPrint('SystemChannels> $msg');
+      if (msg == AppLifecycleState.resumed.toString()) {
+        var signal = new SignalR();
+        signal.reconect();
+      }
+    });
   }
 
   @override
