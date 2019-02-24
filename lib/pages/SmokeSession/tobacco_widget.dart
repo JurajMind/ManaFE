@@ -116,7 +116,7 @@ class TobaccoWidget extends StatelessWidget {
   }
 
   Widget tobacoBody(BuildContext context, PipeAccesorySimpleDto tobacco) {
-    if (tobacco == null || tobacco.id == null) {
+    if (tobacco == null || tobacco.id == null || tobacco.name == null) {
       return new Padding(
         padding: EdgeInsets.all(8.0),
         child: Text('No tobacco'),

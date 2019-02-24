@@ -29,7 +29,7 @@ class _SmokeSessionCarouselState extends State<SmokeSessionCarousel> {
     var personBloc = DataProvider.getData(context).personBloc;
 
     return new Center(
-        child: StreamBuilder<List<String>>(
+        child: StreamBuilder<List<SmokeSessionSimpleDto>>(
       initialData: null,
       stream: personBloc.smokeSessionsCodes,
       builder: (context, snapshot) => PageView.builder(
@@ -66,7 +66,7 @@ class _SmokeSessionCarouselState extends State<SmokeSessionCarousel> {
 }
 
 class SmokeSessionCarouselItem extends StatelessWidget {
-  String smokeSession;
+  final SmokeSessionSimpleDto smokeSession;
 
   SmokeSessionCarouselItem({
     this.smokeSession,
@@ -80,7 +80,7 @@ class SmokeSessionCarouselItem extends StatelessWidget {
       child: InkWell(
         onTap: () => Navigator.of(context).pushReplacement(
                 new MaterialPageRoute(builder: (BuildContext context) {
-              return new SmokeSessionPage(sessionId: smokeSession);
+              return new SmokeSessionPage(sessionId: smokeSession.sessionId);
             })),
         child: Container(
           decoration: BoxDecoration(
@@ -89,7 +89,15 @@ class SmokeSessionCarouselItem extends StatelessWidget {
             border: new Border.all(
                 color: const Color.fromRGBO(221, 221, 221, 1.0), width: 2.0),
           ),
-          child: Center(child: Text(smokeSession)),
+          child: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(smokeSession.device.name,
+                  style: Theme.of(context).textTheme.display1),
+              Text(smokeSession.sessionId),
+            ],
+          )),
         ),
       ),
     );

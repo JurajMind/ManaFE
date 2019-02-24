@@ -40,7 +40,8 @@ class PersonBloc {
   BehaviorSubject<List<PipeAccesorySimpleDto>> myGear =
       new BehaviorSubject<List<PipeAccesorySimpleDto>>(seedValue: null);
 
-  BehaviorSubject<int> gearDisplayType = new BehaviorSubject<int>(seedValue: 0);
+  BehaviorSubject<List<ReservationDto>> myReservations =
+      new BehaviorSubject<List<ReservationDto>>(seedValue: null);
 
   BehaviorSubject<List<PipeAccesorySimpleDto>> hookahs =
       new BehaviorSubject<List<PipeAccesorySimpleDto>>(
@@ -58,8 +59,9 @@ class PersonBloc {
       new BehaviorSubject<List<SmokeSessionSimpleDto>>(
           seedValue: new List<SmokeSessionSimpleDto>());
 
-  BehaviorSubject<List<String>> smokeSessionsCodes =
-      new BehaviorSubject<List<String>>(seedValue: new List<String>());
+  BehaviorSubject<List<SmokeSessionSimpleDto>> smokeSessionsCodes =
+      new BehaviorSubject<List<SmokeSessionSimpleDto>>(
+          seedValue: new List<SmokeSessionSimpleDto>());
 
   loadMyGear(bool reload) async {
     if (_loadedGear && !reload) return;
@@ -69,7 +71,7 @@ class PersonBloc {
     myGear.add(gear);
   }
 
-  addSmokeSession(String smokeSessionId) {
+  addSmokeSession(SmokeSessionSimpleDto smokeSessionId) {
     var newCodes = smokeSessionsCodes.value;
     newCodes.insert(0, smokeSessionId);
     newCodes = newCodes.toSet().toList();
@@ -90,8 +92,8 @@ class PersonBloc {
     var init = await App.http.getPersonInitData();
     devices.add(init.devices);
     smokeSessions.add(init.activeSmokeSessions);
-    smokeSessionsCodes
-        .add(init.activeSmokeSessions.map((f) => f.sessionId).toList());
+    smokeSessionsCodes.add(init.activeSmokeSessions);
+    myReservations.add(init.activeReservations);
     _loadedInit = true;
     try {
       var signal = new SignalR();
@@ -104,6 +106,10 @@ class PersonBloc {
 
   void handleDeviceOnline(ClientMethod f) {
     var data = new DeviceOnline.fromSignal(f.Data);
-    this.addSmokeSession(data.sessionCode);
+    var smokeSession = new SmokeSessionSimpleDto();
+    smokeSession.device = DeviceSimpleDto();
+    smokeSession.device.name = data.deviceName;
+    smokeSession.sessionId = data.sessionCode;
+    this.addSmokeSession(smokeSession);
   }
 }

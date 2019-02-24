@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
       debugPrint('SystemChannels> $msg');
       if (msg == AppLifecycleState.resumed.toString()) {
         var signal = new SignalR();
-        signal.reconect();
+        signal.checkConection();
       }
     });
   }

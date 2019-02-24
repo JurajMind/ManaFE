@@ -6,6 +6,7 @@ import 'package:app/module/places/places_bloc.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:map_view/map_view.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
@@ -88,12 +89,13 @@ class _PlacePageState extends State<PlacePage> {
     staticMapUri = staticMapProvider.getStaticUri(
       myUserLocation,
       14,
-      width: 450,
+      width: MediaQuery.of(context).size.width.round(),
       height: height.round(),
       mapType: StaticMapViewType.roadmap,
     );
 //https://maps.googleapis.com/maps/api/staticmap?center=${myUserLocation.altitude},${myUserLocation.longitude}&zoom=15&format=png&maptype=roadmap&style=element:geometry%7Ccolor:0x1d2c4d&style=element:labels.text.fill%7Ccolor:0x8ec3b9&style=element:labels.text.stroke%7Ccolor:0x1a3646&style=feature:administrative.country%7Celement:geometry.stroke%7Ccolor:0x4b6878&style=feature:administrative.land_parcel%7Celement:labels.text.fill%7Ccolor:0x64779e&style=feature:administrative.province%7Celement:geometry.stroke%7Ccolor:0x4b6878&style=feature:landscape.man_made%7Celement:geometry.stroke%7Ccolor:0x334e87&style=feature:landscape.natural%7Celement:geometry%7Ccolor:0x023e58&style=feature:poi%7Celement:geometry%7Ccolor:0x283d6a&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0x6f9ba5&style=feature:poi%7Celement:labels.text.stroke%7Ccolor:0x1d2c4d&style=feature:poi.business%7Cvisibility:off&style=feature:poi.park%7Celement:geometry.fill%7Ccolor:0x023e58&style=feature:poi.park%7Celement:labels.text%7Cvisibility:off&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x3C7680&style=feature:road%7Celement:geometry%7Ccolor:0x304a7d&style=feature:road%7Celement:labels.text.fill%7Ccolor:0x98a5be&style=feature:road%7Celement:labels.text.stroke%7Ccolor:0x1d2c4d&style=feature:road.highway%7Celement:geometry%7Ccolor:0x2c6675&style=feature:road.highway%7Celement:geometry.stroke%7Ccolor:0x255763&style=feature:road.highway%7Celement:labels.text.fill%7Ccolor:0xb0d5ce&style=feature:road.highway%7Celement:labels.text.stroke%7Ccolor:0x023e58&style=feature:transit%7Celement:labels.text.fill%7Ccolor:0x98a5be&style=feature:transit%7Celement:labels.text.stroke%7Ccolor:0x1d2c4d&style=feature:transit.line%7Celement:geometry.fill%7Ccolor:0x283d6a&style=feature:transit.station%7Celement:geometry%7Ccolor:0x3a4762&style=feature:water%7Celement:geometry%7Ccolor:0x0e1626&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x4e6d70&size=900x500&key${App.googleApiKeys}
 
+    var personBloc = DataProvider.getData(context).personBloc;
     return SafeArea(
       top: false,
       child: new CustomScrollView(
@@ -116,6 +118,10 @@ class _PlacePageState extends State<PlacePage> {
               ),
             ),
           ),
+          SliverList(
+            delegate: new SliverChildListDelegate(<Widget>[Placeholder()]),
+          ),
+          reservationBuilder(personBloc.myReservations),
           placeBuilder(placesBloc.places)
         ],
       ),
@@ -139,6 +145,23 @@ class _PlacePageState extends State<PlacePage> {
         });
   }
 
+  StreamBuilder<List<ReservationDto>> reservationBuilder(
+      BehaviorSubject<List<ReservationDto>> reservations) {
+    return StreamBuilder(
+        stream: reservations,
+        initialData: null,
+        builder: (context, snapshot) {
+          return SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return _createReservationItem(index, snapshot.data[index]);
+              },
+              childCount: snapshot.data == null ? 0 : snapshot.data.length,
+            ),
+          );
+        });
+  }
+
   StreamBuilder<Location> mapBuilder() {
     return StreamBuilder(
         stream: placesBloc.location,
@@ -152,6 +175,7 @@ class _PlacePageState extends State<PlacePage> {
                       staticMapUri.toString() +
                           '&style=element:geometry%7Ccolor:0x1d2c4d&style=element:labels.text.fill%7Ccolor:0x8ec3b9&style=element:labels.text.stroke%7Ccolor:0x1a3646&style=feature:administrative.country%7Celement:geometry.stroke%7Ccolor:0x4b6878&style=feature:administrative.land_parcel%7Celement:labels.text.fill%7Ccolor:0x64779e&style=feature:administrative.province%7Celement:geometry.stroke%7Ccolor:0x4b6878&style=feature:landscape.man_made%7Celement:geometry.stroke%7Ccolor:0x334e87&style=feature:landscape.natural%7Celement:geometry%7Ccolor:0x023e58&style=feature:poi%7Celement:geometry%7Ccolor:0x283d6a&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0x6f9ba5&style=feature:poi%7Celement:labels.text.stroke%7Ccolor:0x1d2c4d&style=feature:poi.business%7Cvisibility:off&style=feature:poi.park%7Celement:geometry.fill%7Ccolor:0x023e58&style=feature:poi.park%7Celement:labels.text%7Cvisibility:off&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x3C7680&style=feature:road%7Celement:geometry%7Ccolor:0x304a7d&style=feature:road%7Celement:labels.text.fill%7Ccolor:0x98a5be&style=feature:road%7Celement:labels.text.stroke%7Ccolor:0x1d2c4d&style=feature:road.highway%7Celement:geometry%7Ccolor:0x2c6675&style=feature:road.highway%7Celement:geometry.stroke%7Ccolor:0x255763&style=feature:road.highway%7Celement:labels.text.fill%7Ccolor:0xb0d5ce&style=feature:road.highway%7Celement:labels.text.stroke%7Ccolor:0x023e58&style=feature:transit%7Celement:labels.text.fill%7Ccolor:0x98a5be&style=feature:transit%7Celement:labels.text.stroke%7Ccolor:0x1d2c4d&style=feature:transit.line%7Celement:geometry.fill%7Ccolor:0x283d6a&style=feature:transit.station%7Celement:geometry%7Ccolor:0x3a4762&style=feature:water%7Celement:geometry%7Ccolor:0x0e1626&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x4e6d70&scale=2',
                       fit: BoxFit.fill,
+                      height: MediaQuery.of(context).size.height / 2,
                     ),
                   ),
                   onTap: () => showMap(),
@@ -180,6 +204,29 @@ class _PlacePageState extends State<PlacePage> {
           )),
       title: Text(data.name),
       subtitle: Text(Extensions.adress(data.address)),
+    );
+  }
+
+  Widget _createReservationItem(int index, ReservationDto data) {
+    var dateFormater = new DateFormat('d.M.yyyy');
+    var timeFormater = new DateFormat('h:mm');
+    return ListTile(
+      onTap: () {},
+      title: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Expanded(child: Text(dateFormater.format(data.time))),
+          Expanded(child: Text(timeFormater.format(data.time))),
+          Expanded(child: Text(data.duration)),
+          Expanded(child: Text(data.persons.toString())),
+        ],
+      ),
+      subtitle: Column(
+        children: <Widget>[
+          Text(data.text ?? ""),
+        ],
+      ),
     );
   }
 }
