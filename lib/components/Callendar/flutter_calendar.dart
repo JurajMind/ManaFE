@@ -16,6 +16,7 @@ class Calendar extends StatefulWidget {
   final bool showChevronsToChangeRange;
   final bool showTodayAction;
   final bool showCalendarPickerIcon;
+  final TextStyle dateStyles;
   final DateTime initialCalendarDateOverride;
 
   Calendar({
@@ -26,7 +27,7 @@ class Calendar extends StatefulWidget {
     this.showTodayAction: true,
     this.showChevronsToChangeRange: true,
     this.showCalendarPickerIcon: true,
-    this.initialCalendarDateOverride,
+    this.initialCalendarDateOverride, this.dateStyles,
   });
 
   @override
@@ -140,6 +141,7 @@ class _CalendarState extends State<Calendar> {
           new CalendarTile(
             isDayOfWeek: true,
             dayOfWeek: day,
+            dateStyles: widget.dateStyles,
           ),
         );
       },

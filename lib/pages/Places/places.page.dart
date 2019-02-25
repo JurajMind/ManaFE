@@ -1,4 +1,5 @@
 import 'package:app/app/app.dart';
+import 'package:app/components/Reservations/reservation_item.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/place_bloc.dart';
@@ -121,13 +122,21 @@ class _PlacePageState extends State<PlacePage> {
           ),
           SliverList(
             delegate: new SliverChildListDelegate(<Widget>[
-              FlatButton(
-                child: Text('All reservations'),
-                onPressed: () => Navigator.of(context).push(
-                        new MaterialPageRoute(builder: (BuildContext context) {
-                      return new ReservationsPage();
-                    })),
-              )
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Text('Upcoming reservation'),
+                  FlatButton(
+                    child: Text('All reservations >'),
+                    onPressed: () => Navigator.of(context).push(
+                            new MaterialPageRoute(builder: (BuildContext context) {
+                          return new ReservationsPage();
+                        })),
+                  ),
+                ],
+              ),
+
             ]),
           ),
           reservationBuilder(personBloc.myReservations),
@@ -163,9 +172,9 @@ class _PlacePageState extends State<PlacePage> {
           return SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                return _createReservationItem(index, snapshot.data[index]);
+                return ReservationItem(reservation:snapshot.data[index]);
               },
-              childCount: snapshot.data == null ? 0 : snapshot.data.length,
+              childCount: snapshot.data == null ? 0 : snapshot.data.length == 0 ? 0 : 1,
             ),
           );
         });
@@ -216,26 +225,4 @@ class _PlacePageState extends State<PlacePage> {
     );
   }
 
-  Widget _createReservationItem(int index, ReservationDto data) {
-    var dateFormater = new DateFormat('d.M.yyyy');
-    var timeFormater = new DateFormat('h:mm');
-    return ListTile(
-      onTap: () {},
-      title: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Expanded(child: Text(dateFormater.format(data.time))),
-          Expanded(child: Text(timeFormater.format(data.time))),
-          Expanded(child: Text(data.duration)),
-          Expanded(child: Text(data.persons.toString())),
-        ],
-      ),
-      subtitle: Column(
-        children: <Widget>[
-          Text(data.text ?? ""),
-        ],
-      ),
-    );
-  }
 }
