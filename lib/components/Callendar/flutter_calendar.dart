@@ -18,6 +18,7 @@ class Calendar extends StatefulWidget {
   final bool showCalendarPickerIcon;
   final TextStyle dateStyles;
   final DateTime initialCalendarDateOverride;
+  final Map<DateTime, List<String>> events;
 
   Calendar({
     this.onDateSelected,
@@ -27,7 +28,9 @@ class Calendar extends StatefulWidget {
     this.showTodayAction: true,
     this.showChevronsToChangeRange: true,
     this.showCalendarPickerIcon: true,
-    this.initialCalendarDateOverride, this.dateStyles,
+    this.initialCalendarDateOverride,
+    this.dateStyles,
+    this.events,
   });
 
   @override
@@ -46,6 +49,7 @@ class _CalendarState extends State<Calendar> {
 
   void initState() {
     super.initState();
+
     if (widget.initialCalendarDateOverride != null)
       _selectedDate = widget.initialCalendarDateOverride;
     selectedMonthsDays = Utils.daysInMonth(_selectedDate);
@@ -164,6 +168,7 @@ class _CalendarState extends State<Calendar> {
           dayWidgets.add(
             new CalendarTile(
               child: this.widget.dayBuilder(context, day),
+               eventCount: widget.events[day]?.length,
             ),
           );
         } else {
@@ -173,6 +178,7 @@ class _CalendarState extends State<Calendar> {
               date: day,
               dateStyles: configureDateStyle(monthStarted, monthEnded),
               isSelected: Utils.isSameDay(selectedDate, day),
+              eventCount: widget.events[new DateTime(day.year,day.month, day.day)]?.length,
             ),
           );
         }
@@ -254,6 +260,7 @@ class _CalendarState extends State<Calendar> {
       updateSelectedRange(firstDateOfNewMonth, lastDateOfNewMonth);
       selectedMonthsDays = Utils.daysInMonth(_selectedDate);
       displayMonth = Utils.formatMonth(_selectedDate);
+      widget.onDateSelected(_selectedDate);
     });
   }
 
@@ -265,6 +272,7 @@ class _CalendarState extends State<Calendar> {
       updateSelectedRange(firstDateOfNewMonth, lastDateOfNewMonth);
       selectedMonthsDays = Utils.daysInMonth(_selectedDate);
       displayMonth = Utils.formatMonth(_selectedDate);
+      widget.onDateSelected(_selectedDate);
     });
   }
 
@@ -279,6 +287,7 @@ class _CalendarState extends State<Calendar> {
               .toList()
               .sublist(0, 7);
       displayMonth = Utils.formatMonth(_selectedDate);
+      widget.onDateSelected(_selectedDate);
     });
   }
 
@@ -293,6 +302,7 @@ class _CalendarState extends State<Calendar> {
               .toList()
               .sublist(0, 7);
       displayMonth = Utils.formatMonth(_selectedDate);
+      widget.onDateSelected(_selectedDate);
     });
   }
 

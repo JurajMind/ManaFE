@@ -13,6 +13,7 @@ class ReservationBloc {
       new BehaviorSubject<List<ReservationDto>>();
 
   loadReservations(DateTime from, DateTime to) async {
+        this.reservations.add(null);
     var result = await App.http.getReservations(from, to);
     this.reservations.add(result);
   }

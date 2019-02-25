@@ -22,28 +22,10 @@ class _ReservationsPageState extends State<ReservationsPage> {
   void initState() {
     super.initState();
     var today = DateTime.now();
-    _fromDate = DateTime(today.year, today.month, 1);
-    _toDate = DateTime(today.year, today.month + 1, 0);
+
     final now = DateTime.now();
     _selectedDay = DateTime(now.year, now.month, now.day);
-    _events = {
-      DateTime(2019, 2, 22): ['Event A', 'Event B', 'Event C'],
-      DateTime(2019, 2, 23): ['Event A'],
-      DateTime(2019, 2, 24): ['Event B', 'Event C'],
-      DateTime(2019, 3, 1): [
-        'Event A',
-        'Event B',
-        'Event C',
-        'Event D',
-        'Event E',
-        'Event F',
-        'Event G'
-      ],
-      DateTime(2019, 1, 29):
-          Set.from(['Event A', 'Event A', 'Event B']).toList(),
-      DateTime(2019, 1, 30): ['Event A', 'Event A', 'Event B'],
-    };
-    _selectedEvents = _events[_selectedDay] ?? [];
+
   }
 
   @override
@@ -52,7 +34,13 @@ class _ReservationsPageState extends State<ReservationsPage> {
     if (reservationBloc == null) {
       reservationBloc = DataProvider.getData(context).reservationBloc;
     }
-    reservationBloc.loadReservations(_fromDate, _toDate);
+loadReservation(DateTime.now());
+  }
+
+  void loadReservation(DateTime date){
+        _fromDate = DateTime(date.year, date.month, 1);
+    _toDate = DateTime(date.year, date.month + 1, 0);
+        reservationBloc.loadReservations(_fromDate, _toDate);
   }
 
   @override
@@ -64,12 +52,14 @@ class _ReservationsPageState extends State<ReservationsPage> {
         children: <Widget>[
           AppBar(
             backgroundColor: Colors.black,
+             centerTitle: true,
+             title: Text('Reservations'),
           ),
           StreamBuilder<List<ReservationDto>>(
               stream: reservationBloc.reservations,
               builder: (context, snapshot) {
                     var childrens = new List<Widget>();
-                childrens.add(_buildTableCalendar());
+                childrens.add(_buildTableCalendar(snapshot.data));
                 childrens.add(
                   const SizedBox(height: 8.0),
                 );
@@ -86,20 +76,46 @@ class _ReservationsPageState extends State<ReservationsPage> {
   }
 
   // Configure the calendar here
-  Widget _buildTableCalendar() {
+  Widget _buildTableCalendar(List<ReservationDto> data) {
+
+    _events = new Map<DateTime,List<String>>();
+    if(data != null){
+      data.forEach((f){
+        var date = new DateTime(f.time.year,f.time.month,f.time.day);
+        var dateEvent = _events[date] as List<String>;
+        if(dateEvent == null){
+          dateEvent = new List<String>.from([f.id.toString()]);
+        } else{
+          dateEvent.add(f.id.toString());
+        }
+        _events[date] = dateEvent;
+      });
+    }
+
     return Calendar(
+        events: _events,
         isExpandable: true,
         showTodayAction: false,
         showCalendarPickerIcon: false,
+        onDateSelected:(date) =>changeDate(date),
         dateStyles: TextStyle(color: Colors.red));
   }
 
   List<Widget> _buildEventList(List<ReservationDto> data) {
     if(data == null){
-      return List<Widget>.generate(10, (int index){return ReservationItemShimer(); })
+      return List<Widget>.generate(10, (int index){return ReservationItemShimer(); });
     }
     return data
         .map((r) => ReservationItem(reservation:r))
         .toList();
+  }
+
+  void changeDate(DateTime newDate){
+    if(_selectedDay.month !=newDate.month){
+      loadReservation(newDate);
+      setState(() {
+       _selectedDay =newDate; 
+      });
+    }
   }
 }

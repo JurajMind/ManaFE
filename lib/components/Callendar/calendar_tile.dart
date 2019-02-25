@@ -10,6 +10,7 @@ class CalendarTile extends StatelessWidget {
   final TextStyle dayOfWeekStyles;
   final TextStyle dateStyles;
   final Widget child;
+  final int eventCount;
 
   CalendarTile({
     this.onDateSelected,
@@ -20,6 +21,7 @@ class CalendarTile extends StatelessWidget {
     this.dayOfWeekStyles,
     this.isDayOfWeek: false,
     this.isSelected: false,
+    this.eventCount,
   });
 
   Widget renderDateOrDayOfWeek(BuildContext context) {
@@ -36,24 +38,44 @@ class CalendarTile extends StatelessWidget {
     } else {
       return new InkWell(
         onTap: onDateSelected,
-        child: new Container(
-          decoration: isSelected
-              ? new BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Theme.of(context).primaryColor,
-                )
-              : new BoxDecoration(
-              
+        child: Stack(
+          children: <Widget>[
+            new Container(
+              decoration: isSelected
+                  ? new BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).primaryColor,
+                    )
+                  : new BoxDecoration(),
+              alignment: Alignment.center,
+              child: new Text(
+                Utils.formatDay(date).toString(),
+                style: isSelected
+                    ? new TextStyle(color: Colors.white)
+                    : Theme.of(context).textTheme.body1,
+                textAlign: TextAlign.center,
               ),
-          alignment: Alignment.center,
-          child: new Text(
-            Utils.formatDay(date).toString(),
-            style: isSelected ? new TextStyle(color: Colors.white) : Theme.of(context).textTheme.body1,
-            textAlign: TextAlign.center,
-          ),
+            ),
+            Positioned(
+                width: 20.0,
+                height: 20.0,
+                bottom: 5,
+                right: 0,
+                child: (buildEventCount(eventCount))),
+          ],
         ),
       );
     }
+  }
+
+  Widget buildEventCount(int eventCount) {
+    if (eventCount == null || eventCount == 0) 
+    return Container();
+
+    return Container(
+      decoration: BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+      child: Center(child: Text(eventCount.toString())),
+    );
   }
 
   @override
@@ -62,9 +84,7 @@ class CalendarTile extends StatelessWidget {
       return child;
     }
     return new Container(
-      decoration: new BoxDecoration(
-
-      ),
+      decoration: new BoxDecoration(),
       child: renderDateOrDayOfWeek(context),
     );
   }
