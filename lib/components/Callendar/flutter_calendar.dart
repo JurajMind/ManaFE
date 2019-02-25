@@ -178,7 +178,7 @@ class _CalendarState extends State<Calendar> {
               date: day,
               dateStyles: configureDateStyle(monthStarted, monthEnded),
               isSelected: Utils.isSameDay(selectedDate, day),
-              eventCount: widget.events[new DateTime(day.year,day.month, day.day)]?.length,
+              eventCount: widget.events == null? 0 : widget.events[new DateTime(day.year,day.month, day.day)]?.length,
             ),
           );
         }

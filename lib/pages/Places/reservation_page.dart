@@ -75,6 +75,7 @@ class _ReservationPageState extends State<ReservationPage> {
                               child: new Calendar(
                                 initialCalendarDateOverride: currentDate,
                                 isExpandable: true,
+                                showCalendarPickerIcon: false,
                                 onDateSelected: (date) {
                                   setState(() {
                                     currentDate = date;
@@ -165,7 +166,7 @@ class _ReservationPageState extends State<ReservationPage> {
                                       WheelPicker.string(
                                         initialValue: selectedDuration,
                                         minValue: 1,
-                                        maxValue: 4,
+                                        maxValue: durations.length,
                                         stringItems: durations,
                                         onChanged: (value) {
                                           print(value);
@@ -227,7 +228,7 @@ class _ReservationPageState extends State<ReservationPage> {
                                     ),
                                     LabeledValue(
                                       label: 'Duration:',
-                                      value: durations[selectedDuration],
+                                      value: durations[selectedDuration-1],
                                     ),
                                   ],
                                 )
