@@ -234,9 +234,9 @@ class _PlaceDetailState extends State<PlaceDetailPage>
                                       child: new CachedNetworkImage(
                                         imageUrl:
                                             mapUri.toString() + '&scale=2',
-                                        placeholder:
+                                        placeholder: (context, url) =>
                                             new CircularProgressIndicator(),
-                                        errorWidget: new Icon(Icons.error),
+                                        errorWidget:(context, url, error) => new Icon(Icons.error),
                                       ),
                                     ),
                                   ),

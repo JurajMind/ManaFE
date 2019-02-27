@@ -37,7 +37,7 @@ class SmokeSessionBloc {
 
   factory SmokeSessionBloc() => SmokeSessionBloc._instance;
 
-  BehaviorSubject<int> smokeState = new BehaviorSubject<int>(seedValue: 0);
+  BehaviorSubject<int> smokeState = new BehaviorSubject<int>.seeded(0);
   BehaviorSubject<SmokeStatisticDataModel> smokeStatistic =
       new BehaviorSubject<SmokeStatisticDataModel>();
 
@@ -46,18 +46,18 @@ class SmokeSessionBloc {
   }
 
   BehaviorSubject<List<String>> recentSessions =
-      new BehaviorSubject<List<String>>(seedValue: new List<String>());
+      new BehaviorSubject<List<String>>.seeded(new List<String>());
 
   BehaviorSubject<SmokeSessionMetaDataDto> smokeSessionMetaData =
-      new BehaviorSubject<SmokeSessionMetaDataDto>(
-          seedValue: new SmokeSessionMetaDataDto());
+      new BehaviorSubject<SmokeSessionMetaDataDto>
+      .seeded(new SmokeSessionMetaDataDto());
 
   BehaviorSubject<StandSettings> standSettings =
-      new BehaviorSubject<StandSettings>(seedValue: new StandSettings.empty());
+      new BehaviorSubject<StandSettings>.seeded(new StandSettings.empty());
 
   BehaviorSubject<List<StandAnimation>> animations =
-      new BehaviorSubject<List<StandAnimation>>(
-          seedValue: new List<StandAnimation>());
+      new BehaviorSubject<List<StandAnimation>>
+      .seeded(new List<StandAnimation>());
 
   BehaviorSubject<List<Color>> sessionColor =
       new BehaviorSubject<List<Color>>();
@@ -68,11 +68,10 @@ class SmokeSessionBloc {
   Observable<Tuple2<StandSettings, SmokeState>> futureSettingDebounce;
 
   BehaviorSubject<List<DevicePreset>> devicePresets =
-      new BehaviorSubject<List<DevicePreset>>(
-          seedValue: new List<DevicePreset>());
+      new BehaviorSubject<List<DevicePreset>>.seeded(new List<DevicePreset>());
 
   BehaviorSubject<DevicePreset> selectedPreset =
-      new BehaviorSubject<DevicePreset>(seedValue: DevicePreset.empty());
+      new BehaviorSubject<DevicePreset>.seeded(DevicePreset.empty());
 
   PublishSubject<DevicePreset> futureDevicePreset =
       new PublishSubject<DevicePreset>();

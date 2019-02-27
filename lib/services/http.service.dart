@@ -34,46 +34,6 @@ class ApiClient {
     return response.data;
   }
 
-  Future<dynamic> _getJsonOld(Uri uri) async {
-    var response =
-        (await _http.getUrl(uri).then((HttpClientRequest request) async {
-      var token = await _authorize.getToken();
-      request.headers.add('Authorization', 'Bearer $token');
-      return request.close();
-    }));
-
-    if (response.statusCode == 403) {
-      if (await _authorize.refreshToken()) {
-        return _getJson(uri);
-      }
-    }
-
-    var transformedResponse = await response.transform(utf8.decoder).join();
-    return json.decode(transformedResponse);
-  }
-
-  Future<dynamic> _postJsonOld(Uri uri, dynamic data) async {
-    var response =
-        (await _http.postUrl(uri).then((HttpClientRequest request) async {
-      var token = await _authorize.getToken();
-      request.headers.add('Authorization', 'Bearer $token');
-      request.headers
-          .add('content-length', utf8.encode(json.encode(data)).length);
-      List<int> bodyBytes = utf8.encode(data);
-      request.add(bodyBytes);
-      return request.close();
-    }));
-
-    if (response.statusCode == 403) {
-      if (await _authorize.refreshToken()) {
-        return _getJson(uri);
-      }
-    }
-
-    var transformedResponse = await response.transform(utf8.decoder).join();
-    return json.decode(transformedResponse);
-  }
-
   void init() {
     _dio.interceptors.add(InterceptorsWrapper(onError: (DioError error) async {
       if (error.response?.statusCode == 401 ||
@@ -82,21 +42,7 @@ class ApiClient {
         var tokenHeader = 'Bearer $token';
         RequestOptions options = error.response.request;
         // If the token has been updated, repeat directly.
-        if (tokenHeader != options.headers["Authorization"]) {
-          options.headers["Authorization"] = tokenHeader;
-          //repeat
-          return _dio.request(options.path, options: options);
-        }
-        _dio.lock();
-        _dio.interceptors.responseLock.lock();
-        _dio.interceptors.errorLock.lock();
-        await _authorize.refreshToken();
-        token = await _authorize.getToken();
-        options.headers["Authorization"] = 'Bearer $token';
-        _dio.unlock();
-        _dio.interceptors.responseLock.unlock();
-        _dio.interceptors.errorLock.unlock();
-        return _dio.request(options.path, options: options);
+        return await _handleAuthError(tokenHeader, options, token);
       } else {
         print(error.message);
         print(error.response);
@@ -114,6 +60,24 @@ class ApiClient {
       print(options.data);
       return options;
     }));
+  }
+
+  _handleAuthError(String tokenHeader, RequestOptions options, String token) async {
+    if (tokenHeader != options.headers["Authorization"]) {
+      options.headers["Authorization"] = tokenHeader;
+      //repeat
+      return _dio.request(options.path, options: options);
+    }
+    _dio.lock();
+    _dio.interceptors.responseLock.lock();
+    _dio.interceptors.errorLock.lock();
+    await _authorize.refreshToken();
+    token = await _authorize.getToken();
+    options.headers["Authorization"] = 'Bearer $token';
+    _dio.unlock();
+    _dio.interceptors.responseLock.unlock();
+    _dio.interceptors.errorLock.unlock();
+    return _dio.request(options.path, options: options);
   }
 
   Future<dynamic> _(Uri uri) async {
@@ -152,7 +116,7 @@ class ApiClient {
     var url =
         Uri.https(baseUrl, 'api/SmokeSession/Validate', {"id": sessionId});
 
-    return _getJsonOld(url).then((json) => SessionIdValidation.fromJson(json));
+    return _getJson(url).then((json) => SessionIdValidation.fromJson(json));
   }
 
   Future<Tuple2<SmokeSession, StandSettings>> getInitData(String sessionId) {

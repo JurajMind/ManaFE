@@ -5,24 +5,20 @@ import 'package:openapi/api.dart';
 class MenuBloc {
   var _loadedPlace = 0;
   BehaviorSubject<List<PipeAccesorySimpleDto>> hookahs =
-      new BehaviorSubject<List<PipeAccesorySimpleDto>>(
-          seedValue: new List<PipeAccesorySimpleDto>());
+      new BehaviorSubject<List<PipeAccesorySimpleDto>> 
+      .seeded(new List<PipeAccesorySimpleDto>());
 
   BehaviorSubject<List<PipeAccesorySimpleDto>> bowls =
-      new BehaviorSubject<List<PipeAccesorySimpleDto>>(
-          seedValue: new List<PipeAccesorySimpleDto>());
+      new BehaviorSubject<List<PipeAccesorySimpleDto>>.seeded(new List<PipeAccesorySimpleDto>());
 
   BehaviorSubject<List<PipeAccesorySimpleDto>> tobacco =
-      new BehaviorSubject<List<PipeAccesorySimpleDto>>(
-          seedValue: new List<PipeAccesorySimpleDto>());
+      new BehaviorSubject<List<PipeAccesorySimpleDto>>.seeded(new List<PipeAccesorySimpleDto>());
 
   BehaviorSubject<List<TobaccoMixSimpleDto>> tobaccoMix =
-      new BehaviorSubject<List<TobaccoMixSimpleDto>>(
-          seedValue: new List<TobaccoMixSimpleDto>());
+      new BehaviorSubject<List<TobaccoMixSimpleDto>>.seeded(new List<TobaccoMixSimpleDto>());
 
   BehaviorSubject<List<SmartHookahModelsOrderExtraDto>> extra =
-      new BehaviorSubject<List<SmartHookahModelsOrderExtraDto>>(
-          seedValue: new List<SmartHookahModelsOrderExtraDto>());
+      new BehaviorSubject<List<SmartHookahModelsOrderExtraDto>>.seeded(new List<SmartHookahModelsOrderExtraDto>());
 
   Future loadMenu(int placeId) async {
     if(placeId != _loadedPlace){

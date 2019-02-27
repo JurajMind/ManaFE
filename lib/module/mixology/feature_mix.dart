@@ -50,7 +50,7 @@ class FeatureMixCreator extends StatelessWidget {
                   height: 60,
                   child: CachedNetworkImage(
                     imageUrl: item.picture,
-                    errorWidget: Icon(Icons.error),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
                 ),
                 title: Text(item.name),

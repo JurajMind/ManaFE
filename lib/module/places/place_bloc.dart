@@ -9,11 +9,11 @@ class PlaceBloc {
   bool _initLoad = false;
   PlaceSimpleDto _place;
 
-  BehaviorSubject<PlaceSimpleDto> place = new BehaviorSubject(seedValue: null);
+  BehaviorSubject<PlaceSimpleDto> place = new BehaviorSubject();
 
-  BehaviorSubject<PlaceDto> placeInfo = new BehaviorSubject(seedValue: null);
+  BehaviorSubject<PlaceDto> placeInfo = new BehaviorSubject();
 
-  BehaviorSubject<List<ReservationsTimeSlot>> reservationInfo = new BehaviorSubject(seedValue: null);
+  BehaviorSubject<List<ReservationsTimeSlot>> reservationInfo = new BehaviorSubject();
 
   static final PlaceBloc _instance = new PlaceBloc._();
 

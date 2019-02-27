@@ -38,30 +38,30 @@ class PersonBloc {
   }
 
   BehaviorSubject<List<PipeAccesorySimpleDto>> myGear =
-      new BehaviorSubject<List<PipeAccesorySimpleDto>>(seedValue: null);
+      new BehaviorSubject<List<PipeAccesorySimpleDto>>();
 
   BehaviorSubject<List<ReservationDto>> myReservations =
-      new BehaviorSubject<List<ReservationDto>>(seedValue: null);
+      new BehaviorSubject<List<ReservationDto>>();
 
   BehaviorSubject<List<PipeAccesorySimpleDto>> hookahs =
-      new BehaviorSubject<List<PipeAccesorySimpleDto>>(
-          seedValue: new List<PipeAccesorySimpleDto>());
+      new BehaviorSubject<List<PipeAccesorySimpleDto>>
+      .seeded(new List<PipeAccesorySimpleDto>());
 
   BehaviorSubject<List<PipeAccesorySimpleDto>> bowls =
-      new BehaviorSubject<List<PipeAccesorySimpleDto>>(
-          seedValue: new List<PipeAccesorySimpleDto>());
+      new BehaviorSubject<List<PipeAccesorySimpleDto>>
+          .seeded(new List<PipeAccesorySimpleDto>());
 
   BehaviorSubject<List<DeviceSimpleDto>> devices =
-      new BehaviorSubject<List<DeviceSimpleDto>>(
-          seedValue: new List<DeviceSimpleDto>());
+      new BehaviorSubject<List<DeviceSimpleDto>>
+      .seeded(new List<DeviceSimpleDto>());
 
   BehaviorSubject<List<SmokeSessionSimpleDto>> smokeSessions =
-      new BehaviorSubject<List<SmokeSessionSimpleDto>>(
-          seedValue: new List<SmokeSessionSimpleDto>());
+      new BehaviorSubject<List<SmokeSessionSimpleDto>>
+      .seeded(new List<SmokeSessionSimpleDto>());
 
   BehaviorSubject<List<SmokeSessionSimpleDto>> smokeSessionsCodes =
-      new BehaviorSubject<List<SmokeSessionSimpleDto>>(
-          seedValue: new List<SmokeSessionSimpleDto>());
+      new BehaviorSubject<List<SmokeSessionSimpleDto>>
+      .seeded(new List<SmokeSessionSimpleDto>());
 
   loadMyGear(bool reload) async {
     if (_loadedGear && !reload) return;

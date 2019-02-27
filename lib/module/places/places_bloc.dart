@@ -11,16 +11,19 @@ class PlacesBloc {
   Location _location = new Location();
 
   BehaviorSubject<List<PlaceSimpleDto>> places =
-      new BehaviorSubject<List<PlaceSimpleDto>>(
-          seedValue: new List<PlaceSimpleDto>());
+      new BehaviorSubject<List<PlaceSimpleDto>>
+      .seeded(new List<PlaceSimpleDto>());
 
-  BehaviorSubject<bool> loading = new BehaviorSubject(seedValue: false);
+  BehaviorSubject<bool> loading = new BehaviorSubject<bool>
+  .seeded(false);
 
   BehaviorSubject<bool> localizationnPermision =
-      new BehaviorSubject(seedValue: false);
+      new BehaviorSubject<bool>
+      .seeded(false);
 
   BehaviorSubject<map.Location> location =
-      new BehaviorSubject(seedValue: new map.Location(0.0, 0.0));
+      new BehaviorSubject<map.Location>
+      .seeded(new map.Location(0.0, 0.0));
 
   static final PlacesBloc _instance = new PlacesBloc._();
 

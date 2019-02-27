@@ -24,8 +24,8 @@ class PipeAccesorySearch extends StatefulWidget {
 
 class PipeAccesorySearchState extends State<PipeAccesorySearch> {
   BehaviorSubject<List<PipeAccesorySimpleDto>> searchResult =
-      new BehaviorSubject<List<PipeAccesorySimpleDto>>(
-          seedValue: new List<PipeAccesorySimpleDto>());
+      new BehaviorSubject<List<PipeAccesorySimpleDto>>
+      .seeded(new List<PipeAccesorySimpleDto>());
 
   bool loading = false;
 

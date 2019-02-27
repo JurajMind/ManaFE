@@ -9,22 +9,22 @@ class GearBloc {
   factory GearBloc() => GearBloc._instance;
 
   BehaviorSubject<List<BrandGroup>> tobacco =
-      new BehaviorSubject<List<BrandGroup>>(seedValue: null);
+      new BehaviorSubject<List<BrandGroup>>();
 
   BehaviorSubject<List<BrandGroup>> hookah =
-      new BehaviorSubject<List<BrandGroup>>(seedValue: null);
+      new BehaviorSubject<List<BrandGroup>>();
 
   BehaviorSubject<List<BrandGroup>> bowls =
-      new BehaviorSubject<List<BrandGroup>>(seedValue: null);
+      new BehaviorSubject<List<BrandGroup>>();
 
   BehaviorSubject<List<BrandGroup>> hms =
-      new BehaviorSubject<List<BrandGroup>>(seedValue: null);
+      new BehaviorSubject<List<BrandGroup>>();
 
   BehaviorSubject<List<BrandGroup>> coals =
-      new BehaviorSubject<List<BrandGroup>>(seedValue: null);
+      new BehaviorSubject<List<BrandGroup>>();
 
   BehaviorSubject<List<PipeAccesorySimpleDto>> brandAccesory =
-      new BehaviorSubject<List<PipeAccesorySimpleDto>>(seedValue: null);
+      new BehaviorSubject<List<PipeAccesorySimpleDto>>();
 
   GearBloc._() {
     this.loadGearBrans();

@@ -24,8 +24,8 @@ class Extensions {
           fadeOutDuration: Duration(milliseconds: 0),
           fadeInCurve: Curves.linear,
           imageUrl: 'https://${App.baseUri}${accesory.picture}',
-          errorWidget: defaultAccesoryPicture(accesory),
-          placeholder: defaultAccesoryPicture(accesory));
+          errorWidget: (context, url, error) => defaultAccesoryPicture(accesory),
+          placeholder: (context, url) => defaultAccesoryPicture(accesory));
     }
     return defaultAccesoryPicture(accesory);
   }
