@@ -1,3 +1,4 @@
+import 'package:app/pages/Places/Reservations/reservation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:openapi/api.dart';
@@ -17,7 +18,12 @@ class ReservationItem extends StatelessWidget {
             border: Border.all(color: Colors.white),
             borderRadius: BorderRadius.circular(16.0)),
         child: ListTile(
-          onTap: () {},
+          onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return new ReservationPage();
+                },
+              )),
+          leading: new ReservationStatusIcon(reservation: reservation),
           title: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -39,6 +45,38 @@ class ReservationItem extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class ReservationStatusIcon extends StatelessWidget {
+  final ReservationDto reservation;
+
+  const ReservationStatusIcon({
+    Key key,
+    this.reservation,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    switch (reservation.status) {
+      // Created
+      case 0:
+        return Icon(Icons.check_circle_outline, color: Colors.blue);
+      // Canceled
+      case 1:
+        return Icon(Icons.cancel, color: Colors.red);
+      // Denied
+      case 2:
+        return Icon(Icons.cancel, color: Colors.red);
+      // Confirmed
+      case 3:
+        return Icon(Icons.check_circle_outline, color: Colors.green);
+      // ConfirmationRequired
+      case 6:
+        return Icon(Icons.question_answer, color: Colors.orange);
+      default:
+        return Icon(Icons.check_circle_outline, color: Colors.red);
+    }
   }
 }
 

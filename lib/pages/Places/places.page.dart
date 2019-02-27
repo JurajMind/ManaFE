@@ -120,25 +120,41 @@ class _PlacePageState extends State<PlacePage> {
               ),
             ),
           ),
-          SliverList(
-            delegate: new SliverChildListDelegate(<Widget>[
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Text('Upcoming reservation'),
-                  FlatButton(
-                    child: Text('All reservations >'),
-                    onPressed: () => Navigator.of(context).push(
-                            new MaterialPageRoute(builder: (BuildContext context) {
-                          return new ReservationsPage();
-                        })),
-                  ),
-                ],
-              ),
-
-            ]),
-          ),
+          StreamBuilder<List<ReservationDto>>(
+              stream: personBloc.myReservations,
+              builder: (context, snapshot) {
+                return false
+                    ? Container()
+                    : SliverList(
+                        delegate: new SliverChildListDelegate(<Widget>[
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Text(
+                                'Upcoming reservation',
+                                style: Theme.of(context).textTheme.display2,
+                              ),
+                              OutlineButton(
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(30.0)),
+                                borderSide: BorderSide(color: Colors.white),
+                                child: Text(
+                                  'All reservations',
+                                  style: Theme.of(context).textTheme.display3,
+                                ),
+                                onPressed: () => Navigator.of(context).push(
+                                        new MaterialPageRoute(
+                                            builder: (BuildContext context) {
+                                      return new ReservationsPage();
+                                    })),
+                              ),
+                            ],
+                          ),
+                        ]),
+                      );
+              }),
           reservationBuilder(personBloc.myReservations),
           placeBuilder(placesBloc.places)
         ],
@@ -172,9 +188,10 @@ class _PlacePageState extends State<PlacePage> {
           return SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                return ReservationItem(reservation:snapshot.data[index]);
+                return ReservationItem(reservation: snapshot.data[index]);
               },
-              childCount: snapshot.data == null ? 0 : snapshot.data.length == 0 ? 0 : 1,
+              childCount:
+                  snapshot.data == null ? 0 : snapshot.data.length == 0 ? 0 : 1,
             ),
           );
         });
@@ -224,5 +241,4 @@ class _PlacePageState extends State<PlacePage> {
       subtitle: Text(Extensions.adress(data.address)),
     );
   }
-
 }

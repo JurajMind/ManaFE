@@ -72,6 +72,11 @@ class Authorize {
     _token = null;
   }
 
+// TODO
+  messToken() {
+    _token = "token";
+  }
+
   Future<bool> refreshToken() async {
     var refreshToken = await _storage.read(key: 'refreshToken');
     await _storage.delete(key: 'accessToken');

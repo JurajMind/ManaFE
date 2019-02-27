@@ -18,7 +18,7 @@ class AppWidget extends StatefulWidget {
     return new _AppWidgetState();
   }
 
-  static restartApp(BuildContext context) {
+  static restartApp(BuildContext context) async {
     final _AppWidgetState state =
         context.ancestorStateOfType(const TypeMatcher<_AppWidgetState>());
     state.restartApp();
@@ -48,8 +48,10 @@ class _AppWidgetState extends State<AppWidget> {
         }));
   }
 
-  void restartApp() {
+  Future restartApp() async {
+    var auth = await isUserAuthorized();
     this.setState(() {
+      _isAuthorized = auth;
       key = new UniqueKey();
     });
   }
@@ -62,8 +64,14 @@ class _AppWidgetState extends State<AppWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return new DataProvider(
-        child: MaterialApp(
+    return _isAuthorized
+        ? new DataProvider(key: key, child: buildMaterialApp())
+        : buildMaterialApp();
+  }
+
+  MaterialApp buildMaterialApp() {
+    return MaterialApp(
+      key: key,
       localizationsDelegates: [
         _newLocaleDelegate,
         //provides localised strings
@@ -77,7 +85,7 @@ class _AppWidgetState extends State<AppWidget> {
       home: getMainPage(),
       onGenerateRoute: App.router.generator,
       theme: buildDarkTheme(),
-    ));
+    );
   }
 
   Widget getMainPage() {

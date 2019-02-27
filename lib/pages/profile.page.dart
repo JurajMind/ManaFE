@@ -1,4 +1,5 @@
 import 'package:app/pages/Settings/language_selector_page.dart';
+import 'package:app/pages/Statistic/test_page.dart';
 
 import 'package:app/services/authorization.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => StatisticPage()));
                       break;
+                    case 'testPage':
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => TestPage()));
+                      break;
                   }
                 },
                 itemBuilder: (BuildContext context) => [
@@ -55,6 +60,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       PopupMenuItem(
                         value: "test",
                         child: Text('Test statistic'),
+                      ),
+                      PopupMenuItem(
+                        value: "testPage",
+                        child: Text('Test page'),
                       )
                     ],
               )

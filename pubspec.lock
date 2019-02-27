@@ -7,7 +7,7 @@ packages:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.34.3"
+    version: "0.35.2"
   animated_background:
     dependency: "direct main"
     description:
@@ -49,7 +49,7 @@ packages:
       name: cached_network_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.1"
+    version: "0.6.2"
   charcode:
     dependency: transitive
     description:
@@ -154,7 +154,7 @@ packages:
       name: flutter_cache_manager
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.3.1"
   flutter_facebook_login:
     dependency: "direct main"
     description:
@@ -192,7 +192,7 @@ packages:
       name: front_end
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.9+1"
+    version: "0.1.12"
   glob:
     dependency: transitive
     description:
@@ -241,7 +241,7 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.6"
+    version: "2.0.7"
   intl:
     dependency: "direct main"
     description:
@@ -276,7 +276,7 @@ packages:
       name: kernel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.9+1"
+    version: "0.3.12"
   lazy_load_scrollview:
     dependency: "direct main"
     description:
@@ -360,7 +360,7 @@ packages:
       name: package_resolver
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.6"
+    version: "1.0.10"
   path:
     dependency: transitive
     description:
@@ -451,7 +451,7 @@ packages:
       name: sembast
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.13.2"
+    version: "1.14.0"
   shelf:
     dependency: transitive
     description:

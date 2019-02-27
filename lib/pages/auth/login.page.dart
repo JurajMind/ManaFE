@@ -1,3 +1,4 @@
+import 'package:app/app/app.widget.dart';
 import 'package:app/helpers.dart';
 import 'package:app/support/validators/email.validator.dart';
 import 'package:app/support/validators/max.validator.dart';
@@ -39,11 +40,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         this._loading = true;
       });
       if (await _auth.authorize(data.email, data.password)) {
-        Navigator.popUntil(context, (_) => !Navigator.canPop(context));
-        Navigator.pushReplacement(
-            context,
-            new MaterialPageRoute(
-                builder: (BuildContext context) => HomePage()));
+        AppWidget.restartApp(context);
       } else {
         final snackBar = SnackBar(content: Text('Wrong email or password'));
 
@@ -143,7 +140,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                       width: screenSize.width,
                       child: new FlatButton(
                         child: new Text(
-                          'Create an account',
+                          'Forgot password',
                         ),
                         onPressed: () {
                           navigate(context, 'auth/register');

@@ -62,7 +62,8 @@ class ApiClient {
     }));
   }
 
-  _handleAuthError(String tokenHeader, RequestOptions options, String token) async {
+  _handleAuthError(
+      String tokenHeader, RequestOptions options, String token) async {
     if (tokenHeader != options.headers["Authorization"]) {
       options.headers["Authorization"] = tokenHeader;
       //repeat
@@ -71,7 +72,11 @@ class ApiClient {
     _dio.lock();
     _dio.interceptors.responseLock.lock();
     _dio.interceptors.errorLock.lock();
-    await _authorize.refreshToken();
+    if (!await _authorize.refreshToken()) {
+      _dio.unlock();
+      _dio.interceptors.responseLock.unlock();
+      _dio.interceptors.errorLock.unlock();
+    }
     token = await _authorize.getToken();
     options.headers["Authorization"] = 'Bearer $token';
     _dio.unlock();
