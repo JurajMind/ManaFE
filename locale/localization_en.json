@@ -5,5 +5,13 @@
     "tab_profile": "Profile",
 
     "tab_bag": "Bolso",
-    "title_select_language": "Select language"
+    "title_select_language": "Select language",
+
+    "day_short_1": "Mon",
+    "day_short_2": "Tue",
+    "day_short_3": "Wed",
+    "day_short_4": "Thu",
+    "day_short_5": "Fri",
+    "day_short_6": "Sat",
+    "day_short_7": "Sun"
 }

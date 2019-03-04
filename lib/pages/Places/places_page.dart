@@ -1,4 +1,5 @@
 import 'package:app/app/app.dart';
+import 'package:app/components/Places/open_indicator.dart';
 import 'package:app/components/Reservations/reservation_item.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
@@ -237,7 +238,17 @@ class _PlacePageState extends State<PlacePage> {
               fit: BoxFit.cover,
             ),
           )),
-      title: Text(data.name),
+      title: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(data.name),
+          OpenIndicator(
+            place: data,
+            size: Size.fromRadius(10),
+          ),
+        ],
+      ),
       subtitle: Text(Extensions.adress(data.address)),
     );
   }

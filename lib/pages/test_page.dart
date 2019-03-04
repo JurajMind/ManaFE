@@ -4,7 +4,8 @@ import 'package:app/app/app.dart';
 import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/pages/Places/reservation_page.dart';
+import 'package:app/pages/Places/Reservations/reservation_detail_page.dart';
+
 import 'package:app/pages/SmokeSession/animation_select_page.dart';
 import 'package:app/pages/SmokeSession/gradiend_color_wheel.dart';
 import 'package:app/pages/SmokeSession/picker_slider.dart';
@@ -68,7 +69,8 @@ class _TestPageState extends State<TestPage> {
                 SizedBox(
                   height: 40.0,
                   child: GestureDetector(
-                    onPanUpdate: (value) =>  controller.jumpTo(controller.offset -  value.delta.dy),
+                    onPanUpdate: (value) =>
+                        controller.jumpTo(controller.offset - value.delta.dy),
                     child: Container(
                       color: Colors.yellow,
                     ),
@@ -79,10 +81,11 @@ class _TestPageState extends State<TestPage> {
                     child: GradientColorWheel(
                       defaultColors: [Colors.red, Colors.blue],
                     )),
-                                    SizedBox(
+                SizedBox(
                   height: 40.0,
                   child: GestureDetector(
-                    onPanUpdate: (value) =>  controller.jumpTo(controller.offset -  value.delta.dy),
+                    onPanUpdate: (value) =>
+                        controller.jumpTo(controller.offset - value.delta.dy),
                     child: Container(
                       color: Colors.yellow,
                     ),
@@ -120,8 +123,7 @@ class _TestPageState extends State<TestPage> {
                                     builder: (BuildContext context) =>
                                         new SizedBox(
                                             width: 20.0,
-                                            height: MediaQuery
-                                                    .of(context)
+                                            height: MediaQuery.of(context)
                                                     .size
                                                     .height -
                                                 80,
@@ -163,8 +165,7 @@ class _TestPageState extends State<TestPage> {
                                     builder: (BuildContext context) =>
                                         new SizedBox(
                                             width: 20.0,
-                                            height: MediaQuery
-                                                    .of(context)
+                                            height: MediaQuery.of(context)
                                                     .size
                                                     .height -
                                                 80,

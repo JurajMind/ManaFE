@@ -1,9 +1,10 @@
 import 'dart:async';
 
+import 'package:app/Helpers/date_utils.dart';
+import 'package:app/Helpers/day_helper.dart';
 import 'package:app/components/Callendar/calendar_tile.dart';
 import 'package:flutter/material.dart';
 
-import 'package:date_utils/date_utils.dart';
 import 'package:tuple/tuple.dart';
 
 typedef DayBuilder(BuildContext context, DateTime day);
@@ -139,7 +140,10 @@ class _CalendarState extends State<Calendar> {
     List<DateTime> calendarDays =
         isExpanded ? selectedMonthsDays : selectedWeeksDays;
 
-    Utils.weekdays.forEach(
+    var weekdays = List<int>.generate(7, (i) => i + 1)
+        .map((f) => getShortDayName(f, context));
+
+    weekdays.forEach(
       (day) {
         dayWidgets.add(
           new CalendarTile(
@@ -168,7 +172,7 @@ class _CalendarState extends State<Calendar> {
           dayWidgets.add(
             new CalendarTile(
               child: this.widget.dayBuilder(context, day),
-               eventCount: widget.events[day]?.length,
+              eventCount: widget.events[day]?.length,
             ),
           );
         } else {
@@ -178,7 +182,10 @@ class _CalendarState extends State<Calendar> {
               date: day,
               dateStyles: configureDateStyle(monthStarted, monthEnded),
               isSelected: Utils.isSameDay(selectedDate, day),
-              eventCount: widget.events == null? 0 : widget.events[new DateTime(day.year,day.month, day.day)]?.length,
+              eventCount: widget.events == null
+                  ? 0
+                  : widget.events[new DateTime(day.year, day.month, day.day)]
+                      ?.length,
             ),
           );
         }

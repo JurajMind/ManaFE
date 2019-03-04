@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:app/helpers.dart';
+import 'package:app/Helpers/helpers.dart';
 import 'package:app/pages/SmokeSession/flip.dart';
 
 import 'package:flutter/material.dart';

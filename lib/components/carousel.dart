@@ -1,3 +1,4 @@
+import 'package:app/components/Places/open_indicator.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/places_bloc.dart';
@@ -152,11 +153,20 @@ class _CarrousselState extends State<Carroussel> {
                       Extensions.adress(place.address),
                       style: new TextStyle(color: Colors.grey),
                     ),
-                    new Flex(
-                      direction: Axis.horizontal,
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
-                        new Icon(ManaIcons.hookah),
-                        new Text(place.rating.toString())
+                        new Flex(
+                          direction: Axis.horizontal,
+                          children: <Widget>[
+                            new Icon(ManaIcons.hookah),
+                            new Text(place.rating.toString()),
+                          ],
+                        ),
+                        new OpenIndicator(
+                          place: place,
+                        )
                       ],
                     )
                   ],

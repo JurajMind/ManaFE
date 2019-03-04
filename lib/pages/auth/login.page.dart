@@ -1,5 +1,5 @@
 import 'package:app/app/app.widget.dart';
-import 'package:app/helpers.dart';
+import 'package:app/Helpers/helpers.dart';
 import 'package:app/support/validators/email.validator.dart';
 import 'package:app/support/validators/max.validator.dart';
 import 'package:app/support/validators/min.validator.dart';

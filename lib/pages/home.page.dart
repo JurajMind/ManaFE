@@ -6,7 +6,7 @@ import 'package:app/module/mixology/mixology_list.dart';
 import 'package:app/module/person/person_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Gear/gear_page.dart';
-import 'package:app/pages/Places/places.page.dart';
+import 'package:app/pages/Places/places_page.dart';
 import 'package:app/pages/SmokeSession/gradiend_color_wheel_rotate.dart';
 import 'package:app/pages/profile.page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';

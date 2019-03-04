@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:app/components/Common/circle_painter.dart';
 import 'package:app/components/carousel.dart';
-import 'package:app/helpers.dart';
+import 'package:app/Helpers/helpers.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Places/place_detail_page.dart';

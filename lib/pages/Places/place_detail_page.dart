@@ -1,17 +1,20 @@
 import 'dart:async';
 
 import 'package:app/app/app.dart';
+import 'package:app/components/Common/leading_icon.dart';
+import 'package:app/components/Places/open_dropdown.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/place_bloc.dart';
+import 'package:app/pages/Places/Reservations/reservation_page.dart';
 import 'package:app/pages/Places/menu.page.dart';
-import 'package:app/pages/Places/reservation_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:map_view/map_view.dart';
 import 'package:openapi/api.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class PlaceDetailPage extends StatefulWidget {
   final PlaceSimpleDto place;
@@ -333,18 +336,15 @@ class _PlaceDetailState extends State<PlaceDetailPage>
             height: 50.0,
           )
         : Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              new IconLabel(
-                icon: Icons.watch,
-                child: Text(
-                  buttomZoomOut.value.toString(),
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
+              new LeadingIcon(
+                  icon: Icons.watch, child: OpenDropdown(place: place)),
               widget.place.phoneNumber != null
                   ? InkWell(
                       onTap: () => launch('tel://${widget.place.phoneNumber}'),
-                      child: new IconLabel(
+                      child: new LeadingIcon(
                         icon: Icons.phone,
                         child: Text(
                           widget.place.phoneNumber,
@@ -354,28 +354,16 @@ class _PlaceDetailState extends State<PlaceDetailPage>
                     )
                   : Container(),
               place.facebook != null
-                  ? new IconLabel(
-                      icon: Icons.face,
-                      child: Text(
-                        place.facebook,
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    )
+                  ? InkWell(
+                      onTap: () => launch(place.facebook),
+                      child: new LeadingIcon(
+                        icon: MdiIcons.facebook,
+                        child: Text(
+                          place.friendlyUrl,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ))
                   : Container(),
-              new IconLabel(
-                icon: Icons.hot_tub,
-                child: Text(
-                  'Cats not allowed',
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-              new IconLabel(
-                icon: Icons.credit_card,
-                child: Text(
-                  'Accepts cards',
-                  style: TextStyle(color: Colors.black),
-                ),
-              )
             ],
           );
   }
@@ -383,7 +371,9 @@ class _PlaceDetailState extends State<PlaceDetailPage>
   void _openAddEntryDialog() {
     Navigator.of(context).push(new MaterialPageRoute<Null>(
         builder: (BuildContext context) {
-          return new ReservationPage();
+          return new ReservationPage(
+            place: place,
+          );
         },
         fullscreenDialog: true));
   }
@@ -400,24 +390,5 @@ class _PlaceDetailState extends State<PlaceDetailPage>
     } else {
       throw 'Could not launch $url';
     }
-  }
-}
-
-class IconLabel extends StatelessWidget {
-  final Widget child;
-  final IconData icon;
-  const IconLabel({Key key, this.child, this.icon}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return new Row(
-      children: <Widget>[
-        Icon(
-          icon,
-          color: Colors.black,
-        ),
-        child
-      ],
-    );
   }
 }

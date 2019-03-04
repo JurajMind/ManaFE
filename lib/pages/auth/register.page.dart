@@ -2,7 +2,7 @@ import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Common/bg_painter.dart';
 import 'package:app/components/Common/shadow_text.dart';
-import 'package:app/helpers.dart';
+import 'package:app/Helpers/helpers.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/support/validators/email.validator.dart';

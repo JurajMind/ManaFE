@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:animated_background/animated_background.dart';
-import 'package:app/helpers.dart';
+import 'package:app/Helpers/helpers.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:flutter/material.dart';

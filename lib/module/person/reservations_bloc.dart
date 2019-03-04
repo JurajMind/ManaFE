@@ -13,8 +13,20 @@ class ReservationBloc {
       new BehaviorSubject<List<ReservationDto>>();
 
   loadReservations(DateTime from, DateTime to) async {
-        this.reservations.add(null);
+    this.reservations.add(null);
     var result = await App.http.getReservations(from, to);
     this.reservations.add(result);
+  }
+
+  Future<ReservationDto> createReservation(
+      ReservationDto newReservation) async {
+    var createdReservation = await App.http.createReservation(newReservation);
+    if (createdReservation != null) {
+      var oldReservations = this.reservations.value;
+      oldReservations.add(createdReservation);
+      this.reservations.add(oldReservations);
+    }
+
+    return createdReservation;
   }
 }
