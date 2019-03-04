@@ -398,6 +398,11 @@ class ApiClient {
         .postUri(url)
         .then((data) => PipeAccesorySimpleDto.fromJson(data.data));
   }
+
+  Future<PersonInfoDto> getPersonInfo() async {
+      var url = Uri.https(baseUrl, '/api/Person/Info');
+      return  await _dio.getUri(url).then((data) => PersonInfoDto.fromJson(data.data));
+  }
 }
 
 class ColorDto {
