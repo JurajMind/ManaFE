@@ -23,7 +23,7 @@ class ReservationPage extends StatefulWidget {
 }
 
 class _ReservationPageState extends State<ReservationPage> {
-  final _textController = TextEditingController();
+    final _textController = TextEditingController();
 
   DateTime currentDate;
   int selectedPersons = 2;
@@ -48,7 +48,8 @@ class _ReservationPageState extends State<ReservationPage> {
   Widget build(BuildContext context) {
     var placeBloc = DataProvider.getData(context).placeSingleBloc;
     var reservationBloc = DataProvider.getData(context).reservationBloc;
-
+    var personBloc = DataProvider.getData(context).personBloc;
+     nameTextController.text = personBloc?.info?.value?.displayName ?? "";
     return SafeArea(
       child: Theme(
         isMaterialAppTheme: true,

@@ -36,6 +36,9 @@ class PersonBloc {
       }
     });
   }
+  
+    BehaviorSubject<PersonInfoDto> info =
+      new BehaviorSubject<PersonInfoDto>();
 
   BehaviorSubject<List<PipeAccesorySimpleDto>> myGear =
       new BehaviorSubject<List<PipeAccesorySimpleDto>>();
@@ -90,10 +93,12 @@ class PersonBloc {
     if (_loadedInit && !reload) return;
     _loadedInit = true;
     var init = await App.http.getPersonInitData();
+    var infoTask = App.http.getPersonInfo();
     devices.add(init.devices);
     smokeSessions.add(init.activeSmokeSessions);
     smokeSessionsCodes.add(init.activeSmokeSessions);
     myReservations.add(init.activeReservations);
+    this.info.add(await infoTask);
     _loadedInit = true;
     try {
       var signal = new SignalR();
