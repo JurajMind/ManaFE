@@ -10,7 +10,7 @@ class PlaceSimpleDto {
   
   String logoPath = null;
   
-  SmartHookahModelsAddress address = null;
+  SmartHookahModelsDbAddress address = null;
   
   List<OpeningDay> businessHours = [];
   
@@ -34,7 +34,7 @@ class PlaceSimpleDto {
     name = json['Name'];
     friendlyUrl = json['FriendlyUrl'];
     logoPath = json['LogoPath'];
-    address = new SmartHookahModelsAddress.fromJson(json['Address']);
+    address = new SmartHookahModelsDbAddress.fromJson(json['Address']);
     businessHours = OpeningDay.listFromJson(json['BusinessHours']);
     rating = json['Rating'];
     medias = MediaDto.listFromJson(json['Medias']);

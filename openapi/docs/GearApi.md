@@ -94,7 +94,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **gearSearch**
-> List<GearServiceSearchPipeAccesory> gearSearch(search, type, page, pageSize)
+> List<GearServiceSearchPipeAccesory> gearSearch(search, type, page, pageSize, searchType)
 
 
 
@@ -107,9 +107,10 @@ var search = search_example; // String |
 var type = type_example; // String | 
 var page = 56; // int | 
 var pageSize = 56; // int | 
+var searchType = searchType_example; // String | 
 
 try { 
-    var result = api_instance.gearSearch(search, type, page, pageSize);
+    var result = api_instance.gearSearch(search, type, page, pageSize, searchType);
     print(result);
 } catch (e) {
     print("Exception when calling GearApi->gearSearch: $e\n");
@@ -124,6 +125,7 @@ Name | Type | Description  | Notes
  **type** | **String**|  | [default to null]
  **page** | **int**|  | [optional] [default to null]
  **pageSize** | **int**|  | [optional] [default to null]
+ **searchType** | **String**|  | [optional] [default to null]
 
 ### Return type
 

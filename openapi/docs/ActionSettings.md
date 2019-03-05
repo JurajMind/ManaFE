@@ -8,7 +8,7 @@ import 'package:openapi/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**color** | [**SmartHookahModelsColor**](SmartHookahModelsColor.md) |  | [optional] [default to null]
+**color** | [**SmartHookahModelsDbColor**](SmartHookahModelsDbColor.md) |  | [optional] [default to null]
 **animationId** | **int** |  | [optional] [default to null]
 **brightness** | **int** |  | [optional] [default to null]
 **speed** | **int** |  | [optional] [default to null]

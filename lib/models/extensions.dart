@@ -13,7 +13,7 @@ class Extensions {
     return 'https://${App.baseUri}${image}original.jpg';
   }
 
-  static String adress(SmartHookahModelsAddress adress) {
+  static String adress(SmartHookahModelsDbAddress adress) {
     return '${adress.street} ${adress.number} ${adress.city}';
   }
 

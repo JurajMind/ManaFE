@@ -1,4 +1,4 @@
-# openapi.model.SmartHookahModelsAddress
+# openapi.model.SmartHookahModelsDbAddress
 
 ## Load the model package
 ```dart

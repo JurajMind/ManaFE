@@ -392,6 +392,12 @@ class ApiClient {
     return ReservationDto.fromJson(data.data);
   }
 
+  Future<ReservationDetailDto> detailReservation(int id) async {
+    var url = Uri.https(baseUrl, '/api/Reservations/$id/Detail');
+    var data = await _dio.get(url.toString());
+    return ReservationDetailDto.fromJson(data.data);
+  }
+
   Future<PipeAccesorySimpleDto> addMyGear(int id, int count) async {
     var url = Uri.https(baseUrl, '/api/Person/MyGear/$id/Add/$count');
     return await _dio

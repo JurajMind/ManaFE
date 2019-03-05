@@ -2,7 +2,7 @@ part of openapi.api;
 
 class ActionSettings {
   
-  SmartHookahModelsColor color = null;
+  SmartHookahModelsDbColor color = null;
   
   int animationId = null;
   
@@ -18,7 +18,7 @@ class ActionSettings {
 
   ActionSettings.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    color = new SmartHookahModelsColor.fromJson(json['Color']);
+    color = new SmartHookahModelsDbColor.fromJson(json['Color']);
     animationId = json['AnimationId'];
     brightness = json['Brightness'];
     speed = json['Speed'];

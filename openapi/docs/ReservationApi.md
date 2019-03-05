@@ -12,11 +12,14 @@ Method | HTTP request | Description
 [**reservationCreate**](ReservationApi.md#reservationCreate) | **POST** /api/Reservations/Create | 
 [**reservationGetManagereservationsInfo**](ReservationApi.md#reservationGetManagereservationsInfo) | **GET** /api/Reservations/{id}/Manage | 
 [**reservationGetPersonReservations**](ReservationApi.md#reservationGetPersonReservations) | **GET** /api/Reservations/Person | 
+[**reservationGetReservationDetail**](ReservationApi.md#reservationGetReservationDetail) | **GET** /api/Reservations/{id}/Detail | 
 [**reservationGetReservationUsage**](ReservationApi.md#reservationGetReservationUsage) | **GET** /api/Reservations/{id}/Usage | 
+[**reservationGetReservations**](ReservationApi.md#reservationGetReservations) | **GET** /api/Reservations/Reservations | 
+[**reservationUpdateReservationState**](ReservationApi.md#reservationUpdateReservationState) | **POST** /api/Reservations/{id}/UpdateState/{state} | 
 
 
 # **reservationCreate**
-> bool reservationCreate(reservationDto)
+> ReservationDto reservationCreate(reservationDto)
 
 
 
@@ -43,7 +46,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**bool**
+[**ReservationDto**](ReservationDto.md)
 
 ### Authorization
 
@@ -136,6 +139,47 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **reservationGetReservationDetail**
+> ReservationDetailDto reservationGetReservationDetail(id)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new ReservationApi();
+var id = 56; // int | 
+
+try { 
+    var result = api_instance.reservationGetReservationDetail(id);
+    print(result);
+} catch (e) {
+    print("Exception when calling ReservationApi->reservationGetReservationDetail: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**|  | [default to null]
+
+### Return type
+
+[**ReservationDetailDto**](ReservationDetailDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **reservationGetReservationUsage**
 > SmartHookahServicesPlaceReservationUsageDto reservationGetReservationUsage(id, date)
 
@@ -167,6 +211,92 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**SmartHookahServicesPlaceReservationUsageDto**](SmartHookahServicesPlaceReservationUsageDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **reservationGetReservations**
+> List<ReservationDto> reservationGetReservations(from, to)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new ReservationApi();
+var from = 2013-10-20T19:20:30+01:00; // DateTime | 
+var to = 2013-10-20T19:20:30+01:00; // DateTime | 
+
+try { 
+    var result = api_instance.reservationGetReservations(from, to);
+    print(result);
+} catch (e) {
+    print("Exception when calling ReservationApi->reservationGetReservations: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **from** | **DateTime**|  | [default to null]
+ **to** | **DateTime**|  | [default to null]
+
+### Return type
+
+[**List<ReservationDto>**](ReservationDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **reservationUpdateReservationState**
+> bool reservationUpdateReservationState(id, state)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new ReservationApi();
+var id = 56; // int | 
+var state = state_example; // String | 
+
+try { 
+    var result = api_instance.reservationUpdateReservationState(id, state);
+    print(result);
+} catch (e) {
+    print("Exception when calling ReservationApi->reservationUpdateReservationState: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**|  | [default to null]
+ **state** | **String**|  | [default to null]
+
+### Return type
+
+**bool**
 
 ### Authorization
 

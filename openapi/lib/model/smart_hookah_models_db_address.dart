@@ -1,6 +1,6 @@
 part of openapi.api;
 
-class SmartHookahModelsAddress {
+class SmartHookahModelsDbAddress {
   
   int id = null;
   
@@ -17,14 +17,14 @@ class SmartHookahModelsAddress {
   String lng = null;
   
   SystemDataEntitySpatialDbGeography location = null;
-  SmartHookahModelsAddress();
+  SmartHookahModelsDbAddress();
 
   @override
   String toString() {
-    return 'SmartHookahModelsAddress[id=$id, street=$street, city=$city, number=$number, ZIP=$ZIP, lat=$lat, lng=$lng, location=$location, ]';
+    return 'SmartHookahModelsDbAddress[id=$id, street=$street, city=$city, number=$number, ZIP=$ZIP, lat=$lat, lng=$lng, location=$location, ]';
   }
 
-  SmartHookahModelsAddress.fromJson(Map<String, dynamic> json) {
+  SmartHookahModelsDbAddress.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
     id = json['Id'];
     street = json['Street'];
@@ -49,14 +49,14 @@ class SmartHookahModelsAddress {
     };
   }
 
-  static List<SmartHookahModelsAddress> listFromJson(List<dynamic> json) {
-    return json == null ? new List<SmartHookahModelsAddress>() : json.map((value) => new SmartHookahModelsAddress.fromJson(value)).toList();
+  static List<SmartHookahModelsDbAddress> listFromJson(List<dynamic> json) {
+    return json == null ? new List<SmartHookahModelsDbAddress>() : json.map((value) => new SmartHookahModelsDbAddress.fromJson(value)).toList();
   }
 
-  static Map<String, SmartHookahModelsAddress> mapFromJson(Map<String, dynamic> json) {
-    var map = new Map<String, SmartHookahModelsAddress>();
+  static Map<String, SmartHookahModelsDbAddress> mapFromJson(Map<String, dynamic> json) {
+    var map = new Map<String, SmartHookahModelsDbAddress>();
     if (json != null && json.length > 0) {
-      json.forEach((String key, dynamic value) => map[key] = new SmartHookahModelsAddress.fromJson(value));
+      json.forEach((String key, dynamic value) => map[key] = new SmartHookahModelsDbAddress.fromJson(value));
     }
     return map;
   }

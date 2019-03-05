@@ -2,7 +2,7 @@ part of openapi.api;
 
 class SmartHookahModelsParameterObjectsChangeColor {
   
-  SmartHookahModelsColor color = null;
+  SmartHookahModelsDbColor color = null;
   
   int type = null;
   //enum typeEnum {  0,  1,  2,  };{
@@ -15,7 +15,7 @@ class SmartHookahModelsParameterObjectsChangeColor {
 
   SmartHookahModelsParameterObjectsChangeColor.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    color = new SmartHookahModelsColor.fromJson(json['Color']);
+    color = new SmartHookahModelsDbColor.fromJson(json['Color']);
     type = json['Type'];
   }
 
