@@ -22,7 +22,8 @@ class ReservationBloc {
       ReservationDto newReservation) async {
     var createdReservation = await App.http.createReservation(newReservation);
     if (createdReservation != null) {
-      var oldReservations = this.reservations.value;
+      var oldReservations =
+          this.reservations.value ?? new List<ReservationDto>();
       oldReservations.add(createdReservation);
       this.reservations.add(oldReservations);
     }

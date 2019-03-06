@@ -5,8 +5,10 @@ import 'package:app/components/Pickers/WheelPicker/wheelPicker.dart';
 
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/person/reservations_bloc.dart';
+import 'package:app/pages/Places/Reservations/reservation_detail_page.dart';
 import 'package:app/utils/date_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:openapi/api.dart';
 import 'package:tuple/tuple.dart';
 import 'package:vibrate/vibrate.dart';
@@ -23,7 +25,7 @@ class ReservationPage extends StatefulWidget {
 }
 
 class _ReservationPageState extends State<ReservationPage> {
-    final _textController = TextEditingController();
+  final _textController = TextEditingController();
 
   DateTime currentDate;
   int selectedPersons = 2;
@@ -49,7 +51,7 @@ class _ReservationPageState extends State<ReservationPage> {
     var placeBloc = DataProvider.getData(context).placeSingleBloc;
     var reservationBloc = DataProvider.getData(context).reservationBloc;
     var personBloc = DataProvider.getData(context).personBloc;
-     nameTextController.text = personBloc?.info?.value?.displayName ?? "";
+    nameTextController.text = personBloc?.info?.value?.displayName ?? "";
     return SafeArea(
       child: Theme(
         isMaterialAppTheme: true,
@@ -320,15 +322,21 @@ class _ReservationPageState extends State<ReservationPage> {
     );
   }
 
-  _createReservations(BuildContext context, ReservationBloc bloc) {
+  _createReservations(BuildContext context, ReservationBloc bloc) async {
     var newReservation = new ReservationDto();
     newReservation.persons = selectedPersons;
     newReservation.placeId = widget.place.id;
     newReservation.name = nameTextController.value.text;
     newReservation.text = noteTextController.value.text;
     newReservation.duration = durations[selectedDuration - 1];
-    newReservation.time = DateTime.now();
+    DateFormat df = new DateFormat('HH:mm');
+    var time = df.parse(selectedTimeLabel);
+    newReservation.time = new DateTime(currentDate.year, currentDate.month,
+        currentDate.day, time.hour, time.minute);
 
-    var result = bloc.createReservation(newReservation);
+    var result = await bloc.createReservation(newReservation);
+    Navigator.of(context).pushReplacement(new MaterialPageRoute(
+        builder: ((BuildContext context) =>
+            ReservationDetailPage(reservation: result))));
   }
 }

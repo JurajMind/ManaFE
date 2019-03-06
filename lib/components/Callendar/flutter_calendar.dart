@@ -126,6 +126,7 @@ class _CalendarState extends State<Calendar> {
             getDirection(gestureDetails),
         onHorizontalDragEnd: (gestureDetails) => endSwipe(gestureDetails),
         child: new GridView.count(
+          physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           crossAxisCount: 7,
           padding: new EdgeInsets.only(bottom: 0.0),

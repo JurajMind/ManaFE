@@ -20,21 +20,37 @@ class _TestPageState extends State<TestPage> {
           ),
           Expanded(
             child: Center(
-              child: OutlineButton.icon(
-                borderSide: BorderSide(color: Colors.white),
-                icon: Icon(
-                  Icons.delete_sweep,
-                  color: Colors.red,
-                ),
-                label: Text('Test token recovery'),
-                onPressed: () async {
-                  var auth = new Authorize();
-                  auth.messToken();
+              child: Column(
+                children: <Widget>[
+                  OutlineButton.icon(
+                    borderSide: BorderSide(color: Colors.white),
+                    icon: Icon(
+                      Icons.delete_sweep,
+                      color: Colors.red,
+                    ),
+                    label: Text('Test date format'),
+                    onPressed: () async {
+                      var date = '2019-03-04T22:20:49.595651Z';
+                      var a = DateTime.parse(date);
+                    },
+                  ),
+                  OutlineButton.icon(
+                    borderSide: BorderSide(color: Colors.white),
+                    icon: Icon(
+                      Icons.delete_sweep,
+                      color: Colors.red,
+                    ),
+                    label: Text('Test token recovery'),
+                    onPressed: () async {
+                      var auth = new Authorize();
+                      auth.messToken();
 
-                  var request = App.http
-                      .getPersonInitData()
-                      .then((v) => debugPrint('refreshed'));
-                },
+                      var request = App.http
+                          .getPersonInitData()
+                          .then((v) => debugPrint('refreshed'));
+                    },
+                  ),
+                ],
               ),
             ),
           )

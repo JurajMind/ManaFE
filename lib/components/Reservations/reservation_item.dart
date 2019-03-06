@@ -1,4 +1,4 @@
-import 'package:app/pages/Places/Reservations/reservation_page.dart';
+import 'package:app/pages/Places/Reservations/reservation_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:openapi/api.dart';
@@ -20,7 +20,7 @@ class ReservationItem extends StatelessWidget {
         child: ListTile(
           onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return new ReservationPage();
+                  return new ReservationDetailPage(reservation: reservation);
                 },
               )),
           leading: new ReservationStatusIcon(reservation: reservation),

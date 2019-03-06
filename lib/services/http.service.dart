@@ -389,6 +389,7 @@ class ApiClient {
       ReservationDto newReservation) async {
     var url = Uri.https(baseUrl, '/api/Reservations/Create');
     var data = await _dio.post(url.toString(), data: newReservation);
+    data.data['Created'] = null;
     return ReservationDto.fromJson(data.data);
   }
 
@@ -400,8 +401,10 @@ class ApiClient {
   }
 
   Future<PersonInfoDto> getPersonInfo() async {
-      var url = Uri.https(baseUrl, '/api/Person/Info');
-      return  await _dio.getUri(url).then((data) => PersonInfoDto.fromJson(data.data));
+    var url = Uri.https(baseUrl, '/api/Person/Info');
+    return await _dio
+        .getUri(url)
+        .then((data) => PersonInfoDto.fromJson(data.data));
   }
 }
 

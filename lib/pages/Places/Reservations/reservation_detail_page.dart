@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:openapi/api.dart';
 
-class ReservationPage extends StatefulWidget {
+class ReservationDetailPage extends StatefulWidget {
+  final ReservationDto reservation;
+
+  const ReservationDetailPage({Key key, this.reservation}) : super(key: key);
+
   @override
-  State<ReservationPage> createState() => _ReservationPageState();
+  State<ReservationDetailPage> createState() => _ReservationDetailState();
 }
 
-class _ReservationPageState extends State<ReservationPage> {
+class _ReservationDetailState extends State<ReservationDetailPage> {
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
+    return SafeArea(
+        top: false,
+        child: CustomScrollView(
+          slivers: <Widget>[
+            new SliverAppBar(
+              backgroundColor: Colors.black,
+              title: Text(widget.reservation.id.toString()),
+              centerTitle: true,
+            ),
+            SliverList(
+              delegate: new SliverChildListDelegate(
+                  <Widget>[Text(widget.reservation.persons.toString())]),
+            )
+          ],
+        ));
   }
 }
