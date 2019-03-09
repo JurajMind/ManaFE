@@ -1,40 +1,33 @@
 import 'package:app/app/app.dart';
 import 'package:app/models/SignalR/device_online.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
+import 'package:app/module/signal_bloc.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
-class PersonBloc {
+class PersonBloc extends SignalBloc {
   bool _loadedGear = false;
   bool _loadedInit = false;
-  final SignalR _signalR = new SignalR();
 
   static final PersonBloc _instance = new PersonBloc._();
 
   factory PersonBloc() => PersonBloc._instance;
 
   PersonBloc._() {
-    _signalR.connect().then((value) {
-      _signalR.clientCalls.listen((onData) {
-        proceddCalls(onData);
-      });
-    });
+    this.connect();
   }
 
-  proceddCalls(ClientCall onData) {
-    if (onData.Data == null) return;
-
-    onData.Data.forEach((f) {
-      switch (f.Method) {
-        case 'deviceOnline':
-          {
-            handleDeviceOnline(f);
-            break;
-          }
-      }
-    });
+  @override
+  handleCall(String method, List<dynamic> data) {
+    switch (method) {
+      case 'deviceOnline':
+        {
+          handleDeviceOnline(data);
+          break;
+        }
+    }
   }
 
   BehaviorSubject<PersonInfoDto> info = new BehaviorSubject<PersonInfoDto>();
@@ -108,8 +101,8 @@ class PersonBloc {
     } catch (e) {}
   }
 
-  void handleDeviceOnline(ClientMethod f) {
-    var data = new DeviceOnline.fromSignal(f.Data);
+  void handleDeviceOnline(List<dynamic> incomingData) {
+    var data = new DeviceOnline.fromSignal(incomingData);
     var smokeSession = new SmokeSessionSimpleDto();
     smokeSession.device = DeviceSimpleDto();
     smokeSession.device.name = data.deviceName;

@@ -1,3 +1,4 @@
+import 'package:app/Helpers/helpers.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Callendar/flutter_calendar.dart';
 import 'package:app/components/Common/labeled_value.dart';
@@ -10,7 +11,6 @@ import 'package:app/utils/date_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:openapi/api.dart';
-import 'package:tuple/tuple.dart';
 import 'package:vibrate/vibrate.dart';
 import 'package:date_format/date_format.dart';
 
@@ -29,12 +29,12 @@ class _ReservationPageState extends State<ReservationPage> {
 
   DateTime currentDate;
   int selectedPersons = 2;
-  int selectedTime = 1;
+  int selectedTime;
   int selectedDuration = 2;
   int selectedTimeValue;
+  int _cannotReserve = 0;
   String selectedTimeLabel;
-  static const durations = ["2:30", "3:00", "3:30", "4:00"];
-  List<DateTime> _markedDate = [DateTime(2018, 9, 20), DateTime(2018, 10, 11)];
+  static const durations = [5, 6, 7, 8];
   PageController pageController = new PageController(initialPage: 0);
   TextEditingController nameTextController;
   TextEditingController noteTextController;
@@ -90,128 +90,155 @@ class _ReservationPageState extends State<ReservationPage> {
                                 isExpandable: true,
                                 showCalendarPickerIcon: false,
                                 onDateSelected: (date) {
+                                  var dateCompare =
+                                      compareDate(date, DateTime.now());
+
+                                  if (dateCompare >= 0) {
+                                    placeBloc.loadReservationInfo(date);
+                                  }
+
                                   setState(() {
                                     currentDate = date;
+                                    _cannotReserve = dateCompare;
                                   });
-
-                                  placeBloc.loadReservationInfo(date);
                                 },
                               ),
                             ),
-                            Card(
-                              elevation: 2.0,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                mainAxisSize: MainAxisSize.max,
-                                children: <Widget>[
-                                  Column(
-                                    children: <Widget>[
-                                      Text(
-                                        'Peoples',
-                                        style: TextStyle(color: Colors.grey),
-                                      ),
-                                      WheelPicker.integer(
-                                        initialValue: selectedPersons,
-                                        minValue: 1,
-                                        maxValue: 10,
-                                        onChanged: (value) {
-                                          print(value);
-                                          Vibrate.feedback(FeedbackType.light);
-                                          setState(() {
-                                            selectedPersons = value;
-                                          });
-                                        },
-                                      )
-                                    ],
+                            _cannotReserve < 0
+                                ? Container()
+                                : Card(
+                                    elevation: 2.0,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: <Widget>[
+                                        Column(
+                                          children: <Widget>[
+                                            Text(
+                                              'Peoples',
+                                              style:
+                                                  TextStyle(color: Colors.grey),
+                                            ),
+                                            WheelPicker.integer(
+                                              initialValue: selectedPersons,
+                                              minValue: 1,
+                                              maxValue: 10,
+                                              onChanged: (value) {
+                                                print(value);
+                                                Vibrate.feedback(
+                                                    FeedbackType.light);
+                                                setState(() {
+                                                  selectedPersons = value;
+                                                });
+                                              },
+                                            )
+                                          ],
+                                        ),
+                                        Column(
+                                          children: <Widget>[
+                                            Text(
+                                              'Time',
+                                              style:
+                                                  TextStyle(color: Colors.grey),
+                                            ),
+                                            StreamBuilder<
+                                                List<ReservationsTimeSlot>>(
+                                              stream: placeBloc.reservationInfo,
+                                              initialData: null,
+                                              builder: (context, snapShot) {
+                                                if (snapShot.data != null &&
+                                                    DateHelper.CompareDate(
+                                                        currentDate,
+                                                        DateTime.now())) {
+                                                  // selectedTime = 4;
+                                                } else {}
+                                                if (selectedTime == null &&
+                                                    snapShot.data != null) {
+                                                  selectTime(1, snapShot);
+                                                }
+                                                return snapShot.data == null
+                                                    ? Container()
+                                                    : WheelPicker.string(
+                                                        initialValue:
+                                                            selectedTime,
+                                                        stringItems: snapShot
+                                                            .data
+                                                            .map((s) => s.text)
+                                                            .toList(),
+                                                        disableItems: this
+                                                            .disabledTime(
+                                                                snapShot.data),
+                                                        onChanged: (value) {
+                                                          Vibrate.feedback(
+                                                              FeedbackType
+                                                                  .light);
+                                                          print(value);
+                                                          setState(() {
+                                                            selectTime(value,
+                                                                snapShot);
+                                                          });
+                                                        },
+                                                      );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: <Widget>[
+                                            Text(
+                                              'Duration',
+                                              style:
+                                                  TextStyle(color: Colors.grey),
+                                            ),
+                                            StreamBuilder<
+                                                    List<ReservationsTimeSlot>>(
+                                                stream:
+                                                    placeBloc.reservationInfo,
+                                                builder: (context, snapShot) {
+                                                  return WheelPicker.string(
+                                                    initialValue:
+                                                        selectedDuration,
+                                                    disableItems: this
+                                                        .disabledTime(
+                                                            snapShot?.data),
+                                                    stringItems: durations
+                                                        .map((s) =>
+                                                            slotDurationString(
+                                                                s))
+                                                        .toList(),
+                                                    onChanged: (value) {
+                                                      print(value);
+                                                      Vibrate.feedback(
+                                                          FeedbackType.light);
+                                                      setState(() {
+                                                        selectedDuration =
+                                                            value;
+                                                      });
+                                                    },
+                                                  );
+                                                })
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                  Column(
-                                    children: <Widget>[
-                                      Text(
-                                        'Time',
-                                        style: TextStyle(color: Colors.grey),
-                                      ),
-                                      StreamBuilder<List<ReservationsTimeSlot>>(
-                                        stream: placeBloc.reservationInfo,
-                                        initialData: null,
-                                        builder: (context, snapShot) {
-                                          if (snapShot.data != null &&
-                                              DateHelper.CompareDate(
-                                                  currentDate,
-                                                  DateTime.now())) {
-                                            // selectedTime = 4;
-                                          } else {}
-
-                                          return snapShot.data == null
-                                              ? Container()
-                                              : WheelPicker.tuple(
-                                                  initialValue: selectedTime,
-                                                  minValue: 1,
-                                                  maxValue:
-                                                      snapShot.data.length,
-                                                  tupleItems: snapShot.data
-                                                      .map((s) => new Tuple2(
-                                                          s.text, s.reserved))
-                                                      .toList(),
-                                                  onChanged: (value) {
-                                                    Vibrate.feedback(
-                                                        FeedbackType.light);
-                                                    print(value);
-                                                    setState(() {
-                                                      selectedTime = value;
-                                                      selectedTimeValue =
-                                                          snapShot
-                                                              .data[value - 1]
-                                                              .value;
-                                                      selectedTimeLabel =
-                                                          snapShot
-                                                              .data[value - 1]
-                                                              .text;
-                                                    });
-                                                  },
-                                                );
-                                        },
-                                      ),
-                                    ],
+                            _cannotReserve < 0
+                                ? Container()
+                                : Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: new RoundedButton(
+                                      buttonName: 'Next',
+                                      onTap: () {
+                                        pageController.jumpToPage(1);
+                                      },
+                                      buttonColor: Colors.black,
+                                      borderWidth: 0.0,
+                                      bottomMargin: 0.0,
+                                      height: 40.0,
+                                      width: 200.0,
+                                    ),
                                   ),
-                                  Column(
-                                    children: <Widget>[
-                                      Text(
-                                        'Duration',
-                                        style: TextStyle(color: Colors.grey),
-                                      ),
-                                      WheelPicker.string(
-                                        initialValue: selectedDuration,
-                                        minValue: 1,
-                                        maxValue: durations.length,
-                                        stringItems: durations,
-                                        onChanged: (value) {
-                                          print(value);
-                                          Vibrate.feedback(FeedbackType.light);
-                                          setState(() {
-                                            selectedDuration = value;
-                                          });
-                                        },
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: new RoundedButton(
-                                buttonName: 'Next',
-                                onTap: () {
-                                  pageController.jumpToPage(1);
-                                },
-                                buttonColor: Colors.black,
-                                borderWidth: 0.0,
-                                bottomMargin: 0.0,
-                                height: 40.0,
-                                width: 200.0,
-                              ),
-                            ),
                           ],
                         ),
                       ],
@@ -251,7 +278,8 @@ class _ReservationPageState extends State<ReservationPage> {
                                     ),
                                     LabeledValue(
                                       label: 'Duration:',
-                                      value: durations[selectedDuration - 1],
+                                      value: slotDurationString(
+                                          selectedDuration + durations[0]),
                                     ),
                                   ],
                                 )
@@ -322,13 +350,55 @@ class _ReservationPageState extends State<ReservationPage> {
     );
   }
 
+  void selectTime(
+      num value, AsyncSnapshot<List<ReservationsTimeSlot>> snapShot) {
+    selectedTime = value;
+    selectedTimeValue = snapShot.data[value].value;
+    selectedTimeLabel = snapShot.data[value].text;
+  }
+
+  List<String> disabledTime(List<ReservationsTimeSlot> times) {
+    if (times == null) return new List<String>();
+    var duration = selectedDuration + durations[0];
+    return disabledTimeDuration(times, duration);
+  }
+
+  List<String> disabledTimeDuration(
+      List<ReservationsTimeSlot> times, int duration) {
+    if (times == null) return new List<String>();
+    List<String> result = new List<String>();
+    for (int i = 0; i < times.length; i++) {
+      for (int j = 0; j < duration; j++) {
+        if (i + j > times.length) {
+          result.add(times[i].text);
+        }
+      }
+    }
+
+    return result.toSet().toList();
+  }
+
+  List<String> disabledDurations(List<ReservationsTimeSlot> times) {
+    if (times == null) return new List<String>();
+
+    var result = new List<String>();
+    for (var duration in durations) {
+      var disabled = disabledTimeDuration(times, duration);
+      if (disabled.length == times.length) {
+        result.add(slotDurationString(duration));
+      }
+    }
+    return result;
+  }
+
   _createReservations(BuildContext context, ReservationBloc bloc) async {
     var newReservation = new ReservationDto();
     newReservation.persons = selectedPersons;
     newReservation.placeId = widget.place.id;
     newReservation.name = nameTextController.value.text;
     newReservation.text = noteTextController.value.text;
-    newReservation.duration = durations[selectedDuration - 1];
+    newReservation.duration =
+        slotDurationString(selectedDuration + durations[0]);
     DateFormat df = new DateFormat('HH:mm');
     var time = df.parse(selectedTimeLabel);
     newReservation.time = new DateTime(currentDate.year, currentDate.month,

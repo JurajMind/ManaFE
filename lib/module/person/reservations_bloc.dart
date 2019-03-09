@@ -1,13 +1,16 @@
 import 'package:app/app/app.dart';
+import 'package:app/module/signal_bloc.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
-class ReservationBloc {
+class ReservationBloc extends SignalBloc {
   static final ReservationBloc _instance = new ReservationBloc._();
 
   factory ReservationBloc() => ReservationBloc._instance;
 
-  ReservationBloc._() {}
+  ReservationBloc._() {
+    this.connect();
+  }
 
   BehaviorSubject<List<ReservationDto>> reservations =
       new BehaviorSubject<List<ReservationDto>>();
@@ -16,6 +19,18 @@ class ReservationBloc {
     this.reservations.add(null);
     var result = await App.http.getReservations(from, to);
     this.reservations.add(result);
+  }
+
+  @override
+  handleCall(String method, List<dynamic> data) {
+    switch (method) {
+      case 'reservationChanged':
+        {
+          this.loadReservations(
+              DateTime.now().subtract(Duration(days: 20)), DateTime.now());
+          break;
+        }
+    }
   }
 
   Future<ReservationDto> createReservation(
