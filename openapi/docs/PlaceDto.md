@@ -28,6 +28,7 @@ Name | Type | Description | Notes
 **minimumReservationTime** | **int** |  | [optional] [default to null]
 **franchiseId** | **int** |  | [optional] [default to null]
 **franchise** | [**FranchiseDto**](FranchiseDto.md) |  | [optional] [default to null]
+**flags** | **List&lt;String&gt;** |  | [optional] [default to []]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

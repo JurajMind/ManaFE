@@ -9,10 +9,100 @@ All URIs are relative to *https://devmana.azurewebsites.net*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**personAddMyGear**](PersonApi.md#personAddMyGear) | **POST** /api/Person/MyGear/{id}/Add/{count} | 
+[**personDeleteMyGear**](PersonApi.md#personDeleteMyGear) | **POST** /api/Person/MyGear/{id}/Delete | 
 [**personGetPersonActiveData**](PersonApi.md#personGetPersonActiveData) | **GET** /api/Person/InitData | 
+[**personGetPersonDevices**](PersonApi.md#personGetPersonDevices) | **GET** /api/Person/Devices | 
 [**personGetPersonInfo**](PersonApi.md#personGetPersonInfo) | **GET** /api/Person/Info | 
+[**personGetRecentAccessories**](PersonApi.md#personGetRecentAccessories) | **GET** /api/Person/MyGear/Used/{sessionCount} | 
 [**personMyGear**](PersonApi.md#personMyGear) | **GET** /api/Person/MyGear | 
 
+
+# **personAddMyGear**
+> PipeAccesorySimpleDto personAddMyGear(id, count)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new PersonApi();
+var id = 56; // int | 
+var count = 56; // int | 
+
+try { 
+    var result = api_instance.personAddMyGear(id, count);
+    print(result);
+} catch (e) {
+    print("Exception when calling PersonApi->personAddMyGear: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**|  | [default to null]
+ **count** | **int**|  | [default to null]
+
+### Return type
+
+[**PipeAccesorySimpleDto**](PipeAccesorySimpleDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **personDeleteMyGear**
+> bool personDeleteMyGear(id, count)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new PersonApi();
+var id = 56; // int | 
+var count = 56; // int | 
+
+try { 
+    var result = api_instance.personDeleteMyGear(id, count);
+    print(result);
+} catch (e) {
+    print("Exception when calling PersonApi->personDeleteMyGear: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**|  | [default to null]
+ **count** | **int**|  | [default to null]
+
+### Return type
+
+**bool**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **personGetPersonActiveData**
 > PersonActiveDataDto personGetPersonActiveData()
@@ -51,6 +141,43 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **personGetPersonDevices**
+> List<DeviceSimpleDto> personGetPersonDevices()
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new PersonApi();
+
+try { 
+    var result = api_instance.personGetPersonDevices();
+    print(result);
+} catch (e) {
+    print("Exception when calling PersonApi->personGetPersonDevices: $e\n");
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**List<DeviceSimpleDto>**](DeviceSimpleDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **personGetPersonInfo**
 > PersonInfoDto personGetPersonInfo()
 
@@ -76,6 +203,47 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**PersonInfoDto**](PersonInfoDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **personGetRecentAccessories**
+> List<PipeAccesorySimpleDto> personGetRecentAccessories(sessionCount)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new PersonApi();
+var sessionCount = 56; // int | 
+
+try { 
+    var result = api_instance.personGetRecentAccessories(sessionCount);
+    print(result);
+} catch (e) {
+    print("Exception when calling PersonApi->personGetRecentAccessories: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **sessionCount** | **int**|  | [default to null]
+
+### Return type
+
+[**List<PipeAccesorySimpleDto>**](PipeAccesorySimpleDto.md)
 
 ### Authorization
 

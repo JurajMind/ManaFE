@@ -220,7 +220,7 @@ class WheelPicker extends StatelessWidget {
             var isDisabled = this.disableItems != null &&
                 this.stringItems != null &&
                 this.stringItems.length > value &&
-                value > 0 &&
+                value >= 0 &&
                 disableItems.contains(this.stringItems[value]);
 
             // Item is disabled

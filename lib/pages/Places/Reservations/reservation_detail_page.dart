@@ -23,8 +23,10 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
               centerTitle: true,
             ),
             SliverList(
-              delegate: new SliverChildListDelegate(
-                  <Widget>[Text(widget.reservation.persons.toString())]),
+              delegate: new SliverChildListDelegate(<Widget>[
+                Text(widget.reservation.persons.toString()),
+                Text(widget.reservation.created.toString())
+              ]),
             )
           ],
         ));

@@ -41,11 +41,13 @@ class PlaceDto {
   int franchiseId = null;
   
   FranchiseDto franchise = null;
+  
+  List<String> flags = [];
   PlaceDto();
 
   @override
   String toString() {
-    return 'PlaceDto[id=$id, name=$name, logoPath=$logoPath, shortDescriptions=$shortDescriptions, descriptions=$descriptions, friendlyUrl=$friendlyUrl, addressId=$addressId, address=$address, businessHours=$businessHours, phoneNumber=$phoneNumber, facebook=$facebook, baseHookahPrice=$baseHookahPrice, currency=$currency, seats=$seats, tobaccoReviews=$tobaccoReviews, medias=$medias, allowReservation=$allowReservation, minimumReservationTime=$minimumReservationTime, franchiseId=$franchiseId, franchise=$franchise, ]';
+    return 'PlaceDto[id=$id, name=$name, logoPath=$logoPath, shortDescriptions=$shortDescriptions, descriptions=$descriptions, friendlyUrl=$friendlyUrl, addressId=$addressId, address=$address, businessHours=$businessHours, phoneNumber=$phoneNumber, facebook=$facebook, baseHookahPrice=$baseHookahPrice, currency=$currency, seats=$seats, tobaccoReviews=$tobaccoReviews, medias=$medias, allowReservation=$allowReservation, minimumReservationTime=$minimumReservationTime, franchiseId=$franchiseId, franchise=$franchise, flags=$flags, ]';
   }
 
   PlaceDto.fromJson(Map<String, dynamic> json) {
@@ -70,6 +72,7 @@ class PlaceDto {
     minimumReservationTime = json['MinimumReservationTime'];
     franchiseId = json['FranchiseId'];
     franchise = new FranchiseDto.fromJson(json['Franchise']);
+    flags = ((json['Flags'] ?? []) as List).map((item) => item as String).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -93,7 +96,8 @@ class PlaceDto {
       'AllowReservation': allowReservation,
       'MinimumReservationTime': minimumReservationTime,
       'FranchiseId': franchiseId,
-      'Franchise': franchise
+      'Franchise': franchise,
+      'Flags': flags
     };
   }
 

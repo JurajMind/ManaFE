@@ -1,6 +1,7 @@
 import 'package:app/app/app.dart';
 import 'package:app/module/signal_bloc.dart';
 import 'package:openapi/api.dart';
+import 'package:queries/collections.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ReservationBloc extends SignalBloc {
@@ -18,7 +19,10 @@ class ReservationBloc extends SignalBloc {
   loadReservations(DateTime from, DateTime to) async {
     this.reservations.add(null);
     var result = await App.http.getReservations(from, to);
-    this.reservations.add(result);
+    var order = new Collection(result)
+        .orderBy((keySelector) => keySelector.time)
+        .toList();
+    this.reservations.add(order);
   }
 
   @override

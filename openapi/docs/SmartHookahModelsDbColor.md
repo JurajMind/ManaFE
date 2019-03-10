@@ -1,4 +1,4 @@
-# openapi.model.ActionSettings
+# openapi.model.SmartHookahModelsDbColor
 
 ## Load the model package
 ```dart
@@ -8,10 +8,9 @@ import 'package:openapi/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**color** | [**SmartHookahModelsDbColor**](SmartHookahModelsDbColor.md) |  | [optional] [default to null]
-**animationId** | **int** |  | [optional] [default to null]
-**brightness** | **int** |  | [optional] [default to null]
-**speed** | **int** |  | [optional] [default to null]
+**hue** | **int** |  | [optional] [default to null]
+**saturation** | **int** |  | [optional] [default to null]
+**value** | **int** |  | [optional] [default to null]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

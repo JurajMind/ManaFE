@@ -45,13 +45,14 @@ import 'package:openapi/api.dart';
 
 
 var api_instance = new AccountApi();
-var smartHookahModelsForgotPasswordViewModel = new SmartHookahModelsForgotPasswordViewModel(); // SmartHookahModelsForgotPasswordViewModel | 
+var userId = userId_example; // String | 
+var code = code_example; // String | 
 
 try {
-    var result = api_instance.accountForgotPassword(smartHookahModelsForgotPasswordViewModel);
+    var result = api_instance.accountConfirmEmail(userId, code);
     print(result);
 } catch (e) {
-    print("Exception when calling AccountApi->accountForgotPassword: $e\n");
+    print("Exception when calling AccountApi->accountConfirmEmail: $e\n");
 }
 
 ```
@@ -62,6 +63,7 @@ All URIs are relative to *https://devmana.azurewebsites.net*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*AccountApi* | [**accountConfirmEmail**](docs\/AccountApi.md#accountconfirmemail) | **POST** /api/Account/api/Account/ConfirmEmail | 
 *AccountApi* | [**accountForgotPassword**](docs\/AccountApi.md#accountforgotpassword) | **POST** /api/Account/ForgotPassword | 
 *AccountApi* | [**accountRegister**](docs\/AccountApi.md#accountregister) | **POST** /api/Account/Register | 
 *AnimApi* | [**animDefaultAction**](docs\/AnimApi.md#animdefaultaction) | **POST** /api/Anim/{id} | 
@@ -95,8 +97,12 @@ Class | Method | HTTP request | Description
 *MixologyApi* | [**mixologyGetTobaccoMixTastes**](docs\/MixologyApi.md#mixologygettobaccomixtastes) | **GET** /api/Mixology/{id}/GetTastes | 
 *MixologyApi* | [**mixologyRemoveMix**](docs\/MixologyApi.md#mixologyremovemix) | **DELETE** /api/Mixology/RemoveMix | 
 *MixologyApi* | [**mixologyVote**](docs\/MixologyApi.md#mixologyvote) | **POST** /api/Mixology/{id}/Vote | 
+*PersonApi* | [**personAddMyGear**](docs\/PersonApi.md#personaddmygear) | **POST** /api/Person/MyGear/{id}/Add/{count} | 
+*PersonApi* | [**personDeleteMyGear**](docs\/PersonApi.md#persondeletemygear) | **POST** /api/Person/MyGear/{id}/Delete | 
 *PersonApi* | [**personGetPersonActiveData**](docs\/PersonApi.md#persongetpersonactivedata) | **GET** /api/Person/InitData | 
+*PersonApi* | [**personGetPersonDevices**](docs\/PersonApi.md#persongetpersondevices) | **GET** /api/Person/Devices | 
 *PersonApi* | [**personGetPersonInfo**](docs\/PersonApi.md#persongetpersoninfo) | **GET** /api/Person/Info | 
+*PersonApi* | [**personGetRecentAccessories**](docs\/PersonApi.md#persongetrecentaccessories) | **GET** /api/Person/MyGear/Used/{sessionCount} | 
 *PersonApi* | [**personMyGear**](docs\/PersonApi.md#personmygear) | **GET** /api/Person/MyGear | 
 *PingApi* | [**pingDefaultAction**](docs\/PingApi.md#pingdefaultaction) | **GET** /api/Ping/{id} | 
 *PlaceCalendarApi* | [**placeCalendarCreatePlaceEventFromFacebook**](docs\/PlaceCalendarApi.md#placecalendarcreateplaceeventfromfacebook) | **GET** /api/PlaceCalendar/CreateEventFromFacebook | 
@@ -114,10 +120,16 @@ Class | Method | HTTP request | Description
 *PufApi* | [**pufDefaultAction**](docs\/PufApi.md#pufdefaultaction) | **POST** /api/Puf/{id} | 
 *PufApi* | [**pufLag**](docs\/PufApi.md#puflag) | **POST** /api/Puf/lag/{id} | 
 *QRCodeApi* | [**qRCodeDefaultAction**](docs\/QRCodeApi.md#qrcodedefaultaction) | **GET** /api/QRCode/{id} | 
+*ReservationApi* | [**reservationAddTable**](docs\/ReservationApi.md#reservationaddtable) | **POST** /api/Reservations/{id}/AddTable | 
+*ReservationApi* | [**reservationCancelReservation**](docs\/ReservationApi.md#reservationcancelreservation) | **POST** /api/Reservations/{id}/Cancel | 
 *ReservationApi* | [**reservationCreate**](docs\/ReservationApi.md#reservationcreate) | **POST** /api/Reservations/Create | 
 *ReservationApi* | [**reservationGetManagereservationsInfo**](docs\/ReservationApi.md#reservationgetmanagereservationsinfo) | **GET** /api/Reservations/{id}/Manage | 
 *ReservationApi* | [**reservationGetPersonReservations**](docs\/ReservationApi.md#reservationgetpersonreservations) | **GET** /api/Reservations/Person | 
+*ReservationApi* | [**reservationGetReservationDetail**](docs\/ReservationApi.md#reservationgetreservationdetail) | **GET** /api/Reservations/{id}/Detail | 
 *ReservationApi* | [**reservationGetReservationUsage**](docs\/ReservationApi.md#reservationgetreservationusage) | **GET** /api/Reservations/{id}/Usage | 
+*ReservationApi* | [**reservationGetReservations**](docs\/ReservationApi.md#reservationgetreservations) | **GET** /api/Reservations/Reservations | 
+*ReservationApi* | [**reservationRemoveTable**](docs\/ReservationApi.md#reservationremovetable) | **DELETE** /api/Reservations/{id}/RemoveTable | 
+*ReservationApi* | [**reservationUpdateReservationState**](docs\/ReservationApi.md#reservationupdatereservationstate) | **POST** /api/Reservations/{id}/UpdateState | 
 *SentToDeviceApi* | [**sentToDeviceDefaultAction**](docs\/SentToDeviceApi.md#senttodevicedefaultaction) | **POST** /api/SentToDevice/{id} | 
 *SmokeSessionApi* | [**smokeSessionGetMetaData**](docs\/SmokeSessionApi.md#smokesessiongetmetadata) | **GET** /api/SmokeSession/GetMetaData | 
 *SmokeSessionApi* | [**smokeSessionGetSessionCode**](docs\/SmokeSessionApi.md#smokesessiongetsessioncode) | **GET** /api/SmokeSession/GetSessionCode | 
@@ -175,14 +187,15 @@ Class | Method | HTTP request | Description
  - [PlaceMenuDto](docs\/PlaceMenuDto.md)
  - [PlaceSimpleDto](docs\/PlaceSimpleDto.md)
  - [PriceGroupItems](docs\/PriceGroupItems.md)
+ - [ReservationDetailDto](docs\/ReservationDetailDto.md)
  - [ReservationDto](docs\/ReservationDto.md)
  - [ReservationManageDto](docs\/ReservationManageDto.md)
  - [ReservationsTimeSlot](docs\/ReservationsTimeSlot.md)
  - [SeatDto](docs\/SeatDto.md)
  - [SmartHookahControllersPriceGroupDto](docs\/SmartHookahControllersPriceGroupDto.md)
  - [SmartHookahHelpersAnimation](docs\/SmartHookahHelpersAnimation.md)
- - [SmartHookahModelsAddress](docs\/SmartHookahModelsAddress.md)
- - [SmartHookahModelsColor](docs\/SmartHookahModelsColor.md)
+ - [SmartHookahModelsDbAddress](docs\/SmartHookahModelsDbAddress.md)
+ - [SmartHookahModelsDbColor](docs\/SmartHookahModelsDbColor.md)
  - [SmartHookahModelsForgotPasswordViewModel](docs\/SmartHookahModelsForgotPasswordViewModel.md)
  - [SmartHookahModelsOrderExtraDto](docs\/SmartHookahModelsOrderExtraDto.md)
  - [SmartHookahModelsParameterObjectsChangeAnimation](docs\/SmartHookahModelsParameterObjectsChangeAnimation.md)

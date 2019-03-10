@@ -1,3 +1,4 @@
+import 'package:app/Helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:date_utils/date_utils.dart';
 
@@ -11,18 +12,38 @@ class CalendarTile extends StatelessWidget {
   final TextStyle dateStyles;
   final Widget child;
   final int eventCount;
+  final doubleToNull;
 
-  CalendarTile({
-    this.onDateSelected,
-    this.date,
-    this.child,
-    this.dateStyles,
-    this.dayOfWeek,
-    this.dayOfWeekStyles,
-    this.isDayOfWeek: false,
-    this.isSelected: false,
-    this.eventCount,
-  });
+  final bool isTodayhighlighted;
+
+  CalendarTile(
+      {this.onDateSelected,
+      this.date,
+      this.child,
+      this.dateStyles,
+      this.dayOfWeek,
+      this.dayOfWeekStyles,
+      this.isDayOfWeek: false,
+      this.isSelected: false,
+      this.eventCount,
+      this.isTodayhighlighted: false,
+      this.doubleToNull: false});
+
+  BoxDecoration getDecorator(BuildContext context) {
+    if (isSelected) {
+      return new BoxDecoration(
+        shape: BoxShape.circle,
+        color: Theme.of(context).primaryColor,
+      );
+    }
+
+    if (isTodayhighlighted && compareDate(date, DateTime.now()) == 0) {
+      var color = Theme.of(context).primaryColor.withAlpha(100);
+      return new BoxDecoration(shape: BoxShape.circle, color: color);
+    }
+
+    return new BoxDecoration();
+  }
 
   Widget renderDateOrDayOfWeek(BuildContext context) {
     if (isDayOfWeek) {
@@ -36,26 +57,22 @@ class CalendarTile extends StatelessWidget {
         ),
       );
     } else {
+      var container = new Container(
+        decoration: getDecorator(context),
+        alignment: Alignment.center,
+        child: new Text(
+          Utils.formatDay(date).toString(),
+          style: isSelected
+              ? new TextStyle(color: Colors.white)
+              : Theme.of(context).textTheme.body1,
+          textAlign: TextAlign.center,
+        ),
+      );
       return new InkWell(
         onTap: onDateSelected,
         child: Stack(
           children: <Widget>[
-            new Container(
-              decoration: isSelected
-                  ? new BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).primaryColor,
-                    )
-                  : new BoxDecoration(),
-              alignment: Alignment.center,
-              child: new Text(
-                Utils.formatDay(date).toString(),
-                style: isSelected
-                    ? new TextStyle(color: Colors.white)
-                    : Theme.of(context).textTheme.body1,
-                textAlign: TextAlign.center,
-              ),
-            ),
+            container,
             Positioned(
                 width: 20.0,
                 height: 20.0,
@@ -69,8 +86,7 @@ class CalendarTile extends StatelessWidget {
   }
 
   Widget buildEventCount(int eventCount) {
-    if (eventCount == null || eventCount == 0) 
-    return Container();
+    if (eventCount == null || eventCount == 0) return Container();
 
     return Container(
       decoration: BoxDecoration(color: Colors.red, shape: BoxShape.circle),

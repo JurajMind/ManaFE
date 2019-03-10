@@ -13,7 +13,7 @@ class Extensions {
     return 'https://${App.baseUri}${image}original.jpg';
   }
 
-  static String adress(SmartHookahModelsAddress adress) {
+  static String adress(SmartHookahModelsDbAddress adress) {
     return '${adress.street} ${adress.number} ${adress.city}';
   }
 
@@ -24,10 +24,18 @@ class Extensions {
           fadeOutDuration: Duration(milliseconds: 0),
           fadeInCurve: Curves.linear,
           imageUrl: 'https://${App.baseUri}${accesory.picture}',
-          errorWidget: (context, url, error) => defaultAccesoryPicture(accesory),
+          errorWidget: (context, url, error) =>
+              defaultAccesoryPicture(accesory),
           placeholder: (context, url) => defaultAccesoryPicture(accesory));
     }
     return defaultAccesoryPicture(accesory);
+  }
+
+  static String getAbsoluteurl(String relativeUrl) {
+    if (relativeUrl != null) {
+      return 'https://${App.baseUri}${relativeUrl}';
+    }
+    return "";
   }
 
   static Widget brandPicture(BrandGroup brand) {

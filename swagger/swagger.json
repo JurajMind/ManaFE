@@ -46,6 +46,42 @@
         }
       }
     },
+    "/api/Account/api/Account/ConfirmEmail": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "operationId": "Account_ConfirmEmail",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
     "/api/Account/ForgotPassword": {
       "post": {
         "tags": [
@@ -797,6 +833,12 @@
             "required": false,
             "type": "integer",
             "format": "int32"
+          },
+          {
+            "name": "searchType",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
@@ -1254,6 +1296,32 @@
         }
       }
     },
+    "/api/Person/Devices": {
+      "get": {
+        "tags": [
+          "Person"
+        ],
+        "operationId": "Person_GetPersonDevices",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DeviceSimpleDto"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Person/Info": {
       "get": {
         "tags": [
@@ -1304,6 +1372,115 @@
               "items": {
                 "$ref": "#/definitions/PipeAccesorySimpleDto"
               }
+            }
+          }
+        }
+      }
+    },
+    "/api/Person/MyGear/Used/{sessionCount}": {
+      "get": {
+        "tags": [
+          "Person"
+        ],
+        "operationId": "Person_GetRecentAccessories",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+          "name": "sessionCount",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PipeAccesorySimpleDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Person/MyGear/{id}/Add/{count}": {
+      "post": {
+        "tags": [
+          "Person"
+        ],
+        "operationId": "Person_AddMyGear",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "count",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PipeAccesorySimpleDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Person/MyGear/{id}/Delete": {
+      "post": {
+        "tags": [
+          "Person"
+        ],
+        "operationId": "Person_DeleteMyGear",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "boolean"
             }
           }
         }
@@ -1940,6 +2117,47 @@
         }
       }
     },
+    "/api/Reservations/Reservations": {
+      "get": {
+        "tags": [
+          "Reservation"
+        ],
+        "operationId": "Reservation_GetReservations",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+            "name": "from",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ReservationDto"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Reservations/Create": {
       "post": {
         "tags": [
@@ -1971,7 +2189,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "type": "boolean"
+              "$ref": "#/definitions/ReservationDto"
             }
           }
         }
@@ -2010,6 +2228,203 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/smartHookahServicesPlaceReservationUsageDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Reservations/{id}/UpdateState": {
+      "post": {
+        "tags": [
+          "Reservation"
+        ],
+        "operationId": "Reservation_UpdateReservationState",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "state",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/api/Reservations/{id}/Cancel": {
+      "post": {
+        "tags": [
+          "Reservation"
+        ],
+        "operationId": "Reservation_CancelReservation",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/api/Reservations/{id}/Detail": {
+      "get": {
+        "tags": [
+          "Reservation"
+        ],
+        "operationId": "Reservation_GetReservationDetail",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ReservationDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Reservations/{id}/AddTable": {
+      "post": {
+        "tags": [
+          "Reservation"
+        ],
+        "operationId": "Reservation_AddTable",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "tableId",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ReservationDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Reservations/{id}/RemoveTable": {
+      "delete": {
+        "tags": [
+          "Reservation"
+        ],
+        "operationId": "Reservation_RemoveTable",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "tableId",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ReservationDto"
             }
           }
         }
@@ -2727,7 +3142,7 @@
       "type": "object",
       "properties": {
         "Color": {
-          "$ref": "#/definitions/smartHookahModelsColor"
+          "$ref": "#/definitions/smartHookahModelsDbColor"
         },
         "Type": {
           "format": "int32",
@@ -2740,7 +3155,7 @@
         }
       }
     },
-    "smartHookahModelsColor": {
+    "smartHookahModelsDbColor": {
       "type": "object",
       "properties": {
         "Hue": {
@@ -2795,7 +3210,7 @@
       "type": "object",
       "properties": {
         "Color": {
-          "$ref": "#/definitions/smartHookahModelsColor"
+          "$ref": "#/definitions/smartHookahModelsDbColor"
         },
         "AnimationId": {
           "format": "int32",
@@ -3239,6 +3654,9 @@
           "format": "int32",
           "type": "integer"
         },
+        "PlaceName": {
+          "type": "string"
+        },
         "Started": {
           "format": "date-time",
           "type": "string"
@@ -3524,7 +3942,7 @@
           "type": "string"
         },
         "Address": {
-          "$ref": "#/definitions/smartHookahModelsAddress"
+          "$ref": "#/definitions/smartHookahModelsDbAddress"
         },
         "BusinessHours": {
           "type": "array",
@@ -3577,7 +3995,7 @@
         }
       }
     },
-    "smartHookahModelsAddress": {
+    "smartHookahModelsDbAddress": {
       "type": "object",
       "properties": {
         "Id": {
@@ -4004,6 +4422,12 @@
         },
         "Franchise": {
           "$ref": "#/definitions/FranchiseDto"
+        },
+        "Flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -4186,6 +4610,10 @@
           "format": "int32",
           "type": "integer"
         },
+        "TablesLeft": {
+          "format": "int32",
+          "type": "integer"
+        },
         "MaxTable": {
           "format": "int32",
           "type": "integer"
@@ -4197,6 +4625,29 @@
         "OrderIndex": {
           "format": "int32",
           "type": "integer"
+        }
+      }
+    },
+    "ReservationDetailDto": {
+      "type": "object",
+      "properties": {
+        "Reservation": {
+          "$ref": "#/definitions/ReservationDto"
+        },
+        "Place": {
+          "$ref": "#/definitions/PlaceDto"
+        },
+        "SmokeSessions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SmokeSessionSimpleDto"
+          }
+        },
+        "Orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HookahOrderDto"
+          }
         }
       }
     },

@@ -10,7 +10,7 @@ class ReservationItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var dateFormater = new DateFormat('d.M.yyyy');
-    var timeFormater = new DateFormat('h:mm');
+    var timeFormater = new DateFormat('H:mm');
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(

@@ -113,6 +113,8 @@ class ApiClient {
           return PlaceSimpleDto.fromJson(value);
         case 'PriceGroupItems':
           return PriceGroupItems.fromJson(value);
+        case 'ReservationDetailDto':
+          return ReservationDetailDto.fromJson(value);
         case 'ReservationDto':
           return ReservationDto.fromJson(value);
         case 'ReservationManageDto':
@@ -125,10 +127,10 @@ class ApiClient {
           return SmartHookahControllersPriceGroupDto.fromJson(value);
         case 'SmartHookahHelpersAnimation':
           return SmartHookahHelpersAnimation.fromJson(value);
-        case 'SmartHookahModelsAddress':
-          return SmartHookahModelsAddress.fromJson(value);
-        case 'SmartHookahModelsColor':
-          return SmartHookahModelsColor.fromJson(value);
+        case 'SmartHookahModelsDbAddress':
+          return SmartHookahModelsDbAddress.fromJson(value);
+        case 'SmartHookahModelsDbColor':
+          return SmartHookahModelsDbColor.fromJson(value);
         case 'SmartHookahModelsForgotPasswordViewModel':
           return SmartHookahModelsForgotPasswordViewModel.fromJson(value);
         case 'SmartHookahModelsOrderExtraDto':

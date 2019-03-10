@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **created** | [**DateTime**](DateTime.md) |  | [optional] [default to null]
 **personId** | **int** |  | [optional] [default to null]
 **placeId** | **int** |  | [optional] [default to null]
+**placeName** | **String** |  | [optional] [default to null]
 **started** | [**DateTime**](DateTime.md) |  | [optional] [default to null]
 **end** | [**DateTime**](DateTime.md) |  | [optional] [default to null]
 **persons** | **int** |  | [optional] [default to null]

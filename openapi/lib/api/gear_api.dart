@@ -107,7 +107,7 @@ class GearApi {
   /// 
   ///
   /// 
-  Future<List<GearServiceSearchPipeAccesory>> gearSearch(String search, String type, { int page, int pageSize }) async {
+  Future<List<GearServiceSearchPipeAccesory>> gearSearch(String search, String type, { int page, int pageSize, String searchType }) async {
     Object postBody;
 
     // verify required params are set
@@ -130,6 +130,9 @@ class GearApi {
     }
     if(pageSize != null) {
       queryParams.addAll(_convertParametersForCollectionFormat("", "pageSize", pageSize));
+    }
+    if(searchType != null) {
+      queryParams.addAll(_convertParametersForCollectionFormat("", "searchType", searchType));
     }
 
     List<String> contentTypes = [];
