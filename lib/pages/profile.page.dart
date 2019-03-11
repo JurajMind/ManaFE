@@ -43,8 +43,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           builder: (context) => StatisticPage()));
                       break;
                     case 'testPage':
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => TestPage()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ProfilePage()));
                       break;
                   }
                 },

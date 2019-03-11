@@ -13,64 +13,84 @@ class ReservationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.white),
-            borderRadius: BorderRadius.circular(16.0)),
-        child: ListTile(
-          onTap: () => Navigator.of(context).push(new MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return new ReservationDetailPage(reservation: reservation);
-                },
-              )),
-          leading: new ReservationStatusIcon(reservation: reservation),
-          title: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Expanded(
-                  flex: 2,
-                  child: LabeledValue(
-                    Utils.toStringDate(reservation.time),
-                    icon: Icon(Icons.calendar_today),
-                    padding: EdgeInsets.only(),
-                  )),
-              Expanded(
-                  flex: 2,
-                  child: LabeledValue(
-                    Utils.toStringShortTime(reservation.time),
-                    icon: Icon(Icons.timer),
-                    padding: EdgeInsets.only(),
-                  )),
-              Expanded(
-                  flex: 2,
-                  child: LabeledValue(
-                    reservation.duration,
-                    icon: Icon(Icons.timelapse),
-                    padding: EdgeInsets.only(),
-                  )),
-            ],
-          ),
-          subtitle: Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Expanded(
+      child: Hero(
+        tag: 'reservation_${reservation.id.toString()}',
+        child: Container(
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.white),
+              borderRadius: BorderRadius.circular(16.0)),
+          child: InkWell(
+            onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return new ReservationDetailPage(reservation: reservation);
+                  },
+                )),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Expanded(
                     flex: 1,
-                    child: LabeledValue(
-                      reservation.persons.toString(),
-                      icon: Icon(Icons.person),
-                      padding: EdgeInsets.only(),
-                    )),
-                Expanded(
-                    flex: 5,
-                    child: LabeledValue(
-                      reservation.placeName ?? "",
-                      icon: Icon(Icons.place),
-                    )),
-              ],
+                    child: new ReservationStatusIcon(reservation: reservation),
+                  ),
+                  Expanded(
+                    flex: 7,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Expanded(
+                                flex: 2,
+                                child: LabeledValue(
+                                  Utils.toStringDate(reservation.time),
+                                  icon: Icon(Icons.calendar_today),
+                                  padding: EdgeInsets.only(),
+                                )),
+                            Expanded(
+                                flex: 2,
+                                child: LabeledValue(
+                                  Utils.toStringShortTime(reservation.time),
+                                  icon: Icon(Icons.timer),
+                                  padding: EdgeInsets.only(),
+                                )),
+                            Expanded(
+                                flex: 2,
+                                child: LabeledValue(
+                                  reservation.duration,
+                                  icon: Icon(Icons.timelapse),
+                                  padding: EdgeInsets.only(),
+                                )),
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Expanded(
+                                flex: 1,
+                                child: LabeledValue(
+                                  reservation.persons.toString(),
+                                  icon: Icon(Icons.person),
+                                  padding: EdgeInsets.only(),
+                                )),
+                            Expanded(
+                                flex: 5,
+                                child: LabeledValue(
+                                  reservation.placeName ?? "",
+                                  icon: Icon(Icons.place),
+                                )),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

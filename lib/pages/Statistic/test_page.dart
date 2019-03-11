@@ -2,12 +2,12 @@ import 'package:app/app/app.dart';
 import 'package:app/services/authorization.dart';
 import 'package:flutter/material.dart';
 
-class TestPage extends StatefulWidget {
+class ProfilePage extends StatefulWidget {
   @override
-  State<TestPage> createState() => new _TestPageState();
+  State<ProfilePage> createState() => new _ProfilePageState();
 }
 
-class _TestPageState extends State<TestPage> {
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
