@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:app/app/app.dart';
 import 'package:app/components/Common/leading_icon.dart';
 import 'package:app/components/Places/open_dropdown.dart';
+import 'package:app/components/Places/place_detail.dart';
+import 'package:app/components/Places/place_map.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
@@ -75,7 +77,6 @@ class _PlaceDetailState extends State<PlaceDetailPage>
   MapView mapView = new MapView();
   final PlaceSimpleDto place;
   PlaceBloc placeBloc;
-  var staticMapProvider = new StaticMapProvider(App.googleApiKeys);
   _PlaceDetailState(this.place, this.placeBloc);
 
   showMap() {
@@ -115,14 +116,6 @@ class _PlaceDetailState extends State<PlaceDetailPage>
 
   @override
   Widget build(BuildContext context) {
-    var mapUri = staticMapProvider.getStaticUri(
-        new Location(
-            double.parse(place.address.lat), double.parse(place.address.lng)),
-        13,
-        width: 450,
-        height: 350,
-        mapType: StaticMapViewType.roadmap);
-
     buttonController.addListener(() {
       if (buttonController.isCompleted) {
         Navigator.push(context,
@@ -223,29 +216,15 @@ class _PlaceDetailState extends State<PlaceDetailPage>
                                 Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: buildPlaceInfo(),
+                                    child: PlaceInfo(place: widget.place),
                                   ),
                                   flex: 1,
                                 ),
                                 Expanded(
-                                  flex: 1,
-                                  child: InkWell(
-                                    onTap: () => _launchMapsUrl(
-                                        double.parse(place.address.lat),
-                                        double.parse(place.address.lng)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: new CachedNetworkImage(
-                                        imageUrl:
-                                            mapUri.toString() + '&scale=2',
-                                        placeholder: (context, url) =>
-                                            new CircularProgressIndicator(),
-                                        errorWidget: (context, url, error) =>
-                                            new Icon(Icons.error),
-                                      ),
-                                    ),
-                                  ),
-                                )
+                                    flex: 1,
+                                    child: PlaceMap(
+                                      place: place,
+                                    ))
                               ],
                             ),
                             Padding(

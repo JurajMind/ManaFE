@@ -406,6 +406,18 @@ class ApiClient {
         .getUri(url)
         .then((data) => PersonInfoDto.fromJson(data.data));
   }
+
+  Future<ReservationDetailDto> reservationDetail(int id) async {
+    var url = Uri.https(baseUrl, '/api/Reservations/$id/Detail');
+    return await _dio
+        .getUri(url)
+        .then((data) => ReservationDetailDto.fromJson(data.data));
+  }
+
+  Future cancelReservation(int id) async {
+    var url = Uri.https(baseUrl, '/api/Reservations/$id/UpdateState');
+    return await _dio.post(url.toString(), data: 1);
+  }
 }
 
 class ColorDto {

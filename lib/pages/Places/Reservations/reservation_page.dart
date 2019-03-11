@@ -174,13 +174,13 @@ class _ReservationPageState extends State<ReservationPage> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
                                     LabeledValue(
-                                      label: 'Date:',
-                                      value: formatDate(
+                                      formatDate(
                                           currentDate, [d, '.', m, '.', yyyy]),
+                                      label: 'Date:',
                                     ),
                                     LabeledValue(
+                                      selectedTimeLabel,
                                       label: 'Time:',
-                                      value: selectedTimeLabel,
                                     ),
                                   ],
                                 ),
@@ -189,15 +189,12 @@ class _ReservationPageState extends State<ReservationPage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
+                                    LabeledValue(selectedPersons.toString(),
+                                        label: 'Persons:'),
                                     LabeledValue(
-                                      label: 'Persons:',
-                                      value: selectedPersons.toString(),
-                                    ),
-                                    LabeledValue(
-                                      label: 'Duration:',
-                                      value: slotDurationString(
-                                          selectedDuration + durations[0]),
-                                    ),
+                                        slotDurationString(
+                                            selectedDuration + durations[0]),
+                                        label: 'Duration:'),
                                   ],
                                 )
                               ],
