@@ -35,7 +35,7 @@ def keystorePropertiesFile = rootProject.file("key.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
-def devPropertiesFile = rootProject.file("debug.properties")
+def devPropertiesFile = rootProject.file("key.properties")
 def devProperties = new Properties()
 devProperties.load(new FileInputStream(devPropertiesFile))
 
@@ -52,8 +52,8 @@ android {
         applicationId "com.manapipes.app"
         minSdkVersion 18
         targetSdkVersion 27
-        versionCode 7
-        versionName "1.6"
+        versionCode 8
+        versionName "1.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 

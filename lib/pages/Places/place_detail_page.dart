@@ -123,8 +123,8 @@ class _PlaceDetailState extends State<PlaceDetailPage>
       }
     });
 
-    return new Container(
-        child: new CustomScrollView(
+    return new Scaffold(
+        body: new CustomScrollView(
       slivers: <Widget>[
         new SliverAppBar(
           backgroundColor: Colors.black,

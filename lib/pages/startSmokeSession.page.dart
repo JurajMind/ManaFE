@@ -104,73 +104,75 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
   Widget build(BuildContext context) {
     final smokeSessionBloc = DataProvider.getSmokeSession(context);
 
-    return new SafeArea(
-      top: false,
-      child: AnimatedBuilder(
-        animation: _colorTween,
-        builder: (context, child) => CustomPaint(
-              painter: CirclePainter(_colorTween.value),
-              child: new Column(
-                children: <Widget>[
-                  new Expanded(flex: 1, child: Container()),
-                  new Expanded(
-                    flex: 4,
-                    child: Hero(
-                      tag: 'Circle',
-                      child: new Container(
-                          child: SizedBox(
-                        height: getCircleRadius(context) * 2,
-                        width: getCircleRadius(context) * 2,
-                        child: GestureDetector(
-                            onTap: () {
-                              _openAddEntryDialog(context, smokeSessionBloc);
-                            },
-                            child: new Container(
-                              child: new Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  new Text(
-                                    'START',
-                                    style: Theme.of(context).textTheme.title,
-                                  ),
-                                  new Icon(
-                                    Icons.play_arrow,
-                                    size: 60.0,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
-                            )),
-                      )),
-                    ),
-                  ),
-                  new Expanded(
+    return Scaffold(
+      body: new SafeArea(
+        top: false,
+        child: AnimatedBuilder(
+          animation: _colorTween,
+          builder: (context, child) => CustomPaint(
+                painter: CirclePainter(_colorTween.value),
+                child: new Column(
+                  children: <Widget>[
+                    new Expanded(flex: 1, child: Container()),
+                    new Expanded(
                       flex: 4,
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              height:
-                                  MediaQuery.of(context).size.height / 2 - 60,
-                              child: Column(
-                                children: <Widget>[
-                                  Text(
-                                    'NEAREST PLACE',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.green[50]),
-                                  ),
-                                  Expanded(
-                                      child: Carroussel(
-                                          navigateToDetail: navigateToPlace)),
-                                ],
+                      child: Hero(
+                        tag: 'Circle',
+                        child: new Container(
+                            child: SizedBox(
+                          height: getCircleRadius(context) * 2,
+                          width: getCircleRadius(context) * 2,
+                          child: GestureDetector(
+                              onTap: () {
+                                _openAddEntryDialog(context, smokeSessionBloc);
+                              },
+                              child: new Container(
+                                child: new Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    new Text(
+                                      'START',
+                                      style: Theme.of(context).textTheme.title,
+                                    ),
+                                    new Icon(
+                                      Icons.play_arrow,
+                                      size: 60.0,
+                                      color: Colors.white,
+                                    )
+                                  ],
+                                ),
                               )),
-                        ],
-                      ))
-                ],
+                        )),
+                      ),
+                    ),
+                    new Expanded(
+                        flex: 4,
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.height / 2 - 60,
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(
+                                      'NEAREST PLACE',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.green[50]),
+                                    ),
+                                    Expanded(
+                                        child: Carroussel(
+                                            navigateToDetail: navigateToPlace)),
+                                  ],
+                                )),
+                          ],
+                        ))
+                  ],
+                ),
               ),
-            ),
+        ),
       ),
     );
   }

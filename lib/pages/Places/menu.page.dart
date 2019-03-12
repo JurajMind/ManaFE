@@ -37,8 +37,8 @@ class _MenuPageState extends State<MenuPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
-        child: PageView(
+      child: Scaffold(
+        body: PageView(
             pageSnapping: true,
             controller: _pageController,
             children: <Widget>[
