@@ -52,36 +52,32 @@ class MixologyListState extends State<MixologyList> {
   Widget build(BuildContext context) {
     final mixologyBloc = DataProvider.getMixology(context);
 
-    return SafeArea(
-      child: Column(
-        children: <Widget>[
-          SizedBox(
-            height: 50.0,
-            child: AppBar(
-              actions: <Widget>[  
-                curentView == 0
-                    ? IconButton(
-                        icon: Icon(Icons.add),
-                        onPressed: () => showTobaccoDialog(
-                            context: context, mixologyBloc: mixologyBloc),
-                      )
-                    : Container()
-              ],
-              title: Center(
-                child: BigSelect(curentView: curentView,labels:labels,onSelected: (val){setState(() {
-                 curentView =  val;
-                });},)
-              ),
-              backgroundColor: Colors.transparent,
-              centerTitle: true,
-            ),
-          ),
-          new Expanded(
-            child: getContent(mixologyBloc),
-          )
-        ],
-      ),
-    );
+    return Scaffold(
+        appBar: AppBar(
+          actions: <Widget>[
+            curentView == 0
+                ? IconButton(
+                    icon: Icon(Icons.add),
+                    onPressed: () => showTobaccoDialog(
+                        context: context, mixologyBloc: mixologyBloc),
+                  )
+                : Container()
+          ],
+          title: Center(
+              child: BigSelect(
+            curentView: curentView,
+            labels: labels,
+            onSelected: (val) {
+              setState(() {
+                curentView = val;
+              });
+            },
+          )),
+          backgroundColor: Colors.transparent,
+          centerTitle: true,
+        ),
+        backgroundColor: Colors.black,
+        body: getContent(mixologyBloc));
   }
 
   Widget getContent(MixologyBloc mixologyBloc) {

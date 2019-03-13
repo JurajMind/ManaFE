@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget myBottomBar() => new Container(
         child: Material(
-          color: Colors.transparent,
+          color: new Color.fromARGB(230, 0, 0, 0),
           child: BackdropFilter(
             filter: new ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
             child: Ink(
@@ -169,16 +169,17 @@ class _HomePageState extends State<HomePage> {
             !await navigatorKeys[_currentIndex].currentState.maybePop();
           }
         },
-        child: new Container(
+        child: new SafeArea(
+            top: false,
             child: Stack(children: <Widget>[
-          _buildBody(),
-          Positioned(
-              bottom: -10,
-              height: 55,
-              width: MediaQuery.of(context).size.width,
-              child: SizedBox(height: 55, child: myBottomBar())),
-          _buildCenter(),
-        ])));
+              _buildBody(),
+              Positioned(
+                  bottom: -10,
+                  height: 55,
+                  width: MediaQuery.of(context).size.width,
+                  child: SizedBox(height: 55, child: myBottomBar())),
+              _buildCenter(),
+            ])));
   }
 
   _buildCenter() {

@@ -13,7 +13,6 @@ import 'package:app/pages/SmokeSession/tobacco_widget.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:flutter/services.dart';
 import 'package:openapi/api.dart';
 
 class SmokeSessionPage extends StatefulWidget {
@@ -70,14 +69,6 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    StreamBuilder<int> builder = new StreamBuilder(
-      stream: dataProvider.smokeSessionBloc.smokeState,
-      builder: (context, asyncSnapshot) {
-        return asyncSnapshot.data != 0
-            ? new CircularProgressIndicator()
-            : Container();
-      },
-    );
 
     StreamBuilder<SmokeSessionMetaDataDto> tobaccoMetaDataBuilder =
         new StreamBuilder(
@@ -174,7 +165,8 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
       },
     );
 
-    return new Container(
+    return new Material(
+      color: Colors.black,
       child: Column(
         children: <Widget>[
           new Expanded(
