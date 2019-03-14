@@ -100,6 +100,7 @@ class _PlacePageState extends State<PlacePage> {
 
     var personBloc = DataProvider.getData(context).personBloc;
     return Scaffold(
+      bottomNavigationBar: SizedBox(height: 45),
       body: SafeArea(
         top: false,
         child: new CustomScrollView(
