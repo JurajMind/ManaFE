@@ -80,10 +80,9 @@ class _AppWidgetState extends State<AppWidget> {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: App.supportedLocales(),
-      navigatorKey: navigatorKey,
       title: 'Manapipes',
       home: getMainPage(),
-      onGenerateRoute: App.router.generator,
+      // onGenerateRoute: App.router.generator,
       theme: buildDarkTheme(),
     );
   }

@@ -495,7 +495,7 @@ class _GearScrollHomeState extends State<GearScrollHome> {
   bool _handleScrollNotification(
       ScrollNotification notification, double midScrollOffset) {
     if (notification.depth == 0 && notification is ScrollUpdateNotification) {
-      if (_scrollController.position.pixels >= _kAppBarMaxHeight) {
+      if (_scrollController.position.pixels >= (_kAppBarMaxHeight - 55)) {
         setState(() {
           innerScrollPhysics = ClampingScrollPhysics();
         });

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:app/models/App/Gear/gear_model.dart';
@@ -64,6 +65,7 @@ class ApiClient {
 
   _handleAuthError(
       String tokenHeader, RequestOptions options, String token) async {
+      log('error handling');
     if (tokenHeader != options.headers["Authorization"]) {
       options.headers["Authorization"] = tokenHeader;
       //repeat

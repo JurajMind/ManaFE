@@ -1,60 +1,76 @@
 import 'package:app/app/app.dart';
+import 'package:app/pages/Statistic/hero_test_page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
-class ProfilePage extends StatefulWidget {
+class TestPage extends StatefulWidget {
   @override
-  State<ProfilePage> createState() => new _ProfilePageState();
+  State<TestPage> createState() => new _TestPageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _TestPageState extends State<TestPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black,
-      child: Column(
-        children: <Widget>[
-          AppBar(
-            title: Text('Test'),
-            backgroundColor: Colors.black,
-          ),
-          Expanded(
-            child: Center(
-              child: Column(
-                children: <Widget>[
-                  OutlineButton.icon(
-                    borderSide: BorderSide(color: Colors.white),
-                    icon: Icon(
-                      Icons.delete_sweep,
-                      color: Colors.red,
-                    ),
-                    label: Text('Test date format'),
-                    onPressed: () async {
-                      var date = '2019-03-04T22:20:49.595651Z';
-                      var a = DateTime.parse(date);
-                    },
-                  ),
-                  OutlineButton.icon(
-                    borderSide: BorderSide(color: Colors.white),
-                    icon: Icon(
-                      Icons.delete_sweep,
-                      color: Colors.red,
-                    ),
-                    label: Text('Test token recovery'),
-                    onPressed: () async {
-                      var auth = new Authorize();
-                      auth.messToken();
+timeDilation = 3.0; 
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Test'),
+        backgroundColor: Colors.black,
+      ),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            OutlineButton.icon(
+              borderSide: BorderSide(color: Colors.white),
+              icon: Icon(
+                Icons.delete_sweep,
+                color: Colors.red,
+              ),
+              label: Text('Test date format'),
+              onPressed: () async {
+                var date = '2019-03-04T22:20:49.595651Z';
+                var a = DateTime.parse(date);
+              },
+            ),
+            OutlineButton.icon(
+              borderSide: BorderSide(color: Colors.white),
+              icon: Icon(
+                Icons.delete_sweep,
+                color: Colors.red,
+              ),
+              label: Text('Test token recovery'),
+              onPressed: () async {
+                var auth = new Authorize();
+                auth.messToken();
 
-                      var request = App.http
-                          .getPersonInitData()
-                          .then((v) => debugPrint('refreshed'));
-                    },
-                  ),
-                ],
+                var request = App.http
+                    .getPersonInitData()
+                    .then((v) => debugPrint('refreshed'));
+              },
+            ),
+            OutlineButton.icon(
+              borderSide: BorderSide(color: Colors.white),
+              icon: Icon(
+                Icons.delete_sweep,
+                color: Colors.red,
+              ),
+              label: Text('Corupt tokken'),
+              onPressed: () async {
+                var auth = new Authorize();
+                await auth.messToken();
+              },
+            ),
+            Hero(
+              tag: "DemoTag",
+              child: IconButton(
+                icon: Icon(Icons.add, size: 70),
+                onPressed: () => Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Hero2())),
               ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }
