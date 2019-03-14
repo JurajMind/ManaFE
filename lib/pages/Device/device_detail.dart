@@ -58,7 +58,7 @@ class DeviceDetailPage extends StatelessWidget {
                 fit: StackFit.expand,
                 children: <Widget>[
                   Hero(
-                    tag: "pic",
+                    tag: "${device.code}_hero",
                     child: new DecoratedBox(
                         decoration: new BoxDecoration(
                           gradient: new LinearGradient(

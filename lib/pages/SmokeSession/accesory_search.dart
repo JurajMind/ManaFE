@@ -24,8 +24,8 @@ class PipeAccesorySearch extends StatefulWidget {
 
 class PipeAccesorySearchState extends State<PipeAccesorySearch> {
   BehaviorSubject<List<PipeAccesorySimpleDto>> searchResult =
-      new BehaviorSubject<List<PipeAccesorySimpleDto>>
-      .seeded(new List<PipeAccesorySimpleDto>());
+      new BehaviorSubject<List<PipeAccesorySimpleDto>>.seeded(
+          new List<PipeAccesorySimpleDto>());
 
   bool loading = false;
 
@@ -57,12 +57,15 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
             AppBar(
               backgroundColor: Colors.black,
               actions: <Widget>[
-                this.loading
-                    ? CircularProgressIndicator()
-                    : IconButton(
-                        icon: Icon(Icons.search),
-                        onPressed: () => submitSearch(controller.text),
-                      )
+                Hero(
+                  tag: "${widget.type}_search_icon",
+                  child: this.loading
+                      ? CircularProgressIndicator()
+                      : IconButton(
+                          icon: Icon(Icons.search),
+                          onPressed: () => submitSearch(controller.text),
+                        ),
+                )
               ],
               centerTitle: true,
               title: TextField(

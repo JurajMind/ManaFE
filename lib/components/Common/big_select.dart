@@ -1,32 +1,37 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class BigSelect extends StatelessWidget {
-
   final Map<int, String> labels;
   final int curentView;
- final ValueChanged<int> onSelected;
-  const BigSelect({Key key, this.labels, this.curentView, this.onSelected}) : super(key: key);
+  final ValueChanged<int> onSelected;
+  const BigSelect({Key key, this.labels, this.curentView, this.onSelected})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-                  onTap: () => _showDialog(context),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Text(labels[curentView]),
-                      Icon(Icons.arrow_drop_down)
-                    ],
-                  ),
-                );
+    return BackdropFilter(
+      filter: new ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+      child: InkWell(
+        onTap: () => _showDialog(context),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(labels[curentView]),
+            Icon(Icons.arrow_drop_down)
+          ],
+        ),
+      ),
+    );
   }
 
-    void _showDialog(BuildContext context) {
+  void _showDialog(BuildContext context) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return Material(
-            color: Colors.transparent,
+            color: Color.fromARGB(150, 0, 0, 0),
             child: InkWell(
               onTap: () => Navigator.of(context).pop(),
               child: Center(
@@ -47,10 +52,10 @@ class BigSelect extends StatelessWidget {
         });
   }
 
-    InkWell mixTypeSelector(BuildContext context, int index) {
+  InkWell mixTypeSelector(BuildContext context, int index) {
     return InkWell(
       onTap: () {
-       onSelected(index);
+        onSelected(index);
         Navigator.of(context).pop();
       },
       child: Padding(
@@ -60,5 +65,4 @@ class BigSelect extends StatelessWidget {
       ),
     );
   }
-
 }

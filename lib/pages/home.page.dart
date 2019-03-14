@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    
+
     tabs = new List<Widget>(5);
     tabFocusNodes = new List<FocusScopeNode>.generate(
       5,
@@ -219,22 +219,19 @@ class _HomePageState extends State<HomePage> {
   }
 
   _buildBody() {
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: new IndexedStack(
-            index: _currentIndex,
-            children: <Widget>[
-              _buildOffstageNavigator(new MixologyList(), 0),
-              _buildOffstageNavigator(new PlacePage(), 1),
-              _buildOffstageNavigator(
-                  new StartSmokeSessionPage(callback: _setActiveTab), 2),
-              _buildOffstageNavigator(new GearPage(), 3),
-              _buildOffstageNavigator(new ProfilePage(), 4),
-            ],
-          ),
-        ),
-      ],
+    return Material(
+      color: Colors.transparent,
+      child: new IndexedStack(
+        index: _currentIndex,
+        children: <Widget>[
+          _buildOffstageNavigator(new MixologyList(), 0),
+          _buildOffstageNavigator(new PlacePage(), 1),
+          _buildOffstageNavigator(
+              new StartSmokeSessionPage(callback: _setActiveTab), 2),
+          _buildOffstageNavigator(new GearPage(), 3),
+          _buildOffstageNavigator(new ProfilePage(), 4),
+        ],
+      ),
     );
   }
 
@@ -265,13 +262,6 @@ class TabNavigator extends StatelessWidget {
   final GlobalKey<NavigatorState> navigatorKey;
   final Widget tabItem;
 
-  void _push(BuildContext context, String route) {
-    var routeBuilders = _routeBuilders(context);
-
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => routeBuilders[route](context)));
-  }
-
   Map<String, WidgetBuilder> _routeBuilders(
     BuildContext context,
   ) {
@@ -281,10 +271,11 @@ class TabNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var routeBuilders = _routeBuilders(context);
-
+    var observable = HeroController();
     return Navigator(
         key: navigatorKey,
         initialRoute: '/',
+        observers: [observable],
         onGenerateRoute: (routeSettings) {
           return MaterialPageRoute(
               builder: (context) => routeBuilders[routeSettings.name](context));

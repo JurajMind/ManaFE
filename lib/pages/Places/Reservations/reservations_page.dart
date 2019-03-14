@@ -46,6 +46,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Container(height: 55, color: Colors.transparent),
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,

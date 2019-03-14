@@ -75,29 +75,32 @@ class SmokeSessionCarouselItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: InkWell(
-        onTap: () => Navigator.of(context).pushReplacement(
-                new MaterialPageRoute(builder: (BuildContext context) {
-              return new SmokeSessionPage(sessionId: smokeSession.sessionId);
-            })),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(20.0),
-            border: new Border.all(
-                color: const Color.fromRGBO(221, 221, 221, 1.0), width: 2.0),
+    return Hero(
+      tag: "${smokeSession.sessionId}_session",
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: InkWell(
+          onTap: () => Navigator.of(context).pushReplacement(
+                  new MaterialPageRoute(builder: (BuildContext context) {
+                return new SmokeSessionPage(sessionId: smokeSession.sessionId);
+              })),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(20.0),
+              border: new Border.all(
+                  color: const Color.fromRGBO(221, 221, 221, 1.0), width: 2.0),
+            ),
+            child: Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(smokeSession.device.name,
+                    style: Theme.of(context).textTheme.display1),
+                Text(smokeSession.sessionId),
+              ],
+            )),
           ),
-          child: Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(smokeSession.device.name,
-                  style: Theme.of(context).textTheme.display1),
-              Text(smokeSession.sessionId),
-            ],
-          )),
         ),
       ),
     );

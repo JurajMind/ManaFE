@@ -165,80 +165,78 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
       },
     );
 
-    return new Material(
-      color: Colors.black,
-      child: Column(
-        children: <Widget>[
-          new Expanded(
-            child: CustomScrollView(
-              physics: new SnapScrollPhysic(snaps: [
-                size.height * 0.75,
-                size.width + 40,
-                size.height * 0.75 + 40
-              ]),
-              controller: scrollController,
-              shrinkWrap: false,
-              slivers: <Widget>[
-                new SliverList(
-                  delegate: new SliverChildListDelegate(<Widget>[
-                    AnimationsPicker(),
-                    SizedBox(
-                      height: 30.0,
-                      child: Center(
-                        child: Icon(Icons.arrow_drop_up),
-                      ),
+    return Column(
+      children: <Widget>[
+        new Expanded(
+          child: CustomScrollView(
+            physics: new SnapScrollPhysic(snaps: [
+              size.height * 0.75,
+              size.width + 40,
+              size.height * 0.75 + 40
+            ]),
+            controller: scrollController,
+            shrinkWrap: false,
+            slivers: <Widget>[
+              new SliverList(
+                delegate: new SliverChildListDelegate(<Widget>[
+                  AnimationsPicker(),
+                  SizedBox(
+                    height: 30.0,
+                    child: Center(
+                      child: Icon(Icons.arrow_drop_up),
                     ),
-                    GestureDetector(
-                      child: SizedBox(
-                          height: size.width,
-                          child: StreamBuilder<StandSettings>(
-                              stream:
-                                  dataProvider.smokeSessionBloc.standSettings,
-                              builder: (context, snapshot) {
-                                return SmokeColorWheel(
-                                  onColorChanged: (color) {
-                                    dataProvider.smokeSessionBloc
-                                        .setColor(color.toColor());
-                                  },
-                                  color: snapshot?.data?.idle?.color,
-                                );
-                              })),
+                  ),
+                  GestureDetector(
+                    child: SizedBox(
+                        height: size.width,
+                        child: StreamBuilder<StandSettings>(
+                            stream: dataProvider.smokeSessionBloc.standSettings,
+                            builder: (context, snapshot) {
+                              return SmokeColorWheel(
+                                onColorChanged: (color) {
+                                  dataProvider.smokeSessionBloc
+                                      .setColor(color.toColor());
+                                },
+                                color: snapshot?.data?.idle?.color,
+                              );
+                            })),
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                    child: Center(
+                      child: Icon(Icons.arrow_drop_down),
                     ),
-                    SizedBox(
-                      height: 30.0,
-                      child: Center(
-                        child: Icon(Icons.arrow_drop_down),
-                      ),
+                  ),
+                  SizedBox(
+                    height: size.height,
+                    child: Column(
+                      children: <Widget>[
+                        Hero(
+                            tag: "${widget.sessionId}_session",
+                            child: statisticBuilder),
+                        tobaccoMetaDataBuilder,
+                        metadataBuilder,
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: new RoundedButton(
+                            child: Text('REVIEW'),
+                            onTap: () {},
+                            buttonColor: Colors.transparent,
+                            borderWidth: 1.0,
+                            bottomMargin: 1.0,
+                            height: 40.0,
+                            width: (MediaQuery.of(context).size.width) * 0.8,
+                          ),
+                        )
+                      ],
                     ),
-                    SizedBox(
-                      height: size.height,
-                      child: Column(
-                        children: <Widget>[
-                          statisticBuilder,
-                          tobaccoMetaDataBuilder,
-                          metadataBuilder,
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: new RoundedButton(
-                              child: Text('REVIEW'),
-                              onTap: () {},
-                              buttonColor: Colors.transparent,
-                              borderWidth: 1.0,
-                              bottomMargin: 1.0,
-                              height: 40.0,
-                              width: (MediaQuery.of(context).size.width) * 0.8,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ]),
-                )
-              ],
-            ),
-          )
-        ],
-      ),
+                  ),
+                ]),
+              )
+            ],
+          ),
+        )
+      ],
     );
   }
 

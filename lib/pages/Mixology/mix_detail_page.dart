@@ -103,13 +103,9 @@ class MixDetailPageState extends State<MixDetailPage> {
               centerTitle: true,
               title: Hero(
                 tag: "mix_hero_${widget.mix.id}",
-                child: Container(
-                  color: Colors.black,
-                  child: Text(
-                    widget.mix.name ?? 'No name',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
-                  ),
+                child: Text(
+                  widget.mix.name ?? 'No name',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
                 ),
               ),
               background: Container(

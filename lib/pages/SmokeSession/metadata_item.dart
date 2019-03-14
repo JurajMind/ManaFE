@@ -59,15 +59,18 @@ class MetadataItem extends StatelessWidget {
                 flex: 4,
               ),
               Expanded(
-                child: IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () => showSearchDialog(
-                      context: context,
-                      child: new PipeAccesorySearch(
-                        type: type,
-                        searchType: searchType,
-                        ownAccesories: pipeAccesories,
-                      )),
+                child: Hero(
+                  tag: "${type}_search_icon",
+                  child: IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () => showSearchDialog(
+                        context: context,
+                        child: new PipeAccesorySearch(
+                          type: type,
+                          searchType: searchType,
+                          ownAccesories: pipeAccesories,
+                        )),
+                  ),
                 ),
                 flex: 1,
               )

@@ -26,7 +26,9 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
           backgroundColor: Colors.black,
           pinned: true,
           flexibleSpace: Container(),
-          title: Text(widget.pipeAccesory.name),
+          title: Hero(
+              tag: '${widget.pipeAccesory.id}_name',
+              child: Text(widget.pipeAccesory.name)),
           bottom: PreferredSize(
               preferredSize: Size.fromHeight(20),
               child: Text(widget.pipeAccesory.brand)),

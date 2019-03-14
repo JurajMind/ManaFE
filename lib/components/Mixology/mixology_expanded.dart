@@ -2,6 +2,7 @@ import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/pages/Mixology/mix_detail_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:openapi/api.dart';
 
 class MixCardExpanded extends StatefulWidget {
@@ -18,6 +19,7 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
   bool expanded = false;
   @override
   Widget build(BuildContext context) {
+    //timeDilation = 6;
     return SingleChildScrollView(
       child: GestureDetector(
         onTap: () => Navigator.push(
@@ -126,13 +128,13 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
   List<Widget> _createTobaccoRow(TobaccoMixSimpleDto mix) {
     return mix.tobaccos.map((item) {
       return Padding(
-        padding: const EdgeInsets.only(left:4.0,right: 4.0),
+        padding: const EdgeInsets.only(left: 4.0, right: 4.0),
         child: new Column(
           children: <Widget>[
             Text(
               item.tobacco?.name ?? 'd',
-              style:
-                  new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+              style: new TextStyle(
+                  fontWeight: FontWeight.bold, color: Colors.black),
             ),
             Text(
               item.tobacco?.brand ?? 'b',

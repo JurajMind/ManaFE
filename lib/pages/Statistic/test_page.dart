@@ -12,7 +12,6 @@ class TestPage extends StatefulWidget {
 class _TestPageState extends State<TestPage> {
   @override
   Widget build(BuildContext context) {
-timeDilation = 3.0; 
     return Scaffold(
       appBar: AppBar(
         title: Text('Test'),

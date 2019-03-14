@@ -233,7 +233,7 @@ class _PlacePageState extends State<PlacePage> {
           height: 60.0,
           width: 60.0,
           child: Hero(
-            tag: '_picture',
+            tag: '${data.friendlyUrl}_place',
             child: new Image(
               image: new CachedNetworkImageProvider(
                   Extensions.getPlaceImage(data)),
