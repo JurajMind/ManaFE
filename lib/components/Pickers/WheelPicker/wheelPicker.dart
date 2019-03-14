@@ -42,62 +42,31 @@ class WheelPicker extends StatelessWidget {
         _listViewHeight = 3 * itemExtent,
         stringItems = null,
         tupleItems = null,
+        disableItems = null,
         super(key: key);
 
   WheelPicker.string({
     Key key,
     @required int initialValue,
-    @required this.minValue,
-    @required this.maxValue,
     @required this.onChanged,
     @required this.stringItems,
     this.itemExtent = DEFAULT_ITEM_EXTENT,
     this.listViewWidth = DEFAULT_LISTVIEW_WIDTH,
+    this.disableItems,
     this.step = 1,
-  })  : assert(initialValue != null),
-        assert(minValue != null),
-        assert(maxValue != null),
-        assert(maxValue > minValue),
-        assert(initialValue >= minValue && initialValue <= maxValue),
-        assert(step > 0),
+  })  : assert(stringItems != null),
         selectedIntValue = initialValue,
+        minValue = 0,
         selectedDecimalValue = -1,
         decimalPlaces = 0,
+        maxValue = stringItems.length,
         intScrollController = new ScrollController(
-          initialScrollOffset: (initialValue - minValue) ~/ step * itemExtent,
+          initialScrollOffset: (initialValue) ~/ step * itemExtent,
         ),
         decimalScrollController = null,
         stringScrollController = null,
         _listViewHeight = 3 * itemExtent,
         tupleItems = null,
-        super(key: key);
-
-  WheelPicker.tuple({
-    Key key,
-    @required int initialValue,
-    @required this.minValue,
-    @required this.maxValue,
-    @required this.onChanged,
-    @required this.tupleItems,
-    this.itemExtent = DEFAULT_ITEM_EXTENT,
-    this.listViewWidth = DEFAULT_LISTVIEW_WIDTH,
-    this.step = 1,
-  })  : assert(initialValue != null),
-        assert(minValue != null),
-        assert(maxValue != null),
-        assert(maxValue > minValue),
-        assert(initialValue >= minValue && initialValue <= maxValue),
-        assert(step > 0),
-        selectedIntValue = initialValue,
-        selectedDecimalValue = -1,
-        decimalPlaces = 0,
-        intScrollController = new ScrollController(
-          initialScrollOffset: (initialValue - minValue) ~/ step * itemExtent,
-        ),
-        decimalScrollController = null,
-        stringScrollController = null,
-        stringItems = null,
-        _listViewHeight = 3 * itemExtent,
         super(key: key);
 
   ///constructor for decimal number picker
@@ -132,6 +101,7 @@ class WheelPicker extends StatelessWidget {
         _listViewHeight = 3 * itemExtent,
         step = 1,
         stringItems = null,
+        disableItems = null,
         stringScrollController = null,
         tupleItems = null,
         super(key: key);
@@ -146,6 +116,8 @@ class WheelPicker extends StatelessWidget {
   final int maxValue;
 
   final List<String> stringItems;
+
+  final List<String> disableItems;
 
   final List<Tuple2<String, bool>> tupleItems;
 
@@ -214,15 +186,64 @@ class WheelPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
 
-    if (tupleItems != null) {
-      return _tupleListView(themeData);
-    }
-    if (decimalPlaces == 0) {
+    if (decimalPlaces == 0 && stringItems == null) {
       return _integerListView(themeData);
     }
     if (stringItems != null) {
-      return _integerListView(themeData);
+      return _stringListView(themeData);
     }
+  }
+
+  Widget _stringListView(ThemeData themeData) {
+    TextStyle defaultStyle = themeData.textTheme.body1;
+    TextStyle selectedStyle =
+        themeData.textTheme.headline.copyWith(color: themeData.accentColor);
+
+    int itemCount = stringItems.length + 3;
+
+    return new NotificationListener(
+      child: new Container(
+        height: _listViewHeight,
+        width: listViewWidth,
+        child: new ListView.builder(
+          controller: intScrollController,
+          itemExtent: itemExtent,
+          itemCount: itemCount,
+          cacheExtent: _calculateCacheExtent(itemCount),
+          itemBuilder: (BuildContext context, int index) {
+            final int value = _intValueFromIndex(index);
+
+            //define special style for selected (middle) element
+            TextStyle itemStyle =
+                value == selectedIntValue ? selectedStyle : defaultStyle;
+
+            var isDisabled = this.disableItems != null &&
+                this.stringItems != null &&
+                this.stringItems.length > value &&
+                value >= 0 &&
+                disableItems.contains(this.stringItems[value]);
+
+            // Item is disabled
+            if (isDisabled) {
+              itemStyle =
+                  itemStyle.copyWith(decoration: TextDecoration.lineThrough);
+            }
+            bool isExtra = index == 0 || value > stringItems.length - 1;
+
+            return isExtra
+                ? new Container() //empty first and last element
+                : new Center(
+                    child: new Text(
+                        stringItems == null
+                            ? value.toString()
+                            : stringItems[value],
+                        style: itemStyle),
+                  );
+          },
+        ),
+      ),
+      onNotification: _onStringNotification,
+    );
   }
 
   Widget _integerListView(ThemeData themeData) {
@@ -245,9 +266,16 @@ class WheelPicker extends StatelessWidget {
             final int value = _intValueFromIndex(index);
 
             //define special style for selected (middle) element
-            final TextStyle itemStyle =
+            TextStyle itemStyle =
                 value == selectedIntValue ? selectedStyle : defaultStyle;
 
+            // Item is disabled
+            if (this.disableItems != null &&
+                this.stringItems != null &&
+                disableItems.contains(this.stringItems[0])) {
+              itemStyle =
+                  itemStyle.copyWith(decoration: TextDecoration.lineThrough);
+            }
             bool isExtra = index == 0 || index == itemCount - 1;
 
             return isExtra
@@ -256,46 +284,8 @@ class WheelPicker extends StatelessWidget {
                     child: new Text(
                         stringItems == null
                             ? value.toString()
-                            : stringItems[value - 1],
+                            : stringItems[value],
                         style: itemStyle),
-                  );
-          },
-        ),
-      ),
-      onNotification: _onIntegerNotification,
-    );
-  }
-
-  Widget _tupleListView(ThemeData themeData) {
-    TextStyle defaultStyle = themeData.textTheme.body1;
-    TextStyle selectedStyle =
-        themeData.textTheme.headline.copyWith(color: themeData.accentColor);
-
-    int itemCount = (maxValue - minValue) ~/ step + 3;
-
-    return new NotificationListener(
-      child: new Container(
-        height: _listViewHeight,
-        width: listViewWidth,
-        child: new ListView.builder(
-          controller: intScrollController,
-          itemExtent: itemExtent,
-          itemCount: itemCount,
-          cacheExtent: _calculateCacheExtent(itemCount),
-          itemBuilder: (BuildContext context, int index) {
-            final int value = _intValueFromIndex(index);
-
-            //define special style for selected (middle) element
-            final TextStyle itemStyle =
-                value == selectedIntValue ? selectedStyle : defaultStyle;
-
-            bool isExtra = index == 0 || index == itemCount - 1;
-
-            return isExtra
-                ? new Container() //empty first and last element
-                : new Center(
-                    child:
-                        new Text(tupleItems[value - 1].item1, style: itemStyle),
                   );
           },
         ),
@@ -341,6 +331,46 @@ class WheelPicker extends StatelessWidget {
           }
         }
         onChanged(newValue);
+      }
+    }
+    return true;
+  }
+
+  bool _onStringNotification(Notification notification) {
+    if (notification is ScrollNotification) {
+      //calculate
+      int intIndexOfMiddleElement =
+          (notification.metrics.pixels + _listViewHeight / 2) ~/ itemExtent;
+      int intValueInTheMiddle = _intValueFromIndex(intIndexOfMiddleElement);
+      intValueInTheMiddle = _normalizeIntegerMiddleValue(intValueInTheMiddle);
+
+      if (_userStoppedScrolling(notification, intScrollController)) {
+        //center selected value
+        animateInt(intValueInTheMiddle);
+      }
+
+      //update selection
+      if (intValueInTheMiddle != selectedIntValue) {
+        num newValue;
+        if (decimalPlaces == 0) {
+          //return integer value
+          newValue = (intValueInTheMiddle);
+        } else {
+          if (intValueInTheMiddle == maxValue) {
+            //if new value is maxValue, then return that value and ignore decimal
+            newValue = (intValueInTheMiddle.toDouble());
+            animateInt(0);
+          } else {
+            //return integer+decimal
+            double decimalPart = _toDecimal(selectedDecimalValue);
+            newValue = ((intValueInTheMiddle + decimalPart).toDouble());
+          }
+        }
+        if (newValue >= stringItems.length) {
+          animateInt(stringItems.length - 1);
+        }
+
+        if (newValue < stringItems.length) onChanged(newValue);
       }
     }
     return true;

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app/Helpers/date_utils.dart';
 import 'package:app/Helpers/day_helper.dart';
+import 'package:app/Helpers/helpers.dart';
 import 'package:app/components/Callendar/calendar_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,9 @@ class Calendar extends StatefulWidget {
   final DayBuilder dayBuilder;
   final bool showChevronsToChangeRange;
   final bool showTodayAction;
+  final bool highlightToday;
   final bool showCalendarPickerIcon;
+  final bool doubleClick;
   final TextStyle dateStyles;
   final DateTime initialCalendarDateOverride;
   final Map<DateTime, List<String>> events;
@@ -32,6 +35,8 @@ class Calendar extends StatefulWidget {
     this.initialCalendarDateOverride,
     this.dateStyles,
     this.events,
+    this.highlightToday: false,
+    this.doubleClick: false,
   });
 
   @override
@@ -47,7 +52,7 @@ class _CalendarState extends State<Calendar> {
   bool isExpanded = false;
   String displayMonth;
   DateTime get selectedDate => _selectedDate;
-
+  bool doubleClick = false;
   void initState() {
     super.initState();
 
@@ -126,6 +131,7 @@ class _CalendarState extends State<Calendar> {
             getDirection(gestureDetails),
         onHorizontalDragEnd: (gestureDetails) => endSwipe(gestureDetails),
         child: new GridView.count(
+          physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           crossAxisCount: 7,
           padding: new EdgeInsets.only(bottom: 0.0),
@@ -181,7 +187,9 @@ class _CalendarState extends State<Calendar> {
               onDateSelected: () => handleSelectedDateAndUserCallback(day),
               date: day,
               dateStyles: configureDateStyle(monthStarted, monthEnded),
-              isSelected: Utils.isSameDay(selectedDate, day),
+              isSelected:
+                  Utils.isSameDay(selectedDate, day) && !this.doubleClick,
+              isTodayhighlighted: widget.highlightToday,
               eventCount: widget.events == null
                   ? 0
                   : widget.events[new DateTime(day.year, day.month, day.day)]
@@ -386,7 +394,14 @@ class _CalendarState extends State<Calendar> {
   void handleSelectedDateAndUserCallback(DateTime day) {
     var firstDayOfCurrentWeek = Utils.firstDayOfWeek(day);
     var lastDayOfCurrentWeek = Utils.lastDayOfWeek(day);
+    var doubleClick = false;
+    if (widget.doubleClick && !this.doubleClick) {
+      if (compareDate(day, _selectedDate) == 0) {
+        doubleClick = true;
+      }
+    }
     setState(() {
+      this.doubleClick = doubleClick;
       _selectedDate = day;
       selectedWeeksDays =
           Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek)
@@ -399,7 +414,11 @@ class _CalendarState extends State<Calendar> {
 
   void _launchDateSelectionCallback(DateTime day) {
     if (widget.onDateSelected != null) {
-      widget.onDateSelected(day);
+      if (doubleClick) {
+        widget.onDateSelected(null);
+      } else {
+        widget.onDateSelected(day);
+      }
     }
   }
 }

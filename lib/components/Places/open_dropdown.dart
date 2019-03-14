@@ -27,7 +27,7 @@ class OpenDropdown extends StatelessWidget {
         var close = df.parse(day.closeTime);
 
         days[i] =
-            "${getShortDayName(i, context)} - ${of.format(open)} - ${of.format(close)}";
+            "${getShortDayName(i, context)} ${of.format(open)}-${of.format(close)}";
       }
     }
 

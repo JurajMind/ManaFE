@@ -10,6 +10,8 @@ class ReservationsTimeSlot {
   
   int capacityLeft = null;
   
+  int tablesLeft = null;
+  
   int maxTable = null;
   
   int id = null;
@@ -19,7 +21,7 @@ class ReservationsTimeSlot {
 
   @override
   String toString() {
-    return 'ReservationsTimeSlot[value=$value, text=$text, reserved=$reserved, capacityLeft=$capacityLeft, maxTable=$maxTable, id=$id, orderIndex=$orderIndex, ]';
+    return 'ReservationsTimeSlot[value=$value, text=$text, reserved=$reserved, capacityLeft=$capacityLeft, tablesLeft=$tablesLeft, maxTable=$maxTable, id=$id, orderIndex=$orderIndex, ]';
   }
 
   ReservationsTimeSlot.fromJson(Map<String, dynamic> json) {
@@ -28,6 +30,7 @@ class ReservationsTimeSlot {
     text = json['Text'];
     reserved = json['Reserved'];
     capacityLeft = json['CapacityLeft'];
+    tablesLeft = json['TablesLeft'];
     maxTable = json['MaxTable'];
     id = json['Id'];
     orderIndex = json['OrderIndex'];
@@ -39,6 +42,7 @@ class ReservationsTimeSlot {
       'Text': text,
       'Reserved': reserved,
       'CapacityLeft': capacityLeft,
+      'TablesLeft': tablesLeft,
       'MaxTable': maxTable,
       'Id': id,
       'OrderIndex': orderIndex

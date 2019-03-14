@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **text** | **String** |  | [optional] [default to null]
 **reserved** | **bool** |  | [optional] [default to null]
 **capacityLeft** | **int** |  | [optional] [default to null]
+**tablesLeft** | **int** |  | [optional] [default to null]
 **maxTable** | **int** |  | [optional] [default to null]
 **id** | **int** |  | [optional] [default to null]
 **orderIndex** | **int** |  | [optional] [default to null]

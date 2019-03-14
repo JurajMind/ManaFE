@@ -62,7 +62,9 @@ class MixDetailPageState extends State<MixDetailPage> {
               a: color.alpha, b: color.blue, g: color.green, r: color.red);
         },
         domainFn: (TobaccoSimpleDto sales, _) => sales.id,
-        measureFn: (TobaccoSimpleDto sales, _) => sales.id,
+        measureFn: (TobaccoSimpleDto sales, _) => widget.mix.tobaccos
+            .firstWhere((t) => t.tobacco.id == sales.id)
+            .fraction,
         data: widget.mix.tobaccos.map((f) => f.tobacco).toList(),
         // Set a label accessor to control the text of the arc label.
         labelAccessorFn: (TobaccoSimpleDto row, _) =>

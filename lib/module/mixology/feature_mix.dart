@@ -1,3 +1,4 @@
+import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mixology_list.dart';
 import 'package:app/module/mixology/mixology_page_new.dart';
@@ -49,7 +50,7 @@ class FeatureMixCreator extends StatelessWidget {
                   width: 60,
                   height: 60,
                   child: CachedNetworkImage(
-                    imageUrl: item.picture,
+                    imageUrl: Extensions.getAbsoluteurl(item.picture),
                     errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
                 ),

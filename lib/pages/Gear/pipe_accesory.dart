@@ -62,57 +62,93 @@ class PipeAccesoryList extends StatelessWidget {
         }
 
         var filtered = snapshot.data.where((s) => s.type == type).toList();
-        if (filtered.length == 0) {
-          return Center(
-            child: Text('No $type'),
-          );
-        }
 
         return ListView.builder(
             controller: scrollController,
             physics: scrollPhysics,
             itemCount: filtered.length + 1,
             itemBuilder: (context, index) {
-              if (index == 0) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
+              if (filtered.length == 0) {
+                return Column(
                   children: <Widget>[
-                    Expanded(
-                        flex: 1,
-                        child: IconButton(
-                          icon: Icon(Icons.search),
-                        )),
-                    Expanded(
-                        flex: 2,
-                        child: Center(
-                          child: BigSelect(
-                            labels: labels,
-                            curentView: currentView,
-                            onSelected: onViewChanged,
-                          ),
-                        )),
-                    Expanded(
-                        flex: 1,
-                        child: IconButton(
-                          icon: Icon(Icons.add),
-                          onPressed: () => showSearchDialog(
-                              bloc: bloc,
-                              context: context,
-                              child: new PipeAccesorySearch(
-                                type: type,
-                                searchType: type,
-                                ownAccesories:
-                                    new List<PipeAccesorySimpleDto>(),
-                              )),
-                        )),
+                    buildSearchRow(bloc, context),
+                    Container(
+                      height: 200,
+                      child: Center(
+                        child: Flex(
+                          direction: Axis.vertical,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Its empty here, add some $type',
+                              style: Theme.of(context).textTheme.display2,
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.add,
+                                size: 50,
+                              ),
+                              onPressed: () => showSearchDialog(
+                                  bloc: bloc,
+                                  context: context,
+                                  child: new PipeAccesorySearch(
+                                    type: type,
+                                    searchType: type,
+                                    ownAccesories:
+                                        new List<PipeAccesorySimpleDto>(),
+                                  )),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
                   ],
                 );
+              }
+
+              if (index == 0) {
+                return buildSearchRow(bloc, context);
               }
               var data = filtered[index - 1];
               return new PipeAccesoryListItem(pipeAccesory: data);
             });
       },
+    );
+  }
+
+  Row buildSearchRow(PersonBloc bloc, BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        Expanded(
+            flex: 1,
+            child: IconButton(
+              icon: Icon(Icons.search),
+            )),
+        Expanded(
+            flex: 2,
+            child: Center(
+              child: BigSelect(
+                labels: labels,
+                curentView: currentView,
+                onSelected: onViewChanged,
+              ),
+            )),
+        Expanded(
+            flex: 1,
+            child: IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () => showSearchDialog(
+                  bloc: bloc,
+                  context: context,
+                  child: new PipeAccesorySearch(
+                    type: type,
+                    searchType: type,
+                    ownAccesories: new List<PipeAccesorySimpleDto>(),
+                  )),
+            )),
+      ],
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:app/app/app.dart';
+import 'package:app/app/app.widget.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Common/bg_painter.dart';
 import 'package:app/components/Common/shadow_text.dart';
@@ -35,6 +36,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final password2Controller = TextEditingController();
 
   var _passwordAutoValidate = false;
+
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -177,15 +180,28 @@ class _RegisterPageState extends State<RegisterPage> {
             Container(
               height: 50,
             ),
-            new RoundedButton(
-              buttonName: 'ACCEPT & REGISTER',
-              onTap: () => register(context),
-              buttonColor: Colors.transparent,
-              borderWidth: 2.0,
-              bottomMargin: 1.0,
-              height: 50.0,
-              width: screenSize.width,
-            ),
+            this.loading
+                ? RoundedButton(
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                    buttonColor: Colors.transparent,
+                    borderWidth: 2.0,
+                    bottomMargin: 1.0,
+                    height: 50.0,
+                    width: screenSize.width,
+                  )
+                : RoundedButton(
+                    buttonName: 'ACCEPT & REGISTER',
+                    onTap: () => register(context),
+                    buttonColor: Colors.transparent,
+                    borderWidth: 2.0,
+                    bottomMargin: 1.0,
+                    height: 50.0,
+                    width: screenSize.width,
+                  ),
             Container(
               height: 200,
             )
@@ -300,7 +316,9 @@ class _RegisterPageState extends State<RegisterPage> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
     }
-
+    setState(() {
+      this.loading = true;
+    });
     data.userName = nameController.text;
     data.email = emailController.text;
     data.password = passwordController.text;
@@ -308,8 +326,7 @@ class _RegisterPageState extends State<RegisterPage> {
     var auth = new Authorize();
     var result = await auth.register(data);
     if (result == null) {
-      Navigator.pushReplacement(context,
-          new MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+      AppWidget.restartApp(context);
     }
   }
 }

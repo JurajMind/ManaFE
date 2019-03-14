@@ -155,4 +155,14 @@ class Utils {
   static DateTime nextWeek(DateTime w) {
     return w.add(new Duration(days: 7));
   }
+
+  static String toStringDate(DateTime w) {
+    var dateFormater = new DateFormat('d.M.yyyy');
+    return dateFormater.format(w);
+  }
+
+  static String toStringShortTime(DateTime w) {
+    var timeFormater = new DateFormat('HH:mm');
+    return timeFormater.format(w);
+  }
 }

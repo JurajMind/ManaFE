@@ -10,6 +10,112 @@ class ReservationApi {
   /// 
   ///
   /// 
+<<<<<<< HEAD
+=======
+  Future<ReservationDto> reservationAddTable(int id, int body) async {
+    Object postBody = body;
+
+    // verify required params are set
+    if(id == null) {
+     throw new ApiException(400, "Missing required param: id");
+    }
+    if(body == null) {
+     throw new ApiException(400, "Missing required param: body");
+    }
+
+    // create path and map variables
+    String path = "/api/Reservations/{id}/AddTable".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+
+    // query params
+    List<QueryParam> queryParams = [];
+    Map<String, String> headerParams = {};
+    Map<String, String> formParams = {};
+
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+
+    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    List<String> authNames = [];
+
+    if(contentType.startsWith("multipart/form-data")) {
+      bool hasFields = false;
+      MultipartRequest mp = new MultipartRequest(null, null);
+      if(hasFields)
+        postBody = mp;
+    }
+    else {
+    }
+
+    var response = await apiClient.invokeAPI(path,
+                                             'POST',
+                                             queryParams,
+                                             postBody,
+                                             headerParams,
+                                             formParams,
+                                             contentType,
+                                             authNames);
+
+    if(response.statusCode >= 400) {
+      throw new ApiException(response.statusCode, response.body);
+    } else if(response.body != null) {
+      return apiClient.deserialize(response.body, 'ReservationDto') as ReservationDto;
+    } else {
+      return null;
+    }
+  }
+  /// 
+  ///
+  /// 
+  Future<bool> reservationCancelReservation(int id) async {
+    Object postBody;
+
+    // verify required params are set
+    if(id == null) {
+     throw new ApiException(400, "Missing required param: id");
+    }
+
+    // create path and map variables
+    String path = "/api/Reservations/{id}/Cancel".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+
+    // query params
+    List<QueryParam> queryParams = [];
+    Map<String, String> headerParams = {};
+    Map<String, String> formParams = {};
+
+    List<String> contentTypes = [];
+
+    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    List<String> authNames = [];
+
+    if(contentType.startsWith("multipart/form-data")) {
+      bool hasFields = false;
+      MultipartRequest mp = new MultipartRequest(null, null);
+      if(hasFields)
+        postBody = mp;
+    }
+    else {
+    }
+
+    var response = await apiClient.invokeAPI(path,
+                                             'POST',
+                                             queryParams,
+                                             postBody,
+                                             headerParams,
+                                             formParams,
+                                             contentType,
+                                             authNames);
+
+    if(response.statusCode >= 400) {
+      throw new ApiException(response.statusCode, response.body);
+    } else if(response.body != null) {
+      return apiClient.deserialize(response.body, 'bool') as bool;
+    } else {
+      return null;
+    }
+  }
+  /// 
+  ///
+  /// 
+>>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
   Future<ReservationDto> reservationCreate(ReservationDto reservationDto) async {
     Object postBody = reservationDto;
 
@@ -320,26 +426,97 @@ class ReservationApi {
   /// 
   ///
   /// 
+<<<<<<< HEAD
   Future<bool> reservationUpdateReservationState(int id, String state) async {
     Object postBody;
+=======
+  Future<ReservationDto> reservationRemoveTable(int id, int body) async {
+    Object postBody = body;
+>>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
 
     // verify required params are set
     if(id == null) {
      throw new ApiException(400, "Missing required param: id");
     }
+<<<<<<< HEAD
     if(state == null) {
      throw new ApiException(400, "Missing required param: state");
     }
 
     // create path and map variables
     String path = "/api/Reservations/{id}/UpdateState/{state}".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString()).replaceAll("{" + "state" + "}", state.toString());
+=======
+    if(body == null) {
+     throw new ApiException(400, "Missing required param: body");
+    }
+
+    // create path and map variables
+    String path = "/api/Reservations/{id}/RemoveTable".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+>>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
 
     // query params
     List<QueryParam> queryParams = [];
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
+<<<<<<< HEAD
     List<String> contentTypes = [];
+=======
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+
+    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    List<String> authNames = [];
+
+    if(contentType.startsWith("multipart/form-data")) {
+      bool hasFields = false;
+      MultipartRequest mp = new MultipartRequest(null, null);
+      if(hasFields)
+        postBody = mp;
+    }
+    else {
+    }
+
+    var response = await apiClient.invokeAPI(path,
+                                             'DELETE',
+                                             queryParams,
+                                             postBody,
+                                             headerParams,
+                                             formParams,
+                                             contentType,
+                                             authNames);
+
+    if(response.statusCode >= 400) {
+      throw new ApiException(response.statusCode, response.body);
+    } else if(response.body != null) {
+      return apiClient.deserialize(response.body, 'ReservationDto') as ReservationDto;
+    } else {
+      return null;
+    }
+  }
+  /// 
+  ///
+  /// 
+  Future<bool> reservationUpdateReservationState(int id, String body) async {
+    Object postBody = body;
+
+    // verify required params are set
+    if(id == null) {
+     throw new ApiException(400, "Missing required param: id");
+    }
+    if(body == null) {
+     throw new ApiException(400, "Missing required param: body");
+    }
+
+    // create path and map variables
+    String path = "/api/Reservations/{id}/UpdateState".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+
+    // query params
+    List<QueryParam> queryParams = [];
+    Map<String, String> headerParams = {};
+    Map<String, String> formParams = {};
+
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+>>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
     List<String> authNames = [];
