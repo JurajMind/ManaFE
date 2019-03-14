@@ -128,12 +128,8 @@ Class | Method | HTTP request | Description
 *ReservationApi* | [**reservationGetReservationDetail**](docs\/ReservationApi.md#reservationgetreservationdetail) | **GET** /api/Reservations/{id}/Detail | 
 *ReservationApi* | [**reservationGetReservationUsage**](docs\/ReservationApi.md#reservationgetreservationusage) | **GET** /api/Reservations/{id}/Usage | 
 *ReservationApi* | [**reservationGetReservations**](docs\/ReservationApi.md#reservationgetreservations) | **GET** /api/Reservations/Reservations | 
-<<<<<<< HEAD
-*ReservationApi* | [**reservationUpdateReservationState**](docs\/ReservationApi.md#reservationupdatereservationstate) | **POST** /api/Reservations/{id}/UpdateState/{state} | 
-=======
 *ReservationApi* | [**reservationRemoveTable**](docs\/ReservationApi.md#reservationremovetable) | **DELETE** /api/Reservations/{id}/RemoveTable | 
 *ReservationApi* | [**reservationUpdateReservationState**](docs\/ReservationApi.md#reservationupdatereservationstate) | **POST** /api/Reservations/{id}/UpdateState | 
->>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
 *SentToDeviceApi* | [**sentToDeviceDefaultAction**](docs\/SentToDeviceApi.md#senttodevicedefaultaction) | **POST** /api/SentToDevice/{id} | 
 *SmokeSessionApi* | [**smokeSessionGetMetaData**](docs\/SmokeSessionApi.md#smokesessiongetmetadata) | **GET** /api/SmokeSession/GetMetaData | 
 *SmokeSessionApi* | [**smokeSessionGetSessionCode**](docs\/SmokeSessionApi.md#smokesessiongetsessioncode) | **GET** /api/SmokeSession/GetSessionCode | 

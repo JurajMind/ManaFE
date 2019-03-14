@@ -1478,17 +1478,6 @@
           "application/xml",
           "text/xml"
         ],
-<<<<<<< HEAD
-        "parameters": [
-          {
-            "name": "sessionCount",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-=======
         "parameters": [{
           "name": "sessionCount",
           "in": "path",
@@ -1496,7 +1485,6 @@
           "type": "integer",
           "format": "int32"
         }],
->>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
         "responses": {
           "200": {
             "description": "OK",
@@ -1523,12 +1511,7 @@
           "application/xml",
           "text/xml"
         ],
-<<<<<<< HEAD
-        "parameters": [
-          {
-=======
         "parameters": [{
->>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
             "name": "id",
             "in": "path",
             "required": true,
@@ -1566,12 +1549,7 @@
           "application/xml",
           "text/xml"
         ],
-<<<<<<< HEAD
-        "parameters": [
-          {
-=======
         "parameters": [{
->>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
             "name": "id",
             "in": "path",
             "required": true,
@@ -2268,12 +2246,7 @@
           "application/xml",
           "text/xml"
         ],
-<<<<<<< HEAD
-        "parameters": [
-          {
-=======
         "parameters": [{
->>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
             "name": "from",
             "in": "query",
             "required": true,
@@ -2379,19 +2352,12 @@
         }
       }
     },
-<<<<<<< HEAD
-    "/api/Reservations/{id}/UpdateState/{state}": {
-=======
     "/api/Reservations/{id}/UpdateState": {
->>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
       "post": {
         "tags": [
           "Reservation"
         ],
         "operationId": "Reservation_UpdateReservationState",
-<<<<<<< HEAD
-        "consumes": [],
-=======
         "consumes": [
           "application/json",
           "text/json",
@@ -2399,19 +2365,13 @@
           "text/xml",
           "application/x-www-form-urlencoded"
         ],
->>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
           "text/xml"
         ],
-<<<<<<< HEAD
-        "parameters": [
-          {
-=======
         "parameters": [{
->>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
             "name": "id",
             "in": "path",
             "required": true,
@@ -2420,17 +2380,11 @@
           },
           {
             "name": "state",
-<<<<<<< HEAD
-            "in": "path",
-            "required": true,
-            "type": "string"
-=======
             "in": "body",
             "required": true,
             "schema": {
               "type": "string"
             }
->>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
           }
         ],
         "responses": {
@@ -2443,8 +2397,6 @@
         }
       }
     },
-<<<<<<< HEAD
-=======
     "/api/Reservations/{id}/Cancel": {
       "post": {
         "tags": [
@@ -2475,7 +2427,6 @@
         }
       }
     },
->>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
     "/api/Reservations/{id}/Detail": {
       "get": {
         "tags": [
@@ -2489,10 +2440,6 @@
           "application/xml",
           "text/xml"
         ],
-<<<<<<< HEAD
-        "parameters": [
-          {
-=======
         "parameters": [{
           "name": "id",
           "in": "path",
@@ -2576,14 +2523,11 @@
           "text/xml"
         ],
         "parameters": [{
->>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
             "name": "id",
             "in": "path",
             "required": true,
             "type": "integer",
             "format": "int32"
-<<<<<<< HEAD
-=======
           },
           {
             "name": "tableId",
@@ -2593,18 +2537,13 @@
               "format": "int32",
               "type": "integer"
             }
->>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
           }
         ],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-<<<<<<< HEAD
-              "$ref": "#/definitions/ReservationDetailDto"
-=======
               "$ref": "#/definitions/ReservationDto"
->>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
             }
           }
         }

@@ -10,8 +10,6 @@ class ReservationApi {
   /// 
   ///
   /// 
-<<<<<<< HEAD
-=======
   Future<ReservationDto> reservationAddTable(int id, int body) async {
     Object postBody = body;
 
@@ -115,7 +113,6 @@ class ReservationApi {
   /// 
   ///
   /// 
->>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
   Future<ReservationDto> reservationCreate(ReservationDto reservationDto) async {
     Object postBody = reservationDto;
 
@@ -426,42 +423,25 @@ class ReservationApi {
   /// 
   ///
   /// 
-<<<<<<< HEAD
-  Future<bool> reservationUpdateReservationState(int id, String state) async {
-    Object postBody;
-=======
   Future<ReservationDto> reservationRemoveTable(int id, int body) async {
     Object postBody = body;
->>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
 
     // verify required params are set
     if(id == null) {
      throw new ApiException(400, "Missing required param: id");
     }
-<<<<<<< HEAD
-    if(state == null) {
-     throw new ApiException(400, "Missing required param: state");
-    }
-
-    // create path and map variables
-    String path = "/api/Reservations/{id}/UpdateState/{state}".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString()).replaceAll("{" + "state" + "}", state.toString());
-=======
     if(body == null) {
      throw new ApiException(400, "Missing required param: body");
     }
 
     // create path and map variables
     String path = "/api/Reservations/{id}/RemoveTable".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
->>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
 
     // query params
     List<QueryParam> queryParams = [];
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-<<<<<<< HEAD
-    List<String> contentTypes = [];
-=======
     List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
@@ -516,7 +496,6 @@ class ReservationApi {
     Map<String, String> formParams = {};
 
     List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
->>>>>>> 19bc15211d6023d79b2be68db25d3fcfb9567f9a
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
     List<String> authNames = [];
