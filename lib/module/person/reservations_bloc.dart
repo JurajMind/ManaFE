@@ -16,6 +16,9 @@ class ReservationBloc extends SignalBloc {
   BehaviorSubject<List<ReservationDto>> reservations =
       new BehaviorSubject<List<ReservationDto>>();
 
+  BehaviorSubject<ReservationDetailDto> reservationDetail =
+      new BehaviorSubject<ReservationDetailDto>();
+
   loadReservations(DateTime from, DateTime to) async {
     this.reservations.add(null);
     var result = await App.http.getReservations(from, to);
@@ -35,6 +38,15 @@ class ReservationBloc extends SignalBloc {
           break;
         }
     }
+  }
+
+    loadReservationDetail(int id) async {
+      if(reservationDetail?.value?.reservation?.id != id){
+        reservationDetail.add(null);
+      }
+
+    var result = await App.http.detailReservation(id);
+    this.reservationDetail.add(result);
   }
 
   Future<ReservationDto> createReservation(
