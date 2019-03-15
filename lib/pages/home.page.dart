@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:app/components/icon_button_title.dart';
 import 'package:app/module/data_provider.dart';
@@ -8,6 +9,7 @@ import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Gear/gear_page.dart';
 import 'package:app/pages/Places/places_page.dart';
 import 'package:app/pages/SmokeSession/gradiend_color_wheel_rotate.dart';
+import 'package:app/pages/Statistic/statistic_page.dart';
 import 'package:app/pages/profile.page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';
 import 'package:app/services/signal_r.dart';
@@ -93,80 +95,62 @@ class _HomePageState extends State<HomePage> {
     return navigatorKeys[index];
   }
 
-  Widget myBottomBar() => new BottomAppBar(
-        shape: CircularNotchedRectangle(),
-        child: Ink(
-          height: 55.0,
-          color: Colors.black,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-            child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: IconButtonTitle(
-                    icon: Icon(ManaIcons.leaf),
-                    text: AppTranslations.of(context).text("tab_mixology"),
-                    color: _currentIndex == 0 ? Colors.white : Colors.grey,
-                    tooltip: 'ss',
-                    onPressed: () => _setActiveTab(0),
-                  ),
+  Widget myBottomBar() => new Container(
+        child: Material(
+          color: new Color.fromARGB(230, 0, 0, 0),
+          child: BackdropFilter(
+            filter: new ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+            child: Ink(
+              height: 55.0,
+              color: Colors.transparent,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: IconButtonTitle(
+                        icon: Icon(ManaIcons.leaf),
+                        text: AppTranslations.of(context).text("tab_mixology"),
+                        color: _currentIndex == 0 ? Colors.white : Colors.grey,
+                        tooltip: 'ss',
+                        onPressed: () => _setActiveTab(0),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: IconButtonTitle(
+                        icon: Icon(Icons.place),
+                        text: AppTranslations.of(context).text("tab_places"),
+                        color: _currentIndex == 1 ? Colors.white : Colors.grey,
+                        onPressed: () => _setActiveTab(1),
+                      ),
+                    ),
+                    Expanded(flex: 1, child: Container()),
+                    Expanded(
+                      flex: 1,
+                      child: IconButtonTitle(
+                        icon: Icon(ManaIcons.hookah),
+                        text: AppTranslations.of(context).text("tab_gear"),
+                        color: _currentIndex == 3 ? Colors.white : Colors.grey,
+                        onPressed: () => _setActiveTab(3),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: IconButtonTitle(
+                        icon: Icon(Icons.person),
+                        text: AppTranslations.of(context).text("tab_profile"),
+                        color: _currentIndex == 4 ? Colors.white : Colors.grey,
+                        onPressed: () => _setActiveTab(4),
+                      ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  flex: 1,
-                  child: IconButtonTitle(
-                    icon: Icon(Icons.place),
-                    text: AppTranslations.of(context).text("tab_places"),
-                    color: _currentIndex == 1 ? Colors.white : Colors.grey,
-                    onPressed: () => _setActiveTab(1),
-                  ),
-                ),
-                Expanded(
-                    flex: 1,
-                    child: _currentIndex == 2
-                        ? InkWell(
-                            borderRadius: BorderRadius.circular(20.0),
-                            onTap: () => _setActiveTab(2),
-                            child: GradientColorWheelRotate(
-                                size: new Size(50.0, 50.0),
-                                defaultColors: [Colors.white, Colors.white],
-                                child: Icon(
-                                  ManaIcons.manam,
-                                  color: Colors.black,
-                                )),
-                          )
-                        : InkWell(
-                            onTap: () => _setActiveTab(2),
-                            child: GradientColorWheelRotate(
-                                size: new Size(50.0, 50.0),
-                                defaultColors: [Colors.white, Colors.white],
-                                child: Icon(
-                                  ManaIcons.manam,
-                                  color: Colors.grey,
-                                )),
-                          )),
-                Expanded(
-                  flex: 1,
-                  child: IconButtonTitle(
-                    icon: Icon(ManaIcons.hookah),
-                    text: AppTranslations.of(context).text("tab_gear"),
-                    color: _currentIndex == 3 ? Colors.white : Colors.grey,
-                    onPressed: () => _setActiveTab(3),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: IconButtonTitle(
-                    icon: Icon(Icons.person),
-                    text: AppTranslations.of(context).text("tab_profile"),
-                    color: _currentIndex == 4 ? Colors.white : Colors.grey,
-                    onPressed: () => _setActiveTab(4),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ),
@@ -186,24 +170,69 @@ class _HomePageState extends State<HomePage> {
             !await navigatorKeys[_currentIndex].currentState.maybePop();
           }
         },
-        child: new Scaffold(
-            key: scaffoldKey,
-            bottomNavigationBar: myBottomBar(),
-            resizeToAvoidBottomPadding: false,
-            body: _buildBody()));
+        child: new SafeArea(
+            top: false,
+            child: Stack(children: <Widget>[
+              _buildBody(),
+              Positioned(
+                  bottom: -10,
+                  height: 55,
+                  width: MediaQuery.of(context).size.width,
+                  child: SizedBox(height: 55, child: myBottomBar())),
+              _buildCenter(),
+            ])));
+  }
+
+  _buildCenter() {
+    var centerSize = 70.0;
+    return Positioned(
+        bottom: 0,
+        right: (MediaQuery.of(context).size.width / 2) - centerSize ~/ 2,
+        child: Material(
+          color: Colors.transparent,
+          child: SizedBox(
+            height: centerSize,
+            width: centerSize,
+            child: _currentIndex == 2
+                ? InkWell(
+                    borderRadius: BorderRadius.circular(20.0),
+                    onTap: () => _setActiveTab(2),
+                    child: GradientColorWheelRotate(
+                        size: new Size(centerSize, centerSize),
+                        defaultColors: [Colors.white, Colors.white],
+                        child: Icon(
+                          ManaIcons.manam,
+                          color: Colors.black,
+                        )),
+                  )
+                : InkWell(
+                    onTap: () => _setActiveTab(2),
+                    child: GradientColorWheelRotate(
+                        size: new Size(centerSize, centerSize),
+                        defaultColors: [Colors.white, Colors.white],
+                        child: Icon(
+                          ManaIcons.manam,
+                          color: Colors.grey,
+                        )),
+                  ),
+          ),
+        ));
   }
 
   _buildBody() {
-    return new IndexedStack(
-      index: _currentIndex,
-      children: <Widget>[
-        _buildOffstageNavigator(new MixologyList(), 0),
-        _buildOffstageNavigator(new PlacePage(), 1),
-        _buildOffstageNavigator(
-            new StartSmokeSessionPage(callback: _setActiveTab), 2),
-        _buildOffstageNavigator(new GearPage(), 3),
-        _buildOffstageNavigator(new ProfilePage(), 4),
-      ],
+    return Material(
+      color: Colors.transparent,
+      child: new IndexedStack(
+        index: _currentIndex,
+        children: <Widget>[
+          _buildOffstageNavigator(new MixologyList(), 0),
+          _buildOffstageNavigator(new PlacePage(), 1),
+          _buildOffstageNavigator(
+              new StartSmokeSessionPage(callback: _setActiveTab), 2),
+          _buildOffstageNavigator(new GearPage(), 3),
+          _buildOffstageNavigator(new StatisticPage(), 4),
+        ],
+      ),
     );
   }
 
@@ -234,13 +263,6 @@ class TabNavigator extends StatelessWidget {
   final GlobalKey<NavigatorState> navigatorKey;
   final Widget tabItem;
 
-  void _push(BuildContext context, String route) {
-    var routeBuilders = _routeBuilders(context);
-
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => routeBuilders[route](context)));
-  }
-
   Map<String, WidgetBuilder> _routeBuilders(
     BuildContext context,
   ) {
@@ -250,10 +272,11 @@ class TabNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var routeBuilders = _routeBuilders(context);
-
+    var observable = HeroController();
     return Navigator(
         key: navigatorKey,
         initialRoute: '/',
+        observers: [observable],
         onGenerateRoute: (routeSettings) {
           return MaterialPageRoute(
               builder: (context) => routeBuilders[routeSettings.name](context));

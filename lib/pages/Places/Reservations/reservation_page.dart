@@ -56,208 +56,221 @@ class _ReservationPageState extends State<ReservationPage> {
     var reservationBloc = DataProvider.getData(context).reservationBloc;
     var personBloc = DataProvider.getData(context).personBloc;
     nameTextController.text = personBloc?.info?.value?.displayName ?? "";
-    return SafeArea(
-      child: Theme(
-        isMaterialAppTheme: true,
-        data: ThemeData.light(),
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(32.0), color: Colors.white),
-          child: new Column(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              new AppBar(
-                iconTheme: IconThemeData(
-                  color: Colors.black, //change your color here
+    return Scaffold(
+      bottomNavigationBar: SizedBox(
+        height: 55,
+      ),
+      body: Hero(
+        tag: "${widget.place.friendlyUrl}_reservation",
+        child: Theme(
+          isMaterialAppTheme: true,
+          data: ThemeData.light(),
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(32.0), color: Colors.white),
+            child: new Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                new AppBar(
+                  iconTheme: IconThemeData(
+                    color: Colors.black, //change your color here
+                  ),
+                  leading: IconButton(
+                    icon: Icon(Icons.arrow_left),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  title: new Text(
+                    "${widget.place.name} reservation",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  backgroundColor: Colors.white,
                 ),
-                title: new Text(
-                  "${widget.place.name} reservation",
-                  style: TextStyle(color: Colors.black),
-                ),
-                backgroundColor: Colors.white,
-              ),
-              Expanded(
-                child: PageView(
-                  controller: pageController,
-                  children: <Widget>[
-                    ListView(
-                      scrollDirection: Axis.vertical,
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Card(
-                              elevation: 2.0,
-                              child: new Calendar(
-                                initialCalendarDateOverride: currentDate,
-                                isExpandable: true,
-                                highlightToday: true,
-                                showCalendarPickerIcon: false,
-                                onDateSelected: (date) {
-                                  var dateCompare =
-                                      compareDate(date, DateTime.now());
-
-                                  if (dateCompare >= 0) {
-                                    placeBloc.loadReservationInfo(date);
-                                  }
-
-                                  setState(() {
-                                    currentDate = date;
-                                    _cannotReserve = dateCompare;
-                                  });
-                                },
-                              ),
-                            ),
-                            StreamBuilder<List<ReservationsTimeSlot>>(
-                                stream: placeBloc.reservationInfo,
-                                initialData: null,
-                                builder: (context, snapshot) {
-                                  if (snapshot.data != null &&
-                                      DateHelper.CompareDate(
-                                          currentDate, DateTime.now())) {
-                                    // selectedTime = 4;
-                                  } else {}
-                                  if (selectedTime == null &&
-                                      snapshot.data != null) {
-                                    selectTime(
-                                        1, snapshot.data, new List<String>());
-                                  }
-
-                                  var disabledTimes =
-                                      this.disabledTime(snapshot.data);
-
-                                  return Column(
-                                    children: <Widget>[
-                                      _cannotReserve < 0
-                                          ? Container()
-                                          : Card(
-                                              elevation: 2.0,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: <Widget>[
-                                                  buildPeoplesColumn(),
-                                                  buildTimeColumn(snapshot.data,
-                                                      disabledTimes),
-                                                  buildDurationColumn(
-                                                      snapshot.data,
-                                                      disabledTimes),
-                                                ],
-                                              ),
-                                            ),
-                                      Padding(
-                                        padding: EdgeInsets.all(10.0),
-                                        child: buildNextButton(
-                                            disabledTimes, _cannotReserve),
-                                      ),
-                                    ],
-                                  );
-                                }),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SingleChildScrollView(
-                      child: Column(
+                Expanded(
+                  child: PageView(
+                    controller: pageController,
+                    children: <Widget>[
+                      ListView(
+                        scrollDirection: Axis.vertical,
                         children: <Widget>[
-                          Card(
-                            elevation: 2.0,
-                            margin: EdgeInsets.all(8.0),
-                            child: Column(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    LabeledValue(
-                                      formatDate(
-                                          currentDate, [d, '.', m, '.', yyyy]),
-                                      label: 'Date:',
-                                    ),
-                                    LabeledValue(
-                                      selectedTimeLabel,
-                                      label: 'Time:',
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    LabeledValue(selectedPersons.toString(),
-                                        label: 'Persons:'),
-                                    LabeledValue(
-                                        slotDurationString(
-                                            selectedDuration + durations[0]),
-                                        label: 'Duration:'),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          Card(
-                            margin: EdgeInsets.all(8.0),
-                            elevation: 2.0,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: <Widget>[
-                                  TextField(
-                                    controller: nameTextController,
-                                    decoration: new InputDecoration(
-                                      labelText: "Name",
-                                    ),
-                                  ),
-                                  TextField(
-                                    controller: noteTextController,
-                                    decoration: new InputDecoration(
-                                        labelText: "Reservation note"),
-                                    maxLines: 5,
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              new RoundedButton(
-                                buttonName: 'Back',
-                                onTap: () {
-                                  pageController.jumpToPage(0);
-                                },
-                                textColor: Colors.red,
-                                buttonColor: Colors.transparent,
-                                borderWidth: 2.0,
-                                bottomMargin: 2.0,
-                                height: 40.0,
-                                width: 150.0,
+                              Card(
+                                elevation: 2.0,
+                                child: new Calendar(
+                                  initialCalendarDateOverride: currentDate,
+                                  isExpandable: true,
+                                  highlightToday: true,
+                                  showCalendarPickerIcon: false,
+                                  onDateSelected: (date) {
+                                    var dateCompare =
+                                        compareDate(date, DateTime.now());
+
+                                    if (dateCompare >= 0) {
+                                      placeBloc.loadReservationInfo(date);
+                                    }
+
+                                    setState(() {
+                                      currentDate = date;
+                                      _cannotReserve = dateCompare;
+                                    });
+                                  },
+                                ),
                               ),
-                              new RoundedButton(
-                                buttonName: 'Reserve',
-                                onTap: () {
-                                  _createReservations(context, reservationBloc);
-                                },
-                                buttonColor: Colors.black,
-                                borderWidth: 0.0,
-                                bottomMargin: 0.0,
-                                height: 40.0,
-                                width: 150.0,
-                              ),
+                              StreamBuilder<List<ReservationsTimeSlot>>(
+                                  stream: placeBloc.reservationInfo,
+                                  initialData: null,
+                                  builder: (context, snapshot) {
+                                    if (snapshot.data != null &&
+                                        DateHelper.CompareDate(
+                                            currentDate, DateTime.now())) {
+                                      // selectedTime = 4;
+                                    } else {}
+                                    if (selectedTime == null &&
+                                        snapshot.data != null) {
+                                      selectTime(
+                                          1, snapshot.data, new List<String>());
+                                    }
+
+                                    var disabledTimes =
+                                        this.disabledTime(snapshot.data);
+
+                                    return Column(
+                                      children: <Widget>[
+                                        _cannotReserve < 0
+                                            ? Container()
+                                            : Card(
+                                                elevation: 2.0,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: <Widget>[
+                                                    buildPeoplesColumn(),
+                                                    buildTimeColumn(
+                                                        snapshot.data,
+                                                        disabledTimes),
+                                                    buildDurationColumn(
+                                                        snapshot.data,
+                                                        disabledTimes),
+                                                  ],
+                                                ),
+                                              ),
+                                        Padding(
+                                          padding: EdgeInsets.all(10.0),
+                                          child: buildNextButton(
+                                              disabledTimes, _cannotReserve),
+                                        ),
+                                      ],
+                                    );
+                                  }),
                             ],
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                      SingleChildScrollView(
+                        child: Column(
+                          children: <Widget>[
+                            Card(
+                              elevation: 2.0,
+                              margin: EdgeInsets.all(8.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      LabeledValue(
+                                        formatDate(currentDate,
+                                            [d, '.', m, '.', yyyy]),
+                                        label: 'Date:',
+                                      ),
+                                      LabeledValue(
+                                        selectedTimeLabel,
+                                        label: 'Time:',
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      LabeledValue(selectedPersons.toString(),
+                                          label: 'Persons:'),
+                                      LabeledValue(
+                                          slotDurationString(
+                                              selectedDuration + durations[0]),
+                                          label: 'Duration:'),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            Card(
+                              margin: EdgeInsets.all(8.0),
+                              elevation: 2.0,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    TextField(
+                                      controller: nameTextController,
+                                      decoration: new InputDecoration(
+                                        labelText: "Name",
+                                      ),
+                                    ),
+                                    TextField(
+                                      controller: noteTextController,
+                                      decoration: new InputDecoration(
+                                          labelText: "Reservation note"),
+                                      maxLines: 5,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                new RoundedButton(
+                                  buttonName: 'Back',
+                                  onTap: () {
+                                    pageController.jumpToPage(0);
+                                  },
+                                  textColor: Colors.red,
+                                  buttonColor: Colors.transparent,
+                                  borderWidth: 2.0,
+                                  bottomMargin: 2.0,
+                                  height: 40.0,
+                                  width: 150.0,
+                                ),
+                                new RoundedButton(
+                                  buttonName: 'Reserve',
+                                  onTap: () {
+                                    _createReservations(
+                                        context, reservationBloc);
+                                  },
+                                  buttonColor: Colors.black,
+                                  borderWidth: 0.0,
+                                  bottomMargin: 0.0,
+                                  height: 40.0,
+                                  width: 150.0,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

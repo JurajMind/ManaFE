@@ -34,8 +34,9 @@ class BrandListItem extends StatelessWidget {
         leading: SizedBox(
             height: 60.0,
             width: 60.0,
-            child:
-                Hero(tag: '_picture', child: Extensions.brandPicture(brand))),
+            child: Hero(
+                tag: '${brand.itemCount}_brand_picture',
+                child: Extensions.brandPicture(brand))),
         title:
             Text(this.brand.name, style: Theme.of(context).textTheme.display2),
         subtitle: Text('Item count: ' + brand.itemCount.toString(),

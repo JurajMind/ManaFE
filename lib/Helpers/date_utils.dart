@@ -165,4 +165,13 @@ class Utils {
     var timeFormater = new DateFormat('HH:mm');
     return timeFormater.format(w);
   }
+
+  static String toStringDuration(Duration duration) {
+    return '${duration.inHours}:${duration.inMinutes % 60}:${duration.inSeconds % 100}';
+  }
+
+  static String toShortStringDuration(Duration duration) {
+    var minuts = duration.inMinutes % 60;
+    return '${minuts == 0 ? "" : minuts.toString() + ":"}${duration.inSeconds % 100}';
+  }
 }

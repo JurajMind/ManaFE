@@ -128,7 +128,7 @@ class _CarrousselState extends State<Carroussel> {
         }
       },
       child: Hero(
-        tag: '_picture',
+        tag: '${place.friendlyUrl}_place',
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: new Container(

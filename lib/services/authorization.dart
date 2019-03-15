@@ -73,8 +73,9 @@ class Authorize {
   }
 
 // TODO
-  messToken() {
+  messToken() async {
     _token = "token";
+    await _storage.write(key: 'accessToken',value:'token');
   }
 
   Future<bool> refreshToken() async {

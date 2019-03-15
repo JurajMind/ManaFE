@@ -26,11 +26,12 @@ class PipeAccesoryListItem extends StatelessWidget {
         leading: SizedBox(
             height: 60.0,
             width: 60.0,
-            child: Hero(
-                tag: '_picture',
-                child: Extensions.accesoryPicture(pipeAccesory))),
-        title: Text(this.pipeAccesory.name,
-            style: Theme.of(context).textTheme.display2),
+            child: Extensions.accesoryPicture(pipeAccesory)),
+        title: Hero(
+          tag: '${pipeAccesory.id}_name',
+          child: Text(this.pipeAccesory.name,
+              style: Theme.of(context).textTheme.display2),
+        ),
         subtitle: Text(pipeAccesory.brand,
             style: Theme.of(context).textTheme.display3),
       ),

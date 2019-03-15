@@ -123,8 +123,8 @@ class _PlaceDetailState extends State<PlaceDetailPage>
       }
     });
 
-    return new Container(
-        child: new CustomScrollView(
+    return new Scaffold(
+        body: new CustomScrollView(
       slivers: <Widget>[
         new SliverAppBar(
           backgroundColor: Colors.black,
@@ -139,7 +139,7 @@ class _PlaceDetailState extends State<PlaceDetailPage>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Hero(
-                      tag: 'placeName',
+                      tag: place.friendlyUrl,
                       child: Text(
                         Extensions.adress(place.address),
                         style: TextStyle(
@@ -181,7 +181,7 @@ class _PlaceDetailState extends State<PlaceDetailPage>
               fit: StackFit.expand,
               children: <Widget>[
                 Hero(
-                  tag: '_picture',
+                  tag: '${place.friendlyUrl}_place',
                   child: new Image(
                     image: new CachedNetworkImageProvider(
                         Extensions.getPlaceImage(place)),
@@ -195,110 +195,118 @@ class _PlaceDetailState extends State<PlaceDetailPage>
         ),
         new SliverList(
           delegate: new SliverChildListDelegate(<Widget>[
-            Container(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: buttomZoomOut.value >= 200
-                    ? new Container(
-                        height: buttomZoomOut.value,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20.0)),
-                      )
-                    : Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20.0)),
-                        child: new Column(
-                          children: <Widget>[
-                            new Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: PlaceInfo(place: widget.place),
-                                  ),
-                                  flex: 1,
-                                ),
-                                Expanded(
-                                    flex: 1,
-                                    child: PlaceMap(
-                                      place: place,
-                                    ))
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: new Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+            Hero(
+              tag: "${widget.place.friendlyUrl}_reservation",
+              child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: buttomZoomOut.value >= 200
+                      ? new Container(
+                          height: buttomZoomOut.value,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20.0)),
+                        )
+                      : Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20.0)),
+                          child: new Column(
+                            children: <Widget>[
+                              new Row(
                                 children: <Widget>[
-                                  FlatButton(
-                                    child: Text(
-                                      'NAVIGATE',
-                                      style: TextStyle(color: Colors.black),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: PlaceInfo(place: widget.place),
                                     ),
-                                    onPressed: () => print('navigate'),
+                                    flex: 1,
                                   ),
-                                  Container(
-                                    height: 14.0,
-                                    width: 2.0,
-                                    color: Colors.grey,
-                                  ),
-                                  FlatButton(
-                                    child: Text(
-                                      'GO WITH UBER',
-                                      style: TextStyle(color: Colors.black),
-                                    ),
-                                    onPressed: () => print('GO WITH UBER'),
-                                  ),
+                                  Expanded(
+                                      flex: 1,
+                                      child: PlaceMap(
+                                        place: place,
+                                      ))
                                 ],
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  30.0, 10.0, 30.0, 10.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(),
-                                    borderRadius: BorderRadius.circular(20.0)),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
                                 child: new Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
                                     FlatButton(
-                                        child: Text(
-                                          'BOOK',
-                                          style: TextStyle(color: Colors.black),
-                                        ),
-                                        onPressed: () => _openAddEntryDialog()),
+                                      child: Text(
+                                        'NAVIGATE',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      onPressed: () => print('navigate'),
+                                    ),
                                     Container(
-                                      height: 35.0,
+                                      height: 14.0,
                                       width: 2.0,
                                       color: Colors.grey,
                                     ),
                                     FlatButton(
                                       child: Text(
-                                        'MENU',
+                                        'GO WITH UBER',
                                         style: TextStyle(color: Colors.black),
                                       ),
-                                      onPressed: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                settings: RouteSettings(),
-                                                builder: (context) => MenuPage(
-                                                    place: widget.place)));
-                                      },
+                                      onPressed: () => print('GO WITH UBER'),
                                     ),
                                   ],
                                 ),
                               ),
-                            )
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    30.0, 10.0, 30.0, 10.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(),
+                                      borderRadius:
+                                          BorderRadius.circular(20.0)),
+                                  child: new Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      FlatButton(
+                                          child: Text(
+                                            'BOOK',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                          onPressed: () =>
+                                              _openAddEntryDialog()),
+                                      Container(
+                                        height: 35.0,
+                                        width: 2.0,
+                                        color: Colors.grey,
+                                      ),
+                                      FlatButton(
+                                        child: Text(
+                                          'MENU',
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  settings: RouteSettings(),
+                                                  builder: (context) =>
+                                                      MenuPage(
+                                                          place:
+                                                              widget.place)));
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
+                ),
               ),
             )
           ]),

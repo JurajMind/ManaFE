@@ -5,15 +5,15 @@ import 'package:app/services/authorization.dart';
 import 'package:flutter/material.dart';
 import 'package:app/pages/Statistic/statistic_page.dart';
 
-class ProfilePage extends StatefulWidget {
+class DesignStatisticPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     print('Profile');
-    return new _ProfilePageState();
+    return new _DesignStatisticPageState();
   }
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _DesignStatisticPageState extends State<DesignStatisticPage> {
   Authorize auth = new Authorize();
   @override
   Widget build(BuildContext context) {
@@ -43,8 +43,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           builder: (context) => StatisticPage()));
                       break;
                     case 'testPage':
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ProfilePage()));
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => TestPage()));
                       break;
                   }
                 },

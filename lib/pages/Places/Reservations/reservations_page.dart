@@ -45,35 +45,32 @@ class _ReservationsPageState extends State<ReservationsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        children: <Widget>[
-          AppBar(
-            backgroundColor: Colors.black,
-            centerTitle: true,
-            title: Text('Reservations'),
-          ),
-          StreamBuilder<List<ReservationDto>>(
-              stream: reservationBloc.reservations,
-              builder: (context, snapshot) {
-                var filteredReservations = _selectedDay == null
-                    ? snapshot.data
-                    : snapshot.data
-                        .where((d) => compareDate(d.time, _selectedDay) == 0)
-                        .toList();
-                var childrens = new List<Widget>();
-                childrens.add(_buildTableCalendar(snapshot.data));
-                childrens.add(
-                  const SizedBox(height: 8.0),
-                );
-                childrens.addAll(_buildEventList(filteredReservations));
-                return Expanded(
-                  child: ListView(
-                    children: childrens,
-                  ),
-                );
-              })
-        ],
+    return Scaffold(
+      bottomNavigationBar: Container(height: 55, color: Colors.transparent),
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        centerTitle: true,
+        title: Text('RESERVATIONS'),
+      ),
+      body: SafeArea(
+        child: StreamBuilder<List<ReservationDto>>(
+            stream: reservationBloc.reservations,
+            builder: (context, snapshot) {
+              var filteredReservations = _selectedDay == null
+                  ? snapshot.data
+                  : snapshot.data
+                      .where((d) => compareDate(d.time, _selectedDay) == 0)
+                      .toList();
+              var childrens = new List<Widget>();
+              childrens.add(_buildTableCalendar(snapshot.data));
+              childrens.add(
+                const SizedBox(height: 8.0),
+              );
+              childrens.addAll(_buildEventList(filteredReservations));
+              return ListView(
+                children: childrens,
+              );
+            }),
       ),
     );
   }

@@ -37,214 +37,217 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
   @override
   Widget build(BuildContext context) {
     // timeDilation = 12.5;
-    return SafeArea(
-        top: false,
-        child: Container(
-          color: Colors.black,
-          child: CustomScrollView(
-            slivers: <Widget>[
-              new SliverAppBar(
-                backgroundColor: Colors.black,
-                centerTitle: true,
-                expandedHeight: _appBarHeight,
-                flexibleSpace: new FlexibleSpaceBar(
-                  title: Text(widget.reservation.name),
+    return Scaffold(
+      body: SafeArea(
+          top: false,
+          child: Container(
+            color: Colors.black,
+            child: CustomScrollView(
+              slivers: <Widget>[
+                new SliverAppBar(
+                  backgroundColor: Colors.black,
                   centerTitle: true,
-                  background: new Stack(
-                    fit: StackFit.expand,
-                    children: <Widget>[
-                      StreamBuilder<ReservationDetailDto>(
-                          stream: this.reservationDetail,
-                          builder: (context, snapshot) {
-                            return snapshot.data == null
-                                ? Container(
-                                    height: _appBarHeight,
-                                  )
-                                : new Image(
-                                    image: new CachedNetworkImageProvider(
-                                        Extensions.getFullPlaceImage(
-                                            snapshot.data.place)),
-                                    fit: BoxFit.cover,
-                                    height: _appBarHeight,
-                                  );
-                          })
-                    ],
-                  ),
-                ),
-              ),
-              SliverList(
-                delegate: new SliverChildListDelegate(<Widget>[
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Hero(
-                    tag: 'reservation_${widget.reservation.id.toString()}',
-                    child: Center(
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              border: new Border.all(color: Colors.white),
-                              borderRadius: new BorderRadius.all(
-                                  const Radius.circular(40.0)),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: <Widget>[
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    LabeledValue(
-                                      Utils.toStringDate(
-                                          widget.reservation.time),
-                                      icon: Icon(Icons.calendar_today),
-                                      label: 'Date: ',
-                                    ),
-                                    LabeledValue(
-                                      Utils.toStringShortTime(
-                                          widget.reservation.time),
-                                      icon: Icon(Icons.timer),
-                                      label: 'Time: ',
+                  expandedHeight: _appBarHeight,
+                  flexibleSpace: new FlexibleSpaceBar(
+                    title: Text(widget.reservation.name),
+                    centerTitle: true,
+                    background: new Stack(
+                      fit: StackFit.expand,
+                      children: <Widget>[
+                        StreamBuilder<ReservationDetailDto>(
+                            stream: this.reservationDetail,
+                            builder: (context, snapshot) {
+                              return snapshot.data == null
+                                  ? Container(
+                                      height: _appBarHeight,
                                     )
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    LabeledValue(widget.reservation.duration,
-                                        icon: Icon(Icons.timelapse),
-                                        label: 'Duration: '),
-                                    LabeledValue(
-                                      widget.reservation.persons.toString(),
-                                      icon: Icon(Icons.person),
-                                      label: 'Peoples: ',
-                                    ),
-                                  ],
-                                ),
-                                widget.reservation.text == null
-                                    ? Container()
-                                    : Row(
-                                        children: <Widget>[
-                                          Text(widget.reservation.text)
-                                        ],
-                                      ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      widget.reservation.status != 1
-                                          ? MainAxisAlignment.spaceAround
-                                          : MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Flex(
-                                      direction: Axis.horizontal,
-                                      children: <Widget>[
-                                        new ReservationStatusIcon(
-                                            reservation: widget.reservation),
-                                        Text(
-                                          ReservationStatusIcon.stateToText(
-                                              widget.reservation),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .display2,
-                                        )
-                                      ],
-                                    ),
-                                    widget.reservation.status == 1
-                                        ? Container()
-                                        : OutlineButton.icon(
-                                            shape: new RoundedRectangleBorder(
-                                                borderRadius:
-                                                    new BorderRadius.circular(
-                                                        30.0)),
-                                            borderSide: BorderSide(
-                                                color: Colors.white, width: 1),
-                                            icon: Icon(Icons.cancel,
-                                                color: Colors.red),
-                                            label: Text(
-                                              'Cancel',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .display2,
-                                            ),
-                                            onPressed: () => _showDialog(),
-                                          )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 16,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: new BorderRadius.all(
-                                  const Radius.circular(40.0)),
-                            ),
-                            child: StreamBuilder<ReservationDetailDto>(
-                                stream: this.reservationDetail,
-                                builder: (context, snapshot) {
-                                  var simplePlace =
-                                      toSimpePlace(snapshot?.data?.place);
-                                  return simplePlace == null
-                                      ? Container()
-                                      : Container(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Column(
-                                            children: <Widget>[
-                                              Text(simplePlace.name,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .display1
-                                                      .merge(TextStyle(
-                                                          color:
-                                                              Colors.black))),
-                                              Text(
-                                                  Extensions.adress(
-                                                      simplePlace.address),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .display2
-                                                      .merge(TextStyle(
-                                                          color:
-                                                              Colors.black))),
-                                              new Row(
-                                                children: <Widget>[
-                                                  Expanded(
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: PlaceInfo(
-                                                          place: simplePlace),
-                                                    ),
-                                                    flex: 1,
-                                                  ),
-                                                  Expanded(
-                                                      flex: 1,
-                                                      child: PlaceMap(
-                                                        place: simplePlace,
-                                                      ))
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                }),
-                          )
-                        ],
-                      ),
+                                  : new Image(
+                                      image: new CachedNetworkImageProvider(
+                                          Extensions.getFullPlaceImage(
+                                              snapshot.data.place)),
+                                      fit: BoxFit.cover,
+                                      height: _appBarHeight,
+                                    );
+                            })
+                      ],
                     ),
                   ),
-                ]),
-              )
-            ],
-          ),
-        ));
+                ),
+                SliverList(
+                  delegate: new SliverChildListDelegate(<Widget>[
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Hero(
+                      tag: 'reservation_${widget.reservation.id.toString()}',
+                      child: Center(
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                border: new Border.all(color: Colors.white),
+                                borderRadius: new BorderRadius.all(
+                                    const Radius.circular(40.0)),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      LabeledValue(
+                                        Utils.toStringDate(
+                                            widget.reservation.time),
+                                        icon: Icon(Icons.calendar_today),
+                                        label: 'Date: ',
+                                      ),
+                                      LabeledValue(
+                                        Utils.toStringShortTime(
+                                            widget.reservation.time),
+                                        icon: Icon(Icons.timer),
+                                        label: 'Time: ',
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      LabeledValue(widget.reservation.duration,
+                                          icon: Icon(Icons.timelapse),
+                                          label: 'Duration: '),
+                                      LabeledValue(
+                                        widget.reservation.persons.toString(),
+                                        icon: Icon(Icons.person),
+                                        label: 'Peoples: ',
+                                      ),
+                                    ],
+                                  ),
+                                  widget.reservation.text == null
+                                      ? Container()
+                                      : Row(
+                                          children: <Widget>[
+                                            Text(widget.reservation.text)
+                                          ],
+                                        ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        widget.reservation.status != 1
+                                            ? MainAxisAlignment.spaceAround
+                                            : MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Flex(
+                                        direction: Axis.horizontal,
+                                        children: <Widget>[
+                                          new ReservationStatusIcon(
+                                              reservation: widget.reservation),
+                                          Text(
+                                            ReservationStatusIcon.stateToText(
+                                                widget.reservation),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .display2,
+                                          )
+                                        ],
+                                      ),
+                                      widget.reservation.status == 1
+                                          ? Container()
+                                          : OutlineButton.icon(
+                                              shape: new RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      new BorderRadius.circular(
+                                                          30.0)),
+                                              borderSide: BorderSide(
+                                                  color: Colors.white,
+                                                  width: 1),
+                                              icon: Icon(Icons.cancel,
+                                                  color: Colors.red),
+                                              label: Text(
+                                                'Cancel',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .display2,
+                                              ),
+                                              onPressed: () => _showDialog(),
+                                            )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: new BorderRadius.all(
+                                    const Radius.circular(40.0)),
+                              ),
+                              child: StreamBuilder<ReservationDetailDto>(
+                                  stream: this.reservationDetail,
+                                  builder: (context, snapshot) {
+                                    var simplePlace =
+                                        toSimpePlace(snapshot?.data?.place);
+                                    return simplePlace == null
+                                        ? Container()
+                                        : Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Column(
+                                              children: <Widget>[
+                                                Text(simplePlace.name,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .display1
+                                                        .merge(TextStyle(
+                                                            color:
+                                                                Colors.black))),
+                                                Text(
+                                                    Extensions.adress(
+                                                        simplePlace.address),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .display2
+                                                        .merge(TextStyle(
+                                                            color:
+                                                                Colors.black))),
+                                                new Row(
+                                                  children: <Widget>[
+                                                    Expanded(
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: PlaceInfo(
+                                                            place: simplePlace),
+                                                      ),
+                                                      flex: 1,
+                                                    ),
+                                                    Expanded(
+                                                        flex: 1,
+                                                        child: PlaceMap(
+                                                          place: simplePlace,
+                                                        ))
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                  }),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ]),
+                )
+              ],
+            ),
+          )),
+    );
   }
 
   // user defined function

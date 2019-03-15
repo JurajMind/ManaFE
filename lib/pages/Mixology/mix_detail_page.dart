@@ -80,63 +80,62 @@ class MixDetailPageState extends State<MixDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new CustomScrollView(
-      slivers: <Widget>[
-        new SliverAppBar(
-          expandedHeight: _appBarHeight,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () async {
-                var delete = await deleteConfirn();
-                if (delete) {
-                  var bloc = DataProvider.getData(context).mixologyBloc;
-                  bloc.deleteMix(widget.mix);
-                  Navigator.of(context).pop();
-                }
-              },
-            )
-          ],
-          backgroundColor: Colors.transparent,
-          flexibleSpace: new FlexibleSpaceBar(
-            centerTitle: true,
-            title: Hero(
-              tag: "mix_hero_${widget.mix.id}",
-              child: Container(
-                color: Colors.black,
+    return Scaffold(
+      body: new CustomScrollView(
+        slivers: <Widget>[
+          new SliverAppBar(
+            expandedHeight: _appBarHeight,
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () async {
+                  var delete = await deleteConfirn();
+                  if (delete) {
+                    var bloc = DataProvider.getData(context).mixologyBloc;
+                    bloc.deleteMix(widget.mix);
+                    Navigator.of(context).pop();
+                  }
+                },
+              )
+            ],
+            backgroundColor: Colors.transparent,
+            flexibleSpace: new FlexibleSpaceBar(
+              centerTitle: true,
+              title: Hero(
+                tag: "mix_hero_${widget.mix.id}",
                 child: Text(
                   widget.mix.name ?? 'No name',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
                 ),
               ),
+              background: Container(
+                  child: SizedBox.expand(
+                      child: Center(
+                          child: new charts.PieChart(
+                _createSampleData(),
+                animate: true,
+                defaultRenderer: new charts.ArcRendererConfig(
+                  arcWidth: 200,
+                ),
+              )))),
             ),
-            background: Container(
-                child: SizedBox.expand(
-                    child: Center(
-                        child: new charts.PieChart(
-              _createSampleData(),
-              animate: true,
-              defaultRenderer: new charts.ArcRendererConfig(
-                arcWidth: 200,
-              ),
-            )))),
           ),
-        ),
-        new SliverList(
-          delegate: new SliverChildListDelegate(<Widget>[
-            Column(
-                children: widget.mix.tobaccos.map((f) {
-              return ListTile(
-                title: Text(f.tobacco.name,
-                    style: Theme.of(context).textTheme.display4),
-                trailing: Text(f.fraction.toString() + ' g'),
-                subtitle: Text(f.tobacco.brand,
-                    style: Theme.of(context).textTheme.display3),
-              );
-            }).toList())
-          ]),
-        )
-      ],
+          new SliverList(
+            delegate: new SliverChildListDelegate(<Widget>[
+              Column(
+                  children: widget.mix.tobaccos.map((f) {
+                return ListTile(
+                  title: Text(f.tobacco.name,
+                      style: Theme.of(context).textTheme.display4),
+                  trailing: Text(f.fraction.toString() + ' g'),
+                  subtitle: Text(f.tobacco.brand,
+                      style: Theme.of(context).textTheme.display3),
+                );
+              }).toList())
+            ]),
+          )
+        ],
+      ),
     );
   }
 }

@@ -19,6 +19,9 @@ class StatisticBloc {
   BehaviorSubject<List<StatisticItem>> topGraphData =
       new BehaviorSubject<List<StatisticItem>>();
 
+  BehaviorSubject<List<SmokeSessionSimpleDto>> smokeSessions =
+      new BehaviorSubject<List<SmokeSessionSimpleDto>>();
+
   BehaviorSubject<StatisticRecap> recap = new BehaviorSubject<StatisticRecap>();
 
   loadStatistic(DateTime from, DateTime to) async {
@@ -31,6 +34,7 @@ class StatisticBloc {
 
     var recap = this.getStatsRecap(result.smokeSessions);
     this.recap.add(recap);
+    this.smokeSessions.add(result.smokeSessions);
   }
 
   List<StatisticItem> getDisplayStatistic(

@@ -1,9 +1,16 @@
+import 'package:app/components/Buttons/roundedButton.dart';
+import 'package:app/components/SmokeSession/smoke_session_list_item.dart';
+import 'package:app/components/Statistic/recap.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/person/statistic_bloc.dart';
+import 'package:app/pages/Settings/language_selector_page.dart';
+import 'package:app/pages/Statistic/test_page.dart';
+import 'package:app/services/authorization.dart';
 import 'package:app/support/mana_icons_icons.dart';
 import 'package:app/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/Charts/sparkline.dart';
+import 'package:openapi/api.dart';
 import 'dart:math' as math;
 
 import 'package:shimmer/shimmer.dart';
@@ -15,14 +22,69 @@ class StatisticPage extends StatefulWidget {
 
 class _StatisticPageState extends State<StatisticPage> {
   math.Random random = new math.Random();
+  PageController controller;
+  Authorize auth = new Authorize();
+  @override
+  initState() {
+    super.initState();
+    controller = new PageController(
+        initialPage: 0, keepPage: true, viewportFraction: 0.9);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     var bloc = DataProvider.getData(context).statisticBloc;
-    return new Container(
-      child: CustomScrollView(
+    return new Scaffold(
+      body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
+            actions: <Widget>[
+              new PopupMenuButton(
+                onSelected: (String value) {
+                  switch (value) {
+                    case 'settings':
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => LanguageSelectorPage()));
+                      break;
+                    case 'signOut':
+                      auth.signOut();
+                      break;
+                    case 'test':
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => StatisticPage()));
+                      break;
+                    case 'testPage':
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => TestPage()));
+                      break;
+                  }
+                },
+                itemBuilder: (BuildContext context) => [
+                      PopupMenuItem(
+                        value: "settings",
+                        child: Text('Settings'),
+                      ),
+                      PopupMenuItem(
+                        value: "signOut",
+                        child: Text('Sign out'),
+                      ),
+                      PopupMenuItem(
+                        value: "test",
+                        child: Text('Design statistic'),
+                      ),
+                      PopupMenuItem(
+                        value: "testPage",
+                        child: Text('Test page'),
+                      )
+                    ],
+              )
+            ],
             backgroundColor: Colors.black,
             pinned: true,
             expandedHeight: 300.0,
@@ -37,24 +99,20 @@ class _StatisticPageState extends State<StatisticPage> {
               ),
             ),
             bottom: PreferredSize(
-              preferredSize: Size(70, 40),
+              preferredSize: Size(700, 40),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
+                  Expanded(flex: 1, child: new TimeSelect(label: 'Week')),
+                  Expanded(flex: 1, child: new TimeSelect(label: 'Month')),
                   Expanded(
                       flex: 1,
-                      child: Chip(
-                        label: Text('Week'),
+                      child: new TimeSelect(
+                        label: 'Year',
+                        selected: true,
                       )),
-                  Expanded(
-                      flex: 1,
-                      child: Chip(
-                        label: Text('Month'),
-                      )),
-                  Expanded(
-                      flex: 1,
-                      child: Chip(
-                        label: Text('Year'),
-                      )),
+                  Expanded(flex: 1, child: new TimeSelect(label: 'Custom')),
                   Expanded(
                       flex: 3,
                       child: Padding(
@@ -99,25 +157,60 @@ class _StatisticPageState extends State<StatisticPage> {
             )),
           ),
           new SliverList(
-            delegate: SliverChildListDelegate(<Widget>[
-              Container(
-                child: Row(
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[],
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              buildStatRecap(bloc),
-              Placeholder()
-            ]),
+            delegate: SliverChildListDelegate(buildBody(bloc)),
           )
         ],
+      ),
+    );
+  }
+
+  List<Widget> buildBody(StatisticBloc bloc) {
+    var result = new List<Widget>();
+    result.add(buildStatRecap(bloc));
+    result.add(buildGearUsage(bloc));
+    result.addAll(buildSmokeSession(bloc));
+    result.add(SizedBox(
+      height: 55,
+    ));
+    return result;
+  }
+
+  List<Widget> buildSmokeSession(StatisticBloc bloc) {
+    var result = new List<Widget>();
+    result.add(Center(
+      child: new Text(
+        'Smoke sessions',
+        style: Theme.of(context).textTheme.title,
+      ),
+    ));
+    result.add(StreamBuilder<List<SmokeSessionSimpleDto>>(
+        stream: bloc.smokeSessions,
+        initialData: null,
+        builder: (BuildContext context,
+            AsyncSnapshot<List<SmokeSessionSimpleDto>> snapshot) {
+          return snapshot.data == null
+              ? Placeholder()
+              : Column(
+                  children: snapshot.data.map((f) {
+                  return SmokeSessionListItem(session: f);
+                }).toList());
+        }));
+    return result;
+  }
+
+  Widget buildGearUsage(StatisticBloc bloc) {
+    return Container(
+      height: 400,
+      width: 200,
+      child: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: PageView.builder(
+          controller: controller,
+          itemCount: 4,
+          itemBuilder: (context, index) {
+            return Placeholder();
+          },
+        ),
       ),
     );
   }
@@ -128,7 +221,8 @@ class _StatisticPageState extends State<StatisticPage> {
       child: StreamBuilder<StatisticRecap>(
         stream: bloc.recap,
         initialData: null,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<StatisticRecap> snapshot) {
           return Container(
               child: Center(
             child: Row(
@@ -146,14 +240,14 @@ class _StatisticPageState extends State<StatisticPage> {
                   child: new StatisticRecapWidget(
                     label: "smoking",
                     ballColor: AppColors.colors[1],
-                    value: getShortTime(snapshot?.data?.smokingTime),
+                    duration: snapshot?.data?.smokingTime,
                   ),
                 ),
                 Expanded(
                   child: new StatisticRecapWidget(
                     label: "activity",
                     ballColor: AppColors.colors[2],
-                    value: getShortTime(snapshot?.data?.activity),
+                    duration: snapshot?.data?.activity,
                   ),
                 ),
               ],
@@ -201,48 +295,44 @@ class _StatisticPageState extends State<StatisticPage> {
   }
 }
 
-class StatisticRecapWidget extends StatelessWidget {
-  final Color ballColor;
+class TimeSelect extends StatelessWidget {
   final String label;
-  final String value;
-  const StatisticRecapWidget({
+  final bool selected;
+
+  const TimeSelect({
     Key key,
-    this.ballColor,
     this.label,
-    this.value,
+    this.selected: false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Flex(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        direction: Axis.vertical,
-        children: <Widget>[
-          Flex(
-              direction: Axis.horizontal,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 15,
-                  width: 15,
-                  decoration:
-                      BoxDecoration(shape: BoxShape.circle, color: ballColor),
-                ),
-                Text(' ${label?.toUpperCase()}',
-                    style: Theme.of(context).textTheme.display2)
-              ]),
-          value != null
-              ? Text(' $value', style: Theme.of(context).textTheme.display1)
-              : Shimmer.fromColors(
-                  baseColor: Colors.grey[400],
-                  highlightColor: Colors.white,
-                  child: Text(' Loading',
-                      style: Theme.of(context).textTheme.display1),
-                )
-        ],
+    if (selected)
+      return RoundedButton(
+        borderWidth: 1,
+        bottomMargin: 1,
+        buttonColor: Colors.white,
+        child: Text(label,
+            style: Theme.of(context)
+                .textTheme
+                .display3
+                .apply(color: Colors.black)),
+        height: 40,
+        width: 30,
+        onTap: () {},
+      );
+
+    return RoundedButton(
+      borderWidth: 1,
+      bottomMargin: 1,
+      buttonColor: Colors.black,
+      child: Text(
+        label,
+        style: Theme.of(context).textTheme.display3,
       ),
+      height: 40,
+      width: 30,
+      onTap: () {},
     );
   }
 }

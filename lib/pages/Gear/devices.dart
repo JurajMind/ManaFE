@@ -30,50 +30,54 @@ class Devices extends StatelessWidget {
               itemCount: snapshot.data?.length ?? 0,
               itemBuilder: (context, index) {
                 var device = snapshot.data[index];
-                return InkWell(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      settings: RouteSettings(),
-                      builder: (context) => DeviceDetailPage(device: device))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Card(
-                      elevation: 3.0,
-                      child: Container(
-                        child: new DecoratedBox(
-                            decoration: new BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              gradient: new LinearGradient(
-                                  begin: Alignment.centerLeft,
-                                  end: Alignment.centerRight,
-                                  colors: Extensions.deviceAccentColor(
-                                      device.type)),
-                            ),
-                            child: Container(
-                              child: Column(
-                                children: <Widget>[
-                                  Center(
-                                    child: Text(
-                                      device.name,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.black,
-                                          fontSize: 20.0),
-                                    ),
-                                  ),
-                                ],
+                return Hero(
+                  tag: "${device.code}_hero",
+                  child: InkWell(
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        settings: RouteSettings(),
+                        builder: (context) =>
+                            DeviceDetailPage(device: device))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Card(
+                        elevation: 3.0,
+                        child: Container(
+                          child: new DecoratedBox(
+                              decoration: new BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                gradient: new LinearGradient(
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
+                                    colors: Extensions.deviceAccentColor(
+                                        device.type)),
                               ),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          Extensions.devicePicture(
-                                              device.type)),
-                                      colorFilter: ColorFilter.mode(
-                                          const Color.fromRGBO(
-                                              255, 255, 255, 0.545),
-                                          BlendMode.modulate),
-                                      fit: BoxFit.cover)),
-                            )),
+                              child: Container(
+                                child: Column(
+                                  children: <Widget>[
+                                    Center(
+                                      child: Text(
+                                        device.name,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.black,
+                                            fontSize: 20.0),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            Extensions.devicePicture(
+                                                device.type)),
+                                        colorFilter: ColorFilter.mode(
+                                            const Color.fromRGBO(
+                                                255, 255, 255, 0.545),
+                                            BlendMode.modulate),
+                                        fit: BoxFit.cover)),
+                              )),
+                        ),
                       ),
                     ),
                   ),
