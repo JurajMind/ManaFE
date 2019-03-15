@@ -4,6 +4,7 @@ import 'package:app/components/Statistic/recap.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/person/statistic_bloc.dart';
 import 'package:app/pages/Settings/language_selector_page.dart';
+import 'package:app/pages/Statistic/Components/gear_usage_item.dart';
 import 'package:app/pages/Statistic/test_page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/support/mana_icons_icons.dart';
@@ -11,6 +12,7 @@ import 'package:app/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/Charts/sparkline.dart';
 import 'package:openapi/api.dart';
+import 'package:queries/collections.dart';
 import 'dart:math' as math;
 
 import 'package:shimmer/shimmer.dart';
@@ -24,6 +26,8 @@ class _StatisticPageState extends State<StatisticPage> {
   math.Random random = new math.Random();
   PageController controller;
   Authorize auth = new Authorize();
+  String selectedTime = "Year";
+  bool loading = false;
   @override
   initState() {
     super.initState();
@@ -104,13 +108,29 @@ class _StatisticPageState extends State<StatisticPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  Expanded(flex: 1, child: new TimeSelect(label: 'Week')),
-                  Expanded(flex: 1, child: new TimeSelect(label: 'Month')),
+                  Expanded(
+                      flex: 1,
+                      child: new TimeSelect(
+                        label: 'Week',
+                        selected: selectedTime == 'Week',
+                        onTap: () =>
+                            loadTime(bloc, new Duration(days: 7), "Week"),
+                      )),
+                  Expanded(
+                      flex: 1,
+                      child: new TimeSelect(
+                        label: 'Month',
+                        selected: selectedTime == 'Month',
+                        onTap: () =>
+                            loadTime(bloc, new Duration(days: 31), "Month"),
+                      )),
                   Expanded(
                       flex: 1,
                       child: new TimeSelect(
                         label: 'Year',
-                        selected: true,
+                        selected: selectedTime == 'Year',
+                        onTap: () =>
+                            loadTime(bloc, new Duration(days: 365), "Year"),
                       )),
                   Expanded(flex: 1, child: new TimeSelect(label: 'Custom')),
                   Expanded(
@@ -151,9 +171,14 @@ class _StatisticPageState extends State<StatisticPage> {
               ),
             ),
             title: Container(
-                child: Text(
-              'STATS',
-              style: Theme.of(context).textTheme.title,
+                child: Row(
+              children: <Widget>[
+                Text(
+                  'STATS',
+                  style: Theme.of(context).textTheme.title,
+                ),
+                this.loading ? CircularProgressIndicator() : Container()
+              ],
             )),
           ),
           new SliverList(
@@ -162,6 +187,20 @@ class _StatisticPageState extends State<StatisticPage> {
         ],
       ),
     );
+  }
+
+  loadTime(StatisticBloc bloc, Duration duration, String label) {
+    setState(() {
+      this.loading = true;
+    });
+    bloc
+        .loadStatistic(DateTime.now().subtract(duration), DateTime.now())
+        .then((_) {
+      setState(() {
+        this.selectedTime = label;
+        this.loading = false;
+      });
+    });
   }
 
   List<Widget> buildBody(StatisticBloc bloc) {
@@ -202,17 +241,42 @@ class _StatisticPageState extends State<StatisticPage> {
     return Container(
       height: 400,
       width: 200,
-      child: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: PageView.builder(
-          controller: controller,
-          itemCount: 4,
-          itemBuilder: (context, index) {
-            return Placeholder();
-          },
-        ),
-      ),
+      child: StreamBuilder<List<PipeAccessoryUsageDto>>(
+          stream: bloc.gearUsage,
+          initialData: null,
+          builder: (context, snapshot) {
+            return Padding(
+              padding: EdgeInsets.all(8.0),
+              child: PageView(
+                controller: controller,
+                children: <Widget>[
+                  GearUsageItem(
+                    label: "Tobacco",
+                    gears: getUsageByType(snapshot.data, "Tobacco"),
+                  ),
+                  GearUsageItem(
+                      label: "Hookah",
+                      gears: getUsageByType(snapshot.data, "Hookah")),
+                  GearUsageItem(
+                      label: "Bowl",
+                      gears: getUsageByType(snapshot.data, "Bowl")),
+                ],
+              ),
+            );
+          }),
     );
+  }
+
+  List<PipeAccessoryUsageDto> getUsageByType(
+      List<PipeAccessoryUsageDto> usage, String type) {
+    if (usage == null) {
+      return null;
+    }
+
+    return Collection(usage)
+        .where((f) => f.type == type)
+        .orderByDescending((o) => o.used)
+        .toList();
   }
 
   Widget buildStatRecap(StatisticBloc bloc) {
@@ -276,7 +340,7 @@ class _StatisticPageState extends State<StatisticPage> {
       child: StreamBuilder<List<StatisticItem>>(
           stream: bloc.topGraphData,
           builder: (context, snapshot) {
-            return snapshot.data == null
+            return snapshot.data == null || snapshot.data.length == 0
                 ? Container()
                 : Sparkline(
                     cubicSmoothingFactor: 0.3,
@@ -298,29 +362,30 @@ class _StatisticPageState extends State<StatisticPage> {
 class TimeSelect extends StatelessWidget {
   final String label;
   final bool selected;
+  final VoidCallback onTap;
 
   const TimeSelect({
     Key key,
     this.label,
     this.selected: false,
+    this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (selected)
       return RoundedButton(
-        borderWidth: 1,
-        bottomMargin: 1,
-        buttonColor: Colors.white,
-        child: Text(label,
-            style: Theme.of(context)
-                .textTheme
-                .display3
-                .apply(color: Colors.black)),
-        height: 40,
-        width: 30,
-        onTap: () {},
-      );
+          borderWidth: 1,
+          bottomMargin: 1,
+          buttonColor: Colors.white,
+          child: Text(label,
+              style: Theme.of(context)
+                  .textTheme
+                  .display3
+                  .apply(color: Colors.black)),
+          height: 40,
+          width: 30,
+          onTap: () {});
 
     return RoundedButton(
       borderWidth: 1,
@@ -332,7 +397,7 @@ class TimeSelect extends StatelessWidget {
       ),
       height: 40,
       width: 30,
-      onTap: () {},
+      onTap: onTap,
     );
   }
 }

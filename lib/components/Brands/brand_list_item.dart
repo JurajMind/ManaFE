@@ -3,7 +3,6 @@ import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Gear/brand_page.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
 import 'package:shimmer/shimmer.dart';
 
 class BrandListItem extends StatelessWidget {

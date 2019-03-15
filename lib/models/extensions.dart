@@ -58,8 +58,12 @@ class Extensions {
   }
 
   static Widget defaultAccesoryPicture(PipeAccesorySimpleDto accesory) {
+    return defaultTypePicture(accesory.type);
+  }
+
+  static Widget defaultTypePicture(String type) {
     var imgPath = '';
-    switch (accesory.type) {
+    switch (type) {
       case 'Bowl':
         imgPath = 'images/types/bowl.png';
         break;

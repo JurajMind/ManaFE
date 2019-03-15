@@ -49,15 +49,15 @@ class SmokeSessionBloc {
       new BehaviorSubject<List<String>>.seeded(new List<String>());
 
   BehaviorSubject<SmokeSessionMetaDataDto> smokeSessionMetaData =
-      new BehaviorSubject<SmokeSessionMetaDataDto>
-      .seeded(new SmokeSessionMetaDataDto());
+      new BehaviorSubject<SmokeSessionMetaDataDto>.seeded(
+          new SmokeSessionMetaDataDto());
 
   BehaviorSubject<StandSettings> standSettings =
       new BehaviorSubject<StandSettings>.seeded(new StandSettings.empty());
 
   BehaviorSubject<List<StandAnimation>> animations =
-      new BehaviorSubject<List<StandAnimation>>
-      .seeded(new List<StandAnimation>());
+      new BehaviorSubject<List<StandAnimation>>.seeded(
+          new List<StandAnimation>());
 
   BehaviorSubject<List<Color>> sessionColor =
       new BehaviorSubject<List<Color>>();
@@ -282,6 +282,10 @@ class SmokeSessionBloc {
             this.loadSessionData();
             break;
           }
+        case 'settingChanged':
+          {
+            handleSettingChanged(f);
+          }
       }
     });
   }
@@ -333,6 +337,13 @@ class SmokeSessionBloc {
     params.add(activeSessionId);
     this.signalR.callServerFunction(name: 'LeaveSession', params: params);
     animations.add(null);
+  }
+
+  void handleSettingChanged(ClientMethod f) {
+    var newSettingJson =
+        StandSettings.fromJson(f.Data[0] as Map<String, dynamic>);
+
+    this.standSettings.add(newSettingJson);
   }
 }
 
