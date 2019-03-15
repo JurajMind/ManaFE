@@ -60,7 +60,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **mixologyGetFeaturedMixCreators**
-> MixCreators mixologyGetFeaturedMixCreators(page, pageSize, orderBy, order)
+> MixCreatorsDto mixologyGetFeaturedMixCreators(page, pageSize, orderBy, order)
 
 
 
@@ -93,7 +93,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**MixCreators**](MixCreators.md)
+[**MixCreatorsDto**](MixCreatorsDto.md)
 
 ### Authorization
 

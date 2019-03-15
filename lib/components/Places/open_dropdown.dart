@@ -23,7 +23,7 @@ class OpenDropdown extends StatelessWidget {
       if (day == null) {
         days[i] = "${getShortDayName(i, context)} - closed";
       } else {
-        var open = df.parse(day.openTime);
+        var open = df.parse(day.openTine);
         var close = df.parse(day.closeTime);
 
         days[i] =

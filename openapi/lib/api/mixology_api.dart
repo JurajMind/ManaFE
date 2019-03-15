@@ -60,7 +60,7 @@ class MixologyApi {
   /// 
   ///
   /// 
-  Future<MixCreators> mixologyGetFeaturedMixCreators({ int page, int pageSize, String orderBy, String order }) async {
+  Future<MixCreatorsDto> mixologyGetFeaturedMixCreators({ int page, int pageSize, String orderBy, String order }) async {
     Object postBody;
 
     // verify required params are set
@@ -111,7 +111,7 @@ class MixologyApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'MixCreators') as MixCreators;
+      return apiClient.deserialize(response.body, 'MixCreatorsDto') as MixCreatorsDto;
     } else {
       return null;
     }

@@ -16,13 +16,11 @@ class MediaDto {
   String extension = null;
   
   String fileName = null;
-  
-  String getDirectory = null;
   MediaDto();
 
   @override
   String toString() {
-    return 'MediaDto[id=$id, created=$created, path=$path, type=$type, isDefault=$isDefault, extension=$extension, fileName=$fileName, getDirectory=$getDirectory, ]';
+    return 'MediaDto[id=$id, created=$created, path=$path, type=$type, isDefault=$isDefault, extension=$extension, fileName=$fileName, ]';
   }
 
   MediaDto.fromJson(Map<String, dynamic> json) {
@@ -34,7 +32,6 @@ class MediaDto {
     isDefault = json['IsDefault'];
     extension = json['Extension'];
     fileName = json['FileName'];
-    getDirectory = json['GetDirectory'];
   }
 
   Map<String, dynamic> toJson() {
@@ -45,8 +42,7 @@ class MediaDto {
       'Type': type,
       'IsDefault': isDefault,
       'Extension': extension,
-      'FileName': fileName,
-      'GetDirectory': getDirectory
+      'FileName': fileName
     };
   }
 

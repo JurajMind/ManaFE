@@ -1,4 +1,4 @@
-# openapi.model.PlaceCalendar
+# openapi.model.MixCreatorsDto
 
 ## Load the model package
 ```dart
@@ -8,10 +8,7 @@ import 'package:openapi/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**placeDays** | [**List&lt;PlaceDay&gt;**](PlaceDay.md) |  | [optional] [default to []]
-**success** | **bool** |  | [optional] [default to null]
-**message** | **String** |  | [optional] [default to null]
-**httpResponseCode** | **int** |  | [optional] [default to null]
+**mixCreatorsList** | [**List&lt;MixCreator&gt;**](MixCreator.md) |  | [optional] [default to []]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

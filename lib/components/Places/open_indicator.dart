@@ -15,7 +15,7 @@ class OpenIndicator extends StatelessWidget {
     if (today == null) return false;
     var now = DateTime.now();
     final DateFormat df = new DateFormat('HH:mm:ss');
-    var open = df.parse(today.openTime);
+    var open = df.parse(today.openTine);
     var close = df.parse(today.closeTime);
     open = DateTime(now.year, now.month, now.day, open.hour, open.minute);
     close = DateTime(now.year, now.month, now.day, close.hour, close.minute);

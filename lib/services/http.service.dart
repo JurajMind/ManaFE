@@ -65,7 +65,7 @@ class ApiClient {
 
   _handleAuthError(
       String tokenHeader, RequestOptions options, String token) async {
-      log('error handling');
+    log('error handling');
     if (tokenHeader != options.headers["Authorization"]) {
       options.headers["Authorization"] = tokenHeader;
       //repeat
@@ -115,7 +115,7 @@ class ApiClient {
   Future<List<MixCreator>> getMixCreator() async {
     var url = Uri.https(baseUrl, '/api/Mixology/GetMixCreators');
     return _getJson(url)
-        .then((json) => MixCreators.fromJson(json))
+        .then((json) => MixCreatorsDto.fromJson(json))
         .then((m) => m.mixCreatorsList);
   }
 

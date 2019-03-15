@@ -13,7 +13,6 @@ class Extensions {
     return 'https://${App.baseUri}${image}original.jpg';
   }
 
-
   static String getFullPlaceImage(PlaceDto place) {
     var image = place?.medias?.first?.path;
     if (image == null) {
@@ -22,7 +21,7 @@ class Extensions {
     return 'https://${App.baseUri}${image}original.jpg';
   }
 
-  static String adress(SmartHookahModelsDbAddress adress) {
+  static String adress(AddressDto adress) {
     return '${adress.street} ${adress.number} ${adress.city}';
   }
 

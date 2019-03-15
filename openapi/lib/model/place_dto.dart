@@ -2,27 +2,9 @@ part of openapi.api;
 
 class PlaceDto {
   
-  int id = null;
-  
-  String name = null;
-  
-  String logoPath = null;
-  
   String shortDescriptions = null;
   
   String descriptions = null;
-  
-  String friendlyUrl = null;
-  
-  int addressId = null;
-  
-  AddressDto address = null;
-  
-  List<BusinessHoursDto> businessHours = [];
-  
-  String phoneNumber = null;
-  
-  String facebook = null;
   
   double baseHookahPrice = null;
   
@@ -43,26 +25,35 @@ class PlaceDto {
   FranchiseDto franchise = null;
   
   List<String> flags = [];
+  
+  int id = null;
+  
+  String name = null;
+  
+  String friendlyUrl = null;
+  
+  String logoPath = null;
+  
+  AddressDto address = null;
+  
+  List<BusinessHoursDto> businessHours = [];
+  
+  int rating = null;
+  
+  String phoneNumber = null;
+  
+  String facebook = null;
   PlaceDto();
 
   @override
   String toString() {
-    return 'PlaceDto[id=$id, name=$name, logoPath=$logoPath, shortDescriptions=$shortDescriptions, descriptions=$descriptions, friendlyUrl=$friendlyUrl, addressId=$addressId, address=$address, businessHours=$businessHours, phoneNumber=$phoneNumber, facebook=$facebook, baseHookahPrice=$baseHookahPrice, currency=$currency, seats=$seats, tobaccoReviews=$tobaccoReviews, medias=$medias, allowReservation=$allowReservation, minimumReservationTime=$minimumReservationTime, franchiseId=$franchiseId, franchise=$franchise, flags=$flags, ]';
+    return 'PlaceDto[shortDescriptions=$shortDescriptions, descriptions=$descriptions, baseHookahPrice=$baseHookahPrice, currency=$currency, seats=$seats, tobaccoReviews=$tobaccoReviews, medias=$medias, allowReservation=$allowReservation, minimumReservationTime=$minimumReservationTime, franchiseId=$franchiseId, franchise=$franchise, flags=$flags, id=$id, name=$name, friendlyUrl=$friendlyUrl, logoPath=$logoPath, address=$address, businessHours=$businessHours, rating=$rating, phoneNumber=$phoneNumber, facebook=$facebook, ]';
   }
 
   PlaceDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['Id'];
-    name = json['Name'];
-    logoPath = json['LogoPath'];
     shortDescriptions = json['ShortDescriptions'];
     descriptions = json['Descriptions'];
-    friendlyUrl = json['FriendlyUrl'];
-    addressId = json['AddressId'];
-    address = new AddressDto.fromJson(json['Address']);
-    businessHours = BusinessHoursDto.listFromJson(json['BusinessHours']);
-    phoneNumber = json['PhoneNumber'];
-    facebook = json['Facebook'];
     baseHookahPrice = json['BaseHookahPrice'];
     currency = json['Currency'];
     seats = SeatDto.listFromJson(json['Seats']);
@@ -73,21 +64,21 @@ class PlaceDto {
     franchiseId = json['FranchiseId'];
     franchise = new FranchiseDto.fromJson(json['Franchise']);
     flags = ((json['Flags'] ?? []) as List).map((item) => item as String).toList();
+    id = json['Id'];
+    name = json['Name'];
+    friendlyUrl = json['FriendlyUrl'];
+    logoPath = json['LogoPath'];
+    address = new AddressDto.fromJson(json['Address']);
+    businessHours = BusinessHoursDto.listFromJson(json['BusinessHours']);
+    rating = json['Rating'];
+    phoneNumber = json['PhoneNumber'];
+    facebook = json['Facebook'];
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'Id': id,
-      'Name': name,
-      'LogoPath': logoPath,
       'ShortDescriptions': shortDescriptions,
       'Descriptions': descriptions,
-      'FriendlyUrl': friendlyUrl,
-      'AddressId': addressId,
-      'Address': address,
-      'BusinessHours': businessHours,
-      'PhoneNumber': phoneNumber,
-      'Facebook': facebook,
       'BaseHookahPrice': baseHookahPrice,
       'Currency': currency,
       'Seats': seats,
@@ -97,7 +88,16 @@ class PlaceDto {
       'MinimumReservationTime': minimumReservationTime,
       'FranchiseId': franchiseId,
       'Franchise': franchise,
-      'Flags': flags
+      'Flags': flags,
+      'Id': id,
+      'Name': name,
+      'FriendlyUrl': friendlyUrl,
+      'LogoPath': logoPath,
+      'Address': address,
+      'BusinessHours': businessHours,
+      'Rating': rating,
+      'PhoneNumber': phoneNumber,
+      'Facebook': facebook
     };
   }
 

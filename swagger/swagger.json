@@ -85,42 +85,6 @@
         }
       }
     },
-    "/api/Account/api/Account/ConfirmEmail": {
-      "post": {
-        "tags": [
-          "Account"
-        ],
-        "operationId": "Account_ConfirmEmail",
-        "consumes": [],
-        "produces": [
-          "application/json",
-          "text/json",
-          "application/xml",
-          "text/xml"
-        ],
-        "parameters": [{
-            "name": "userId",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "code",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "object"
-            }
-          }
-        }
-      }
-    },
     "/api/Account/ForgotPassword": {
       "post": {
         "tags": [
@@ -1171,7 +1135,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/MixCreators"
+              "$ref": "#/definitions/MixCreatorsDto"
             }
           }
         }
@@ -1478,13 +1442,15 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [{
-          "name": "sessionCount",
-          "in": "path",
-          "required": true,
-          "type": "integer",
-          "format": "int32"
-        }],
+        "parameters": [
+          {
+            "name": "sessionCount",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -1511,7 +1477,8 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [{
+        "parameters": [
+          {
             "name": "id",
             "in": "path",
             "required": true,
@@ -1549,7 +1516,8 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [{
+        "parameters": [
+          {
             "name": "id",
             "in": "path",
             "required": true,
@@ -1752,7 +1720,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/PlaceCalendar"
+              "$ref": "#/definitions/PlaceCalendarDto"
             }
           }
         }
@@ -2246,7 +2214,8 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [{
+        "parameters": [
+          {
             "name": "from",
             "in": "query",
             "required": true,
@@ -2371,7 +2340,8 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [{
+        "parameters": [
+          {
             "name": "id",
             "in": "path",
             "required": true,
@@ -2410,13 +2380,15 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [{
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "integer",
-          "format": "int32"
-        }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -2440,13 +2412,15 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [{
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "integer",
-          "format": "int32"
-        }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -2476,7 +2450,8 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [{
+        "parameters": [
+          {
             "name": "id",
             "in": "path",
             "required": true,
@@ -2522,7 +2497,8 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [{
+        "parameters": [
+          {
             "name": "id",
             "in": "path",
             "required": true,
@@ -3616,7 +3592,7 @@
         }
       }
     },
-    "MixCreators": {
+    "MixCreatorsDto": {
       "type": "object",
       "properties": {
         "MixCreatorsList": {
@@ -3624,16 +3600,6 @@
           "items": {
             "$ref": "#/definitions/MixCreator"
           }
-        },
-        "Success": {
-          "type": "boolean"
-        },
-        "Message": {
-          "type": "string"
-        },
-        "HttpResponseCode": {
-          "format": "int32",
-          "type": "integer"
         }
       }
     },
@@ -4085,12 +4051,12 @@
           "type": "string"
         },
         "Address": {
-          "$ref": "#/definitions/smartHookahModelsDbAddress"
+          "$ref": "#/definitions/AddressDto"
         },
         "BusinessHours": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/OpeningDay"
+            "$ref": "#/definitions/BusinessHoursDto"
           }
         },
         "Rating": {
@@ -4138,7 +4104,7 @@
         }
       }
     },
-    "smartHookahModelsDbAddress": {
+    "AddressDto": {
       "type": "object",
       "properties": {
         "Id": {
@@ -4162,20 +4128,25 @@
         },
         "Lng": {
           "type": "string"
-        },
-        "Location": {
-          "$ref": "#/definitions/SystemDataEntitySpatialDbGeography"
         }
       }
     },
-    "OpeningDay": {
+    "BusinessHoursDto": {
       "type": "object",
       "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "PlaceId": {
+          "format": "int32",
+          "type": "integer"
+        },
         "Day": {
           "format": "int32",
           "type": "integer"
         },
-        "OpenTime": {
+        "OpenTine": {
           "type": "string"
         },
         "CloseTime": {
@@ -4215,34 +4186,6 @@
         "FileName": {
           "type": "string",
           "readOnly": true
-        },
-        "GetDirectory": {
-          "type": "string",
-          "readOnly": true
-        }
-      }
-    },
-    "SystemDataEntitySpatialDbGeography": {
-      "type": "object",
-      "properties": {
-        "Geography": {
-          "$ref": "#/definitions/SystemDataEntitySpatialDbGeographyWellKnownValue"
-        }
-      }
-    },
-    "SystemDataEntitySpatialDbGeographyWellKnownValue": {
-      "type": "object",
-      "properties": {
-        "CoordinateSystemId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "WellKnownText": {
-          "type": "string"
-        },
-        "WellKnownBinary": {
-          "format": "byte",
-          "type": "string"
         }
       }
     },
@@ -4295,16 +4238,6 @@
           "items": {
             "$ref": "#/definitions/PlaceEvent"
           }
-        },
-        "Success": {
-          "type": "boolean"
-        },
-        "Message": {
-          "type": "string"
-        },
-        "HttpResponseCode": {
-          "format": "int32",
-          "type": "integer"
         }
       }
     },
@@ -4351,7 +4284,7 @@
         }
       }
     },
-    "PlaceCalendar": {
+    "PlaceCalendarDto": {
       "type": "object",
       "properties": {
         "PlaceDays": {
@@ -4359,16 +4292,6 @@
           "items": {
             "$ref": "#/definitions/PlaceDay"
           }
-        },
-        "Success": {
-          "type": "boolean"
-        },
-        "Message": {
-          "type": "string"
-        },
-        "HttpResponseCode": {
-          "format": "int32",
-          "type": "integer"
         }
       }
     },
@@ -4489,42 +4412,10 @@
     "PlaceDto": {
       "type": "object",
       "properties": {
-        "Id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Name": {
-          "type": "string"
-        },
-        "LogoPath": {
-          "type": "string"
-        },
         "ShortDescriptions": {
           "type": "string"
         },
         "Descriptions": {
-          "type": "string"
-        },
-        "FriendlyUrl": {
-          "type": "string"
-        },
-        "AddressId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Address": {
-          "$ref": "#/definitions/AddressDto"
-        },
-        "BusinessHours": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/BusinessHoursDto"
-          }
-        },
-        "PhoneNumber": {
-          "type": "string"
-        },
-        "Facebook": {
           "type": "string"
         },
         "BaseHookahPrice": {
@@ -4571,55 +4462,37 @@
           "items": {
             "type": "string"
           }
-        }
-      }
-    },
-    "AddressDto": {
-      "type": "object",
-      "properties": {
+        },
         "Id": {
           "format": "int32",
           "type": "integer"
         },
-        "Street": {
+        "Name": {
           "type": "string"
         },
-        "City": {
+        "FriendlyUrl": {
           "type": "string"
         },
-        "Number": {
+        "LogoPath": {
           "type": "string"
         },
-        "ZIP": {
-          "type": "string"
+        "Address": {
+          "$ref": "#/definitions/AddressDto"
         },
-        "Lat": {
-          "type": "string"
+        "BusinessHours": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BusinessHoursDto"
+          }
         },
-        "Lng": {
-          "type": "string"
-        }
-      }
-    },
-    "BusinessHoursDto": {
-      "type": "object",
-      "properties": {
-        "Id": {
+        "Rating": {
           "format": "int32",
           "type": "integer"
         },
-        "PlaceId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Day": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "OpenTine": {
+        "PhoneNumber": {
           "type": "string"
         },
-        "CloseTime": {
+        "Facebook": {
           "type": "string"
         }
       }

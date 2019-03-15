@@ -13,17 +13,11 @@ class PlaceDay {
   String closeHour = null;
   
   List<PlaceEvent> placeEvents = [];
-  
-  bool success = null;
-  
-  String message = null;
-  
-  int httpResponseCode = null;
   PlaceDay();
 
   @override
   String toString() {
-    return 'PlaceDay[id=$id, placeId=$placeId, day=$day, openHour=$openHour, closeHour=$closeHour, placeEvents=$placeEvents, success=$success, message=$message, httpResponseCode=$httpResponseCode, ]';
+    return 'PlaceDay[id=$id, placeId=$placeId, day=$day, openHour=$openHour, closeHour=$closeHour, placeEvents=$placeEvents, ]';
   }
 
   PlaceDay.fromJson(Map<String, dynamic> json) {
@@ -34,9 +28,6 @@ class PlaceDay {
     openHour = json['OpenHour'];
     closeHour = json['CloseHour'];
     placeEvents = PlaceEvent.listFromJson(json['PlaceEvents']);
-    success = json['Success'];
-    message = json['Message'];
-    httpResponseCode = json['HttpResponseCode'];
   }
 
   Map<String, dynamic> toJson() {
@@ -46,10 +37,7 @@ class PlaceDay {
       'Day': day == null ? '' : day.toUtc().toIso8601String(),
       'OpenHour': openHour,
       'CloseHour': closeHour,
-      'PlaceEvents': placeEvents,
-      'Success': success,
-      'Message': message,
-      'HttpResponseCode': httpResponseCode
+      'PlaceEvents': placeEvents
     };
   }
 

@@ -75,12 +75,10 @@ class ApiClient {
           return MediaDto.fromJson(value);
         case 'MixCreator':
           return MixCreator.fromJson(value);
-        case 'MixCreators':
-          return MixCreators.fromJson(value);
+        case 'MixCreatorsDto':
+          return MixCreatorsDto.fromJson(value);
         case 'NearbyPlacesDto':
           return NearbyPlacesDto.fromJson(value);
-        case 'OpeningDay':
-          return OpeningDay.fromJson(value);
         case 'PersonActiveDataDto':
           return PersonActiveDataDto.fromJson(value);
         case 'PersonInfoDto':
@@ -97,8 +95,8 @@ class ApiClient {
           return PipeAccessoryStatisticsDto.fromJson(value);
         case 'PipeAccessoryUsageDto':
           return PipeAccessoryUsageDto.fromJson(value);
-        case 'PlaceCalendar':
-          return PlaceCalendar.fromJson(value);
+        case 'PlaceCalendarDto':
+          return PlaceCalendarDto.fromJson(value);
         case 'PlaceDay':
           return PlaceDay.fromJson(value);
         case 'PlaceDto':
@@ -127,8 +125,6 @@ class ApiClient {
           return SmartHookahControllersPriceGroupDto.fromJson(value);
         case 'SmartHookahHelpersAnimation':
           return SmartHookahHelpersAnimation.fromJson(value);
-        case 'SmartHookahModelsDbAddress':
-          return SmartHookahModelsDbAddress.fromJson(value);
         case 'SmartHookahModelsDbColor':
           return SmartHookahModelsDbColor.fromJson(value);
         case 'SmartHookahModelsForgotPasswordViewModel':
@@ -153,10 +149,6 @@ class ApiClient {
           return SmokeSessionSimpleDto.fromJson(value);
         case 'SmokeSessionTimeStatisticsDto':
           return SmokeSessionTimeStatisticsDto.fromJson(value);
-        case 'SystemDataEntitySpatialDbGeography':
-          return SystemDataEntitySpatialDbGeography.fromJson(value);
-        case 'SystemDataEntitySpatialDbGeographyWellKnownValue':
-          return SystemDataEntitySpatialDbGeographyWellKnownValue.fromJson(value);
         case 'TobaccoDto':
           return TobaccoDto.fromJson(value);
         case 'TobaccoInMix':
