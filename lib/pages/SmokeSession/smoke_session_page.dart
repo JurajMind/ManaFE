@@ -1,3 +1,4 @@
+import 'package:app/Helpers/date_utils.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Pickers/smoke_color_wheel.dart';
 import 'package:app/components/snap_scroll.dart';
@@ -130,9 +131,8 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         if (asyncSnapshot.data.duration == null) {
           return Text('NoData');
         }
-        var duration = asyncSnapshot.data.duration;
         var durationString =
-            '${duration.inHours}:${duration.inMinutes % 60}:${duration.inSeconds % 100}';
+            Utils.toStringDuration(asyncSnapshot.data.duration);
 
         var longestString =
             '${asyncSnapshot.data.longestPuf.inMinutes == 0 ? "" : asyncSnapshot.data.longestPuf.inMinutes.toString() + ':'}${asyncSnapshot.data.longestPuf.inSeconds}.${asyncSnapshot.data.longestPuf.inMilliseconds.toString()}';

@@ -9,6 +9,7 @@ import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Gear/gear_page.dart';
 import 'package:app/pages/Places/places_page.dart';
 import 'package:app/pages/SmokeSession/gradiend_color_wheel_rotate.dart';
+import 'package:app/pages/Statistic/statistic_page.dart';
 import 'package:app/pages/profile.page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';
 import 'package:app/services/signal_r.dart';
@@ -229,7 +230,7 @@ class _HomePageState extends State<HomePage> {
           _buildOffstageNavigator(
               new StartSmokeSessionPage(callback: _setActiveTab), 2),
           _buildOffstageNavigator(new GearPage(), 3),
-          _buildOffstageNavigator(new ProfilePage(), 4),
+          _buildOffstageNavigator(new StatisticPage(), 4),
         ],
       ),
     );

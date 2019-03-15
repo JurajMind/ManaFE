@@ -21,7 +21,10 @@ class _LanguageSelectorPageState extends State<LanguageSelectorPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppTranslations.of(context).text("title_select_language")),
+        backgroundColor: Colors.black,
+        title: Text(AppTranslations.of(context)
+            .text("title_select_language")
+            .toUpperCase()),
       ),
       body: _buildLanguagesList(),
     );
