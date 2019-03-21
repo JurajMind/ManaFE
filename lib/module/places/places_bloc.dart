@@ -1,29 +1,26 @@
 import 'package:app/app/app.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:location/location.dart';
-import 'package:map_view/map_view.dart' as map;
+
 import 'package:flutter/services.dart';
 import 'dart:convert';
 
 class PlacesBloc {
-  Location _location = new Location();
-
+  bool _permission = false;
+  String error;
   BehaviorSubject<List<PlaceSimpleDto>> places =
-      new BehaviorSubject<List<PlaceSimpleDto>>
-      .seeded(new List<PlaceSimpleDto>());
+      new BehaviorSubject<List<PlaceSimpleDto>>.seeded(
+          new List<PlaceSimpleDto>());
 
-  BehaviorSubject<bool> loading = new BehaviorSubject<bool>
-  .seeded(false);
+  BehaviorSubject<bool> loading = new BehaviorSubject<bool>.seeded(false);
 
   BehaviorSubject<bool> localizationnPermision =
-      new BehaviorSubject<bool>
-      .seeded(false);
+      new BehaviorSubject<bool>.seeded(false);
 
-  BehaviorSubject<map.Location> location =
-      new BehaviorSubject<map.Location>
-      .seeded(new map.Location(0.0, 0.0));
+  BehaviorSubject<Position> location = new BehaviorSubject<Position>.seeded(
+      new Position(longitude: 40.0, latitude: 40.0));
 
   static final PlacesBloc _instance = new PlacesBloc._();
 
@@ -34,20 +31,31 @@ class PlacesBloc {
   }
 
   Future loadPlaces() async {
+    Geolocator()
+        .getLastKnownPosition(desiredAccuracy: LocationAccuracy.low)
+        .then((value) {
+      if (value != null) {
+        location.add(value);
+      }
+    });
     await loadPlacesFromCache();
 
-    map.Location location = null;// await getLocation();
-    if (location == null) {
-      location = new map.Location(0.0, 0.0);
+    double lat = 0;
+    double lng = 0;
+    if (location.value != null) {
+      lat = location.value.latitude;
+      lng = location.value.longitude;
     }
-    await App.http
-        .getNearbyPlaces(lat: location.latitude, lng: location.longitude)
-        .then((places) async {
+    await App.http.getNearbyPlaces(lat: lat, lng: lng).then((places) async {
       this.places.add(places);
       var db = await App.cache.getDatabase();
       var key = await db.put(json.encode(places), 'places');
       this.loading.add(false);
     });
+
+    Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((value) => {this.location.add(value)});
   }
 
   Future loadPlacesFromCache() async {
@@ -69,29 +77,9 @@ class PlacesBloc {
   }
 
   Future<bool> _getPermissionStatus() async {
-    final res = await _location.hasPermission();
+    final res = false; //await _location.hasPermission();
 
     localizationnPermision.add(res);
     return res;
-  }
-
-  Future<map.Location> getLocation() async {
-    // Platform messages may fail, so we use a try/catch PlatformException.
-
-    try {
-      var _permission = await this._getPermissionStatus();
-      if (!_permission) {
-        return location.value;
-      }
-      var rawlocation = await _location.getLocation();
-      var sl = map.Location(rawlocation['latitude'], rawlocation['longitude']);
-      if (sl == null) return null;
-      location.add(sl);
-      return sl;
-    } on PlatformException catch (e) {
-      if (e.code == 'PERMISSION_DENIED') {
-        location = null;
-      }
-    }
   }
 }

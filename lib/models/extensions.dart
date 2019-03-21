@@ -6,7 +6,7 @@ import 'package:openapi/api.dart';
 
 class Extensions {
   static String getPlaceImage(PlaceSimpleDto place) {
-    var image = place?.medias?.first?.path;
+    var image = place?.media?.path;
     if (image == null) {
       return 'https://${App.baseUri}/Content/Placeholder/place.jpg';
     }

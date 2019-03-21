@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:app/const/theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geolocator/geolocator.dart';
 
 class NewPlacePage extends StatefulWidget {
   @override
@@ -17,7 +16,8 @@ class NewPlacePage extends StatefulWidget {
   }
 }
 
-class NewPlacePageState extends State<NewPlacePage> with TickerProviderStateMixin {
+class NewPlacePageState extends State<NewPlacePage>
+    with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   TabController _tabController;
   PageController _pageController;
@@ -25,17 +25,14 @@ class NewPlacePageState extends State<NewPlacePage> with TickerProviderStateMixi
   int _tabbarIndex = 0;
   String _selectedLocation = "Istanbul, TR";
   bool selectedColor = true;
-  var currentLocation;
+
   bool showMaps = false;
 
   List<String> _location = ["Newyork, NY", "Dubai", "Istanbul, TR"];
   @override
   void initState() {
-    Geolocator().getCurrentPosition().then((current) {
-      setState(() {
-        currentLocation = current;
-        showMaps = true;
-      });
+    setState(() {
+      showMaps = true;
     });
     _pageController = PageController(
       initialPage: 0,
@@ -50,7 +47,6 @@ class NewPlacePageState extends State<NewPlacePage> with TickerProviderStateMixi
   void dispose() {
     _tabController.dispose();
     _pageController.dispose();
-    _mapController.dispose();
     super.dispose();
   }
 
@@ -59,7 +55,9 @@ class NewPlacePageState extends State<NewPlacePage> with TickerProviderStateMixi
     final _media = MediaQuery.of(context).size;
     return Scaffold(
       key: _scaffoldKey,
-      bottomNavigationBar: new SizedBox(height: 55,),
+      bottomNavigationBar: new SizedBox(
+        height: 55,
+      ),
       endDrawer: Stack(
         children: <Widget>[
           Theme(
@@ -164,8 +162,7 @@ class NewPlacePageState extends State<NewPlacePage> with TickerProviderStateMixi
                               initialCameraPosition: CameraPosition(
                                 bearing: 10,
                                 zoom: 15,
-                                target: LatLng(currentLocation.latitude,
-                                    currentLocation.longitude),
+                                target: LatLng(10, 10),
                               ),
                               onMapCreated: (controller) {
                                 setState(() {
@@ -186,25 +183,6 @@ class NewPlacePageState extends State<NewPlacePage> with TickerProviderStateMixi
                           children: <Widget>[
                             GestureDetector(
                               onTap: () {
-                                _mapController == null
-                                    ? null
-                                    : _mapController.addMarker(
-                                        MarkerOptions(
-                                          icon: BitmapDescriptor
-                                              .defaultMarkerWithHue(
-                                            BitmapDescriptor.hueOrange,
-                                          ),
-                                          draggable: true,
-                                          position: LatLng(
-                                            41.08738144641038,
-                                            28.788369297981262,
-                                          ),
-                                          infoWindowText: InfoWindowText(
-                                            "Cafe De Perks",
-                                            "Good food",
-                                          ),
-                                        ),
-                                      );
                                 _mapController.animateCamera(
                                   CameraUpdate.newCameraPosition(
                                     CameraPosition(
@@ -222,36 +200,19 @@ class NewPlacePageState extends State<NewPlacePage> with TickerProviderStateMixi
                               },
                               child: Container(
                                 child: CardListWidget(
-                                  heartIcon: LikeButton(
-                                    width: 70,
-                                  ),
-                                  foodDetail: "Desert - Fast Food - Alcohol",
-                                  foodName: "Cafe De Perks",
-                                  vote: 4.5,
-                                  foodTime: "15-30 min",
-                                  image: ""
-                                ),
+                                    heartIcon: LikeButton(
+                                      width: 70,
+                                    ),
+                                    foodDetail: "Desert - Fast Food - Alcohol",
+                                    foodName: "Cafe De Perks",
+                                    vote: 4.5,
+                                    foodTime: "15-30 min",
+                                    image: ""),
                               ),
                             ),
                             GestureDetector(
                               onTap: () {
-                                _mapController == null
-                                    ? null
-                                    : _mapController.addMarker(
-                                        MarkerOptions(
-                                          icon: BitmapDescriptor
-                                              .defaultMarkerWithHue(
-                                            BitmapDescriptor.hueOrange,
-                                          ),
-                                          draggable: true,
-                                          position: LatLng(
-                                            41.05612003462361,
-                                            28.72148036956787,
-                                          ),
-                                          infoWindowText: InfoWindowText(
-                                              "Cafe De Istanbul", "Good food"),
-                                        ),
-                                      );
+                                _mapController == null ? null : _mapController;
                                 _mapController.animateCamera(
                                   CameraUpdate.newCameraPosition(
                                     CameraPosition(
@@ -499,9 +460,7 @@ class NewPlacePageState extends State<NewPlacePage> with TickerProviderStateMixi
             borderRadius: BorderRadius.circular(50),
             boxShadow: [
               BoxShadow(
-                  color: AppColors.blue,
-                  blurRadius: 12,
-                  offset: Offset(0, 5)),
+                  color: AppColors.blue, blurRadius: 12, offset: Offset(0, 5)),
             ]),
         child: Icon(
           IconData(0xe800, fontFamily: "Icons"),
@@ -511,8 +470,6 @@ class NewPlacePageState extends State<NewPlacePage> with TickerProviderStateMixi
       ),
     );
   }
-
-
 
   Positioned buildPositionedButtons() {
     return Positioned(
@@ -550,9 +507,7 @@ class NewPlacePageState extends State<NewPlacePage> with TickerProviderStateMixi
                 child: Text(
                   "List View",
                   style: TextStyle(
-                    color: selectedColor
-                        ? AppColors.blue
-                        : AppColors.gray,
+                    color: selectedColor ? AppColors.blue : AppColors.gray,
                     fontWeight: FontWeight.w400,
                     fontSize: 16,
                     fontFamily: "Poppins",
@@ -580,9 +535,7 @@ class NewPlacePageState extends State<NewPlacePage> with TickerProviderStateMixi
                 child: Text(
                   "Map View",
                   style: TextStyle(
-                    color: selectedColor
-                        ? AppColors.gray
-                        : AppColors.blue,
+                    color: selectedColor ? AppColors.gray : AppColors.blue,
                     fontWeight: FontWeight.w400,
                     fontSize: 16,
                     fontFamily: "Poppins",

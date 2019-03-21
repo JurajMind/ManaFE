@@ -98,58 +98,55 @@ class _HomePageState extends State<HomePage> {
   Widget myBottomBar() => new Container(
         child: Material(
           color: new Color.fromARGB(230, 0, 0, 0),
-          child: BackdropFilter(
-            filter: new ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
-            child: Ink(
-              height: 55.0,
-              color: Colors.transparent,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: IconButtonTitle(
-                        icon: Icon(ManaIcons.leaf),
-                        text: AppTranslations.of(context).text("tab_mixology"),
-                        color: _currentIndex == 0 ? Colors.white : Colors.grey,
-                        tooltip: 'ss',
-                        onPressed: () => _setActiveTab(0),
-                      ),
+          child: Ink(
+            height: 55.0,
+            color: Colors.transparent,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: IconButtonTitle(
+                      icon: Icon(ManaIcons.leaf),
+                      text: AppTranslations.of(context).text("tab_mixology"),
+                      color: _currentIndex == 0 ? Colors.white : Colors.grey,
+                      tooltip: 'ss',
+                      onPressed: () => _setActiveTab(0),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: IconButtonTitle(
-                        icon: Icon(Icons.place),
-                        text: AppTranslations.of(context).text("tab_places"),
-                        color: _currentIndex == 1 ? Colors.white : Colors.grey,
-                        onPressed: () => _setActiveTab(1),
-                      ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: IconButtonTitle(
+                      icon: Icon(Icons.place),
+                      text: AppTranslations.of(context).text("tab_places"),
+                      color: _currentIndex == 1 ? Colors.white : Colors.grey,
+                      onPressed: () => _setActiveTab(1),
                     ),
-                    Expanded(flex: 1, child: Container()),
-                    Expanded(
-                      flex: 1,
-                      child: IconButtonTitle(
-                        icon: Icon(ManaIcons.hookah),
-                        text: AppTranslations.of(context).text("tab_gear"),
-                        color: _currentIndex == 3 ? Colors.white : Colors.grey,
-                        onPressed: () => _setActiveTab(3),
-                      ),
+                  ),
+                  Expanded(flex: 1, child: Container()),
+                  Expanded(
+                    flex: 1,
+                    child: IconButtonTitle(
+                      icon: Icon(ManaIcons.hookah),
+                      text: AppTranslations.of(context).text("tab_gear"),
+                      color: _currentIndex == 3 ? Colors.white : Colors.grey,
+                      onPressed: () => _setActiveTab(3),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: IconButtonTitle(
-                        icon: Icon(Icons.person),
-                        text: AppTranslations.of(context).text("tab_profile"),
-                        color: _currentIndex == 4 ? Colors.white : Colors.grey,
-                        onPressed: () => _setActiveTab(4),
-                      ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: IconButtonTitle(
+                      icon: Icon(Icons.person),
+                      text: AppTranslations.of(context).text("tab_profile"),
+                      color: _currentIndex == 4 ? Colors.white : Colors.grey,
+                      onPressed: () => _setActiveTab(4),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -226,7 +223,7 @@ class _HomePageState extends State<HomePage> {
         index: _currentIndex,
         children: <Widget>[
           _buildOffstageNavigator(new MixologyList(), 0),
-          _buildOffstageNavigator(new PlacePage(), 1),
+          _buildOffstageNavigator(new PlacesPage(), 1),
           _buildOffstageNavigator(
               new StartSmokeSessionPage(callback: _setActiveTab), 2),
           _buildOffstageNavigator(new GearPage(), 3),

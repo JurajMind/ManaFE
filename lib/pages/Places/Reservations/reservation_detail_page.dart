@@ -242,6 +242,11 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                         ),
                       ),
                     ),
+                    Container(
+                      child: ExpansionTile(
+                        title: Text('I will be late'),
+                      ),
+                    )
                   ]),
                 )
               ],

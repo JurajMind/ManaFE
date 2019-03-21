@@ -2,10 +2,8 @@ import 'package:app/app/app.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:location/location.dart';
 
 class PlaceBloc {
-  Location _location = new Location();
   bool _initLoad = false;
   PlaceSimpleDto _place;
 
@@ -13,7 +11,8 @@ class PlaceBloc {
 
   BehaviorSubject<PlaceDto> placeInfo = new BehaviorSubject();
 
-  BehaviorSubject<List<ReservationsTimeSlot>> reservationInfo = new BehaviorSubject();
+  BehaviorSubject<List<ReservationsTimeSlot>> reservationInfo =
+      new BehaviorSubject();
 
   static final PlaceBloc _instance = new PlaceBloc._();
 
@@ -27,13 +26,16 @@ class PlaceBloc {
       placeInfo.add(null);
       this.place.add(place);
     }
-    var placeInfoTask = App.http.getPlaceInfo(place.id).then((data) => placeInfo.add(data));
-    var placeReservationTask = loadReservationInfo(DateTime.now()) ;
+    var placeInfoTask =
+        App.http.getPlaceInfo(place.id).then((data) => placeInfo.add(data));
+    var placeReservationTask = loadReservationInfo(DateTime.now());
 
-    await Future.wait([placeInfoTask,placeReservationTask]);
+    await Future.wait([placeInfoTask, placeReservationTask]);
   }
 
-  Future loadReservationInfo(DateTime date) async{
-    await App.http.getPlaceReservationInfo(_place.id, date).then((data) => reservationInfo.add(data.timeSlots));
+  Future loadReservationInfo(DateTime date) async {
+    await App.http
+        .getPlaceReservationInfo(_place.id, date)
+        .then((data) => reservationInfo.add(data.timeSlots));
   }
 }

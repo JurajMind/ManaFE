@@ -13,7 +13,6 @@ import 'package:app/pages/Places/Reservations/reservation_page.dart';
 import 'package:app/pages/Places/menu.page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:map_view/map_view.dart';
 import 'package:openapi/api.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -74,45 +73,9 @@ class _PlaceDetailState extends State<PlaceDetailPage>
   final double _appBarHeight = 256.0;
   AnimationController buttonController;
   Animation buttomZoomOut;
-  MapView mapView = new MapView();
   final PlaceSimpleDto place;
   PlaceBloc placeBloc;
   _PlaceDetailState(this.place, this.placeBloc);
-
-  showMap() {
-    mapView.onMapReady.listen((_) {
-      mapView.addMarker(new Marker(
-        "1",
-        widget.place.name,
-        double.parse(place.address.lat),
-        double.parse(place.address.lng),
-      ));
-    });
-
-    mapView.show(
-        new MapOptions(
-            mapViewType: MapViewType.normal,
-            showUserLocation: true,
-            showMyLocationButton: true,
-            showCompassButton: true,
-            initialCameraPosition: new CameraPosition(
-                new Location(double.parse(widget.place.address.lat),
-                    double.parse(widget.place.address.lng)),
-                15.0),
-            hideToolbar: false,
-            title: widget.place.name),
-        toolbarActions: [new ToolbarAction("Close", 1)]);
-
-    mapView.onToolbarAction.listen((id) {
-      if (id == 1) {
-        _handleDismiss();
-      }
-    });
-  }
-
-  _handleDismiss() async {
-    mapView.dismiss();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -241,7 +204,7 @@ class _PlaceDetailState extends State<PlaceDetailPage>
                                         'NAVIGATE',
                                         style: TextStyle(color: Colors.black),
                                       ),
-                                      onPressed: () => print('navigate'),
+                                      onPressed: () => navigate(),
                                     ),
                                     Container(
                                       height: 14.0,
@@ -313,6 +276,17 @@ class _PlaceDetailState extends State<PlaceDetailPage>
         )
       ],
     ));
+  }
+
+  void navigate() async {
+    var lat = double.parse(place.address.lat);
+    var lng = double.parse(place.address.lng);
+    final url = 'https://www.google.com/maps/search/?api=1&query=$lat,$lng';
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: false);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   Widget buildPlaceInfo() {

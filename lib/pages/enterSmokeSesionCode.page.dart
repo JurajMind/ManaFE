@@ -9,7 +9,6 @@ import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/services/http.service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:qrcode_reader/qrcode_reader.dart';
 
 class EnterSmokeSessionCode extends StatefulWidget {
   @override
@@ -138,7 +137,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                         flex: 1,
                                         child: InkWell(
                                             onTap: () {
-                                              Future<String> futureString =
+                                              /*     Future<String> futureString =
                                                   new QRCodeReader().scan();
                                               futureString.then(
                                                   (smokeSessionLink) async {
@@ -154,7 +153,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                                   await validateAndGo(
                                                       context, sessionCode);
                                                 }
-                                              });
+                                              });*/
                                             },
                                             child: Container(
                                               width: 50.0,

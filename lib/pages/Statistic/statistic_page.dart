@@ -3,6 +3,7 @@ import 'package:app/components/SmokeSession/smoke_session_list_item.dart';
 import 'package:app/components/Statistic/recap.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/person/statistic_bloc.dart';
+import 'package:app/pages/Places/places_map_page.dart';
 import 'package:app/pages/Settings/language_selector_page.dart';
 import 'package:app/pages/Statistic/Components/gear_usage_item.dart';
 import 'package:app/pages/Statistic/test_page.dart';
@@ -67,6 +68,10 @@ class _StatisticPageState extends State<StatisticPage> {
                       Navigator.of(context).push(
                           MaterialPageRoute(builder: (context) => TestPage()));
                       break;
+                    case 'testPlaces':
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => PlacesMapPage()));
+                      break;
                   }
                 },
                 itemBuilder: (BuildContext context) => [
@@ -85,6 +90,10 @@ class _StatisticPageState extends State<StatisticPage> {
                       PopupMenuItem(
                         value: "testPage",
                         child: Text('Test page'),
+                      ),
+                      PopupMenuItem(
+                        value: "testPlaces",
+                        child: Text('Test places'),
                       )
                     ],
               )
