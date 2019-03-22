@@ -26,10 +26,13 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
   BehaviorSubject<ReservationDetailDto> reservationDetail =
       new BehaviorSubject<ReservationDetailDto>();
 
+  ScrollController controller;
+
   final double _appBarHeight = 150.0;
   @override
   void initState() {
     super.initState();
+    controller = new ScrollController();
     App.http
         .reservationDetail(widget.reservation.id)
         .then((data) => this.reservationDetail.add(data));
@@ -44,6 +47,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
           child: Container(
             color: Colors.black,
             child: CustomScrollView(
+              controller: controller,
               slivers: <Widget>[
                 new SliverAppBar(
                   backgroundColor: Colors.black,
@@ -253,7 +257,11 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                             new BorderRadius.all(const Radius.circular(40.0)),
                       ),
                       child: ExpansionTile(
-                        title: Text('I will be late'),
+                        title: Center(child: Text('I will be late')),
+                        onExpansionChanged: (expansion) {
+                          controller
+                              .jumpTo(controller.position.maxScrollExtent);
+                        },
                         children: <Widget>[
                           Row(
                             mainAxisSize: MainAxisSize.max,
