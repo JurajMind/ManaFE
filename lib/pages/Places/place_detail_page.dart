@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app/app/app.dart';
 import 'package:app/components/Common/leading_icon.dart';
+import 'package:app/components/Places/navigate_button.dart';
 import 'package:app/components/Places/open_dropdown.dart';
 import 'package:app/components/Places/place_detail.dart';
 import 'package:app/components/Places/place_map.dart';
@@ -199,12 +200,8 @@ class _PlaceDetailState extends State<PlaceDetailPage>
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
-                                    FlatButton(
-                                      child: Text(
-                                        'NAVIGATE',
-                                        style: TextStyle(color: Colors.black),
-                                      ),
-                                      onPressed: () => navigate(),
+                                    NavigateButton(
+                                      place: place,
                                     ),
                                     Container(
                                       height: 14.0,
@@ -276,17 +273,6 @@ class _PlaceDetailState extends State<PlaceDetailPage>
         )
       ],
     ));
-  }
-
-  void navigate() async {
-    var lat = double.parse(place.address.lat);
-    var lng = double.parse(place.address.lng);
-    final url = 'https://www.google.com/maps/search/?api=1&query=$lat,$lng';
-    if (await canLaunch(url)) {
-      await launch(url, forceSafariVC: false);
-    } else {
-      throw 'Could not launch $url';
-    }
   }
 
   Widget buildPlaceInfo() {

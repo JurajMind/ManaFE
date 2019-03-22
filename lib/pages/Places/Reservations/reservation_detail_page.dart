@@ -2,6 +2,7 @@ import 'package:app/Helpers/date_utils.dart';
 import 'package:app/Helpers/type_helper.dart';
 import 'package:app/app/app.dart';
 import 'package:app/components/Common/labeled_value.dart';
+import 'package:app/components/Places/navigate_button.dart';
 import 'package:app/components/Places/place_detail.dart';
 import 'package:app/components/Places/place_map.dart';
 import 'package:app/components/Reservations/reservation_item.dart';
@@ -233,6 +234,8 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                                         ))
                                                   ],
                                                 ),
+                                                NavigateButton(
+                                                    place: simplePlace)
                                               ],
                                             ),
                                           );
@@ -242,11 +245,35 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                         ),
                       ),
                     ),
+                    SizedBox(height: 20),
                     Container(
+                      decoration: BoxDecoration(
+                        border: new Border.all(color: Colors.white),
+                        borderRadius:
+                            new BorderRadius.all(const Radius.circular(40.0)),
+                      ),
                       child: ExpansionTile(
                         title: Text('I will be late'),
+                        children: <Widget>[
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              new LateTimeButton(
+                                time: 10,
+                              ),
+                              new LateTimeButton(
+                                time: 15,
+                              ),
+                              new LateTimeButton(
+                                time: 20,
+                              )
+                            ],
+                          )
+                        ],
                       ),
-                    )
+                    ),
+                    SizedBox(height: 100),
                   ]),
                 )
               ],
@@ -297,6 +324,28 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
           ],
         );
       },
+    );
+  }
+}
+
+class LateTimeButton extends StatelessWidget {
+  final int time;
+  const LateTimeButton({
+    Key key,
+    this.time,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlineButton(
+      shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(30.0)),
+      borderSide: BorderSide(color: Colors.white, width: 1),
+      child: Text(
+        "${time.toString()} min",
+        style: Theme.of(context).textTheme.display2,
+      ),
+      onPressed: () => Navigator.of(context).pop(),
     );
   }
 }
