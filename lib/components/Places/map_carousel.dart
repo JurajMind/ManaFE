@@ -128,10 +128,10 @@ class _CarrousselState extends State<MapCarousel> {
               await widget.mapController.future;
           await controller.animateCamera(CameraUpdate.newCameraPosition(
               CameraPosition(
-                  bearing: 192.8334901395799,
+                  bearing: 0,
                   target: LatLng(double.parse(place.address.lat),
                       double.parse(place.address.lng)),
-                  tilt: 59.440717697143555,
+                  tilt: 0,
                   zoom: 15.151926040649414)));
         }
       },

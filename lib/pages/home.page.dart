@@ -187,31 +187,44 @@ class _HomePageState extends State<HomePage> {
         right: (MediaQuery.of(context).size.width / 2) - centerSize ~/ 2,
         child: Material(
           color: Colors.transparent,
-          child: SizedBox(
-            height: centerSize,
-            width: centerSize,
-            child: _currentIndex == 2
-                ? InkWell(
-                    borderRadius: BorderRadius.circular(20.0),
-                    onTap: () => _setActiveTab(2),
-                    child: GradientColorWheelRotate(
-                        size: new Size(centerSize, centerSize),
-                        defaultColors: [Colors.white, Colors.white],
-                        child: Icon(
-                          ManaIcons.manam,
-                          color: Colors.black,
-                        )),
-                  )
-                : InkWell(
-                    onTap: () => _setActiveTab(2),
-                    child: GradientColorWheelRotate(
-                        size: new Size(centerSize, centerSize),
-                        defaultColors: [Colors.white, Colors.white],
-                        child: Icon(
-                          ManaIcons.manam,
-                          color: Colors.grey,
-                        )),
-                  ),
+          child: Container(
+            decoration: new BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.transparent,
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: Colors.grey,
+                  offset: Offset(1.0, 6.0),
+                  blurRadius: 40.0,
+                ),
+              ],
+            ),
+            child: SizedBox(
+              height: centerSize,
+              width: centerSize,
+              child: _currentIndex == 2
+                  ? InkWell(
+                      borderRadius: BorderRadius.circular(20.0),
+                      onTap: () => _setActiveTab(2),
+                      child: GradientColorWheelRotate(
+                          size: new Size(centerSize, centerSize),
+                          defaultColors: [Colors.white, Colors.white],
+                          child: Icon(
+                            ManaIcons.manam,
+                            color: Colors.black,
+                          )),
+                    )
+                  : InkWell(
+                      onTap: () => _setActiveTab(2),
+                      child: GradientColorWheelRotate(
+                          size: new Size(centerSize, centerSize),
+                          defaultColors: [Colors.white, Colors.white],
+                          child: Icon(
+                            ManaIcons.manam,
+                            color: Colors.grey,
+                          )),
+                    ),
+            ),
           ),
         ));
   }

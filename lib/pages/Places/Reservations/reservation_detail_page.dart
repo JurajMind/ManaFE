@@ -122,7 +122,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                       LabeledValue(
                                         widget.reservation.persons.toString(),
                                         icon: Icon(Icons.person),
-                                        label: 'Peoples: ',
+                                        label: 'Persons: ',
                                       ),
                                     ],
                                   ),
