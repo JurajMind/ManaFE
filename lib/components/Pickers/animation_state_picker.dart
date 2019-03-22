@@ -69,14 +69,14 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
     return StreamBuilder<List<StandAnimation>>(
         stream: widget.smokeSessionBloc.animations,
         initialData: List<StandAnimation>(),
-        builder: (context, snapshot) => snapshot.data.length == 0
+        builder: (context, snapshot) => snapshot?.data?.length == 0
             ? Container()
             : ListWheelScrollView(
-                itemExtent: 50.0,
+                itemExtent: 70.0,
                 controller: scrollController,
                 clipToSize: true,
                 diameterRatio: 10.0,
-                perspective: 0.01,
+                perspective: 0.005,
                 onSelectedItemChanged: (int index) {
                   if (index == 0) {
                     print('fake');
@@ -202,7 +202,7 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
       _focusIndex = index;
     }
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(10.0),
       child: Container(
         child: Center(
           child: Text(data.displayName,
