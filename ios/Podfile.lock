@@ -13,7 +13,14 @@ PODS:
   - flutter_facebook_login (0.0.1):
     - FBSDKLoginKit (= 4.39.1)
     - Flutter
-  - flutter_secure_storage (3.1.1):
+  - flutter_secure_storage (3.2.0):
+    - Flutter
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - geolocator (3.0.1):
+    - Flutter
+  - google_api_availability (2.0.0):
     - Flutter
   - google_maps_flutter (0.0.1):
     - Flutter
@@ -23,17 +30,13 @@ PODS:
   - GoogleMaps/Base (2.7.0)
   - GoogleMaps/Maps (2.7.0):
     - GoogleMaps/Base
-  - location (0.0.1):
-    - Flutter
-  - map_view (0.0.12):
-    - Flutter
-    - GoogleMaps
   - path_provider (0.0.1):
     - Flutter
-  - qrcode_reader (0.0.1):
+  - permission_handler (3.0.0):
     - Flutter
-  - shared_preferences (0.0.1):
+  - sqflite (0.0.1):
     - Flutter
+    - FMDB (~> 2.7.2)
   - url_launcher (0.0.1):
     - Flutter
   - vibrate (0.0.1):
@@ -43,12 +46,12 @@ DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios-release`)
   - flutter_facebook_login (from `.symlinks/plugins/flutter_facebook_login/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
+  - geolocator (from `.symlinks/plugins/geolocator/ios`)
+  - google_api_availability (from `.symlinks/plugins/google_api_availability/ios`)
   - google_maps_flutter (from `.symlinks/plugins/google_maps_flutter/ios`)
-  - location (from `.symlinks/plugins/location/ios`)
-  - map_view (from `.symlinks/plugins/map_view/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
-  - qrcode_reader (from `.symlinks/plugins/qrcode_reader/ios`)
-  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
   - vibrate (from `.symlinks/plugins/vibrate/ios`)
 
@@ -57,6 +60,7 @@ SPEC REPOS:
     - Bolts
     - FBSDKCoreKit
     - FBSDKLoginKit
+    - FMDB
     - GoogleMaps
 
 EXTERNAL SOURCES:
@@ -66,18 +70,18 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_facebook_login/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
+  geolocator:
+    :path: ".symlinks/plugins/geolocator/ios"
+  google_api_availability:
+    :path: ".symlinks/plugins/google_api_availability/ios"
   google_maps_flutter:
     :path: ".symlinks/plugins/google_maps_flutter/ios"
-  location:
-    :path: ".symlinks/plugins/location/ios"
-  map_view:
-    :path: ".symlinks/plugins/map_view/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
-  qrcode_reader:
-    :path: ".symlinks/plugins/qrcode_reader/ios"
-  shared_preferences:
-    :path: ".symlinks/plugins/shared_preferences/ios"
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
   vibrate:
@@ -89,14 +93,15 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: c3079d9a4db27c492287b1eed7a4272b28cf8a59
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
   flutter_facebook_login: 2915660b59f2bf5a06ca4363563c7b77bad750a1
-  flutter_secure_storage: cbb73e37aa0c66689fe63799a9619ac66849b8fa
+  flutter_secure_storage: dbcc8ff35d99569c3a4d3b483afa3339416c1a78
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  geolocator: e054ad14f577d282c418eb5e32c5f0a8a5e6c69d
+  google_api_availability: 80c105ad2c0ed01c18cf779653da2cb939518192
   google_maps_flutter: 6449d5918d3f1a69a37dc9c557bbad7bb9bcf0e9
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
-  location: 26c90953ad5916331d0d1d913898779910416487
-  map_view: 9653e5e5b090355507a711908240eb353566b616
   path_provider: 09407919825bfe3c2deae39453b7a5b44f467873
-  qrcode_reader: da11877390dff62dd3783964618d666a857e34c8
-  shared_preferences: 5a1d487c427ee18fcd3ea1f2a131569481834b53
+  permission_handler: 03dcf3ade9d5f398b8854b366cb9de718d3daa76
+  sqflite: d1612813fa7db7c667bed9f1d1b508deffc56999
   url_launcher: 92b89c1029a0373879933c21642958c874539095
   vibrate: 8d9cb77859e02b88730c44a9907f561ddca25ca1
 
