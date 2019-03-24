@@ -1,22 +1,13 @@
-import 'dart:io';
-import 'dart:ui';
-
 import 'package:app/components/icon_button_title.dart';
-import 'package:app/module/data_provider.dart';
+import 'package:app/components/my_flutter_app_icons.dart';
+import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/mixology/mixology_list.dart';
-import 'package:app/module/person/person_bloc.dart';
-import 'package:app/module/smokeSession/smoke_session_bloc.dart';
-import 'package:app/pages/Gear/gear_page.dart';
-import 'package:app/pages/Places/places_page.dart';
-import 'package:app/pages/SmokeSession/gradiend_color_wheel_rotate.dart';
-import 'package:app/pages/Statistic/statistic_page.dart';
+import 'package:app/pages/gear.page.dart';
+import 'package:app/pages/places.page.dart';
 import 'package:app/pages/profile.page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';
-import 'package:app/services/signal_r.dart';
-import 'package:app/support/mana_icons_icons.dart';
-import 'package:app/utils/translations/app_translations.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -26,7 +17,6 @@ class HomePage extends StatefulWidget {
 }
 
 //Equivalent to var hc = $.hubConnection(url,options);
-final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 2;
@@ -38,221 +28,144 @@ class _HomePageState extends State<HomePage> {
     4: GlobalKey<NavigatorState>(),
   };
 
-  List<Widget> tabs;
-  List<FocusScopeNode> tabFocusNodes;
-
-  SmokeSessionBloc smokeSessionBloc;
-  PersonBloc personBloc;
-
-  @override
-  void initState() {
-    super.initState();
-
-    tabs = new List<Widget>(5);
-    tabFocusNodes = new List<FocusScopeNode>.generate(
-      5,
-      (int index) => new FocusScopeNode(),
-    );
-  }
-
-  @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    smokeSessionBloc = DataProvider.getSmokeSession(context);
-    personBloc = DataProvider.getData(context).personBloc;
-    _focusActiveTab();
-    personBloc.loadMyGear(false);
-    personBloc.loadInitData();
-    SystemChannels.lifecycle.setMessageHandler((msg) {
-      debugPrint('SystemChannels> $msg');
-      if (msg == AppLifecycleState.resumed.toString()) {
-        var signal = new SignalR();
-        signal.checkConection();
-      }
-    });
-  }
-
-  @override
-  void didUpdateWidget(dynamic oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    _focusActiveTab();
-  }
-
-  void _focusActiveTab() {
-    FocusScope.of(context).setFirstFocus(tabFocusNodes[_currentIndex]);
-  }
-
-  GlobalKey<NavigatorState> _setActiveTab(int index) {
-    if (index == _currentIndex && index == 2) {
-      if (!Platform.isIOS) {
-        navigatorKeys[index].currentState.maybePop();
-      }
-    }
-    setState(() {
-      _currentIndex = index;
-      _focusActiveTab();
-    });
-    return navigatorKeys[index];
-  }
-
-  Widget myBottomBar() => new Container(
-        child: Material(
-          color: new Color.fromARGB(230, 0, 0, 0),
-          child: BackdropFilter(
-            filter: new ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
-            child: Ink(
-              height: 55.0,
-              color: Colors.transparent,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: IconButtonTitle(
-                        icon: Icon(ManaIcons.leaf),
-                        text: AppTranslations.of(context).text("tab_mixology"),
-                        color: _currentIndex == 0 ? Colors.white : Colors.grey,
-                        tooltip: 'ss',
-                        onPressed: () => _setActiveTab(0),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: IconButtonTitle(
-                        icon: Icon(Icons.place),
-                        text: AppTranslations.of(context).text("tab_places"),
-                        color: _currentIndex == 1 ? Colors.white : Colors.grey,
-                        onPressed: () => _setActiveTab(1),
-                      ),
-                    ),
-                    Expanded(flex: 1, child: Container()),
-                    Expanded(
-                      flex: 1,
-                      child: IconButtonTitle(
-                        icon: Icon(ManaIcons.hookah),
-                        text: AppTranslations.of(context).text("tab_gear"),
-                        color: _currentIndex == 3 ? Colors.white : Colors.grey,
-                        onPressed: () => _setActiveTab(3),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: IconButtonTitle(
-                        icon: Icon(Icons.person),
-                        text: AppTranslations.of(context).text("tab_profile"),
-                        color: _currentIndex == 4 ? Colors.white : Colors.grey,
-                        onPressed: () => _setActiveTab(4),
-                      ),
-                    ),
-                  ],
-                ),
+  Widget myBottomBar() => new BottomAppBar(
+        child: Ink(
+          height: 50.0,
+          color: Colors.black,
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              IconButtonTitle(
+                icon: Icon(Icons.refresh),
+                text: 'Mixology',
+                color: _currentIndex == 0 ? Colors.white : Colors.grey,
+                tooltip: 'ss',
+                onPressed: () => setState(() {
+                      _currentIndex = 0;
+                    }),
               ),
-            ),
+              IconButtonTitle(
+                icon: Icon(Icons.place),
+                text: 'Places',
+                color: _currentIndex == 1 ? Colors.white : Colors.grey,
+                onPressed: () => setState(() {
+                      _currentIndex = 1;
+                    }),
+              ),
+              IconButton(
+                icon: Icon(Icons.settings_backup_restore),
+                color: _currentIndex == 2 ? Colors.white : Colors.grey,
+                onPressed: () => setState(() {
+                      _currentIndex = 2;
+                    }),
+              ),
+              IconButtonTitle(
+                icon: Icon(Icons.settings),
+                text: 'Gear',
+                color: _currentIndex == 3 ? Colors.white : Colors.grey,
+                onPressed: () => setState(() {
+                      _currentIndex = 3;
+                    }),
+              ),
+              IconButtonTitle(
+                icon: Icon(Icons.person),
+                text: 'Profile',
+                color: _currentIndex == 4 ? Colors.white : Colors.grey,
+                onPressed: () => setState(() {
+                      _currentIndex = 4;
+                    }),
+              ),
+            ],
           ),
         ),
       );
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-        onWillPop: () async {
-          if (!navigatorKeys[_currentIndex].currentState.canPop()) {
-            if (_currentIndex != 2) {
-              _setActiveTab(2);
-            } else {
-              return true;
-            }
-          } else {
-            !await navigatorKeys[_currentIndex].currentState.maybePop();
-          }
-        },
-        child: new SafeArea(
-            top: false,
-            child: Stack(children: <Widget>[
-              _buildBody(),
-              Positioned(
-                  bottom: -10,
-                  height: 55,
-                  width: MediaQuery.of(context).size.width,
-                  child: SizedBox(height: 55, child: myBottomBar())),
-              _buildCenter(),
-            ])));
-  }
-
-  _buildCenter() {
-    var centerSize = 70.0;
-    return Positioned(
-        bottom: 0,
-        right: (MediaQuery.of(context).size.width / 2) - centerSize ~/ 2,
-        child: Material(
-          color: Colors.transparent,
-          child: SizedBox(
-            height: centerSize,
-            width: centerSize,
-            child: _currentIndex == 2
-                ? InkWell(
-                    borderRadius: BorderRadius.circular(20.0),
-                    onTap: () => _setActiveTab(2),
-                    child: GradientColorWheelRotate(
-                        size: new Size(centerSize, centerSize),
-                        defaultColors: [Colors.white, Colors.white],
-                        child: Icon(
-                          ManaIcons.manam,
-                          color: Colors.black,
-                        )),
-                  )
-                : InkWell(
-                    onTap: () => _setActiveTab(2),
-                    child: GradientColorWheelRotate(
-                        size: new Size(centerSize, centerSize),
-                        defaultColors: [Colors.white, Colors.white],
-                        child: Icon(
-                          ManaIcons.manam,
-                          color: Colors.grey,
-                        )),
-                  ),
-          ),
-        ));
+    final smokeSessionBloc = DataProvider.getSmokeSession(context);
+    smokeSessionBloc.signalR.conect();
+    return new CupertinoTabScaffold(
+        tabBar: new CupertinoTabBar(
+          backgroundColor: Colors.black,
+          activeColor: Colors.white,
+          items: const <BottomNavigationBarItem>[
+            const BottomNavigationBarItem(
+              icon: const Icon(CupertinoIcons.home),
+              title: const Text('Home'),
+            ),
+            const BottomNavigationBarItem(
+              icon: const Icon(CupertinoIcons.conversation_bubble),
+              title: const Text('Support'),
+            ),
+            const BottomNavigationBarItem(
+                icon: const Icon(
+                  CupertinoIcons.profile_circled,
+                  size: 50.0,
+                ),
+                title: const Text('')),
+            const BottomNavigationBarItem(
+              icon: const Icon(CupertinoIcons.profile_circled),
+              title: const Text('Profile'),
+            ),
+            const BottomNavigationBarItem(
+              icon: const Icon(CupertinoIcons.profile_circled),
+              title: const Text('Profile'),
+            ),
+          ],
+        ),
+        tabBuilder: (BuildContext context, int index) {
+          return new DefaultTextStyle(
+            style: const TextStyle(
+              fontFamily: '.SF UI Text',
+              fontSize: 17.0,
+              color: CupertinoColors.black,
+            ),
+            child: new CupertinoTabView(
+              builder: (BuildContext context) {
+                switch (index) {
+                  case 0:
+                    return new MixologyList();
+                    break;
+                  case 1:
+                    return new PlacePage();
+                    break;
+                  case 2:
+                    return new StartSmokeSessionPage();
+                    break;
+                  case 3:
+                    return new GearPage();
+                    break;
+                  case 4:
+                    return new ProfilePage();
+                    break;
+                  default:
+                }
+              },
+            ),
+          );
+        });
   }
 
   _buildBody() {
-    return Material(
-      color: Colors.transparent,
-      child: new IndexedStack(
-        index: _currentIndex,
-        children: <Widget>[
-          _buildOffstageNavigator(new MixologyList(), 0),
-          _buildOffstageNavigator(new PlacePage(), 1),
-          _buildOffstageNavigator(
-              new StartSmokeSessionPage(callback: _setActiveTab), 2),
-          _buildOffstageNavigator(new GearPage(), 3),
-          _buildOffstageNavigator(new StatisticPage(), 4),
-        ],
-      ),
+    return new IndexedStack(
+      index: _currentIndex,
+      children: <Widget>[
+        _buildOffstageNavigator(new MixologyList(), 0),
+        _buildOffstageNavigator(new PlacePage(), 1),
+        _buildOffstageNavigator(new StartSmokeSessionPage(), 2),
+        _buildOffstageNavigator(new GearPage(), 3),
+        _buildOffstageNavigator(new ProfilePage(), 4),
+      ],
     );
-  }
-
-  @override
-  void dispose() {
-    for (FocusScopeNode focusScopeNode in tabFocusNodes) {
-      focusScopeNode.detach();
-    }
-    super.dispose();
   }
 
   Widget _buildOffstageNavigator(Widget tabItem, int index) {
     return Offstage(
       offstage: _currentIndex != index,
-      child: FocusScope(
-        node: tabFocusNodes[index],
-        child: TabNavigator(
-          navigatorKey: navigatorKeys[index],
-          tabItem: tabItem,
-        ),
+      child: TabNavigator(
+        navigatorKey: navigatorKeys[index],
+        tabItem: tabItem,
       ),
     );
   }
@@ -263,6 +176,13 @@ class TabNavigator extends StatelessWidget {
   final GlobalKey<NavigatorState> navigatorKey;
   final Widget tabItem;
 
+  void _push(BuildContext context, String route) {
+    var routeBuilders = _routeBuilders(context);
+
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => routeBuilders[route](context)));
+  }
+
   Map<String, WidgetBuilder> _routeBuilders(
     BuildContext context,
   ) {
@@ -272,11 +192,10 @@ class TabNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var routeBuilders = _routeBuilders(context);
-    var observable = HeroController();
+
     return Navigator(
         key: navigatorKey,
         initialRoute: '/',
-        observers: [observable],
         onGenerateRoute: (routeSettings) {
           return MaterialPageRoute(
               builder: (context) => routeBuilders[routeSettings.name](context));
