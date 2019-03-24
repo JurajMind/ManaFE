@@ -15,6 +15,7 @@ import 'package:app/pages/startSmokeSession.page.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:app/support/mana_icons_icons.dart';
 import 'package:app/utils/translations/app_translations.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -47,7 +48,13 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
+    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+    _firebaseMessaging.requestNotificationPermissions();
+    _firebaseMessaging.configure(onLaunch: (_) {
+      print('notification');
+    }, onMessage: (_) {
+      print('MSG');
+    });
     tabs = new List<Widget>(5);
     tabFocusNodes = new List<FocusScopeNode>.generate(
       5,
