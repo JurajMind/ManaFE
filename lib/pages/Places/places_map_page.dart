@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:openapi/api.dart';
+import 'package:rxdart/rxdart.dart';
 
 class PlacesMapPage extends StatefulWidget {
   final Position position;
@@ -25,10 +27,15 @@ class PlacesMapPage extends StatefulWidget {
 class _PlacesMapPageState extends State<PlacesMapPage> {
   Completer<GoogleMapController> _controller = Completer();
   CameraPosition initView;
+  CameraPosition curentView;
+  Set<Marker> markers;
+  bool loading = false;
+  BehaviorSubject<List<PlaceSimpleDto>> nearbyPlaces =
+      new BehaviorSubject<List<PlaceSimpleDto>>.seeded(null);
   @override
   initState() {
     super.initState();
-
+    markers = new Set<Marker>();
     if (widget.position != null) {
       initView = CameraPosition(
         target: LatLng(widget.position.latitude, widget.position.longitude),
@@ -47,15 +54,10 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   @override
   Widget build(BuildContext context) {
     var placeBloc = DataProvider.getData(context).placeBloc;
+    if (this.nearbyPlaces.value == null) {
+      setMarkers(placeBloc.places.value);
+    }
 
-    var markers = placeBloc.places.value.map((f) {
-      return new Marker(
-          markerId: MarkerId(f.id.toString()),
-          infoWindow:
-              InfoWindow(title: f.name, snippet: Extensions.adress(f.address)),
-          position:
-              LatLng(double.parse(f.address.lat), double.parse(f.address.lng)));
-    }).toSet();
     return SafeArea(
       top: true,
       child: new Scaffold(
@@ -63,71 +65,93 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
         bottomNavigationBar: SizedBox(
           height: 55,
         ),
-        body: Stack(
-          children: <Widget>[
-            GoogleMap(
-              markers: markers,
-              myLocationEnabled: false,
-              mapType: MapType.normal,
-              compassEnabled: true,
-              tiltGesturesEnabled: true,
-              initialCameraPosition: initView,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-              },
-            ),
-            Positioned(
-              bottom: 40,
-              child: Container(
-                height: 120,
-                width: MediaQuery.of(context).size.width,
-                child: MapCarousel(
-                    placeBloc: placeBloc, mapController: _controller),
-              ),
-            ),
-            Positioned(
-              top: 10,
-              right: 10,
-              child: FloatingActionButton(
-                heroTag: 'Search',
-                backgroundColor: AppColors.blue,
-                child: Icon(
-                  Icons.search,
-                  color: Colors.white,
-                ),
-                onPressed: () => searchCity(),
-              ),
-            ),
-            Positioned(
-              bottom: 160,
-              right: 10,
-              child: FloatingActionButton(
-                backgroundColor: AppColors.gray.withAlpha(40),
-                child: Icon(
-                  Icons.track_changes,
-                  color: Colors.black,
-                ),
-                onPressed: () async {
-                  var controller = await _controller.future;
-                  Geolocator()
-                      .getLastKnownPosition(
-                          desiredAccuracy: LocationAccuracy.low)
-                      .then((value) {
-                    if (value != null) {
-                      var position = CameraUpdate.newCameraPosition(
-                          CameraPosition(
-                              bearing: 0,
-                              target: LatLng(value.latitude, value.longitude),
-                              tilt: 0,
-                              zoom: 15.151926040649414));
-                      controller.animateCamera(position);
-                    }
-                  });
-                },
-              ),
-            )
-          ],
-        ),
+        body: StreamBuilder<List<PlaceSimpleDto>>(
+            stream: nearbyPlaces,
+            builder: (context, snapshot) {
+              return Stack(
+                children: <Widget>[
+                  GoogleMap(
+                    markers: markers,
+                    myLocationEnabled: false,
+                    onCameraMove: (cv) => curentView = cv,
+                    mapType: MapType.normal,
+                    compassEnabled: true,
+                    tiltGesturesEnabled: true,
+                    initialCameraPosition: initView,
+                    onMapCreated: (GoogleMapController controller) {
+                      _controller.complete(controller);
+                    },
+                  ),
+                  Positioned(
+                    bottom: 40,
+                    child: Container(
+                      height: 120,
+                      width: MediaQuery.of(context).size.width,
+                      child: MapCarousel(
+                          nearbyPlaces: nearbyPlaces,
+                          mapController: _controller),
+                    ),
+                  ),
+                  Positioned(
+                    top: 10,
+                    right: 10,
+                    child: FloatingActionButton(
+                      heroTag: 'Search',
+                      backgroundColor: AppColors.blue,
+                      child: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      ),
+                      onPressed: () => searchCity(),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 160,
+                    right: 10,
+                    child: FloatingActionButton(
+                      backgroundColor: AppColors.gray.withAlpha(40),
+                      child: Icon(
+                        Icons.track_changes,
+                        color: Colors.black,
+                      ),
+                      onPressed: () async {
+                        var controller = await _controller.future;
+                        Geolocator()
+                            .getLastKnownPosition(
+                                desiredAccuracy: LocationAccuracy.low)
+                            .then((value) {
+                          if (value != null) {
+                            var location =
+                                LatLng(value.latitude, value.longitude);
+                            loadNearby(imPosition: location);
+                            var position = CameraUpdate.newCameraPosition(
+                                CameraPosition(
+                                    bearing: 0,
+                                    target: location,
+                                    tilt: 0,
+                                    zoom: 15.151926040649414));
+                            controller.animateCamera(position);
+                          }
+                        });
+                      },
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 260,
+                    right: 10,
+                    child: FloatingActionButton(
+                        heroTag: "refresh",
+                        backgroundColor: AppColors.green.withAlpha(40),
+                        child: loading
+                            ? CircularProgressIndicator()
+                            : Icon(
+                                Icons.refresh,
+                              ),
+                        onPressed: () => loadNearby()),
+                  )
+                ],
+              );
+            }),
       ),
     );
   }
@@ -141,5 +165,30 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
         mode: Mode.overlay, // Mode.fullscreen
         language: "en",
         components: [new Component(Component.country, "en")]);
+  }
+
+  void loadNearby({LatLng imPosition}) async {
+    setState(() {
+      loading = true;
+    });
+    var position = imPosition ?? curentView.target;
+    var newPlaces = await App.http
+        .getNearbyPlaces(lat: position.latitude, lng: position.longitude);
+    nearbyPlaces.add(newPlaces);
+    setMarkers(newPlaces);
+    setState(() {
+      loading = false;
+    });
+  }
+
+  void setMarkers(List<PlaceSimpleDto> places) {
+    markers = places.map((f) {
+      return new Marker(
+          markerId: MarkerId(f.id.toString()),
+          infoWindow:
+              InfoWindow(title: f.name, snippet: Extensions.adress(f.address)),
+          position:
+              LatLng(double.parse(f.address.lat), double.parse(f.address.lng)));
+    }).toSet();
   }
 }

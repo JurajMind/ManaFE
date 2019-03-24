@@ -140,8 +140,8 @@ class ApiClient {
   Future<List<PlaceSimpleDto>> getNearbyPlaces({double lat, double lng}) {
     Map<String, String> queryParameters = new Map<String, String>();
     if (lat != null && lng != null) {
-      queryParameters['lat'] = '0'; // lat.toString();
-      queryParameters['lng'] = '0'; //lng.toString();
+      queryParameters['lat'] = lat.toString();
+      queryParameters['lng'] = lng.toString();
       queryParameters['page'] = '0';
       queryParameters['pageSize'] = '10';
     }
@@ -229,10 +229,11 @@ class ApiClient {
   Future<List<PipeAccesorySimpleDto>> searchGear(
       String search, String type, int page, int pageSize,
       {String searchType = "All"}) {
-    var url = Uri.https(baseUrl, 'api/Gear/$type/Search/$search', {
+    var url = Uri.https(baseUrl, 'api/Gear/Search/$search', {
       "page": page.toString(),
       "pageSize": pageSize.toString(),
-      "searchType": searchType
+      "searchType": searchType,
+      // "type": type
     });
 
     return _getJson(url).then((json) {

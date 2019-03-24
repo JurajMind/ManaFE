@@ -26,7 +26,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
   BehaviorSubject<List<PipeAccesorySimpleDto>> searchResult =
       new BehaviorSubject<List<PipeAccesorySimpleDto>>.seeded(
           new List<PipeAccesorySimpleDto>());
-
+  final searchOnChange = new BehaviorSubject<String>();
   bool loading = false;
 
   List<PipeAccesorySimpleDto> ownSimpleAccesories;
@@ -35,6 +35,9 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
   void initState() {
     super.initState();
     ownSimpleAccesories = widget.ownAccesories;
+    searchOnChange.debounce(Duration(milliseconds: 500)).listen((queryString) {
+      if (queryString.length > 3) submitSearch(queryString);
+    });
   }
 
   @override
@@ -42,6 +45,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
     super.dispose();
     controller.dispose();
     this.searchResult.close();
+    this.searchOnChange.close();
   }
 
   TextEditingController controller = new TextEditingController();
@@ -73,6 +77,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                     new InputDecoration(hintText: "Search ${widget.type}"),
                 controller: controller,
                 onSubmitted: submitSearch,
+                onChanged: _search,
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.search,
               ),
@@ -83,6 +88,10 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
         ),
       ),
     );
+  }
+
+  void _search(String queryString) {
+    searchOnChange.add(queryString);
   }
 
   void submitSearch(text) {

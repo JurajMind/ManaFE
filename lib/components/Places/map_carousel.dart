@@ -10,11 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/api.dart';
+import 'package:rxdart/rxdart.dart';
 
 class MapCarousel extends StatefulWidget {
-  MapCarousel({this.placeBloc, this.mapController});
+  MapCarousel({this.nearbyPlaces, this.mapController});
   final Completer<GoogleMapController> mapController;
-  final PlacesBloc placeBloc;
+  final BehaviorSubject<List<PlaceSimpleDto>> nearbyPlaces;
   @override
   _CarrousselState createState() => new _CarrousselState();
 }
@@ -51,23 +52,15 @@ class _CarrousselState extends State<MapCarousel> {
   Widget build(BuildContext context) {
     return new Center(
         child: new Container(
-      child: loadingBuilder(widget.placeBloc),
+      child: buildPlacePages(widget.nearbyPlaces),
     ));
   }
 
-  StreamBuilder<bool> loadingBuilder(PlacesBloc bloc) {
-    return StreamBuilder<bool>(
-      initialData: true,
-      stream: bloc.loading,
-      builder: (context, snapshot) =>
-          snapshot.data ? CircularProgressIndicator() : buildPlacePages(bloc),
-    );
-  }
-
-  StreamBuilder<List<PlaceSimpleDto>> buildPlacePages(PlacesBloc bloc) {
+  StreamBuilder<List<PlaceSimpleDto>> buildPlacePages(
+      BehaviorSubject<List<PlaceSimpleDto>> bloc) {
     return StreamBuilder<List<PlaceSimpleDto>>(
         initialData: null,
-        stream: bloc.places,
+        stream: bloc,
         builder: (context, snapshot) => PageView.builder(
               onPageChanged: (value) {
                 setState(() {
@@ -136,7 +129,7 @@ class _CarrousselState extends State<MapCarousel> {
         }
       },
       child: Hero(
-        tag: '${place.friendlyUrl}_place',
+        tag: '${place.id}_place',
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: new Container(

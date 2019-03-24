@@ -16,9 +16,15 @@ ThemeData buildDarkTheme() {
       textTheme: ButtonTextTheme.primary,
     ),
     textTheme: TextTheme(
-      headline: TextStyle(fontSize: 42.0, fontWeight: FontWeight.w700,   fontFamily: 'Montserrat'),
-      title: TextStyle(fontSize: 36.0, fontWeight: FontWeight.w700,   fontFamily: 'Montserrat'),
-      body1: TextStyle(fontSize: 14.0,    fontFamily: 'Montserrat'),
+      headline: TextStyle(
+          fontSize: 42.0,
+          fontWeight: FontWeight.w700,
+          fontFamily: 'Montserrat'),
+      title: TextStyle(
+          fontSize: 36.0,
+          fontWeight: FontWeight.w700,
+          fontFamily: 'Montserrat'),
+      body1: TextStyle(fontSize: 14.0, fontFamily: 'Montserrat'),
       subtitle: TextStyle(
           fontSize: 16.0,
           fontWeight: FontWeight.w700,
@@ -58,7 +64,7 @@ class AppColors {
   static const Color blueLight = Colors.lightBlue;
   static const Color black = Colors.black;
   static const Color gray = Colors.grey;
-
+  static const Color green = Colors.green;
   static const List<Color> colors = [
     Colors.red,
     Colors.blue,
