@@ -1,10 +1,8 @@
 import 'dart:async';
 
-import 'package:app/app/app.dart';
 import 'package:app/components/Common/leading_icon.dart';
 import 'package:app/components/Places/navigate_button.dart';
 import 'package:app/components/Places/open_dropdown.dart';
-import 'package:app/components/Places/place_detail.dart';
 import 'package:app/components/Places/place_map.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/models/extensions.dart';
@@ -275,46 +273,6 @@ class _PlaceDetailState extends State<PlaceDetailPage>
     ));
   }
 
-  Widget buildPlaceInfo() {
-    return widget.place == null
-        ? SizedBox(
-            child: CircularProgressIndicator(),
-            width: 50.0,
-            height: 50.0,
-          )
-        : Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              new LeadingIcon(
-                  icon: Icons.watch, child: OpenDropdown(place: place)),
-              widget.place.phoneNumber != null
-                  ? InkWell(
-                      onTap: () => launch('tel://${widget.place.phoneNumber}'),
-                      child: new LeadingIcon(
-                        icon: Icons.phone,
-                        child: Text(
-                          widget.place.phoneNumber,
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ),
-                    )
-                  : Container(),
-              place.facebook != null
-                  ? InkWell(
-                      onTap: () => launch(place.facebook),
-                      child: new LeadingIcon(
-                        icon: MdiIcons.facebook,
-                        child: Text(
-                          place.friendlyUrl,
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ))
-                  : Container(),
-            ],
-          );
-  }
-
   void _openAddEntryDialog() {
     Navigator.of(context).push(new MaterialPageRoute<Null>(
         builder: (BuildContext context) {
@@ -337,5 +295,55 @@ class _PlaceDetailState extends State<PlaceDetailPage>
     } else {
       throw 'Could not launch $url';
     }
+  }
+}
+
+class PlaceInfo extends StatelessWidget {
+  const PlaceInfo({
+    Key key,
+    @required this.place,
+  }) : super(key: key);
+
+  final PlaceSimpleDto place;
+
+  @override
+  Widget build(BuildContext context) {
+    return place == null
+        ? SizedBox(
+            child: CircularProgressIndicator(),
+            width: 50.0,
+            height: 50.0,
+          )
+        : Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              new LeadingIcon(
+                  icon: Icons.watch, child: OpenDropdown(place: place)),
+              place.phoneNumber != null
+                  ? InkWell(
+                      onTap: () => launch('tel://${place.phoneNumber}'),
+                      child: new LeadingIcon(
+                        icon: Icons.phone,
+                        child: Text(
+                          place.phoneNumber,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    )
+                  : Container(),
+              place.facebook != null
+                  ? InkWell(
+                      onTap: () => launch(place.facebook),
+                      child: new LeadingIcon(
+                        icon: MdiIcons.facebook,
+                        child: Text(
+                          place.friendlyUrl,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ))
+                  : Container(),
+            ],
+          );
   }
 }
