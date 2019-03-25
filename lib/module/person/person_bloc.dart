@@ -90,7 +90,8 @@ class PersonBloc extends SignalBloc {
     smokeSessions.add(init.activeSmokeSessions);
     smokeSessionsCodes.add(init.activeSmokeSessions);
     myReservations.add(init.activeReservations);
-    this.info.add(await infoTask);
+    var info = await infoTask;
+    this.info.add(info);
     _loadedInit = true;
     try {
       var signal = new SignalR();

@@ -416,6 +416,17 @@ class ApiClient {
         .then((data) => PersonInfoDto.fromJson(data.data));
   }
 
+  Future updateNotificationToken(String token) async {
+    var url =
+        Uri.https(baseUrl, '/api/Person/NotificationToken', {'token': token});
+    await _dio.putUri(url);
+  }
+
+  Future testNotification() async {
+    var url = Uri.https(baseUrl, '/api/Person/TestNotification');
+    await _dio.post(url.toString());
+  }
+
   Future<ReservationDetailDto> reservationDetail(int id) async {
     var url = Uri.https(baseUrl, '/api/Reservations/$id/Detail');
     return await _dio

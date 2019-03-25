@@ -51,6 +51,17 @@ class _TestPageState extends State<TestPage> {
             OutlineButton.icon(
               borderSide: BorderSide(color: Colors.white),
               icon: Icon(
+                Icons.notifications,
+                color: Colors.red,
+              ),
+              label: Text('Test notification'),
+              onPressed: () async {
+                App.http.testNotification();
+              },
+            ),
+            OutlineButton.icon(
+              borderSide: BorderSide(color: Colors.white),
+              icon: Icon(
                 Icons.delete_sweep,
                 color: Colors.red,
               ),

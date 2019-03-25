@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:app/app/app.dart';
 import 'package:app/components/icon_button_title.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mixology_list.dart';
@@ -50,6 +51,11 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
     _firebaseMessaging.requestNotificationPermissions();
+    try {
+      _firebaseMessaging.getToken().then((token) async {
+        await App.http.updateNotificationToken(token);
+      });
+    } catch (e) {}
     _firebaseMessaging.configure(onLaunch: (_) {
       print('notification');
     }, onMessage: (_) {
