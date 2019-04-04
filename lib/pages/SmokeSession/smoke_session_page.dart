@@ -132,7 +132,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
           return Text('NoData');
         }
         var durationString =
-            Utils.toStringDuration(asyncSnapshot.data.duration);
+            DateUtils.toStringDuration(asyncSnapshot.data.duration);
 
         var longestString =
             '${asyncSnapshot.data.longestPuf.inMinutes == 0 ? "" : asyncSnapshot.data.longestPuf.inMinutes.toString() + ':'}${asyncSnapshot.data.longestPuf.inSeconds}.${asyncSnapshot.data.longestPuf.inMilliseconds.toString()}';

@@ -5,7 +5,7 @@
 import 'package:openapi/api.dart';
 ```
 
-All URIs are relative to *https://devmana.azurewebsites.net*
+All URIs are relative to *https://localhost:44324*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

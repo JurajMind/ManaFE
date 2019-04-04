@@ -9,11 +9,13 @@ class PersonInfoDto {
   List<PlaceSimpleDto> managedPlaces = [];
   
   List<String> roles = [];
+  
+  String personId = null;
   PersonInfoDto();
 
   @override
   String toString() {
-    return 'PersonInfoDto[displayName=$displayName, email=$email, managedPlaces=$managedPlaces, roles=$roles, ]';
+    return 'PersonInfoDto[displayName=$displayName, email=$email, managedPlaces=$managedPlaces, roles=$roles, personId=$personId, ]';
   }
 
   PersonInfoDto.fromJson(Map<String, dynamic> json) {
@@ -22,6 +24,7 @@ class PersonInfoDto {
     email = json['Email'];
     managedPlaces = PlaceSimpleDto.listFromJson(json['ManagedPlaces']);
     roles = ((json['Roles'] ?? []) as List).map((item) => item as String).toList();
+    personId = json['PersonId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -29,7 +32,8 @@ class PersonInfoDto {
       'DisplayName': displayName,
       'Email': email,
       'ManagedPlaces': managedPlaces,
-      'Roles': roles
+      'Roles': roles,
+      'PersonId': personId
     };
   }
 

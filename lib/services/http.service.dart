@@ -139,7 +139,8 @@ class ApiClient {
       queryParameters['lat'] = lat.toString();
       queryParameters['lng'] = lng.toString();
       queryParameters['page'] = '0';
-      queryParameters['pageSize'] = '10';
+      queryParameters['pageSize'] = '100';
+      queryParameters['radius'] = '50';
     }
     var uri = Uri.https(baseUrl, 'api/Places/SearchNearby', queryParameters);
 

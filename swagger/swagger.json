@@ -4,7 +4,7 @@
     "version": "v1",
     "title": "smartHookah"
   },
-  "host": "devmana.azurewebsites.net",
+  "host": "localhost:44324",
   "schemes": [
     "https"
   ],
@@ -28,16 +28,14 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "userModel",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/UserModel"
-            }
+        "parameters": [{
+          "name": "userModel",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/UserModel"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -61,8 +59,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "userId",
             "in": "query",
             "required": true,
@@ -104,16 +101,14 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "model",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/smartHookahModelsForgotPasswordViewModel"
-            }
+        "parameters": [{
+          "name": "model",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/smartHookahModelsForgotPasswordViewModel"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -137,14 +132,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -166,14 +159,12 @@
           "application/json",
           "text/json"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -203,8 +194,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -248,8 +238,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -293,8 +282,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -338,8 +326,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -377,14 +364,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -408,14 +393,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -445,8 +428,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -485,14 +467,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -516,14 +496,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -547,15 +525,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -605,8 +581,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "sessionCode",
             "in": "path",
             "required": true,
@@ -654,8 +629,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "deviceId",
             "in": "path",
             "required": true,
@@ -698,15 +672,13 @@
         "operationId": "DevicePreset_SetDefault",
         "consumes": [],
         "produces": [],
-        "parameters": [
-          {
-            "name": "presetId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "presetId",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "204": {
             "description": "No Content"
@@ -722,14 +694,12 @@
         "operationId": "DevicePreset_UseDefault",
         "consumes": [],
         "produces": [],
-        "parameters": [
-          {
-            "name": "sessionId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "sessionId",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "204": {
             "description": "No Content"
@@ -745,8 +715,7 @@
         "operationId": "DevicePreset_UsePreset",
         "consumes": [],
         "produces": [],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "sessionId",
             "in": "path",
             "required": true,
@@ -780,15 +749,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -812,14 +779,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -830,7 +795,7 @@
         }
       }
     },
-    "/api/Gear/{type}/Search/{search}": {
+    "/api/Gear/Search/{search}": {
       "get": {
         "tags": [
           "Gear"
@@ -843,8 +808,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "search",
             "in": "path",
             "required": true,
@@ -852,8 +816,8 @@
           },
           {
             "name": "type",
-            "in": "path",
-            "required": true,
+            "in": "query",
+            "required": false,
             "type": "string"
           },
           {
@@ -883,7 +847,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/GearServiceSearchPipeAccesory"
+                "$ref": "#/definitions/SearchPipeAccessory"
               }
             }
           }
@@ -964,20 +928,50 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/PipeAccessoryDetailsDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Gear/Brands/{prefix}": {
+      "get": {
+        "tags": [
+          "Gear"
+        ],
+        "operationId": "Gear_GetBrandsPrefix",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+          "name": "prefix",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         }
@@ -1002,8 +996,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -1043,8 +1036,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "page",
             "in": "query",
             "required": false,
@@ -1103,8 +1095,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "page",
             "in": "query",
             "required": false,
@@ -1152,15 +1143,13 @@
           "application/json",
           "text/json"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1184,15 +1173,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1224,16 +1211,14 @@
           "application/json",
           "text/json"
         ],
-        "parameters": [
-          {
-            "name": "newMix",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/TobaccoMixSimpleDto"
-            }
+        "parameters": [{
+          "name": "newMix",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/TobaccoMixSimpleDto"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1263,8 +1248,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -1304,15 +1288,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "mixId",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "mixId",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1395,6 +1377,42 @@
         }
       }
     },
+    "/api/Person/NotificationToken": {
+      "put": {
+        "tags": [
+          "Person"
+        ],
+        "operationId": "Person_AddNotificationToken",
+        "consumes": [],
+        "produces": [],
+        "parameters": [{
+          "name": "token",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/Person/TestNotification": {
+      "post": {
+        "tags": [
+          "Person"
+        ],
+        "operationId": "Person_TestNotification",
+        "consumes": [],
+        "produces": [],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
     "/api/Person/MyGear": {
       "get": {
         "tags": [
@@ -1408,14 +1426,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "type",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1442,15 +1458,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "sessionCount",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "sessionCount",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1477,8 +1491,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -1516,8 +1529,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -1555,8 +1567,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -1598,16 +1609,14 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "placeDay",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/PlaceDay"
-            }
+        "parameters": [{
+          "name": "placeDay",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/PlaceDay"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1637,16 +1646,14 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "placeEvent",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/PlaceEvent"
-            }
+        "parameters": [{
+          "name": "placeEvent",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/PlaceEvent"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1670,14 +1677,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "url",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "url",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1701,8 +1706,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "placeId",
             "in": "query",
             "required": true,
@@ -1739,8 +1743,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "placeId",
             "in": "query",
             "required": true,
@@ -1791,15 +1794,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "eventId",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "eventId",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1823,8 +1824,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "placeId",
             "in": "query",
             "required": true,
@@ -1875,15 +1875,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "dayId",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "dayId",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1907,15 +1905,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "eventId",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "eventId",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1939,15 +1935,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1971,21 +1965,34 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/PlaceDto"
             }
+          }
+        }
+      }
+    },
+    "/api/Places/FixLocation": {
+      "get": {
+        "tags": [
+          "Places"
+        ],
+        "operationId": "Places_FixLocation",
+        "consumes": [],
+        "produces": [],
+        "responses": {
+          "204": {
+            "description": "No Content"
           }
         }
       }
@@ -2003,8 +2010,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "page",
             "in": "query",
             "required": false,
@@ -2019,14 +2025,21 @@
             "format": "int32"
           },
           {
+            "name": "lat",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
             "name": "lng",
             "in": "query",
             "required": false,
             "type": "number",
-            "format": "float"
+            "format": "double"
           },
           {
-            "name": "lat",
+            "name": "radius",
             "in": "query",
             "required": false,
             "type": "number",
@@ -2038,6 +2051,130 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/NearbyPlacesDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Places/Import": {
+      "post": {
+        "tags": [
+          "Places"
+        ],
+        "operationId": "Places_ImportPlaces",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Places/ImportMap": {
+      "post": {
+        "tags": [
+          "Places"
+        ],
+        "operationId": "Places_ImportPlacesFromMap",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Places/{placeId}/AddFlags": {
+      "put": {
+        "tags": [
+          "Places"
+        ],
+        "operationId": "Places_AddFlags",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+            "name": "placeId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "flags",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlaceDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Places/{placeId}/DashboardData": {
+      "get": {
+        "tags": [
+          "Places"
+        ],
+        "operationId": "Places_GetDashboardData",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+          "name": "placeId",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlacesPlaceDashboardDto"
             }
           }
         }
@@ -2056,14 +2193,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2087,14 +2222,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2118,14 +2251,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2149,8 +2280,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -2214,8 +2344,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "from",
             "in": "query",
             "required": true,
@@ -2262,16 +2391,14 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "reservation",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ReservationDto"
-            }
+        "parameters": [{
+          "name": "reservation",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/ReservationDto"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2295,8 +2422,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -2340,8 +2466,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -2367,6 +2492,44 @@
         }
       }
     },
+    "/api/Reservations/{id}/AddLateTime": {
+      "post": {
+        "tags": [
+          "Reservation"
+        ],
+        "operationId": "Reservation_AddLateTime",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [],
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "time",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
     "/api/Reservations/{id}/Cancel": {
       "post": {
         "tags": [
@@ -2380,15 +2543,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2412,15 +2573,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2450,8 +2609,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -2497,8 +2655,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -2533,8 +2690,7 @@
         "operationId": "SentToDevice_DefaultAction",
         "consumes": [],
         "produces": [],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -2573,14 +2729,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2604,14 +2758,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2635,14 +2787,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2666,19 +2816,50 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/SmokeSessionMetaDataDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/SmokeSession/GetPufs": {
+      "get": {
+        "tags": [
+          "SmokeSession"
+        ],
+        "operationId": "SmokeSession_GetPufs",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/smartHookahModelsDbPuf"
+              }
             }
           }
         }
@@ -2703,8 +2884,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -2742,14 +2922,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2773,8 +2951,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "from",
             "in": "query",
             "required": true,
@@ -2812,15 +2989,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2850,8 +3025,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "page",
             "in": "query",
             "required": true,
@@ -2946,15 +3120,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2978,15 +3150,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -3013,15 +3183,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -3045,8 +3213,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -3094,8 +3261,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -3364,7 +3530,7 @@
         }
       }
     },
-    "GearServiceSearchPipeAccesory": {
+    "SearchPipeAccessory": {
       "type": "object",
       "properties": {
         "Id": {
@@ -3379,10 +3545,6 @@
         },
         "Type": {
           "type": "string"
-        },
-        "Owned": {
-          "format": "int32",
-          "type": "integer"
         }
       }
     },
@@ -4044,6 +4206,9 @@
         "Name": {
           "type": "string"
         },
+        "ShortDescriptions": {
+          "type": "string"
+        },
         "FriendlyUrl": {
           "type": "string"
         },
@@ -4063,17 +4228,23 @@
           "format": "int32",
           "type": "integer"
         },
-        "Medias": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/MediaDto"
-          }
+        "Media": {
+          "$ref": "#/definitions/MediaDto"
         },
         "PhoneNumber": {
           "type": "string"
         },
         "Facebook": {
           "type": "string"
+        },
+        "HaveMenu": {
+          "type": "boolean"
+        },
+        "HaveOrders": {
+          "type": "boolean"
+        },
+        "HaveMana": {
+          "type": "boolean"
         }
       }
     },
@@ -4209,6 +4380,9 @@
           "items": {
             "type": "string"
           }
+        },
+        "PersonId": {
+          "type": "string"
         }
       }
     },
@@ -4412,7 +4586,10 @@
     "PlaceDto": {
       "type": "object",
       "properties": {
-        "ShortDescriptions": {
+        "Instagram": {
+          "type": "string"
+        },
+        "Url": {
           "type": "string"
         },
         "Descriptions": {
@@ -4443,7 +4620,7 @@
             "$ref": "#/definitions/MediaDto"
           }
         },
-        "AllowReservation": {
+        "HaveReservation": {
           "type": "boolean"
         },
         "MinimumReservationTime": {
@@ -4470,6 +4647,9 @@
         "Name": {
           "type": "string"
         },
+        "ShortDescriptions": {
+          "type": "string"
+        },
         "FriendlyUrl": {
           "type": "string"
         },
@@ -4489,11 +4669,23 @@
           "format": "int32",
           "type": "integer"
         },
+        "Media": {
+          "$ref": "#/definitions/MediaDto"
+        },
         "PhoneNumber": {
           "type": "string"
         },
         "Facebook": {
           "type": "string"
+        },
+        "HaveMenu": {
+          "type": "boolean"
+        },
+        "HaveOrders": {
+          "type": "boolean"
+        },
+        "HaveMana": {
+          "type": "boolean"
         }
       }
     },
@@ -4562,6 +4754,35 @@
         "HttpResponseCode": {
           "format": "int32",
           "type": "integer"
+        }
+      }
+    },
+    "PlacesPlaceDashboardDto": {
+      "type": "object",
+      "properties": {
+        "PlaceDevices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlacesDevicePlaceDashboardDto"
+          }
+        }
+      }
+    },
+    "PlacesDevicePlaceDashboardDto": {
+      "type": "object",
+      "properties": {
+        "Device": {
+          "$ref": "#/definitions/DeviceSimpleDto"
+        },
+        "Statistic": {
+          "$ref": "#/definitions/DynamicSmokeStatisticRawDto"
+        },
+        "MetaData": {
+          "$ref": "#/definitions/SmokeSessionMetaDataDto"
+        },
+        "TobaccoEstimate": {
+          "format": "double",
+          "type": "number"
         }
       }
     },
@@ -4701,6 +4922,35 @@
         },
         "DeviceSettings": {
           "$ref": "#/definitions/DeviceSettingDto"
+        }
+      }
+    },
+    "smartHookahModelsDbPuf": {
+      "type": "object",
+      "properties": {
+        "SId": {
+          "type": "string"
+        },
+        "T": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2
+          ],
+          "type": "integer"
+        },
+        "D": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "M": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "P": {
+          "format": "int32",
+          "type": "integer"
         }
       }
     },

@@ -10,14 +10,10 @@ class OpenIndicator extends StatelessWidget {
   const OpenIndicator({Key key, this.place, this.size}) : super(key: key);
 
   bool _isOpen() {
-
-
-
     var today = Collection(place.businessHours)
         .firstOrDefault((a) => a.day == DateTime.now().weekday);
     if (today == null) return false;
-        if(today.openTine == null || today.closeTime == null)
-    return false;
+    if (today.openTine == null || today.closeTime == null) return false;
     var now = DateTime.now();
     final DateFormat df = new DateFormat('HH:mm:ss');
     var open = df.parse(today.openTine);
@@ -38,6 +34,14 @@ class OpenIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var s = size ?? new Size.fromRadius(15);
+    if (place.businessHours.length == 0) {
+      return Container(
+        height: s.height,
+        width: s.width,
+        decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+      );
+    }
+
     return Container(
       height: s.height,
       width: s.width,

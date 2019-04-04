@@ -380,23 +380,27 @@ class PlaceInfo extends StatelessWidget {
                       ),
                     )
                   : Container(),
-                  Row(
-                    children: <Widget>[
-                      new IconUrlButton(url: place.facebook,icon: MdiIcons.facebookBox,color:Colors.blue),
-                      new IconUrlButton(url: null,icon: MdiIcons.instagram,color:Colors.blue),
-                        new IconUrlButton(url:null,icon: MdiIcons.web,color:Colors.black),
-                    ],
-                  )
+              Row(
+                children: <Widget>[
+                  new IconUrlButton(
+                      url: place.facebook,
+                      icon: MdiIcons.facebookBox,
+                      color: Colors.blue),
+                  new IconUrlButton(
+                      url: null, icon: MdiIcons.instagram, color: Colors.grey),
+                  new IconUrlButton(
+                      url: null, icon: MdiIcons.web, color: Colors.grey),
+                ],
+              )
             ],
           );
   }
 }
 
 class IconUrlButton extends StatelessWidget {
-  const IconUrlButton({
-    Key key,
-    @required this.url, this.icon, this.color = Colors.black
-  }) : super(key: key);
+  const IconUrlButton(
+      {Key key, @required this.url, this.icon, this.color = Colors.black})
+      : super(key: key);
 
   final String url;
   final IconData icon;
@@ -405,11 +409,12 @@ class IconUrlButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Icon(icon,color: color,size: 40),
-      onPressed: ()  {
-        if (url != null){
+      icon: Icon(icon, color: color, size: 40),
+      onPressed: () {
+        if (url != null) {
           launch(url);
         }
-      },);
+      },
+    );
   }
 }

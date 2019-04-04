@@ -1,9 +1,8 @@
 part of openapi.api;
 
 class PriceGroupItems {
-  
   int groupId = null;
-  
+
   Map<String, double> price = {};
   PriceGroupItems();
 
@@ -19,22 +18,21 @@ class PriceGroupItems {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'GroupId': groupId,
-      'Price': price
-    };
+    return {'GroupId': groupId, 'Price': price};
   }
 
   static List<PriceGroupItems> listFromJson(List<dynamic> json) {
-    return json == null ? new List<PriceGroupItems>() : json.map((value) => new PriceGroupItems.fromJson(value)).toList();
+    return json == null
+        ? new List<PriceGroupItems>()
+        : json.map((value) => new PriceGroupItems.fromJson(value)).toList();
   }
 
   static Map<String, PriceGroupItems> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, PriceGroupItems>();
     if (json != null && json.length > 0) {
-      json.forEach((String key, dynamic value) => map[key] = new PriceGroupItems.fromJson(value));
+      json.forEach((String key, dynamic value) =>
+          map[key] = new PriceGroupItems.fromJson(value));
     }
     return map;
   }
 }
-

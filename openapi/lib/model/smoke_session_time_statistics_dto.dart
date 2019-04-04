@@ -1,17 +1,16 @@
 part of openapi.api;
 
 class SmokeSessionTimeStatisticsDto {
-  
   int sessionsCount = null;
-  
+
   String sessionsDuration = null;
-  
+
   String smokeDuration = null;
-  
+
   int puffCount = null;
-  
+
   Map<String, int> dayOfWeekDistribution = {};
-  
+
   Map<String, int> sessionStartTimeDistribution = {};
   SmokeSessionTimeStatisticsDto();
 
@@ -26,8 +25,10 @@ class SmokeSessionTimeStatisticsDto {
     sessionsDuration = json['SessionsDuration'];
     smokeDuration = json['SmokeDuration'];
     puffCount = json['PuffCount'];
-    dayOfWeekDistribution = new Map<String, int>.from(json['DayOfWeekDistribution']);
-    sessionStartTimeDistribution = new Map<String, int>.from(json['SessionStartTimeDistribution']);
+    dayOfWeekDistribution =
+        new Map<String, int>.from(json['DayOfWeekDistribution']);
+    sessionStartTimeDistribution =
+        new Map<String, int>.from(json['SessionStartTimeDistribution']);
   }
 
   Map<String, dynamic> toJson() {
@@ -42,15 +43,20 @@ class SmokeSessionTimeStatisticsDto {
   }
 
   static List<SmokeSessionTimeStatisticsDto> listFromJson(List<dynamic> json) {
-    return json == null ? new List<SmokeSessionTimeStatisticsDto>() : json.map((value) => new SmokeSessionTimeStatisticsDto.fromJson(value)).toList();
+    return json == null
+        ? new List<SmokeSessionTimeStatisticsDto>()
+        : json
+            .map((value) => new SmokeSessionTimeStatisticsDto.fromJson(value))
+            .toList();
   }
 
-  static Map<String, SmokeSessionTimeStatisticsDto> mapFromJson(Map<String, dynamic> json) {
+  static Map<String, SmokeSessionTimeStatisticsDto> mapFromJson(
+      Map<String, dynamic> json) {
     var map = new Map<String, SmokeSessionTimeStatisticsDto>();
     if (json != null && json.length > 0) {
-      json.forEach((String key, dynamic value) => map[key] = new SmokeSessionTimeStatisticsDto.fromJson(value));
+      json.forEach((String key, dynamic value) =>
+          map[key] = new SmokeSessionTimeStatisticsDto.fromJson(value));
     }
     return map;
   }
 }
-

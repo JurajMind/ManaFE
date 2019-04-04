@@ -6,6 +6,7 @@ import 'package:app/support/mana_icons_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:openapi/api.dart';
+import 'dart:math' as math;
 
 class Carroussel extends StatefulWidget {
   Carroussel({this.navigateToDetail});
@@ -80,7 +81,8 @@ class _CarrousselState extends State<Carroussel> {
                 });
               },
               controller: controller,
-              itemCount: snapshot.data != null ? snapshot.data.length : 0,
+              itemCount:
+                  snapshot.data != null ? math.min(snapshot.data.length, 5) : 0,
               itemBuilder: (context, index) =>
                   builder(index, snapshot.data[index]),
             ));

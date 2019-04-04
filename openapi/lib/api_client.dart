@@ -18,7 +18,7 @@ class ApiClient {
   final _regList = RegExp(r'^List<(.*)>$');
   final _regMap = RegExp(r'^Map<String,(.*)>$');
 
-  ApiClient({this.basePath: "https://devmana.azurewebsites.net"}) {
+  ApiClient({this.basePath: "https://localhost:44324"}) {
     // Setup authentications (key: authentication name, value: authentication).
   }
 
@@ -63,8 +63,6 @@ class ApiClient {
           return GamePictureDto.fromJson(value);
         case 'GameProfileSimpleDto':
           return GameProfileSimpleDto.fromJson(value);
-        case 'GearServiceSearchPipeAccesory':
-          return GearServiceSearchPipeAccesory.fromJson(value);
         case 'HookahOrderDto':
           return HookahOrderDto.fromJson(value);
         case 'InitDataDto':
@@ -109,6 +107,10 @@ class ApiClient {
           return PlaceMenuDto.fromJson(value);
         case 'PlaceSimpleDto':
           return PlaceSimpleDto.fromJson(value);
+        case 'PlacesDevicePlaceDashboardDto':
+          return PlacesDevicePlaceDashboardDto.fromJson(value);
+        case 'PlacesPlaceDashboardDto':
+          return PlacesPlaceDashboardDto.fromJson(value);
         case 'PriceGroupItems':
           return PriceGroupItems.fromJson(value);
         case 'ReservationDetailDto':
@@ -119,6 +121,8 @@ class ApiClient {
           return ReservationManageDto.fromJson(value);
         case 'ReservationsTimeSlot':
           return ReservationsTimeSlot.fromJson(value);
+        case 'SearchPipeAccessory':
+          return SearchPipeAccessory.fromJson(value);
         case 'SeatDto':
           return SeatDto.fromJson(value);
         case 'SmartHookahControllersPriceGroupDto':
@@ -127,6 +131,8 @@ class ApiClient {
           return SmartHookahHelpersAnimation.fromJson(value);
         case 'SmartHookahModelsDbColor':
           return SmartHookahModelsDbColor.fromJson(value);
+        case 'SmartHookahModelsDbPuf':
+          return SmartHookahModelsDbPuf.fromJson(value);
         case 'SmartHookahModelsForgotPasswordViewModel':
           return SmartHookahModelsForgotPasswordViewModel.fromJson(value);
         case 'SmartHookahModelsOrderExtraDto':

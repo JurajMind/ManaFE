@@ -103,13 +103,13 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       LabeledValue(
-                                        Utils.toStringDate(
+                                        DateUtils.toStringDate(
                                             widget.reservation.time),
                                         icon: Icon(Icons.calendar_today),
                                         label: 'Date: ',
                                       ),
                                       LabeledValue(
-                                        Utils.toStringShortTime(
+                                        DateUtils.toStringShortTime(
                                             widget.reservation.time),
                                         icon: Icon(Icons.timer),
                                         label: 'Time: ',

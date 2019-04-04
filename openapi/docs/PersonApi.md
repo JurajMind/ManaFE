@@ -5,17 +5,19 @@
 import 'package:openapi/api.dart';
 ```
 
-All URIs are relative to *https://devmana.azurewebsites.net*
+All URIs are relative to *https://localhost:44324*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**personAddMyGear**](PersonApi.md#personAddMyGear) | **POST** /api/Person/MyGear/{id}/Add/{count} | 
+[**personAddNotificationToken**](PersonApi.md#personAddNotificationToken) | **PUT** /api/Person/NotificationToken | 
 [**personDeleteMyGear**](PersonApi.md#personDeleteMyGear) | **POST** /api/Person/MyGear/{id}/Delete | 
 [**personGetPersonActiveData**](PersonApi.md#personGetPersonActiveData) | **GET** /api/Person/InitData | 
 [**personGetPersonDevices**](PersonApi.md#personGetPersonDevices) | **GET** /api/Person/Devices | 
 [**personGetPersonInfo**](PersonApi.md#personGetPersonInfo) | **GET** /api/Person/Info | 
 [**personGetRecentAccessories**](PersonApi.md#personGetRecentAccessories) | **GET** /api/Person/MyGear/Used/{sessionCount} | 
 [**personMyGear**](PersonApi.md#personMyGear) | **GET** /api/Person/MyGear | 
+[**personTestNotification**](PersonApi.md#personTestNotification) | **POST** /api/Person/TestNotification | 
 
 
 # **personAddMyGear**
@@ -58,6 +60,46 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **personAddNotificationToken**
+> personAddNotificationToken(token)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new PersonApi();
+var token = token_example; // String | 
+
+try { 
+    api_instance.personAddNotificationToken(token);
+} catch (e) {
+    print("Exception when calling PersonApi->personAddNotificationToken: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **token** | **String**|  | [default to null]
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -294,6 +336,42 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **personTestNotification**
+> personTestNotification()
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new PersonApi();
+
+try { 
+    api_instance.personTestNotification();
+} catch (e) {
+    print("Exception when calling PersonApi->personTestNotification: $e\n");
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

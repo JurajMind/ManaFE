@@ -1,20 +1,16 @@
 import 'package:app/app/app.dart';
-import 'package:app/components/Places/open_indicator.dart';
 import 'package:app/components/Places/place_item.dart';
 import 'package:app/components/Reservations/reservation_item.dart';
-import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/place_bloc.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:app/pages/Places/Reservations/reservations_page.dart';
-import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/pages/Places/places_map_page.dart';
 import 'package:app/pages/Places/places_search_page.dart';
 import 'package:app/utils/Map/location.dart';
 import 'package:app/utils/Map/map_view_type.dart';
 import 'package:app/utils/Map/marker.dart';
 import 'package:app/utils/Map/static_map_provider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -141,6 +137,17 @@ class _PlacesPageState extends State<PlacesPage> {
         stream: places,
         initialData: null,
         builder: (context, snapshot) {
+          if (snapshot.data == null) {
+            return SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return PlaceItemShimer();
+                },
+                childCount: 10,
+              ),
+            );
+          }
+
           return SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {

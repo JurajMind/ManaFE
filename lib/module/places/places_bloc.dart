@@ -11,9 +11,7 @@ class PlacesBloc {
   bool _permission = false;
   String error;
   BehaviorSubject<List<PlaceSimpleDto>> places =
-      new BehaviorSubject<List<PlaceSimpleDto>>.seeded(
-          new List<PlaceSimpleDto>());
-
+      new BehaviorSubject<List<PlaceSimpleDto>>();
   BehaviorSubject<bool> loading = new BehaviorSubject<bool>.seeded(false);
 
   BehaviorSubject<bool> localizationnPermision =

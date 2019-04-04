@@ -1,18 +1,16 @@
 import 'dart:async';
 
-import 'package:app/Helpers/date_utils.dart';
 import 'package:app/app/app.dart';
-import 'package:app/components/Places/GooglePlaceAutocomplete/google_places.dart';
 
 import 'package:app/components/Places/map_carousel.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/places/places_bloc.dart';
 import 'package:app/pages/Places/places_search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_maps_webservice/places.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -33,9 +31,12 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   bool loading = false;
   BehaviorSubject<List<PlaceSimpleDto>> nearbyPlaces =
       new BehaviorSubject<List<PlaceSimpleDto>>.seeded(null);
+  PlacesBloc bloc;
   @override
   initState() {
     super.initState();
+    curentView = new CameraPosition(
+        target: LatLng(widget.position.latitude, widget.position.longitude));
     markers = new Set<Marker>();
     if (widget.position != null) {
       initView = CameraPosition(
@@ -50,15 +51,20 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
         zoom: 14.4746,
       );
     }
+
+    new Future.delayed(Duration.zero, () {
+      bloc = DataProvider.getData(context).placeBloc;
+      setMarkers(bloc.places.value);
+      nearbyPlaces.add(bloc.places.value);
+      bloc.places.doOnData((onData) {
+        setMarkers(onData);
+        nearbyPlaces.add(onData);
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    var placeBloc = DataProvider.getData(context).placeBloc;
-    if (this.nearbyPlaces.value == null) {
-      setMarkers(placeBloc.places.value);
-    }
-
     return SafeArea(
       top: true,
       child: new Scaffold(
