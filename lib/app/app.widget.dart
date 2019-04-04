@@ -105,61 +105,6 @@ class _AppWidgetState extends State<AppWidget> {
 
     return false;
   }
-
-/*  Future<void> initPlatformState() async {
-    if (!mounted) return;
-
-    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
-
-    OneSignal.shared.setRequiresUserPrivacyConsent(_requireConsent);
-
-    var settings = {
-      OSiOSSettings.autoPrompt: false,
-      OSiOSSettings.promptBeforeOpeningPushUrl: true
-    };
-
-    OneSignal.shared.setNotificationReceivedHandler((notification) {
-      this.setState(() {
-        _debugLabelString =
-            "Received notification: \n${notification.jsonRepresentation().replaceAll("\\n", "\n")}";
-      });
-    });
-
-    OneSignal.shared
-        .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
-      this.setState(() {
-        _debugLabelString =
-            "Opened notification: \n${result.notification.jsonRepresentation().replaceAll("\\n", "\n")}";
-      });
-    });
-
-    OneSignal.shared
-        .setSubscriptionObserver((OSSubscriptionStateChanges changes) {
-      print("SUBSCRIPTION STATE CHANGED: ${changes.jsonRepresentation()}");
-    });
-
-    OneSignal.shared.setPermissionObserver((OSPermissionStateChanges changes) {
-      print("PERMISSION STATE CHANGED: ${changes.jsonRepresentation()}");
-    });
-
-    OneSignal.shared.setEmailSubscriptionObserver(
-        (OSEmailSubscriptionStateChanges changes) {
-      print("EMAIL SUBSCRIPTION STATE CHANGED ${changes.jsonRepresentation()}");
-    });
-
-    // NOTE: Replace with your own app ID from https://www.onesignal.com
-    await OneSignal.shared
-        .init("f3335ca8-8fc9-4e91-b9f8-324717b86d3c", iOSSettings: settings);
-
-    OneSignal.shared
-        .setInFocusDisplayType(OSNotificationDisplayType.notification);
-
-    bool requiresConsent = await OneSignal.shared.requiresUserPrivacyConsent();
-
-    this.setState(() {
-      _enableConsentButton = requiresConsent;
-    });
-  }*/
 }
 
 class SplashScreen extends StatelessWidget {

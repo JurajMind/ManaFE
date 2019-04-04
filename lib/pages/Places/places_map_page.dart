@@ -73,11 +73,10 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                 children: <Widget>[
                   Column(
                     children: <Widget>[
-                      Container(
-                        height: MediaQuery.of(context).size.height - (200),
+                      Expanded(
                         child: GoogleMap(
                           markers: markers,
-                          myLocationEnabled: false,
+                          myLocationEnabled: true,
                           onCameraMove: (cv) => curentView = cv,
                           mapType: MapType.normal,
                           compassEnabled: true,
@@ -88,10 +87,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                           },
                         ),
                       ),
-                      Container(
-                        height: 40,
-                        color: Colors.black,
-                      )
+                      SizedBox(height: 140)
                     ],
                   ),
                   Positioned(
@@ -117,8 +113,8 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                       onPressed: () => searchCity(context),
                     ),
                   ),
-                  Positioned(
-                    bottom: 190,
+                  /* Positioned(
+                    bottom: 160,
                     right: 10,
                     child: FloatingActionButton(
                       backgroundColor: AppColors.gray.withAlpha(40),
@@ -147,7 +143,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                         });
                       },
                     ),
-                  ),
+                  ),*/
                   Positioned(
                     bottom: 260,
                     right: 10,

@@ -8,9 +8,13 @@ dependencies:
     sdk: flutter
   validator:
     git: https://github.com/jodinathan/validator.dart
+<<<<<<< HEAD
   web_socket_channel: '^1.0.12'
+=======
+  web_socket_channel: ^1.0.12
+>>>>>>> 5ea31db0f6a241b8e830985cf85639b1021f09e3
   fluro: ^1.4.0
-  flutter_secure_storage: ^3.2.0
+  flutter_secure_storage: ^3.2.1+1
   rxdart: ^0.21.0
   vibrate: '^0.0.4'
   intl: ^0.15.7

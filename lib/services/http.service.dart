@@ -74,17 +74,13 @@ class ApiClient {
     _dio.lock();
     _dio.interceptors.responseLock.lock();
     _dio.interceptors.errorLock.lock();
-    if (!await _authorize.refreshToken()) {
+    await _authorize.refreshToken().then((d) {
+      options.headers["Authorization"] = 'Bearer $d';
       _dio.unlock();
       _dio.interceptors.responseLock.unlock();
       _dio.interceptors.errorLock.unlock();
-    }
-    token = await _authorize.getToken();
-    options.headers["Authorization"] = 'Bearer $token';
-    _dio.unlock();
-    _dio.interceptors.responseLock.unlock();
-    _dio.interceptors.errorLock.unlock();
-    return _dio.request(options.path, options: options);
+      return _dio.request(options.path, options: options);
+    });
   }
 
   Future<dynamic> _(Uri uri) async {
