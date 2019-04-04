@@ -70,20 +70,28 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
             builder: (context, snapshot) {
               return Stack(
                 children: <Widget>[
-                  GoogleMap(
-                    markers: markers,
-                    myLocationEnabled: false,
-                    onCameraMove: (cv) => curentView = cv,
-                    mapType: MapType.normal,
-                    compassEnabled: true,
-                    tiltGesturesEnabled: true,
-                    initialCameraPosition: initView,
-                    onMapCreated: (GoogleMapController controller) {
-                      _controller.complete(controller);
-                    },
+                  Column(
+                    children: <Widget>[
+                      Expanded(
+                                              child: GoogleMap(
+                          markers: markers,
+                          myLocationEnabled: true,
+                          onCameraMove: (cv) => curentView = cv,
+                          mapType: MapType.normal,
+                          compassEnabled: true,
+                          tiltGesturesEnabled: true,
+                          initialCameraPosition: initView,
+                          onMapCreated: (GoogleMapController controller) {
+                            _controller.complete(controller);
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 140)
+                    ],
                   ),
+              
                   Positioned(
-                    bottom: 40,
+                    bottom: 10,
                     child: Container(
                       height: 120,
                       width: MediaQuery.of(context).size.width,
@@ -105,7 +113,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                       onPressed: () => searchCity(),
                     ),
                   ),
-                  Positioned(
+                  /* Positioned(
                     bottom: 160,
                     right: 10,
                     child: FloatingActionButton(
@@ -135,7 +143,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                         });
                       },
                     ),
-                  ),
+                  ),*/
                   Positioned(
                     bottom: 260,
                     right: 10,

@@ -10,9 +10,14 @@ class OpenIndicator extends StatelessWidget {
   const OpenIndicator({Key key, this.place, this.size}) : super(key: key);
 
   bool _isOpen() {
+
+
+
     var today = Collection(place.businessHours)
         .firstOrDefault((a) => a.day == DateTime.now().weekday);
     if (today == null) return false;
+        if(today.openTine == null || today.closeTime == null)
+    return false;
     var now = DateTime.now();
     final DateFormat df = new DateFormat('HH:mm:ss');
     var open = df.parse(today.openTine);

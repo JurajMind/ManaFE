@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:app/app/app.dart';
 import 'package:app/app/app.widget.dart';
+import 'package:app/pages/home.page.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:openapi/api.dart';
@@ -36,7 +37,7 @@ class Authorize {
     }
 
     final responseJson = json.decode(response.body);
-    return await writeToken(responseJson);
+    return await writeToken(responseJson)  != null;
   }
 
   Future<String> getToken() async {
@@ -58,7 +59,7 @@ class Authorize {
         "https://${App.baseUri}/Account/ObtainLocalAccessToken?provider=${provider}&externalAccessToken=${externalToken}");
     final responseJson = json.decode(response.body);
     var success = await writeToken(responseJson);
-    if (success) {
+    if (success != null) {
       return true;
     }
     return false;
@@ -78,7 +79,7 @@ class Authorize {
     await _storage.write(key: 'accessToken',value:'token');
   }
 
-  Future<bool> refreshToken() async {
+  Future<String> refreshToken() async {
     var refreshToken = await _storage.read(key: 'refreshToken');
     await _storage.delete(key: 'accessToken');
     await _storage.delete(key: 'refreshToken');
@@ -94,12 +95,12 @@ class Authorize {
     final responseJson = json.decode(response.body);
 
     var success = await writeToken(responseJson);
-    if (success) {
-      return true;
+    if (success!= null) {
+      return success;
     }
 
-    navigatorKey.currentState.pushReplacementNamed('auth/login');
-    return false;
+    AppWidget.restartApp(scaffoldKey.currentContext);    
+    return null;
   }
 
   Future<String> register(UserModel userData) async {
@@ -116,13 +117,13 @@ class Authorize {
     final responseJson = json.decode(response.body);
 
     var success = await writeToken(responseJson);
-    if (success) {
+    if (success != null) {
       return null;
     }
     return "ERROR";
   }
 
-  Future<bool> writeToken(dynamic responseJson) async {
+  Future<String> writeToken(dynamic responseJson) async {
     var token = TokenResponse.fromJson(responseJson as Map<String, dynamic>);
     if (token.accessToken != null) {
       await _storage.write(key: 'accessToken', value: token.accessToken);
@@ -132,9 +133,9 @@ class Authorize {
       await _storage.write(key: 'userName', value: token.userName);
       // OneSignal.shared.sendTag('user_id', token.userName);
 
-      return true;
+      return token.accessToken;
     }
-    return false;
+    return null;
   }
 
   Future<bool> isAuthorized() async {

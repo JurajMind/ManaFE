@@ -11,7 +11,6 @@ import 'package:app/pages/Gear/gear_page.dart';
 import 'package:app/pages/Places/places_page.dart';
 import 'package:app/pages/SmokeSession/gradiend_color_wheel_rotate.dart';
 import 'package:app/pages/Statistic/statistic_page.dart';
-import 'package:app/pages/profile.page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:app/support/mana_icons_icons.dart';

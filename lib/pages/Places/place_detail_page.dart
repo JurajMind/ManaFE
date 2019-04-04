@@ -332,18 +332,36 @@ class PlaceInfo extends StatelessWidget {
                       ),
                     )
                   : Container(),
-              place.facebook != null
-                  ? InkWell(
-                      onTap: () => launch(place.facebook),
-                      child: new LeadingIcon(
-                        icon: MdiIcons.facebook,
-                        child: Text(
-                          place.friendlyUrl,
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ))
-                  : Container(),
+                  Row(
+                    children: <Widget>[
+                      new IconUrlButton(url: place.facebook,icon: MdiIcons.facebookBox,color:Colors.blue),
+                      new IconUrlButton(url: null,icon: MdiIcons.instagram,color:Colors.blue),
+                        new IconUrlButton(url:null,icon: MdiIcons.web,color:Colors.black),
+                    ],
+                  )
             ],
           );
+  }
+}
+
+class IconUrlButton extends StatelessWidget {
+  const IconUrlButton({
+    Key key,
+    @required this.url, this.icon, this.color = Colors.black
+  }) : super(key: key);
+
+  final String url;
+  final IconData icon;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(icon,color: color,size: 40),
+      onPressed: ()  {
+        if (url != null){
+          launch(url);
+        }
+      },);
   }
 }
