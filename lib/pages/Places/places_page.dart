@@ -1,5 +1,6 @@
 import 'package:app/app/app.dart';
 import 'package:app/components/Places/open_indicator.dart';
+import 'package:app/components/Places/place_item.dart';
 import 'package:app/components/Reservations/reservation_item.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
@@ -8,6 +9,7 @@ import 'package:app/module/places/places_bloc.dart';
 import 'package:app/pages/Places/Reservations/reservations_page.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/pages/Places/places_map_page.dart';
+import 'package:app/pages/Places/places_search_page.dart';
 import 'package:app/utils/Map/location.dart';
 import 'package:app/utils/Map/map_view_type.dart';
 import 'package:app/utils/Map/marker.dart';
@@ -69,7 +71,13 @@ class _PlacesPageState extends State<PlacesPage> {
               actions: <Widget>[
                 IconButton(
                   icon: Icon(Icons.search),
-                  onPressed: () => {},
+                  onPressed: () => Navigator.of(context).push(
+                          new MaterialPageRoute(
+                              builder: (BuildContext context) {
+                        return new PlacesSearchPage(
+                          places: placesBloc.places.value,
+                        );
+                      })),
                 )
               ],
               flexibleSpace: InkWell(
@@ -206,36 +214,6 @@ class _PlacesPageState extends State<PlacesPage> {
   }
 
   Widget _createPlaceItem(int index, PlaceSimpleDto data) {
-    return ListTile(
-      onTap: () {
-        placeBloc.loadPlace(place: data);
-        Navigator.of(context).push(MaterialPageRoute(
-            settings: RouteSettings(),
-            builder: (context) => PlaceDetailPage(place: data)));
-      },
-      leading: SizedBox(
-          height: 60.0,
-          width: 60.0,
-          child: Hero(
-            tag: '${data.friendlyUrl}_place',
-            child: new Image(
-              image: new CachedNetworkImageProvider(
-                  Extensions.getPlaceImage(data)),
-              fit: BoxFit.cover,
-            ),
-          )),
-      title: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(data.name),
-          OpenIndicator(
-            place: data,
-            size: Size.fromRadius(10),
-          ),
-        ],
-      ),
-      subtitle: Text(Extensions.adress(data.address)),
-    );
+    return new PlaceItem(place: data);
   }
 }

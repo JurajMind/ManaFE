@@ -183,9 +183,14 @@ class SmokeSessionBloc {
     var selection = this.smokeSessionMetaData.value;
     if (setModel.mix == null) {
       selection.tobacco = setModel.tobacco;
+      selection.tobaccoId = setModel.tobacco.id;
       selection.tobaccoWeight = setModel.weight.toDouble();
+      selection.tobaccoMix = null;
     } else {
       selection.tobaccoMix = setModel.mix;
+      if (setModel.mix.id != null) {
+        selection.tobaccoId = setModel.mix.id;
+      }
       selection.tobacco = null;
     }
 

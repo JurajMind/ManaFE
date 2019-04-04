@@ -338,7 +338,8 @@ class ApiClient {
   }
 
   Future<PlaceDto> getPlaceInfo(int id) async {
-    var url = Uri.https(baseUrl, '/api/Places/GetPlaceInfo/${id}');
+    var url =
+        Uri.https(baseUrl, '/api/Places/GetPlaceInfo/', {"id": id.toString()});
     return await _dio
         .get(url.toString())
         .then((data) => PlaceDto.fromJson(data.data));

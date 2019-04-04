@@ -28,7 +28,8 @@ class PlaceBloc {
     }
     var placeInfoTask =
         App.http.getPlaceInfo(place.id).then((data) => placeInfo.add(data));
-    var placeReservationTask = loadReservationInfo(DateTime.now());
+    var placeReservationTask = loadReservationInfo(DateTime.now())
+        .then((data) => reservationInfo.add(data));
 
     await Future.wait([placeInfoTask, placeReservationTask]);
   }

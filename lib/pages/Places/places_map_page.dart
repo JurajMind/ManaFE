@@ -8,6 +8,7 @@ import 'package:app/components/Places/map_carousel.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/pages/Places/places_search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -70,20 +71,31 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
             builder: (context, snapshot) {
               return Stack(
                 children: <Widget>[
-                  GoogleMap(
-                    markers: markers,
-                    myLocationEnabled: false,
-                    onCameraMove: (cv) => curentView = cv,
-                    mapType: MapType.normal,
-                    compassEnabled: true,
-                    tiltGesturesEnabled: true,
-                    initialCameraPosition: initView,
-                    onMapCreated: (GoogleMapController controller) {
-                      _controller.complete(controller);
-                    },
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        height: MediaQuery.of(context).size.height - (200),
+                        child: GoogleMap(
+                          markers: markers,
+                          myLocationEnabled: false,
+                          onCameraMove: (cv) => curentView = cv,
+                          mapType: MapType.normal,
+                          compassEnabled: true,
+                          tiltGesturesEnabled: true,
+                          initialCameraPosition: initView,
+                          onMapCreated: (GoogleMapController controller) {
+                            _controller.complete(controller);
+                          },
+                        ),
+                      ),
+                      Container(
+                        height: 40,
+                        color: Colors.black,
+                      )
+                    ],
                   ),
                   Positioned(
-                    bottom: 40,
+                    bottom: 10,
                     child: Container(
                       height: 120,
                       width: MediaQuery.of(context).size.width,
@@ -102,11 +114,11 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                         Icons.search,
                         color: Colors.white,
                       ),
-                      onPressed: () => searchCity(),
+                      onPressed: () => searchCity(context),
                     ),
                   ),
                   Positioned(
-                    bottom: 160,
+                    bottom: 190,
                     right: 10,
                     child: FloatingActionButton(
                       backgroundColor: AppColors.gray.withAlpha(40),
@@ -156,15 +168,13 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
     );
   }
 
-  void searchCity() async {
-    var kGoogleApiKey = App.googleApiKeys;
-
-    Prediction p = await PlacesAutocomplete.show(
-        context: context,
-        apiKey: kGoogleApiKey,
-        mode: Mode.overlay, // Mode.fullscreen
-        language: "en",
-        components: [new Component(Component.country, "en")]);
+  void searchCity(BuildContext context) async {
+    Navigator.of(context)
+        .push(new MaterialPageRoute(builder: (BuildContext context) {
+      return new PlacesSearchPage(
+        places: nearbyPlaces.value,
+      );
+    }));
   }
 
   void loadNearby({LatLng imPosition}) async {
