@@ -1,3 +1,5 @@
+import 'package:app/Helpers/day_helper.dart';
+import 'package:app/app/app.widget.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/SmokeSession/smoke_session_list_item.dart';
 import 'package:app/components/Statistic/recap.dart';
@@ -15,6 +17,7 @@ import 'package:app/components/Charts/sparkline.dart';
 import 'package:openapi/api.dart';
 import 'package:queries/collections.dart';
 import 'dart:math' as math;
+import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'package:shimmer/shimmer.dart';
 
@@ -59,6 +62,7 @@ class _StatisticPageState extends State<StatisticPage> {
                       break;
                     case 'signOut':
                       auth.signOut();
+                      AppWidget.restartApp(context);
                       break;
                     case 'test':
                       Navigator.of(context).push(MaterialPageRoute(
@@ -108,6 +112,7 @@ class _StatisticPageState extends State<StatisticPage> {
                 children: <Widget>[
                   buildPositioned(bloc, 0, (f) => f.pufCount.toDouble()),
                   buildPositioned(bloc, 1, (f) => f.smokeSessions.toDouble()),
+                  buildPositioned(bloc, 2, (f) => f.activity.toDouble()),
                 ],
               ),
             ),
@@ -216,9 +221,12 @@ class _StatisticPageState extends State<StatisticPage> {
     var result = new List<Widget>();
     result.add(buildStatRecap(bloc));
     result.add(buildGearUsage(bloc));
+    result.add(buildTimeStatistic(bloc));
+    result.add(buildDayStatistic(bloc));
+    result.add(SizedBox(height: 10));
     result.addAll(buildSmokeSession(bloc));
     result.add(SizedBox(
-      height: 55,
+      height: 70,
     ));
     return result;
   }
@@ -228,7 +236,7 @@ class _StatisticPageState extends State<StatisticPage> {
     result.add(Center(
       child: new Text(
         'Smoke sessions',
-        style: Theme.of(context).textTheme.title,
+        style: Theme.of(context).textTheme.display2,
       ),
     ));
     result.add(StreamBuilder<List<SmokeSessionSimpleDto>>(
@@ -236,12 +244,32 @@ class _StatisticPageState extends State<StatisticPage> {
         initialData: null,
         builder: (BuildContext context,
             AsyncSnapshot<List<SmokeSessionSimpleDto>> snapshot) {
-          return snapshot.data == null
-              ? Placeholder()
-              : Column(
-                  children: snapshot.data.map((f) {
-                  return SmokeSessionListItem(session: f);
-                }).toList());
+          if (snapshot.data == null) {
+            return Placeholder();
+          }
+          List<Widget> sessions = snapshot.data
+              .map((f) {
+                return SmokeSessionListItem(session: f);
+              })
+              .take(5)
+              .cast<Widget>()
+              .toList();
+          sessions.add(
+            OutlineButton.icon(
+              borderSide: BorderSide(color: Colors.white),
+              icon: Icon(
+                Icons.clear_all,
+                color: Colors.red,
+              ),
+              label: Text('All sessions (${snapshot.data.length})'),
+              onPressed: () async {
+                var auth = new Authorize();
+                auth.messToken();
+              },
+            ),
+          );
+
+          return Column(children: sessions);
         }));
     return result;
   }
@@ -346,26 +374,137 @@ class _StatisticPageState extends State<StatisticPage> {
   Positioned buildPositioned(
       StatisticBloc bloc, int color, double funct(StatisticItem s)) {
     return Positioned(
+      top: 40,
       child: StreamBuilder<List<StatisticItem>>(
           stream: bloc.topGraphData,
           builder: (context, snapshot) {
-            return snapshot.data == null || snapshot.data.length == 0
-                ? Container()
-                : Sparkline(
-                    cubicSmoothingFactor: 0.3,
-                    useCubicSmoothing: true,
-                    sharpCorners: false,
-                    data: snapshot.data.map((f) => funct(f)).toList(),
-                    lineColor: AppColors.colors[color],
-                    fillMode: FillMode.below,
-                    fillColor: AppColors.colors[color],
-                    pointsMode: PointsMode.none,
-                    pointSize: 5.0,
-                    pointColor: Colors.amber,
-                  );
+            return Container(
+              height: 200,
+              width: MediaQuery.of(context).size.width,
+              child: snapshot.data == null || snapshot.data.length == 0
+                  ? Container()
+                  : Sparkline(
+                      cubicSmoothingFactor: 0.3,
+                      useCubicSmoothing: true,
+                      sharpCorners: false,
+                      data: snapshot.data.map((f) => funct(f)).toList(),
+                      lineColor: AppColors.colors[color],
+                      fillMode: FillMode.below,
+                      fillColor: AppColors.colors[color].withAlpha(60),
+                      pointsMode: PointsMode.none,
+                      pointSize: 5.0,
+                      pointColor: Colors.amber,
+                    ),
+            );
           }),
     );
   }
+
+  Widget buildDayStatistic(StatisticBloc bloc) {
+    return Container(
+      child: StreamBuilder<PersonStatisticsOverallDto>(
+          stream: bloc.statistic,
+          builder: (context, snapshot) {
+            if (snapshot.data == null) {
+              return Container();
+            }
+            var seriesList = snapshot.data.timeStatistics.dayOfWeekDistribution;
+            return Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Container(
+                height: 250,
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'Week days',
+                      style: Theme.of(context).textTheme.display2,
+                    ),
+                    Expanded(
+                      child: new charts.BarChart(
+                        _createSampleData(seriesList, (f, i) {
+                          var day = getShortDayName(int.parse(f) + 1, context);
+                          return new OrdinalSales(day, i);
+                        }),
+                        animate: true,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          }),
+    );
+  }
+
+  Widget buildTimeStatistic(StatisticBloc bloc) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Container(
+        child: StreamBuilder<PersonStatisticsOverallDto>(
+            stream: bloc.statistic,
+            builder: (context, snapshot) {
+              if (snapshot.data == null) {
+                return Container();
+              }
+
+              var seriesList =
+                  snapshot.data.timeStatistics.sessionStartTimeDistribution;
+              return Container(
+                height: 250,
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'Start time',
+                      style: Theme.of(context).textTheme.display2,
+                    ),
+                    Expanded(
+                      child: new charts.BarChart(
+                        _createSampleData(seriesList, (f, i) {
+                          return new OrdinalSales(f, i, order: int.parse(f));
+                        }),
+                        animate: true,
+                      ),
+                    )
+                  ],
+                ),
+              );
+            }),
+      ),
+    );
+  }
+
+  static List<charts.Series<OrdinalSales, String>> _createSampleData(
+      Map<String, int> imput, Function funct) {
+    var convertedData = new List<OrdinalSales>();
+    imput.forEach((f, i) {
+      convertedData.add(funct(f, i));
+    });
+
+    var ordered = new Collection(convertedData)
+        .orderBy((keySelector) => keySelector.order);
+
+    return [
+      new charts.Series<OrdinalSales, String>(
+          id: 'Sales',
+          colorFn: (data, __) {
+            if (data.sales > 4) {
+              return charts.MaterialPalette.red.shadeDefault;
+            }
+            return charts.MaterialPalette.green.shadeDefault;
+          },
+          domainFn: (OrdinalSales sales, _) => sales.label,
+          measureFn: (OrdinalSales sales, _) => sales.sales,
+          data: ordered.toList())
+    ];
+  }
+}
+
+class OrdinalSales {
+  final String label;
+  final int order;
+  final int sales;
+
+  OrdinalSales(this.label, this.sales, {this.order = 0});
 }
 
 class TimeSelect extends StatelessWidget {

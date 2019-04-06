@@ -17,7 +17,9 @@ class LabeledValue extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            icon == null ? Container() : icon,
+            icon == null
+                ? Container()
+                : Padding(padding: EdgeInsets.only(right: 4), child: icon),
             label == null
                 ? Container()
                 : Text(

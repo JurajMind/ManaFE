@@ -136,8 +136,8 @@ class ApiClient {
   Future<List<PlaceSimpleDto>> getNearbyPlaces({double lat, double lng}) {
     Map<String, String> queryParameters = new Map<String, String>();
     if (lat != null && lng != null) {
-      queryParameters['lat'] = lat.toString();
-      queryParameters['lng'] = lng.toString();
+      queryParameters['lat'] = lat == -200 ? null : lat.toString();
+      queryParameters['lng'] = lng == -200 ? null : lng.toString();
       queryParameters['page'] = '0';
       queryParameters['pageSize'] = '100';
       queryParameters['radius'] = '50';

@@ -1,6 +1,7 @@
 import 'package:app/models/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
+import 'dart:math' as math;
 
 class GearUsageItem extends StatelessWidget {
   final String label;
@@ -38,12 +39,13 @@ class GearUsageItem extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: gears?.length ?? 0,
+                itemCount: math.min(gears?.length ?? 0, 5),
+                physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   var item = gears[index];
                   var style = Theme.of(context).textTheme.display2;
                   return Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(4.0),
                     child: Container(
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.white),
@@ -64,6 +66,17 @@ class GearUsageItem extends StatelessWidget {
                   );
                 },
               ),
+            ),
+            Center(
+              child: OutlineButton(
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0)),
+                  borderSide: BorderSide(color: Colors.white),
+                  child: Text(
+                    'All ${label.toLowerCase()}',
+                    style: Theme.of(context).textTheme.display3,
+                  ),
+                  onPressed: () {}),
             )
           ],
         ));

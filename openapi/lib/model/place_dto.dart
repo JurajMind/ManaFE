@@ -1,59 +1,58 @@
 part of openapi.api;
 
 class PlaceDto {
-  
   String instagram = null;
-  
+
   String url = null;
-  
+
   String descriptions = null;
-  
+
   double baseHookahPrice = null;
-  
+
   String currency = null;
-  
+
   List<SeatDto> seats = [];
-  
+
   List<TobaccoReviewDto> tobaccoReviews = [];
-  
+
   List<MediaDto> medias = [];
-  
+
   bool haveReservation = null;
-  
+
   int minimumReservationTime = null;
-  
+
   int franchiseId = null;
-  
+
   FranchiseDto franchise = null;
-  
+
   List<String> flags = [];
-  
+
   int id = null;
-  
+
   String name = null;
-  
+
   String shortDescriptions = null;
-  
+
   String friendlyUrl = null;
-  
+
   String logoPath = null;
-  
+
   AddressDto address = null;
-  
+
   List<BusinessHoursDto> businessHours = [];
-  
+
   int rating = null;
-  
+
   MediaDto media = null;
-  
+
   String phoneNumber = null;
-  
+
   String facebook = null;
-  
+
   bool haveMenu = null;
-  
+
   bool haveOrders = null;
-  
+
   bool haveMana = null;
   PlaceDto();
 
@@ -76,7 +75,8 @@ class PlaceDto {
     minimumReservationTime = json['MinimumReservationTime'];
     franchiseId = json['FranchiseId'];
     franchise = new FranchiseDto.fromJson(json['Franchise']);
-    flags = ((json['Flags'] ?? []) as List).map((item) => item as String).toList();
+    flags =
+        ((json['Flags'] ?? []) as List).map((item) => item as String).toList();
     id = json['Id'];
     name = json['Name'];
     shortDescriptions = json['ShortDescriptions'];
@@ -90,7 +90,7 @@ class PlaceDto {
     facebook = json['Facebook'];
     haveMenu = json['HaveMenu'];
     haveOrders = json['HaveOrders'];
-    haveMana = json['HaveMana'];
+    haveMana = json['haveMana'];
   }
 
   Map<String, dynamic> toJson() {
@@ -126,15 +126,17 @@ class PlaceDto {
   }
 
   static List<PlaceDto> listFromJson(List<dynamic> json) {
-    return json == null ? new List<PlaceDto>() : json.map((value) => new PlaceDto.fromJson(value)).toList();
+    return json == null
+        ? new List<PlaceDto>()
+        : json.map((value) => new PlaceDto.fromJson(value)).toList();
   }
 
   static Map<String, PlaceDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, PlaceDto>();
     if (json != null && json.length > 0) {
-      json.forEach((String key, dynamic value) => map[key] = new PlaceDto.fromJson(value));
+      json.forEach((String key, dynamic value) =>
+          map[key] = new PlaceDto.fromJson(value));
     }
     return map;
   }
 }
-

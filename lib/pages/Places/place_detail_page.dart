@@ -1,6 +1,7 @@
 import 'package:app/components/Common/leading_icon.dart';
 import 'package:app/components/Places/navigate_button.dart';
 import 'package:app/components/Places/open_dropdown.dart';
+import 'package:app/components/Places/place_detail.dart';
 import 'package:app/components/Places/place_map.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/models/extensions.dart';
@@ -290,7 +291,7 @@ class DisabledChip extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Chip(
-        backgroundColor: Colors.grey,
+        backgroundColor: disabled ? Colors.blue : Colors.grey,
         label: Icon(
           icon,
           color: Colors.grey[200],
@@ -343,57 +344,6 @@ class PlaceFlag extends StatelessWidget {
           style: Theme.of(context).textTheme.body1.apply(color: Colors.black),
         );
     }
-  }
-}
-
-class PlaceInfo extends StatelessWidget {
-  const PlaceInfo({
-    Key key,
-    @required this.place,
-  }) : super(key: key);
-
-  final PlaceSimpleDto place;
-
-  @override
-  Widget build(BuildContext context) {
-    return place == null
-        ? SizedBox(
-            child: CircularProgressIndicator(),
-            width: 50.0,
-            height: 50.0,
-          )
-        : Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              new LeadingIcon(
-                  icon: Icons.watch, child: OpenDropdown(place: place)),
-              place.phoneNumber != null
-                  ? InkWell(
-                      onTap: () => launch('tel://${place.phoneNumber}'),
-                      child: new LeadingIcon(
-                        icon: Icons.phone,
-                        child: Text(
-                          place.phoneNumber,
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ),
-                    )
-                  : Container(),
-              Row(
-                children: <Widget>[
-                  new IconUrlButton(
-                      url: place.facebook,
-                      icon: MdiIcons.facebookBox,
-                      color: Colors.blue),
-                  new IconUrlButton(
-                      url: null, icon: MdiIcons.instagram, color: Colors.grey),
-                  new IconUrlButton(
-                      url: null, icon: MdiIcons.web, color: Colors.grey),
-                ],
-              )
-            ],
-          );
   }
 }
 

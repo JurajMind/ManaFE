@@ -36,21 +36,21 @@ class SmokeSessionListItem extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Expanded(
-                      flex: 2,
+                      flex: 4,
                       child: LabeledValue(
-                        DateUtils.toStringDate(start),
+                        '${DateUtils.toStringDate(start)} ${DateUtils.toStringShortTime(start)}',
                         icon: Icon(Icons.calendar_today),
                       ),
                     ),
                     Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: LabeledValue(
                         DateUtils.toStringDuration(duration),
                         icon: Icon(Icons.timelapse),
                       ),
                     ),
                     Expanded(
-                      flex: 1,
+                      flex: 2,
                       child: LabeledValue(
                         session.statistic.pufCount.toString(),
                         icon: Icon(Icons.cloud),
