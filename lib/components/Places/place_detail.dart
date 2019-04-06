@@ -1,3 +1,4 @@
+import 'package:app/Helpers/place_helper.dart';
 import 'package:app/components/Common/leading_icon.dart';
 import 'package:app/components/Places/open_dropdown.dart';
 import 'package:flutter/material.dart';
@@ -5,14 +6,27 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:openapi/api.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class PlaceInfo extends StatelessWidget {
+class PlaceInfo extends StatefulWidget {
   final PlaceSimpleDto place;
 
   const PlaceInfo({Key key, this.place}) : super(key: key);
 
   @override
+  _PlaceInfoState createState() => _PlaceInfoState();
+}
+
+class _PlaceInfoState extends State<PlaceInfo> {
+  bool isOpen = false;
+
+  @override
+  void initState() {
+    isOpen = PlaceHelpers.isOpen(widget.place);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return place == null
+    return widget.place == null
         ? SizedBox(
             child: CircularProgressIndicator(),
             width: 50.0,
@@ -23,26 +37,28 @@ class PlaceInfo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               new LeadingIcon(
-                  icon: Icons.watch, child: OpenDropdown(place: place)),
-              place.phoneNumber != null
+                  color: isOpen ? Colors.green : Colors.red,
+                  icon: Icons.watch,
+                  child: OpenDropdown(place: widget.place)),
+              widget.place.phoneNumber != null
                   ? InkWell(
-                      onTap: () => launch('tel://${place.phoneNumber}'),
+                      onTap: () => launch('tel://${widget.place.phoneNumber}'),
                       child: new LeadingIcon(
                         icon: Icons.phone,
                         child: Text(
-                          place.phoneNumber,
+                          widget.place.phoneNumber,
                           style: TextStyle(color: Colors.black),
                         ),
                       ),
                     )
                   : Container(),
-              place.facebook != null
+              widget.place.facebook != null
                   ? InkWell(
-                      onTap: () => launch(place.facebook),
+                      onTap: () => launch(widget.place.facebook),
                       child: new LeadingIcon(
                         icon: MdiIcons.facebook,
                         child: Text(
-                          place.friendlyUrl,
+                          widget.place.friendlyUrl,
                           style: TextStyle(color: Colors.black),
                         ),
                       ))

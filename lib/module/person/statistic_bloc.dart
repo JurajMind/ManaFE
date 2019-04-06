@@ -30,9 +30,13 @@ class StatisticBloc {
   Future loadStatistic(DateTime from, DateTime to) async {
     var result = await App.http.getStatistic(from, to);
     this.statistic.add(result);
+    var month = false;
+    if (to.difference(from).inDays > 60) {
+      month = true;
+    }
 
     var statistic =
-        this.getDisplayStatistic(from, to, result.smokeSessions, month: true);
+        this.getDisplayStatistic(from, to, result.smokeSessions, month: month);
     topGraphData.add(statistic);
 
     var recap = this.getStatsRecap(result.smokeSessions);

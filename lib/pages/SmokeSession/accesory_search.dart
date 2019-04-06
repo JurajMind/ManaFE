@@ -170,6 +170,9 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
     }
     var index = getIndexes(text.toLowerCase(), match.toLowerCase());
 
+    if (index.length == 0) {
+      return [new TextSpan(text: text, style: nonMatchStyle)];
+    }
     for (var i = 0; i < index.length; i++) {
       if (index[i] != 0) {
         result.add(new TextSpan(

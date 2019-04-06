@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:openapi/api.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class PlaceMap extends StatelessWidget {
   final PlaceSimpleDto place;

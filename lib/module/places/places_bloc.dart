@@ -17,8 +17,7 @@ class PlacesBloc {
   BehaviorSubject<bool> localizationnPermision =
       new BehaviorSubject<bool>.seeded(false);
 
-  BehaviorSubject<Position> location = new BehaviorSubject<Position>.seeded(
-      new Position(longitude: 40.0, latitude: 40.0));
+  BehaviorSubject<Position> location = new BehaviorSubject<Position>();
 
   static final PlacesBloc _instance = new PlacesBloc._();
 
@@ -36,15 +35,15 @@ class PlacesBloc {
         location.add(value);
       }
     });
-    await loadPlacesFromCache();
+    loadPlacesFromCache();
 
-    double lat = 0;
-    double lng = 0;
+    double lat = -200;
+    double lng = -200;
     if (location.value != null) {
       lat = location.value.latitude;
       lng = location.value.longitude;
     }
-    await App.http.getNearbyPlaces(lat: lat, lng: lng).then((places) async {
+    App.http.getNearbyPlaces(lat: lat, lng: lng).then((places) async {
       this.places.add(places);
       var db = await App.cache.getDatabase();
       var key = await db.put(json.encode(places), 'places');

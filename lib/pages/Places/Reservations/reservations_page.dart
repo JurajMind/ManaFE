@@ -98,7 +98,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
         showCalendarPickerIcon: false,
         highlightToday: true,
         doubleClick: true,
-        initialCalendarDateOverride: null,
+        initialCalendarDateOverride: _selectedDay,
         onDateSelected: (date) => changeDate(date),
         dateStyles: TextStyle(color: Colors.red));
   }
@@ -114,11 +114,13 @@ class _ReservationsPageState extends State<ReservationsPage> {
 
   void changeDate(DateTime newDate) {
     print(newDate);
+    if (newDate != null &&
+        _selectedDay != null &&
+        _selectedDay.month != newDate.month) {
+      loadReservation(newDate);
+    }
     setState(() {
       _selectedDay = newDate;
     });
-    if (newDate != null && _selectedDay.month != newDate.month) {
-      loadReservation(newDate);
-    }
   }
 }
