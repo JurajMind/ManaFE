@@ -291,7 +291,7 @@ class DisabledChip extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Chip(
-        backgroundColor: disabled ? Colors.blue : Colors.grey,
+        backgroundColor: disabled ?? false ? Colors.blue : Colors.grey,
         label: Icon(
           icon,
           color: Colors.grey[200],
