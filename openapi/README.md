@@ -140,6 +140,7 @@ Class | Method | HTTP request | Description
 *ReservationApi* | [**reservationRemoveTable**](docs\/ReservationApi.md#reservationremovetable) | **DELETE** /api/Reservations/{id}/RemoveTable | 
 *ReservationApi* | [**reservationUpdateReservationState**](docs\/ReservationApi.md#reservationupdatereservationstate) | **POST** /api/Reservations/{id}/UpdateState | 
 *SentToDeviceApi* | [**sentToDeviceDefaultAction**](docs\/SentToDeviceApi.md#senttodevicedefaultaction) | **POST** /api/SentToDevice/{id} | 
+*SmokeSessionApi* | [**smokeSessionGetFinishedData**](docs\/SmokeSessionApi.md#smokesessiongetfinisheddata) | **GET** /api/SmokeSession/GetFinishedData | 
 *SmokeSessionApi* | [**smokeSessionGetMetaData**](docs\/SmokeSessionApi.md#smokesessiongetmetadata) | **GET** /api/SmokeSession/GetMetaData | 
 *SmokeSessionApi* | [**smokeSessionGetPufs**](docs\/SmokeSessionApi.md#smokesessiongetpufs) | **GET** /api/SmokeSession/GetPufs | 
 *SmokeSessionApi* | [**smokeSessionGetSessionCode**](docs\/SmokeSessionApi.md#smokesessiongetsessioncode) | **GET** /api/SmokeSession/GetSessionCode | 
@@ -169,6 +170,7 @@ Class | Method | HTTP request | Description
  - [DeviceSimpleDto](docs\/DeviceSimpleDto.md)
  - [Dto](docs\/Dto.md)
  - [DynamicSmokeStatisticRawDto](docs\/DynamicSmokeStatisticRawDto.md)
+ - [FinishedSessionDataDto](docs\/FinishedSessionDataDto.md)
  - [FranchiseDto](docs\/FranchiseDto.md)
  - [GamePictureDto](docs\/GamePictureDto.md)
  - [GameProfileSimpleDto](docs\/GameProfileSimpleDto.md)
@@ -217,6 +219,7 @@ Class | Method | HTTP request | Description
  - [SmartHookahServicesPlaceReservationUsageDto](docs\/SmartHookahServicesPlaceReservationUsageDto.md)
  - [SmokeSessionMetaDataDto](docs\/SmokeSessionMetaDataDto.md)
  - [SmokeSessionSimpleDto](docs\/SmokeSessionSimpleDto.md)
+ - [SmokeSessionStatisticsDto](docs\/SmokeSessionStatisticsDto.md)
  - [SmokeSessionTimeStatisticsDto](docs\/SmokeSessionTimeStatisticsDto.md)
  - [TobaccoDto](docs\/TobaccoDto.md)
  - [TobaccoInMix](docs\/TobaccoInMix.md)

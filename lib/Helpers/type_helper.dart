@@ -14,6 +14,5 @@ PlaceSimpleDto toSimpePlace(PlaceDto place) {
   result.haveMana = place.haveMana;
   result.haveMenu = place.haveMenu;
   result.haveOrders = place.haveOrders;
-  result.haveReservation = place.haveReservation;
   return result;
 }

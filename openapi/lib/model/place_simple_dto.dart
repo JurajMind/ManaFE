@@ -1,35 +1,34 @@
 part of openapi.api;
 
 class PlaceSimpleDto {
+  
   int id = null;
-
+  
   String name = null;
-
+  
   String shortDescriptions = null;
-
+  
   String friendlyUrl = null;
-
+  
   String logoPath = null;
-
+  
   AddressDto address = null;
-
+  
   List<BusinessHoursDto> businessHours = [];
-
+  
   int rating = null;
-
+  
   MediaDto media = null;
-
+  
   String phoneNumber = null;
-
+  
   String facebook = null;
-
+  
   bool haveMenu = null;
-
+  
   bool haveOrders = null;
-
+  
   bool haveMana = null;
-
-  bool haveReservation = null;
   PlaceSimpleDto();
 
   @override
@@ -53,7 +52,6 @@ class PlaceSimpleDto {
     haveMenu = json['HaveMenu'];
     haveOrders = json['HaveOrders'];
     haveMana = json['HaveMana'];
-    haveReservation = json['HaveReservation'];
   }
 
   Map<String, dynamic> toJson() {
@@ -76,17 +74,15 @@ class PlaceSimpleDto {
   }
 
   static List<PlaceSimpleDto> listFromJson(List<dynamic> json) {
-    return json == null
-        ? new List<PlaceSimpleDto>()
-        : json.map((value) => new PlaceSimpleDto.fromJson(value)).toList();
+    return json == null ? new List<PlaceSimpleDto>() : json.map((value) => new PlaceSimpleDto.fromJson(value)).toList();
   }
 
   static Map<String, PlaceSimpleDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, PlaceSimpleDto>();
     if (json != null && json.length > 0) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = new PlaceSimpleDto.fromJson(value));
+      json.forEach((String key, dynamic value) => map[key] = new PlaceSimpleDto.fromJson(value));
     }
     return map;
   }
 }
+

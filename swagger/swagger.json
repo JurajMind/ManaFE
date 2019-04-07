@@ -2832,6 +2832,36 @@
         }
       }
     },
+    "/api/SmokeSession/GetFinishedData": {
+      "get": {
+        "tags": [
+          "SmokeSession"
+        ],
+        "operationId": "SmokeSession_GetFinishedData",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/FinishedSessionDataDto"
+            }
+          }
+        }
+      }
+    },
     "/api/SmokeSession/GetPufs": {
       "get": {
         "tags": [
@@ -3901,8 +3931,12 @@
         "MetaData": {
           "$ref": "#/definitions/SmokeSessionMetaDataDto"
         },
-        "Place": {
-          "$ref": "#/definitions/PlaceSimpleDto"
+        "PlaceId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "PlaceName": {
+          "type": "string"
         }
       }
     },
@@ -4196,6 +4230,59 @@
         }
       }
     },
+    "SeatDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Code": {
+          "type": "string"
+        },
+        "Capacity": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "GamePictureDto": {
+      "type": "object",
+      "properties": {
+        "PictureUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "PersonInfoDto": {
+      "type": "object",
+      "properties": {
+        "DisplayName": {
+          "type": "string"
+        },
+        "Email": {
+          "type": "string"
+        },
+        "ManagedPlaces": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlaceSimpleDto"
+          }
+        },
+        "Roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "PersonId": {
+          "type": "string"
+        }
+      }
+    },
     "PlaceSimpleDto": {
       "type": "object",
       "properties": {
@@ -4245,33 +4332,6 @@
         },
         "HaveMana": {
           "type": "boolean"
-        }
-      }
-    },
-    "SeatDto": {
-      "type": "object",
-      "properties": {
-        "Id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Name": {
-          "type": "string"
-        },
-        "Code": {
-          "type": "string"
-        },
-        "Capacity": {
-          "format": "int32",
-          "type": "integer"
-        }
-      }
-    },
-    "GamePictureDto": {
-      "type": "object",
-      "properties": {
-        "PictureUrl": {
-          "type": "string"
         }
       }
     },
@@ -4357,32 +4417,6 @@
         "FileName": {
           "type": "string",
           "readOnly": true
-        }
-      }
-    },
-    "PersonInfoDto": {
-      "type": "object",
-      "properties": {
-        "DisplayName": {
-          "type": "string"
-        },
-        "Email": {
-          "type": "string"
-        },
-        "ManagedPlaces": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/PlaceSimpleDto"
-          }
-        },
-        "Roles": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "PersonId": {
-          "type": "string"
         }
       }
     },
@@ -4925,6 +4959,51 @@
         }
       }
     },
+    "FinishedSessionDataDto": {
+      "type": "object",
+      "properties": {
+        "MetaData": {
+          "$ref": "#/definitions/SmokeSessionMetaDataDto"
+        },
+        "Statistics": {
+          "$ref": "#/definitions/SmokeSessionStatisticsDto"
+        }
+      }
+    },
+    "SmokeSessionStatisticsDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "start": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "end": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "smokeDuration": {
+          "type": "string"
+        },
+        "longestPuf": {
+          "type": "string"
+        },
+        "pufCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "estimatedPersonCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "sessionDuration": {
+          "type": "string"
+        }
+      }
+    },
     "smartHookahModelsDbPuf": {
       "type": "object",
       "properties": {
@@ -5029,6 +5108,10 @@
         },
         "Owned": {
           "type": "boolean"
+        },
+        "InMix": {
+          "format": "int32",
+          "type": "integer"
         }
       }
     },

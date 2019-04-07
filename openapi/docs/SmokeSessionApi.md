@@ -9,6 +9,7 @@ All URIs are relative to *https://localhost:44324*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**smokeSessionGetFinishedData**](SmokeSessionApi.md#smokeSessionGetFinishedData) | **GET** /api/SmokeSession/GetFinishedData | 
 [**smokeSessionGetMetaData**](SmokeSessionApi.md#smokeSessionGetMetaData) | **GET** /api/SmokeSession/GetMetaData | 
 [**smokeSessionGetPufs**](SmokeSessionApi.md#smokeSessionGetPufs) | **GET** /api/SmokeSession/GetPufs | 
 [**smokeSessionGetSessionCode**](SmokeSessionApi.md#smokeSessionGetSessionCode) | **GET** /api/SmokeSession/GetSessionCode | 
@@ -16,6 +17,47 @@ Method | HTTP request | Description
 [**smokeSessionSaveMetaData**](SmokeSessionApi.md#smokeSessionSaveMetaData) | **POST** /api/SmokeSession/{id}/SaveMetaData | 
 [**smokeSessionValidate**](SmokeSessionApi.md#smokeSessionValidate) | **GET** /api/SmokeSession/Validate | 
 
+
+# **smokeSessionGetFinishedData**
+> FinishedSessionDataDto smokeSessionGetFinishedData(id)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new SmokeSessionApi();
+var id = 56; // int | 
+
+try { 
+    var result = api_instance.smokeSessionGetFinishedData(id);
+    print(result);
+} catch (e) {
+    print("Exception when calling SmokeSessionApi->smokeSessionGetFinishedData: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**|  | [default to null]
+
+### Return type
+
+[**FinishedSessionDataDto**](FinishedSessionDataDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **smokeSessionGetMetaData**
 > SmokeSessionMetaDataDto smokeSessionGetMetaData(id)

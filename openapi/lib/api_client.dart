@@ -57,6 +57,8 @@ class ApiClient {
           return Dto.fromJson(value);
         case 'DynamicSmokeStatisticRawDto':
           return DynamicSmokeStatisticRawDto.fromJson(value);
+        case 'FinishedSessionDataDto':
+          return FinishedSessionDataDto.fromJson(value);
         case 'FranchiseDto':
           return FranchiseDto.fromJson(value);
         case 'GamePictureDto':
@@ -153,6 +155,8 @@ class ApiClient {
           return SmokeSessionMetaDataDto.fromJson(value);
         case 'SmokeSessionSimpleDto':
           return SmokeSessionSimpleDto.fromJson(value);
+        case 'SmokeSessionStatisticsDto':
+          return SmokeSessionStatisticsDto.fromJson(value);
         case 'SmokeSessionTimeStatisticsDto':
           return SmokeSessionTimeStatisticsDto.fromJson(value);
         case 'TobaccoDto':
