@@ -129,7 +129,7 @@ class _CarrousselState extends State<MapCarousel> {
         }
       },
       child: Hero(
-        tag: '${place.id}_place',
+        tag: '${place.friendlyUrl}_place',
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: new Container(
@@ -148,7 +148,27 @@ class _CarrousselState extends State<MapCarousel> {
                   children: <Widget>[
                     new Text(
                       place.name,
-                      style: Theme.of(context).textTheme.display1,
+                      style:
+                          Theme.of(context).textTheme.display1.merge(TextStyle(
+                                shadows: [
+                                  Shadow(
+                                      // bottomLeft
+                                      offset: Offset(-1, -1),
+                                      color: Colors.black),
+                                  Shadow(
+                                      // bottomRight
+                                      offset: Offset(1, -1),
+                                      color: Colors.black),
+                                  Shadow(
+                                      // topRight
+                                      offset: Offset(1, 1),
+                                      color: Colors.black),
+                                  Shadow(
+                                      // topLeft
+                                      offset: Offset(-1, 1),
+                                      color: Colors.black),
+                                ],
+                              )),
                     ),
                     new Text(
                       Extensions.adress(place.address),

@@ -90,7 +90,7 @@ class PlaceDto {
     facebook = json['Facebook'];
     haveMenu = json['HaveMenu'];
     haveOrders = json['HaveOrders'];
-    haveMana = json['haveMana'];
+    haveMana = json['HaveMana'];
   }
 
   Map<String, dynamic> toJson() {

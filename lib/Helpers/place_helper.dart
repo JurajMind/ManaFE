@@ -5,7 +5,7 @@ import 'package:queries/collections.dart';
 class PlaceHelpers {
   static bool isOpen(PlaceSimpleDto place) {
     var today = Collection(place.businessHours)
-        .firstOrDefault((a) => a.day == DateTime.now().weekday);
+        .firstOrDefault((a) => a.day == (DateTime.now().weekday - 1));
     if (today == null) return null;
     if (today.openTine == null || today.closeTime == null) return false;
     var now = DateTime.now();

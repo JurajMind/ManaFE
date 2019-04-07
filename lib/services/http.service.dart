@@ -230,7 +230,7 @@ class ApiClient {
       "page": page.toString(),
       "pageSize": pageSize.toString(),
       "searchType": searchType,
-      // "type": type
+      "type": type
     });
 
     return _getJson(url).then((json) {
@@ -327,7 +327,7 @@ class ApiClient {
       int id, DateTime date) async {
     var url = Uri.https(baseUrl, '/api/Reservations/$id/Usage');
     var formatter = new DateFormat('yyyy-MM-dd');
-    String formatted = formatter.format(date);
+    String formatted = formatter.format(date ?? DateTime.now());
     return await _dio
         .get(url.toString(), queryParameters: {'date': formatted}).then((data) {
       return SmartHookahServicesPlaceReservationUsageDto.fromJson(data.data);

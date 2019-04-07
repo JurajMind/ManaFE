@@ -188,17 +188,23 @@ class _PlacesPageState extends State<PlacesPage> {
                     double.parse(f.address.lat), double.parse(f.address.lng)))
                 .toList();
           }
-          var staticMapUri = staticMapProvider.getStaticUriWithMarkers(markers,
-              zoomLevel: 14,
-              center: myUserLocation,
-              width: MediaQuery.of(context).size.width.round(),
-              height: height.round(),
-              maptype: StaticMapViewType.roadmap);
 
-          return StreamBuilder(
+          return StreamBuilder<Position>(
               stream: placesBloc.location,
               initialData: null,
               builder: (context, snapshot) {
+                if (snapshot.data == null) {
+                  return CircularProgressIndicator();
+                }
+                var staticMapUri = staticMapProvider.getStaticUriWithMarkers(
+                    markers,
+                    zoomLevel: 14,
+                    center: new Location(
+                        snapshot.data.latitude, snapshot.data.longitude),
+                    width: MediaQuery.of(context).size.width.round(),
+                    height: height.round(),
+                    maptype: StaticMapViewType.roadmap);
+
                 return snapshot.data == null
                     ? CircularProgressIndicator()
                     : InkWell(

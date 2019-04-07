@@ -66,14 +66,11 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Hero(
-                      tag: place.friendlyUrl,
-                      child: Text(
-                        Extensions.adress(place.address),
-                        style: TextStyle(
-                          fontSize: 15.0,
-                          color: Colors.white,
-                        ),
+                    Text(
+                      Extensions.adress(place.address),
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        color: Colors.white,
                       ),
                     ),
                     new StarRating(
@@ -102,6 +99,26 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                 maxLines: 2,
                 overflow: TextOverflow.fade,
                 textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.display1.merge(TextStyle(
+                      shadows: [
+                        Shadow(
+                            // bottomLeft
+                            offset: Offset(-1, -1),
+                            color: Colors.black),
+                        Shadow(
+                            // bottomRight
+                            offset: Offset(1, -1),
+                            color: Colors.black),
+                        Shadow(
+                            // topRight
+                            offset: Offset(1, 1),
+                            color: Colors.black),
+                        Shadow(
+                            // topLeft
+                            offset: Offset(-1, 1),
+                            color: Colors.black),
+                      ],
+                    )),
               ),
             ),
             centerTitle: true,
@@ -254,6 +271,7 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
   }
 
   void _openAddEntryDialog() {
+    placeBloc.loadReservationInfo(DateTime.now());
     Navigator.of(context).push(new MaterialPageRoute<Null>(
         builder: (BuildContext context) {
           return new ReservationPage(
@@ -279,10 +297,10 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
 
 class DisabledChip extends StatelessWidget {
   final IconData icon;
-  final bool disabled;
+  final bool enable;
   const DisabledChip(
     this.icon,
-    this.disabled, {
+    this.enable, {
     Key key,
   }) : super(key: key);
 
@@ -291,7 +309,7 @@ class DisabledChip extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Chip(
-        backgroundColor: disabled ?? false ? Colors.blue : Colors.grey,
+        backgroundColor: enable ?? false ? Colors.blue : Colors.grey,
         label: Icon(
           icon,
           color: Colors.grey[200],

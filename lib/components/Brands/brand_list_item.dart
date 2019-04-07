@@ -26,7 +26,10 @@ class BrandListItem extends StatelessWidget {
           gearBloc.loadBrandAccesory(brand.name, brandType ?? "Tobacco");
           Navigator.of(context)
               .push(new MaterialPageRoute(builder: (BuildContext context) {
-            return new BrandPage(brand: brand);
+            return new BrandPage(
+              brand: brand,
+              type: brandType,
+            );
           }));
         },
         trailing: Icon(Icons.chevron_right),
@@ -34,7 +37,7 @@ class BrandListItem extends StatelessWidget {
             height: 60.0,
             width: 60.0,
             child: Hero(
-                tag: '${brand.itemCount}_brand_picture',
+                tag: '${brand.name}_${brandType}_brand_picture',
                 child: Extensions.brandPicture(brand))),
         title:
             Text(this.brand.name, style: Theme.of(context).textTheme.display2),

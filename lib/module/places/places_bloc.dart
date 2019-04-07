@@ -30,29 +30,33 @@ class PlacesBloc {
   Future loadPlaces() async {
     Geolocator()
         .getLastKnownPosition(desiredAccuracy: LocationAccuracy.low)
-        .then((value) {
+        .then((value) async {
       if (value != null) {
         location.add(value);
+        await _loadPlaces();
       }
     });
     loadPlacesFromCache();
 
-    double lat = -200;
-    double lng = -200;
-    if (location.value != null) {
-      lat = location.value.latitude;
-      lng = location.value.longitude;
-    }
+    Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((value) {
+      this.location.add(value);
+      _loadPlaces();
+    });
+  }
+
+  Future _loadPlaces() async {
+    if (location.value == null) return;
+    var lat = location.value.latitude;
+    var lng = location.value.longitude;
+
     App.http.getNearbyPlaces(lat: lat, lng: lng).then((places) async {
       this.places.add(places);
       var db = await App.cache.getDatabase();
       var key = await db.put(json.encode(places), 'places');
       this.loading.add(false);
     });
-
-    Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((value) => {this.location.add(value)});
   }
 
   Future loadPlacesFromCache() async {

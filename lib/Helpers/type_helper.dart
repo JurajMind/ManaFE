@@ -11,5 +11,9 @@ PlaceSimpleDto toSimpePlace(PlaceDto place) {
   result.phoneNumber = place.phoneNumber;
   result.businessHours = place.businessHours;
   result.address = place.address;
+  result.haveMana = place.haveMana;
+  result.haveMenu = place.haveMenu;
+  result.haveOrders = place.haveOrders;
+  result.haveReservation = place.haveReservation;
   return result;
 }

@@ -114,11 +114,17 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
     return StreamBuilder<List<PipeAccesorySimpleDto>>(
         stream: searchResult,
         initialData: new List<PipeAccesorySimpleDto>(),
-        builder: (context, snapshot) => new ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) =>
-                  _createResult(index, snapshot.data[index], context),
-            ));
+        builder: (context, snapshot) {
+          if (snapshot.data.length == 0) {
+            return Center(child: Text('No result'));
+          }
+
+          return new ListView.builder(
+            itemCount: snapshot.data.length,
+            itemBuilder: (context, index) =>
+                _createResult(index, snapshot.data[index], context),
+          );
+        });
   }
 
   Widget buildDefault() {

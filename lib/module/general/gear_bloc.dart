@@ -43,8 +43,8 @@ class GearBloc {
   String loadedType;
   loadBrandAccesory(String brand, String type) async {
     brandAccesory.add(null);
-    var accesory =
-        await App.http.searchGear(brand, type, 0, 1000, searchType: "Brand");
+    var accesory = await App.http
+        .searchGear(brand.trim(), type, 0, 1000, searchType: "Brand");
     brandAccesory.add(accesory);
   }
 

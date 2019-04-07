@@ -129,52 +129,68 @@ class _CarrousselState extends State<Carroussel> {
           navigateToDetail(place);
         }
       },
-      child: Hero(
-        tag: '${place.friendlyUrl}_place',
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: new Container(
-              decoration: BoxDecoration(
-                  borderRadius: new BorderRadius.circular(10.0),
-                  color: Colors.grey[300],
-                  image: DecorationImage(
-                      image: CachedNetworkImageProvider(
-                          Extensions.getPlaceImage(place)),
-                      fit: BoxFit.cover)),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    new Text(
-                      place.name,
-                      style: Theme.of(context).textTheme.display1,
-                    ),
-                    new Text(
-                      Extensions.adress(place.address),
-                      style: new TextStyle(color: Colors.grey),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        new Flex(
-                          direction: Axis.horizontal,
-                          children: <Widget>[
-                            new Icon(ManaIcons.hookah),
-                            new Text(place.rating.toString()),
-                          ],
-                        ),
-                        new OpenIndicator(
-                          place: place,
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              )),
-        ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: new Container(
+            decoration: BoxDecoration(
+                borderRadius: new BorderRadius.circular(10.0),
+                color: Colors.grey[300],
+                image: DecorationImage(
+                    image: CachedNetworkImageProvider(
+                        Extensions.getPlaceImage(place)),
+                    fit: BoxFit.cover)),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  new Text(place.name,
+                      style: Theme.of(context).textTheme.display1.merge(
+                            TextStyle(
+                              shadows: [
+                                Shadow(
+                                    // bottomLeft
+                                    offset: Offset(-1, -1),
+                                    color: Colors.black),
+                                Shadow(
+                                    // bottomRight
+                                    offset: Offset(1, -1),
+                                    color: Colors.black),
+                                Shadow(
+                                    // topRight
+                                    offset: Offset(1, 1),
+                                    color: Colors.black),
+                                Shadow(
+                                    // topLeft
+                                    offset: Offset(-1, 1),
+                                    color: Colors.black),
+                              ],
+                            ),
+                          )),
+                  new Text(
+                    Extensions.adress(place.address),
+                    style: new TextStyle(color: Colors.grey),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      new Flex(
+                        direction: Axis.horizontal,
+                        children: <Widget>[
+                          new Icon(ManaIcons.hookah),
+                          new Text(place.rating.toString()),
+                        ],
+                      ),
+                      new OpenIndicator(
+                        place: place,
+                      )
+                    ],
+                  )
+                ],
+              ),
+            )),
       ),
     );
   }
