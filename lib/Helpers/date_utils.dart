@@ -174,4 +174,30 @@ class DateUtils {
     var minuts = duration.inMinutes % 60;
     return '${minuts == 0 ? "" : minuts.toString() + ":"}${duration.inSeconds % 100}';
   }
+
+  static Duration stringToDuration(String sDuration) {
+    var chunks = sDuration.split(':');
+    var parts = chunks.map((f) {
+      if (f.startsWith('0')) {
+        return int.parse(f[1]);
+      }
+      return int.parse(f);
+    }).toList();
+    return new Duration(hours: parts[0], minutes: parts[1], seconds: parts[2]);
+  }
+
+  static Duration parseDuration(String s) {
+    int hours = 0;
+    int minutes = 0;
+    int micros;
+    List<String> parts = s.split(':');
+    if (parts.length > 2) {
+      hours = int.parse(parts[parts.length - 3]);
+    }
+    if (parts.length > 1) {
+      minutes = int.parse(parts[parts.length - 2]);
+    }
+    micros = (double.parse(parts[parts.length - 1]) * 1000000).round();
+    return Duration(hours: hours, minutes: minutes, microseconds: micros);
+  }
 }

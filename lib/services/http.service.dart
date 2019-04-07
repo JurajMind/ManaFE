@@ -436,6 +436,21 @@ class ApiClient {
     var url = Uri.https(baseUrl, '/api/Reservations/$id/UpdateState');
     return await _dio.post(url.toString(), data: 1);
   }
+
+  Future<List<SmartHookahModelsDbPuf>> getPufs(int id) async {
+    var url =
+        Uri.https(baseUrl, '/api/SmokeSession/GetPufs', {'id': id.toString()});
+    return await _dio.getUri(url).then(
+        (data) => SmartHookahModelsDbPuf.listFromJson(data.data).toList());
+  }
+
+  Future<FinishedSessionDataDto> getFinishedData(int id) async {
+    var url = Uri.https(
+        baseUrl, '/api/SmokeSession/GetFinishedData', {'id': id.toString()});
+    return await _dio
+        .getUri(url)
+        .then((data) => FinishedSessionDataDto.fromJson(data.data));
+  }
 }
 
 class ColorDto {

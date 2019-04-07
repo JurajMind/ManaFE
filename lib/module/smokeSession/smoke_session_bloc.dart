@@ -370,17 +370,6 @@ class PuffChangeDataModel extends SignalData {
   }
 }
 
-Duration stringToDuration(String sDuration) {
-  var chunks = sDuration.split(':');
-  var parts = chunks.map((f) {
-    if (f.startsWith('0')) {
-      return int.parse(f[1]);
-    }
-    return int.parse(f);
-  }).toList();
-  return new Duration(hours: parts[0], minutes: parts[1], seconds: parts[2]);
-}
-
 abstract class SignalData {
   SignalData(List<dynamic> data);
 }

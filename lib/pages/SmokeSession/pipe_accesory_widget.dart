@@ -36,21 +36,24 @@ class PipeAccesoryWidget extends StatelessWidget {
                 : Text('No data'),
             flex: 2,
           ),
-          IconButton(
-              icon: Icon(Icons.add_box),
-              onPressed: () async {
-                showModalBottomSheet<void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Theme(
-                              data: Theme.of(context).copyWith(canvasColor: Colors.teal),
-                                              child: new MetadataBottomSheet(
-                            dataProvider: this.dataProvider),
-                      );
-                    }).then((value) {
-                  this.dataProvider.smokeSessionBloc.saveMetaData();
-                });
-              })
+          this.dataProvider == null
+              ? Container()
+              : IconButton(
+                  icon: Icon(Icons.add_box),
+                  onPressed: () async {
+                    showModalBottomSheet<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Theme(
+                            data: Theme.of(context)
+                                .copyWith(canvasColor: Colors.teal),
+                            child: new MetadataBottomSheet(
+                                dataProvider: this.dataProvider),
+                          );
+                        }).then((value) {
+                      this.dataProvider.smokeSessionBloc.saveMetaData();
+                    });
+                  })
         ],
       ),
     );

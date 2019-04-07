@@ -1,17 +1,18 @@
 part of openapi.api;
 
 class SmokeSessionSimpleDto {
-  
+  int id = null;
+
   String sessionId = null;
-  
+
   DeviceSimpleDto device = null;
-  
+
   DynamicSmokeStatisticRawDto statistic = null;
-  
+
   SmokeSessionMetaDataDto metaData = null;
-  
+
   int placeId = null;
-  
+
   String placeName = null;
   SmokeSessionSimpleDto();
 
@@ -22,6 +23,7 @@ class SmokeSessionSimpleDto {
 
   SmokeSessionSimpleDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
+    id = json['Id'];
     sessionId = json['SessionId'];
     device = new DeviceSimpleDto.fromJson(json['Device']);
     statistic = new DynamicSmokeStatisticRawDto.fromJson(json['Statistic']);
@@ -42,15 +44,20 @@ class SmokeSessionSimpleDto {
   }
 
   static List<SmokeSessionSimpleDto> listFromJson(List<dynamic> json) {
-    return json == null ? new List<SmokeSessionSimpleDto>() : json.map((value) => new SmokeSessionSimpleDto.fromJson(value)).toList();
+    return json == null
+        ? new List<SmokeSessionSimpleDto>()
+        : json
+            .map((value) => new SmokeSessionSimpleDto.fromJson(value))
+            .toList();
   }
 
-  static Map<String, SmokeSessionSimpleDto> mapFromJson(Map<String, dynamic> json) {
+  static Map<String, SmokeSessionSimpleDto> mapFromJson(
+      Map<String, dynamic> json) {
     var map = new Map<String, SmokeSessionSimpleDto>();
     if (json != null && json.length > 0) {
-      json.forEach((String key, dynamic value) => map[key] = new SmokeSessionSimpleDto.fromJson(value));
+      json.forEach((String key, dynamic value) =>
+          map[key] = new SmokeSessionSimpleDto.fromJson(value));
     }
     return map;
   }
 }
-
