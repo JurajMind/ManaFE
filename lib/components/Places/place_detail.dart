@@ -37,7 +37,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               new LeadingIcon(
-                  color: isOpen ? Colors.green : Colors.red,
+                  color: getColor(),
                   icon: Icons.watch,
                   child: OpenDropdown(place: widget.place)),
               widget.place.phoneNumber != null
@@ -65,5 +65,12 @@ class _PlaceInfoState extends State<PlaceInfo> {
                   : Container(),
             ],
           );
+  }
+
+  MaterialColor getColor() {
+    if (isOpen == null) {
+      return Colors.grey;
+    }
+    return isOpen ? Colors.green : Colors.red;
   }
 }
