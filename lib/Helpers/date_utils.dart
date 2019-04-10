@@ -170,6 +170,10 @@ class DateUtils {
     return '${duration.inHours}:${duration.inMinutes % 60}:${duration.inSeconds % 100}';
   }
 
+  static String toSecondDuration(Duration duration) {
+    return '${duration.inSeconds % 100}.${duration.inMilliseconds & 1000} sec.';
+  }
+
   static String toShortStringDuration(Duration duration) {
     var minuts = duration.inMinutes % 60;
     return '${minuts == 0 ? "" : minuts.toString() + ":"}${duration.inSeconds % 100}';
