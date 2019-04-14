@@ -196,7 +196,7 @@ class DateUtils {
     int micros;
     List<String> parts = s.split(':');
     if (parts.length > 2) {
-      hours = int.parse(parts[parts.length - 3]);
+      hours = double.parse(parts[parts.length - 3]).toInt();
     }
     if (parts.length > 1) {
       minutes = int.parse(parts[parts.length - 2]);

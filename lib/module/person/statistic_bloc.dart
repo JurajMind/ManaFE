@@ -41,7 +41,10 @@ class StatisticBloc {
 
     var recap = this.getStatsRecap(result.smokeSessions);
     this.recap.add(recap);
-    this.smokeSessions.add(result.smokeSessions);
+    var ordered = new Collection(result.smokeSessions)
+        .orderBy((s) => s.statistic.start)
+        .toList();
+    this.smokeSessions.add(ordered);
     this.gearUsage.add(result.accessoriesUsage);
   }
 

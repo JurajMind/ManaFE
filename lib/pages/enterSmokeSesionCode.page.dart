@@ -5,6 +5,7 @@ import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Common/circle_painter.dart';
 import 'package:app/components/SmokeSession/smoke_session_carousel.dart';
 import 'package:app/Helpers/helpers.dart';
+import 'package:app/module/data_provider.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/services/http.service.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +20,24 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
   final double topWidgetHeight = 200.0;
   String _sessionCode;
   final _formKey = GlobalKey<FormState>();
-  final myController = TextEditingController(text: 'VV49Y');
+  final myController = TextEditingController();
   final ApiClient apiClient = App.http;
   bool validating = false;
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    new Future.delayed(Duration.zero, () {
+      var bloc = DataProvider.getData(context).personBloc;
+      bloc.loadSessions();
+      var sessionBloc = DataProvider.getData(context).smokeSessionBloc;
+      setState(() {
+        myController.text = sessionBloc.lastSession.value;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

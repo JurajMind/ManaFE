@@ -45,8 +45,7 @@ class SmokeSessionBloc {
     return this.smokeState.asBroadcastStream();
   }
 
-  BehaviorSubject<List<String>> recentSessions =
-      new BehaviorSubject<List<String>>.seeded(new List<String>());
+  BehaviorSubject<String> lastSession = new BehaviorSubject<String>();
 
   BehaviorSubject<SmokeSessionMetaDataDto> smokeSessionMetaData =
       new BehaviorSubject<SmokeSessionMetaDataDto>.seeded(
@@ -155,9 +154,7 @@ class SmokeSessionBloc {
     List<String> params = new List<String>();
     params.add(sessionCode);
     this.signalR.callServerFunction(name: 'JoinSession', params: params);
-    var list = new List<String>.from(recentSessions.value);
-    list.add(sessionCode);
-    //recentSessions.add(list);
+    lastSession.add(sessionCode);
     await loadSessionData();
   }
 

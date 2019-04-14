@@ -258,6 +258,12 @@ class ApiClient {
     return _getJson(url).then((data) => PersonActiveDataDto.fromJson(data));
   }
 
+  Future<List<SmokeSessionSimpleDto>> getPersonSessions() async {
+    var url = Uri.https(baseUrl, 'api/Person/Sessions');
+    return _getJson(url)
+        .then((data) => SmokeSessionSimpleDto.listFromJson(data));
+  }
+
   Future<SmokeSessionMetaDataDto> postMetadata(
       String sessionCode, SmokeSessionMetaDataDto value) async {
     var url =

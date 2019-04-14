@@ -8,6 +8,7 @@ import 'package:app/module/person/statistic_bloc.dart';
 import 'package:app/pages/Places/places_map_page.dart';
 import 'package:app/pages/Settings/language_selector_page.dart';
 import 'package:app/pages/Statistic/Components/gear_usage_item.dart';
+import 'package:app/pages/Statistic/all_statistic_page.dart';
 import 'package:app/pages/Statistic/test_page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/support/mana_icons_icons.dart';
@@ -247,6 +248,7 @@ class _StatisticPageState extends State<StatisticPage> {
           if (snapshot.data == null) {
             return Placeholder();
           }
+
           List<Widget> sessions = snapshot.data
               .map((f) {
                 return SmokeSessionListItem(session: f);
@@ -263,8 +265,9 @@ class _StatisticPageState extends State<StatisticPage> {
               ),
               label: Text('All sessions (${snapshot.data.length})'),
               onPressed: () async {
-                var auth = new Authorize();
-                auth.messToken();
+                Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (context) =>
+                        AllStatisticPage(seed: snapshot.data)));
               },
             ),
           );
@@ -423,7 +426,7 @@ class _StatisticPageState extends State<StatisticPage> {
                       child: new charts.BarChart(
                         _createSampleData(seriesList, (f, i) {
                           var day = getShortDayName(int.parse(f) + 1, context);
-                          return new OrdinalSales(day, i);
+                          return new ChartData(day, i);
                         }),
                         animate: true,
                       ),
@@ -460,7 +463,7 @@ class _StatisticPageState extends State<StatisticPage> {
                     Expanded(
                       child: new charts.BarChart(
                         _createSampleData(seriesList, (f, i) {
-                          return new OrdinalSales(f, i, order: int.parse(f));
+                          return new ChartData(f, i, order: int.parse(f));
                         }),
                         animate: true,
                       ),
@@ -473,9 +476,9 @@ class _StatisticPageState extends State<StatisticPage> {
     );
   }
 
-  static List<charts.Series<OrdinalSales, String>> _createSampleData(
+  static List<charts.Series<ChartData, String>> _createSampleData(
       Map<String, int> imput, Function funct) {
-    var convertedData = new List<OrdinalSales>();
+    var convertedData = new List<ChartData>();
     imput.forEach((f, i) {
       convertedData.add(funct(f, i));
     });
@@ -484,7 +487,7 @@ class _StatisticPageState extends State<StatisticPage> {
         .orderBy((keySelector) => keySelector.order);
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      new charts.Series<ChartData, String>(
           id: 'Sales',
           colorFn: (data, __) {
             if (data.sales > 4) {
@@ -492,19 +495,19 @@ class _StatisticPageState extends State<StatisticPage> {
             }
             return charts.MaterialPalette.green.shadeDefault;
           },
-          domainFn: (OrdinalSales sales, _) => sales.label,
-          measureFn: (OrdinalSales sales, _) => sales.sales,
+          domainFn: (ChartData sales, _) => sales.label,
+          measureFn: (ChartData sales, _) => sales.sales,
           data: ordered.toList())
     ];
   }
 }
 
-class OrdinalSales {
+class ChartData {
   final String label;
   final int order;
   final int sales;
 
-  OrdinalSales(this.label, this.sales, {this.order = 0});
+  ChartData(this.label, this.sales, {this.order = 0});
 }
 
 class TimeSelect extends StatelessWidget {

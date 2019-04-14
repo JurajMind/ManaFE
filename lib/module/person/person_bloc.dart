@@ -102,6 +102,11 @@ class PersonBloc extends SignalBloc {
     } catch (e) {}
   }
 
+  loadSessions() async {
+    var sessions = await App.http.getPersonSessions();
+    this.smokeSessions.add(sessions);
+  }
+
   void handleDeviceOnline(List<dynamic> incomingData) {
     var data = new DeviceOnline.fromSignal(incomingData);
     var smokeSession = new SmokeSessionSimpleDto();

@@ -26,7 +26,7 @@ class _OpenIndicatorState extends State<OpenIndicator> {
   @override
   Widget build(BuildContext context) {
     var s = widget.size ?? new Size.fromRadius(15);
-    if (widget.place.businessHours.length == 0) {
+    if (widget.place.businessHours.length == 0 || isOpen == null) {
       return Container(
         height: s.height,
         width: s.width,

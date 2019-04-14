@@ -4,9 +4,10 @@ import 'package:queries/collections.dart';
 
 class PlaceHelpers {
   static bool isOpen(PlaceSimpleDto place) {
+    if (place.businessHours.length == 0) return null;
     var today = Collection(place.businessHours)
         .firstOrDefault((a) => a.day == (DateTime.now().weekday - 1));
-    if (today == null) return null;
+    if (today == null) return false;
     if (today.openTine == null || today.closeTime == null) return false;
     var now = DateTime.now();
     final DateFormat df = new DateFormat('HH:mm:ss');
