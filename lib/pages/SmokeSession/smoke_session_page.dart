@@ -5,6 +5,7 @@ import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/pages/SmokeSession/Experimental/experimental_page.dart';
 import 'package:app/pages/SmokeSession/animation_list.dart';
 import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
 import 'package:app/pages/SmokeSession/pipe_accesory_widget.dart';
@@ -15,6 +16,7 @@ import 'package:app/pages/home.page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:openapi/api.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SmokeSessionPage extends StatefulWidget {
   final String sessionId;
@@ -227,6 +229,18 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                             height: 40.0,
                             width: (MediaQuery.of(context).size.width) * 0.8,
                           ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: new RoundedButton(
+                            child: Text('MORE'),
+                            onTap: () => showMoreModal(),
+                            buttonColor: Colors.transparent,
+                            borderWidth: 1.0,
+                            bottomMargin: 1.0,
+                            height: 40.0,
+                            width: (MediaQuery.of(context).size.width) * 0.8,
+                          ),
                         )
                       ],
                     ),
@@ -287,6 +301,36 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         }).then((value) {
       this.dataProvider.smokeSessionBloc.saveMetaData();
     });
+  }
+
+  void showMoreModal() {
+    showModalBottomSheet<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            height: 220,
+            child: new Column(
+              children: <Widget>[
+                new ListTile(
+                  leading: new Icon(FontAwesomeIcons.powerOff),
+                  title: new Text('End session'),
+                  onTap: () => {},
+                ),
+                new ListTile(
+                  leading: new Icon(Icons.refresh),
+                  title: new Text('Restart stand'),
+                  onTap: () => {},
+                ),
+                new ListTile(
+                  leading: new Icon(FontAwesomeIcons.vial),
+                  title: new Text('Experiments'),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ExperimentalPage())),
+                ),
+              ],
+            ),
+          );
+        }).then((value) {});
   }
 }
 

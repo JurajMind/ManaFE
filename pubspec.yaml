@@ -43,6 +43,7 @@ dependencies:
   firebase_messaging: ^4.0.0+1
   charts_flutter: ^0.6.0
   flutter_section_table_view: ^1.0.3
+  shake: ^0.1.0
 
 flutter_icons:
   android: true
