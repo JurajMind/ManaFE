@@ -80,9 +80,9 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         }
         return Column(
           children: <Widget>[
-            TobaccoWidget(
+            TobaccoSessionWidget(
               tobacco: asyncSnapshot.data.tobacco,
-              tobacoMix: asyncSnapshot.data.tobaccoMix,
+              tobaccoMix: asyncSnapshot.data.tobaccoMix,
               smokeSessionBloc: dataProvider.smokeSessionBloc,
             )
           ],

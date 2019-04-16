@@ -1,4 +1,5 @@
 import 'package:app/models/extensions.dart';
+import 'package:app/pages/Gear/pipe_accesory_page.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'dart:math' as math;
@@ -46,21 +47,27 @@ class GearUsageItem extends StatelessWidget {
                   var style = Theme.of(context).textTheme.display2;
                   return Padding(
                     padding: const EdgeInsets.all(4.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
-                          borderRadius: BorderRadius.circular(16.0)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(children: <Widget>[
-                          Expanded(
-                              flex: 4,
-                              child: Text("${item.brandName} ${item.accName}",
-                                  style: style)),
-                          Expanded(
-                              flex: 1,
-                              child: Text("${item.used} x", style: style)),
-                        ]),
+                    child: InkWell(
+                              onTap: () => Navigator.of(context)
+                .push(new MaterialPageRoute(builder: (BuildContext context) {
+              return new PipeAccesoryPage(pipeAccesory: null);
+            })),
+                                          child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(16.0)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(children: <Widget>[
+                            Expanded(
+                                flex: 4,
+                                child: Text("${item.brandName} ${item.accName}",
+                                    style: style)),
+                            Expanded(
+                                flex: 1,
+                                child: Text("${item.used} x", style: style)),
+                          ]),
+                        ),
                       ),
                     ),
                   );
