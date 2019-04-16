@@ -70,10 +70,16 @@ class Extensions {
       case 'Coal':
         imgPath = 'images/types/coal.png';
         break;
+      case 'Coals':
+        imgPath = 'images/types/coal.png';
+        break;
       case 'HeatManagement':
         imgPath = 'images/types/heatmanagment.png';
         break;
       case 'HeatManagment':
+        imgPath = 'images/types/heatmanagment.png';
+        break;
+      case 'H.M.S':
         imgPath = 'images/types/heatmanagment.png';
         break;
       case 'Tobacco':

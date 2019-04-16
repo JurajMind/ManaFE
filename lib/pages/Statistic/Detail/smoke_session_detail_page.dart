@@ -1,5 +1,6 @@
 import 'package:app/Helpers/date_utils.dart';
 import 'package:app/app/app.dart';
+import 'package:app/components/SmokeSession/tobacco_widget.dart';
 import 'package:app/models/SmokeSession/puf_type.dart';
 import 'package:app/pages/SmokeSession/pipe_accesory_widget.dart';
 import 'package:app/pages/Statistic/Detail/detail_page_helper.dart';
@@ -117,6 +118,10 @@ class SessionMetadataDetail extends StatelessWidget {
         Center(
           child: Text('Metadata', style: Theme.of(context).textTheme.display1),
         ),
+                    TobaccoWidget(
+              tobacco: metaData.tobacco,
+              tobaccoMix: metaData.tobaccoMix,
+            ),
         PipeAccesoryWidget(
           accesory: metaData.pipe,
           type: 'Pipe',
@@ -361,9 +366,9 @@ class SmokeDurationGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var inMilis = this.inDurations.sum$1((s) => s.inMilliseconds).toInt();
-    var outMilis = this.outDurations.sum$1((s) => s.inMilliseconds).toInt();
-    var idleMilis = this.idleDurations.sum$1((s) => s.inMilliseconds).toInt();
+    var inMilis = this.inDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0;
+    var outMilis = this.outDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0;
+    var idleMilis = this.idleDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0;
     Map<String, int> data = new Map<String, int>();
     data['Pufs'] = inMilis;
     data['Blows'] = outMilis;

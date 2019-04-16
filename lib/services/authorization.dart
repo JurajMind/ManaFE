@@ -37,7 +37,7 @@ class Authorize {
     }
 
     final responseJson = json.decode(response.body);
-    return await writeToken(responseJson)  != null;
+    return await writeToken(responseJson) != null;
   }
 
   Future<String> getToken() async {
@@ -76,13 +76,13 @@ class Authorize {
 // TODO
   messToken() async {
     _token = "token";
-    await _storage.write(key: 'accessToken',value:'token');
+    await _storage.write(key: 'accessToken', value: 'token');
   }
 
   Future<String> refreshToken() async {
     var refreshToken = await _storage.read(key: 'refreshToken');
-    await _storage.delete(key: 'accessToken');
-    await _storage.delete(key: 'refreshToken');
+    // await _storage.delete(key: 'accessToken');
+    // await _storage.delete(key: 'refreshToken');
     _token = null;
     final response = await http.post(
       url,
@@ -95,11 +95,11 @@ class Authorize {
     final responseJson = json.decode(response.body);
 
     var success = await writeToken(responseJson);
-    if (success!= null) {
+    if (success != null) {
       return success;
     }
 
-    AppWidget.restartApp(scaffoldKey.currentContext);    
+    AppWidget.restartApp(scaffoldKey.currentContext);
     return null;
   }
 

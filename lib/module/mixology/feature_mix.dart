@@ -1,7 +1,6 @@
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mixology_list.dart';
-import 'package:app/module/mixology/mixology_page_new.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';

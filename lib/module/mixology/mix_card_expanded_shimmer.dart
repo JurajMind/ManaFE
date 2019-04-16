@@ -9,11 +9,11 @@ class MixCardExpandedShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[400],
-      highlightColor: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey[400],
+        highlightColor: Colors.white,
         child: new Column(
           children: <Widget>[
             Row(
