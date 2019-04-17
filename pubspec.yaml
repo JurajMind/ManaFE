@@ -44,6 +44,7 @@ dependencies:
   charts_flutter: ^0.6.0
   flutter_section_table_view: ^1.0.3
   shake: ^0.1.0
+  wave: ^0.0.8
 
 flutter_icons:
   android: true

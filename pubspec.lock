@@ -514,7 +514,7 @@ packages:
       name: sembast
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.15.1"
+    version: "1.15.2"
   sensors:
     dependency: transitive
     description:
@@ -753,6 +753,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.7+10"
+  wave:
+    dependency: "direct main"
+    description:
+      name: wave
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.8"
   web_socket_channel:
     dependency: "direct main"
     description:
