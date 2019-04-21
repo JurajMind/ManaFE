@@ -180,6 +180,7 @@ class _HomePageState extends State<HomePage> {
           }
         },
         child: new SafeArea(
+            key: scaffoldKey,
             top: false,
             child: Stack(children: <Widget>[
               _buildBody(),

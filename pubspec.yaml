@@ -33,7 +33,7 @@ dependencies:
   shimmer: ^1.0.0
   date_format: ^1.0.6
   lazy_load_scrollview: ^0.0.2
-  material_design_icons_flutter: 3.1.3493
+  material_design_icons_flutter: ^3.2.3595
   queries: ^0.1.9
   sliver_fab: '^1.0.0'
   font_awesome_flutter: ^8.4.0

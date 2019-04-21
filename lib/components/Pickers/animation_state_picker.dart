@@ -6,6 +6,7 @@ import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/picker_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:vibrate/vibrate.dart';
 
 class AnimationStatePicker extends StatefulWidget {
@@ -154,8 +155,8 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
                     markCount: 12,
                     positiveColor: AppColors.colors[2],
                     negativeColor: AppColors.colors[3],
-                    positiveIcon: Icons.brightness_low,
-                    negativeIcon: Icons.brightness_high,
+                    positiveIcon: FontAwesomeIcons.moon,
+                    negativeIcon: FontAwesomeIcons.sun,
                     minValue: 0.0,
                     maxValue: 255.0,
                     initValue: setting.brightness + 0.0,
