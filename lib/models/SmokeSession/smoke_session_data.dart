@@ -40,6 +40,7 @@ class SmokeStatisticDataModel extends SignalData {
       longestPuf = new Duration(milliseconds: parsed.longestPufMilis);
       lastPuf = parsed.lastPuf / 10000000;
       duration = new Duration(milliseconds: parsed.duration);
+      smokeDuration = new Duration(milliseconds: parsed.smokeDuration);
       start = DateTime.fromMillisecondsSinceEpoch(parsed.start);
     } catch (e) {}
   }

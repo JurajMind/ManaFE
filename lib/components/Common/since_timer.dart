@@ -13,13 +13,13 @@ class SinceTimer extends StatefulWidget {
 
 class _SinceTimerState extends State<SinceTimer> {
   Timer _timer;
-  String text;
+  String text = "";
 
   @override
   void initState() {
     const oneSec = const Duration(seconds: 1);
     _timer = new Timer.periodic(oneSec, (timer) {
-      var diference = DateTime.now().difference(widget.start);
+      var diference = DateTime.now().difference(widget.start ?? DateTime.now());
       var stringDurations = DateUtils.toStringDuration(diference);
       setState(() {
         text = stringDurations;
@@ -36,6 +36,7 @@ class _SinceTimerState extends State<SinceTimer> {
 
   @override
   dispose() {
+    _timer.cancel();
     super.dispose();
   }
 }

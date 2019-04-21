@@ -108,7 +108,7 @@ class SignalR {
     try {
       _channel = new IOWebSocketChannel.connect(chanelUlr);
       _channel.stream.listen((message) async {
-        print('From signal ' + message);
+        print('From signal reconected ' + message);
         if (message == "{}") {
           // ping msg
           lastPing = DateTime.now();
