@@ -60,7 +60,7 @@ TextTheme _buildTextTheme(TextTheme base) {
 
 class AppColors {
   static const Color scafBg = Colors.black;
-  static const Color blue = Colors.blue;
+  static const Color blue = const Color.fromARGB(0, 31, 3, 255);
   static const Color blueLight = Colors.lightBlue;
   static const Color black = Colors.black;
   static const Color bgBlack = const Color(0xFF202124);
@@ -68,9 +68,9 @@ class AppColors {
   static const Color gray = Colors.grey;
   static const Color green = Colors.green;
   static const List<Color> colors = [
-    Colors.red,
-    Colors.blue,
-    Colors.yellow,
-    Colors.pink
+    const Color.fromARGB(255, 31, 3, 255),
+    const Color.fromARGB(255, 25, 247, 173),
+    const Color.fromARGB(255, 244, 28, 244),
+    const Color.fromARGB(255, 242, 160, 29),
   ];
 }

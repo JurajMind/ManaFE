@@ -13,7 +13,8 @@ class TobaccoSessionWidget extends StatelessWidget {
   final TobaccoMixSimpleDto tobaccoMix;
   final SmokeSessionBloc smokeSessionBloc;
 
-  const TobaccoSessionWidget({this.tobacco, this.tobaccoMix, this.smokeSessionBloc});
+  const TobaccoSessionWidget(
+      {this.tobacco, this.tobaccoMix, this.smokeSessionBloc});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,9 @@ class TobaccoSessionWidget extends StatelessWidget {
             stream: smokeSessionBloc.smokeStatistic,
             builder: (context, snapShot) {
               double percentage = ((snapShot?.data?.pufCount ?? 0) / 300) * 100;
-
+              if (percentage > 100) {
+                percentage = 100;
+              }
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[

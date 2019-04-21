@@ -1,5 +1,6 @@
 import 'package:app/components/Mixology/mixology_expanded.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
+import 'package:app/models/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
@@ -28,7 +29,8 @@ class TobaccoWidget extends StatelessWidget {
               ? Container()
               : Expanded(
                   child: IconButton(
-                      icon: Icon(Icons.add_box), onPressed: () => onPressed(context)),
+                      icon: Icon(Icons.add_box),
+                      onPressed: () => onPressed(context)),
                   flex: 1,
                 )
         ],
@@ -65,6 +67,10 @@ class TobaccoWidget extends StatelessWidget {
     } else {
       return Row(
         children: <Widget>[
+          Container(
+              padding: EdgeInsets.only(right: 4),
+              height: 30,
+              child: Extensions.defaultTypePicture('Tobacco')),
           Text(
             tobacco.name,
             style: Theme.of(context).textTheme.display2,
@@ -74,5 +80,4 @@ class TobaccoWidget extends StatelessWidget {
       );
     }
   }
-  
 }

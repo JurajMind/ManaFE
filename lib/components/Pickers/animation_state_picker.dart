@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:app/const/theme.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/Stand/animation.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
@@ -143,15 +144,16 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
             width: 20.0,
             height: MediaQuery.of(context).size.height - 80,
             child: SimpleDialog(
-              title: const Text('Set brightness'),
+              title: Center(child: const Text('Brightness')),
+              backgroundColor: Colors.transparent,
               children: <Widget>[
                 SizedBox(
                   height: 400.0,
                   width: 200.0,
                   child: SpringySlider(
                     markCount: 12,
-                    positiveColor: Colors.red,
-                    negativeColor: Colors.blue,
+                    positiveColor: AppColors.colors[2],
+                    negativeColor: AppColors.colors[3],
                     positiveIcon: Icons.brightness_low,
                     negativeIcon: Icons.brightness_high,
                     minValue: 0.0,
@@ -172,22 +174,24 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
             width: 20.0,
             height: MediaQuery.of(context).size.height - 80,
             child: SimpleDialog(
-              title: const Text('Set speed'),
+              elevation: 2.0,
+              backgroundColor: Colors.transparent,
+              title: Center(child: const Text('Speed')),
               children: <Widget>[
                 SizedBox(
                   height: 400.0,
                   width: 200.0,
                   child: SpringySlider(
                     markCount: 12,
-                    positiveColor: Colors.red,
-                    negativeColor: Colors.blue,
-                    positiveIcon: Icons.slow_motion_video,
-                    negativeIcon: Icons.shutter_speed,
+                    positiveColor: AppColors.colors[0],
+                    negativeColor: AppColors.colors[1],
+                    positiveIcon: Icons.pause,
+                    negativeIcon: Icons.fast_forward,
                     minValue: 0.0,
-                    maxValue: 600.0,
-                    initValue: 600.0 - setting.speed,
+                    maxValue: 255.0,
+                    initValue: 255.0 - setting.speed,
                     onChanged: (value) => widget.smokeSessionBloc
-                        .setSpeed(value.round(), widget.state),
+                        .setSpeed(255 - value.round(), widget.state),
                   ),
                 )
               ],

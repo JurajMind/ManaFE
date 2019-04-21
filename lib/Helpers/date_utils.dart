@@ -167,7 +167,7 @@ class DateUtils {
   }
 
   static String toStringDuration(Duration duration) {
-    return '${duration.inHours}:${duration.inMinutes % 60}:${duration.inSeconds % 100}';
+    return '${duration.inHours}:${duration.inMinutes % 60}:${duration.inSeconds % 60}';
   }
 
   static String toSecondDuration(Duration duration) {

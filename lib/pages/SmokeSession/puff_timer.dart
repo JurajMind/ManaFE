@@ -11,6 +11,7 @@ class PuffTimeText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Offstage(
           offstage: this.dependencies.showTimer == null ||
@@ -20,13 +21,13 @@ class PuffTimeText extends StatelessWidget {
             children: <Widget>[
               new RepaintBoundary(
                 child: new SizedBox(
-                  height: 30.0,
+                  height: 38.0,
                   child: new MinutesAndSeconds(dependencies: this.dependencies),
                 ),
               ),
               new RepaintBoundary(
                 child: new SizedBox(
-                  height: 30.0,
+                  height: 38.0,
                   child: new Hundreds(dependencies: this.dependencies),
                 ),
               ),
@@ -36,9 +37,9 @@ class PuffTimeText extends StatelessWidget {
         Offstage(
             offstage: this.dependencies.showTimer,
             child: SizedBox(
-              height: 30.0,
+              height: 38.0,
               child: Text(this.dependencies.alternativeText,
-                  style: this.dependencies.textStyle),
+                  style: Theme.of(context).textTheme.body2),
             ))
       ],
     );
@@ -79,13 +80,12 @@ class PufTimerDependencies {
 
   dispose() {
     this.timer.cancel();
+    subscription.cancel();
   }
 
   final List<ValueChanged<ElapsedTime>> timerListeners =
       <ValueChanged<ElapsedTime>>[];
 
-  final TextStyle textStyle =
-      const TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold);
   Stopwatch stopwatch;
   SmokeSessionBloc smokeSessionBloc;
   final int timerMillisecondsRefreshRate = 30;
@@ -150,7 +150,7 @@ class HundredsState extends State<Hundreds> {
   @override
   Widget build(BuildContext context) {
     String hundredsStr = (hundreds % 100).toString().padLeft(2, '0');
-    return new Text(hundredsStr, style: dependencies.textStyle);
+    return new Text(hundredsStr, style: Theme.of(context).textTheme.body2);
   }
 
   @override
@@ -191,7 +191,7 @@ class MinutesAndSecondsState extends State<MinutesAndSeconds> {
   @override
   Widget build(BuildContext context) {
     String secondsStr = (seconds).toString().padLeft(1, '0');
-    return new Text('$secondsStr.', style: dependencies.textStyle);
+    return new Text('$secondsStr.', style: Theme.of(context).textTheme.body2);
   }
 
   @override

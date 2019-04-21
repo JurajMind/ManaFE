@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/SmokeSession/tobacco_slider.dart';
+import 'package:app/const/theme.dart';
 import 'package:app/models/SmokeSession/pipe_accesory_from_tobacco.dart';
 import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/module/data_provider.dart';

@@ -93,6 +93,11 @@ class Authorize {
       },
     );
     final responseJson = json.decode(response.body);
+    if (responseJson['error'] != null) {
+      await _storage.delete(key: 'refreshToken');
+      await _storage.delete(key: 'accessToken');
+      AppWidget.restartApp(scaffoldKey.currentContext);
+    }
 
     var success = await writeToken(responseJson);
     if (success != null) {

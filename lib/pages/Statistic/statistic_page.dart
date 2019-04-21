@@ -3,6 +3,7 @@ import 'package:app/app/app.widget.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/SmokeSession/smoke_session_list_item.dart';
 import 'package:app/components/Statistic/recap.dart';
+import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/person/statistic_bloc.dart';
 import 'package:app/pages/Places/places_map_page.dart';

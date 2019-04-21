@@ -45,6 +45,7 @@ dependencies:
   flutter_section_table_view: ^1.0.3
   shake: ^0.1.0
   wave: ^0.0.8
+  share: ^0.6.1
 
 flutter_icons:
   android: true
@@ -101,6 +102,7 @@ flutter:
     - locale/localization_cs.json
 
     - assets/term_of_ussage.txt
+    - assets/sprite.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

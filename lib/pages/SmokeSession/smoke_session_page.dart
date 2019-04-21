@@ -1,5 +1,7 @@
 import 'package:app/Helpers/date_utils.dart';
+import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
+import 'package:app/components/Common/since_timer.dart';
 import 'package:app/components/Pickers/smoke_color_wheel.dart';
 import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
@@ -17,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:openapi/api.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:share/share.dart';
 
 class SmokeSessionPage extends StatefulWidget {
   final String sessionId;
@@ -134,10 +137,12 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
           return Text('NoData');
         }
         var durationString =
-            DateUtils.toStringDuration(asyncSnapshot.data.duration);
+            DateUtils.toStringDuration(asyncSnapshot.data.smokeDuration);
 
         var longestString =
-            '${asyncSnapshot.data.longestPuf.inMinutes == 0 ? "" : asyncSnapshot.data.longestPuf.inMinutes.toString() + ':'}${asyncSnapshot.data.longestPuf.inSeconds}.${asyncSnapshot.data.longestPuf.inMilliseconds.toString()}';
+            DateUtils.toSecondDuration(asyncSnapshot.data.longestPuf);
+
+        var start = asyncSnapshot.data.start;
         return asyncSnapshot.data != null
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -147,20 +152,32 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                     label: 'Puf count',
                     data: asyncSnapshot.data.pufCount.toString(),
                   ),
-                  Column(
-                    children: <Widget>[
-                      Text('Last puf (sec)',
-                          style: TextStyle(color: Colors.grey)),
-                      new PuffTimeText(
-                          dependencies: dependencies,
-                          completeTime: asyncSnapshot.data.toString()),
-                      Text(longestString)
-                    ],
+                  Expanded(
+                    child: Column(
+                      children: <Widget>[
+                        Text('Last puf (sec)',
+                            style: TextStyle(color: Colors.grey)),
+                        new PuffTimeText(
+                            dependencies: dependencies,
+                            completeTime: asyncSnapshot.data.toString()),
+                        Text(longestString)
+                      ],
+                    ),
                   ),
-                  new HeaderItem(
-                    label: 'Duration',
-                    data: durationString,
-                  )
+                  Expanded(
+                    child: Column(
+                      children: <Widget>[
+                        Text('Durations', style: TextStyle(color: Colors.grey)),
+                        Text(
+                          durationString,
+                          style: Theme.of(context).textTheme.body2,
+                        ),
+                        SinceTimer(
+                          start: start,
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               )
             : Text('No data');
@@ -307,30 +324,71 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
     showModalBottomSheet<void>(
         context: context,
         builder: (BuildContext context) {
+          var code = DataProvider.getData(context).smokeSessionBloc.hookahCode;
           return Container(
-            height: 220,
+            height: 260,
             child: new Column(
               children: <Widget>[
                 new ListTile(
-                  leading: new Icon(FontAwesomeIcons.powerOff),
-                  title: new Text('End session'),
-                  onTap: () => {},
-                ),
-                new ListTile(
-                  leading: new Icon(Icons.refresh),
-                  title: new Text('Restart stand'),
-                  onTap: () => {},
-                ),
+                    leading: new Icon(FontAwesomeIcons.share),
+                    title: new Text('Share'),
+                    onTap: () => Share.share(
+                        'check out my website https://example.com')),
                 new ListTile(
                   leading: new Icon(FontAwesomeIcons.vial),
                   title: new Text('Experiments'),
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => ExperimentalPage())),
                 ),
+                new ListTile(
+                  leading: new Icon(Icons.refresh),
+                  title: new Text('Restart stand'),
+                  onTap: () => _restartDialog(code),
+                ),
+                new ListTile(
+                  leading: new Icon(FontAwesomeIcons.powerOff),
+                  title: new Text('End session'),
+                  onTap: () => {},
+                ),
               ],
             ),
           );
         }).then((value) {});
+  }
+
+  void _restartDialog(String code) {
+    // flutter defined function
+    showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Restart device?"),
+          content: new Text("Do you want restart this device ?"),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text(
+                "Restart",
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            )
+          ],
+        );
+      },
+    ).then((value) {
+      if (value) {
+        App.http.restartDevice(code);
+      }
+    });
   }
 }
 
@@ -347,16 +405,12 @@ class HeaderItem extends StatelessWidget {
           Text(label, style: _labelStyle()),
           Text(
             data,
-            style: _textStyle(),
+            style: Theme.of(context).textTheme.body2,
           ),
         ],
       ),
       flex: 1,
     );
-  }
-
-  TextStyle _textStyle() {
-    return new TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold);
   }
 
   TextStyle _labelStyle() {

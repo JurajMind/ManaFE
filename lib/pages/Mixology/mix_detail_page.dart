@@ -1,8 +1,10 @@
+import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:openapi/api.dart';
+import 'package:share/share.dart';
 
 class MixDetailPage extends StatefulWidget {
   final TobaccoMixSimpleDto mix;
@@ -86,6 +88,10 @@ class MixDetailPageState extends State<MixDetailPage> {
           new SliverAppBar(
             expandedHeight: _appBarHeight,
             actions: <Widget>[
+              IconButton(
+                  icon: Icon(Icons.share),
+                  onPressed: () =>
+                      Share.share('check out my website https://example.com')),
               IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () async {
