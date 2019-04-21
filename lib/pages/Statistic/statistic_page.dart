@@ -112,8 +112,8 @@ class _StatisticPageState extends State<StatisticPage> {
             flexibleSpace: new FlexibleSpaceBar(
               background: Stack(
                 children: <Widget>[
-                  buildPositioned(bloc, 0, (f) => f.pufCount.toDouble()),
-                  buildPositioned(bloc, 1, (f) => f.smokeSessions.toDouble()),
+                  buildPositioned(bloc, 1, (f) => f.pufCount.toDouble()),
+                  buildPositioned(bloc, 0, (f) => f.smokeSessions.toDouble()),
                   buildPositioned(bloc, 2, (f) => f.activity.toDouble()),
                 ],
               ),
@@ -337,14 +337,14 @@ class _StatisticPageState extends State<StatisticPage> {
                 Expanded(
                   child: new StatisticRecapWidget(
                     label: "puffs",
-                    ballColor: AppColors.colors[0],
+                    ballColor: AppColors.colors[1],
                     value: snapshot?.data?.pufCount?.toString(),
                   ),
                 ),
                 Expanded(
                   child: new StatisticRecapWidget(
                     label: "smoking",
-                    ballColor: AppColors.colors[1],
+                    ballColor: AppColors.colors[0],
                     duration: snapshot?.data?.smokingTime,
                   ),
                 ),
