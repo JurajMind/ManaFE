@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app/Helpers/date_utils.dart';
 import 'package:app/app/app.dart';
 import 'package:app/components/SmokeSession/tobacco_widget.dart';
@@ -6,6 +8,7 @@ import 'package:app/pages/SmokeSession/pipe_accesory_widget.dart';
 import 'package:app/pages/Statistic/Detail/detail_page_helper.dart';
 import 'package:app/pages/Statistic/statistic_page.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/api.dart';
 import 'package:queries/collections.dart';
 import 'package:rxdart/rxdart.dart';
@@ -95,7 +98,16 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage> {
               );
             },
           ),
-          SessionStatisticGraph(pufs: this.pufs)
+          SessionStatisticGraph(pufs: this.pufs),
+          StreamBuilder<List<SmartHookahModelsDbPuf>>(
+            stream: this.pufs,
+            builder: (context, snapshot) {
+              if(snapshot.data == null)
+              return Container();
+              return HrWidget();
+            }
+          ),
+          SizedBox(height: 100)
         ],
       ),
     );
@@ -115,13 +127,19 @@ class SessionMetadataDetail extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Center(
-          child: Text('Metadata', style: Theme.of(context).textTheme.display1),
+                Center(
+          child: Row(mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('Metadata', style: Theme.of(context).textTheme.display1),
+                                SizedBox(width: 8),
+              Icon(FontAwesomeIcons.table),
+            ],
+          ),
         ),
-                    TobaccoWidget(
-              tobacco: metaData.tobacco,
-              tobaccoMix: metaData.tobaccoMix,
-            ),
+        TobaccoWidget(
+          tobacco: metaData.tobacco,
+          tobaccoMix: metaData.tobaccoMix,
+        ),
         PipeAccesoryWidget(
           accesory: metaData.pipe,
           type: 'Pipe',
@@ -139,6 +157,65 @@ class SessionMetadataDetail extends StatelessWidget {
           type: 'Coals',
         ),
       ],
+    );
+  }
+}
+
+class HrWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+        var random = new Random();
+        var haveData = random.nextBool();
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('Heart rate monitor',
+                  style: Theme.of(context).textTheme.display1),
+                  SizedBox(width: 8),
+                  Icon(FontAwesomeIcons.heartbeat)
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  Text(
+                    'Resting HR',
+                    style: Theme.of(context).textTheme.display2,
+                  ),
+                  Text(
+                    haveData ?'${60 + random.nextInt(12)} bpm' : '--- bpm',
+                    style: Theme.of(context)
+                        .textTheme
+                        .display2
+                        .apply(color: Colors.red),
+                  )
+                ],
+              ),
+              Column(
+                children: <Widget>[
+                  Text(
+                    'Buzz HR',
+                    style: Theme.of(context).textTheme.display2,
+                  ),
+                  Text(
+                    haveData? '${80 + random.nextInt(30)} bpm' : '--- bpm',
+                    style: Theme.of(context)
+                        .textTheme
+                        .display2
+                        .apply(color: Colors.red),
+                  )
+                ],
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -162,13 +239,19 @@ class SessionStatisticDetail extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Center(
-          child: Text('Statistic', style: Theme.of(context).textTheme.display1),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('Statistic', style: Theme.of(context).textTheme.display1),
+                                SizedBox(width: 8),
+              Icon(FontAwesomeIcons.chartBar),
+            ],
+          ),
         ),
         StreamBuilder<FinishedSessionDataDto>(
             stream: this.data,
             builder: (context, snapshot) {
               if (snapshot.data == null) {
-                return Placeholder();
+                return Container();
               }
               return Column(
                 children: <Widget>[
@@ -367,8 +450,10 @@ class SmokeDurationGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var inMilis = this.inDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0;
-    var outMilis = this.outDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0;
-    var idleMilis = this.idleDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0;
+    var outMilis =
+        this.outDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0;
+    var idleMilis =
+        this.idleDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0;
     Map<String, int> data = new Map<String, int>();
     data['Pufs'] = inMilis;
     data['Blows'] = outMilis;
@@ -435,7 +520,7 @@ class _SessionStatisticGraphState extends State<SessionStatisticGraph> {
         stream: widget.pufs,
         initialData: null,
         builder: (BuildContext context, snapshot) {
-          if (snapshot.data == null) return Placeholder();
+          if (snapshot.data == null) return Container();
 
           var processData =
               DetailPageHelper.createHistogram(snapshot.data, 300);
