@@ -9,6 +9,7 @@ import 'package:app/module/person/statistic_bloc.dart';
 import 'package:app/pages/Places/places_map_page.dart';
 import 'package:app/pages/Settings/language_selector_page.dart';
 import 'package:app/pages/Statistic/Components/gear_usage_item.dart';
+import 'package:app/pages/Statistic/UserProfile/user_profile_page.dart';
 import 'package:app/pages/Statistic/all_statistic_page.dart';
 import 'package:app/pages/Statistic/test_page.dart';
 import 'package:app/services/authorization.dart';
@@ -68,7 +69,7 @@ class _StatisticPageState extends State<StatisticPage> {
                       break;
                     case 'test':
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => StatisticPage()));
+                          builder: (context) => UserProfilePage()));
                       break;
                     case 'testPage':
                       Navigator.of(context).push(
@@ -86,12 +87,8 @@ class _StatisticPageState extends State<StatisticPage> {
                         child: Text('Settings'),
                       ),
                       PopupMenuItem(
-                        value: "signOut",
-                        child: Text('Sign out'),
-                      ),
-                      PopupMenuItem(
                         value: "test",
-                        child: Text('Design statistic'),
+                        child: Text('User profile'),
                       ),
                       PopupMenuItem(
                         value: "testPage",
@@ -100,7 +97,11 @@ class _StatisticPageState extends State<StatisticPage> {
                       PopupMenuItem(
                         value: "testPlaces",
                         child: Text('Test places'),
-                      )
+                      ),
+                         PopupMenuItem(
+                        value: "signOut",
+                        child: Text('Sign out'),
+                      ),
                     ],
               )
             ],

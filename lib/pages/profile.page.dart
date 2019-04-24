@@ -53,10 +53,7 @@ class _DesignStatisticPageState extends State<DesignStatisticPage> {
                         value: "settings",
                         child: Text('Settings'),
                       ),
-                      PopupMenuItem(
-                        value: "signOut",
-                        child: Text('Sign out'),
-                      ),
+                     
                       PopupMenuItem(
                         value: "test",
                         child: Text('Test statistic'),
@@ -64,7 +61,11 @@ class _DesignStatisticPageState extends State<DesignStatisticPage> {
                       PopupMenuItem(
                         value: "testPage",
                         child: Text('Test page'),
-                      )
+                      ),
+                         PopupMenuItem(
+                        value: "signOut",
+                        child: Text('Sign out'),
+                      ),
                     ],
               )
             ],
