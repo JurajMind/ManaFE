@@ -47,7 +47,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
       ),
       resizeToAvoidBottomInset: false,
       body: CustomPaint(
-        painter: CirclePainter(Colors.red),
+        painter: CirclePainter(Colors.red, data: MediaQuery.of(context)),
         child: Column(
           children: <Widget>[
             new AppBar(

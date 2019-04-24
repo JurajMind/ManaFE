@@ -1,12 +1,19 @@
+import 'package:app/Helpers/helpers.dart';
 import 'package:app/components/Common/bg_painter.dart';
 import 'package:flutter/material.dart';
 
 class CirclePainter extends CustomPainter {
   final Color color;
   BgPainter bgPainter;
-
-  CirclePainter(this.color) {
-    this.bgPainter = new BgPainter(color: this.color, logoSize: 0.6);
+  CirclePainter(this.color, {MediaQueryData data}) {
+    if (isTablet(data)) {
+      this.bgPainter = new BgPainter(
+          color: this.color,
+          logoSize: 1.1,
+          startPoint: Offset(data.size.width * 0.4, data.size.width * 0.4));
+    } else {
+      this.bgPainter = new BgPainter(color: this.color, logoSize: 0.6);
+    }
   }
 
   @override

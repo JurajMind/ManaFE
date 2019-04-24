@@ -22,7 +22,7 @@ class Extensions {
   }
 
   static String adress(AddressDto adress) {
-    return '${adress.street} ${adress.number} ${adress.city}';
+    return '${adress?.street ?? ''} ${adress?.number ?? ''} ${adress?.city ?? ''}';
   }
 
   static Widget accesoryPicture(PipeAccesorySimpleDto accesory) {

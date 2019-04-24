@@ -110,7 +110,8 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
         child: AnimatedBuilder(
           animation: _colorTween,
           builder: (context, child) => CustomPaint(
-                painter: CirclePainter(_colorTween.value),
+                painter: CirclePainter(_colorTween.value,
+                    data: MediaQuery.of(context)),
                 child: new Column(
                   children: <Widget>[
                     new Expanded(flex: 1, child: Container()),
