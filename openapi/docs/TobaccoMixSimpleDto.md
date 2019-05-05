@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **likes** | [**List&lt;PipeAccesoryLikeDto&gt;**](PipeAccesoryLikeDto.md) |  | [optional] [default to []]
 **tobaccos** | [**List&lt;TobaccoInMix&gt;**](TobaccoInMix.md) |  | [optional] [default to []]
+**myMix** | **bool** |  | [optional] [default to null]
 **id** | **int** |  | [optional] [default to null]
 **name** | **String** |  | [optional] [default to null]
 **brand** | **String** |  | [optional] [default to null]

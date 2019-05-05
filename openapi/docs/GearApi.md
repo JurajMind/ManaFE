@@ -9,12 +9,56 @@ All URIs are relative to *https://localhost:44324*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**gearGetBrand**](GearApi.md#gearGetBrand) | **GET** /api/Gear/Brand/{brandName} | 
 [**gearGetBrands**](GearApi.md#gearGetBrands) | **GET** /api/Gear/Brands | 
 [**gearGetBrandsPrefix**](GearApi.md#gearGetBrandsPrefix) | **GET** /api/Gear/Brands/{prefix} | 
 [**gearGetDetails**](GearApi.md#gearGetDetails) | **GET** /api/Gear/{id}/Detail | 
+[**gearInfo**](GearApi.md#gearInfo) | **GET** /api/Gear/{id}/Info | 
 [**gearSearch**](GearApi.md#gearSearch) | **GET** /api/Gear/Search/{search} | 
+[**gearSessions**](GearApi.md#gearSessions) | **GET** /api/Gear/{id}/Sessions | 
 [**gearVote**](GearApi.md#gearVote) | **POST** /api/Gear/{id}/Vote | 
 
+
+# **gearGetBrand**
+> BrandDto gearGetBrand(brandName)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new GearApi();
+var brandName = brandName_example; // String | 
+
+try { 
+    var result = api_instance.gearGetBrand(brandName);
+    print(result);
+} catch (e) {
+    print("Exception when calling GearApi->gearGetBrand: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **brandName** | **String**|  | [default to null]
+
+### Return type
+
+[**BrandDto**](BrandDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **gearGetBrands**
 > InlineResponse200 gearGetBrands()
@@ -135,6 +179,47 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **gearInfo**
+> PipeAccesorySimpleDto gearInfo(id)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new GearApi();
+var id = 56; // int | 
+
+try { 
+    var result = api_instance.gearInfo(id);
+    print(result);
+} catch (e) {
+    print("Exception when calling GearApi->gearInfo: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**|  | [default to null]
+
+### Return type
+
+[**PipeAccesorySimpleDto**](PipeAccesorySimpleDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **gearSearch**
 > List<SearchPipeAccessory> gearSearch(search, type, page, pageSize, searchType)
 
@@ -172,6 +257,51 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**List<SearchPipeAccessory>**](SearchPipeAccessory.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **gearSessions**
+> List<SmokeSessionSimpleDto> gearSessions(id, pageSize, page)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new GearApi();
+var id = 56; // int | 
+var pageSize = 56; // int | 
+var page = 56; // int | 
+
+try { 
+    var result = api_instance.gearSessions(id, pageSize, page);
+    print(result);
+} catch (e) {
+    print("Exception when calling GearApi->gearSessions: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**|  | [default to null]
+ **pageSize** | **int**|  | [optional] [default to null]
+ **page** | **int**|  | [optional] [default to null]
+
+### Return type
+
+[**List<SmokeSessionSimpleDto>**](SmokeSessionSimpleDto.md)
 
 ### Authorization
 

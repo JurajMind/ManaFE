@@ -86,10 +86,20 @@ Class | Method | HTTP request | Description
 *DevicePresetApi* | [**devicePresetUseDefault**](docs\/DevicePresetApi.md#devicepresetusedefault) | **POST** /api/Device/Preset/UseDefault/{sessionId} | 
 *DevicePresetApi* | [**devicePresetUsePreset**](docs\/DevicePresetApi.md#devicepresetusepreset) | **POST** /api/Device/Preset/{presetId}/Use/{sessionId} | 
 *EndSessionApi* | [**endSessionDefaultAction**](docs\/EndSessionApi.md#endsessiondefaultaction) | **POST** /api/EndSession/{id} | 
+*FeatureMixApi* | [**featureMixAddFollow**](docs\/FeatureMixApi.md#featuremixaddfollow) | **POST** /api/FeatureMix/Follow/{id} | 
+*FeatureMixApi* | [**featureMixFix**](docs\/FeatureMixApi.md#featuremixfix) | **POST** /api/FeatureMix/Fix | 
+*FeatureMixApi* | [**featureMixGetFeatureMixCreator**](docs\/FeatureMixApi.md#featuremixgetfeaturemixcreator) | **GET** /api/FeatureMix/FeatureCreator/{id} | 
+*FeatureMixApi* | [**featureMixGetFeatureMixCreators**](docs\/FeatureMixApi.md#featuremixgetfeaturemixcreators) | **GET** /api/FeatureMix/FeatureCreators | 
+*FeatureMixApi* | [**featureMixGetFollowedCreators**](docs\/FeatureMixApi.md#featuremixgetfollowedcreators) | **GET** /api/FeatureMix/FollowedCreators | 
+*FeatureMixApi* | [**featureMixGetMixes**](docs\/FeatureMixApi.md#featuremixgetmixes) | **GET** /api/FeatureMix/Mixes/{id} | 
+*FeatureMixApi* | [**featureMixRemoveFollow**](docs\/FeatureMixApi.md#featuremixremovefollow) | **DELETE** /api/FeatureMix/Follow/{id} | 
+*GearApi* | [**gearGetBrand**](docs\/GearApi.md#geargetbrand) | **GET** /api/Gear/Brand/{brandName} | 
 *GearApi* | [**gearGetBrands**](docs\/GearApi.md#geargetbrands) | **GET** /api/Gear/Brands | 
 *GearApi* | [**gearGetBrandsPrefix**](docs\/GearApi.md#geargetbrandsprefix) | **GET** /api/Gear/Brands/{prefix} | 
 *GearApi* | [**gearGetDetails**](docs\/GearApi.md#geargetdetails) | **GET** /api/Gear/{id}/Detail | 
+*GearApi* | [**gearInfo**](docs\/GearApi.md#gearinfo) | **GET** /api/Gear/{id}/Info | 
 *GearApi* | [**gearSearch**](docs\/GearApi.md#gearsearch) | **GET** /api/Gear/Search/{search} | 
+*GearApi* | [**gearSessions**](docs\/GearApi.md#gearsessions) | **GET** /api/Gear/{id}/Sessions | 
 *GearApi* | [**gearVote**](docs\/GearApi.md#gearvote) | **POST** /api/Gear/{id}/Vote | 
 *MixologyApi* | [**mixologyAddToMix**](docs\/MixologyApi.md#mixologyaddtomix) | **POST** /api/Mixology/AddToMix | 
 *MixologyApi* | [**mixologyGetFeaturedMixCreators**](docs\/MixologyApi.md#mixologygetfeaturedmixcreators) | **GET** /api/Mixology/GetMixCreators | 
@@ -97,6 +107,7 @@ Class | Method | HTTP request | Description
 *MixologyApi* | [**mixologyGetTobaccoMix**](docs\/MixologyApi.md#mixologygettobaccomix) | **GET** /api/Mixology/{id}/GetMix | 
 *MixologyApi* | [**mixologyGetTobaccoMixTastes**](docs\/MixologyApi.md#mixologygettobaccomixtastes) | **GET** /api/Mixology/{id}/GetTastes | 
 *MixologyApi* | [**mixologyRemoveMix**](docs\/MixologyApi.md#mixologyremovemix) | **DELETE** /api/Mixology/RemoveMix | 
+*MixologyApi* | [**mixologyRenameMix**](docs\/MixologyApi.md#mixologyrenamemix) | **POST** /api/Mixology/RenameMix/{id} | 
 *MixologyApi* | [**mixologyVote**](docs\/MixologyApi.md#mixologyvote) | **POST** /api/Mixology/{id}/Vote | 
 *PersonApi* | [**personAddMyGear**](docs\/PersonApi.md#personaddmygear) | **POST** /api/Person/MyGear/{id}/Add/{count} | 
 *PersonApi* | [**personAddNotificationToken**](docs\/PersonApi.md#personaddnotificationtoken) | **PUT** /api/Person/NotificationToken | 
@@ -104,6 +115,7 @@ Class | Method | HTTP request | Description
 *PersonApi* | [**personGetPersonActiveData**](docs\/PersonApi.md#persongetpersonactivedata) | **GET** /api/Person/InitData | 
 *PersonApi* | [**personGetPersonDevices**](docs\/PersonApi.md#persongetpersondevices) | **GET** /api/Person/Devices | 
 *PersonApi* | [**personGetPersonInfo**](docs\/PersonApi.md#persongetpersoninfo) | **GET** /api/Person/Info | 
+*PersonApi* | [**personGetPersonSessions**](docs\/PersonApi.md#persongetpersonsessions) | **GET** /api/Person/Sessions | 
 *PersonApi* | [**personGetRecentAccessories**](docs\/PersonApi.md#persongetrecentaccessories) | **GET** /api/Person/MyGear/Used/{sessionCount} | 
 *PersonApi* | [**personMyGear**](docs\/PersonApi.md#personmygear) | **GET** /api/Person/MyGear | 
 *PersonApi* | [**personTestNotification**](docs\/PersonApi.md#persontestnotification) | **POST** /api/Person/TestNotification | 
@@ -163,6 +175,7 @@ Class | Method | HTTP request | Description
  - [ActionSettings](docs\/ActionSettings.md)
  - [AddressDto](docs\/AddressDto.md)
  - [Animations](docs\/Animations.md)
+ - [BrandDto](docs\/BrandDto.md)
  - [BrandGroupDto](docs\/BrandGroupDto.md)
  - [BusinessHoursDto](docs\/BusinessHoursDto.md)
  - [DevicePresetDto](docs\/DevicePresetDto.md)
@@ -170,6 +183,8 @@ Class | Method | HTTP request | Description
  - [DeviceSimpleDto](docs\/DeviceSimpleDto.md)
  - [Dto](docs\/Dto.md)
  - [DynamicSmokeStatisticRawDto](docs\/DynamicSmokeStatisticRawDto.md)
+ - [FeatureMixCreatorDto](docs\/FeatureMixCreatorDto.md)
+ - [FeatureMixCreatorSimpleDto](docs\/FeatureMixCreatorSimpleDto.md)
  - [FinishedSessionDataDto](docs\/FinishedSessionDataDto.md)
  - [FranchiseDto](docs\/FranchiseDto.md)
  - [GamePictureDto](docs\/GamePictureDto.md)
@@ -209,6 +224,7 @@ Class | Method | HTTP request | Description
  - [SmartHookahHelpersAnimation](docs\/SmartHookahHelpersAnimation.md)
  - [SmartHookahModelsDbColor](docs\/SmartHookahModelsDbColor.md)
  - [SmartHookahModelsDbPuf](docs\/SmartHookahModelsDbPuf.md)
+ - [SmartHookahModelsDbSocialMedia](docs\/SmartHookahModelsDbSocialMedia.md)
  - [SmartHookahModelsForgotPasswordViewModel](docs\/SmartHookahModelsForgotPasswordViewModel.md)
  - [SmartHookahModelsOrderExtraDto](docs\/SmartHookahModelsOrderExtraDto.md)
  - [SmartHookahModelsParameterObjectsChangeAnimation](docs\/SmartHookahModelsParameterObjectsChangeAnimation.md)

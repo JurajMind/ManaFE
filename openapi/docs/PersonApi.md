@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**personGetPersonActiveData**](PersonApi.md#personGetPersonActiveData) | **GET** /api/Person/InitData | 
 [**personGetPersonDevices**](PersonApi.md#personGetPersonDevices) | **GET** /api/Person/Devices | 
 [**personGetPersonInfo**](PersonApi.md#personGetPersonInfo) | **GET** /api/Person/Info | 
+[**personGetPersonSessions**](PersonApi.md#personGetPersonSessions) | **GET** /api/Person/Sessions | 
 [**personGetRecentAccessories**](PersonApi.md#personGetRecentAccessories) | **GET** /api/Person/MyGear/Used/{sessionCount} | 
 [**personMyGear**](PersonApi.md#personMyGear) | **GET** /api/Person/MyGear | 
 [**personTestNotification**](PersonApi.md#personTestNotification) | **POST** /api/Person/TestNotification | 
@@ -245,6 +246,43 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**PersonInfoDto**](PersonInfoDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **personGetPersonSessions**
+> List<SmokeSessionSimpleDto> personGetPersonSessions()
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new PersonApi();
+
+try { 
+    var result = api_instance.personGetPersonSessions();
+    print(result);
+} catch (e) {
+    print("Exception when calling PersonApi->personGetPersonSessions: $e\n");
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**List<SmokeSessionSimpleDto>**](SmokeSessionSimpleDto.md)
 
 ### Authorization
 

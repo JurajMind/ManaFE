@@ -795,6 +795,232 @@
         }
       }
     },
+    "/api/FeatureMix/FeatureCreators": {
+      "get": {
+        "tags": [
+          "FeatureMix"
+        ],
+        "operationId": "FeatureMix_GetFeatureMixCreators",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FeatureMixCreatorSimpleDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FeatureMix/FeatureCreator/{id}": {
+      "get": {
+        "tags": [
+          "FeatureMix"
+        ],
+        "operationId": "FeatureMix_GetFeatureMixCreator",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/FeatureMixCreatorDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/FeatureMix/Mixes/{id}": {
+      "get": {
+        "tags": [
+          "FeatureMix"
+        ],
+        "operationId": "FeatureMix_GetMixes",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PipeAccesorySimpleDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FeatureMix/FollowedCreators": {
+      "get": {
+        "tags": [
+          "FeatureMix"
+        ],
+        "operationId": "FeatureMix_GetFollowedCreators",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FeatureMixCreatorSimpleDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FeatureMix/Follow/{id}": {
+      "post": {
+        "tags": [
+          "FeatureMix"
+        ],
+        "operationId": "FeatureMix_AddFollow",
+        "consumes": [],
+        "produces": [],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "FeatureMix"
+        ],
+        "operationId": "FeatureMix_RemoveFollow",
+        "consumes": [],
+        "produces": [],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/FeatureMix/Fix": {
+      "post": {
+        "tags": [
+          "FeatureMix"
+        ],
+        "operationId": "FeatureMix_Fix",
+        "consumes": [],
+        "produces": [],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
     "/api/Gear/Search/{search}": {
       "get": {
         "tags": [
@@ -915,6 +1141,35 @@
         }
       }
     },
+    "/api/Gear/Brand/{brandName}": {
+      "get": {
+        "tags": [
+          "Gear"
+        ],
+        "operationId": "Gear_GetBrand",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+          "name": "brandName",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/BrandDto"
+            }
+          }
+        }
+      }
+    },
     "/api/Gear/{id}/Detail": {
       "get": {
         "tags": [
@@ -972,6 +1227,84 @@
               "items": {
                 "type": "string"
               }
+            }
+          }
+        }
+      }
+    },
+    "/api/Gear/{id}/Sessions": {
+      "get": {
+        "tags": [
+          "Gear"
+        ],
+        "operationId": "Gear_Sessions",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SmokeSessionSimpleDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Gear/{id}/Info": {
+      "get": {
+        "tags": [
+          "Gear"
+        ],
+        "operationId": "Gear_Info",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PipeAccesorySimpleDto"
             }
           }
         }
@@ -1229,6 +1562,41 @@
         }
       }
     },
+    "/api/Mixology/RenameMix/{id}": {
+      "post": {
+        "tags": [
+          "Mixology"
+        ],
+        "operationId": "Mixology_RenameMix",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "newName",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TobaccoMixSimpleDto"
+            }
+          }
+        }
+      }
+    },
     "/api/Mixology/{id}/Vote": {
       "post": {
         "tags": [
@@ -1323,6 +1691,32 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/PersonActiveDataDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Person/Sessions": {
+      "get": {
+        "tags": [
+          "Person"
+        ],
+        "operationId": "Person_GetPersonSessions",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SmokeSessionSimpleDto"
+              }
             }
           }
         }
@@ -3560,74 +3954,115 @@
         }
       }
     },
-    "SearchPipeAccessory": {
+    "FeatureMixCreatorSimpleDto": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "Location": {
+          "type": "string"
+        },
+        "LogoPicture": {
+          "type": "string"
+        },
+        "PersonId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "FeatureMixCreatorDto": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "Location": {
+          "type": "string"
+        },
+        "SocialMedias": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/smartHookahModelsDbSocialMedia"
+          }
+        },
+        "Medias": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MediaDto"
+          }
+        },
+        "LogoPicture": {
+          "type": "string"
+        },
+        "PersonId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "smartHookahModelsDbSocialMedia": {
       "type": "object",
       "properties": {
         "Id": {
           "format": "int32",
           "type": "integer"
         },
-        "Name": {
+        "Code": {
           "type": "string"
         },
-        "Brand": {
+        "Url": {
+          "type": "string"
+        }
+      }
+    },
+    "MediaDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Created": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "Path": {
           "type": "string"
         },
         "Type": {
-          "type": "string"
-        }
-      }
-    },
-    "BrandGroupDto": {
-      "type": "object",
-      "properties": {
-        "Id": {
-          "type": "string"
-        },
-        "Picture": {
-          "type": "string"
-        },
-        "Name": {
-          "type": "string"
-        },
-        "ItemCount": {
           "format": "int32",
-          "type": "integer"
-        }
-      }
-    },
-    "PipeAccessoryDetailsDto": {
-      "type": "object",
-      "properties": {
-        "UsedByPerson": {
-          "format": "int32",
+          "enum": [
+            0,
+            1
+          ],
           "type": "integer"
         },
-        "UsedWith": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UsedWithDto"
-          }
+        "IsDefault": {
+          "type": "boolean"
         },
-        "OwnedByPersons": {
-          "format": "int32",
-          "type": "integer"
+        "Extension": {
+          "type": "string",
+          "readOnly": true
         },
-        "OwnedByPlaces": {
-          "format": "int32",
-          "type": "integer"
-        }
-      }
-    },
-    "UsedWithDto": {
-      "type": "object",
-      "properties": {
-        "Accessory": {
-          "$ref": "#/definitions/PipeAccesorySimpleDto"
-        },
-        "UsedCount": {
-          "format": "int32",
-          "type": "integer"
+        "FileName": {
+          "type": "string",
+          "readOnly": true
         }
       }
     },
@@ -3690,6 +4125,311 @@
         }
       }
     },
+    "SearchPipeAccessory": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Brand": {
+          "type": "string"
+        },
+        "Type": {
+          "type": "string"
+        }
+      }
+    },
+    "BrandGroupDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string"
+        },
+        "Picture": {
+          "type": "string"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "ItemCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "BrandDto": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Url": {
+          "type": "string"
+        },
+        "Picture": {
+          "type": "string"
+        },
+        "Tobacco": {
+          "type": "boolean"
+        },
+        "Bowl": {
+          "type": "boolean"
+        },
+        "Hookah": {
+          "type": "boolean"
+        },
+        "Coal": {
+          "type": "boolean"
+        },
+        "HeatManagment": {
+          "type": "boolean"
+        },
+        "TobaccoMixBrand": {
+          "type": "boolean"
+        },
+        "PipeAccessories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PipeAccesorySimpleDto"
+          }
+        },
+        "SocialMedias": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/smartHookahModelsDbSocialMedia"
+          }
+        },
+        "Medias": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MediaDto"
+          }
+        },
+        "DisplayName": {
+          "type": "string"
+        }
+      }
+    },
+    "PipeAccessoryDetailsDto": {
+      "type": "object",
+      "properties": {
+        "UsedByPerson": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "UsedWith": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UsedWithDto"
+          }
+        },
+        "OwnedByPersons": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "OwnedByPlaces": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "UsedWithDto": {
+      "type": "object",
+      "properties": {
+        "Accessory": {
+          "$ref": "#/definitions/PipeAccesorySimpleDto"
+        },
+        "UsedCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "SmokeSessionSimpleDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "SessionId": {
+          "type": "string"
+        },
+        "Device": {
+          "$ref": "#/definitions/DeviceSimpleDto"
+        },
+        "Statistic": {
+          "$ref": "#/definitions/DynamicSmokeStatisticRawDto"
+        },
+        "MetaData": {
+          "$ref": "#/definitions/SmokeSessionMetaDataDto"
+        },
+        "PlaceId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "PlaceName": {
+          "type": "string"
+        }
+      }
+    },
+    "DeviceSimpleDto": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Code": {
+          "type": "string"
+        },
+        "IsOnline": {
+          "type": "boolean"
+        },
+        "Type": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "type": "integer"
+        },
+        "Version": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "DynamicSmokeStatisticRawDto": {
+      "type": "object",
+      "properties": {
+        "PufCount": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "LastPuf": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "LastPufTime": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "SmokeDuration": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "LongestPuf": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "Start": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "Duration": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "LongestPufMilis": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        }
+      }
+    },
+    "SmokeSessionMetaDataDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "TobaccoId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Tobacco": {
+          "$ref": "#/definitions/PipeAccesorySimpleDto"
+        },
+        "TobaccoMix": {
+          "$ref": "#/definitions/TobaccoMixSimpleDto"
+        },
+        "TobaccoWeight": {
+          "format": "double",
+          "type": "number"
+        },
+        "AnonymPeopleCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "BowlId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Bowl": {
+          "$ref": "#/definitions/PipeAccesorySimpleDto"
+        },
+        "PipeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Pipe": {
+          "$ref": "#/definitions/PipeAccesorySimpleDto"
+        },
+        "CoalId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Coal": {
+          "$ref": "#/definitions/PipeAccesorySimpleDto"
+        },
+        "HeatManagementId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "HeatManagement": {
+          "$ref": "#/definitions/PipeAccesorySimpleDto"
+        },
+        "PackType": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "type": "integer"
+        },
+        "CoalCount": {
+          "format": "double",
+          "type": "number"
+        }
+      }
+    },
     "TobaccoMixSimpleDto": {
       "type": "object",
       "properties": {
@@ -3704,6 +4444,9 @@
           "items": {
             "$ref": "#/definitions/TobaccoInMix"
           }
+        },
+        "MyMix": {
+          "type": "boolean"
         },
         "Id": {
           "format": "int32",
@@ -3875,68 +4618,6 @@
         },
         "GameProfile": {
           "$ref": "#/definitions/GameProfileSimpleDto"
-        }
-      }
-    },
-    "DeviceSimpleDto": {
-      "type": "object",
-      "properties": {
-        "Name": {
-          "type": "string"
-        },
-        "Code": {
-          "type": "string"
-        },
-        "IsOnline": {
-          "type": "boolean"
-        },
-        "Type": {
-          "format": "int32",
-          "enum": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10,
-            11,
-            12,
-            13
-          ],
-          "type": "integer"
-        },
-        "Version": {
-          "format": "int32",
-          "type": "integer"
-        }
-      }
-    },
-    "SmokeSessionSimpleDto": {
-      "type": "object",
-      "properties": {
-        "SessionId": {
-          "type": "string"
-        },
-        "Device": {
-          "$ref": "#/definitions/DeviceSimpleDto"
-        },
-        "Statistic": {
-          "$ref": "#/definitions/DynamicSmokeStatisticRawDto"
-        },
-        "MetaData": {
-          "$ref": "#/definitions/SmokeSessionMetaDataDto"
-        },
-        "PlaceId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "PlaceName": {
-          "type": "string"
         }
       }
     },
@@ -4115,121 +4796,6 @@
         }
       }
     },
-    "DynamicSmokeStatisticRawDto": {
-      "type": "object",
-      "properties": {
-        "PufCount": {
-          "format": "int32",
-          "type": "integer",
-          "readOnly": true
-        },
-        "LastPuf": {
-          "format": "int64",
-          "type": "integer",
-          "readOnly": true
-        },
-        "LastPufTime": {
-          "format": "int64",
-          "type": "integer",
-          "readOnly": true
-        },
-        "SmokeDuration": {
-          "format": "int64",
-          "type": "integer",
-          "readOnly": true
-        },
-        "LongestPuf": {
-          "format": "int64",
-          "type": "integer",
-          "readOnly": true
-        },
-        "Start": {
-          "format": "int64",
-          "type": "integer",
-          "readOnly": true
-        },
-        "Duration": {
-          "format": "int64",
-          "type": "integer",
-          "readOnly": true
-        },
-        "LongestPufMilis": {
-          "format": "int64",
-          "type": "integer",
-          "readOnly": true
-        }
-      }
-    },
-    "SmokeSessionMetaDataDto": {
-      "type": "object",
-      "properties": {
-        "Id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "TobaccoId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Tobacco": {
-          "$ref": "#/definitions/PipeAccesorySimpleDto"
-        },
-        "TobaccoMix": {
-          "$ref": "#/definitions/TobaccoMixSimpleDto"
-        },
-        "TobaccoWeight": {
-          "format": "double",
-          "type": "number"
-        },
-        "AnonymPeopleCount": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "BowlId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Bowl": {
-          "$ref": "#/definitions/PipeAccesorySimpleDto"
-        },
-        "PipeId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Pipe": {
-          "$ref": "#/definitions/PipeAccesorySimpleDto"
-        },
-        "CoalId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Coal": {
-          "$ref": "#/definitions/PipeAccesorySimpleDto"
-        },
-        "HeatManagementId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "HeatManagement": {
-          "$ref": "#/definitions/PipeAccesorySimpleDto"
-        },
-        "PackType": {
-          "format": "int32",
-          "enum": [
-            0,
-            1,
-            2,
-            3,
-            4
-          ],
-          "type": "integer"
-        },
-        "CoalCount": {
-          "format": "double",
-          "type": "number"
-        }
-      }
-    },
     "SeatDto": {
       "type": "object",
       "properties": {
@@ -4382,41 +4948,6 @@
         },
         "CloseTime": {
           "type": "string"
-        }
-      }
-    },
-    "MediaDto": {
-      "type": "object",
-      "properties": {
-        "Id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Created": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "Path": {
-          "type": "string"
-        },
-        "Type": {
-          "format": "int32",
-          "enum": [
-            0,
-            1
-          ],
-          "type": "integer"
-        },
-        "IsDefault": {
-          "type": "boolean"
-        },
-        "Extension": {
-          "type": "string",
-          "readOnly": true
-        },
-        "FileName": {
-          "type": "string",
-          "readOnly": true
         }
       }
     },

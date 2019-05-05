@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class NavigateButton extends StatelessWidget {
+class TaxiButton extends StatelessWidget {
   final PlaceSimpleDto place;
 
-  const NavigateButton({Key key, this.place}) : super(key: key);
+  const TaxiButton({Key key, this.place}) : super(key: key);
 
   void navigate() async {
     var lat = double.parse(place.address.lat);
@@ -22,7 +22,7 @@ class NavigateButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       child: Text(
-        'NAVIGATE',
+        'GO WITH TAXI',
         style: TextStyle(color: Colors.black),
       ),
       onPressed: () => navigate(),

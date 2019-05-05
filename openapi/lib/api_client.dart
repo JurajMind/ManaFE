@@ -43,6 +43,8 @@ class ApiClient {
           return AddressDto.fromJson(value);
         case 'Animations':
           return Animations.fromJson(value);
+        case 'BrandDto':
+          return BrandDto.fromJson(value);
         case 'BrandGroupDto':
           return BrandGroupDto.fromJson(value);
         case 'BusinessHoursDto':
@@ -57,6 +59,10 @@ class ApiClient {
           return Dto.fromJson(value);
         case 'DynamicSmokeStatisticRawDto':
           return DynamicSmokeStatisticRawDto.fromJson(value);
+        case 'FeatureMixCreatorDto':
+          return FeatureMixCreatorDto.fromJson(value);
+        case 'FeatureMixCreatorSimpleDto':
+          return FeatureMixCreatorSimpleDto.fromJson(value);
         case 'FinishedSessionDataDto':
           return FinishedSessionDataDto.fromJson(value);
         case 'FranchiseDto':
@@ -135,6 +141,8 @@ class ApiClient {
           return SmartHookahModelsDbColor.fromJson(value);
         case 'SmartHookahModelsDbPuf':
           return SmartHookahModelsDbPuf.fromJson(value);
+        case 'SmartHookahModelsDbSocialMedia':
+          return SmartHookahModelsDbSocialMedia.fromJson(value);
         case 'SmartHookahModelsForgotPasswordViewModel':
           return SmartHookahModelsForgotPasswordViewModel.fromJson(value);
         case 'SmartHookahModelsOrderExtraDto':

@@ -457,6 +457,15 @@ class ApiClient {
         .getUri(url)
         .then((data) => FinishedSessionDataDto.fromJson(data.data));
   }
+
+  Future<bool> changeMixName(int id, String name) async {
+    var url =
+        Uri.https(baseUrl, '/api/Mixology/RenameMix/$id', {'newName': name});
+    return await _dio
+        .postUri(url)
+        .then((onValue) => true)
+        .catchError((_) => false);
+  }
 }
 
 class ColorDto {

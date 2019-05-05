@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**mixologyGetTobaccoMix**](MixologyApi.md#mixologyGetTobaccoMix) | **GET** /api/Mixology/{id}/GetMix | 
 [**mixologyGetTobaccoMixTastes**](MixologyApi.md#mixologyGetTobaccoMixTastes) | **GET** /api/Mixology/{id}/GetTastes | 
 [**mixologyRemoveMix**](MixologyApi.md#mixologyRemoveMix) | **DELETE** /api/Mixology/RemoveMix | 
+[**mixologyRenameMix**](MixologyApi.md#mixologyRenameMix) | **POST** /api/Mixology/RenameMix/{id} | 
 [**mixologyVote**](MixologyApi.md#mixologyVote) | **POST** /api/Mixology/{id}/Vote | 
 
 
@@ -275,6 +276,49 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **mixologyRenameMix**
+> TobaccoMixSimpleDto mixologyRenameMix(id, newName)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new MixologyApi();
+var id = 56; // int | 
+var newName = newName_example; // String | 
+
+try { 
+    var result = api_instance.mixologyRenameMix(id, newName);
+    print(result);
+} catch (e) {
+    print("Exception when calling MixologyApi->mixologyRenameMix: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**|  | [default to null]
+ **newName** | **String**|  | [default to null]
+
+### Return type
+
+[**TobaccoMixSimpleDto**](TobaccoMixSimpleDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

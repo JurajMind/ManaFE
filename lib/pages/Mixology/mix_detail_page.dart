@@ -1,6 +1,7 @@
+import 'package:app/app/app.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/utils/theme.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:openapi/api.dart';
@@ -18,7 +19,8 @@ class MixDetailPage extends StatefulWidget {
 class MixDetailPageState extends State<MixDetailPage> {
   final double _appBarHeight = 256.0;
   var data = [0.0, 1.0, 1.5, 2.0, 0.0, 0.0, -0.5, -1.0, -0.5, 0.0, 0.0];
-
+  bool editName;
+  TextEditingController nameController;
   Future<bool> deleteConfirn() async {
     return showDialog<bool>(
       context: context,
@@ -77,7 +79,15 @@ class MixDetailPageState extends State<MixDetailPage> {
 
   @override
   initState() {
+    this.editName = false;
+    this.nameController =
+        new TextEditingController(text: widget.mix.name ?? "");
     super.initState();
+  }
+
+  changeName() async {
+    widget.mix.name = nameController.value.text;
+    await App.http.changeMixName(widget.mix.id, nameController.value.text);
   }
 
   @override
@@ -107,19 +117,54 @@ class MixDetailPageState extends State<MixDetailPage> {
             backgroundColor: Colors.transparent,
             flexibleSpace: new FlexibleSpaceBar(
               centerTitle: true,
-              title: Hero(
-                tag: "mix_hero_${widget.mix.id}",
-                child: Text(
-                  widget.mix.name ?? 'No name',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
-                ),
-              ),
+              title: editName
+                  ? Container(
+                      width: 200,
+                      child: TextField(
+                        autofocus: true,
+                        controller: nameController,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            suffixIcon: IconButton(
+                              color: Colors.white,
+                              icon: Icon(Icons.save),
+                              onPressed: () => setState(() {
+                                    editName = false;
+                                    changeName();
+                                  }),
+                            ),
+                            hintText: 'Please enter a mix name'),
+                      ),
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          width: 200,
+                          child: Hero(
+                            tag: "mix_hero_${widget.mix.id}",
+                            child: AutoSizeText(
+                              widget.mix.name ?? 'No name',
+                              maxLines: 1,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 30.0),
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () => setState(() {
+                                editName = true;
+                              }),
+                        )
+                      ],
+                    ),
               background: Container(
                   child: SizedBox.expand(
                       child: Center(
                           child: new charts.PieChart(
                 _createSampleData(),
-                animate: true,
+                animate: false,
                 defaultRenderer: new charts.ArcRendererConfig(
                   arcWidth: 200,
                 ),

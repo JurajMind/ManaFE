@@ -3,6 +3,7 @@ import 'package:app/components/Places/navigate_button.dart';
 import 'package:app/components/Places/open_dropdown.dart';
 import 'package:app/components/Places/place_detail.dart';
 import 'package:app/components/Places/place_map.dart';
+import 'package:app/components/Places/taxi_button.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
@@ -206,12 +207,8 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                                 width: 2.0,
                                 color: Colors.grey,
                               ),
-                              FlatButton(
-                                child: Text(
-                                  'GO WITH UBER',
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                                onPressed: () => print('GO WITH UBER'),
+                              TaxiButton(
+                                place: place,
                               ),
                             ],
                           ),
