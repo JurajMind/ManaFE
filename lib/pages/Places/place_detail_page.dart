@@ -216,41 +216,10 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                         Padding(
                           padding:
                               const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(),
-                                borderRadius: BorderRadius.circular(20.0)),
-                            child: new Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                FlatButton(
-                                    child: Text(
-                                      'BOOK',
-                                      style: TextStyle(color: Colors.black),
-                                    ),
-                                    onPressed: () => _openAddEntryDialog()),
-                                Container(
-                                  height: 35.0,
-                                  width: 2.0,
-                                  color: Colors.grey,
-                                ),
-                                FlatButton(
-                                  child: Text(
-                                    'MENU',
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            settings: RouteSettings(),
-                                            builder: (context) =>
-                                                MenuPage(place: widget.place)));
-                                  },
-                                )
-                              ],
-                            ),
-                          ),
+                          child: new BookMenuWidget(
+                              placeBloc: placeBloc,
+                              place: place,
+                              widget: widget),
                         )
                       ],
                     ),
@@ -267,17 +236,6 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
     ));
   }
 
-  void _openAddEntryDialog() {
-    placeBloc.loadReservationInfo(DateTime.now());
-    Navigator.of(context).push(new MaterialPageRoute<Null>(
-        builder: (BuildContext context) {
-          return new ReservationPage(
-            place: place,
-          );
-        },
-        fullscreenDialog: true));
-  }
-
   dispose() {
     super.dispose();
   }
@@ -289,6 +247,65 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
     } else {
       throw 'Could not launch $url';
     }
+  }
+}
+
+class BookMenuWidget extends StatelessWidget {
+  const BookMenuWidget({
+    Key key,
+    @required this.placeBloc,
+    @required this.place,
+    @required this.widget,
+  }) : super(key: key);
+
+  final PlaceBloc placeBloc;
+  final PlaceSimpleDto place;
+  final PlaceDetailPage widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          border: Border.all(), borderRadius: BorderRadius.circular(20.0)),
+      child: buildMenu(context),
+    );
+  }
+
+  Widget buildMenu(BuildContext context) {
+    if (!(place.haveReservation ?? false)) {
+      if (!place.haveMenu)
+        return Container(
+            width: MediaQuery.of(context).size.width * 0.7,
+            child: BookButton(place: place, placeBloc: placeBloc));
+    }
+
+    return new Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        Expanded(
+            flex: 1, child: BookButton(placeBloc: placeBloc, place: place)),
+        Container(
+          height: 35.0,
+          width: 2.0,
+          color: Colors.grey,
+        ),
+        Expanded(
+          flex: 1,
+          child: FlatButton(
+            child: Text(
+              'MENU',
+              style: TextStyle(color: Colors.black),
+            ),
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  settings: RouteSettings(),
+                  builder: (context) => MenuPage(place: widget.place)));
+            },
+          ),
+        )
+      ],
+    );
   }
 }
 
@@ -381,5 +398,62 @@ class IconUrlButton extends StatelessWidget {
         }
       },
     );
+  }
+}
+
+class BookButton extends StatelessWidget {
+  final PlaceBloc placeBloc;
+  final PlaceSimpleDto place;
+  const BookButton({Key key, this.placeBloc, this.place}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (!(place.haveReservation ?? false) && place.phoneNumber != null)
+      return FlatButton(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(
+                Icons.phone,
+                color: Colors.black,
+              ),
+              Text(
+                'CALL FOR  RESERVATION',
+                style: TextStyle(color: Colors.black),
+              ),
+            ],
+          ),
+          onPressed: () => launch('tel://${place.phoneNumber}'));
+
+    if (place.haveReservation ?? false) {
+      return FlatButton(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(
+                Icons.calendar_view_day,
+                color: Colors.black,
+              ),
+              Text(
+                'RESERVE',
+                style: TextStyle(color: Colors.black),
+              ),
+            ],
+          ),
+          onPressed: () => _openBookingDialog(context));
+    }
+
+    return Container();
+  }
+
+  void _openBookingDialog(BuildContext context) {
+    placeBloc.loadReservationInfo(DateTime.now());
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+        builder: (BuildContext context) {
+          return new ReservationPage(
+            place: place,
+          );
+        },
+        fullscreenDialog: true));
   }
 }

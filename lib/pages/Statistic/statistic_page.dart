@@ -7,6 +7,7 @@ import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/person/statistic_bloc.dart';
 import 'package:app/pages/Places/places_map_page.dart';
+import 'package:app/pages/Places/test_search.dart';
 import 'package:app/pages/Settings/language_selector_page.dart';
 import 'package:app/pages/Statistic/Components/gear_usage_item.dart';
 import 'package:app/pages/Statistic/UserProfile/user_profile_page.dart';
@@ -77,7 +78,7 @@ class _StatisticPageState extends State<StatisticPage> {
                       break;
                     case 'testPlaces':
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => PlacesMapPage()));
+                          builder: (context) => TestSearch()));
                       break;
                   }
                 },
@@ -98,7 +99,7 @@ class _StatisticPageState extends State<StatisticPage> {
                         value: "testPlaces",
                         child: Text('Test places'),
                       ),
-                         PopupMenuItem(
+                      PopupMenuItem(
                         value: "signOut",
                         child: Text('Sign out'),
                       ),

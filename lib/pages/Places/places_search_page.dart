@@ -1,7 +1,12 @@
+import 'package:app/app/app.dart';
+import 'package:app/components/Places/GooglePlaceAutocomplete/google_places.dart';
 import 'package:app/components/Places/place_item.dart';
-import 'package:app/const/theme.dart';
+import 'package:app/module/data_provider.dart';
+import 'package:app/module/places/places_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_webservice/places.dart';
 import 'package:openapi/api.dart';
+import 'package:queries/collections.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PlacesSearchPage extends StatefulWidget {
@@ -11,13 +16,55 @@ class PlacesSearchPage extends StatefulWidget {
   _PlacesSearchPageState createState() => _PlacesSearchPageState();
 }
 
+// to get places detail (lat/lng)
+
 class _PlacesSearchPageState extends State<PlacesSearchPage> {
   BehaviorSubject<List<PlaceSimpleDto>> places;
-
+  PlacesBloc placesBloc;
+  static const kGoogleApiKey = "AIzaSyDv2o2BsQ1IJjdPS3eSjkf7f-_Jt7Fu-MU";
+  GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
+  Mode _mode = Mode.overlay;
+  String currentLocation;
+  String searchString = "";
   @override
   initState() {
     super.initState();
     places = new BehaviorSubject.seeded(widget.places);
+    this.currentLocation = "Current location";
+    new Future.delayed(Duration.zero, () {
+      placesBloc = DataProvider.getData(context).placeBloc;
+    });
+  }
+
+  Future<void> _handlePressButton() async {
+    // show input autocomplete with selected mode
+    // then get the Prediction selected
+    Prediction p = await PlacesAutocomplete.show(
+        context: context,
+        apiKey: kGoogleApiKey,
+        onError: onError,
+        mode: _mode,
+        types: ['(cities)']);
+
+    displayPrediction(p);
+  }
+
+  void onError(PlacesAutocompleteResponse response) {}
+
+  Future<Null> displayPrediction(Prediction p) async {
+    if (p != null) {
+      // get detail (lat/lng)
+      PlacesDetailsResponse detail =
+          await _places.getDetailsByPlaceId(p.placeId);
+      setState(() {
+        this.currentLocation = detail.result.name;
+      });
+      final lat = detail.result.geometry.location.lat;
+      final lng = detail.result.geometry.location.lng;
+      App.http.getNearbyPlaces(lat: lat, lng: lng).then((value) {
+        places.add(value);
+      });
+    }
   }
 
   @override
@@ -53,12 +100,29 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                                   flex: 1,
                                   child: Row(
                                     children: <Widget>[
-                                      Flexible(child: Icon(Icons.search)),
+                                      Flexible(
+                                          child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: Icon(Icons.search),
+                                      )),
                                       Expanded(
-                                          child: TextFormField(
-                                        decoration: InputDecoration(
-                                            disabledBorder:
-                                                OutlineInputBorder()),
+                                          child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 15.0),
+                                        child: TextField(
+                                          onChanged: (data) {
+                                            setState(() {
+                                              this.searchString = data;
+                                            });
+                                          },
+                                          decoration: InputDecoration(
+                                              hintText: 'Search',
+                                              border: InputBorder.none,
+                                              labelStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .body2),
+                                        ),
                                       )),
                                     ],
                                   )),
@@ -70,12 +134,35 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                                     Flexible(
                                       child: IconButton(
                                         icon: Icon(Icons.place),
+                                        onPressed: () {
+                                          setState(() {
+                                            this.currentLocation =
+                                                "Current location";
+                                          });
+                                          var location =
+                                              this.placesBloc.location.value;
+                                          App.http
+                                              .getNearbyPlaces(
+                                                  lat: location.latitude,
+                                                  lng: location.longitude)
+                                              .then((value) {
+                                            places.add(value);
+                                          });
+                                        },
                                       ),
                                     ),
                                     Container(width: 1, color: Colors.white),
                                     Expanded(
-                                        child: TextFormField(
-                                      initialValue: "Curent location",
+                                        child: GestureDetector(
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 4.0),
+                                        child: Text(this.currentLocation,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .display2),
+                                      ),
+                                      onTap: () => _handlePressButton(),
                                     )),
                                   ],
                                 ),
@@ -92,13 +179,23 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
               child: StreamBuilder<List<PlaceSimpleDto>>(
                   stream: this.places,
                   builder: (context, snapshot) {
+                    var data = snapshot.data;
+                    if (data != null && this.searchString != "") {
+                      var dataCollection = Collection(data);
+                      data = dataCollection
+                          .where$1((a, _) => a.name
+                              .toUpperCase()
+                              .contains(this.searchString.toUpperCase()))
+                          .toList();
+                    }
+
                     return snapshot.data == null
                         ? CircularProgressIndicator()
                         : ListView.builder(
-                            itemCount: snapshot.data.length,
+                            itemCount: data.length,
                             itemBuilder: (context, index) {
-                              var data = snapshot.data[index];
-                              return new PlaceItem(place: data);
+                              var place = data[index];
+                              return new PlaceItem(place: place);
                             },
                           );
                   }),
