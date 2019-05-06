@@ -40,7 +40,7 @@ class PlacesAutocompleteField extends StatefulWidget {
     @required this.apiKey,
     this.controller,
     this.leading,
-    this.hint = "Search",
+    this.hint = "Searcht",
     this.trailing,
     this.trailingOnTap,
     this.mode = Mode.fullscreen,

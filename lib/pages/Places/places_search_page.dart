@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app/app/app.dart';
 import 'package:app/components/Places/GooglePlaceAutocomplete/google_places.dart';
 import 'package:app/components/Places/place_item.dart';
@@ -26,8 +28,10 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
   Mode _mode = Mode.overlay;
   String currentLocation;
   String searchString = "";
+  String session = "";
   @override
   initState() {
+    session = Uuid().generateV4();
     super.initState();
     places = new BehaviorSubject.seeded(widget.places);
     this.currentLocation = "Current location";
@@ -39,7 +43,9 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
   Future<void> _handlePressButton() async {
     // show input autocomplete with selected mode
     // then get the Prediction selected
+
     Prediction p = await PlacesAutocomplete.show(
+        sessionToken: session,
         context: context,
         apiKey: kGoogleApiKey,
         onError: onError,
@@ -127,7 +133,7 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                                     ],
                                   )),
                               Container(height: 1, color: Colors.white),
-                              Expanded(
+                              Flexible(
                                 flex: 1,
                                 child: Row(
                                   children: <Widget>[
@@ -152,18 +158,20 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                                       ),
                                     ),
                                     Container(width: 1, color: Colors.white),
-                                    Expanded(
+                                    Flexible(
+                                        flex: 4,
+                                        fit: FlexFit.tight,
                                         child: GestureDetector(
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 4.0),
-                                        child: Text(this.currentLocation,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .display2),
-                                      ),
-                                      onTap: () => _handlePressButton(),
-                                    )),
+                                          onTap: () => _handlePressButton(),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 4.0),
+                                            child: Text(this.currentLocation,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .display2),
+                                          ),
+                                        )),
                                   ],
                                 ),
                               )
@@ -205,4 +213,27 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
       ),
     );
   }
+}
+
+class Uuid {
+  final Random _random = Random();
+
+  String generateV4() {
+    // Generate xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx / 8-4-4-4-12.
+    final int special = 8 + _random.nextInt(4);
+
+    return '${_bitsDigits(16, 4)}${_bitsDigits(16, 4)}-'
+        '${_bitsDigits(16, 4)}-'
+        '4${_bitsDigits(12, 3)}-'
+        '${_printDigits(special, 1)}${_bitsDigits(12, 3)}-'
+        '${_bitsDigits(16, 4)}${_bitsDigits(16, 4)}${_bitsDigits(16, 4)}';
+  }
+
+  String _bitsDigits(int bitCount, int digitCount) =>
+      _printDigits(_generateBits(bitCount), digitCount);
+
+  int _generateBits(int bitCount) => _random.nextInt(1 << bitCount);
+
+  String _printDigits(int value, int count) =>
+      value.toRadixString(16).padLeft(count, '0');
 }

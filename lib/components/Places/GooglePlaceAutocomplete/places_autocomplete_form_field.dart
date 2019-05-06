@@ -48,7 +48,7 @@ class PlacesAutocompleteFormField extends FormField<String> {
     this.controller,
     Icon leading,
     String initialValue,
-    String hint = "Search",
+    String hint = "Searceh",
     Icon trailing,
     VoidCallback trailingOnTap,
     Mode mode = Mode.fullscreen,
