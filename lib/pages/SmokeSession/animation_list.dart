@@ -49,13 +49,13 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
           PageView(
             controller: controller,
             children: <Widget>[
-              devicePresetPickerBuilder(),
-              animationStatePickerBuilder(
-                  smokeSessionBloc.standSettings, SmokeState.idle, 'IDLE'),
-              animationStatePickerBuilder(
-                  smokeSessionBloc.standSettings, SmokeState.puf, 'SMOKING'),
-              animationStatePickerBuilder(
-                  smokeSessionBloc.standSettings, SmokeState.blow, 'PURGE'),
+              //  devicePresetPickerBuilder(),
+              animationStatePickerBuilder(smokeSessionBloc.standSettings,
+                  SmokeState.idle, 'IDLE', false, true),
+              animationStatePickerBuilder(smokeSessionBloc.standSettings,
+                  SmokeState.puf, 'SMOKING', true, true),
+              animationStatePickerBuilder(smokeSessionBloc.standSettings,
+                  SmokeState.blow, 'PURGE', true, false),
             ],
           ),
         ],
@@ -66,7 +66,11 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
   void changeAnimation() {}
 
   StreamBuilder<StandSettings> animationStatePickerBuilder(
-      Stream<StandSettings> stream, SmokeState state, String label) {
+      Stream<StandSettings> stream,
+      SmokeState state,
+      String label,
+      bool left,
+      bool right) {
     return StreamBuilder<StandSettings>(
       initialData: null,
       stream: stream,
@@ -76,6 +80,8 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
               smokeSessionBloc: smokeSessionBloc,
               label: label,
               state: state,
+              haveLeftChevron: left,
+              haveRightChevron: right,
               selectedIndex: snapshot.data.getStateSetting(state) == null
                   ? -1
                   : snapshot.data.getStateSetting(state).animationId,

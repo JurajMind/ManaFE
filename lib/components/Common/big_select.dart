@@ -39,7 +39,6 @@ class BigSelect extends StatelessWidget {
                     children: <Widget>[
                       mixTypeSelector(context, 0),
                       mixTypeSelector(context, 1),
-                      mixTypeSelector(context, 2),
                     ],
                   ),
                 ),

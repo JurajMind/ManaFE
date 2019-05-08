@@ -207,7 +207,7 @@ class _PlacesPageState extends State<PlacesPage> {
 
                 return snapshot.data == null
                     ? CircularProgressIndicator()
-                    : InkWell(
+                    : GestureDetector(
                         child: new Center(
                           child: new Image.network(
                             staticMapUri.toString() +

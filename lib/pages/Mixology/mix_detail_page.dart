@@ -137,17 +137,24 @@ class MixDetailPageState extends State<MixDetailPage> {
                       ),
                     )
                   : Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
                           width: 200,
-                          child: Hero(
-                            tag: "mix_hero_${widget.mix.id}",
-                            child: AutoSizeText(
-                              widget.mix.name ?? 'No name',
-                              maxLines: 1,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 30.0),
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Hero(
+                              tag: "mix_hero_${widget.mix.id}",
+                              child: Container(
+                                child: AutoSizeText(
+                                  widget.mix.name ?? 'No name',
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30.0),
+                                ),
+                              ),
                             ),
                           ),
                         ),

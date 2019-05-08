@@ -15,12 +15,16 @@ class AnimationStatePicker extends StatefulWidget {
   final String label;
   final SmokeState state;
   final ValueChanged<int> onChanged;
+  final bool haveRightChevron;
+  final bool haveLeftChevron;
   AnimationStatePicker(
       {this.smokeSessionBloc,
       this.selectedIndex,
       this.onChanged,
       this.label,
-      this.state});
+      this.state,
+      this.haveRightChevron,
+      this.haveLeftChevron});
 
   @override
   AnimationStatePickerState createState() {
@@ -105,7 +109,11 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
           return new Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Icon(Icons.chevron_left),
+              widget.haveLeftChevron ?? true
+                  ? Icon(Icons.chevron_left)
+                  : Container(
+                      width: 20.0,
+                    ),
               InkWell(
                 onTap: () => showBrDialog(context, setting),
                 child: Container(
@@ -128,11 +136,11 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
                   child: Icon(Icons.shutter_speed),
                 ),
               ),
-              widget.label == "PURGE"
-                  ? Container(
+              widget.haveRightChevron ?? true
+                  ? Icon(Icons.chevron_right)
+                  : Container(
                       width: 20.0,
                     )
-                  : Icon(Icons.chevron_right),
             ],
           );
         });
