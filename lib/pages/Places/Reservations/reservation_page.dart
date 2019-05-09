@@ -123,7 +123,7 @@ class _ReservationPageState extends State<ReservationPage> {
                                   initialData: null,
                                   builder: (context, snapshot) {
                                     if (snapshot.data != null &&
-                                        DateHelper.CompareDate(
+                                        DateHelper.compareDate(
                                             currentDate, DateTime.now())) {
                                       // selectedTime = 4;
                                     } else {}
@@ -323,8 +323,10 @@ class _ReservationPageState extends State<ReservationPage> {
           'Time',
           style: TextStyle(color: Colors.grey),
         ),
-        data == null
-            ? Container()
+        data == null || data.length == 0
+            ? Container(
+              height: 100,
+            )
             : WheelPicker.string(
                 initialValue: selectedTime,
                 stringItems: data.map((s) => s.text).toList(),
@@ -369,7 +371,7 @@ class _ReservationPageState extends State<ReservationPage> {
     selectedTime = value;
     selectedTimeValue = snapShot[value].value;
     selectedTimeLabel = snapShot[value].text;
-  }
+  } 
 
   int canGoNext(List<String> disabledTimes) {
     if (disabledTimes.contains(selectedTimeLabel)) {

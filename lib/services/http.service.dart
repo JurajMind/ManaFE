@@ -154,21 +154,21 @@ class ApiClient {
   }
 
   Future changeColor(String deviceId, HSVColor color) async {
-    var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeColor');
+    var uri = Uri.https(baseUrl, 'api/Device/$deviceId/ChangeColor');
 
     var data = {'Color': ColorDto(color), 'Type': 1};
     print('color ${ColorDto(color).toJson()}');
     var response = await _dio.post(uri.toString(),
         data: data,
         options: Options(
-          contentType: ContentType.JSON,
+          contentType: ContentType.json,
         ));
   }
 
   Future<bool> changeAnimation(
       int animationId, SmokeState type, String deviceId) async {
-    print('ChangeAnimation{$animationId} ${type}');
-    var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeAnimation');
+    print('ChangeAnimation{$animationId} $type');
+    var uri = Uri.https(baseUrl, 'api/Device/$deviceId/ChangeAnimation');
     var data = {
       'AnimationId': animationId,
       'Type': SmokeState.values.indexOf(type)
@@ -176,15 +176,15 @@ class ApiClient {
     var response = await _dio.post(uri.toString(),
         data: data,
         options: Options(
-          contentType: ContentType.JSON,
+          contentType: ContentType.json,
         ));
     debugPrint(response.data.toString());
     return true;
   }
 
   Future<bool> changeSpeed(int speed, SmokeState type, String deviceId) async {
-    debugPrint('Change speed {$speed} ${type}');
-    var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeSpeed');
+    debugPrint('Change speed $speed $type');
+    var uri = Uri.https(baseUrl, 'api/Device/$deviceId/ChangeSpeed');
     var data = {
       'Speed': speed.toString(),
       'Type': SmokeState.values.indexOf(type)
@@ -192,7 +192,7 @@ class ApiClient {
     var response = await _dio.post(uri.toString(),
         data: data,
         options: Options(
-          contentType: ContentType.JSON,
+          contentType: ContentType.json,
         ));
     debugPrint(response.data.toString());
     return true;
@@ -200,8 +200,8 @@ class ApiClient {
 
   Future<bool> changeBrightness(
       int brightness, SmokeState type, String deviceId) async {
-    debugPrint('Change brghtness {$brightness} ${type}');
-    var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeBrightness');
+    debugPrint('Change brghtness $brightness $type');
+    var uri = Uri.https(baseUrl, 'api/Device/$deviceId/ChangeBrightness');
     var data = {
       'Brightness': brightness.toString(),
       'Type': SmokeState.values.indexOf(type)
@@ -209,7 +209,7 @@ class ApiClient {
     var response = await _dio.post(uri.toString(),
         data: data,
         options: Options(
-          contentType: ContentType.JSON,
+          contentType: ContentType.json,
         ));
     debugPrint(response.data.toString());
     return true;
@@ -268,20 +268,11 @@ class ApiClient {
       String sessionCode, SmokeSessionMetaDataDto value) async {
     var url =
         Uri.https(baseUrl, 'api/SmokeSession/${sessionCode}/SaveMetaData');
-    var data = {
-      'Id': value.id,
-      'BowlId': value.bowl != null ? value.bowl.id : null,
-      'PipeId': value.pipe != null ? value.pipe.id : null,
-      'CoalId': value.coal != null ? value.coal.id : null,
-      'HeatManagementId':
-          value.heatManagement != null ? value.heatManagement.id : null,
-      'TobbacoId': value.tobaccoId,
-    };
 
     var response = await _dio.post(url.toString(),
         data: value.toJson(),
         options: Options(
-          contentType: ContentType.JSON,
+          contentType: ContentType.json,
         ));
     debugPrint(response.data.toString());
     return SmokeSessionMetaDataDto.fromJson(response.data);
@@ -298,7 +289,7 @@ class ApiClient {
     var url = Uri.https(
         baseUrl, '/api/Device/Preset/${presetId.toString()}/Use/$sessionId');
     var response = await _dio.post(url.toString(),
-        data: null, options: Options(contentType: ContentType.JSON));
+        data: null, options: Options(contentType: ContentType.json));
 
     return true;
   }
@@ -323,7 +314,7 @@ class ApiClient {
   }
 
   Future<PlaceMenuDto> getPlaceMenu(int id) async {
-    var url = Uri.https(baseUrl, '/api/Places/${id}/Menu');
+    var url = Uri.https(baseUrl, '/api/Places/$id/Menu');
     return await _dio.get(url.toString()).then((data) {
       return PlaceMenuDto.fromJson(data.data);
     });
@@ -349,12 +340,12 @@ class ApiClient {
   }
 
   Future restartDevice(String id) async {
-    var url = Uri.https(baseUrl, '/api/Device/${id}/Restart');
+    var url = Uri.https(baseUrl, '/api/Device/$id/Restart');
     return await _dio.post(url.toString());
   }
 
   Future sleepDevice(String id) async {
-    var url = Uri.https(baseUrl, '/api/Device/${id}/Sleep');
+    var url = Uri.https(baseUrl, '/api/Device/$id/Sleep');
     return await _dio.post(url.toString());
   }
 
@@ -367,7 +358,7 @@ class ApiClient {
   Future deleteMix(TobaccoMixSimpleDto mix) async {
     var url = Uri.https(
         baseUrl, '/api/Mixology/RemoveMix', {'mixId': mix.id.toString()});
-    var result = await _dio.deleteUri(url);
+     await _dio.deleteUri(url);
   }
 
   Future<PersonStatisticsOverallDto> getStatistic(

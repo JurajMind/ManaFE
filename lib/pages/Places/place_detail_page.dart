@@ -1,6 +1,4 @@
-import 'package:app/components/Common/leading_icon.dart';
 import 'package:app/components/Places/navigate_button.dart';
-import 'package:app/components/Places/open_dropdown.dart';
 import 'package:app/components/Places/place_detail.dart';
 import 'package:app/components/Places/place_map.dart';
 import 'package:app/components/Places/taxi_button.dart';
@@ -15,7 +13,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PlaceDetailPage extends StatefulWidget {
@@ -238,15 +235,6 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
 
   dispose() {
     super.dispose();
-  }
-
-  void _launchMapsUrl(double lat, double lon) async {
-    final url = 'https://www.google.com/maps/search/?api=1&query=$lat,$lon';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
   }
 }
 

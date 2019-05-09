@@ -159,6 +159,8 @@ class SmokeSessionBloc {
   }
 
   Future loadSessionData() async {
+    if(this.activeSessionId == null)
+      return;
     var sessionData = await App.http.getInitData(this.activeSessionId);
     standSettings.add(sessionData.item2);
     smokeStatistic.add(sessionData.item1.smokeSessionData);

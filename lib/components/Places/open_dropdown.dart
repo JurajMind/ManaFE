@@ -46,7 +46,6 @@ class _OpenDropdownState extends State<OpenDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    var s = widget.size ?? new Size.fromRadius(15);
 
     if (widget.place.businessHours.length == 0) {
       return Text(

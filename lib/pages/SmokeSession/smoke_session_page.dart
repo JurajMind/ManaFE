@@ -211,6 +211,9 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                         child: StreamBuilder<StandSettings>(
                             stream: dataProvider.smokeSessionBloc.standSettings,
                             builder: (context, snapshot) {
+                              if(snapshot.data == null){
+                                return Container();
+                              }
                               return SmokeColorWheel(
                                 onColorChanged: (color) {
                                   dataProvider.smokeSessionBloc
@@ -326,7 +329,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         builder: (BuildContext context) {
           var code = DataProvider.getData(context).smokeSessionBloc.hookahCode;
           return Container(
-            height: 260,
+            height: 1000,
             child: new Column(
               children: <Widget>[
                 new ListTile(

@@ -65,18 +65,21 @@ class TobaccoWidget extends StatelessWidget {
         child: Text('No tobacco'),
       );
     } else {
-      return Row(
-        children: <Widget>[
-          Container(
-              padding: EdgeInsets.only(right: 4),
-              height: 30,
-              child: Extensions.defaultTypePicture('Tobacco')),
-          Text(
-            tobacco.name,
-            style: Theme.of(context).textTheme.display2,
-          ),
-          Text(' ' + tobacco.brand)
-        ],
+      return Padding(
+        padding: const EdgeInsets.only(left:14),
+        child: Row(
+          children: <Widget>[
+            Container(
+                padding: EdgeInsets.only(right: 4),
+                height: 30,
+                child: Extensions.defaultTypePicture('Tobacco')),
+            Text(
+              tobacco.name,
+              style: Theme.of(context).textTheme.display2,
+            ),
+            Text(' ' + tobacco.brand)
+          ],
+        ),
       );
     }
   }

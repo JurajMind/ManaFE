@@ -192,6 +192,7 @@ class WheelPicker extends StatelessWidget {
     if (stringItems != null) {
       return _stringListView(themeData);
     }
+    return Container();
   }
 
   Widget _stringListView(ThemeData themeData) {

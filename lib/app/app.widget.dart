@@ -30,11 +30,6 @@ class _AppWidgetState extends State<AppWidget> {
   bool _isAuthorized = false;
   bool splash = true;
   AppTranslationsDelegate _newLocaleDelegate;
-  String _debugLabelString = "";
-  String _emailAddress;
-  bool _enableConsentButton = false;
-  // CHANGE THIS parameter to true if you want to test GDPR privacy consent
-  bool _requireConsent = false;
 
   @override
   void initState() {
