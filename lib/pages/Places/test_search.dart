@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:app/app/app.dart';
 import 'package:app/components/Places/GooglePlaceAutocomplete/google_places.dart';
+import 'package:flutter/cupertino.dart';
+
 import 'package:google_maps_webservice/places.dart';
 
 import 'package:flutter/material.dart';
@@ -33,12 +35,7 @@ class _TestSearchState extends State<TestSearch> {
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          RaisedButton(
-            onPressed: _handlePressButton,
-            child: Text("Search places"),
-          ),
-        ],
+        children: <Widget>[RaisedButton(onPressed: () {})],
       )),
     );
   }

@@ -43,6 +43,14 @@ String slotDurationString(int slots) {
   return "${minutes ~/ 60}:${(minutes % 60)}${minutes % 60 == 0 ? "0" : ""}";
 }
 
+int compareTime(DateTime a, DateTime b) {
+  var d1 = DateTime.utc(
+      a.year, a.month, a.day, a.hour, a.minute, a.second, a.millisecond);
+  var d2 = DateTime.utc(
+      a.year, a.month, a.day, b.hour, b.minute, b.second, b.millisecond);
+  return d1.compareTo(d2);
+}
+
 int compareDate(DateTime a, DateTime b) {
   var d1 = DateTime.utc(a.year, a.month, a.day);
   var d2 = DateTime.utc(b.year, b.month, b.day); //you can add today's date here

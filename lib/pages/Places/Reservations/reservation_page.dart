@@ -1,3 +1,4 @@
+import 'package:app/Helpers/date_utils.dart';
 import 'package:app/Helpers/helpers.dart';
 import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
@@ -26,12 +27,27 @@ class ReservationPage extends StatefulWidget {
   }
 }
 
+class ParsedTimes {
+  final DateFormat of = new DateFormat('HH:mm');
+  ParsedTimes.fromTimeSlot(ReservationsTimeSlot timeSlot) {
+    this.timeSlot = timeSlot;
+    var parsedTime = of.parse(timeSlot.text);
+    this.time = parsedTime;
+    this.label = timeSlot.text;
+  }
+
+  ParsedTimes({this.time, this.label, this.timeSlot});
+  DateTime time;
+  String label;
+  ReservationsTimeSlot timeSlot;
+}
+
 class _ReservationPageState extends State<ReservationPage> {
   final _textController = TextEditingController();
 
-  DateTime currentDate;
+  DateTime selectedDate;
   int selectedPersons = 2;
-  int selectedTime;
+  int selectedTime = 0;
   int selectedDuration = 2;
   int selectedTimeValue;
   int _cannotReserve = 0;
@@ -40,19 +56,18 @@ class _ReservationPageState extends State<ReservationPage> {
   PageController pageController = new PageController(initialPage: 0);
   TextEditingController nameTextController;
   TextEditingController noteTextController;
-  BehaviorSubject<List<ReservationsTimeSlot>> reservationInfo =
-      new BehaviorSubject.seeded(new List<ReservationsTimeSlot>());
+  BehaviorSubject<List<ParsedTimes>> reservationInfo =
+      new BehaviorSubject.seeded(new List<ParsedTimes>());
 
-  List<String> _disabledTimes;
-
+  List<ParsedTimes> _disabledTimes;
   @override
   initState() {
     super.initState();
     nameTextController = new TextEditingController();
     noteTextController = new TextEditingController();
-    currentDate = DateTime.now();
-    _disabledTimes = new List<String>();
-    loadReservationInfo(currentDate);
+    selectedDate = DateTime.now();
+    _disabledTimes = new List<ParsedTimes>();
+    loadReservationInfo(selectedDate);
   }
 
   @override
@@ -104,7 +119,7 @@ class _ReservationPageState extends State<ReservationPage> {
                               Card(
                                 elevation: 2.0,
                                 child: new Calendar(
-                                  initialCalendarDateOverride: currentDate,
+                                  initialCalendarDateOverride: selectedDate,
                                   isExpandable: true,
                                   highlightToday: true,
                                   showCalendarPickerIcon: false,
@@ -117,29 +132,26 @@ class _ReservationPageState extends State<ReservationPage> {
                                     }
 
                                     setState(() {
-                                      currentDate = date;
+                                      selectedDate = date;
                                       _cannotReserve = dateCompare;
                                     });
                                   },
                                 ),
                               ),
-                              StreamBuilder<List<ReservationsTimeSlot>>(
+                              StreamBuilder<List<ParsedTimes>>(
                                   stream: reservationInfo,
                                   initialData: null,
                                   builder: (context, snapshot) {
                                     if (snapshot.data != null &&
                                         DateHelper.compareDate(
-                                            currentDate, DateTime.now())) {
+                                            selectedDate, DateTime.now())) {
                                       // selectedTime = 4;
                                     } else {}
                                     if (selectedTime == null &&
                                         snapshot.data != null) {
-                                      selectTime(
-                                          1, snapshot.data, new List<String>());
+                                      selectTime(1, snapshot.data,
+                                          new List<ParsedTimes>());
                                     }
-
-                                    var disabledTimes =
-                                        this.disabledTime(snapshot.data);
 
                                     return Column(
                                       children: <Widget>[
@@ -154,20 +166,28 @@ class _ReservationPageState extends State<ReservationPage> {
                                                   mainAxisSize:
                                                       MainAxisSize.max,
                                                   children: <Widget>[
-                                                    buildPeoplesColumn(),
-                                                    buildTimeColumn(
-                                                        snapshot.data,
-                                                        disabledTimes),
-                                                    buildDurationColumn(
-                                                        snapshot.data,
-                                                        disabledTimes),
+                                                    Expanded(
+                                                        flex: 1,
+                                                        child:
+                                                            buildPeoplesColumn()),
+                                                    Expanded(
+                                                        flex: 1,
+                                                        child: buildTimeColumn(
+                                                            snapshot.data,
+                                                            this._disabledTimes)),
+                                                    Expanded(
+                                                        flex: 1,
+                                                        child: buildDurationColumn(
+                                                            snapshot.data,
+                                                            this._disabledTimes)),
                                                   ],
                                                 ),
                                               ),
                                         Padding(
                                           padding: EdgeInsets.all(10.0),
                                           child: buildNextButton(
-                                              disabledTimes, _cannotReserve),
+                                              this._disabledTimes,
+                                              _cannotReserve),
                                         ),
                                       ],
                                     );
@@ -190,7 +210,7 @@ class _ReservationPageState extends State<ReservationPage> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
                                       LabeledValue(
-                                        formatDate(currentDate,
+                                        formatDate(selectedDate,
                                             [d, '.', m, '.', yyyy]),
                                         label: 'Date:',
                                       ),
@@ -283,13 +303,23 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
   Future loadReservationInfo(DateTime date) async {
-    await App.http
-        .getPlaceReservationInfo(widget.place.id, date)
-        .then((data) => reservationInfo.add(data.timeSlots));
+    await App.http.getPlaceReservationInfo(widget.place.id, date).then((data) {
+      if (compareDate(selectedDate, date) == 0) {
+        setState(() {
+          selectedTime = 2;
+        });
+      }
+      var parsed =
+          data.timeSlots.map((f) => new ParsedTimes.fromTimeSlot(f)).toList();
+
+      this._disabledTimes =
+          this.disabledTimeDuration(parsed, this.selectedDuration);
+      return reservationInfo.add(parsed);
+    });
   }
 
   RoundedButton buildNextButton(
-      List<String> disabledTimes, int _cannotReserve) {
+      List<ParsedTimes> disabledTimes, int _cannotReserve) {
     var next =
         disabledTimes.contains(selectedTimeLabel) || (_cannotReserve < 0);
     return new RoundedButton(
@@ -303,7 +333,7 @@ class _ReservationPageState extends State<ReservationPage> {
     );
   }
 
-  Column buildPeoplesColumn() {
+  Widget buildPeoplesColumn() {
     return Column(
       children: <Widget>[
         Text(
@@ -326,8 +356,15 @@ class _ReservationPageState extends State<ReservationPage> {
     );
   }
 
-  Column buildTimeColumn(
-      List<ReservationsTimeSlot> data, List<String> disabledTimes) {
+  bool timeBefore(int time) {
+    if (selectedDate.isAfter(DateTime.now())) {
+      return false;
+    }
+    return true;
+  }
+
+  Widget buildTimeColumn(
+      List<ParsedTimes> data, List<ParsedTimes> disabledTimes) {
     return Column(
       children: <Widget>[
         Text(
@@ -340,8 +377,8 @@ class _ReservationPageState extends State<ReservationPage> {
               )
             : WheelPicker.string(
                 initialValue: selectedTime,
-                stringItems: data.map((s) => s.text).toList(),
-                disableItems: disabledTimes,
+                stringItems: data.map((s) => s.timeSlot.text).toList(),
+                disableItems: disabledTimes.map((d) => d.label).toList(),
                 onChanged: (value) {
                   Vibrate.feedback(FeedbackType.light);
                   print(value);
@@ -355,7 +392,7 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
   Column buildDurationColumn(
-      List<ReservationsTimeSlot> data, List<String> disabledTimes) {
+      List<ParsedTimes> data, List<ParsedTimes> disabledTimes) {
     return Column(
       children: <Widget>[
         Text(
@@ -370,6 +407,7 @@ class _ReservationPageState extends State<ReservationPage> {
             Vibrate.feedback(FeedbackType.light);
             setState(() {
               selectedDuration = value;
+              this._disabledTimes = this.disabledTimeDuration(data, value);
             });
           },
         )
@@ -377,11 +415,14 @@ class _ReservationPageState extends State<ReservationPage> {
     );
   }
 
-  void selectTime(num value, List<ReservationsTimeSlot> snapShot,
-      List<String> disabledTimes) {
+  void selectTime(
+      num value, List<ParsedTimes> snapShot, List<ParsedTimes> disabledTimes) {
+    if (snapShot == null) {
+      return;
+    }
     selectedTime = value;
-    selectedTimeValue = snapShot[value].value;
-    selectedTimeLabel = snapShot[value].text;
+    selectedTimeValue = snapShot[value].timeSlot.value;
+    selectedTimeLabel = snapShot[value].timeSlot.text;
   }
 
   int canGoNext(List<String> disabledTimes) {
@@ -392,36 +433,26 @@ class _ReservationPageState extends State<ReservationPage> {
     }
   }
 
-  List<String> disabledTime(List<ReservationsTimeSlot> times) {
-    if (times == null) return new List<String>();
-    var duration = selectedDuration + durations[0];
-    return disabledTimeDuration(times, duration);
-  }
+  List<ParsedTimes> disabledTimeDuration(
+      List<ParsedTimes> times, int duration) {
+    if (times == null) return new List<ParsedTimes>();
+    List<ParsedTimes> result = new List<ParsedTimes>();
 
-  List<String> disabledTimeDuration(
-      List<ReservationsTimeSlot> times, int duration) {
-    if (times == null) return new List<String>();
-    List<String> result = new List<String>();
-
-    if (compareDate(currentDate, DateTime.now()) == 0) {
-      final DateFormat of = new DateFormat('HH:mm');
+    if (compareDate(this.selectedDate, DateTime.now()) == 0) {
       for (var time in times) {
-        var parsedTime = of.parse(time.text);
-        var parsedDate = DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, parsedTime.hour, parsedTime.minute);
-        if (parsedDate.compareTo(DateTime.now()) < 0) {
-          result.add(time.text);
+        if (compareTime(time.time, DateTime.now()) < 0) {
+          result.add(time);
         }
       }
     }
-
+    var durationOffset = duration + durations[0];
     for (int i = 0; i < times.length; i++) {
-      for (int j = 0; j < duration; j++) {
+      for (int j = 0; j < durationOffset; j++) {
         if (i + j >= times.length) {
-          result.add(times[i].text);
+          result.add(times[i]);
         } else {
-          if (times[i + j].tablesLeft == 0) {
-            result.add(times[i].text);
+          if (times[i + j].timeSlot.tablesLeft == 0) {
+            result.add(times[i]);
           }
         }
       }
@@ -444,19 +475,6 @@ class _ReservationPageState extends State<ReservationPage> {
     return result.toSet().toList();
   }
 
-  List<String> disabledDurations(List<ReservationsTimeSlot> times) {
-    if (times == null) return new List<String>();
-
-    var result = new List<String>();
-    for (var duration in durations) {
-      var disabled = disabledTimeDuration(times, duration);
-      if (disabled.length == times.length) {
-        result.add(slotDurationString(duration));
-      }
-    }
-    return result;
-  }
-
   _createReservations(BuildContext context, ReservationBloc bloc) async {
     var newReservation = new ReservationDto();
     newReservation.persons = selectedPersons;
@@ -467,8 +485,8 @@ class _ReservationPageState extends State<ReservationPage> {
         slotDurationString(selectedDuration + durations[0]);
     DateFormat df = new DateFormat('HH:mm');
     var time = df.parse(selectedTimeLabel);
-    newReservation.time = new DateTime(currentDate.year, currentDate.month,
-        currentDate.day, time.hour, time.minute);
+    newReservation.time = new DateTime(selectedDate.year, selectedDate.month,
+        selectedDate.day, time.hour, time.minute);
 
     var result = await bloc.createReservation(newReservation);
     Navigator.of(context).pushReplacement(new MaterialPageRoute(

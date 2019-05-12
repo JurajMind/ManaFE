@@ -26,7 +26,7 @@ class _OpenDropdownState extends State<OpenDropdown> {
       var result = new Map<int, String>();
       for (int i = 1; i < 8; i++) {
         var day = new Collection(widget.place.businessHours)
-            .firstOrDefault((d) => d.day == i - 1);
+            .firstOrDefault((d) => d.day == (i) % 7);
         if (day == null) {
           result[i] = "${getShortDayName(i, context)} - closed";
         } else {
@@ -46,7 +46,6 @@ class _OpenDropdownState extends State<OpenDropdown> {
 
   @override
   Widget build(BuildContext context) {
-
     if (widget.place.businessHours.length == 0) {
       return Text(
         'Unknown',

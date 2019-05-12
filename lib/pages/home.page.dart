@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 
 import 'package:app/app/app.dart';
 import 'package:app/components/icon_button_title.dart';
+import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mixology_list.dart';
 import 'package:app/module/person/person_bloc.dart';
@@ -16,8 +18,11 @@ import 'package:app/services/signal_r.dart';
 import 'package:app/support/mana_icons_icons.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'SmokeSession/smoke_session_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -28,6 +33,7 @@ class HomePage extends StatefulWidget {
 
 //Equivalent to var hc = $.hubConnection(url,options);
 final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+StreamSubscription<Flushbar<Map<String, dynamic>>> subscription;
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 2;
@@ -57,8 +63,21 @@ class _HomePageState extends State<HomePage> {
     } catch (e) {}
     _firebaseMessaging.configure(onLaunch: (_) {
       print('notification');
-    }, onMessage: (_) {
-      print('MSG');
+    }, onMessage: (msg) {
+      print('MSG $msg');
+      var title = msg['notification']['title'];
+      var body = msg['notification']['body'];
+      Flushbar(
+        title: title,
+        message: body,
+        icon: Icon(
+          Icons.info_outline,
+          size: 28.0,
+          color: AppColors.colors[2],
+        ),
+        duration: Duration(seconds: 10),
+        leftBarIndicatorColor: AppColors.colors[2],
+      )..show(context);
     });
     tabs = new List<Widget>(5);
     tabFocusNodes = new List<FocusScopeNode>.generate(
@@ -72,6 +91,18 @@ class _HomePageState extends State<HomePage> {
     super.didChangeDependencies();
     smokeSessionBloc = DataProvider.getSmokeSession(context);
     personBloc = DataProvider.getData(context).personBloc;
+    subscription = smokeSessionBloc.notifications.stream.listen((data) {
+      data.show(context).then((data) {
+        if (data == null) return;
+        var sessionId = data['sessionId'] as String;
+        if (sessionId == null) return;
+        Navigator.of(context).push(new MaterialPageRoute(
+          builder: (BuildContext context) {
+            return new SmokeSessionPage(sessionId: sessionId);
+          },
+        ));
+      });
+    });
     _focusActiveTab();
     personBloc.loadMyGear(false);
     personBloc.loadInitData();
@@ -263,6 +294,7 @@ class _HomePageState extends State<HomePage> {
     for (FocusScopeNode focusScopeNode in tabFocusNodes) {
       focusScopeNode.detach();
     }
+    subscription.cancel();
     super.dispose();
   }
 
@@ -288,7 +320,12 @@ class TabNavigator extends StatelessWidget {
   Map<String, WidgetBuilder> _routeBuilders(
     BuildContext context,
   ) {
-    return {'/': (context) => this.tabItem};
+    return {
+      '/': (context) => this.tabItem,
+      '/smokeSesion': (context) {
+        return new SmokeSessionPage();
+      }
+    };
   }
 
   @override

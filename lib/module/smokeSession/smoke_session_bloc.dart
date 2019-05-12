@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app/app/app.dart';
+import 'package:app/const/theme.dart';
 import 'package:app/models/SignalR/device_online.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
@@ -12,6 +13,7 @@ import 'package:app/models/Stand/preset.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:app/utils/color.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
@@ -75,6 +77,9 @@ class SmokeSessionBloc {
   PublishSubject<DevicePreset> futureDevicePreset =
       new PublishSubject<DevicePreset>();
   Observable<DevicePreset> futureDevicePresetDebounce;
+
+  StreamController<Flushbar<Map<String, dynamic>>> notifications =
+      new StreamController<Flushbar<Map<String, dynamic>>>();
 
   setColor(Color color) async {
     sessionColor.add([color, ColorHelper.getOpositeColor(color)]);
@@ -159,8 +164,7 @@ class SmokeSessionBloc {
   }
 
   Future loadSessionData() async {
-    if(this.activeSessionId == null)
-      return;
+    if (this.activeSessionId == null) return;
     var sessionData = await App.http.getInitData(this.activeSessionId);
     standSettings.add(sessionData.item2);
     smokeStatistic.add(sessionData.item1.smokeSessionData);
@@ -310,18 +314,30 @@ class SmokeSessionBloc {
 
   void handleDeviceOnline(ClientMethod f) {
     var data = new DeviceOnline.fromSignal(f.Data);
-    final snackBar = SnackBar(
-      content: Text('${data.deviceName} come online'),
-      action: SnackBarAction(
-        label: 'TO SESSION',
-        onPressed: () => {},
-        // onPressed: () => navigatorKey.currentState
-        //        .push(new MaterialPageRoute(builder: (BuildContext context) {
-        //      return new SmokeSessionPage(sessionId: data.sessionCode);
-        //    })),
+    Flushbar<Map<String, dynamic>> bar;
+    bar = new Flushbar<Map<String, dynamic>>(
+      message: '${data.deviceName} come online',
+      mainButton: FlatButton(
+        onPressed: () {
+          var map = new Map<String, dynamic>();
+          map['sessionId'] = data.sessionCode;
+          bar.dismiss(map);
+        },
+        child: Text(
+          "TO SESSION",
+          style: TextStyle(color: Colors.amber),
+        ),
       ),
+      icon: Icon(
+        Icons.cloud,
+        size: 28.0,
+        color: AppColors.colors[1],
+      ),
+      duration: Duration(seconds: 10),
+      leftBarIndicatorColor: AppColors.colors[1],
     );
-    scaffoldKey.currentState.showSnackBar(snackBar);
+
+    this.notifications.add(bar);
   }
 
   loadPresets() async {

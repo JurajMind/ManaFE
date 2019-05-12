@@ -71,6 +71,11 @@ class App {
       supportedLanguagesCodes.map<Locale>((language) => Locale(language, ""));
 
   static LocaleChangeCallback onLocaleChanged;
+
+  Future onDidReceiveLocalNotification(
+      int id, String title, String body, String payload) {}
+
+  Future onSelectNotification(String payload) {}
 }
 
 typedef void LocaleChangeCallback(Locale locale);
