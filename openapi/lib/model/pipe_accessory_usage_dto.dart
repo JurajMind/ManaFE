@@ -13,11 +13,13 @@ class PipeAccessoryUsageDto {
   int used = null;
   
   bool owned = null;
+  
+  int inMix = null;
   PipeAccessoryUsageDto();
 
   @override
   String toString() {
-    return 'PipeAccessoryUsageDto[id=$id, brandName=$brandName, accName=$accName, type=$type, used=$used, owned=$owned, ]';
+    return 'PipeAccessoryUsageDto[id=$id, brandName=$brandName, accName=$accName, type=$type, used=$used, owned=$owned, inMix=$inMix, ]';
   }
 
   PipeAccessoryUsageDto.fromJson(Map<String, dynamic> json) {
@@ -28,6 +30,7 @@ class PipeAccessoryUsageDto {
     type = json['Type'];
     used = json['Used'];
     owned = json['Owned'];
+    inMix = json['InMix'];
   }
 
   Map<String, dynamic> toJson() {
@@ -37,7 +40,8 @@ class PipeAccessoryUsageDto {
       'AccName': accName,
       'Type': type,
       'Used': used,
-      'Owned': owned
+      'Owned': owned,
+      'InMix': inMix
     };
   }
 

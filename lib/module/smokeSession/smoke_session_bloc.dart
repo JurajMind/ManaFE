@@ -45,19 +45,18 @@ class SmokeSessionBloc {
     return this.smokeState.asBroadcastStream();
   }
 
-  BehaviorSubject<List<String>> recentSessions =
-      new BehaviorSubject<List<String>>.seeded(new List<String>());
+  BehaviorSubject<String> lastSession = new BehaviorSubject<String>();
 
   BehaviorSubject<SmokeSessionMetaDataDto> smokeSessionMetaData =
-      new BehaviorSubject<SmokeSessionMetaDataDto>
-      .seeded(new SmokeSessionMetaDataDto());
+      new BehaviorSubject<SmokeSessionMetaDataDto>.seeded(
+          new SmokeSessionMetaDataDto());
 
   BehaviorSubject<StandSettings> standSettings =
       new BehaviorSubject<StandSettings>.seeded(new StandSettings.empty());
 
   BehaviorSubject<List<StandAnimation>> animations =
-      new BehaviorSubject<List<StandAnimation>>
-      .seeded(new List<StandAnimation>());
+      new BehaviorSubject<List<StandAnimation>>.seeded(
+          new List<StandAnimation>());
 
   BehaviorSubject<List<Color>> sessionColor =
       new BehaviorSubject<List<Color>>();
@@ -155,13 +154,13 @@ class SmokeSessionBloc {
     List<String> params = new List<String>();
     params.add(sessionCode);
     this.signalR.callServerFunction(name: 'JoinSession', params: params);
-    var list = new List<String>.from(recentSessions.value);
-    list.add(sessionCode);
-    //recentSessions.add(list);
+    lastSession.add(sessionCode);
     await loadSessionData();
   }
 
   Future loadSessionData() async {
+    if(this.activeSessionId == null)
+      return;
     var sessionData = await App.http.getInitData(this.activeSessionId);
     standSettings.add(sessionData.item2);
     smokeStatistic.add(sessionData.item1.smokeSessionData);
@@ -183,9 +182,14 @@ class SmokeSessionBloc {
     var selection = this.smokeSessionMetaData.value;
     if (setModel.mix == null) {
       selection.tobacco = setModel.tobacco;
+      selection.tobaccoId = setModel.tobacco.id;
       selection.tobaccoWeight = setModel.weight.toDouble();
+      selection.tobaccoMix = null;
     } else {
       selection.tobaccoMix = setModel.mix;
+      if (setModel.mix.id != null) {
+        selection.tobaccoId = setModel.mix.id;
+      }
       selection.tobacco = null;
     }
 
@@ -282,6 +286,10 @@ class SmokeSessionBloc {
             this.loadSessionData();
             break;
           }
+        case 'settingChanged':
+          {
+            handleSettingChanged(f);
+          }
       }
     });
   }
@@ -334,6 +342,13 @@ class SmokeSessionBloc {
     this.signalR.callServerFunction(name: 'LeaveSession', params: params);
     animations.add(null);
   }
+
+  void handleSettingChanged(ClientMethod f) {
+    var newSettingJson =
+        StandSettings.fromJson(f.Data[0] as Map<String, dynamic>);
+
+    this.standSettings.add(newSettingJson);
+  }
 }
 
 class PuffChangeDataModel extends SignalData {
@@ -352,17 +367,6 @@ class PuffChangeDataModel extends SignalData {
       }
     }
   }
-}
-
-Duration stringToDuration(String sDuration) {
-  var chunks = sDuration.split(':');
-  var parts = chunks.map((f) {
-    if (f.startsWith('0')) {
-      return int.parse(f[1]);
-    }
-    return int.parse(f);
-  }).toList();
-  return new Duration(hours: parts[0], minutes: parts[1], seconds: parts[2]);
 }
 
 abstract class SignalData {

@@ -2,27 +2,11 @@ part of openapi.api;
 
 class PlaceDto {
   
-  int id = null;
+  String instagram = null;
   
-  String name = null;
-  
-  String logoPath = null;
-  
-  String shortDescriptions = null;
+  String url = null;
   
   String descriptions = null;
-  
-  String friendlyUrl = null;
-  
-  int addressId = null;
-  
-  AddressDto address = null;
-  
-  List<BusinessHoursDto> businessHours = [];
-  
-  String phoneNumber = null;
-  
-  String facebook = null;
   
   double baseHookahPrice = null;
   
@@ -34,7 +18,7 @@ class PlaceDto {
   
   List<MediaDto> medias = [];
   
-  bool allowReservation = null;
+  bool haveReservation = null;
   
   int minimumReservationTime = null;
   
@@ -43,61 +27,101 @@ class PlaceDto {
   FranchiseDto franchise = null;
   
   List<String> flags = [];
+  
+  int id = null;
+  
+  String name = null;
+  
+  String shortDescriptions = null;
+  
+  String friendlyUrl = null;
+  
+  String logoPath = null;
+  
+  AddressDto address = null;
+  
+  List<BusinessHoursDto> businessHours = [];
+  
+  int rating = null;
+  
+  MediaDto media = null;
+  
+  String phoneNumber = null;
+  
+  String facebook = null;
+  
+  bool haveMenu = null;
+  
+  bool haveOrders = null;
+  
+  bool haveMana = null;
   PlaceDto();
 
   @override
   String toString() {
-    return 'PlaceDto[id=$id, name=$name, logoPath=$logoPath, shortDescriptions=$shortDescriptions, descriptions=$descriptions, friendlyUrl=$friendlyUrl, addressId=$addressId, address=$address, businessHours=$businessHours, phoneNumber=$phoneNumber, facebook=$facebook, baseHookahPrice=$baseHookahPrice, currency=$currency, seats=$seats, tobaccoReviews=$tobaccoReviews, medias=$medias, allowReservation=$allowReservation, minimumReservationTime=$minimumReservationTime, franchiseId=$franchiseId, franchise=$franchise, flags=$flags, ]';
+    return 'PlaceDto[instagram=$instagram, url=$url, descriptions=$descriptions, baseHookahPrice=$baseHookahPrice, currency=$currency, seats=$seats, tobaccoReviews=$tobaccoReviews, medias=$medias, haveReservation=$haveReservation, minimumReservationTime=$minimumReservationTime, franchiseId=$franchiseId, franchise=$franchise, flags=$flags, id=$id, name=$name, shortDescriptions=$shortDescriptions, friendlyUrl=$friendlyUrl, logoPath=$logoPath, address=$address, businessHours=$businessHours, rating=$rating, media=$media, phoneNumber=$phoneNumber, facebook=$facebook, haveMenu=$haveMenu, haveOrders=$haveOrders, haveMana=$haveMana, ]';
   }
 
   PlaceDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['Id'];
-    name = json['Name'];
-    logoPath = json['LogoPath'];
-    shortDescriptions = json['ShortDescriptions'];
+    instagram = json['Instagram'];
+    url = json['Url'];
     descriptions = json['Descriptions'];
-    friendlyUrl = json['FriendlyUrl'];
-    addressId = json['AddressId'];
-    address = new AddressDto.fromJson(json['Address']);
-    businessHours = BusinessHoursDto.listFromJson(json['BusinessHours']);
-    phoneNumber = json['PhoneNumber'];
-    facebook = json['Facebook'];
     baseHookahPrice = json['BaseHookahPrice'];
     currency = json['Currency'];
     seats = SeatDto.listFromJson(json['Seats']);
     tobaccoReviews = TobaccoReviewDto.listFromJson(json['TobaccoReviews']);
     medias = MediaDto.listFromJson(json['Medias']);
-    allowReservation = json['AllowReservation'];
+    haveReservation = json['HaveReservation'];
     minimumReservationTime = json['MinimumReservationTime'];
     franchiseId = json['FranchiseId'];
     franchise = new FranchiseDto.fromJson(json['Franchise']);
     flags = ((json['Flags'] ?? []) as List).map((item) => item as String).toList();
+    id = json['Id'];
+    name = json['Name'];
+    shortDescriptions = json['ShortDescriptions'];
+    friendlyUrl = json['FriendlyUrl'];
+    logoPath = json['LogoPath'];
+    address = new AddressDto.fromJson(json['Address']);
+    businessHours = BusinessHoursDto.listFromJson(json['BusinessHours']);
+    rating = json['Rating'];
+    media = new MediaDto.fromJson(json['Media']);
+    phoneNumber = json['PhoneNumber'];
+    facebook = json['Facebook'];
+    haveMenu = json['HaveMenu'];
+    haveOrders = json['HaveOrders'];
+    haveMana = json['HaveMana'];
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'Id': id,
-      'Name': name,
-      'LogoPath': logoPath,
-      'ShortDescriptions': shortDescriptions,
+      'Instagram': instagram,
+      'Url': url,
       'Descriptions': descriptions,
-      'FriendlyUrl': friendlyUrl,
-      'AddressId': addressId,
-      'Address': address,
-      'BusinessHours': businessHours,
-      'PhoneNumber': phoneNumber,
-      'Facebook': facebook,
       'BaseHookahPrice': baseHookahPrice,
       'Currency': currency,
       'Seats': seats,
       'TobaccoReviews': tobaccoReviews,
       'Medias': medias,
-      'AllowReservation': allowReservation,
+      'HaveReservation': haveReservation,
       'MinimumReservationTime': minimumReservationTime,
       'FranchiseId': franchiseId,
       'Franchise': franchise,
-      'Flags': flags
+      'Flags': flags,
+      'Id': id,
+      'Name': name,
+      'ShortDescriptions': shortDescriptions,
+      'FriendlyUrl': friendlyUrl,
+      'LogoPath': logoPath,
+      'Address': address,
+      'BusinessHours': businessHours,
+      'Rating': rating,
+      'Media': media,
+      'PhoneNumber': phoneNumber,
+      'Facebook': facebook,
+      'HaveMenu': haveMenu,
+      'HaveOrders': haveOrders,
+      'HaveMana': haveMana
     };
   }
 

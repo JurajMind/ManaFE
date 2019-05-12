@@ -58,11 +58,11 @@ class PresetPickerState extends State<PresetPicker> {
         builder: (context, snapshot) => snapshot.data.length == 0
             ? Container()
             : ListWheelScrollView(
-                itemExtent: 50.0,
+                itemExtent: 70.0,
                 controller: scrollController,
                 clipToSize: true,
                 diameterRatio: 10.0,
-                perspective: 0.01,
+                perspective: 0.005,
                 onSelectedItemChanged: (int index) {
                   if (index == 0) {
                     print('fake');

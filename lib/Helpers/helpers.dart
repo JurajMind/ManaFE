@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app/app/app.dart';
 import 'package:app/support/validators/base.validator.dart';
 import 'package:flutter/material.dart';
@@ -45,4 +47,21 @@ int compareDate(DateTime a, DateTime b) {
   var d1 = DateTime.utc(a.year, a.month, a.day);
   var d2 = DateTime.utc(b.year, b.month, b.day); //you can add today's date here
   return d1.compareTo(d2);
+}
+
+bool isTablet(MediaQueryData query) {
+  var size = query.size;
+  var diagonal = sqrt((size.width * size.width) + (size.height * size.height));
+
+  /*
+    print(
+      'size: ${size.width}x${size.height}\n'
+      'pixelRatio: ${query.devicePixelRatio}\n'
+      'pixels: ${size.width * query.devicePixelRatio}x${size.height * query.devicePixelRatio}\n'
+      'diagonal: $diagonal'
+    );
+    */
+
+  var isTablet = diagonal > 1100.0;
+  return isTablet;
 }

@@ -65,7 +65,7 @@ class ApiClient {
 
   _handleAuthError(
       String tokenHeader, RequestOptions options, String token) async {
-      log('error handling');
+    log('error handling');
     if (tokenHeader != options.headers["Authorization"]) {
       options.headers["Authorization"] = tokenHeader;
       //repeat
@@ -74,17 +74,13 @@ class ApiClient {
     _dio.lock();
     _dio.interceptors.responseLock.lock();
     _dio.interceptors.errorLock.lock();
-    if (!await _authorize.refreshToken()) {
+    await _authorize.refreshToken().then((d) {
+      options.headers["Authorization"] = 'Bearer $d';
       _dio.unlock();
       _dio.interceptors.responseLock.unlock();
       _dio.interceptors.errorLock.unlock();
-    }
-    token = await _authorize.getToken();
-    options.headers["Authorization"] = 'Bearer $token';
-    _dio.unlock();
-    _dio.interceptors.responseLock.unlock();
-    _dio.interceptors.errorLock.unlock();
-    return _dio.request(options.path, options: options);
+      return _dio.request(options.path, options: options);
+    });
   }
 
   Future<dynamic> _(Uri uri) async {
@@ -115,7 +111,7 @@ class ApiClient {
   Future<List<MixCreator>> getMixCreator() async {
     var url = Uri.https(baseUrl, '/api/Mixology/GetMixCreators');
     return _getJson(url)
-        .then((json) => MixCreators.fromJson(json))
+        .then((json) => MixCreatorsDto.fromJson(json))
         .then((m) => m.mixCreatorsList);
   }
 
@@ -140,10 +136,11 @@ class ApiClient {
   Future<List<PlaceSimpleDto>> getNearbyPlaces({double lat, double lng}) {
     Map<String, String> queryParameters = new Map<String, String>();
     if (lat != null && lng != null) {
-      queryParameters['lat'] = '0'; // lat.toString();
-      queryParameters['lng'] = '0'; //lng.toString();
+      queryParameters['lat'] = lat == -200 ? null : lat.toString();
+      queryParameters['lng'] = lng == -200 ? null : lng.toString();
       queryParameters['page'] = '0';
-      queryParameters['pageSize'] = '10';
+      queryParameters['pageSize'] = '100';
+      queryParameters['radius'] = '50';
     }
     var uri = Uri.https(baseUrl, 'api/Places/SearchNearby', queryParameters);
 
@@ -157,21 +154,21 @@ class ApiClient {
   }
 
   Future changeColor(String deviceId, HSVColor color) async {
-    var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeColor');
+    var uri = Uri.https(baseUrl, 'api/Device/$deviceId/ChangeColor');
 
     var data = {'Color': ColorDto(color), 'Type': 1};
     print('color ${ColorDto(color).toJson()}');
     var response = await _dio.post(uri.toString(),
         data: data,
         options: Options(
-          contentType: ContentType.JSON,
+          contentType: ContentType.json,
         ));
   }
 
   Future<bool> changeAnimation(
       int animationId, SmokeState type, String deviceId) async {
-    print('ChangeAnimation{$animationId} ${type}');
-    var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeAnimation');
+    print('ChangeAnimation{$animationId} $type');
+    var uri = Uri.https(baseUrl, 'api/Device/$deviceId/ChangeAnimation');
     var data = {
       'AnimationId': animationId,
       'Type': SmokeState.values.indexOf(type)
@@ -179,15 +176,15 @@ class ApiClient {
     var response = await _dio.post(uri.toString(),
         data: data,
         options: Options(
-          contentType: ContentType.JSON,
+          contentType: ContentType.json,
         ));
     debugPrint(response.data.toString());
     return true;
   }
 
   Future<bool> changeSpeed(int speed, SmokeState type, String deviceId) async {
-    debugPrint('Change speed {$speed} ${type}');
-    var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeSpeed');
+    debugPrint('Change speed $speed $type');
+    var uri = Uri.https(baseUrl, 'api/Device/$deviceId/ChangeSpeed');
     var data = {
       'Speed': speed.toString(),
       'Type': SmokeState.values.indexOf(type)
@@ -195,7 +192,7 @@ class ApiClient {
     var response = await _dio.post(uri.toString(),
         data: data,
         options: Options(
-          contentType: ContentType.JSON,
+          contentType: ContentType.json,
         ));
     debugPrint(response.data.toString());
     return true;
@@ -203,8 +200,8 @@ class ApiClient {
 
   Future<bool> changeBrightness(
       int brightness, SmokeState type, String deviceId) async {
-    debugPrint('Change brghtness {$brightness} ${type}');
-    var uri = Uri.https(baseUrl, 'api/Device/${deviceId}/ChangeBrightness');
+    debugPrint('Change brghtness $brightness $type');
+    var uri = Uri.https(baseUrl, 'api/Device/$deviceId/ChangeBrightness');
     var data = {
       'Brightness': brightness.toString(),
       'Type': SmokeState.values.indexOf(type)
@@ -212,7 +209,7 @@ class ApiClient {
     var response = await _dio.post(uri.toString(),
         data: data,
         options: Options(
-          contentType: ContentType.JSON,
+          contentType: ContentType.json,
         ));
     debugPrint(response.data.toString());
     return true;
@@ -229,10 +226,11 @@ class ApiClient {
   Future<List<PipeAccesorySimpleDto>> searchGear(
       String search, String type, int page, int pageSize,
       {String searchType = "All"}) {
-    var url = Uri.https(baseUrl, 'api/Gear/$type/Search/$search', {
+    var url = Uri.https(baseUrl, 'api/Gear/Search/$search', {
       "page": page.toString(),
       "pageSize": pageSize.toString(),
-      "searchType": searchType
+      "searchType": searchType,
+      "type": type
     });
 
     return _getJson(url).then((json) {
@@ -260,24 +258,21 @@ class ApiClient {
     return _getJson(url).then((data) => PersonActiveDataDto.fromJson(data));
   }
 
+  Future<List<SmokeSessionSimpleDto>> getPersonSessions() async {
+    var url = Uri.https(baseUrl, 'api/Person/Sessions');
+    return _getJson(url)
+        .then((data) => SmokeSessionSimpleDto.listFromJson(data));
+  }
+
   Future<SmokeSessionMetaDataDto> postMetadata(
       String sessionCode, SmokeSessionMetaDataDto value) async {
     var url =
         Uri.https(baseUrl, 'api/SmokeSession/${sessionCode}/SaveMetaData');
-    var data = {
-      'Id': value.id,
-      'BowlId': value.bowl != null ? value.bowl.id : null,
-      'PipeId': value.pipe != null ? value.pipe.id : null,
-      'CoalId': value.coal != null ? value.coal.id : null,
-      'HeatManagementId':
-          value.heatManagement != null ? value.heatManagement.id : null,
-      'TobbacoId': value.tobaccoId,
-    };
 
     var response = await _dio.post(url.toString(),
         data: value.toJson(),
         options: Options(
-          contentType: ContentType.JSON,
+          contentType: ContentType.json,
         ));
     debugPrint(response.data.toString());
     return SmokeSessionMetaDataDto.fromJson(response.data);
@@ -294,7 +289,7 @@ class ApiClient {
     var url = Uri.https(
         baseUrl, '/api/Device/Preset/${presetId.toString()}/Use/$sessionId');
     var response = await _dio.post(url.toString(),
-        data: null, options: Options(contentType: ContentType.JSON));
+        data: null, options: Options(contentType: ContentType.json));
 
     return true;
   }
@@ -319,7 +314,7 @@ class ApiClient {
   }
 
   Future<PlaceMenuDto> getPlaceMenu(int id) async {
-    var url = Uri.https(baseUrl, '/api/Places/${id}/Menu');
+    var url = Uri.https(baseUrl, '/api/Places/$id/Menu');
     return await _dio.get(url.toString()).then((data) {
       return PlaceMenuDto.fromJson(data.data);
     });
@@ -329,7 +324,7 @@ class ApiClient {
       int id, DateTime date) async {
     var url = Uri.https(baseUrl, '/api/Reservations/$id/Usage');
     var formatter = new DateFormat('yyyy-MM-dd');
-    String formatted = formatter.format(date);
+    String formatted = formatter.format(date ?? DateTime.now());
     return await _dio
         .get(url.toString(), queryParameters: {'date': formatted}).then((data) {
       return SmartHookahServicesPlaceReservationUsageDto.fromJson(data.data);
@@ -337,19 +332,20 @@ class ApiClient {
   }
 
   Future<PlaceDto> getPlaceInfo(int id) async {
-    var url = Uri.https(baseUrl, '/api/Places/GetPlaceInfo/${id}');
+    var url =
+        Uri.https(baseUrl, '/api/Places/GetPlaceInfo/', {"id": id.toString()});
     return await _dio
         .get(url.toString())
         .then((data) => PlaceDto.fromJson(data.data));
   }
 
   Future restartDevice(String id) async {
-    var url = Uri.https(baseUrl, '/api/Device/${id}/Restart');
+    var url = Uri.https(baseUrl, '/api/Device/$id/Restart');
     return await _dio.post(url.toString());
   }
 
   Future sleepDevice(String id) async {
-    var url = Uri.https(baseUrl, '/api/Device/${id}/Sleep');
+    var url = Uri.https(baseUrl, '/api/Device/$id/Sleep');
     return await _dio.post(url.toString());
   }
 
@@ -362,7 +358,7 @@ class ApiClient {
   Future deleteMix(TobaccoMixSimpleDto mix) async {
     var url = Uri.https(
         baseUrl, '/api/Mixology/RemoveMix', {'mixId': mix.id.toString()});
-    var result = await _dio.deleteUri(url);
+     await _dio.deleteUri(url);
   }
 
   Future<PersonStatisticsOverallDto> getStatistic(
@@ -415,6 +411,17 @@ class ApiClient {
         .then((data) => PersonInfoDto.fromJson(data.data));
   }
 
+  Future updateNotificationToken(String token) async {
+    var url =
+        Uri.https(baseUrl, '/api/Person/NotificationToken', {'token': token});
+    await _dio.putUri(url);
+  }
+
+  Future testNotification() async {
+    var url = Uri.https(baseUrl, '/api/Person/TestNotification');
+    await _dio.post(url.toString());
+  }
+
   Future<ReservationDetailDto> reservationDetail(int id) async {
     var url = Uri.https(baseUrl, '/api/Reservations/$id/Detail');
     return await _dio
@@ -425,6 +432,30 @@ class ApiClient {
   Future cancelReservation(int id) async {
     var url = Uri.https(baseUrl, '/api/Reservations/$id/UpdateState');
     return await _dio.post(url.toString(), data: 1);
+  }
+
+  Future<List<SmartHookahModelsDbPuf>> getPufs(int id) async {
+    var url =
+        Uri.https(baseUrl, '/api/SmokeSession/GetPufs', {'id': id.toString()});
+    return await _dio.getUri(url).then(
+        (data) => SmartHookahModelsDbPuf.listFromJson(data.data).toList());
+  }
+
+  Future<FinishedSessionDataDto> getFinishedData(int id) async {
+    var url = Uri.https(
+        baseUrl, '/api/SmokeSession/GetFinishedData', {'id': id.toString()});
+    return await _dio
+        .getUri(url)
+        .then((data) => FinishedSessionDataDto.fromJson(data.data));
+  }
+
+  Future<bool> changeMixName(int id, String name) async {
+    var url =
+        Uri.https(baseUrl, '/api/Mixology/RenameMix/$id', {'newName': name});
+    return await _dio
+        .postUri(url)
+        .then((onValue) => true)
+        .catchError((_) => false);
   }
 }
 

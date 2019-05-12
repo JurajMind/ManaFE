@@ -5,7 +5,7 @@
 import 'package:openapi/api.dart';
 ```
 
-All URIs are relative to *https://devmana.azurewebsites.net*
+All URIs are relative to *https://localhost:44324*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -191,7 +191,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **placeCalendarGetPlaceCalendar**
-> PlaceCalendar placeCalendarGetPlaceCalendar(placeId, privacyType)
+> PlaceCalendarDto placeCalendarGetPlaceCalendar(placeId, privacyType)
 
 
 
@@ -220,7 +220,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PlaceCalendar**](PlaceCalendar.md)
+[**PlaceCalendarDto**](PlaceCalendarDto.md)
 
 ### Authorization
 

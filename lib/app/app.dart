@@ -6,8 +6,9 @@ import 'package:app/routes/app.routes.dart';
 import 'package:app/routes/auth.routes.dart';
 import 'package:app/services/http.service.dart';
 import 'package:fluro/fluro.dart';
-import 'package:map_view/map_view.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
+
+void main() => runApp(new AppWidget());
 
 class App {
   // Application environment.
@@ -58,7 +59,6 @@ class App {
 
   // App run.
   void run(runApp) {
-    MapView.setApiKey(App.googleApiKeys);
     runApp(new AppWidget());
   }
 

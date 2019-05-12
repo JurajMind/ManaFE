@@ -16,9 +16,15 @@ ThemeData buildDarkTheme() {
       textTheme: ButtonTextTheme.primary,
     ),
     textTheme: TextTheme(
-      headline: TextStyle(fontSize: 42.0, fontWeight: FontWeight.w700,   fontFamily: 'Montserrat'),
-      title: TextStyle(fontSize: 36.0, fontWeight: FontWeight.w700,   fontFamily: 'Montserrat'),
-      body1: TextStyle(fontSize: 14.0,    fontFamily: 'Montserrat'),
+      headline: TextStyle(
+          fontSize: 42.0,
+          fontWeight: FontWeight.w700,
+          fontFamily: 'Montserrat'),
+      title: TextStyle(
+          fontSize: 36.0,
+          fontWeight: FontWeight.w700,
+          fontFamily: 'Montserrat'),
+      body1: TextStyle(fontSize: 14.0, fontFamily: 'Montserrat'),
       subtitle: TextStyle(
           fontSize: 16.0,
           fontWeight: FontWeight.w700,
@@ -39,6 +45,11 @@ ThemeData buildDarkTheme() {
           fontSize: 14.0,
           fontWeight: FontWeight.w700,
           fontFamily: 'Montserrat'),
+      caption: TextStyle(fontSize: 12.0, fontFamily: 'Montserrat'),
+      body2: TextStyle(
+          fontSize: 30.0,
+          fontWeight: FontWeight.w700,
+          fontFamily: 'Montserrat'),
     ),
     primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
     accentTextTheme: _buildTextTheme(base.accentTextTheme),
@@ -50,13 +61,4 @@ TextTheme _buildTextTheme(TextTheme base) {
     title: base.title
         .copyWith(fontFamily: 'Montserrat', fontWeight: FontWeight.w700),
   );
-}
-
-class AppColors {
-  static const List<Color> colors = [
-    Colors.red,
-    Colors.blue,
-    Colors.yellow,
-    Colors.pink
-  ];
 }

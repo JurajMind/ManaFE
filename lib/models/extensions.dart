@@ -6,13 +6,12 @@ import 'package:openapi/api.dart';
 
 class Extensions {
   static String getPlaceImage(PlaceSimpleDto place) {
-    var image = place?.medias?.first?.path;
+    var image = place?.media?.path;
     if (image == null) {
       return 'https://${App.baseUri}/Content/Placeholder/place.jpg';
     }
     return 'https://${App.baseUri}${image}original.jpg';
   }
-
 
   static String getFullPlaceImage(PlaceDto place) {
     var image = place?.medias?.first?.path;
@@ -22,8 +21,8 @@ class Extensions {
     return 'https://${App.baseUri}${image}original.jpg';
   }
 
-  static String adress(SmartHookahModelsDbAddress adress) {
-    return '${adress.street} ${adress.number} ${adress.city}';
+  static String adress(AddressDto adress) {
+    return '${adress?.street ?? ''} ${adress?.number ?? ''} ${adress?.city ?? ''}';
   }
 
   static Widget accesoryPicture(PipeAccesorySimpleDto accesory) {
@@ -59,18 +58,28 @@ class Extensions {
   }
 
   static Widget defaultAccesoryPicture(PipeAccesorySimpleDto accesory) {
+    return defaultTypePicture(accesory.type);
+  }
+
+  static Widget defaultTypePicture(String type) {
     var imgPath = '';
-    switch (accesory.type) {
+    switch (type) {
       case 'Bowl':
         imgPath = 'images/types/bowl.png';
         break;
       case 'Coal':
         imgPath = 'images/types/coal.png';
         break;
+      case 'Coals':
+        imgPath = 'images/types/coal.png';
+        break;
       case 'HeatManagement':
         imgPath = 'images/types/heatmanagment.png';
         break;
       case 'HeatManagment':
+        imgPath = 'images/types/heatmanagment.png';
+        break;
+      case 'H.M.S':
         imgPath = 'images/types/heatmanagment.png';
         break;
       case 'Tobacco':

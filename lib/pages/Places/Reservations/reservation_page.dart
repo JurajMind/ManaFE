@@ -1,4 +1,5 @@
 import 'package:app/Helpers/helpers.dart';
+import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Callendar/flutter_calendar.dart';
 import 'package:app/components/Common/labeled_value.dart';
@@ -11,6 +12,7 @@ import 'package:app/utils/date_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:openapi/api.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:vibrate/vibrate.dart';
 import 'package:date_format/date_format.dart';
 
@@ -38,6 +40,8 @@ class _ReservationPageState extends State<ReservationPage> {
   PageController pageController = new PageController(initialPage: 0);
   TextEditingController nameTextController;
   TextEditingController noteTextController;
+  BehaviorSubject<List<ReservationsTimeSlot>> reservationInfo =
+      new BehaviorSubject.seeded(new List<ReservationsTimeSlot>());
 
   List<String> _disabledTimes;
 
@@ -48,6 +52,7 @@ class _ReservationPageState extends State<ReservationPage> {
     noteTextController = new TextEditingController();
     currentDate = DateTime.now();
     _disabledTimes = new List<String>();
+    loadReservationInfo(currentDate);
   }
 
   @override
@@ -103,12 +108,12 @@ class _ReservationPageState extends State<ReservationPage> {
                                   isExpandable: true,
                                   highlightToday: true,
                                   showCalendarPickerIcon: false,
-                                  onDateSelected: (date) {
+                                  onDateSelected: (date) async {
                                     var dateCompare =
                                         compareDate(date, DateTime.now());
 
                                     if (dateCompare >= 0) {
-                                      placeBloc.loadReservationInfo(date);
+                                      await loadReservationInfo(date);
                                     }
 
                                     setState(() {
@@ -119,11 +124,11 @@ class _ReservationPageState extends State<ReservationPage> {
                                 ),
                               ),
                               StreamBuilder<List<ReservationsTimeSlot>>(
-                                  stream: placeBloc.reservationInfo,
+                                  stream: reservationInfo,
                                   initialData: null,
                                   builder: (context, snapshot) {
                                     if (snapshot.data != null &&
-                                        DateHelper.CompareDate(
+                                        DateHelper.compareDate(
                                             currentDate, DateTime.now())) {
                                       // selectedTime = 4;
                                     } else {}
@@ -277,6 +282,12 @@ class _ReservationPageState extends State<ReservationPage> {
     );
   }
 
+  Future loadReservationInfo(DateTime date) async {
+    await App.http
+        .getPlaceReservationInfo(widget.place.id, date)
+        .then((data) => reservationInfo.add(data.timeSlots));
+  }
+
   RoundedButton buildNextButton(
       List<String> disabledTimes, int _cannotReserve) {
     var next =
@@ -323,8 +334,10 @@ class _ReservationPageState extends State<ReservationPage> {
           'Time',
           style: TextStyle(color: Colors.grey),
         ),
-        data == null
-            ? Container()
+        data == null || data.length == 0
+            ? Container(
+                height: 100,
+              )
             : WheelPicker.string(
                 initialValue: selectedTime,
                 stringItems: data.map((s) => s.text).toList(),

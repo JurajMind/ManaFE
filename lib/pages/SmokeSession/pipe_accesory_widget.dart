@@ -1,4 +1,5 @@
 import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
+import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
@@ -24,9 +25,18 @@ class PipeAccesoryWidget extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(
-            child: Text(
-              this.type,
-              style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+            child: Row(
+              children: <Widget>[
+                Container(
+                    padding: EdgeInsets.only(right: 4),
+                    height: 30,
+                    child: Extensions.defaultTypePicture(this.type)),
+                Text(
+                  this.type,
+                  style: new TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16.0),
+                ),
+              ],
             ),
             flex: 1,
           ),
@@ -36,21 +46,24 @@ class PipeAccesoryWidget extends StatelessWidget {
                 : Text('No data'),
             flex: 2,
           ),
-          IconButton(
-              icon: Icon(Icons.add_box),
-              onPressed: () async {
-                showModalBottomSheet<void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Theme(
-                              data: Theme.of(context).copyWith(canvasColor: Colors.teal),
-                                              child: new MetadataBottomSheet(
-                            dataProvider: this.dataProvider),
-                      );
-                    }).then((value) {
-                  this.dataProvider.smokeSessionBloc.saveMetaData();
-                });
-              })
+          this.dataProvider == null
+              ? Container()
+              : IconButton(
+                  icon: Icon(Icons.add_box),
+                  onPressed: () async {
+                    showModalBottomSheet<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Theme(
+                            data: Theme.of(context)
+                                .copyWith(canvasColor: Colors.teal),
+                            child: new MetadataBottomSheet(
+                                dataProvider: this.dataProvider),
+                          );
+                        }).then((value) {
+                      this.dataProvider.smokeSessionBloc.saveMetaData();
+                    });
+                  })
         ],
       ),
     );

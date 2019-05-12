@@ -6,6 +6,8 @@ class TobaccoMixSimpleDto {
   
   List<TobaccoInMix> tobaccos = [];
   
+  bool myMix = null;
+  
   int id = null;
   
   String name = null;
@@ -25,13 +27,14 @@ class TobaccoMixSimpleDto {
 
   @override
   String toString() {
-    return 'TobaccoMixSimpleDto[likes=$likes, tobaccos=$tobaccos, id=$id, name=$name, brand=$brand, brandId=$brandId, picture=$picture, type=$type, likeCount=$likeCount, disLikeCount=$disLikeCount, ]';
+    return 'TobaccoMixSimpleDto[likes=$likes, tobaccos=$tobaccos, myMix=$myMix, id=$id, name=$name, brand=$brand, brandId=$brandId, picture=$picture, type=$type, likeCount=$likeCount, disLikeCount=$disLikeCount, ]';
   }
 
   TobaccoMixSimpleDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
     likes = PipeAccesoryLikeDto.listFromJson(json['Likes']);
     tobaccos = TobaccoInMix.listFromJson(json['Tobaccos']);
+    myMix = json['MyMix'];
     id = json['Id'];
     name = json['Name'];
     brand = json['Brand'];
@@ -46,6 +49,7 @@ class TobaccoMixSimpleDto {
     return {
       'Likes': likes,
       'Tobaccos': tobaccos,
+      'MyMix': myMix,
       'Id': id,
       'Name': name,
       'Brand': brand,

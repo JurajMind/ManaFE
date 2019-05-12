@@ -90,7 +90,8 @@ class PersonBloc extends SignalBloc {
     smokeSessions.add(init.activeSmokeSessions);
     smokeSessionsCodes.add(init.activeSmokeSessions);
     myReservations.add(init.activeReservations);
-    this.info.add(await infoTask);
+    var info = await infoTask;
+    this.info.add(info);
     _loadedInit = true;
     try {
       var signal = new SignalR();
@@ -99,6 +100,11 @@ class PersonBloc extends SignalBloc {
       params.add(await auth.getUserName());
       signal.callServerFunction(name: 'JoinPerson', params: params);
     } catch (e) {}
+  }
+
+  loadSessions() async {
+    var sessions = await App.http.getPersonSessions();
+    this.smokeSessions.add(sessions);
   }
 
   void handleDeviceOnline(List<dynamic> incomingData) {

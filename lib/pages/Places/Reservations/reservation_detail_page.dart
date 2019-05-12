@@ -2,6 +2,7 @@ import 'package:app/Helpers/date_utils.dart';
 import 'package:app/Helpers/type_helper.dart';
 import 'package:app/app/app.dart';
 import 'package:app/components/Common/labeled_value.dart';
+import 'package:app/components/Places/navigate_button.dart';
 import 'package:app/components/Places/place_detail.dart';
 import 'package:app/components/Places/place_map.dart';
 import 'package:app/components/Reservations/reservation_item.dart';
@@ -25,10 +26,13 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
   BehaviorSubject<ReservationDetailDto> reservationDetail =
       new BehaviorSubject<ReservationDetailDto>();
 
+  ScrollController controller;
+
   final double _appBarHeight = 150.0;
   @override
   void initState() {
     super.initState();
+    controller = new ScrollController();
     App.http
         .reservationDetail(widget.reservation.id)
         .then((data) => this.reservationDetail.add(data));
@@ -43,6 +47,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
           child: Container(
             color: Colors.black,
             child: CustomScrollView(
+              controller: controller,
               slivers: <Widget>[
                 new SliverAppBar(
                   backgroundColor: Colors.black,
@@ -98,13 +103,13 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       LabeledValue(
-                                        Utils.toStringDate(
+                                        DateUtils.toStringDate(
                                             widget.reservation.time),
                                         icon: Icon(Icons.calendar_today),
                                         label: 'Date: ',
                                       ),
                                       LabeledValue(
-                                        Utils.toStringShortTime(
+                                        DateUtils.toStringShortTime(
                                             widget.reservation.time),
                                         icon: Icon(Icons.timer),
                                         label: 'Time: ',
@@ -121,7 +126,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                       LabeledValue(
                                         widget.reservation.persons.toString(),
                                         icon: Icon(Icons.person),
-                                        label: 'Peoples: ',
+                                        label: 'Persons: ',
                                       ),
                                     ],
                                   ),
@@ -233,6 +238,8 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                                         ))
                                                   ],
                                                 ),
+                                                NavigateButton(
+                                                    place: simplePlace)
                                               ],
                                             ),
                                           );
@@ -242,6 +249,39 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                         ),
                       ),
                     ),
+                    SizedBox(height: 20),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: new Border.all(color: Colors.white),
+                        borderRadius:
+                            new BorderRadius.all(const Radius.circular(40.0)),
+                      ),
+                      child: ExpansionTile(
+                        title: Center(child: Text('I will be late')),
+                        onExpansionChanged: (expansion) {
+                          controller
+                              .jumpTo(controller.position.maxScrollExtent);
+                        },
+                        children: <Widget>[
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              new LateTimeButton(
+                                time: 10,
+                              ),
+                              new LateTimeButton(
+                                time: 15,
+                              ),
+                              new LateTimeButton(
+                                time: 20,
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 100),
                   ]),
                 )
               ],
@@ -292,6 +332,28 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
           ],
         );
       },
+    );
+  }
+}
+
+class LateTimeButton extends StatelessWidget {
+  final int time;
+  const LateTimeButton({
+    Key key,
+    this.time,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlineButton(
+      shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(30.0)),
+      borderSide: BorderSide(color: Colors.white, width: 1),
+      child: Text(
+        "${time.toString()} min",
+        style: Theme.of(context).textTheme.display2,
+      ),
+      onPressed: () => Navigator.of(context).pop(),
     );
   }
 }

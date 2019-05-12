@@ -26,7 +26,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
   BehaviorSubject<List<PipeAccesorySimpleDto>> searchResult =
       new BehaviorSubject<List<PipeAccesorySimpleDto>>.seeded(
           new List<PipeAccesorySimpleDto>());
-
+  final searchOnChange = new BehaviorSubject<String>();
   bool loading = false;
 
   List<PipeAccesorySimpleDto> ownSimpleAccesories;
@@ -35,6 +35,9 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
   void initState() {
     super.initState();
     ownSimpleAccesories = widget.ownAccesories;
+    searchOnChange.debounce(Duration(milliseconds: 500)).listen((queryString) {
+      if (queryString.length > 3) submitSearch(queryString);
+    });
   }
 
   @override
@@ -42,6 +45,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
     super.dispose();
     controller.dispose();
     this.searchResult.close();
+    this.searchOnChange.close();
   }
 
   TextEditingController controller = new TextEditingController();
@@ -73,6 +77,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                     new InputDecoration(hintText: "Search ${widget.type}"),
                 controller: controller,
                 onSubmitted: submitSearch,
+                onChanged: _search,
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.search,
               ),
@@ -83,6 +88,10 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
         ),
       ),
     );
+  }
+
+  void _search(String queryString) {
+    searchOnChange.add(queryString);
   }
 
   void submitSearch(text) {
@@ -105,11 +114,17 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
     return StreamBuilder<List<PipeAccesorySimpleDto>>(
         stream: searchResult,
         initialData: new List<PipeAccesorySimpleDto>(),
-        builder: (context, snapshot) => new ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) =>
-                  _createResult(index, snapshot.data[index], context),
-            ));
+        builder: (context, snapshot) {
+          if (snapshot.data.length == 0) {
+            return Center(child: Text('No result'));
+          }
+
+          return new ListView.builder(
+            itemCount: snapshot.data.length,
+            itemBuilder: (context, index) =>
+                _createResult(index, snapshot.data[index], context),
+          );
+        });
   }
 
   Widget buildDefault() {
@@ -161,6 +176,9 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
     }
     var index = getIndexes(text.toLowerCase(), match.toLowerCase());
 
+    if (index.length == 0) {
+      return [new TextSpan(text: text, style: nonMatchStyle)];
+    }
     for (var i = 0; i < index.length; i++) {
       if (index[i] != 0) {
         result.add(new TextSpan(

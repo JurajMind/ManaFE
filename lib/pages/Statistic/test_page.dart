@@ -1,6 +1,7 @@
 import 'package:app/app/app.dart';
 import 'package:app/pages/Statistic/hero_test_page.dart';
 import 'package:app/services/authorization.dart';
+import 'package:app/services/signal_r.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -20,6 +21,18 @@ class _TestPageState extends State<TestPage> {
       body: Center(
         child: Column(
           children: <Widget>[
+            OutlineButton.icon(
+              borderSide: BorderSide(color: Colors.white),
+              icon: Icon(
+                Icons.cloud,
+                color: Colors.red,
+              ),
+              label: Text('Signal reconect'),
+              onPressed: () async {
+                var signal = new SignalR();
+                signal.restartConnection();
+              },
+            ),
             OutlineButton.icon(
               borderSide: BorderSide(color: Colors.white),
               icon: Icon(
@@ -46,6 +59,17 @@ class _TestPageState extends State<TestPage> {
                 var request = App.http
                     .getPersonInitData()
                     .then((v) => debugPrint('refreshed'));
+              },
+            ),
+            OutlineButton.icon(
+              borderSide: BorderSide(color: Colors.white),
+              icon: Icon(
+                Icons.notifications,
+                color: Colors.red,
+              ),
+              label: Text('Test notification'),
+              onPressed: () async {
+                App.http.testNotification();
               },
             ),
             OutlineButton.icon(

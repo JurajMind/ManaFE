@@ -11,17 +11,14 @@ class BigSelect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BackdropFilter(
-      filter: new ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
-      child: InkWell(
-        onTap: () => _showDialog(context),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(labels[curentView]),
-            Icon(Icons.arrow_drop_down)
-          ],
-        ),
+    return InkWell(
+      onTap: () => _showDialog(context),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(labels[curentView]),
+          Icon(Icons.arrow_drop_down)
+        ],
       ),
     );
   }
@@ -42,7 +39,6 @@ class BigSelect extends StatelessWidget {
                     children: <Widget>[
                       mixTypeSelector(context, 0),
                       mixTypeSelector(context, 1),
-                      mixTypeSelector(context, 2),
                     ],
                   ),
                 ),

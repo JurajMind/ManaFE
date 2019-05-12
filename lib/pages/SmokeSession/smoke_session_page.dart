@@ -1,10 +1,13 @@
 import 'package:app/Helpers/date_utils.dart';
+import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
+import 'package:app/components/Common/since_timer.dart';
 import 'package:app/components/Pickers/smoke_color_wheel.dart';
 import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/pages/SmokeSession/Experimental/experimental_page.dart';
 import 'package:app/pages/SmokeSession/animation_list.dart';
 import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
 import 'package:app/pages/SmokeSession/pipe_accesory_widget.dart';
@@ -15,6 +18,8 @@ import 'package:app/pages/home.page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:openapi/api.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:share/share.dart';
 
 class SmokeSessionPage extends StatefulWidget {
   final String sessionId;
@@ -80,9 +85,9 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         }
         return Column(
           children: <Widget>[
-            TobaccoWidget(
+            TobaccoSessionWidget(
               tobacco: asyncSnapshot.data.tobacco,
-              tobacoMix: asyncSnapshot.data.tobaccoMix,
+              tobaccoMix: asyncSnapshot.data.tobaccoMix,
               smokeSessionBloc: dataProvider.smokeSessionBloc,
             )
           ],
@@ -132,10 +137,12 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
           return Text('NoData');
         }
         var durationString =
-            Utils.toStringDuration(asyncSnapshot.data.duration);
+            DateUtils.toStringDuration(asyncSnapshot.data.smokeDuration);
 
         var longestString =
-            '${asyncSnapshot.data.longestPuf.inMinutes == 0 ? "" : asyncSnapshot.data.longestPuf.inMinutes.toString() + ':'}${asyncSnapshot.data.longestPuf.inSeconds}.${asyncSnapshot.data.longestPuf.inMilliseconds.toString()}';
+            DateUtils.toSecondDuration(asyncSnapshot.data.longestPuf);
+
+        var start = asyncSnapshot.data.start;
         return asyncSnapshot.data != null
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -145,20 +152,32 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                     label: 'Puf count',
                     data: asyncSnapshot.data.pufCount.toString(),
                   ),
-                  Column(
-                    children: <Widget>[
-                      Text('Last puf (sec)',
-                          style: TextStyle(color: Colors.grey)),
-                      new PuffTimeText(
-                          dependencies: dependencies,
-                          completeTime: asyncSnapshot.data.toString()),
-                      Text(longestString)
-                    ],
+                  Expanded(
+                    child: Column(
+                      children: <Widget>[
+                        Text('Last puf (sec)',
+                            style: TextStyle(color: Colors.grey)),
+                        new PuffTimeText(
+                            dependencies: dependencies,
+                            completeTime: asyncSnapshot.data.toString()),
+                        Text(longestString)
+                      ],
+                    ),
                   ),
-                  new HeaderItem(
-                    label: 'Duration',
-                    data: durationString,
-                  )
+                  Expanded(
+                    child: Column(
+                      children: <Widget>[
+                        Text('Durations', style: TextStyle(color: Colors.grey)),
+                        Text(
+                          durationString,
+                          style: Theme.of(context).textTheme.body2,
+                        ),
+                        SinceTimer(
+                          start: start,
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               )
             : Text('No data');
@@ -192,6 +211,9 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                         child: StreamBuilder<StandSettings>(
                             stream: dataProvider.smokeSessionBloc.standSettings,
                             builder: (context, snapshot) {
+                              if(snapshot.data == null){
+                                return Container();
+                              }
                               return SmokeColorWheel(
                                 onColorChanged: (color) {
                                   dataProvider.smokeSessionBloc
@@ -221,6 +243,18 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                           child: new RoundedButton(
                             child: Text('REVIEW'),
                             onTap: () {},
+                            buttonColor: Colors.transparent,
+                            borderWidth: 1.0,
+                            bottomMargin: 1.0,
+                            height: 40.0,
+                            width: (MediaQuery.of(context).size.width) * 0.8,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: new RoundedButton(
+                            child: Text('MORE'),
+                            onTap: () => showMoreModal(),
                             buttonColor: Colors.transparent,
                             borderWidth: 1.0,
                             bottomMargin: 1.0,
@@ -288,6 +322,77 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
       this.dataProvider.smokeSessionBloc.saveMetaData();
     });
   }
+
+  void showMoreModal() {
+    showModalBottomSheet<void>(
+        context: context,
+        builder: (BuildContext context) {
+          var code = DataProvider.getData(context).smokeSessionBloc.hookahCode;
+          return Container(
+            height: 1000,
+            child: new Column(
+              children: <Widget>[
+                new ListTile(
+                    leading: new Icon(FontAwesomeIcons.share),
+                    title: new Text('Share'),
+                    onTap: () => Share.share(
+                        'check out my website https://example.com')),
+                new ListTile(
+                  leading: new Icon(FontAwesomeIcons.vial),
+                  title: new Text('Experiments'),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ExperimentalPage())),
+                ),
+                new ListTile(
+                  leading: new Icon(Icons.refresh),
+                  title: new Text('Restart stand'),
+                  onTap: () => _restartDialog(code),
+                ),
+                new ListTile(
+                  leading: new Icon(FontAwesomeIcons.powerOff),
+                  title: new Text('End session'),
+                  onTap: () => {},
+                ),
+              ],
+            ),
+          );
+        }).then((value) {});
+  }
+
+  void _restartDialog(String code) {
+    // flutter defined function
+    showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Restart device?"),
+          content: new Text("Do you want restart this device ?"),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text(
+                "Restart",
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            )
+          ],
+        );
+      },
+    ).then((value) {
+      if (value) {
+        App.http.restartDevice(code);
+      }
+    });
+  }
 }
 
 class HeaderItem extends StatelessWidget {
@@ -303,16 +408,12 @@ class HeaderItem extends StatelessWidget {
           Text(label, style: _labelStyle()),
           Text(
             data,
-            style: _textStyle(),
+            style: Theme.of(context).textTheme.body2,
           ),
         ],
       ),
       flex: 1,
     );
-  }
-
-  TextStyle _textStyle() {
-    return new TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold);
   }
 
   TextStyle _labelStyle() {

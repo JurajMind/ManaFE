@@ -1,3 +1,4 @@
+import 'package:app/Helpers/helpers.dart';
 import 'package:app/app/app.dart';
 import 'package:app/module/signal_bloc.dart';
 import 'package:openapi/api.dart';
@@ -19,8 +20,14 @@ class ReservationBloc extends SignalBloc {
   BehaviorSubject<ReservationDetailDto> reservationDetail =
       new BehaviorSubject<ReservationDetailDto>();
 
+  DateTime from;
+  DateTime to;
+
   loadReservations(DateTime from, DateTime to) async {
-    this.reservations.add(null);
+    if (compareDate(from, from) != 0 || compareDate(to, to) != 0) {
+      this.reservations.add(null);
+    }
+
     var result = await App.http.getReservations(from, to);
     var order = new Collection(result)
         .orderBy((keySelector) => keySelector.time)
@@ -40,10 +47,10 @@ class ReservationBloc extends SignalBloc {
     }
   }
 
-    loadReservationDetail(int id) async {
-      if(reservationDetail?.value?.reservation?.id != id){
-        reservationDetail.add(null);
-      }
+  loadReservationDetail(int id) async {
+    if (reservationDetail?.value?.reservation?.id != id) {
+      reservationDetail.add(null);
+    }
 
     var result = await App.http.detailReservation(id);
     this.reservationDetail.add(result);

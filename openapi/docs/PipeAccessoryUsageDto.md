@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **type** | **String** |  | [optional] [default to null]
 **used** | **int** |  | [optional] [default to null]
 **owned** | **bool** |  | [optional] [default to null]
+**inMix** | **int** |  | [optional] [default to null]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

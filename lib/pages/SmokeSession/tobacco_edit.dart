@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/SmokeSession/tobacco_slider.dart';
+import 'package:app/const/theme.dart';
 import 'package:app/models/SmokeSession/pipe_accesory_from_tobacco.dart';
 import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/module/data_provider.dart';
@@ -8,6 +11,7 @@ import 'package:app/utils/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
+import 'package:shake/shake.dart';
 
 class TobaccoEditWidget extends StatefulWidget {
   final ValueChanged<TobaccoEditModel> onSave;
@@ -32,15 +36,27 @@ class TobaccoEditWidget extends StatefulWidget {
 
 class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
   bool loading = false;
-
+  ShakeDetector detector;
   List<PipeAccesorySimpleDto> selectedTobacco;
-  List<PipeAccesorySimpleDto> ownSimpleAccesories;
   List<PipeAccesorySimpleDto> tobaccoList = new List<PipeAccesorySimpleDto>();
   Map<int, double> tobaccoWeight = new Map<int, double>();
   @override
   void initState() {
     super.initState();
+    new Future.delayed(Duration.zero, () {
+      var ownedTobacco = DataProvider.getData(context)
+          .personBloc
+          .myGear
+          .value
+          .where((s) => s.type == "Tobacco")
+          .toList();
 
+      detector = ShakeDetector.waitForStart(onPhoneShake: () {
+        randomTobacco(ownedTobacco);
+      });
+
+      detector.startListening();
+    });
     if (widget?.mix?.tobaccos != null) {
       for (var tobacco in widget.mix.tobaccos) {
         this.addTobacco(
@@ -113,8 +129,9 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
         .where((s) => s.type == "Tobacco")
         .toList();
 
-    var sugestedTobacco =
-        ownedTobacco.where((t) => tobaccoList.where((d) => t.id == d.id).length == 0).toList();
+    var sugestedTobacco = ownedTobacco
+        .where((t) => tobaccoList.where((d) => t.id == d.id).length == 0)
+        .toList();
 
     var tobaccoWidgetList = this.tobaccoList.map((item) {
       return Column(
@@ -150,56 +167,57 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
 
     var listWidgets = new List<Widget>();
     listWidgets.addAll(tobaccoWidgetList);
-    if (tobaccoList.length <4 ) listWidgets.add(Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'Suggestion',
-            style: Theme.of(context).textTheme.display1,
+    if (tobaccoList.length < 4)
+      listWidgets.add(Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Suggestion',
+              style: Theme.of(context).textTheme.display1,
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: <Widget>[
-              sugestedTobacco.length >= 1
-                  ? Expanded(
-                      flex: 2,
-                      child: new SuggestedTobacco(
-                        tobacco: sugestedTobacco[0],
-                        onPressed: () => setState(() {
-                              addTobacco(sugestedTobacco[0], 5);
-                            }),
-                      ))
-                  : Container(),
-              sugestedTobacco.length >= 2
-                  ? Expanded(
-                      flex: 2,
-                      child: new SuggestedTobacco(
-                        tobacco: sugestedTobacco[1],
-                        onPressed: () => setState(() {
-                              addTobacco(sugestedTobacco[1], 5);
-                            }),
-                      ))
-                  : Container(),
-              Expanded(
-                child: IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () => showSearchDialog(
-                      context: context,
-                      child: new PipeAccesorySearch(
-                        type: 'Tobacco',
-                        searchType: 'Tobacco',
-                        ownAccesories: ownedTobacco,
-                      )),
-                ),
-              )
-            ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: <Widget>[
+                sugestedTobacco.length >= 1
+                    ? Expanded(
+                        flex: 2,
+                        child: new SuggestedTobacco(
+                          tobacco: sugestedTobacco[0],
+                          onPressed: () => setState(() {
+                                addTobacco(sugestedTobacco[0], 5);
+                              }),
+                        ))
+                    : Container(),
+                sugestedTobacco.length >= 2
+                    ? Expanded(
+                        flex: 2,
+                        child: new SuggestedTobacco(
+                          tobacco: sugestedTobacco[1],
+                          onPressed: () => setState(() {
+                                addTobacco(sugestedTobacco[1], 5);
+                              }),
+                        ))
+                    : Container(),
+                Expanded(
+                  child: IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () => showSearchDialog(
+                        context: context,
+                        child: new PipeAccesorySearch(
+                          type: 'Tobacco',
+                          searchType: 'Tobacco',
+                          ownAccesories: ownedTobacco,
+                        )),
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-      ],
-    ));
+        ],
+      ));
     listWidgets.add(
       Padding(
         padding: const EdgeInsets.all(8.0),
@@ -227,6 +245,12 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
               ? AppBar(
                   elevation: 0,
                   backgroundColor: Colors.black,
+                  actions: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.refresh),
+                      onPressed: () => randomTobacco(ownedTobacco),
+                    )
+                  ],
                 )
               : AppBar(
                   backgroundColor: Colors.black,
@@ -235,6 +259,12 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                     decoration: InputDecoration(labelText: 'Mix name'),
                     controller: controller,
                   ),
+                  actions: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.refresh),
+                      onPressed: () => randomTobacco(ownedTobacco),
+                    )
+                  ],
                 ),
           Expanded(
             child: Padding(
@@ -252,8 +282,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
   }
 
   void addTobacco(PipeAccesorySimpleDto tobacco, double weight) {
-    if(tobaccoList.length ==4 )
-    return;
+    if (tobaccoList.length == 4) return;
     setState(() {
       if (tobaccoList.where((t) => t.id == tobacco.id).length == 0) {
         tobaccoList.add(tobacco);
@@ -269,6 +298,23 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
         tobaccoWeight.remove(tobacco.id);
       }
     });
+  }
+
+  void randomTobacco(List<PipeAccesorySimpleDto> ownedTobacco) {
+    var rng = new Random();
+    setState(() {
+      tobaccoList = new List<PipeAccesorySimpleDto>();
+      tobaccoWeight = new Map<int, double>();
+    });
+    var tobaccoCount = rng.nextInt(2) + 2;
+    for (int i = 0; i < tobaccoCount; i++) {
+      var tobaccoIndex = rng.nextInt(ownedTobacco.length);
+      var tobacco = ownedTobacco[tobaccoIndex];
+      setState(() {
+        tobaccoList.add(tobacco);
+        tobaccoWeight[tobacco.id] = (rng.nextInt(5) + 5).truncateToDouble();
+      });
+    }
   }
 }
 
@@ -306,13 +352,11 @@ class SuggestedTobacco extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(left:8.0),
-                      child: Text(
-                        tobacco.name,
-                        style: Theme.of(context).textTheme.display4,
-                        maxLines: 1,
-                            overflow: TextOverflow.ellipsis
-                      ),
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(tobacco.name,
+                          style: Theme.of(context).textTheme.display4,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis),
                     ),
                     Text(tobacco.brand)
                   ],

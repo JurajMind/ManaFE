@@ -18,7 +18,7 @@ class ApiClient {
   final _regList = RegExp(r'^List<(.*)>$');
   final _regMap = RegExp(r'^Map<String,(.*)>$');
 
-  ApiClient({this.basePath: "https://devmana.azurewebsites.net"}) {
+  ApiClient({this.basePath: "https://localhost:44324"}) {
     // Setup authentications (key: authentication name, value: authentication).
   }
 
@@ -43,6 +43,8 @@ class ApiClient {
           return AddressDto.fromJson(value);
         case 'Animations':
           return Animations.fromJson(value);
+        case 'BrandDto':
+          return BrandDto.fromJson(value);
         case 'BrandGroupDto':
           return BrandGroupDto.fromJson(value);
         case 'BusinessHoursDto':
@@ -57,14 +59,18 @@ class ApiClient {
           return Dto.fromJson(value);
         case 'DynamicSmokeStatisticRawDto':
           return DynamicSmokeStatisticRawDto.fromJson(value);
+        case 'FeatureMixCreatorDto':
+          return FeatureMixCreatorDto.fromJson(value);
+        case 'FeatureMixCreatorSimpleDto':
+          return FeatureMixCreatorSimpleDto.fromJson(value);
+        case 'FinishedSessionDataDto':
+          return FinishedSessionDataDto.fromJson(value);
         case 'FranchiseDto':
           return FranchiseDto.fromJson(value);
         case 'GamePictureDto':
           return GamePictureDto.fromJson(value);
         case 'GameProfileSimpleDto':
           return GameProfileSimpleDto.fromJson(value);
-        case 'GearServiceSearchPipeAccesory':
-          return GearServiceSearchPipeAccesory.fromJson(value);
         case 'HookahOrderDto':
           return HookahOrderDto.fromJson(value);
         case 'InitDataDto':
@@ -75,12 +81,10 @@ class ApiClient {
           return MediaDto.fromJson(value);
         case 'MixCreator':
           return MixCreator.fromJson(value);
-        case 'MixCreators':
-          return MixCreators.fromJson(value);
+        case 'MixCreatorsDto':
+          return MixCreatorsDto.fromJson(value);
         case 'NearbyPlacesDto':
           return NearbyPlacesDto.fromJson(value);
-        case 'OpeningDay':
-          return OpeningDay.fromJson(value);
         case 'PersonActiveDataDto':
           return PersonActiveDataDto.fromJson(value);
         case 'PersonInfoDto':
@@ -97,8 +101,8 @@ class ApiClient {
           return PipeAccessoryStatisticsDto.fromJson(value);
         case 'PipeAccessoryUsageDto':
           return PipeAccessoryUsageDto.fromJson(value);
-        case 'PlaceCalendar':
-          return PlaceCalendar.fromJson(value);
+        case 'PlaceCalendarDto':
+          return PlaceCalendarDto.fromJson(value);
         case 'PlaceDay':
           return PlaceDay.fromJson(value);
         case 'PlaceDto':
@@ -111,6 +115,10 @@ class ApiClient {
           return PlaceMenuDto.fromJson(value);
         case 'PlaceSimpleDto':
           return PlaceSimpleDto.fromJson(value);
+        case 'PlacesDevicePlaceDashboardDto':
+          return PlacesDevicePlaceDashboardDto.fromJson(value);
+        case 'PlacesPlaceDashboardDto':
+          return PlacesPlaceDashboardDto.fromJson(value);
         case 'PriceGroupItems':
           return PriceGroupItems.fromJson(value);
         case 'ReservationDetailDto':
@@ -121,16 +129,20 @@ class ApiClient {
           return ReservationManageDto.fromJson(value);
         case 'ReservationsTimeSlot':
           return ReservationsTimeSlot.fromJson(value);
+        case 'SearchPipeAccessory':
+          return SearchPipeAccessory.fromJson(value);
         case 'SeatDto':
           return SeatDto.fromJson(value);
         case 'SmartHookahControllersPriceGroupDto':
           return SmartHookahControllersPriceGroupDto.fromJson(value);
         case 'SmartHookahHelpersAnimation':
           return SmartHookahHelpersAnimation.fromJson(value);
-        case 'SmartHookahModelsDbAddress':
-          return SmartHookahModelsDbAddress.fromJson(value);
         case 'SmartHookahModelsDbColor':
           return SmartHookahModelsDbColor.fromJson(value);
+        case 'SmartHookahModelsDbPuf':
+          return SmartHookahModelsDbPuf.fromJson(value);
+        case 'SmartHookahModelsDbSocialMedia':
+          return SmartHookahModelsDbSocialMedia.fromJson(value);
         case 'SmartHookahModelsForgotPasswordViewModel':
           return SmartHookahModelsForgotPasswordViewModel.fromJson(value);
         case 'SmartHookahModelsOrderExtraDto':
@@ -151,12 +163,10 @@ class ApiClient {
           return SmokeSessionMetaDataDto.fromJson(value);
         case 'SmokeSessionSimpleDto':
           return SmokeSessionSimpleDto.fromJson(value);
+        case 'SmokeSessionStatisticsDto':
+          return SmokeSessionStatisticsDto.fromJson(value);
         case 'SmokeSessionTimeStatisticsDto':
           return SmokeSessionTimeStatisticsDto.fromJson(value);
-        case 'SystemDataEntitySpatialDbGeography':
-          return SystemDataEntitySpatialDbGeography.fromJson(value);
-        case 'SystemDataEntitySpatialDbGeographyWellKnownValue':
-          return SystemDataEntitySpatialDbGeographyWellKnownValue.fromJson(value);
         case 'TobaccoDto':
           return TobaccoDto.fromJson(value);
         case 'TobaccoInMix':

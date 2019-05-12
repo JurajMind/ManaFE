@@ -22,19 +22,30 @@ class StatisticBloc {
   BehaviorSubject<List<SmokeSessionSimpleDto>> smokeSessions =
       new BehaviorSubject<List<SmokeSessionSimpleDto>>();
 
+  BehaviorSubject<List<PipeAccessoryUsageDto>> gearUsage =
+      new BehaviorSubject<List<PipeAccessoryUsageDto>>();
+
   BehaviorSubject<StatisticRecap> recap = new BehaviorSubject<StatisticRecap>();
 
-  loadStatistic(DateTime from, DateTime to) async {
+  Future loadStatistic(DateTime from, DateTime to) async {
     var result = await App.http.getStatistic(from, to);
     this.statistic.add(result);
+    var month = false;
+    if (to.difference(from).inDays > 60) {
+      month = true;
+    }
 
     var statistic =
-        this.getDisplayStatistic(from, to, result.smokeSessions, month: true);
+        this.getDisplayStatistic(from, to, result.smokeSessions, month: month);
     topGraphData.add(statistic);
 
     var recap = this.getStatsRecap(result.smokeSessions);
     this.recap.add(recap);
-    this.smokeSessions.add(result.smokeSessions);
+    var ordered = new Collection(result.smokeSessions)
+        .orderBy((s) => s.statistic.start)
+        .toList();
+    this.smokeSessions.add(ordered);
+    this.gearUsage.add(result.accessoriesUsage);
   }
 
   List<StatisticItem> getDisplayStatistic(
@@ -75,12 +86,13 @@ class StatisticBloc {
   StatisticRecap getStatsRecap(List<SmokeSessionSimpleDto> sessions) {
     var sessionCollection = Collection(sessions);
     var pufCount =
-        sessionCollection.sum$1((selector) => selector.statistic.pufCount);
-    var smokingTimeMilis =
-        sessionCollection.sum$1((selector) => selector.statistic.smokeDuration);
+        sessionCollection.sum$1((selector) => selector.statistic.pufCount) ?? 0;
+    var smokingTimeMilis = sessionCollection
+            .sum$1((selector) => selector.statistic.smokeDuration) ??
+        0;
 
     var activityMilis =
-        sessionCollection.sum$1((selector) => selector.statistic.duration);
+        sessionCollection.sum$1((selector) => selector.statistic.duration) ?? 0;
 
     var smokingTime = new Duration(milliseconds: smokingTimeMilis);
     var activityTyme = new Duration(milliseconds: activityMilis);

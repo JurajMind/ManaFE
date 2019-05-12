@@ -59,7 +59,7 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://devmana.azurewebsites.net*
+All URIs are relative to *https://localhost:44324*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -86,9 +86,20 @@ Class | Method | HTTP request | Description
 *DevicePresetApi* | [**devicePresetUseDefault**](docs\/DevicePresetApi.md#devicepresetusedefault) | **POST** /api/Device/Preset/UseDefault/{sessionId} | 
 *DevicePresetApi* | [**devicePresetUsePreset**](docs\/DevicePresetApi.md#devicepresetusepreset) | **POST** /api/Device/Preset/{presetId}/Use/{sessionId} | 
 *EndSessionApi* | [**endSessionDefaultAction**](docs\/EndSessionApi.md#endsessiondefaultaction) | **POST** /api/EndSession/{id} | 
+*FeatureMixApi* | [**featureMixAddFollow**](docs\/FeatureMixApi.md#featuremixaddfollow) | **POST** /api/FeatureMix/Follow/{id} | 
+*FeatureMixApi* | [**featureMixFix**](docs\/FeatureMixApi.md#featuremixfix) | **POST** /api/FeatureMix/Fix | 
+*FeatureMixApi* | [**featureMixGetFeatureMixCreator**](docs\/FeatureMixApi.md#featuremixgetfeaturemixcreator) | **GET** /api/FeatureMix/FeatureCreator/{id} | 
+*FeatureMixApi* | [**featureMixGetFeatureMixCreators**](docs\/FeatureMixApi.md#featuremixgetfeaturemixcreators) | **GET** /api/FeatureMix/FeatureCreators | 
+*FeatureMixApi* | [**featureMixGetFollowedCreators**](docs\/FeatureMixApi.md#featuremixgetfollowedcreators) | **GET** /api/FeatureMix/FollowedCreators | 
+*FeatureMixApi* | [**featureMixGetMixes**](docs\/FeatureMixApi.md#featuremixgetmixes) | **GET** /api/FeatureMix/Mixes/{id} | 
+*FeatureMixApi* | [**featureMixRemoveFollow**](docs\/FeatureMixApi.md#featuremixremovefollow) | **DELETE** /api/FeatureMix/Follow/{id} | 
+*GearApi* | [**gearGetBrand**](docs\/GearApi.md#geargetbrand) | **GET** /api/Gear/Brand/{brandName} | 
 *GearApi* | [**gearGetBrands**](docs\/GearApi.md#geargetbrands) | **GET** /api/Gear/Brands | 
+*GearApi* | [**gearGetBrandsPrefix**](docs\/GearApi.md#geargetbrandsprefix) | **GET** /api/Gear/Brands/{prefix} | 
 *GearApi* | [**gearGetDetails**](docs\/GearApi.md#geargetdetails) | **GET** /api/Gear/{id}/Detail | 
-*GearApi* | [**gearSearch**](docs\/GearApi.md#gearsearch) | **GET** /api/Gear/{type}/Search/{search} | 
+*GearApi* | [**gearInfo**](docs\/GearApi.md#gearinfo) | **GET** /api/Gear/{id}/Info | 
+*GearApi* | [**gearSearch**](docs\/GearApi.md#gearsearch) | **GET** /api/Gear/Search/{search} | 
+*GearApi* | [**gearSessions**](docs\/GearApi.md#gearsessions) | **GET** /api/Gear/{id}/Sessions | 
 *GearApi* | [**gearVote**](docs\/GearApi.md#gearvote) | **POST** /api/Gear/{id}/Vote | 
 *MixologyApi* | [**mixologyAddToMix**](docs\/MixologyApi.md#mixologyaddtomix) | **POST** /api/Mixology/AddToMix | 
 *MixologyApi* | [**mixologyGetFeaturedMixCreators**](docs\/MixologyApi.md#mixologygetfeaturedmixcreators) | **GET** /api/Mixology/GetMixCreators | 
@@ -96,14 +107,18 @@ Class | Method | HTTP request | Description
 *MixologyApi* | [**mixologyGetTobaccoMix**](docs\/MixologyApi.md#mixologygettobaccomix) | **GET** /api/Mixology/{id}/GetMix | 
 *MixologyApi* | [**mixologyGetTobaccoMixTastes**](docs\/MixologyApi.md#mixologygettobaccomixtastes) | **GET** /api/Mixology/{id}/GetTastes | 
 *MixologyApi* | [**mixologyRemoveMix**](docs\/MixologyApi.md#mixologyremovemix) | **DELETE** /api/Mixology/RemoveMix | 
+*MixologyApi* | [**mixologyRenameMix**](docs\/MixologyApi.md#mixologyrenamemix) | **POST** /api/Mixology/RenameMix/{id} | 
 *MixologyApi* | [**mixologyVote**](docs\/MixologyApi.md#mixologyvote) | **POST** /api/Mixology/{id}/Vote | 
 *PersonApi* | [**personAddMyGear**](docs\/PersonApi.md#personaddmygear) | **POST** /api/Person/MyGear/{id}/Add/{count} | 
+*PersonApi* | [**personAddNotificationToken**](docs\/PersonApi.md#personaddnotificationtoken) | **PUT** /api/Person/NotificationToken | 
 *PersonApi* | [**personDeleteMyGear**](docs\/PersonApi.md#persondeletemygear) | **POST** /api/Person/MyGear/{id}/Delete | 
 *PersonApi* | [**personGetPersonActiveData**](docs\/PersonApi.md#persongetpersonactivedata) | **GET** /api/Person/InitData | 
 *PersonApi* | [**personGetPersonDevices**](docs\/PersonApi.md#persongetpersondevices) | **GET** /api/Person/Devices | 
 *PersonApi* | [**personGetPersonInfo**](docs\/PersonApi.md#persongetpersoninfo) | **GET** /api/Person/Info | 
+*PersonApi* | [**personGetPersonSessions**](docs\/PersonApi.md#persongetpersonsessions) | **GET** /api/Person/Sessions | 
 *PersonApi* | [**personGetRecentAccessories**](docs\/PersonApi.md#persongetrecentaccessories) | **GET** /api/Person/MyGear/Used/{sessionCount} | 
 *PersonApi* | [**personMyGear**](docs\/PersonApi.md#personmygear) | **GET** /api/Person/MyGear | 
+*PersonApi* | [**personTestNotification**](docs\/PersonApi.md#persontestnotification) | **POST** /api/Person/TestNotification | 
 *PingApi* | [**pingDefaultAction**](docs\/PingApi.md#pingdefaultaction) | **GET** /api/Ping/{id} | 
 *PlaceCalendarApi* | [**placeCalendarCreatePlaceEventFromFacebook**](docs\/PlaceCalendarApi.md#placecalendarcreateplaceeventfromfacebook) | **GET** /api/PlaceCalendar/CreateEventFromFacebook | 
 *PlaceCalendarApi* | [**placeCalendarDeletePlaceDay**](docs\/PlaceCalendarApi.md#placecalendardeleteplaceday) | **DELETE** /api/PlaceCalendar/DeletePlaceDay | 
@@ -114,12 +129,18 @@ Class | Method | HTTP request | Description
 *PlaceCalendarApi* | [**placeCalendarGetPlaceEvent**](docs\/PlaceCalendarApi.md#placecalendargetplaceevent) | **GET** /api/PlaceCalendar/GetPlaceEvent | 
 *PlaceCalendarApi* | [**placeCalendarSavePlaceDay**](docs\/PlaceCalendarApi.md#placecalendarsaveplaceday) | **POST** /api/PlaceCalendar/SavePlaceDay | 
 *PlaceCalendarApi* | [**placeCalendarSavePlaceEvent**](docs\/PlaceCalendarApi.md#placecalendarsaveplaceevent) | **POST** /api/PlaceCalendar/SavePlaceEvent | 
+*PlacesApi* | [**placesAddFlags**](docs\/PlacesApi.md#placesaddflags) | **PUT** /api/Places/{placeId}/AddFlags | 
+*PlacesApi* | [**placesFixLocation**](docs\/PlacesApi.md#placesfixlocation) | **GET** /api/Places/FixLocation | 
+*PlacesApi* | [**placesGetDashboardData**](docs\/PlacesApi.md#placesgetdashboarddata) | **GET** /api/Places/{placeId}/DashboardData | 
 *PlacesApi* | [**placesGetPlaceInfo**](docs\/PlacesApi.md#placesgetplaceinfo) | **GET** /api/Places/GetPlaceInfo | 
 *PlacesApi* | [**placesGetPlaceMenu**](docs\/PlacesApi.md#placesgetplacemenu) | **GET** /api/Places/{id}/Menu | 
+*PlacesApi* | [**placesImportPlaces**](docs\/PlacesApi.md#placesimportplaces) | **POST** /api/Places/Import | 
+*PlacesApi* | [**placesImportPlacesFromMap**](docs\/PlacesApi.md#placesimportplacesfrommap) | **POST** /api/Places/ImportMap | 
 *PlacesApi* | [**placesSearchNearby**](docs\/PlacesApi.md#placessearchnearby) | **GET** /api/Places/SearchNearby | 
 *PufApi* | [**pufDefaultAction**](docs\/PufApi.md#pufdefaultaction) | **POST** /api/Puf/{id} | 
 *PufApi* | [**pufLag**](docs\/PufApi.md#puflag) | **POST** /api/Puf/lag/{id} | 
 *QRCodeApi* | [**qRCodeDefaultAction**](docs\/QRCodeApi.md#qrcodedefaultaction) | **GET** /api/QRCode/{id} | 
+*ReservationApi* | [**reservationAddLateTime**](docs\/ReservationApi.md#reservationaddlatetime) | **POST** /api/Reservations/{id}/AddLateTime | 
 *ReservationApi* | [**reservationAddTable**](docs\/ReservationApi.md#reservationaddtable) | **POST** /api/Reservations/{id}/AddTable | 
 *ReservationApi* | [**reservationCancelReservation**](docs\/ReservationApi.md#reservationcancelreservation) | **POST** /api/Reservations/{id}/Cancel | 
 *ReservationApi* | [**reservationCreate**](docs\/ReservationApi.md#reservationcreate) | **POST** /api/Reservations/Create | 
@@ -131,7 +152,9 @@ Class | Method | HTTP request | Description
 *ReservationApi* | [**reservationRemoveTable**](docs\/ReservationApi.md#reservationremovetable) | **DELETE** /api/Reservations/{id}/RemoveTable | 
 *ReservationApi* | [**reservationUpdateReservationState**](docs\/ReservationApi.md#reservationupdatereservationstate) | **POST** /api/Reservations/{id}/UpdateState | 
 *SentToDeviceApi* | [**sentToDeviceDefaultAction**](docs\/SentToDeviceApi.md#senttodevicedefaultaction) | **POST** /api/SentToDevice/{id} | 
+*SmokeSessionApi* | [**smokeSessionGetFinishedData**](docs\/SmokeSessionApi.md#smokesessiongetfinisheddata) | **GET** /api/SmokeSession/GetFinishedData | 
 *SmokeSessionApi* | [**smokeSessionGetMetaData**](docs\/SmokeSessionApi.md#smokesessiongetmetadata) | **GET** /api/SmokeSession/GetMetaData | 
+*SmokeSessionApi* | [**smokeSessionGetPufs**](docs\/SmokeSessionApi.md#smokesessiongetpufs) | **GET** /api/SmokeSession/GetPufs | 
 *SmokeSessionApi* | [**smokeSessionGetSessionCode**](docs\/SmokeSessionApi.md#smokesessiongetsessioncode) | **GET** /api/SmokeSession/GetSessionCode | 
 *SmokeSessionApi* | [**smokeSessionInitData**](docs\/SmokeSessionApi.md#smokesessioninitdata) | **GET** /api/SmokeSession/InitData | 
 *SmokeSessionApi* | [**smokeSessionSaveMetaData**](docs\/SmokeSessionApi.md#smokesessionsavemetadata) | **POST** /api/SmokeSession/{id}/SaveMetaData | 
@@ -152,6 +175,7 @@ Class | Method | HTTP request | Description
  - [ActionSettings](docs\/ActionSettings.md)
  - [AddressDto](docs\/AddressDto.md)
  - [Animations](docs\/Animations.md)
+ - [BrandDto](docs\/BrandDto.md)
  - [BrandGroupDto](docs\/BrandGroupDto.md)
  - [BusinessHoursDto](docs\/BusinessHoursDto.md)
  - [DevicePresetDto](docs\/DevicePresetDto.md)
@@ -159,18 +183,19 @@ Class | Method | HTTP request | Description
  - [DeviceSimpleDto](docs\/DeviceSimpleDto.md)
  - [Dto](docs\/Dto.md)
  - [DynamicSmokeStatisticRawDto](docs\/DynamicSmokeStatisticRawDto.md)
+ - [FeatureMixCreatorDto](docs\/FeatureMixCreatorDto.md)
+ - [FeatureMixCreatorSimpleDto](docs\/FeatureMixCreatorSimpleDto.md)
+ - [FinishedSessionDataDto](docs\/FinishedSessionDataDto.md)
  - [FranchiseDto](docs\/FranchiseDto.md)
  - [GamePictureDto](docs\/GamePictureDto.md)
  - [GameProfileSimpleDto](docs\/GameProfileSimpleDto.md)
- - [GearServiceSearchPipeAccesory](docs\/GearServiceSearchPipeAccesory.md)
  - [HookahOrderDto](docs\/HookahOrderDto.md)
  - [InitDataDto](docs\/InitDataDto.md)
  - [InlineResponse200](docs\/InlineResponse200.md)
  - [MediaDto](docs\/MediaDto.md)
  - [MixCreator](docs\/MixCreator.md)
- - [MixCreators](docs\/MixCreators.md)
+ - [MixCreatorsDto](docs\/MixCreatorsDto.md)
  - [NearbyPlacesDto](docs\/NearbyPlacesDto.md)
- - [OpeningDay](docs\/OpeningDay.md)
  - [PersonActiveDataDto](docs\/PersonActiveDataDto.md)
  - [PersonInfoDto](docs\/PersonInfoDto.md)
  - [PersonStatisticsOverallDto](docs\/PersonStatisticsOverallDto.md)
@@ -179,23 +204,27 @@ Class | Method | HTTP request | Description
  - [PipeAccessoryDetailsDto](docs\/PipeAccessoryDetailsDto.md)
  - [PipeAccessoryStatisticsDto](docs\/PipeAccessoryStatisticsDto.md)
  - [PipeAccessoryUsageDto](docs\/PipeAccessoryUsageDto.md)
- - [PlaceCalendar](docs\/PlaceCalendar.md)
+ - [PlaceCalendarDto](docs\/PlaceCalendarDto.md)
  - [PlaceDay](docs\/PlaceDay.md)
  - [PlaceDto](docs\/PlaceDto.md)
  - [PlaceEvent](docs\/PlaceEvent.md)
  - [PlaceEventCollection](docs\/PlaceEventCollection.md)
  - [PlaceMenuDto](docs\/PlaceMenuDto.md)
  - [PlaceSimpleDto](docs\/PlaceSimpleDto.md)
+ - [PlacesDevicePlaceDashboardDto](docs\/PlacesDevicePlaceDashboardDto.md)
+ - [PlacesPlaceDashboardDto](docs\/PlacesPlaceDashboardDto.md)
  - [PriceGroupItems](docs\/PriceGroupItems.md)
  - [ReservationDetailDto](docs\/ReservationDetailDto.md)
  - [ReservationDto](docs\/ReservationDto.md)
  - [ReservationManageDto](docs\/ReservationManageDto.md)
  - [ReservationsTimeSlot](docs\/ReservationsTimeSlot.md)
+ - [SearchPipeAccessory](docs\/SearchPipeAccessory.md)
  - [SeatDto](docs\/SeatDto.md)
  - [SmartHookahControllersPriceGroupDto](docs\/SmartHookahControllersPriceGroupDto.md)
  - [SmartHookahHelpersAnimation](docs\/SmartHookahHelpersAnimation.md)
- - [SmartHookahModelsDbAddress](docs\/SmartHookahModelsDbAddress.md)
  - [SmartHookahModelsDbColor](docs\/SmartHookahModelsDbColor.md)
+ - [SmartHookahModelsDbPuf](docs\/SmartHookahModelsDbPuf.md)
+ - [SmartHookahModelsDbSocialMedia](docs\/SmartHookahModelsDbSocialMedia.md)
  - [SmartHookahModelsForgotPasswordViewModel](docs\/SmartHookahModelsForgotPasswordViewModel.md)
  - [SmartHookahModelsOrderExtraDto](docs\/SmartHookahModelsOrderExtraDto.md)
  - [SmartHookahModelsParameterObjectsChangeAnimation](docs\/SmartHookahModelsParameterObjectsChangeAnimation.md)
@@ -206,9 +235,8 @@ Class | Method | HTTP request | Description
  - [SmartHookahServicesPlaceReservationUsageDto](docs\/SmartHookahServicesPlaceReservationUsageDto.md)
  - [SmokeSessionMetaDataDto](docs\/SmokeSessionMetaDataDto.md)
  - [SmokeSessionSimpleDto](docs\/SmokeSessionSimpleDto.md)
+ - [SmokeSessionStatisticsDto](docs\/SmokeSessionStatisticsDto.md)
  - [SmokeSessionTimeStatisticsDto](docs\/SmokeSessionTimeStatisticsDto.md)
- - [SystemDataEntitySpatialDbGeography](docs\/SystemDataEntitySpatialDbGeography.md)
- - [SystemDataEntitySpatialDbGeographyWellKnownValue](docs\/SystemDataEntitySpatialDbGeographyWellKnownValue.md)
  - [TobaccoDto](docs\/TobaccoDto.md)
  - [TobaccoInMix](docs\/TobaccoInMix.md)
  - [TobaccoInformationDto](docs\/TobaccoInformationDto.md)

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class TextButton extends StatelessWidget {
-  String buttonName;
+  final String buttonName;
   final VoidCallback onPressed;
-  TextStyle textStyle,buttonTextStyle;
+  final TextStyle textStyle,buttonTextStyle;
   //passing props in react style
   TextButton({
     this.buttonName,
     this.onPressed,
-    this.buttonTextStyle,
+    this.buttonTextStyle, this.textStyle,
   });
 
   @override

@@ -1,6 +1,8 @@
 import 'package:app/Helpers/date_utils.dart';
 import 'package:app/components/Common/labeled_value.dart';
+import 'package:app/pages/Statistic/Detail/smoke_session_detail_page.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:openapi/api.dart';
 
 class SmokeSessionListItem extends StatelessWidget {
@@ -16,9 +18,6 @@ class SmokeSessionListItem extends StatelessWidget {
     var duration =
         new Duration(microseconds: session.statistic.duration * 1000);
 
-    var longest =
-        new Duration(microseconds: session.statistic.longestPufMilis * 1000);
-
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: Container(
@@ -26,7 +25,10 @@ class SmokeSessionListItem extends StatelessWidget {
             border: Border.all(color: Colors.white),
             borderRadius: BorderRadius.circular(16.0)),
         child: InkWell(
-          onTap: () {},
+          onTap: () => Navigator.of(context)
+                  .push(new MaterialPageRoute(builder: (BuildContext context) {
+                return SmokeSessioDetailPage(session);
+              })),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 4.0),
             child: Column(
@@ -34,31 +36,24 @@ class SmokeSessionListItem extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Expanded(
-                      flex: 2,
+                      flex: 4,
                       child: LabeledValue(
-                        Utils.toStringDate(start),
+                        '${DateUtils.toStringDate(start)} ${DateUtils.toStringShortTime(start)}',
                         icon: Icon(Icons.calendar_today),
                       ),
                     ),
                     Expanded(
+                      flex: 3,
+                      child: LabeledValue(
+                        DateUtils.toStringDuration(duration),
+                        icon: Icon(Icons.timelapse),
+                      ),
+                    ),
+                    Expanded(
                       flex: 2,
                       child: LabeledValue(
-                        Utils.toStringDuration(duration),
-                        icon: Icon(Icons.timelapse),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: LabeledValue(
                         session.statistic.pufCount.toString(),
-                        icon: Icon(Icons.timelapse),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: LabeledValue(
-                        Utils.toShortStringDuration(longest),
-                        icon: Icon(Icons.local_florist),
+                        icon: Icon(Icons.cloud),
                       ),
                     )
                   ],

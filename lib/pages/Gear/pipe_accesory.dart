@@ -14,7 +14,7 @@ class PipeAccesoryList extends StatelessWidget {
   static const Map<int, String> labels = {
     0: 'MY GEAR',
     1: 'BY BRAND',
-    2: 'TODO'
+    2: 'TOP'
   };
 
   final ScrollController scrollController;
@@ -125,6 +125,7 @@ class PipeAccesoryList extends StatelessWidget {
             flex: 1,
             child: IconButton(
               icon: Icon(Icons.search),
+              onPressed: () {},
             )),
         Expanded(
             flex: 2,
@@ -215,6 +216,7 @@ class PipeAccesoryList extends StatelessWidget {
                       flex: 1,
                       child: IconButton(
                         icon: Icon(Icons.search),
+                        onPressed: () {},
                       ),
                     ),
                     Expanded(

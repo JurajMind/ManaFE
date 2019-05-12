@@ -8,38 +8,47 @@ dependencies:
     sdk: flutter
   validator:
     git: https://github.com/jodinathan/validator.dart
-  web_socket_channel: '^1.0.9'
+  web_socket_channel: ^1.0.12
   fluro: ^1.4.0
-  flutter_secure_storage: ^3.2.0
+  flutter_secure_storage: ^3.2.1+1
   rxdart: ^0.21.0
   vibrate: '^0.0.4'
   intl: ^0.15.7
   animated_background: ^1.0.1
   tuple: ^1.0.2
   percent_indicator: '^1.0.13'
-  qrcode_reader: ^0.4.4
   dio: ^2.0.14
-  charts_flutter: ^0.4.0
-  flutter_facebook_login: ^1.2.0
-  map_view: ^0.0.14
-  location: ^1.4.1
+  flutter_facebook_login: ^2.0.0
+  geolocator: ^3.0.1
   cached_network_image: ^0.6.1
   date_utils: ^0.1.0
   flutter_launcher_icons: ^0.6.1
   openapi:
     path: ./openapi
   sticky_headers: '^0.1.7'
-  # onesignal: ^1.0.3
   sembast: ^1.13.0
-  url_launcher: ^4.0.3
-  google_maps_flutter: ^0.2.0+6
+  url_launcher: ^5.0.2
+  google_maps_flutter: ^0.5.0
   tinycolor: ^1.0.2
   shimmer: ^1.0.0
   date_format: ^1.0.6
   lazy_load_scrollview: ^0.0.2
-  material_design_icons_flutter: 3.1.3493
+  material_design_icons_flutter: ^3.2.3595
   queries: ^0.1.9
   sliver_fab: '^1.0.0'
+  font_awesome_flutter: ^8.4.0
+  flutter_advanced_networkimage: ^0.4.14
+  uri: ^0.11.3+1
+  google_maps_webservice: ^0.0.12
+  firebase_messaging: ^4.0.0+1
+  charts_flutter: ^0.6.0
+  flutter_section_table_view: ^1.0.3
+  shake: ^0.1.0
+  wave: ^0.0.8
+  share: ^0.6.1
+  achievement_view: ^0.1.2
+  avatar_glow: ^0.2.0
+  auto_size_text: ^1.1.2
 
 flutter_icons:
   android: true
@@ -96,6 +105,9 @@ flutter:
     - locale/localization_cs.json
 
     - assets/term_of_ussage.txt
+    - assets/sprite.png
+    - assets/avatar.png
+    - assets/google_black.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -225,7 +225,7 @@ class PlaceCalendarApi {
   /// 
   ///
   /// 
-  Future<PlaceCalendar> placeCalendarGetPlaceCalendar(int placeId, { String privacyType }) async {
+  Future<PlaceCalendarDto> placeCalendarGetPlaceCalendar(int placeId, { String privacyType }) async {
     Object postBody;
 
     // verify required params are set
@@ -271,7 +271,7 @@ class PlaceCalendarApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'PlaceCalendar') as PlaceCalendar;
+      return apiClient.deserialize(response.body, 'PlaceCalendarDto') as PlaceCalendarDto;
     } else {
       return null;
     }

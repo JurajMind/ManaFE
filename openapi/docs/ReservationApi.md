@@ -5,10 +5,11 @@
 import 'package:openapi/api.dart';
 ```
 
-All URIs are relative to *https://devmana.azurewebsites.net*
+All URIs are relative to *https://localhost:44324*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**reservationAddLateTime**](ReservationApi.md#reservationAddLateTime) | **POST** /api/Reservations/{id}/AddLateTime | 
 [**reservationAddTable**](ReservationApi.md#reservationAddTable) | **POST** /api/Reservations/{id}/AddTable | 
 [**reservationCancelReservation**](ReservationApi.md#reservationCancelReservation) | **POST** /api/Reservations/{id}/Cancel | 
 [**reservationCreate**](ReservationApi.md#reservationCreate) | **POST** /api/Reservations/Create | 
@@ -20,6 +21,48 @@ Method | HTTP request | Description
 [**reservationRemoveTable**](ReservationApi.md#reservationRemoveTable) | **DELETE** /api/Reservations/{id}/RemoveTable | 
 [**reservationUpdateReservationState**](ReservationApi.md#reservationUpdateReservationState) | **POST** /api/Reservations/{id}/UpdateState | 
 
+
+# **reservationAddLateTime**
+> reservationAddLateTime(id, body)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new ReservationApi();
+var id = 56; // int | 
+var body = new int(); // int | 
+
+try { 
+    api_instance.reservationAddLateTime(id, body);
+} catch (e) {
+    print("Exception when calling ReservationApi->reservationAddLateTime: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**|  | [default to null]
+ **body** | **int**|  | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **reservationAddTable**
 > ReservationDto reservationAddTable(id, body)

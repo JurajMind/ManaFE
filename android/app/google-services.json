@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "652590711591",
+    "firebase_url": "https://manapipes.firebaseio.com",
+    "project_id": "manapipes",
+    "storage_bucket": "manapipes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652590711591:android:41251d98bc2d08d0",
+        "android_client_info": {
+          "package_name": "com.manapipes.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "652590711591-a56j88i2ml60bp9dtrv8471v1r51lugu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCImUErdFgyFQsOtYde5XJ67BrO-Ji8YJU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

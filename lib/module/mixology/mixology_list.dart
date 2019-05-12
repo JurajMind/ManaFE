@@ -1,108 +1,137 @@
-import 'package:app/models/PipeAccesory/tobacco_mix.dart';
+import 'package:app/components/Common/big_select.dart';
+import 'package:app/components/Mixology/mixology_expanded.dart';
+import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
+import 'package:app/module/data_provider.dart';
+import 'package:app/module/mixology/feature_mix.dart';
+import 'package:app/module/mixology/mix_card_expanded_shimmer.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
-import 'package:app/module/mixology/mixology_slice.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:app/pages/Mixology/mix_detail_page.dart';
+import 'package:app/pages/SmokeSession/tobacco_edit.dart';
 import 'package:flutter/material.dart';
+import 'package:openapi/api.dart';
+import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 
-abstract class MainPage {}
+class MixologyList extends StatefulWidget {
+  @override
+  MixologyListState createState() {
+    return new MixologyListState();
+  }
+}
 
-class MixologyList extends StatelessWidget {
-  static const _loadingSpace = 10;
+class MixologyListState extends State<MixologyList> {
+  int curentView = 0;
+
+  static const Map<int, String> labels = {
+    0: 'My mixes',
+    1: 'Featured mix creators'
+  };
+
+  Future showTobaccoDialog(
+      {BuildContext context, MixologyBloc mixologyBloc}) async {
+    TobaccoEditModel tobacco = await Navigator.of(context)
+        .push(new MaterialPageRoute<TobaccoEditModel>(
+            builder: (BuildContext context) {
+              return new TobaccoEditWidget(
+                tobaccoWeight: 0,
+                tobacco: null,
+                mix: null,
+              );
+            },
+            fullscreenDialog: true));
+    if (tobacco.mix != null && tobacco.mix.tobaccos.length > 0)
+      mixologyBloc.saveMix(tobacco.mix).then((onValue) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MixDetailPage(mix: onValue)));
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
     final mixologyBloc = DataProvider.getMixology(context);
 
-    return CupertinoPageScaffold(
-      backgroundColor: Colors.black,
-      child: Column(
-        children: <Widget>[
-          SizedBox(
-              height: 200.0, width: 200.0, child: buildListView(mixologyBloc)),
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        SafeArea(
+          child: SizedBox(
+            height: 55,
+            child: AppBar(
+              actions: <Widget>[
+                curentView == 0
+                    ? IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: () => showTobaccoDialog(
+                            context: context, mixologyBloc: mixologyBloc),
+                      )
+                    : Container()
+              ],
+              title: Center(
+                  child: BigSelect(
+                curentView: curentView,
+                labels: labels,
+                onSelected: (val) {
+                  setState(() {
+                    curentView = val;
+                  });
+                },
+              )),
+              backgroundColor: Colors.transparent,
+              centerTitle: true,
+            ),
+          ),
+        ),
+        Expanded(child: getContent(mixologyBloc)),
+      ],
     );
   }
 
-  StreamBuilder<MixologySlice> buildListView(MixologyBloc mixologyBloc) {
-    return StreamBuilder<MixologySlice>(
-      stream: mixologyBloc.slice,
-      initialData: MixologySlice.empty(),
-      builder: (context, snapshot) => ListView.builder(
-            itemCount: snapshot.data.endIndex + _loadingSpace,
-            itemBuilder: (context, index) =>
-                _createMixBloc(index, snapshot.data, mixologyBloc, context),
-          ),
-    );
-  }
-
-  List<Widget> _createTobaccoRow(TobaccoMix mix) {
-    return mix.tobaccos.map((item) {
-      return new Column(
-        children: <Widget>[
-          Text(item.item2.toString() + 'g',
-              style: TextStyle(color: Colors.grey)),
-          Text(
-            item.item1.name,
-            style:
-                new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-          ),
-          Text(
-            item.item1.brand,
-            style: TextStyle(color: Colors.black),
-          ),
-        ],
-      );
-    }).toList();
-  }
-
-  Widget _createMixBloc(int index, MixologySlice data,
-      MixologyBloc mixologyBloc, BuildContext context) {
-    mixologyBloc.index.add(index);
-    TobaccoMix mix;
-    mix = data.elementAt(index);
-
-    if (mix == null) {
-      return Center(child: CircularProgressIndicator());
+  Widget getContent(MixologyBloc mixologyBloc) {
+    switch (curentView) {
+      case 0:
+        return new PaggingMixListView(
+            mixologyBloc: mixologyBloc, mixCreator: 'me');
+      case 1:
+        return FeatureMixCreator();
+      case 2:
+        return Placeholder();
     }
+    return Placeholder();
+  }
+}
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: new Column(
-        children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              mix.name != null
-                  ? Text(mix.name)
-                  : Text(
-                      'No name',
-                      style: new TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0),
-                    ),
-            ],
-          ),
-          Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25.0),
+class PaggingMixListView extends StatelessWidget {
+  const PaggingMixListView({
+    Key key,
+    @required this.mixologyBloc,
+    this.mixCreator,
+  }) : super(key: key);
+
+  final MixologyBloc mixologyBloc;
+  final String mixCreator;
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<List<TobaccoMixSimpleDto>>(
+        stream: mixologyBloc.mixCreatorMixes[mixCreator],
+        initialData: null,
+        builder: (context, snapshot) {
+          return LazyLoadScrollView(
+            onEndOfPage: () {
+              if (!snapshot.data.contains(null))
+                mixologyBloc.loadCreatorMixesNextPage(mixCreator);
+            },
+            child: ListView.builder(
+              itemCount: snapshot.data?.length ?? 10,
+              itemBuilder: (context, index) {
+                if (snapshot.data != null && snapshot.data[index] != null) {
+                  return MixCardExpanded(tobaccoMix: snapshot.data[index]);
+                } else {
+                  return MixCardExpandedShimmer();
+                }
+              },
             ),
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                  mainAxisAlignment: mix.tobaccos.length > 3
-                      ? MainAxisAlignment.end
-                      : MainAxisAlignment.spaceEvenly,
-                  children: _createTobaccoRow(mix)),
-            ),
-            elevation: 8.0,
-            margin: EdgeInsets.zero,
-          )
-        ],
-      ),
-    );
+          );
+        });
   }
 }

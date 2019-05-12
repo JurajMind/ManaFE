@@ -1,5 +1,7 @@
+import 'package:app/Helpers/date_utils.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:openapi/api.dart';
 
 class SmokeStatisticDataModel extends SignalData {
   int pufCount = 0;
@@ -22,11 +24,11 @@ class SmokeStatisticDataModel extends SignalData {
     final DateFormat df = new DateFormat('dd-MM-yyyy HH:mm:ss');
     lastPuf = double.parse(map['lastPuf']);
     lastPufTime = df.parse(map['lastPufTime']);
-    smokeDuration = stringToDuration(map['smokeDuration']);
+    smokeDuration = DateUtils.stringToDuration(map['smokeDuration']);
 
     start = df.parse(map['start']);
 
-    duration = stringToDuration(map['duration']);
+    duration = DateUtils.stringToDuration(map['duration']);
 
     longestPuf = new Duration(milliseconds: map['longestPufMilis'].round());
   }
@@ -34,19 +36,12 @@ class SmokeStatisticDataModel extends SignalData {
   SmokeStatisticDataModel.fromJson(Map<String, dynamic> json) : super(null) {
     try {
       pufCount = json['PufCount'];
-
-      if (json['LastPuf'] == null) return;
-
-      final DateFormat df = new DateFormat('dd-MM-yyyy HH:mm:ss');
-      lastPuf = double.parse(json['LastPuf']);
-      lastPufTime = df.parse(json['LastPufTime']);
-      smokeDuration = stringToDuration(json['SmokeDuration']);
-
-      start = df.parse(json['Start']);
-
-      duration = stringToDuration(json['Duration']);
-
-      longestPuf = new Duration(microseconds: json['LongestPufMilis'].round());
+      var parsed = DynamicSmokeStatisticRawDto.fromJson(json);
+      longestPuf = new Duration(milliseconds: parsed.longestPufMilis);
+      lastPuf = parsed.lastPuf / 10000000;
+      duration = new Duration(milliseconds: parsed.duration);
+      smokeDuration = new Duration(milliseconds: parsed.smokeDuration);
+      start = DateTime.fromMillisecondsSinceEpoch(parsed.start);
     } catch (e) {}
   }
 }

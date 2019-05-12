@@ -1,12 +1,13 @@
 part of openapi.api;
 
 class UserModel {
+  
   String confirmPassword = null;
-
+  
   String password = null;
-
+  
   String userName = null;
-
+  
   String email = null;
   UserModel();
 
@@ -33,17 +34,15 @@ class UserModel {
   }
 
   static List<UserModel> listFromJson(List<dynamic> json) {
-    return json == null
-        ? new List<UserModel>()
-        : json.map((value) => new UserModel.fromJson(value)).toList();
+    return json == null ? new List<UserModel>() : json.map((value) => new UserModel.fromJson(value)).toList();
   }
 
   static Map<String, UserModel> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, UserModel>();
     if (json != null && json.length > 0) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = new UserModel.fromJson(value));
+      json.forEach((String key, dynamic value) => map[key] = new UserModel.fromJson(value));
     }
     return map;
   }
 }
+

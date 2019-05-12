@@ -4,7 +4,7 @@
     "version": "v1",
     "title": "smartHookah"
   },
-  "host": "devmana.azurewebsites.net",
+  "host": "localhost:44324",
   "schemes": [
     "https"
   ],
@@ -28,53 +28,14 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "userModel",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/UserModel"
-            }
+        "parameters": [{
+          "name": "userModel",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/UserModel"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "object"
-            }
-          }
-        }
-      }
-    },
-    "/api/Account/api/Account/ConfirmEmail": {
-      "post": {
-        "tags": [
-          "Account"
-        ],
-        "operationId": "Account_ConfirmEmail",
-        "consumes": [],
-        "produces": [
-          "application/json",
-          "text/json",
-          "application/xml",
-          "text/xml"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "code",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -140,16 +101,14 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "model",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/smartHookahModelsForgotPasswordViewModel"
-            }
+        "parameters": [{
+          "name": "model",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/smartHookahModelsForgotPasswordViewModel"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -173,14 +132,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -202,14 +159,12 @@
           "application/json",
           "text/json"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -239,8 +194,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -284,8 +238,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -329,8 +282,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -374,8 +326,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -413,14 +364,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -444,14 +393,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -481,8 +428,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -521,14 +467,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -552,14 +496,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -583,15 +525,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -641,8 +581,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "sessionCode",
             "in": "path",
             "required": true,
@@ -690,8 +629,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "deviceId",
             "in": "path",
             "required": true,
@@ -734,15 +672,13 @@
         "operationId": "DevicePreset_SetDefault",
         "consumes": [],
         "produces": [],
-        "parameters": [
-          {
-            "name": "presetId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "presetId",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "204": {
             "description": "No Content"
@@ -758,14 +694,12 @@
         "operationId": "DevicePreset_UseDefault",
         "consumes": [],
         "produces": [],
-        "parameters": [
-          {
-            "name": "sessionId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "sessionId",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "204": {
             "description": "No Content"
@@ -781,8 +715,7 @@
         "operationId": "DevicePreset_UsePreset",
         "consumes": [],
         "produces": [],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "sessionId",
             "in": "path",
             "required": true,
@@ -816,15 +749,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -848,14 +779,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -866,7 +795,233 @@
         }
       }
     },
-    "/api/Gear/{type}/Search/{search}": {
+    "/api/FeatureMix/FeatureCreators": {
+      "get": {
+        "tags": [
+          "FeatureMix"
+        ],
+        "operationId": "FeatureMix_GetFeatureMixCreators",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FeatureMixCreatorSimpleDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FeatureMix/FeatureCreator/{id}": {
+      "get": {
+        "tags": [
+          "FeatureMix"
+        ],
+        "operationId": "FeatureMix_GetFeatureMixCreator",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/FeatureMixCreatorDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/FeatureMix/Mixes/{id}": {
+      "get": {
+        "tags": [
+          "FeatureMix"
+        ],
+        "operationId": "FeatureMix_GetMixes",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PipeAccesorySimpleDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FeatureMix/FollowedCreators": {
+      "get": {
+        "tags": [
+          "FeatureMix"
+        ],
+        "operationId": "FeatureMix_GetFollowedCreators",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FeatureMixCreatorSimpleDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FeatureMix/Follow/{id}": {
+      "post": {
+        "tags": [
+          "FeatureMix"
+        ],
+        "operationId": "FeatureMix_AddFollow",
+        "consumes": [],
+        "produces": [],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "FeatureMix"
+        ],
+        "operationId": "FeatureMix_RemoveFollow",
+        "consumes": [],
+        "produces": [],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/FeatureMix/Fix": {
+      "post": {
+        "tags": [
+          "FeatureMix"
+        ],
+        "operationId": "FeatureMix_Fix",
+        "consumes": [],
+        "produces": [],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/Gear/Search/{search}": {
       "get": {
         "tags": [
           "Gear"
@@ -879,8 +1034,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "search",
             "in": "path",
             "required": true,
@@ -888,8 +1042,8 @@
           },
           {
             "name": "type",
-            "in": "path",
-            "required": true,
+            "in": "query",
+            "required": false,
             "type": "string"
           },
           {
@@ -919,7 +1073,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/GearServiceSearchPipeAccesory"
+                "$ref": "#/definitions/SearchPipeAccessory"
               }
             }
           }
@@ -987,6 +1141,35 @@
         }
       }
     },
+    "/api/Gear/Brand/{brandName}": {
+      "get": {
+        "tags": [
+          "Gear"
+        ],
+        "operationId": "Gear_GetBrand",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+          "name": "brandName",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/BrandDto"
+            }
+          }
+        }
+      }
+    },
     "/api/Gear/{id}/Detail": {
       "get": {
         "tags": [
@@ -1000,11 +1183,86 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PipeAccessoryDetailsDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Gear/Brands/{prefix}": {
+      "get": {
+        "tags": [
+          "Gear"
+        ],
+        "operationId": "Gear_GetBrandsPrefix",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+          "name": "prefix",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Gear/{id}/Sessions": {
+      "get": {
+        "tags": [
+          "Gear"
+        ],
+        "operationId": "Gear_Sessions",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
             "type": "integer",
             "format": "int32"
           }
@@ -1013,7 +1271,40 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/PipeAccessoryDetailsDto"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SmokeSessionSimpleDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Gear/{id}/Info": {
+      "get": {
+        "tags": [
+          "Gear"
+        ],
+        "operationId": "Gear_Info",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PipeAccesorySimpleDto"
             }
           }
         }
@@ -1038,8 +1329,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -1079,8 +1369,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "page",
             "in": "query",
             "required": false,
@@ -1139,8 +1428,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "page",
             "in": "query",
             "required": false,
@@ -1171,7 +1459,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/MixCreators"
+              "$ref": "#/definitions/MixCreatorsDto"
             }
           }
         }
@@ -1188,15 +1476,13 @@
           "application/json",
           "text/json"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1220,15 +1506,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1260,14 +1544,47 @@
           "application/json",
           "text/json"
         ],
-        "parameters": [
-          {
-            "name": "newMix",
-            "in": "body",
-            "required": true,
+        "parameters": [{
+          "name": "newMix",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/TobaccoMixSimpleDto"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
             "schema": {
               "$ref": "#/definitions/TobaccoMixSimpleDto"
             }
+          }
+        }
+      }
+    },
+    "/api/Mixology/RenameMix/{id}": {
+      "post": {
+        "tags": [
+          "Mixology"
+        ],
+        "operationId": "Mixology_RenameMix",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "newName",
+            "in": "query",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -1299,8 +1616,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -1340,15 +1656,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "mixId",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "mixId",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1377,6 +1691,32 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/PersonActiveDataDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Person/Sessions": {
+      "get": {
+        "tags": [
+          "Person"
+        ],
+        "operationId": "Person_GetPersonSessions",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SmokeSessionSimpleDto"
+              }
             }
           }
         }
@@ -1431,6 +1771,42 @@
         }
       }
     },
+    "/api/Person/NotificationToken": {
+      "put": {
+        "tags": [
+          "Person"
+        ],
+        "operationId": "Person_AddNotificationToken",
+        "consumes": [],
+        "produces": [],
+        "parameters": [{
+          "name": "token",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/Person/TestNotification": {
+      "post": {
+        "tags": [
+          "Person"
+        ],
+        "operationId": "Person_TestNotification",
+        "consumes": [],
+        "produces": [],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
     "/api/Person/MyGear": {
       "get": {
         "tags": [
@@ -1444,14 +1820,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "type",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1587,8 +1961,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -1630,16 +2003,14 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "placeDay",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/PlaceDay"
-            }
+        "parameters": [{
+          "name": "placeDay",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/PlaceDay"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1669,16 +2040,14 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "placeEvent",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/PlaceEvent"
-            }
+        "parameters": [{
+          "name": "placeEvent",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/PlaceEvent"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1702,14 +2071,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "url",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "url",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1733,8 +2100,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "placeId",
             "in": "query",
             "required": true,
@@ -1752,7 +2118,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/PlaceCalendar"
+              "$ref": "#/definitions/PlaceCalendarDto"
             }
           }
         }
@@ -1771,8 +2137,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "placeId",
             "in": "query",
             "required": true,
@@ -1823,15 +2188,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "eventId",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "eventId",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1855,8 +2218,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "placeId",
             "in": "query",
             "required": true,
@@ -1907,15 +2269,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "dayId",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "dayId",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1939,15 +2299,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "eventId",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "eventId",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1971,15 +2329,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2003,21 +2359,34 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/PlaceDto"
             }
+          }
+        }
+      }
+    },
+    "/api/Places/FixLocation": {
+      "get": {
+        "tags": [
+          "Places"
+        ],
+        "operationId": "Places_FixLocation",
+        "consumes": [],
+        "produces": [],
+        "responses": {
+          "204": {
+            "description": "No Content"
           }
         }
       }
@@ -2035,8 +2404,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "page",
             "in": "query",
             "required": false,
@@ -2051,14 +2419,21 @@
             "format": "int32"
           },
           {
+            "name": "lat",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
             "name": "lng",
             "in": "query",
             "required": false,
             "type": "number",
-            "format": "float"
+            "format": "double"
           },
           {
-            "name": "lat",
+            "name": "radius",
             "in": "query",
             "required": false,
             "type": "number",
@@ -2070,6 +2445,130 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/NearbyPlacesDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Places/Import": {
+      "post": {
+        "tags": [
+          "Places"
+        ],
+        "operationId": "Places_ImportPlaces",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Places/ImportMap": {
+      "post": {
+        "tags": [
+          "Places"
+        ],
+        "operationId": "Places_ImportPlacesFromMap",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Places/{placeId}/AddFlags": {
+      "put": {
+        "tags": [
+          "Places"
+        ],
+        "operationId": "Places_AddFlags",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+            "name": "placeId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "flags",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlaceDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Places/{placeId}/DashboardData": {
+      "get": {
+        "tags": [
+          "Places"
+        ],
+        "operationId": "Places_GetDashboardData",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+          "name": "placeId",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlacesPlaceDashboardDto"
             }
           }
         }
@@ -2088,14 +2587,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2119,14 +2616,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2150,14 +2645,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2181,8 +2674,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -2293,16 +2785,14 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "reservation",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ReservationDto"
-            }
+        "parameters": [{
+          "name": "reservation",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/ReservationDto"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2326,8 +2816,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -2393,6 +2882,44 @@
             "schema": {
               "type": "boolean"
             }
+          }
+        }
+      }
+    },
+    "/api/Reservations/{id}/AddLateTime": {
+      "post": {
+        "tags": [
+          "Reservation"
+        ],
+        "operationId": "Reservation_AddLateTime",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [],
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "time",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
           }
         }
       }
@@ -2557,8 +3084,7 @@
         "operationId": "SentToDevice_DefaultAction",
         "consumes": [],
         "produces": [],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -2597,14 +3123,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2628,14 +3152,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2659,14 +3181,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2690,19 +3210,80 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/SmokeSessionMetaDataDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/SmokeSession/GetFinishedData": {
+      "get": {
+        "tags": [
+          "SmokeSession"
+        ],
+        "operationId": "SmokeSession_GetFinishedData",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/FinishedSessionDataDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/SmokeSession/GetPufs": {
+      "get": {
+        "tags": [
+          "SmokeSession"
+        ],
+        "operationId": "SmokeSession_GetPufs",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/smartHookahModelsDbPuf"
+              }
             }
           }
         }
@@ -2727,8 +3308,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -2766,14 +3346,12 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2797,8 +3375,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "from",
             "in": "query",
             "required": true,
@@ -2836,15 +3413,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2874,8 +3449,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "page",
             "in": "query",
             "required": true,
@@ -2970,15 +3544,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -3002,15 +3574,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -3037,15 +3607,13 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -3069,8 +3637,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -3118,8 +3685,7 @@
           "application/xml",
           "text/xml"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -3388,78 +3954,115 @@
         }
       }
     },
-    "GearServiceSearchPipeAccesory": {
+    "FeatureMixCreatorSimpleDto": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "Location": {
+          "type": "string"
+        },
+        "LogoPicture": {
+          "type": "string"
+        },
+        "PersonId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "FeatureMixCreatorDto": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "Location": {
+          "type": "string"
+        },
+        "SocialMedias": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/smartHookahModelsDbSocialMedia"
+          }
+        },
+        "Medias": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MediaDto"
+          }
+        },
+        "LogoPicture": {
+          "type": "string"
+        },
+        "PersonId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "smartHookahModelsDbSocialMedia": {
       "type": "object",
       "properties": {
         "Id": {
           "format": "int32",
           "type": "integer"
         },
-        "Name": {
+        "Code": {
           "type": "string"
         },
-        "Brand": {
+        "Url": {
+          "type": "string"
+        }
+      }
+    },
+    "MediaDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Created": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "Path": {
           "type": "string"
         },
         "Type": {
-          "type": "string"
-        },
-        "Owned": {
           "format": "int32",
-          "type": "integer"
-        }
-      }
-    },
-    "BrandGroupDto": {
-      "type": "object",
-      "properties": {
-        "Id": {
-          "type": "string"
-        },
-        "Picture": {
-          "type": "string"
-        },
-        "Name": {
-          "type": "string"
-        },
-        "ItemCount": {
-          "format": "int32",
-          "type": "integer"
-        }
-      }
-    },
-    "PipeAccessoryDetailsDto": {
-      "type": "object",
-      "properties": {
-        "UsedByPerson": {
-          "format": "int32",
+          "enum": [
+            0,
+            1
+          ],
           "type": "integer"
         },
-        "UsedWith": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UsedWithDto"
-          }
+        "IsDefault": {
+          "type": "boolean"
         },
-        "OwnedByPersons": {
-          "format": "int32",
-          "type": "integer"
+        "Extension": {
+          "type": "string",
+          "readOnly": true
         },
-        "OwnedByPlaces": {
-          "format": "int32",
-          "type": "integer"
-        }
-      }
-    },
-    "UsedWithDto": {
-      "type": "object",
-      "properties": {
-        "Accessory": {
-          "$ref": "#/definitions/PipeAccesorySimpleDto"
-        },
-        "UsedCount": {
-          "format": "int32",
-          "type": "integer"
+        "FileName": {
+          "type": "string",
+          "readOnly": true
         }
       }
     },
@@ -3522,6 +4125,311 @@
         }
       }
     },
+    "SearchPipeAccessory": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Brand": {
+          "type": "string"
+        },
+        "Type": {
+          "type": "string"
+        }
+      }
+    },
+    "BrandGroupDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string"
+        },
+        "Picture": {
+          "type": "string"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "ItemCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "BrandDto": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Url": {
+          "type": "string"
+        },
+        "Picture": {
+          "type": "string"
+        },
+        "Tobacco": {
+          "type": "boolean"
+        },
+        "Bowl": {
+          "type": "boolean"
+        },
+        "Hookah": {
+          "type": "boolean"
+        },
+        "Coal": {
+          "type": "boolean"
+        },
+        "HeatManagment": {
+          "type": "boolean"
+        },
+        "TobaccoMixBrand": {
+          "type": "boolean"
+        },
+        "PipeAccessories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PipeAccesorySimpleDto"
+          }
+        },
+        "SocialMedias": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/smartHookahModelsDbSocialMedia"
+          }
+        },
+        "Medias": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MediaDto"
+          }
+        },
+        "DisplayName": {
+          "type": "string"
+        }
+      }
+    },
+    "PipeAccessoryDetailsDto": {
+      "type": "object",
+      "properties": {
+        "UsedByPerson": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "UsedWith": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UsedWithDto"
+          }
+        },
+        "OwnedByPersons": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "OwnedByPlaces": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "UsedWithDto": {
+      "type": "object",
+      "properties": {
+        "Accessory": {
+          "$ref": "#/definitions/PipeAccesorySimpleDto"
+        },
+        "UsedCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "SmokeSessionSimpleDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "SessionId": {
+          "type": "string"
+        },
+        "Device": {
+          "$ref": "#/definitions/DeviceSimpleDto"
+        },
+        "Statistic": {
+          "$ref": "#/definitions/DynamicSmokeStatisticRawDto"
+        },
+        "MetaData": {
+          "$ref": "#/definitions/SmokeSessionMetaDataDto"
+        },
+        "PlaceId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "PlaceName": {
+          "type": "string"
+        }
+      }
+    },
+    "DeviceSimpleDto": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Code": {
+          "type": "string"
+        },
+        "IsOnline": {
+          "type": "boolean"
+        },
+        "Type": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "type": "integer"
+        },
+        "Version": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "DynamicSmokeStatisticRawDto": {
+      "type": "object",
+      "properties": {
+        "PufCount": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "LastPuf": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "LastPufTime": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "SmokeDuration": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "LongestPuf": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "Start": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "Duration": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        },
+        "LongestPufMilis": {
+          "format": "int64",
+          "type": "integer",
+          "readOnly": true
+        }
+      }
+    },
+    "SmokeSessionMetaDataDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "TobaccoId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Tobacco": {
+          "$ref": "#/definitions/PipeAccesorySimpleDto"
+        },
+        "TobaccoMix": {
+          "$ref": "#/definitions/TobaccoMixSimpleDto"
+        },
+        "TobaccoWeight": {
+          "format": "double",
+          "type": "number"
+        },
+        "AnonymPeopleCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "BowlId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Bowl": {
+          "$ref": "#/definitions/PipeAccesorySimpleDto"
+        },
+        "PipeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Pipe": {
+          "$ref": "#/definitions/PipeAccesorySimpleDto"
+        },
+        "CoalId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Coal": {
+          "$ref": "#/definitions/PipeAccesorySimpleDto"
+        },
+        "HeatManagementId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "HeatManagement": {
+          "$ref": "#/definitions/PipeAccesorySimpleDto"
+        },
+        "PackType": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "type": "integer"
+        },
+        "CoalCount": {
+          "format": "double",
+          "type": "number"
+        }
+      }
+    },
     "TobaccoMixSimpleDto": {
       "type": "object",
       "properties": {
@@ -3536,6 +4444,9 @@
           "items": {
             "$ref": "#/definitions/TobaccoInMix"
           }
+        },
+        "MyMix": {
+          "type": "boolean"
         },
         "Id": {
           "format": "int32",
@@ -3616,7 +4527,7 @@
         }
       }
     },
-    "MixCreators": {
+    "MixCreatorsDto": {
       "type": "object",
       "properties": {
         "MixCreatorsList": {
@@ -3624,16 +4535,6 @@
           "items": {
             "$ref": "#/definitions/MixCreator"
           }
-        },
-        "Success": {
-          "type": "boolean"
-        },
-        "Message": {
-          "type": "string"
-        },
-        "HttpResponseCode": {
-          "format": "int32",
-          "type": "integer"
         }
       }
     },
@@ -3717,64 +4618,6 @@
         },
         "GameProfile": {
           "$ref": "#/definitions/GameProfileSimpleDto"
-        }
-      }
-    },
-    "DeviceSimpleDto": {
-      "type": "object",
-      "properties": {
-        "Name": {
-          "type": "string"
-        },
-        "Code": {
-          "type": "string"
-        },
-        "IsOnline": {
-          "type": "boolean"
-        },
-        "Type": {
-          "format": "int32",
-          "enum": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10,
-            11,
-            12,
-            13
-          ],
-          "type": "integer"
-        },
-        "Version": {
-          "format": "int32",
-          "type": "integer"
-        }
-      }
-    },
-    "SmokeSessionSimpleDto": {
-      "type": "object",
-      "properties": {
-        "SessionId": {
-          "type": "string"
-        },
-        "Device": {
-          "$ref": "#/definitions/DeviceSimpleDto"
-        },
-        "Statistic": {
-          "$ref": "#/definitions/DynamicSmokeStatisticRawDto"
-        },
-        "MetaData": {
-          "$ref": "#/definitions/SmokeSessionMetaDataDto"
-        },
-        "Place": {
-          "$ref": "#/definitions/PlaceSimpleDto"
         }
       }
     },
@@ -3953,164 +4796,6 @@
         }
       }
     },
-    "DynamicSmokeStatisticRawDto": {
-      "type": "object",
-      "properties": {
-        "PufCount": {
-          "format": "int32",
-          "type": "integer",
-          "readOnly": true
-        },
-        "LastPuf": {
-          "format": "int64",
-          "type": "integer",
-          "readOnly": true
-        },
-        "LastPufTime": {
-          "format": "int64",
-          "type": "integer",
-          "readOnly": true
-        },
-        "SmokeDuration": {
-          "format": "int64",
-          "type": "integer",
-          "readOnly": true
-        },
-        "LongestPuf": {
-          "format": "int64",
-          "type": "integer",
-          "readOnly": true
-        },
-        "Start": {
-          "format": "int64",
-          "type": "integer",
-          "readOnly": true
-        },
-        "Duration": {
-          "format": "int64",
-          "type": "integer",
-          "readOnly": true
-        },
-        "LongestPufMilis": {
-          "format": "int64",
-          "type": "integer",
-          "readOnly": true
-        }
-      }
-    },
-    "SmokeSessionMetaDataDto": {
-      "type": "object",
-      "properties": {
-        "Id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "TobaccoId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Tobacco": {
-          "$ref": "#/definitions/PipeAccesorySimpleDto"
-        },
-        "TobaccoMix": {
-          "$ref": "#/definitions/TobaccoMixSimpleDto"
-        },
-        "TobaccoWeight": {
-          "format": "double",
-          "type": "number"
-        },
-        "AnonymPeopleCount": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "BowlId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Bowl": {
-          "$ref": "#/definitions/PipeAccesorySimpleDto"
-        },
-        "PipeId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Pipe": {
-          "$ref": "#/definitions/PipeAccesorySimpleDto"
-        },
-        "CoalId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Coal": {
-          "$ref": "#/definitions/PipeAccesorySimpleDto"
-        },
-        "HeatManagementId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "HeatManagement": {
-          "$ref": "#/definitions/PipeAccesorySimpleDto"
-        },
-        "PackType": {
-          "format": "int32",
-          "enum": [
-            0,
-            1,
-            2,
-            3,
-            4
-          ],
-          "type": "integer"
-        },
-        "CoalCount": {
-          "format": "double",
-          "type": "number"
-        }
-      }
-    },
-    "PlaceSimpleDto": {
-      "type": "object",
-      "properties": {
-        "Id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Name": {
-          "type": "string"
-        },
-        "FriendlyUrl": {
-          "type": "string"
-        },
-        "LogoPath": {
-          "type": "string"
-        },
-        "Address": {
-          "$ref": "#/definitions/smartHookahModelsDbAddress"
-        },
-        "BusinessHours": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/OpeningDay"
-          }
-        },
-        "Rating": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Medias": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/MediaDto"
-          }
-        },
-        "PhoneNumber": {
-          "type": "string"
-        },
-        "Facebook": {
-          "type": "string"
-        }
-      }
-    },
     "SeatDto": {
       "type": "object",
       "properties": {
@@ -4138,7 +4823,85 @@
         }
       }
     },
-    "smartHookahModelsDbAddress": {
+    "PersonInfoDto": {
+      "type": "object",
+      "properties": {
+        "DisplayName": {
+          "type": "string"
+        },
+        "Email": {
+          "type": "string"
+        },
+        "ManagedPlaces": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlaceSimpleDto"
+          }
+        },
+        "Roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "PersonId": {
+          "type": "string"
+        }
+      }
+    },
+    "PlaceSimpleDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "ShortDescriptions": {
+          "type": "string"
+        },
+        "FriendlyUrl": {
+          "type": "string"
+        },
+        "LogoPath": {
+          "type": "string"
+        },
+        "Address": {
+          "$ref": "#/definitions/AddressDto"
+        },
+        "BusinessHours": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BusinessHoursDto"
+          }
+        },
+        "Rating": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Media": {
+          "$ref": "#/definitions/MediaDto"
+        },
+        "PhoneNumber": {
+          "type": "string"
+        },
+        "Facebook": {
+          "type": "string"
+        },
+        "HaveMenu": {
+          "type": "boolean"
+        },
+        "HaveOrders": {
+          "type": "boolean"
+        },
+        "HaveMana": {
+          "type": "boolean"
+        }
+      }
+    },
+    "AddressDto": {
       "type": "object",
       "properties": {
         "Id": {
@@ -4162,110 +4925,29 @@
         },
         "Lng": {
           "type": "string"
-        },
-        "Location": {
-          "$ref": "#/definitions/SystemDataEntitySpatialDbGeography"
         }
       }
     },
-    "OpeningDay": {
-      "type": "object",
-      "properties": {
-        "Day": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "OpenTime": {
-          "type": "string"
-        },
-        "CloseTime": {
-          "type": "string"
-        }
-      }
-    },
-    "MediaDto": {
+    "BusinessHoursDto": {
       "type": "object",
       "properties": {
         "Id": {
           "format": "int32",
           "type": "integer"
         },
-        "Created": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "Path": {
-          "type": "string"
-        },
-        "Type": {
-          "format": "int32",
-          "enum": [
-            0,
-            1
-          ],
-          "type": "integer"
-        },
-        "IsDefault": {
-          "type": "boolean"
-        },
-        "Extension": {
-          "type": "string",
-          "readOnly": true
-        },
-        "FileName": {
-          "type": "string",
-          "readOnly": true
-        },
-        "GetDirectory": {
-          "type": "string",
-          "readOnly": true
-        }
-      }
-    },
-    "SystemDataEntitySpatialDbGeography": {
-      "type": "object",
-      "properties": {
-        "Geography": {
-          "$ref": "#/definitions/SystemDataEntitySpatialDbGeographyWellKnownValue"
-        }
-      }
-    },
-    "SystemDataEntitySpatialDbGeographyWellKnownValue": {
-      "type": "object",
-      "properties": {
-        "CoordinateSystemId": {
+        "PlaceId": {
           "format": "int32",
           "type": "integer"
         },
-        "WellKnownText": {
+        "Day": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "OpenTine": {
           "type": "string"
         },
-        "WellKnownBinary": {
-          "format": "byte",
+        "CloseTime": {
           "type": "string"
-        }
-      }
-    },
-    "PersonInfoDto": {
-      "type": "object",
-      "properties": {
-        "DisplayName": {
-          "type": "string"
-        },
-        "Email": {
-          "type": "string"
-        },
-        "ManagedPlaces": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/PlaceSimpleDto"
-          }
-        },
-        "Roles": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         }
       }
     },
@@ -4295,16 +4977,6 @@
           "items": {
             "$ref": "#/definitions/PlaceEvent"
           }
-        },
-        "Success": {
-          "type": "boolean"
-        },
-        "Message": {
-          "type": "string"
-        },
-        "HttpResponseCode": {
-          "format": "int32",
-          "type": "integer"
         }
       }
     },
@@ -4351,7 +5023,7 @@
         }
       }
     },
-    "PlaceCalendar": {
+    "PlaceCalendarDto": {
       "type": "object",
       "properties": {
         "PlaceDays": {
@@ -4359,16 +5031,6 @@
           "items": {
             "$ref": "#/definitions/PlaceDay"
           }
-        },
-        "Success": {
-          "type": "boolean"
-        },
-        "Message": {
-          "type": "string"
-        },
-        "HttpResponseCode": {
-          "format": "int32",
-          "type": "integer"
         }
       }
     },
@@ -4489,42 +5151,13 @@
     "PlaceDto": {
       "type": "object",
       "properties": {
-        "Id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Name": {
+        "Instagram": {
           "type": "string"
         },
-        "LogoPath": {
-          "type": "string"
-        },
-        "ShortDescriptions": {
+        "Url": {
           "type": "string"
         },
         "Descriptions": {
-          "type": "string"
-        },
-        "FriendlyUrl": {
-          "type": "string"
-        },
-        "AddressId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Address": {
-          "$ref": "#/definitions/AddressDto"
-        },
-        "BusinessHours": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/BusinessHoursDto"
-          }
-        },
-        "PhoneNumber": {
-          "type": "string"
-        },
-        "Facebook": {
           "type": "string"
         },
         "BaseHookahPrice": {
@@ -4552,7 +5185,7 @@
             "$ref": "#/definitions/MediaDto"
           }
         },
-        "AllowReservation": {
+        "HaveReservation": {
           "type": "boolean"
         },
         "MinimumReservationTime": {
@@ -4571,56 +5204,53 @@
           "items": {
             "type": "string"
           }
-        }
-      }
-    },
-    "AddressDto": {
-      "type": "object",
-      "properties": {
+        },
         "Id": {
           "format": "int32",
           "type": "integer"
         },
-        "Street": {
+        "Name": {
           "type": "string"
         },
-        "City": {
+        "ShortDescriptions": {
           "type": "string"
         },
-        "Number": {
+        "FriendlyUrl": {
           "type": "string"
         },
-        "ZIP": {
+        "LogoPath": {
           "type": "string"
         },
-        "Lat": {
-          "type": "string"
+        "Address": {
+          "$ref": "#/definitions/AddressDto"
         },
-        "Lng": {
-          "type": "string"
-        }
-      }
-    },
-    "BusinessHoursDto": {
-      "type": "object",
-      "properties": {
-        "Id": {
+        "BusinessHours": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BusinessHoursDto"
+          }
+        },
+        "Rating": {
           "format": "int32",
           "type": "integer"
         },
-        "PlaceId": {
-          "format": "int32",
-          "type": "integer"
+        "Media": {
+          "$ref": "#/definitions/MediaDto"
         },
-        "Day": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "OpenTine": {
+        "PhoneNumber": {
           "type": "string"
         },
-        "CloseTime": {
+        "Facebook": {
           "type": "string"
+        },
+        "HaveMenu": {
+          "type": "boolean"
+        },
+        "HaveOrders": {
+          "type": "boolean"
+        },
+        "HaveMana": {
+          "type": "boolean"
         }
       }
     },
@@ -4689,6 +5319,35 @@
         "HttpResponseCode": {
           "format": "int32",
           "type": "integer"
+        }
+      }
+    },
+    "PlacesPlaceDashboardDto": {
+      "type": "object",
+      "properties": {
+        "PlaceDevices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlacesDevicePlaceDashboardDto"
+          }
+        }
+      }
+    },
+    "PlacesDevicePlaceDashboardDto": {
+      "type": "object",
+      "properties": {
+        "Device": {
+          "$ref": "#/definitions/DeviceSimpleDto"
+        },
+        "Statistic": {
+          "$ref": "#/definitions/DynamicSmokeStatisticRawDto"
+        },
+        "MetaData": {
+          "$ref": "#/definitions/SmokeSessionMetaDataDto"
+        },
+        "TobaccoEstimate": {
+          "format": "double",
+          "type": "number"
         }
       }
     },
@@ -4831,6 +5490,80 @@
         }
       }
     },
+    "FinishedSessionDataDto": {
+      "type": "object",
+      "properties": {
+        "MetaData": {
+          "$ref": "#/definitions/SmokeSessionMetaDataDto"
+        },
+        "Statistics": {
+          "$ref": "#/definitions/SmokeSessionStatisticsDto"
+        }
+      }
+    },
+    "SmokeSessionStatisticsDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "start": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "end": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "smokeDuration": {
+          "type": "string"
+        },
+        "longestPuf": {
+          "type": "string"
+        },
+        "pufCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "estimatedPersonCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "sessionDuration": {
+          "type": "string"
+        }
+      }
+    },
+    "smartHookahModelsDbPuf": {
+      "type": "object",
+      "properties": {
+        "SId": {
+          "type": "string"
+        },
+        "T": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2
+          ],
+          "type": "integer"
+        },
+        "D": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "M": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "P": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
     "PersonStatisticsOverallDto": {
       "type": "object",
       "properties": {
@@ -4906,6 +5639,10 @@
         },
         "Owned": {
           "type": "boolean"
+        },
+        "InMix": {
+          "format": "int32",
+          "type": "integer"
         }
       }
     },

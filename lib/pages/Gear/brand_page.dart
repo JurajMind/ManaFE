@@ -6,8 +6,8 @@ import 'package:openapi/api.dart';
 
 class BrandPage extends StatefulWidget {
   final BrandGroup brand;
-
-  const BrandPage({Key key, this.brand}) : super(key: key);
+  final String type;
+  const BrandPage({Key key, this.brand, this.type}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return new _BrandPageState();
@@ -31,7 +31,9 @@ class _BrandPageState extends State<BrandPage> {
           backgroundColor: Colors.black,
           pinned: true,
           flexibleSpace: Container(),
-          title: Text(widget.brand.name),
+          title: Hero(
+              tag: '${widget.brand.name}_${widget.type}_brand_picture',
+              child: Text(widget.brand.name)),
           centerTitle: true,
         ),
         StreamBuilder<List<PipeAccesorySimpleDto>>(

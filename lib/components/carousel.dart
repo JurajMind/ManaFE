@@ -6,6 +6,7 @@ import 'package:app/support/mana_icons_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:openapi/api.dart';
+import 'dart:math' as math;
 
 class Carroussel extends StatefulWidget {
   Carroussel({this.navigateToDetail});
@@ -80,7 +81,8 @@ class _CarrousselState extends State<Carroussel> {
                 });
               },
               controller: controller,
-              itemCount: snapshot.data != null ? snapshot.data.length : 0,
+              itemCount:
+                  snapshot.data != null ? math.min(snapshot.data.length, 5) : 0,
               itemBuilder: (context, index) =>
                   builder(index, snapshot.data[index]),
             ));
@@ -127,52 +129,68 @@ class _CarrousselState extends State<Carroussel> {
           navigateToDetail(place);
         }
       },
-      child: Hero(
-        tag: '${place.friendlyUrl}_place',
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: new Container(
-              decoration: BoxDecoration(
-                  borderRadius: new BorderRadius.circular(10.0),
-                  color: Colors.grey[300],
-                  image: DecorationImage(
-                      image: CachedNetworkImageProvider(
-                          Extensions.getPlaceImage(place)),
-                      fit: BoxFit.cover)),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    new Text(
-                      place.name,
-                      style: Theme.of(context).textTheme.display1,
-                    ),
-                    new Text(
-                      Extensions.adress(place.address),
-                      style: new TextStyle(color: Colors.grey),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        new Flex(
-                          direction: Axis.horizontal,
-                          children: <Widget>[
-                            new Icon(ManaIcons.hookah),
-                            new Text(place.rating.toString()),
-                          ],
-                        ),
-                        new OpenIndicator(
-                          place: place,
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              )),
-        ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: new Container(
+            decoration: BoxDecoration(
+                borderRadius: new BorderRadius.circular(10.0),
+                color: Colors.grey[300],
+                image: DecorationImage(
+                    image: CachedNetworkImageProvider(
+                        Extensions.getPlaceImage(place)),
+                    fit: BoxFit.cover)),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  new Text(place.name,
+                      style: Theme.of(context).textTheme.display1.merge(
+                            TextStyle(
+                              shadows: [
+                                Shadow(
+                                    // bottomLeft
+                                    offset: Offset(-1, -1),
+                                    color: Colors.black),
+                                Shadow(
+                                    // bottomRight
+                                    offset: Offset(1, -1),
+                                    color: Colors.black),
+                                Shadow(
+                                    // topRight
+                                    offset: Offset(1, 1),
+                                    color: Colors.black),
+                                Shadow(
+                                    // topLeft
+                                    offset: Offset(-1, 1),
+                                    color: Colors.black),
+                              ],
+                            ),
+                          )),
+                  new Text(
+                    Extensions.adress(place.address),
+                    style: new TextStyle(color: Colors.grey),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      new Flex(
+                        direction: Axis.horizontal,
+                        children: <Widget>[
+                          new Icon(ManaIcons.hookah),
+                          new Text(place.rating.toString()),
+                        ],
+                      ),
+                      new OpenIndicator(
+                        place: place,
+                      )
+                    ],
+                  )
+                ],
+              ),
+            )),
       ),
     );
   }

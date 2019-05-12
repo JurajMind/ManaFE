@@ -60,7 +60,7 @@ class MixologyApi {
   /// 
   ///
   /// 
-  Future<MixCreators> mixologyGetFeaturedMixCreators({ int page, int pageSize, String orderBy, String order }) async {
+  Future<MixCreatorsDto> mixologyGetFeaturedMixCreators({ int page, int pageSize, String orderBy, String order }) async {
     Object postBody;
 
     // verify required params are set
@@ -111,7 +111,7 @@ class MixologyApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'MixCreators') as MixCreators;
+      return apiClient.deserialize(response.body, 'MixCreatorsDto') as MixCreatorsDto;
     } else {
       return null;
     }
@@ -274,7 +274,7 @@ class MixologyApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return new Map<String, List<TobaccoTasteDto>>.from(apiClient.deserialize(response.body, 'Map<String, List<TobaccoTasteDto>>'));
-          ;
+          
     } else {
       return null;
     }
@@ -326,6 +326,60 @@ class MixologyApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return apiClient.deserialize(response.body, 'Dto') as Dto;
+    } else {
+      return null;
+    }
+  }
+  /// 
+  ///
+  /// 
+  Future<TobaccoMixSimpleDto> mixologyRenameMix(int id, String newName) async {
+    Object postBody;
+
+    // verify required params are set
+    if(id == null) {
+     throw new ApiException(400, "Missing required param: id");
+    }
+    if(newName == null) {
+     throw new ApiException(400, "Missing required param: newName");
+    }
+
+    // create path and map variables
+    String path = "/api/Mixology/RenameMix/{id}".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+
+    // query params
+    List<QueryParam> queryParams = [];
+    Map<String, String> headerParams = {};
+    Map<String, String> formParams = {};
+      queryParams.addAll(_convertParametersForCollectionFormat("", "newName", newName));
+
+    List<String> contentTypes = [];
+
+    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    List<String> authNames = [];
+
+    if(contentType.startsWith("multipart/form-data")) {
+      bool hasFields = false;
+      MultipartRequest mp = new MultipartRequest(null, null);
+      if(hasFields)
+        postBody = mp;
+    }
+    else {
+    }
+
+    var response = await apiClient.invokeAPI(path,
+                                             'POST',
+                                             queryParams,
+                                             postBody,
+                                             headerParams,
+                                             formParams,
+                                             contentType,
+                                             authNames);
+
+    if(response.statusCode >= 400) {
+      throw new ApiException(response.statusCode, response.body);
+    } else if(response.body != null) {
+      return apiClient.deserialize(response.body, 'TobaccoMixSimpleDto') as TobaccoMixSimpleDto;
     } else {
       return null;
     }

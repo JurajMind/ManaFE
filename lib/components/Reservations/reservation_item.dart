@@ -47,14 +47,14 @@ class ReservationItem extends StatelessWidget {
                             Expanded(
                                 flex: 2,
                                 child: LabeledValue(
-                                  Utils.toStringDate(reservation.time),
+                                  DateUtils.toStringDate(reservation.time),
                                   icon: Icon(Icons.calendar_today),
                                   padding: EdgeInsets.only(),
                                 )),
                             Expanded(
                                 flex: 2,
                                 child: LabeledValue(
-                                  Utils.toStringShortTime(reservation.time),
+                                  DateUtils.toStringShortTime(reservation.time),
                                   icon: Icon(Icons.timer),
                                   padding: EdgeInsets.only(),
                                 )),

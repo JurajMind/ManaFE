@@ -1,46 +1,91 @@
 import 'dart:async';
 
-import 'package:app/components/Backgrund.dart';
+import 'package:app/components/Common/circle_painter.dart';
 import 'package:app/components/carousel.dart';
-import 'package:app/helpers.dart';
-import 'package:app/module/mixology/mixology_bloc.dart';
+import 'package:app/Helpers/helpers.dart';
+import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
+import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/pages/enterSmokeSesionCode.page.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:app/support/mana_icons_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel/carousel.dart';
-import 'package:web_socket_channel/io.dart';
+import 'package:openapi/api.dart';
+
+class MyCustomRoute<T> extends MaterialPageRoute<T> {
+  MyCustomRoute(
+      {WidgetBuilder builder, RouteSettings settings, bool fullscreenDialog})
+      : super(
+            builder: builder,
+            settings: settings,
+            fullscreenDialog: fullscreenDialog);
+
+  @override
+  Widget buildTransitions(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child) {
+    if (settings.isInitialRoute) return child;
+    // Fades between routes. (If you don't want any animation,
+    // just return child.)
+    return new FadeTransition(opacity: animation, child: child);
+  }
+}
 
 class StartSmokeSessionPage extends StatefulWidget {
   final double topWidgetHeight = 200.0;
 
-  var channel;
+  StartSmokeSessionPage({this.callback});
 
+  final GlobalKey<NavigatorState> Function(int) callback;
+
+  var channel;
   main() async {}
 
   @override
   StartSmokeSessionPageState createState() {
     main();
-    return new StartSmokeSessionPageState();
+    return new StartSmokeSessionPageState(callback: callback);
   }
 }
 
-class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
+class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
+    with SingleTickerProviderStateMixin {
+  StartSmokeSessionPageState({this.callback});
+
+  AnimationController _animationController;
+  Animation _colorTween;
+
+  final GlobalKey<NavigatorState> Function(int) callback;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 15000));
+    _colorTween = ColorTween(begin: Colors.indigo[900], end: Colors.blue)
+        .animate(_animationController);
+    _animationController.forward();
+    _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _animationController.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        _animationController.forward();
+      }
+    });
+  }
+
   Future _openAddEntryDialog(
       BuildContext context, SmokeSessionBloc smokeSessionBloc) async {
     final sessionCode =
-        await Navigator.of(context).push(new MaterialPageRoute<String>(
+        await Navigator.of(context).push(new MyCustomRoute<String>(
             builder: (BuildContext context) {
               return new EnterSmokeSessionCode();
             },
-            fullscreenDialog: true));
+            fullscreenDialog: false));
 
     print(sessionCode);
     if (sessionCode == null) {
       return;
     }
-    smokeSessionBloc.joinSession(sessionCode);
     Navigator.of(context).push(new MaterialPageRoute(
       builder: (BuildContext context) {
         return new SmokeSessionPage();
@@ -48,70 +93,86 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> {
     ));
   }
 
+  navigateToPlace(PlaceSimpleDto place) {
+    var navigation = callback(1);
+    navigation.currentState.push(MaterialPageRoute(
+        settings: RouteSettings(),
+        builder: (context) => PlaceDetailPage(place: place)));
+  }
+
   @override
   Widget build(BuildContext context) {
     final smokeSessionBloc = DataProvider.getSmokeSession(context);
 
-    return new CupertinoPageScaffold(
-      child: Material(
-        child: new Stack(
-          children: <Widget>[
-            new Positioned(
-              child: new CircleAvatar(
-                  radius: getCircleRadius(context),
-                  backgroundColor: Colors.green,
-                  child: GestureDetector(
-                      onTap: () {
-                        _openAddEntryDialog(context, smokeSessionBloc);
-                      },
-                      child: new Container(
-                        child: new Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            new Text(
-                              'START',
-                              style: new TextStyle(
-                                  fontSize: 40.0,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            new Icon(
-                              Icons.play_arrow,
-                              size: 60.0,
-                              color: Colors.white,
-                            )
-                          ],
-                        ),
-                      ))),
-              left: (MediaQuery.of(context).size.width / 2) -
-                  getCircleRadius(context),
-              top: widget.topWidgetHeight - getCircleRadius(context),
-            ),
-            new Positioned(
-              child: new Icon(
-                Icons.refresh,
-                size: 40.0,
-              ),
-              left: 10.0,
-              top: 40.0,
-            ),
-            new Positioned(
-                top: 300.0,
-                child: Column(
+    return Scaffold(
+      body: new SafeArea(
+        top: false,
+        child: AnimatedBuilder(
+          animation: _colorTween,
+          builder: (context, child) => CustomPaint(
+                painter: CirclePainter(_colorTween.value,
+                    data: MediaQuery.of(context)),
+                child: new Column(
                   children: <Widget>[
-                    Text(
-                      'NEAREST PLACE',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.green[50]),
+                    new Expanded(flex: 1, child: Container()),
+                    new Expanded(
+                      flex: 4,
+                      child: Hero(
+                        tag: 'Circle',
+                        child: new Container(
+                            child: SizedBox(
+                          height: getCircleRadius(context) * 2,
+                          width: getCircleRadius(context) * 2,
+                          child: GestureDetector(
+                              onTap: () {
+                                _openAddEntryDialog(context, smokeSessionBloc);
+                              },
+                              child: new Container(
+                                child: new Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    new Text(
+                                      'START',
+                                      style: Theme.of(context).textTheme.title,
+                                    ),
+                                    new Icon(
+                                      Icons.play_arrow,
+                                      size: 60.0,
+                                      color: Colors.white,
+                                    )
+                                  ],
+                                ),
+                              )),
+                        )),
+                      ),
                     ),
-                    SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height / 2 - 60,
-                        child: Carroussel()),
+                    new Expanded(
+                        flex: 4,
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.height / 2 - 60,
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(
+                                      'NEAREST PLACE',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.green[50]),
+                                    ),
+                                    Expanded(
+                                        child: Carroussel(
+                                            navigateToDetail: navigateToPlace)),
+                                  ],
+                                )),
+                          ],
+                        ))
                   ],
-                ))
-          ],
+                ),
+              ),
         ),
       ),
     );
