@@ -91,12 +91,12 @@ class _HomePageState extends State<HomePage> {
     super.didChangeDependencies();
     smokeSessionBloc = DataProvider.getSmokeSession(context);
     personBloc = DataProvider.getData(context).personBloc;
-    subscription = smokeSessionBloc.notifications.stream.listen((data) {
+    subscription = smokeSessionBloc.notifications.stream.asBroadcastStream().listen((data) {
       data.show(context).then((data) {
         if (data == null) return;
         var sessionId = data['sessionId'] as String;
         if (sessionId == null) return;
-        Navigator.of(context).push(new MaterialPageRoute(
+        navigatorKeys[2].currentState.push(new MaterialPageRoute(
           builder: (BuildContext context) {
             return new SmokeSessionPage(sessionId: sessionId);
           },

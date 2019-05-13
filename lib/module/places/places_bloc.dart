@@ -28,7 +28,11 @@ class PlacesBloc {
   }
 
   Future loadPlaces() async {
-    Geolocator()
+    var geolocator = Geolocator();
+    GeolocationStatus geolocationStatus =
+        await geolocator.checkGeolocationPermissionStatus();
+    if (geolocationStatus != GeolocationStatus.granted) return;
+    geolocator
         .getLastKnownPosition(desiredAccuracy: LocationAccuracy.low)
         .then((value) async {
       if (value != null) {
@@ -38,7 +42,7 @@ class PlacesBloc {
     });
     loadPlacesFromCache();
 
-    Geolocator()
+    geolocator
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((value) {
       this.location.add(value);

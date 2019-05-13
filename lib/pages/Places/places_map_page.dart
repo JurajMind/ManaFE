@@ -13,6 +13,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
+import 'dart:math' show cos, sqrt, asin;
 
 class PlacesMapPage extends StatefulWidget {
   final Position position;
@@ -27,6 +28,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   Completer<GoogleMapController> _controller = Completer();
   CameraPosition initView;
   CameraPosition curentView;
+  CameraPosition lastIdleView;
   Set<Marker> markers;
   bool loading = false;
   BehaviorSubject<List<PlaceSimpleDto>> nearbyPlaces =
@@ -37,6 +39,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
     super.initState();
     curentView = new CameraPosition(
         target: LatLng(widget.position.latitude, widget.position.longitude));
+    lastIdleView = curentView;
     markers = new Set<Marker>();
     if (widget.position != null) {
       initView = CameraPosition(
@@ -63,6 +66,18 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
     });
   }
 
+  double calculateDistance(LatLng pos1, LatLng pos2) {
+    var p = 0.017453292519943295;
+    var c = cos;
+    var a = 0.5 -
+        c((pos2.latitude - pos1.latitude) * p) / 2 +
+        c(pos1.latitude * p) *
+            c(pos2.latitude * p) *
+            (1 - c((pos2.longitude - pos1.longitude) * p)) /
+            2;
+    return 12742 * asin(sqrt(a));
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -83,7 +98,18 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                         child: GoogleMap(
                           markers: markers,
                           myLocationEnabled: true,
-                          onCameraMove: (cv) => curentView = cv,
+                          onCameraIdle: () {
+                            var distance = calculateDistance(
+                                lastIdleView.target, curentView.target);
+
+                            lastIdleView = curentView;
+                            if (distance > 5) {
+                              loadNearby();
+                            }
+                          },
+                          onCameraMove: (cv) {
+                            curentView = cv;
+                          },
                           mapType: MapType.normal,
                           compassEnabled: true,
                           tiltGesturesEnabled: true,
@@ -108,10 +134,10 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                   ),
                   Positioned(
                     top: 10,
-                    right: 10,
+                    right: MediaQuery.of(context).size.width / 2,
                     child: FloatingActionButton(
                       heroTag: 'Search',
-                      backgroundColor: AppColors.blue,
+                      backgroundColor: AppColors.scafBg,
                       child: Icon(
                         Icons.search,
                         color: Colors.white,
@@ -119,47 +145,18 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                       onPressed: () => searchCity(context),
                     ),
                   ),
-                  /* Positioned(
-                    bottom: 160,
-                    right: 10,
-                    child: FloatingActionButton(
-                      backgroundColor: AppColors.gray.withAlpha(40),
-                      child: Icon(
-                        Icons.track_changes,
-                        color: Colors.black,
-                      ),
-                      onPressed: () async {
-                        var controller = await _controller.future;
-                        Geolocator()
-                            .getLastKnownPosition(
-                                desiredAccuracy: LocationAccuracy.low)
-                            .then((value) {
-                          if (value != null) {
-                            var location =
-                                LatLng(value.latitude, value.longitude);
-                            loadNearby(imPosition: location);
-                            var position = CameraUpdate.newCameraPosition(
-                                CameraPosition(
-                                    bearing: 0,
-                                    target: location,
-                                    tilt: 0,
-                                    zoom: 15.151926040649414));
-                            controller.animateCamera(position);
-                          }
-                        });
-                      },
-                    ),
-                  ),*/
+                
                   Positioned(
-                    bottom: 260,
-                    right: 10,
+                     top: 10,
+                    right: (MediaQuery.of(context).size.width / 2) - 60, 
                     child: FloatingActionButton(
                         heroTag: "refresh",
-                        backgroundColor: AppColors.green.withAlpha(40),
+                        backgroundColor: AppColors.scafBg,
                         child: loading
                             ? CircularProgressIndicator()
                             : Icon(
                                 Icons.refresh,
+                                 color: Colors.white,
                               ),
                         onPressed: () => loadNearby()),
                   )
@@ -171,12 +168,20 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   }
 
   void searchCity(BuildContext context) async {
-    Navigator.of(context)
+    var result = await Navigator.of(context)
         .push(new MaterialPageRoute(builder: (BuildContext context) {
       return new PlacesSearchPage(
         places: nearbyPlaces.value,
+        returnToMap: true,
       );
     }));
+
+    if (result != null) {
+      var controller = await _controller.future;
+      var location = result as LatLng;
+      controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+          bearing: 0, target: location, tilt: 0, zoom: 15.151926040649414)));
+    }
   }
 
   void loadNearby({LatLng imPosition}) async {

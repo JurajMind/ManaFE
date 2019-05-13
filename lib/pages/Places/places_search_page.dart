@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:app/app/app.dart';
 import 'package:app/components/Places/GooglePlaceAutocomplete/google_places.dart';
 import 'package:app/components/Places/place_item.dart';
+import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +11,13 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:openapi/api.dart';
 import 'package:queries/collections.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PlacesSearchPage extends StatefulWidget {
   final List<PlaceSimpleDto> places;
-  PlacesSearchPage({Key key, this.places}) : super(key: key);
+  final bool returnToMap;
+  PlacesSearchPage({Key key, this.places, this.returnToMap = false})
+      : super(key: key);
 
   _PlacesSearchPageState createState() => _PlacesSearchPageState();
 }
@@ -27,6 +31,7 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
   GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
   Mode _mode = Mode.overlay;
   String currentLocation;
+  LatLng currentCitiLocation;
   String searchString = "";
   String session = "";
   @override
@@ -70,6 +75,7 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
       App.http.getNearbyPlaces(lat: lat, lng: lng).then((value) {
         places.add(value);
       });
+      currentCitiLocation = new LatLng(lat, lng);
     }
   }
 
@@ -78,136 +84,165 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
     return SafeArea(
       top: true,
       child: Scaffold(
+        bottomNavigationBar: Container(height: 55),
         resizeToAvoidBottomInset: false,
-        body: Column(
+        body: Stack(
           children: <Widget>[
-            Expanded(
-              flex: 2,
-              child: Row(
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(
-                      Icons.chevron_left,
-                      size: 30,
-                    ),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white),
-                              borderRadius: BorderRadius.circular(16.0)),
-                          child: Column(
-                            children: <Widget>[
-                              Expanded(
-                                  flex: 1,
-                                  child: Row(
-                                    children: <Widget>[
-                                      Flexible(
-                                          child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 8.0),
-                                        child: Icon(Icons.search),
-                                      )),
-                                      Expanded(
-                                          child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 15.0),
-                                        child: TextField(
-                                          onChanged: (data) {
-                                            setState(() {
-                                              this.searchString = data;
-                                            });
-                                          },
-                                          decoration: InputDecoration(
-                                              hintText: 'Search',
-                                              border: InputBorder.none,
-                                              labelStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .body2),
-                                        ),
-                                      )),
-                                    ],
-                                  )),
-                              Container(height: 1, color: Colors.white),
-                              Flexible(
-                                flex: 1,
-                                child: Row(
-                                  children: <Widget>[
-                                    Flexible(
-                                      child: IconButton(
-                                        icon: Icon(Icons.place),
-                                        onPressed: () {
-                                          setState(() {
-                                            this.currentLocation =
-                                                "Current location";
-                                          });
-                                          var location =
-                                              this.placesBloc.location.value;
-                                          App.http
-                                              .getNearbyPlaces(
-                                                  lat: location.latitude,
-                                                  lng: location.longitude)
-                                              .then((value) {
-                                            places.add(value);
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                    Container(width: 1, color: Colors.white),
-                                    Flexible(
-                                        flex: 4,
-                                        fit: FlexFit.tight,
-                                        child: GestureDetector(
-                                          onTap: () => _handlePressButton(),
-                                          child: Padding(
+            Column(
+              children: <Widget>[
+                Expanded(
+                  flex: 2,
+                  child: Row(
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(
+                          Icons.chevron_left,
+                          size: 30,
+                        ),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(16.0)),
+                              child: Column(
+                                children: <Widget>[
+                                  Expanded(
+                                      flex: 1,
+                                      child: Row(
+                                        children: <Widget>[
+                                          Flexible(
+                                              child: Padding(
                                             padding: const EdgeInsets.only(
-                                                left: 4.0),
-                                            child: Text(this.currentLocation,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .display2),
+                                                left: 8.0),
+                                            child: Icon(Icons.search),
+                                          )),
+                                          Expanded(
+                                              child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 15.0),
+                                            child: TextField(
+                                              onChanged: (data) {
+                                                setState(() {
+                                                  this.searchString = data;
+                                                });
+                                              },
+                                              decoration: InputDecoration(
+                                                  hintText: 'Search',
+                                                  border: InputBorder.none,
+                                                  labelStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .body2),
+                                            ),
+                                          )),
+                                        ],
+                                      )),
+                                  Container(height: 1, color: Colors.white),
+                                  Flexible(
+                                    flex: 1,
+                                    child: Row(
+                                      children: <Widget>[
+                                        Flexible(
+                                          child: IconButton(
+                                            icon: Icon(Icons.place),
+                                            onPressed: () {
+                                              setState(() {
+                                                this.currentLocation =
+                                                    "Current location";
+                                              });
+                                              var location = this
+                                                  .placesBloc
+                                                  .location
+                                                  .value;
+                                              App.http
+                                                  .getNearbyPlaces(
+                                                      lat: location.latitude,
+                                                      lng: location.longitude)
+                                                  .then((value) {
+                                                places.add(value);
+                                                currentCitiLocation =
+                                                    new LatLng(
+                                                        location.latitude,
+                                                        location.longitude);
+                                              });
+                                            },
                                           ),
-                                        )),
-                                  ],
-                                ),
-                              )
-                            ],
-                          )),
-                    ),
+                                        ),
+                                        Container(
+                                            width: 1, color: Colors.white),
+                                        Flexible(
+                                            flex: 4,
+                                            fit: FlexFit.tight,
+                                            child: GestureDetector(
+                                              onTap: () => _handlePressButton(),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 4.0),
+                                                child: Text(
+                                                    this.currentLocation,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .display2),
+                                              ),
+                                            )),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              )),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 11,
-              child: StreamBuilder<List<PlaceSimpleDto>>(
-                  stream: this.places,
-                  builder: (context, snapshot) {
-                    var data = snapshot.data;
-                    if (data != null && this.searchString != "") {
-                      var dataCollection = Collection(data);
-                      data = dataCollection
-                          .where$1((a, _) => a.name
-                              .toUpperCase()
-                              .contains(this.searchString.toUpperCase()))
-                          .toList();
-                    }
+                ),
+                Expanded(
+                  flex: 11,
+                  child: StreamBuilder<List<PlaceSimpleDto>>(
+                      stream: this.places,
+                      builder: (context, snapshot) {
+                        var data = snapshot.data;
+                        if (data != null && this.searchString != "") {
+                          var dataCollection = Collection(data);
+                          data = dataCollection
+                              .where$1((a, _) => a.name
+                                  .toUpperCase()
+                                  .contains(this.searchString.toUpperCase()))
+                              .toList();
+                        }
 
-                    return snapshot.data == null
-                        ? CircularProgressIndicator()
-                        : ListView.builder(
-                            itemCount: data.length,
-                            itemBuilder: (context, index) {
-                              var place = data[index];
-                              return new PlaceItem(place: place);
-                            },
-                          );
-                  }),
-            )
+                        return snapshot.data == null
+                            ? CircularProgressIndicator()
+                            : ListView.builder(
+                                itemCount: data.length,
+                                itemBuilder: (context, index) {
+                                  var place = data[index];
+                                  return new PlaceItem(place: place);
+                                },
+                              );
+                      }),
+                ),
+
+              ],
+            ),
+                          if(widget.returnToMap)  Positioned(
+                  right: 10,
+                  top: 12,
+                  child: FloatingActionButton(
+                    heroTag: 'Search',
+                    backgroundColor: AppColors.colors[0],
+                    child: Icon(
+                      Icons.map,
+                      color: Colors.white,
+                    ),
+                    onPressed: () => {
+                      Navigator.of(context).pop(this.currentCitiLocation)
+                    },
+                  ),
+                ),
           ],
         ),
       ),
