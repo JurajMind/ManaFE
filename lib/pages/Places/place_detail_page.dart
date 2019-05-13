@@ -396,23 +396,6 @@ class BookButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!(place.haveReservation ?? false) && place.phoneNumber != null)
-      return FlatButton(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(
-                Icons.phone,
-                color: Colors.black,
-              ),
-              Text(
-                'CALL FOR  RESERVATION',
-                style: TextStyle(color: Colors.black),
-              ),
-            ],
-          ),
-          onPressed: () => launch('tel://${place.phoneNumber}'));
-
     if (place.haveReservation ?? false) {
       return FlatButton(
           child: Row(

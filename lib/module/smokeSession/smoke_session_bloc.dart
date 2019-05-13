@@ -79,7 +79,7 @@ class SmokeSessionBloc {
   Observable<DevicePreset> futureDevicePresetDebounce;
 
   StreamController<Flushbar<Map<String, dynamic>>> notifications =
-      new StreamController<Flushbar<Map<String, dynamic>>>();
+      new StreamController<Flushbar<Map<String, dynamic>>>.broadcast();
 
   setColor(Color color) async {
     sessionColor.add([color, ColorHelper.getOpositeColor(color)]);
