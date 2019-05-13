@@ -1,12 +1,9 @@
 import 'dart:async';
 
-import 'package:app/components/Places/open_indicator.dart';
+import 'package:app/Helpers/place_helper.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/models/extensions.dart';
-import 'package:app/module/data_provider.dart';
-import 'package:app/module/places/places_bloc.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
-import 'package:app/support/mana_icons_icons.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -88,6 +85,13 @@ class _CarrousselState extends State<MapCarousel> {
   }
 
   InkWell buildInkWell(int index, PlaceSimpleDto place) {
+    var isOpen = PlaceHelpers.isOpen(place);
+    var textColor = Colors.white;
+    if (isOpen != null && isOpen) {
+      textColor = Colors.green;
+    } else if (isOpen != null && !isOpen) {
+      textColor = Colors.red;
+    }
     return new InkWell(
       onTap: () async {
         print('curent');
@@ -158,6 +162,7 @@ class _CarrousselState extends State<MapCarousel> {
                                   .textTheme
                                   .display1
                                   .merge(TextStyle(
+                                    color: textColor,
                                     shadows: [
                                       Shadow(
                                           // bottomLeft
