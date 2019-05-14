@@ -50,6 +50,7 @@ dependencies:
   avatar_glow: ^0.2.0
   auto_size_text: ^1.1.2
   flushbar: ^1.5.0
+  qrscan: ^0.1.5
 
 flutter_icons:
   android: true
@@ -109,6 +110,7 @@ flutter:
     - assets/sprite.png
     - assets/avatar.png
     - assets/google_black.png
+    - assets/man_pin.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

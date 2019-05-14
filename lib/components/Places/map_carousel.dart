@@ -12,7 +12,9 @@ import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MapCarousel extends StatefulWidget {
-  MapCarousel({this.nearbyPlaces, this.mapController});
+  PlaceSimpleDto selectedPlace;
+
+  MapCarousel({this.nearbyPlaces, this.mapController, this.selectedPlace});
   final Completer<GoogleMapController> mapController;
   final BehaviorSubject<List<PlaceSimpleDto>> nearbyPlaces;
   @override
@@ -30,6 +32,15 @@ class _CarrousselState extends State<MapCarousel> {
   @override
   initState() {
     super.initState();
+
+    if(widget.selectedPlace != null){
+      currentpage = widget.nearbyPlaces.value.indexOf(widget.selectedPlace);
+      widget.nearbyPlaces.doOnData((onData){
+      var index = onData.indexOf(widget.selectedPlace);
+       controller.jumpToPage(index);
+     });
+    }
+
     controller = new PageController(
       initialPage: currentpage,
       keepPage: false,
@@ -94,8 +105,7 @@ class _CarrousselState extends State<MapCarousel> {
     }
     return new InkWell(
       onTap: () async {
-        print('curent');
-
+      
         if (currentpage > index) {
           controller.previousPage(
               duration: Duration(milliseconds: 500), curve: Curves.ease);
@@ -107,7 +117,7 @@ class _CarrousselState extends State<MapCarousel> {
         }
 
         if (currentpage == index) {
-          if (clickedIndex == index) {
+          if (true) {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => PlaceDetailPage(place: place)));
           }

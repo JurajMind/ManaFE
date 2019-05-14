@@ -1,16 +1,15 @@
-import 'package:app/app/app.dart';
 import 'package:app/app/app.widget.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Common/bg_painter.dart';
 import 'package:app/components/Common/shadow_text.dart';
 import 'package:app/Helpers/helpers.dart';
-import 'package:app/pages/home.page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/support/validators/email.validator.dart';
 import 'package:app/support/validators/max.validator.dart';
 import 'package:app/support/validators/required.validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/api.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -28,7 +27,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final FocusNode passwordFocusNode = FocusNode();
   UserModel data = new UserModel();
   String termOfUssage = "";
-
+  bool showPassword = false;
   var _emailAutoValidate = false;
   final nameController = TextEditingController();
   final emailController = TextEditingController();
@@ -99,8 +98,15 @@ class _RegisterPageState extends State<RegisterPage> {
                 ]);
               },
               keyboardType: TextInputType.emailAddress,
-              decoration:
-                  new InputDecoration(hintText: 'E-mail', labelText: 'E-mail'),
+              decoration: new InputDecoration(
+                  hintText: 'E-mail',
+                  labelText: 'E-mail',
+                  labelStyle: Theme.of(context).textTheme.body2,
+                  enabledBorder: new UnderlineInputBorder(
+                      borderSide: new BorderSide(color: Colors.white)),
+                  focusedBorder: new UnderlineInputBorder(
+                      borderSide: new BorderSide(color: Colors.white)),
+                  icon: Icon(Icons.email, color: Colors.white)),
               onFieldSubmitted: (String textInput) {
                 setState(() {
                   _emailAutoValidate = true;
@@ -228,18 +234,28 @@ class _RegisterPageState extends State<RegisterPage> {
             softWrap: true,
           ),
           SizedBox(height: 48.0),
-          new TextFormField(
-              autofocus: false,
-              controller: nameController,
-              keyboardType: TextInputType.emailAddress,
-              decoration:
-                  new InputDecoration(hintText: 'your name', labelText: 'Name'),
-              onFieldSubmitted: (String textInput) {
-                data.userName = textInput;
-              },
-              onSaved: (String value) {
-                data.userName = value;
-              }),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: new TextFormField(
+                autofocus: false,
+                controller: nameController,
+                keyboardType: TextInputType.text,
+                decoration: new InputDecoration(
+                    hintText: 'Your display name',
+                    labelText: 'Name',
+                    labelStyle: Theme.of(context).textTheme.body2,
+                    enabledBorder: new UnderlineInputBorder(
+                        borderSide: new BorderSide(color: Colors.white)),
+                    focusedBorder: new UnderlineInputBorder(
+                        borderSide: new BorderSide(color: Colors.white)),
+                    icon: Icon(FontAwesomeIcons.userCircle, color: Colors.white)),
+                onFieldSubmitted: (String textInput) {
+                  data.userName = textInput;
+                },
+                onSaved: (String value) {
+                  data.userName = value;
+                }),
+          ),
           SizedBox(height: 48.0),
           nextRoundedButton(screenSize),
         ],
@@ -283,9 +299,30 @@ class _RegisterPageState extends State<RegisterPage> {
               autovalidate: _passwordAutoValidate,
               autofocus: true,
               controller: passwordController,
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.text,
+              obscureText: !showPassword,
               decoration: new InputDecoration(
-                  hintText: 'Password', labelText: 'Password'),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      showPassword
+                          ? FontAwesomeIcons.eyeSlash
+                          : FontAwesomeIcons.eye,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        showPassword = !showPassword;
+                      });
+                    },
+                  ),
+                  hintText: 'Password',
+                  labelText: 'Password',
+                  labelStyle: Theme.of(context).textTheme.display3,
+                  enabledBorder: new UnderlineInputBorder(
+                      borderSide: new BorderSide(color: Colors.white)),
+                  focusedBorder: new UnderlineInputBorder(
+                      borderSide: new BorderSide(color: Colors.white)),
+                  icon: Icon(Icons.security, color: Colors.white)),
               onFieldSubmitted: (String textInput) {
                 data.password = textInput;
               },
@@ -295,15 +332,38 @@ class _RegisterPageState extends State<RegisterPage> {
               }),
           new TextFormField(
               autovalidate: _passwordAutoValidate,
+              autofocus: true,
               controller: password2Controller,
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.text,
+              obscureText: !showPassword,
               decoration: new InputDecoration(
-                  hintText: 'Confirm password', labelText: 'Confirm password'),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      showPassword
+                          ? FontAwesomeIcons.eyeSlash
+                          : FontAwesomeIcons.eye,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        showPassword = !showPassword;
+                      });
+                    },
+                  ),
+                  hintText: 'Confirm password',
+                  labelText: 'Confirm password',
+                  labelStyle: Theme.of(context).textTheme.display3,
+                  enabledBorder: new UnderlineInputBorder(
+                      borderSide: new BorderSide(color: Colors.white)),
+                  focusedBorder: new UnderlineInputBorder(
+                      borderSide: new BorderSide(color: Colors.white)),
+                  icon: Icon(Icons.security, color: Colors.white)),
               onFieldSubmitted: (String textInput) {
-                data.confirmPassword = textInput;
+                data.password = textInput;
               },
+              onEditingComplete: () {},
               onSaved: (String value) {
-                data.confirmPassword = value;
+                data.password = value;
               }),
           SizedBox(height: 48.0),
           nextRoundedButton(screenSize),

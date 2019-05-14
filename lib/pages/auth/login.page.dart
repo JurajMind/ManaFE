@@ -7,8 +7,8 @@ import 'package:app/support/validators/required.validator.dart';
 import 'package:app/support/validators/string.validator.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
-import 'package:app/pages/home.page.dart';
 import 'package:app/services/authorization.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   _LoginData data = new _LoginData();
   bool _loading = false;
   final FocusNode passwordFocusNode = FocusNode();
-
+  bool showPassword = false;
   void submit(BuildContext context) async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
@@ -77,7 +77,16 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                         autofocus: true,
                         keyboardType: TextInputType.emailAddress,
                         decoration: new InputDecoration(
-                            hintText: 'you@example.com', labelText: 'E-mail'),
+                            labelStyle: Theme.of(context).textTheme.display1,
+                            enabledBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.white)),
+                            focusedBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.white)),
+                            icon: Icon(Icons.mail, color: Colors.white),
+                            hintText: 'your@email.com',
+                            labelText: 'E-mail'),
                         validator: (String value) {
                           return validate(value, 'E-mail Address', [
                             new RequiredValidator(),
@@ -93,10 +102,31 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                           data.email = value;
                         }),
                     new TextFormField(
-                        obscureText: true,
+                        obscureText: showPassword,
                         focusNode: passwordFocusNode,
                         decoration: new InputDecoration(
-                            labelText: 'Enter your password'),
+                                            suffixIcon: IconButton(
+                    icon: Icon(
+                      showPassword
+                          ? FontAwesomeIcons.eyeSlash
+                          : FontAwesomeIcons.eye,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        showPassword = !showPassword;
+                      });
+                    },
+                  ),
+                            labelStyle: Theme.of(context).textTheme.display1,
+                            enabledBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.white)),
+                            focusedBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.white)),
+                            icon: Icon(Icons.security, color: Colors.white),
+                            labelText: 'Password'),
                         validator: (String value) {
                           return validate(value, 'Password', [
                             new RequiredValidator(),
@@ -140,7 +170,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                       width: screenSize.width,
                       child: new FlatButton(
                         child: new Text(
-                          'Forgot password',
+                          'Forgot password?',style: Theme.of(context).textTheme.display2,
                         ),
                         onPressed: () {
                           navigate(context, 'auth/register');

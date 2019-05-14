@@ -7,6 +7,7 @@ import 'package:app/const/theme.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/places_bloc.dart';
+import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/pages/Places/places_search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -17,8 +18,9 @@ import 'dart:math' show cos, sqrt, asin;
 
 class PlacesMapPage extends StatefulWidget {
   final Position position;
+  final PlaceDto place;
 
-  PlacesMapPage({this.position});
+  PlacesMapPage({this.position, this.place});
 
   @override
   State<PlacesMapPage> createState() => _PlacesMapPageState();
@@ -34,12 +36,12 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   BehaviorSubject<List<PlaceSimpleDto>> nearbyPlaces =
       new BehaviorSubject<List<PlaceSimpleDto>>.seeded(null);
   PlacesBloc bloc;
+  BitmapDescriptor _manaMarker;
+  PlaceSimpleDto _selectedPlace;
   @override
   initState() {
     super.initState();
-    curentView = new CameraPosition(
-        target: LatLng(widget.position.latitude, widget.position.longitude));
-    lastIdleView = curentView;
+
     markers = new Set<Marker>();
     if (widget.position != null) {
       initView = CameraPosition(
@@ -54,6 +56,8 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
         zoom: 14.4746,
       );
     }
+    curentView = initView;
+    lastIdleView = curentView;
 
     new Future.delayed(Duration.zero, () {
       bloc = DataProvider.getData(context).placeBloc;
@@ -63,6 +67,26 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
         setMarkers(onData);
         nearbyPlaces.add(onData);
       });
+
+      if (widget.position != null) {
+        loadNearby();
+      }
+      _createMarkerImageFromAsset(context);
+    });
+  }
+
+  Future<void> _createMarkerImageFromAsset(BuildContext context) async {
+    if (_manaMarker == null) {
+      final ImageConfiguration imageConfiguration =
+          createLocalImageConfiguration(context);
+      BitmapDescriptor.fromAssetImage(imageConfiguration, 'assets/man_pin.png')
+          .then(_updateBitmap);
+    }
+  }
+
+  void _updateBitmap(BitmapDescriptor bitmap) {
+    setState(() {
+      _manaMarker = bitmap;
     });
   }
 
@@ -128,6 +152,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                       height: 120,
                       width: MediaQuery.of(context).size.width,
                       child: MapCarousel(
+                        selectedPlace: _selectedPlace,
                           nearbyPlaces: nearbyPlaces,
                           mapController: _controller),
                     ),
@@ -145,10 +170,9 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                       onPressed: () => searchCity(context),
                     ),
                   ),
-                
                   Positioned(
-                     top: 10,
-                    right: (MediaQuery.of(context).size.width / 2) - 60, 
+                    top: 10,
+                    right: (MediaQuery.of(context).size.width / 2) - 60,
                     child: FloatingActionButton(
                         heroTag: "refresh",
                         backgroundColor: AppColors.scafBg,
@@ -156,7 +180,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                             ? CircularProgressIndicator()
                             : Icon(
                                 Icons.refresh,
-                                 color: Colors.white,
+                                color: Colors.white,
                               ),
                         onPressed: () => loadNearby()),
                   )
@@ -201,6 +225,25 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   void setMarkers(List<PlaceSimpleDto> places) {
     markers = places.map((f) {
       return new Marker(
+          icon: f.haveMana ? _manaMarker : BitmapDescriptor.defaultMarker,
+          
+          onTap: () async {
+            var controller = await _controller.future;
+            if(_selectedPlace == f){
+                 Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => PlaceDetailPage(place: f)));
+            }
+            setState(() {
+             _selectedPlace = f; 
+            });
+            controller.animateCamera(CameraUpdate.newCameraPosition(
+                CameraPosition(
+                    bearing: 0,
+                    target: new LatLng(double.parse(f.address.lat),
+                        double.parse(f.address.lng)),
+                    tilt: 0,
+                    zoom: 15.151926040649414)));
+          },
           markerId: MarkerId(f.id.toString()),
           infoWindow:
               InfoWindow(title: f.name, snippet: Extensions.adress(f.address)),

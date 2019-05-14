@@ -7,6 +7,7 @@ import 'package:app/module/mixology/mix_card_expanded_shimmer.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/pages/Mixology/mix_detail_page.dart';
 import 'package:app/pages/SmokeSession/tobacco_edit.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
@@ -116,6 +117,9 @@ class PaggingMixListView extends StatelessWidget {
         stream: mixologyBloc.mixCreatorMixes[mixCreator],
         initialData: null,
         builder: (context, snapshot) {
+          if(snapshot.data.length == 0){
+            return Center(child: Text('Is empty here, try add new mix                                                                                                                                                                       ',style: Theme.of(context).textTheme.display1,));
+          }
           return LazyLoadScrollView(
             onEndOfPage: () {
               if (!snapshot.data.contains(null))

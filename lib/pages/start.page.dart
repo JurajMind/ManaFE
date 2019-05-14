@@ -81,13 +81,13 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                           width: screenSize.width,
                           textColor: Colors.black,
                         ),
-                        margin: new EdgeInsets.only(top: 20.0),
+                        margin: new EdgeInsets.only(top: 25.0),
                       ),
                       new Container(
                         width: screenSize.width,
                         child: new FlatButton(
                           child: new Text(
-                            'I alredy have an account',
+                            'I alredy have an account',style: Theme.of(context).textTheme.display2,
                           ),
                           onPressed: () {
                             navigate(context, 'auth/login');
