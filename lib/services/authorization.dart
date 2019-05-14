@@ -73,7 +73,6 @@ class Authorize {
     _token = null;
   }
 
-// TODO
   messToken() async {
     _token = "token";
     await _storage.write(key: 'accessToken', value: 'token');
@@ -153,7 +152,6 @@ class Authorize {
 class _requireConsent {}
 
 class AuthorizationPost {
-  var _grant_type = "grant_type";
   final String username;
   final String password;
 

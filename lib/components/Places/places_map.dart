@@ -4,7 +4,6 @@ import 'package:app/utils/Map/map_view_type.dart';
 import 'package:app/utils/Map/static_map_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 
 import 'package:openapi/api.dart';
 import 'package:url_launcher/url_launcher.dart';

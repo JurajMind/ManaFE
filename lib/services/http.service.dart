@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
@@ -16,7 +15,6 @@ import 'package:tuple/tuple.dart';
 import 'package:openapi/api.dart';
 
 class ApiClient {
-  final _http = HttpClient();
   final Dio _dio;
   final Authorize _authorize = new Authorize();
 
@@ -83,11 +81,6 @@ class ApiClient {
     });
   }
 
-  Future<dynamic> _(Uri uri) async {
-    var response = await (await _http.getUrl(uri)).close();
-    var transformedResponse = await response.transform(utf8.decoder).join();
-    return json.decode(transformedResponse);
-  }
 
   Future<List<TobaccoMixSimpleDto>> fetchtobacoMix(
       {int page: 0,
@@ -158,7 +151,7 @@ class ApiClient {
 
     var data = {'Color': ColorDto(color), 'Type': 1};
     print('color ${ColorDto(color).toJson()}');
-    var response = await _dio.post(uri.toString(),
+    await _dio.post(uri.toString(),
         data: data,
         options: Options(
           contentType: ContentType.json,
@@ -267,7 +260,7 @@ class ApiClient {
   Future<SmokeSessionMetaDataDto> postMetadata(
       String sessionCode, SmokeSessionMetaDataDto value) async {
     var url =
-        Uri.https(baseUrl, 'api/SmokeSession/${sessionCode}/SaveMetaData');
+        Uri.https(baseUrl, 'api/SmokeSession/$sessionCode/SaveMetaData');
 
     var response = await _dio.post(url.toString(),
         data: value.toJson(),
@@ -288,7 +281,7 @@ class ApiClient {
     print('Set preset on session {$sessionId}:${presetId.toString()}');
     var url = Uri.https(
         baseUrl, '/api/Device/Preset/${presetId.toString()}/Use/$sessionId');
-    var response = await _dio.post(url.toString(),
+       await _dio.post(url.toString(),
         data: null, options: Options(contentType: ContentType.json));
 
     return true;

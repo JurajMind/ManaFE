@@ -1,12 +1,10 @@
-import 'package:app/components/ProgressButton/progress_button.dart';
+import 'package:app/components/ProgressButton/progress_button.dart' show ProgressButton;
 import 'package:app/components/ProgressButton/reveal_progress_button_painter.dart';
-import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
 
 class RevealProgressButton extends StatefulWidget {
 
-  @override
   State<StatefulWidget> createState() => _RevealProgressButtonState();
 }
 

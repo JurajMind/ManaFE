@@ -2,7 +2,6 @@ import 'package:app/Helpers/date_utils.dart';
 import 'package:app/components/Common/labeled_value.dart';
 import 'package:app/pages/Places/Reservations/reservation_detail_page.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:openapi/api.dart';
 
 class ReservationItem extends StatelessWidget {
