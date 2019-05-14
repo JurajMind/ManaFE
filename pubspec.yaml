@@ -50,7 +50,6 @@ dependencies:
   avatar_glow: ^0.2.0
   auto_size_text: ^1.1.2
   flushbar: ^1.5.0
-  qrscan: ^0.1.5
 
 flutter_icons:
   android: true
