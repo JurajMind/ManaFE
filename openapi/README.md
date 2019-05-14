@@ -59,7 +59,7 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://localhost:44324*
+All URIs are relative to *https://devmana.azurewebsites.net*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -213,10 +213,10 @@ Class | Method | HTTP request | Description
  - [PlaceSimpleDto](docs\/PlaceSimpleDto.md)
  - [PlacesDevicePlaceDashboardDto](docs\/PlacesDevicePlaceDashboardDto.md)
  - [PlacesPlaceDashboardDto](docs\/PlacesPlaceDashboardDto.md)
+ - [PlacesReservationsReservationDetailDto](docs\/PlacesReservationsReservationDetailDto.md)
+ - [PlacesReservationsReservationDto](docs\/PlacesReservationsReservationDto.md)
+ - [PlacesReservationsReservationManageDto](docs\/PlacesReservationsReservationManageDto.md)
  - [PriceGroupItems](docs\/PriceGroupItems.md)
- - [ReservationDetailDto](docs\/ReservationDetailDto.md)
- - [ReservationDto](docs\/ReservationDto.md)
- - [ReservationManageDto](docs\/ReservationManageDto.md)
  - [ReservationsTimeSlot](docs\/ReservationsTimeSlot.md)
  - [SearchPipeAccessory](docs\/SearchPipeAccessory.md)
  - [SeatDto](docs\/SeatDto.md)

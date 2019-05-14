@@ -23,7 +23,7 @@ Name | Type | Description | Notes
 **seatId** | **int** |  | [optional] [default to null]
 **seat** | [**SeatDto**](SeatDto.md) |  | [optional] [default to null]
 **reservationId** | **int** |  | [optional] [default to null]
-**reservation** | [**ReservationDto**](ReservationDto.md) |  | [optional] [default to null]
+**reservation** | [**PlacesReservationsReservationDto**](PlacesReservationsReservationDto.md) |  | [optional] [default to null]
 **type** | **int** |  | [optional] [default to null]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

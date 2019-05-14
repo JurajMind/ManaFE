@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **devices** | [**List&lt;DeviceSimpleDto&gt;**](DeviceSimpleDto.md) |  | [optional] [default to []]
 **activeSmokeSessions** | [**List&lt;SmokeSessionSimpleDto&gt;**](SmokeSessionSimpleDto.md) |  | [optional] [default to []]
-**activeReservations** | [**List&lt;ReservationDto&gt;**](ReservationDto.md) |  | [optional] [default to []]
+**activeReservations** | [**List&lt;PlacesReservationsReservationDto&gt;**](PlacesReservationsReservationDto.md) |  | [optional] [default to []]
 **activeHookahOrders** | [**List&lt;HookahOrderDto&gt;**](HookahOrderDto.md) |  | [optional] [default to []]
 **gameProfile** | [**GameProfileSimpleDto**](GameProfileSimpleDto.md) |  | [optional] [default to null]
 

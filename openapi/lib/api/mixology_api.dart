@@ -274,7 +274,7 @@ class MixologyApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return new Map<String, List<TobaccoTasteDto>>.from(apiClient.deserialize(response.body, 'Map<String, List<TobaccoTasteDto>>'));
-          
+          ;
     } else {
       return null;
     }

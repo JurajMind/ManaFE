@@ -34,8 +34,8 @@ android {
         applicationId "com.manapipes.app"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 12
-        versionName "0.8.24"
+        versionCode 38
+        versionName "0.8.30"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 

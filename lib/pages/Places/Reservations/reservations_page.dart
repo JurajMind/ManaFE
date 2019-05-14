@@ -1,10 +1,12 @@
 import 'package:app/Helpers/helpers.dart';
+import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Callendar/flutter_calendar.dart';
 import 'package:app/components/Reservations/reservation_item.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/person/reservations_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
+import 'package:queries/collections.dart';
 
 class ReservationsPage extends StatefulWidget {
   @override
@@ -18,6 +20,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
   DateTime _selectedDay;
   Map<DateTime, List> _events;
   List _selectedEvents;
+  int reservationFilter = -1;
 
   @override
   void initState() {
@@ -53,7 +56,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
         title: Text('RESERVATIONS'),
       ),
       body: SafeArea(
-        child: StreamBuilder<List<ReservationDto>>(
+        child: StreamBuilder<List<PlacesReservationsReservationDto>>(
             stream: reservationBloc.reservations,
             builder: (context, snapshot) {
               var filteredReservations = _selectedDay == null
@@ -63,12 +66,24 @@ class _ReservationsPageState extends State<ReservationsPage> {
                       .toList();
               var childrens = new List<Widget>();
               childrens.add(_buildTableCalendar(snapshot.data));
-              childrens.add(
-                const SizedBox(height: 8.0),
-              );
+
+              childrens.add(Center(
+                child: new ReservationFilterWidget(
+                  reservationFilter: reservationFilter,
+                  onChanged: (index) => {
+                        setState(() {
+                          reservationFilter = index;
+                        })
+                      },
+                ),
+              ));
               childrens.addAll(_buildEventList(filteredReservations));
-              return ListView(
-                children: childrens,
+              return Stack(
+                children: <Widget>[
+                  ListView(
+                    children: childrens,
+                  ),
+                ],
               );
             }),
       ),
@@ -76,7 +91,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
   }
 
   // Configure the calendar here
-  Widget _buildTableCalendar(List<ReservationDto> data) {
+  Widget _buildTableCalendar(List<PlacesReservationsReservationDto> data) {
     _events = new Map<DateTime, List<String>>();
     if (data != null) {
       data.forEach((f) {
@@ -103,13 +118,24 @@ class _ReservationsPageState extends State<ReservationsPage> {
         dateStyles: TextStyle(color: Colors.red));
   }
 
-  List<Widget> _buildEventList(List<ReservationDto> data) {
+  List<Widget> _buildEventList(List<PlacesReservationsReservationDto> data) {
     if (data == null) {
       return List<Widget>.generate(10, (int index) {
         return ReservationItemShimer();
       });
     }
-    return data.map((r) => ReservationItem(reservation: r)).toList();
+
+    var reservations = new Collection(data);
+    if (reservationFilter != -1) {
+      reservations = reservations
+          .where$1((p, _) => p.status == reservationFilter)
+          .toCollection();
+    }
+    return reservations
+        .reverse()
+        .toList()
+        .map((r) => ReservationItem(reservation: r))
+        .toList();
   }
 
   void changeDate(DateTime newDate) {
@@ -122,5 +148,45 @@ class _ReservationsPageState extends State<ReservationsPage> {
     setState(() {
       _selectedDay = newDate;
     });
+  }
+}
+
+class ReservationFilterWidget extends StatelessWidget {
+  final ValueChanged<int> onChanged;
+  final int reservationFilter;
+  static List<int> reservationFilterSet = [-1, 3, 6, 1];
+  const ReservationFilterWidget({
+    Key key,
+    this.onChanged,
+    this.reservationFilter,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 200,
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.white),
+          borderRadius: BorderRadius.circular(16.0)),
+      child: new InkWell(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ReservationStatusIcon(
+              reservationInt: reservationFilter,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(ReservationStatusIcon.stateToText(reservationFilter))
+          ],
+        ),
+        onTap: () {
+          var index = reservationFilterSet.indexOf(reservationFilter);
+          index = (index + 1) % reservationFilterSet.length;
+          onChanged(reservationFilterSet[index]);
+        },
+      ),
+    );
   }
 }

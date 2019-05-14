@@ -14,11 +14,11 @@ class ReservationBloc extends SignalBloc {
     this.connect();
   }
 
-  BehaviorSubject<List<ReservationDto>> reservations =
-      new BehaviorSubject<List<ReservationDto>>();
+  BehaviorSubject<List<PlacesReservationsReservationDto>> reservations =
+      new BehaviorSubject<List<PlacesReservationsReservationDto>>();
 
-  BehaviorSubject<ReservationDetailDto> reservationDetail =
-      new BehaviorSubject<ReservationDetailDto>();
+  BehaviorSubject<PlacesReservationsReservationDetailDto> reservationDetail =
+      new BehaviorSubject<PlacesReservationsReservationDetailDto>();
 
   DateTime from;
   DateTime to;
@@ -56,12 +56,12 @@ class ReservationBloc extends SignalBloc {
     this.reservationDetail.add(result);
   }
 
-  Future<ReservationDto> createReservation(
-      ReservationDto newReservation) async {
+  Future<PlacesReservationsReservationDto> createReservation(
+      PlacesReservationsReservationDto newReservation) async {
     var createdReservation = await App.http.createReservation(newReservation);
     if (createdReservation != null) {
-      var oldReservations =
-          this.reservations.value ?? new List<ReservationDto>();
+      var oldReservations = this.reservations.value ??
+          new List<PlacesReservationsReservationDto>();
       oldReservations.add(createdReservation);
       this.reservations.add(oldReservations);
     }

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
 class ReservationItem extends StatelessWidget {
-  final ReservationDto reservation;
+  final PlacesReservationsReservationDto reservation;
 
   const ReservationItem({Key key, this.reservation}) : super(key: key);
   @override
@@ -99,8 +99,10 @@ class ReservationItem extends StatelessWidget {
 }
 
 class ReservationStatusIcon extends StatelessWidget {
-  static String stateToText(ReservationDto reservation) {
-    switch (reservation.status) {
+  static String stateToText(int reservationState) {
+    switch (reservationState) {
+      case -1:
+        return "All";
       // Created
       case 0:
         return "Created";
@@ -117,20 +119,25 @@ class ReservationStatusIcon extends StatelessWidget {
       case 6:
         return "Confirmation required";
       default:
-        return reservation.status.toString();
+        return reservationState.toString();
     }
   }
 
-  final ReservationDto reservation;
+  final PlacesReservationsReservationDto reservation;
+  final int reservationInt;
 
   const ReservationStatusIcon({
     Key key,
     this.reservation,
+    this.reservationInt,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    switch (reservation.status) {
+    var status = reservationInt ?? reservation.status;
+    switch (status) {
+      case -1:
+        return Icon(Icons.filter_list, color: Colors.white);
       // Created
       case 0:
         return Icon(Icons.check_circle_outline, color: Colors.blue);

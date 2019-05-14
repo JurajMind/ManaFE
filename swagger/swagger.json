@@ -4,7 +4,7 @@
     "version": "v1",
     "title": "smartHookah"
   },
-  "host": "localhost:44324",
+  "host": "devmana.azurewebsites.net",
   "schemes": [
     "https"
   ],
@@ -2693,7 +2693,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/ReservationManageDto"
+              "$ref": "#/definitions/PlacesReservationsReservationManageDto"
             }
           }
         }
@@ -2718,7 +2718,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/ReservationDto"
+                "$ref": "#/definitions/PlacesReservationsReservationDto"
               }
             }
           }
@@ -2759,7 +2759,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/ReservationDto"
+                "$ref": "#/definitions/PlacesReservationsReservationDto"
               }
             }
           }
@@ -2790,14 +2790,14 @@
           "in": "body",
           "required": true,
           "schema": {
-            "$ref": "#/definitions/ReservationDto"
+            "$ref": "#/definitions/PlacesReservationsReservationDto"
           }
         }],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/ReservationDto"
+              "$ref": "#/definitions/PlacesReservationsReservationDto"
             }
           }
         }
@@ -2899,7 +2899,12 @@
           "text/xml",
           "application/x-www-form-urlencoded"
         ],
-        "produces": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
         "parameters": [{
             "name": "id",
             "in": "path",
@@ -2918,8 +2923,11 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlacesReservationsReservationDto"
+            }
           }
         }
       }
@@ -2978,7 +2986,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/ReservationDetailDto"
+              "$ref": "#/definitions/PlacesReservationsReservationDetailDto"
             }
           }
         }
@@ -3024,7 +3032,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/ReservationDto"
+              "$ref": "#/definitions/PlacesReservationsReservationDto"
             }
           }
         }
@@ -3070,7 +3078,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/ReservationDto"
+              "$ref": "#/definitions/PlacesReservationsReservationDto"
             }
           }
         }
@@ -4607,7 +4615,7 @@
         "ActiveReservations": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ReservationDto"
+            "$ref": "#/definitions/PlacesReservationsReservationDto"
           }
         },
         "ActiveHookahOrders": {
@@ -4621,7 +4629,7 @@
         }
       }
     },
-    "ReservationDto": {
+    "PlacesReservationsReservationDto": {
       "type": "object",
       "properties": {
         "Id": {
@@ -4682,6 +4690,10 @@
             "format": "int32",
             "type": "integer"
           }
+        },
+        "LateDuration": {
+          "format": "int32",
+          "type": "integer"
         }
       }
     },
@@ -4751,7 +4763,7 @@
           "type": "integer"
         },
         "Reservation": {
-          "$ref": "#/definitions/ReservationDto"
+          "$ref": "#/definitions/PlacesReservationsReservationDto"
         },
         "Type": {
           "format": "int32",
@@ -4897,6 +4909,9 @@
           "type": "boolean"
         },
         "HaveMana": {
+          "type": "boolean"
+        },
+        "HaveReservation": {
           "type": "boolean"
         }
       }
@@ -5151,9 +5166,6 @@
     "PlaceDto": {
       "type": "object",
       "properties": {
-        "Instagram": {
-          "type": "string"
-        },
         "Url": {
           "type": "string"
         },
@@ -5203,6 +5215,12 @@
           "type": "array",
           "items": {
             "type": "string"
+          }
+        },
+        "SocialMedias": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/smartHookahModelsDbSocialMedia"
           }
         },
         "Id": {
@@ -5351,7 +5369,7 @@
         }
       }
     },
-    "ReservationManageDto": {
+    "PlacesReservationsReservationManageDto": {
       "type": "object",
       "properties": {
         "startTime": {
@@ -5379,7 +5397,7 @@
         "Reservations": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ReservationDto"
+            "$ref": "#/definitions/PlacesReservationsReservationDto"
           }
         }
       }
@@ -5430,11 +5448,11 @@
         }
       }
     },
-    "ReservationDetailDto": {
+    "PlacesReservationsReservationDetailDto": {
       "type": "object",
       "properties": {
         "Reservation": {
-          "$ref": "#/definitions/ReservationDto"
+          "$ref": "#/definitions/PlacesReservationsReservationDto"
         },
         "Place": {
           "$ref": "#/definitions/PlaceDto"

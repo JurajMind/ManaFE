@@ -10,7 +10,7 @@ class ReservationApi {
   /// 
   ///
   /// 
-  Future reservationAddLateTime(int id, int body) async {
+  Future<PlacesReservationsReservationDto> reservationAddLateTime(int id, int body) async {
     Object postBody = body;
 
     // verify required params are set
@@ -55,14 +55,15 @@ class ReservationApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
+      return apiClient.deserialize(response.body, 'PlacesReservationsReservationDto') as PlacesReservationsReservationDto;
     } else {
-      return;
+      return null;
     }
   }
   /// 
   ///
   /// 
-  Future<ReservationDto> reservationAddTable(int id, int body) async {
+  Future<PlacesReservationsReservationDto> reservationAddTable(int id, int body) async {
     Object postBody = body;
 
     // verify required params are set
@@ -107,7 +108,7 @@ class ReservationApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'ReservationDto') as ReservationDto;
+      return apiClient.deserialize(response.body, 'PlacesReservationsReservationDto') as PlacesReservationsReservationDto;
     } else {
       return null;
     }
@@ -165,12 +166,12 @@ class ReservationApi {
   /// 
   ///
   /// 
-  Future<ReservationDto> reservationCreate(ReservationDto reservationDto) async {
-    Object postBody = reservationDto;
+  Future<PlacesReservationsReservationDto> reservationCreate(PlacesReservationsReservationDto placesReservationsReservationDto) async {
+    Object postBody = placesReservationsReservationDto;
 
     // verify required params are set
-    if(reservationDto == null) {
-     throw new ApiException(400, "Missing required param: reservationDto");
+    if(placesReservationsReservationDto == null) {
+     throw new ApiException(400, "Missing required param: placesReservationsReservationDto");
     }
 
     // create path and map variables
@@ -207,7 +208,7 @@ class ReservationApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'ReservationDto') as ReservationDto;
+      return apiClient.deserialize(response.body, 'PlacesReservationsReservationDto') as PlacesReservationsReservationDto;
     } else {
       return null;
     }
@@ -215,7 +216,7 @@ class ReservationApi {
   /// 
   ///
   /// 
-  Future<ReservationManageDto> reservationGetManagereservationsInfo(int id, DateTime date) async {
+  Future<PlacesReservationsReservationManageDto> reservationGetManagereservationsInfo(int id, DateTime date) async {
     Object postBody;
 
     // verify required params are set
@@ -261,7 +262,7 @@ class ReservationApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'ReservationManageDto') as ReservationManageDto;
+      return apiClient.deserialize(response.body, 'PlacesReservationsReservationManageDto') as PlacesReservationsReservationManageDto;
     } else {
       return null;
     }
@@ -269,7 +270,7 @@ class ReservationApi {
   /// 
   ///
   /// 
-  Future<List<ReservationDto>> reservationGetPersonReservations() async {
+  Future<List<PlacesReservationsReservationDto>> reservationGetPersonReservations() async {
     Object postBody;
 
     // verify required params are set
@@ -308,7 +309,7 @@ class ReservationApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return (apiClient.deserialize(response.body, 'List<ReservationDto>') as List).map((item) => item as ReservationDto).toList();
+      return (apiClient.deserialize(response.body, 'List<PlacesReservationsReservationDto>') as List).map((item) => item as PlacesReservationsReservationDto).toList();
     } else {
       return null;
     }
@@ -316,7 +317,7 @@ class ReservationApi {
   /// 
   ///
   /// 
-  Future<ReservationDetailDto> reservationGetReservationDetail(int id) async {
+  Future<PlacesReservationsReservationDetailDto> reservationGetReservationDetail(int id) async {
     Object postBody;
 
     // verify required params are set
@@ -358,7 +359,7 @@ class ReservationApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'ReservationDetailDto') as ReservationDetailDto;
+      return apiClient.deserialize(response.body, 'PlacesReservationsReservationDetailDto') as PlacesReservationsReservationDetailDto;
     } else {
       return null;
     }
@@ -420,7 +421,7 @@ class ReservationApi {
   /// 
   ///
   /// 
-  Future<List<ReservationDto>> reservationGetReservations(DateTime from, DateTime to) async {
+  Future<List<PlacesReservationsReservationDto>> reservationGetReservations(DateTime from, DateTime to) async {
     Object postBody;
 
     // verify required params are set
@@ -467,7 +468,7 @@ class ReservationApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return (apiClient.deserialize(response.body, 'List<ReservationDto>') as List).map((item) => item as ReservationDto).toList();
+      return (apiClient.deserialize(response.body, 'List<PlacesReservationsReservationDto>') as List).map((item) => item as PlacesReservationsReservationDto).toList();
     } else {
       return null;
     }
@@ -475,7 +476,7 @@ class ReservationApi {
   /// 
   ///
   /// 
-  Future<ReservationDto> reservationRemoveTable(int id, int body) async {
+  Future<PlacesReservationsReservationDto> reservationRemoveTable(int id, int body) async {
     Object postBody = body;
 
     // verify required params are set
@@ -520,7 +521,7 @@ class ReservationApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'ReservationDto') as ReservationDto;
+      return apiClient.deserialize(response.body, 'PlacesReservationsReservationDto') as PlacesReservationsReservationDto;
     } else {
       return null;
     }

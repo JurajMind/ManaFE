@@ -476,7 +476,7 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
   _createReservations(BuildContext context, ReservationBloc bloc) async {
-    var newReservation = new ReservationDto();
+    var newReservation = new PlacesReservationsReservationDto();
     newReservation.persons = selectedPersons;
     newReservation.placeId = widget.place.id;
     newReservation.name = nameTextController.value.text;

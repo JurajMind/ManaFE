@@ -41,7 +41,11 @@ class ApiClient {
         var tokenHeader = 'Bearer $token';
         RequestOptions options = error.response.request;
         // If the token has been updated, repeat directly.
-        return await _handleAuthError(tokenHeader, options, token);
+        if (token != null)
+          return await _handleAuthError(tokenHeader, options, token);
+        else {
+          print('Null token');
+        }
       } else {
         print(error.message);
         print(error.response);
@@ -80,7 +84,6 @@ class ApiClient {
       return _dio.request(options.path, options: options);
     });
   }
-
 
   Future<List<TobaccoMixSimpleDto>> fetchtobacoMix(
       {int page: 0,
@@ -259,8 +262,7 @@ class ApiClient {
 
   Future<SmokeSessionMetaDataDto> postMetadata(
       String sessionCode, SmokeSessionMetaDataDto value) async {
-    var url =
-        Uri.https(baseUrl, 'api/SmokeSession/$sessionCode/SaveMetaData');
+    var url = Uri.https(baseUrl, 'api/SmokeSession/$sessionCode/SaveMetaData');
 
     var response = await _dio.post(url.toString(),
         data: value.toJson(),
@@ -281,7 +283,7 @@ class ApiClient {
     print('Set preset on session {$sessionId}:${presetId.toString()}');
     var url = Uri.https(
         baseUrl, '/api/Device/Preset/${presetId.toString()}/Use/$sessionId');
-       await _dio.post(url.toString(),
+    await _dio.post(url.toString(),
         data: null, options: Options(contentType: ContentType.json));
 
     return true;
@@ -324,6 +326,14 @@ class ApiClient {
     });
   }
 
+  Future<PlacesReservationsReservationDto> addLateReservation(
+      int id, int time) async {
+    var url = Uri.https(baseUrl, '/api/Reservations/$id/AddLateTime');
+    return await _dio.post(url.toString(), data: time).then((data) {
+      return PlacesReservationsReservationDto.fromJson(data.data);
+    });
+  }
+
   Future<PlaceDto> getPlaceInfo(int id) async {
     var url =
         Uri.https(baseUrl, '/api/Places/GetPlaceInfo/', {"id": id.toString()});
@@ -351,7 +361,7 @@ class ApiClient {
   Future deleteMix(TobaccoMixSimpleDto mix) async {
     var url = Uri.https(
         baseUrl, '/api/Mixology/RemoveMix', {'mixId': mix.id.toString()});
-     await _dio.deleteUri(url);
+    await _dio.deleteUri(url);
   }
 
   Future<PersonStatisticsOverallDto> getStatistic(
@@ -365,29 +375,29 @@ class ApiClient {
         .then((data) => PersonStatisticsOverallDto.fromJson(data.data));
   }
 
-  Future<List<ReservationDto>> getReservations(
+  Future<List<PlacesReservationsReservationDto>> getReservations(
       DateTime from, DateTime to) async {
     final f = new DateFormat('yyyy-MM-dd');
     var url = Uri.https(baseUrl, '/api/Reservations/Reservations',
         {'from': f.format(from), 'to': f.format(to)});
 
-    return await _dio
-        .getUri(url)
-        .then((data) => ReservationDto.listFromJson(data.data));
+    return await _dio.getUri(url).then(
+        (data) => PlacesReservationsReservationDto.listFromJson(data.data));
   }
 
-  Future<ReservationDto> createReservation(
-      ReservationDto newReservation) async {
+  Future<PlacesReservationsReservationDto> createReservation(
+      PlacesReservationsReservationDto newReservation) async {
     var url = Uri.https(baseUrl, '/api/Reservations/Create');
     var data = await _dio.post(url.toString(), data: newReservation);
     data.data['Created'] = null;
-    return ReservationDto.fromJson(data.data);
+    return PlacesReservationsReservationDto.fromJson(data.data);
   }
 
-  Future<ReservationDetailDto> detailReservation(int id) async {
+  Future<PlacesReservationsReservationDetailDto> detailReservation(
+      int id) async {
     var url = Uri.https(baseUrl, '/api/Reservations/$id/Detail');
     var data = await _dio.get(url.toString());
-    return ReservationDetailDto.fromJson(data.data);
+    return PlacesReservationsReservationDetailDto.fromJson(data.data);
   }
 
   Future<PipeAccesorySimpleDto> addMyGear(int id, int count) async {
@@ -415,11 +425,11 @@ class ApiClient {
     await _dio.post(url.toString());
   }
 
-  Future<ReservationDetailDto> reservationDetail(int id) async {
+  Future<PlacesReservationsReservationDetailDto> reservationDetail(
+      int id) async {
     var url = Uri.https(baseUrl, '/api/Reservations/$id/Detail');
-    return await _dio
-        .getUri(url)
-        .then((data) => ReservationDetailDto.fromJson(data.data));
+    return await _dio.getUri(url).then(
+        (data) => PlacesReservationsReservationDetailDto.fromJson(data.data));
   }
 
   Future cancelReservation(int id) async {

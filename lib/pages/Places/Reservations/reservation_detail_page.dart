@@ -11,10 +11,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:openapi/api.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ReservationDetailPage extends StatefulWidget {
-  final ReservationDto reservation;
+  final PlacesReservationsReservationDto reservation;
 
   const ReservationDetailPage({Key key, this.reservation}) : super(key: key);
 
@@ -23,11 +24,11 @@ class ReservationDetailPage extends StatefulWidget {
 }
 
 class _ReservationDetailState extends State<ReservationDetailPage> {
-  BehaviorSubject<ReservationDetailDto> reservationDetail =
-      new BehaviorSubject<ReservationDetailDto>();
+  BehaviorSubject<PlacesReservationsReservationDetailDto> reservationDetail =
+      new BehaviorSubject<PlacesReservationsReservationDetailDto>();
 
   ScrollController controller;
-
+  bool lateReservationLoading = false;
   final double _appBarHeight = 150.0;
   @override
   void initState() {
@@ -59,7 +60,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                     background: new Stack(
                       fit: StackFit.expand,
                       children: <Widget>[
-                        StreamBuilder<ReservationDetailDto>(
+                        StreamBuilder<PlacesReservationsReservationDetailDto>(
                             stream: this.reservationDetail,
                             builder: (context, snapshot) {
                               return snapshot.data == null
@@ -151,7 +152,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                               reservation: widget.reservation),
                                           Text(
                                             ReservationStatusIcon.stateToText(
-                                                widget.reservation),
+                                                widget.reservation.status),
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .display2,
@@ -192,7 +193,8 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                 borderRadius: new BorderRadius.all(
                                     const Radius.circular(40.0)),
                               ),
-                              child: StreamBuilder<ReservationDetailDto>(
+                              child: StreamBuilder<
+                                      PlacesReservationsReservationDetailDto>(
                                   stream: this.reservationDetail,
                                   builder: (context, snapshot) {
                                     var simplePlace =
@@ -250,37 +252,48 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: new Border.all(color: Colors.white),
-                        borderRadius:
-                            new BorderRadius.all(const Radius.circular(40.0)),
+                    if (widget.reservation.status != 1)
+                      Container(
+                        decoration: BoxDecoration(
+                          border: new Border.all(color: Colors.white),
+                          borderRadius:
+                              new BorderRadius.all(const Radius.circular(40.0)),
+                        ),
+                        child: ExpansionTile(
+                          title: Center(
+                              child: Text(
+                            'I will be late ${(widget.reservation.lateDuration != 0 && widget.reservation.lateDuration != null) ? widget.reservation.lateDuration.toString() + ' minutes' : ''}',
+                            style: Theme.of(context).textTheme.display2,
+                          )),
+                          leading: !lateReservationLoading
+                              ? Icon(Icons.watch_later, color: Colors.white)
+                              : CircularProgressIndicator(),
+                          onExpansionChanged: (expansion) {},
+                          children: <Widget>[
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                new LateTimeButton(
+                                  time: 10,
+                                  selectedTime: widget.reservation.lateDuration,
+                                  onChanged: (time) => setLateTime(time),
+                                ),
+                                new LateTimeButton(
+                                  time: 15,
+                                  selectedTime: widget.reservation.lateDuration,
+                                  onChanged: (time) => setLateTime(time),
+                                ),
+                                new LateTimeButton(
+                                  time: 30,
+                                  selectedTime: widget.reservation.lateDuration,
+                                  onChanged: (time) => setLateTime(time),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                      child: ExpansionTile(
-                        title: Center(child: Text('I will be late')),
-                        onExpansionChanged: (expansion) {
-                          controller
-                              .jumpTo(controller.position.maxScrollExtent);
-                        },
-                        children: <Widget>[
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              new LateTimeButton(
-                                time: 10,
-                              ),
-                              new LateTimeButton(
-                                time: 15,
-                              ),
-                              new LateTimeButton(
-                                time: 20,
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
                     SizedBox(height: 100),
                   ]),
                 )
@@ -288,6 +301,18 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
             ),
           )),
     );
+  }
+
+  setLateTime(int time) {
+    setState(() {
+      lateReservationLoading = true;
+    });
+    App.http.addLateReservation(widget.reservation.id, time).then((onValue) {
+      setState(() {
+        widget.reservation.lateDuration = onValue.lateDuration;
+        lateReservationLoading = false;
+      });
+    });
   }
 
   // user defined function
@@ -338,22 +363,27 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
 
 class LateTimeButton extends StatelessWidget {
   final int time;
+  final int selectedTime;
+  final ValueChanged<int> onChanged;
   const LateTimeButton({
     Key key,
     this.time,
+    this.selectedTime,
+    this.onChanged,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var color = time == selectedTime ? Colors.red : Colors.white;
     return OutlineButton(
-      shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(30.0)),
-      borderSide: BorderSide(color: Colors.white, width: 1),
-      child: Text(
-        "${time.toString()} min",
-        style: Theme.of(context).textTheme.display2,
-      ),
-      onPressed: () => Navigator.of(context).pop(),
-    );
+        color: Colors.red,
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(30.0)),
+        borderSide: BorderSide(color: color, width: 1),
+        child: Text(
+          "${time.toString()} min",
+          style: Theme.of(context).textTheme.display2.apply(color: color),
+        ),
+        onPressed: () => time != selectedTime ? onChanged(time) : ({}));
   }
 }

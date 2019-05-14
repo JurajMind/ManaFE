@@ -18,7 +18,7 @@ class ApiClient {
   final _regList = RegExp(r'^List<(.*)>$');
   final _regMap = RegExp(r'^Map<String,(.*)>$');
 
-  ApiClient({this.basePath: "https://localhost:44324"}) {
+  ApiClient({this.basePath: "https://devmana.azurewebsites.net"}) {
     // Setup authentications (key: authentication name, value: authentication).
   }
 
@@ -119,14 +119,14 @@ class ApiClient {
           return PlacesDevicePlaceDashboardDto.fromJson(value);
         case 'PlacesPlaceDashboardDto':
           return PlacesPlaceDashboardDto.fromJson(value);
+        case 'PlacesReservationsReservationDetailDto':
+          return PlacesReservationsReservationDetailDto.fromJson(value);
+        case 'PlacesReservationsReservationDto':
+          return PlacesReservationsReservationDto.fromJson(value);
+        case 'PlacesReservationsReservationManageDto':
+          return PlacesReservationsReservationManageDto.fromJson(value);
         case 'PriceGroupItems':
           return PriceGroupItems.fromJson(value);
-        case 'ReservationDetailDto':
-          return ReservationDetailDto.fromJson(value);
-        case 'ReservationDto':
-          return ReservationDto.fromJson(value);
-        case 'ReservationManageDto':
-          return ReservationManageDto.fromJson(value);
         case 'ReservationsTimeSlot':
           return ReservationsTimeSlot.fromJson(value);
         case 'SearchPipeAccessory':

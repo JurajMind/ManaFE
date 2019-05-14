@@ -2,8 +2,6 @@ part of openapi.api;
 
 class PlaceDto {
   
-  String instagram = null;
-  
   String url = null;
   
   String descriptions = null;
@@ -27,6 +25,8 @@ class PlaceDto {
   FranchiseDto franchise = null;
   
   List<String> flags = [];
+  
+  List<SmartHookahModelsDbSocialMedia> socialMedias = [];
   
   int id = null;
   
@@ -59,12 +59,11 @@ class PlaceDto {
 
   @override
   String toString() {
-    return 'PlaceDto[instagram=$instagram, url=$url, descriptions=$descriptions, baseHookahPrice=$baseHookahPrice, currency=$currency, seats=$seats, tobaccoReviews=$tobaccoReviews, medias=$medias, haveReservation=$haveReservation, minimumReservationTime=$minimumReservationTime, franchiseId=$franchiseId, franchise=$franchise, flags=$flags, id=$id, name=$name, shortDescriptions=$shortDescriptions, friendlyUrl=$friendlyUrl, logoPath=$logoPath, address=$address, businessHours=$businessHours, rating=$rating, media=$media, phoneNumber=$phoneNumber, facebook=$facebook, haveMenu=$haveMenu, haveOrders=$haveOrders, haveMana=$haveMana, ]';
+    return 'PlaceDto[url=$url, descriptions=$descriptions, baseHookahPrice=$baseHookahPrice, currency=$currency, seats=$seats, tobaccoReviews=$tobaccoReviews, medias=$medias, haveReservation=$haveReservation, minimumReservationTime=$minimumReservationTime, franchiseId=$franchiseId, franchise=$franchise, flags=$flags, socialMedias=$socialMedias, id=$id, name=$name, shortDescriptions=$shortDescriptions, friendlyUrl=$friendlyUrl, logoPath=$logoPath, address=$address, businessHours=$businessHours, rating=$rating, media=$media, phoneNumber=$phoneNumber, facebook=$facebook, haveMenu=$haveMenu, haveOrders=$haveOrders, haveMana=$haveMana, ]';
   }
 
   PlaceDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    instagram = json['Instagram'];
     url = json['Url'];
     descriptions = json['Descriptions'];
     baseHookahPrice = json['BaseHookahPrice'];
@@ -77,6 +76,7 @@ class PlaceDto {
     franchiseId = json['FranchiseId'];
     franchise = new FranchiseDto.fromJson(json['Franchise']);
     flags = ((json['Flags'] ?? []) as List).map((item) => item as String).toList();
+    socialMedias = SmartHookahModelsDbSocialMedia.listFromJson(json['SocialMedias']);
     id = json['Id'];
     name = json['Name'];
     shortDescriptions = json['ShortDescriptions'];
@@ -95,7 +95,6 @@ class PlaceDto {
 
   Map<String, dynamic> toJson() {
     return {
-      'Instagram': instagram,
       'Url': url,
       'Descriptions': descriptions,
       'BaseHookahPrice': baseHookahPrice,
@@ -108,6 +107,7 @@ class PlaceDto {
       'FranchiseId': franchiseId,
       'Franchise': franchise,
       'Flags': flags,
+      'SocialMedias': socialMedias,
       'Id': id,
       'Name': name,
       'ShortDescriptions': shortDescriptions,

@@ -5,7 +5,7 @@
 import 'package:openapi/api.dart';
 ```
 
-All URIs are relative to *https://localhost:44324*
+All URIs are relative to *https://devmana.azurewebsites.net*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -23,7 +23,7 @@ Method | HTTP request | Description
 
 
 # **reservationAddLateTime**
-> reservationAddLateTime(id, body)
+> PlacesReservationsReservationDto reservationAddLateTime(id, body)
 
 
 
@@ -36,7 +36,8 @@ var id = 56; // int |
 var body = new int(); // int | 
 
 try { 
-    api_instance.reservationAddLateTime(id, body);
+    var result = api_instance.reservationAddLateTime(id, body);
+    print(result);
 } catch (e) {
     print("Exception when calling ReservationApi->reservationAddLateTime: $e\n");
 }
@@ -51,7 +52,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PlacesReservationsReservationDto**](PlacesReservationsReservationDto.md)
 
 ### Authorization
 
@@ -60,12 +61,12 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **reservationAddTable**
-> ReservationDto reservationAddTable(id, body)
+> PlacesReservationsReservationDto reservationAddTable(id, body)
 
 
 
@@ -94,7 +95,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ReservationDto**](ReservationDto.md)
+[**PlacesReservationsReservationDto**](PlacesReservationsReservationDto.md)
 
 ### Authorization
 
@@ -149,7 +150,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **reservationCreate**
-> ReservationDto reservationCreate(reservationDto)
+> PlacesReservationsReservationDto reservationCreate(placesReservationsReservationDto)
 
 
 
@@ -158,10 +159,10 @@ No authorization required
 import 'package:openapi/api.dart';
 
 var api_instance = new ReservationApi();
-var reservationDto = new ReservationDto(); // ReservationDto | 
+var placesReservationsReservationDto = new PlacesReservationsReservationDto(); // PlacesReservationsReservationDto | 
 
 try { 
-    var result = api_instance.reservationCreate(reservationDto);
+    var result = api_instance.reservationCreate(placesReservationsReservationDto);
     print(result);
 } catch (e) {
     print("Exception when calling ReservationApi->reservationCreate: $e\n");
@@ -172,11 +173,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **reservationDto** | [**ReservationDto**](ReservationDto.md)|  | 
+ **placesReservationsReservationDto** | [**PlacesReservationsReservationDto**](PlacesReservationsReservationDto.md)|  | 
 
 ### Return type
 
-[**ReservationDto**](ReservationDto.md)
+[**PlacesReservationsReservationDto**](PlacesReservationsReservationDto.md)
 
 ### Authorization
 
@@ -190,7 +191,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **reservationGetManagereservationsInfo**
-> ReservationManageDto reservationGetManagereservationsInfo(id, date)
+> PlacesReservationsReservationManageDto reservationGetManagereservationsInfo(id, date)
 
 
 
@@ -219,7 +220,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ReservationManageDto**](ReservationManageDto.md)
+[**PlacesReservationsReservationManageDto**](PlacesReservationsReservationManageDto.md)
 
 ### Authorization
 
@@ -233,7 +234,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **reservationGetPersonReservations**
-> List<ReservationDto> reservationGetPersonReservations()
+> List<PlacesReservationsReservationDto> reservationGetPersonReservations()
 
 
 
@@ -256,7 +257,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**List<ReservationDto>**](ReservationDto.md)
+[**List<PlacesReservationsReservationDto>**](PlacesReservationsReservationDto.md)
 
 ### Authorization
 
@@ -270,7 +271,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **reservationGetReservationDetail**
-> ReservationDetailDto reservationGetReservationDetail(id)
+> PlacesReservationsReservationDetailDto reservationGetReservationDetail(id)
 
 
 
@@ -297,7 +298,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ReservationDetailDto**](ReservationDetailDto.md)
+[**PlacesReservationsReservationDetailDto**](PlacesReservationsReservationDetailDto.md)
 
 ### Authorization
 
@@ -354,7 +355,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **reservationGetReservations**
-> List<ReservationDto> reservationGetReservations(from, to)
+> List<PlacesReservationsReservationDto> reservationGetReservations(from, to)
 
 
 
@@ -383,7 +384,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<ReservationDto>**](ReservationDto.md)
+[**List<PlacesReservationsReservationDto>**](PlacesReservationsReservationDto.md)
 
 ### Authorization
 
@@ -397,7 +398,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **reservationRemoveTable**
-> ReservationDto reservationRemoveTable(id, body)
+> PlacesReservationsReservationDto reservationRemoveTable(id, body)
 
 
 
@@ -426,7 +427,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ReservationDto**](ReservationDto.md)
+[**PlacesReservationsReservationDto**](PlacesReservationsReservationDto.md)
 
 ### Authorization
 

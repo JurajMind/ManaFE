@@ -88,7 +88,7 @@ class _PlacesPageState extends State<PlacesPage> {
                 ),
               ),
             ),
-            StreamBuilder<List<ReservationDto>>(
+            StreamBuilder<List<PlacesReservationsReservationDto>>(
                 stream: personBloc.myReservations,
                 builder: (context, snapshot) {
                   return false
@@ -159,8 +159,8 @@ class _PlacesPageState extends State<PlacesPage> {
         });
   }
 
-  StreamBuilder<List<ReservationDto>> reservationBuilder(
-      BehaviorSubject<List<ReservationDto>> reservations) {
+  StreamBuilder<List<PlacesReservationsReservationDto>> reservationBuilder(
+      BehaviorSubject<List<PlacesReservationsReservationDto>> reservations) {
     return StreamBuilder(
         stream: reservations,
         initialData: null,

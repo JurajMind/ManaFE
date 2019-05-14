@@ -6,7 +6,7 @@ class PersonActiveDataDto {
   
   List<SmokeSessionSimpleDto> activeSmokeSessions = [];
   
-  List<ReservationDto> activeReservations = [];
+  List<PlacesReservationsReservationDto> activeReservations = [];
   
   List<HookahOrderDto> activeHookahOrders = [];
   
@@ -22,7 +22,7 @@ class PersonActiveDataDto {
     if (json == null) return;
     devices = DeviceSimpleDto.listFromJson(json['Devices']);
     activeSmokeSessions = SmokeSessionSimpleDto.listFromJson(json['ActiveSmokeSessions']);
-    activeReservations = ReservationDto.listFromJson(json['ActiveReservations']);
+    activeReservations = PlacesReservationsReservationDto.listFromJson(json['ActiveReservations']);
     activeHookahOrders = HookahOrderDto.listFromJson(json['ActiveHookahOrders']);
     gameProfile = new GameProfileSimpleDto.fromJson(json['GameProfile']);
   }

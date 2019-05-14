@@ -35,8 +35,8 @@ class PersonBloc extends SignalBloc {
   BehaviorSubject<List<PipeAccesorySimpleDto>> myGear =
       new BehaviorSubject<List<PipeAccesorySimpleDto>>();
 
-  BehaviorSubject<List<ReservationDto>> myReservations =
-      new BehaviorSubject<List<ReservationDto>>();
+  BehaviorSubject<List<PlacesReservationsReservationDto>> myReservations =
+      new BehaviorSubject<List<PlacesReservationsReservationDto>>();
 
   BehaviorSubject<List<PipeAccesorySimpleDto>> hookahs =
       new BehaviorSubject<List<PipeAccesorySimpleDto>>.seeded(

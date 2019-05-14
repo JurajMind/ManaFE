@@ -8,7 +8,6 @@ import 'package:openapi/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**instagram** | **String** |  | [optional] [default to null]
 **url** | **String** |  | [optional] [default to null]
 **descriptions** | **String** |  | [optional] [default to null]
 **baseHookahPrice** | **double** |  | [optional] [default to null]
@@ -21,6 +20,7 @@ Name | Type | Description | Notes
 **franchiseId** | **int** |  | [optional] [default to null]
 **franchise** | [**FranchiseDto**](FranchiseDto.md) |  | [optional] [default to null]
 **flags** | **List&lt;String&gt;** |  | [optional] [default to []]
+**socialMedias** | [**List&lt;SmartHookahModelsDbSocialMedia&gt;**](SmartHookahModelsDbSocialMedia.md) |  | [optional] [default to []]
 **id** | **int** |  | [optional] [default to null]
 **name** | **String** |  | [optional] [default to null]
 **shortDescriptions** | **String** |  | [optional] [default to null]

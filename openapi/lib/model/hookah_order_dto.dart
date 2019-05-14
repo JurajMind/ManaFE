@@ -33,7 +33,7 @@ class HookahOrderDto {
   
   int reservationId = null;
   
-  ReservationDto reservation = null;
+  PlacesReservationsReservationDto reservation = null;
   
   int type = null;
   //enum typeEnum {  0,  1,  2,  };{
@@ -61,7 +61,7 @@ class HookahOrderDto {
     seatId = json['SeatId'];
     seat = new SeatDto.fromJson(json['Seat']);
     reservationId = json['ReservationId'];
-    reservation = new ReservationDto.fromJson(json['Reservation']);
+    reservation = new PlacesReservationsReservationDto.fromJson(json['Reservation']);
     type = json['Type'];
   }
 
