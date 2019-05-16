@@ -37,7 +37,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
     if (reservationBloc == null) {
       reservationBloc = DataProvider.getData(context).reservationBloc;
     }
-    loadReservation(DateTime.now());
+
   }
 
   void loadReservation(DateTime date) {

@@ -117,7 +117,7 @@ class PaggingMixListView extends StatelessWidget {
         stream: mixologyBloc.mixCreatorMixes[mixCreator],
         initialData: null,
         builder: (context, snapshot) {
-          if(snapshot.data.length == 0){
+          if(snapshot.data == null || snapshot.data.length == 0){
             return Center(child: Text('Is empty here, try add new mix                                                                                                                                                                       ',style: Theme.of(context).textTheme.display1,));
           }
           return LazyLoadScrollView(
