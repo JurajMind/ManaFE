@@ -176,6 +176,9 @@ class _PlacesPageState extends State<PlacesPage> {
           return SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
+                if ( reservation == null){
+                  return Container();
+                }
                 return ReservationItem(reservation: reservation?? null);
               },
               childCount:
