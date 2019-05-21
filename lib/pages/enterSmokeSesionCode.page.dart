@@ -10,7 +10,6 @@ import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/services/http.service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class EnterSmokeSessionCode extends StatefulWidget {
   @override
@@ -152,25 +151,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                       Expanded(
                                         flex: 1,
                                         child: InkWell(
-                                            onTap: () {
-                                                  Future<String> futureString =
-                                                FlutterBarcodeScanner.scanBarcode("#ff6666", "Cancel", false);
-                                              futureString.then(
-                                                  (smokeSessionLink) async {
-                                                if (smokeSessionLink != null &&
-                                                    smokeSessionLink
-                                                        .contains("/smoke/")) {
-                                                  var sessionCode =
-                                                      smokeSessionLink
-                                                          .split('/')
-                                                          .last;
-                                                  myController.text =
-                                                      sessionCode;
-                                                  await validateAndGo(
-                                                      context, sessionCode);
-                                                }
-                                              });
-                                            },
+                                            onTap: () {},
                                             child: Container(
                                               width: 50.0,
                                               height: 50.0,
