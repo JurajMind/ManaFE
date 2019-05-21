@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 
 class SinceTimer extends StatefulWidget {
   final DateTime start;
+  final int pufCount; 
+  final TextStyle style;
 
-  const SinceTimer({Key key, this.start}) : super(key: key);
+  const SinceTimer({Key key, this.start, this.pufCount, this.style}) : super(key: key);
   @override
   _SinceTimerState createState() => new _SinceTimerState();
 }
@@ -31,7 +33,13 @@ class _SinceTimerState extends State<SinceTimer> {
 
   @override
   Widget build(BuildContext context) {
-    return new Text(text);
+  
+    if(widget.pufCount == 0){
+
+    return new Text('0:0:0', style: widget.style);
+    }
+
+    return new Text(text, style: widget.style);
   }
 
   @override
