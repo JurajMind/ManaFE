@@ -1,10 +1,11 @@
-import 'package:app/Helpers/date_utils.dart';
 import 'package:app/Helpers/helpers.dart';
 import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Callendar/flutter_calendar.dart';
 import 'package:app/components/Common/labeled_value.dart';
+import 'package:app/components/Loading/circle_loading.dart';
 import 'package:app/components/Pickers/WheelPicker/wheelPicker.dart';
+import 'package:app/const/theme.dart';
 
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/person/reservations_bloc.dart';
@@ -45,6 +46,7 @@ class ParsedTimes {
 class _ReservationPageState extends State<ReservationPage> {
   final _textController = TextEditingController();
 
+  bool loading = false;
   DateTime selectedDate;
   int selectedPersons = 2;
   int selectedTime = 0;
@@ -60,6 +62,8 @@ class _ReservationPageState extends State<ReservationPage> {
       new BehaviorSubject.seeded(new List<ParsedTimes>());
 
   List<ParsedTimes> _disabledTimes;
+
+  bool postingReservation = false;
   @override
   initState() {
     super.initState();
@@ -67,7 +71,10 @@ class _ReservationPageState extends State<ReservationPage> {
     noteTextController = new TextEditingController();
     selectedDate = DateTime.now();
     _disabledTimes = new List<ParsedTimes>();
-    loadReservationInfo(selectedDate);
+    loadReservationInfo(selectedDate).then((data) {
+      selectedTimeLabel = data[0].label;
+      selectedTimeValue = data[0].timeSlot.capacityLeft;
+    });
   }
 
   @override
@@ -92,6 +99,7 @@ class _ReservationPageState extends State<ReservationPage> {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 new AppBar(
+                  centerTitle: true,
                   iconTheme: IconThemeData(
                     color: Colors.black, //change your color here
                   ),
@@ -100,7 +108,7 @@ class _ReservationPageState extends State<ReservationPage> {
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                   title: new Text(
-                    "${widget.place.name} reservation",
+                    "${widget.place.name.toUpperCase()} RESERVATION",
                     style: TextStyle(color: Colors.black),
                   ),
                   backgroundColor: Colors.white,
@@ -108,6 +116,7 @@ class _ReservationPageState extends State<ReservationPage> {
                 Expanded(
                   child: PageView(
                     controller: pageController,
+                    physics: NeverScrollableScrollPhysics(),
                     children: <Widget>[
                       ListView(
                         scrollDirection: Axis.vertical,
@@ -265,7 +274,10 @@ class _ReservationPageState extends State<ReservationPage> {
                                 new RoundedButton(
                                   buttonName: 'Back',
                                   onTap: () {
-                                    pageController.jumpToPage(0);
+                                    pageController.animateToPage(0,
+                                        curve: Curves.easeIn,
+                                        duration:
+                                            const Duration(milliseconds: 500));
                                   },
                                   textColor: Colors.red,
                                   buttonColor: Colors.transparent,
@@ -274,18 +286,26 @@ class _ReservationPageState extends State<ReservationPage> {
                                   height: 40.0,
                                   width: 150.0,
                                 ),
-                                new RoundedButton(
-                                  buttonName: 'Reserve',
-                                  onTap: () {
-                                    _createReservations(
-                                        context, reservationBloc);
-                                  },
-                                  buttonColor: Colors.black,
-                                  borderWidth: 0.0,
-                                  bottomMargin: 0.0,
-                                  height: 40.0,
-                                  width: 150.0,
-                                ),
+                                postingReservation
+                                    ? ColorLoader(
+                                        colors: AppColors.colors,
+                                        duration: Duration(milliseconds: 50),
+                                      )
+                                    : new RoundedButton(
+                                        buttonName: 'Reserve',
+                                        onTap: () {
+                                          setState(() {
+                                            postingReservation = true;
+                                          });
+                                          _createReservations(
+                                              context, reservationBloc);
+                                        },
+                                        buttonColor: Colors.black,
+                                        borderWidth: 0.0,
+                                        bottomMargin: 0.0,
+                                        height: 40.0,
+                                        width: 150.0,
+                                      ),
                               ],
                             ),
                           ],
@@ -302,8 +322,13 @@ class _ReservationPageState extends State<ReservationPage> {
     );
   }
 
-  Future loadReservationInfo(DateTime date) async {
-    await App.http.getPlaceReservationInfo(widget.place.id, date).then((data) {
+  Future<List<ParsedTimes>> loadReservationInfo(DateTime date) async {
+    setState(() {
+      loading = true;
+    });
+    return await App.http
+        .getPlaceReservationInfo(widget.place.id, date)
+        .then((data) {
       if (compareDate(selectedDate, date) == 0) {
         setState(() {
           selectedTime = 2;
@@ -312,19 +337,35 @@ class _ReservationPageState extends State<ReservationPage> {
       var parsed =
           data.timeSlots.map((f) => new ParsedTimes.fromTimeSlot(f)).toList();
 
-      this._disabledTimes =
-          this.disabledTimeDuration(parsed, this.selectedDuration);
-      return reservationInfo.add(parsed);
+      setState(() {
+        this._disabledTimes =
+            this.disabledTimeDuration(date, parsed, this.selectedDuration);
+      });
+      setState(() {
+        loading = false;
+      });
+      reservationInfo.add(parsed);
+      return parsed;
     });
   }
 
-  RoundedButton buildNextButton(
-      List<ParsedTimes> disabledTimes, int _cannotReserve) {
-    var next =
-        disabledTimes.contains(selectedTimeLabel) || (_cannotReserve < 0);
+  Widget buildNextButton(List<ParsedTimes> disabledTimes, int _cannotReserve) {
+    var next = disabledTimes.map((f) => f.label).contains(selectedTimeLabel) ||
+        (_cannotReserve < 0);
+
+    if (loading) {
+      return ColorLoader(
+        colors: AppColors.colors,
+        duration: Duration(milliseconds: 50),
+      );
+    }
     return new RoundedButton(
       buttonName: 'Next',
-      onTap: () => next ? null : pageController.jumpToPage(1),
+      onTap: () => next
+          ? null
+          : pageController.animateToPage(1,
+              curve: Curves.easeIn,
+              duration: const Duration(milliseconds: 500)),
       buttonColor: next ? Colors.grey : Colors.black,
       borderWidth: 0.0,
       bottomMargin: 0.0,
@@ -373,7 +414,7 @@ class _ReservationPageState extends State<ReservationPage> {
         ),
         data == null || data.length == 0
             ? Container(
-                height: 100,
+                height: 150,
               )
             : WheelPicker.string(
                 initialValue: selectedTime,
@@ -407,7 +448,8 @@ class _ReservationPageState extends State<ReservationPage> {
             Vibrate.feedback(FeedbackType.light);
             setState(() {
               selectedDuration = value;
-              this._disabledTimes = this.disabledTimeDuration(data, value);
+              this._disabledTimes =
+                  this.disabledTimeDuration(selectedDate, data, value);
             });
           },
         )
@@ -425,20 +467,12 @@ class _ReservationPageState extends State<ReservationPage> {
     selectedTimeLabel = snapShot[value].timeSlot.text;
   }
 
-  int canGoNext(List<String> disabledTimes) {
-    if (disabledTimes.contains(selectedTimeLabel)) {
-      return 0;
-    } else {
-      return 1;
-    }
-  }
-
   List<ParsedTimes> disabledTimeDuration(
-      List<ParsedTimes> times, int duration) {
+      DateTime date, List<ParsedTimes> times, int duration) {
     if (times == null) return new List<ParsedTimes>();
     List<ParsedTimes> result = new List<ParsedTimes>();
 
-    if (compareDate(this.selectedDate, DateTime.now()) == 0) {
+    if (compareDate(date, DateTime.now()) == 0) {
       for (var time in times) {
         if (compareTime(time.time, DateTime.now()) < 0) {
           result.add(time);

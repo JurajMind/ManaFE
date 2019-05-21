@@ -12,11 +12,13 @@ import 'package:app/pages/Settings/language_selector_page.dart';
 import 'package:app/pages/Statistic/Components/gear_usage_item.dart';
 import 'package:app/pages/Statistic/UserProfile/user_profile_page.dart';
 import 'package:app/pages/Statistic/all_statistic_page.dart';
+import 'package:app/pages/Statistic/health_page.dart';
 import 'package:app/pages/Statistic/test_page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/support/mana_icons_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/Charts/sparkline.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/api.dart';
 import 'package:queries/collections.dart';
 import 'dart:math' as math;
@@ -54,8 +56,15 @@ class TimeModel {
         {
           from = now.subtract(new Duration(days: 7));
           to = now;
-          label =
-              'Last week';
+          label = 'Last week';
+          break;
+        }
+
+      case 3:
+        {
+          from = now.subtract(new Duration(days: 2000));
+          to = now;
+          label = 'From begining';
           break;
         }
 
@@ -99,7 +108,8 @@ class _StatisticPageState extends State<StatisticPage> {
                       durationSelector(context, 0, 'last Year'),
                       durationSelector(context, 1, 'last Month'),
                       durationSelector(context, 2, 'last Week'),
-                      durationSelector(context, 3, 'Custom'),
+                      durationSelector(context, 3, 'Whole time'),
+                      durationSelector(context, 4, 'Custom'),
                     ],
                   ),
                 ),
@@ -222,7 +232,7 @@ class _StatisticPageState extends State<StatisticPage> {
                         borderSide: BorderSide(color: Colors.white, width: 1),
                         onPressed: () =>
                             _showDialog(context).then((value) async {
-                              if (value == 3) {
+                              if (value == 4) {
                                 final List<DateTime> picked =
                                     await DateRagePicker.showDatePicker(
                                         context: context,
@@ -241,7 +251,7 @@ class _StatisticPageState extends State<StatisticPage> {
                                 }
                               }
                               setState(() {
-                                if (value >= 0 && value < 3) {
+                                if (value >= 0 && value < 4) {
                                   selectedTime =
                                       new TimeModel.fromSelect(value);
                                 }
@@ -320,6 +330,7 @@ class _StatisticPageState extends State<StatisticPage> {
   List<Widget> buildBody(StatisticBloc bloc) {
     var result = new List<Widget>();
     result.add(buildStatRecap(bloc));
+    result.add(buildHealth(bloc));
     result.add(buildGearUsage(bloc));
     result.add(buildTimeStatistic(bloc));
     result.add(buildDayStatistic(bloc));
@@ -461,6 +472,51 @@ class _StatisticPageState extends State<StatisticPage> {
     );
   }
 
+  Widget buildHealth(StatisticBloc bloc) {
+    return Container(
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.white),
+          borderRadius: BorderRadius.circular(16.0)),
+      child: StreamBuilder<StatisticRecap>(
+          stream: bloc.recap,
+          builder: (context, snapshot) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                onTap: () => Navigator.of(context).push(
+                        new MaterialPageRoute(builder: (BuildContext context) {
+                      return HealthPage();
+                    })),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: new HealthIcon(snapshot.data?.sessionCount),
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: Column(
+                        children: <Widget>[
+                          Text('Some health text'),
+                          Text('Some health text 2')
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Icon(
+                        Icons.chevron_right,
+                        size: 40,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          }),
+    );
+  }
+
   String getShortTime(Duration duration) {
     if (duration == null) {
       return null;
@@ -598,6 +654,47 @@ class _StatisticPageState extends State<StatisticPage> {
           measureFn: (ChartData sales, _) => sales.sales,
           data: ordered.toList())
     ];
+  }
+}
+
+class HealthIcon extends StatelessWidget {
+  const HealthIcon(
+    this.pufCount, {
+    Key key,
+  }) : super(key: key);
+
+  final int pufCount;
+  @override
+  Widget build(BuildContext context) {
+    if (pufCount == null) {
+      return Icon(
+        FontAwesomeIcons.cog,
+        size: 40,
+        color: AppColors.colors[1],
+      );
+    }
+
+    if (pufCount < 10) {
+      return Icon(
+        FontAwesomeIcons.smile,
+        size: 40,
+        color: AppColors.colors[1],
+      );
+    }
+
+    if (pufCount < 30) {
+      return Icon(
+        FontAwesomeIcons.frown,
+        size: 40,
+        color: AppColors.colors[3],
+      );
+    }
+
+    return Icon(
+      FontAwesomeIcons.sadCry,
+      size: 40,
+      color: AppColors.colors[2],
+    );
   }
 }
 
