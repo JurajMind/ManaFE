@@ -19,7 +19,7 @@ class TobaccoWidget extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(
-            flex: 5,
+            flex: 7,
             child: this.tobaccoMix?.tobaccos != null &&
                     this.tobaccoMix.tobaccos.length > 0
                 ? tobacoMixBody(tobaccoMix)
@@ -66,7 +66,7 @@ class TobaccoWidget extends StatelessWidget {
       );
     } else {
       return Padding(
-        padding: const EdgeInsets.only(left:14),
+        padding: const EdgeInsets.only(left:0),
         child: Row(
           children: <Widget>[
             Container(
@@ -75,9 +75,9 @@ class TobaccoWidget extends StatelessWidget {
                 child: Extensions.defaultTypePicture('Tobacco')),
             Text(
               tobacco.name,
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.display1,
             ),
-            Text(' ' + tobacco.brand)
+            Text(' ' + tobacco.brand,   style: Theme.of(context).textTheme.display1.merge(new TextStyle(fontWeight:FontWeight.normal ) ),)
           ],
         ),
       );

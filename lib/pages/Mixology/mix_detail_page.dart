@@ -20,6 +20,7 @@ class MixDetailPageState extends State<MixDetailPage> {
   final double _appBarHeight = 256.0;
   var data = [0.0, 1.0, 1.5, 2.0, 0.0, 0.0, -0.5, -1.0, -0.5, 0.0, 0.0];
   bool editName;
+
   TextEditingController nameController;
   Future<bool> deleteConfirn() async {
     return showDialog<bool>(
@@ -102,7 +103,7 @@ class MixDetailPageState extends State<MixDetailPage> {
                   icon: Icon(Icons.share),
                   onPressed: () =>
                       Share.share('check out my website https://example.com')),
-              IconButton(
+              widget.mix.myMix ? IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () async {
                   var delete = await deleteConfirn();
@@ -111,8 +112,8 @@ class MixDetailPageState extends State<MixDetailPage> {
                     bloc.deleteMix(widget.mix);
                     Navigator.of(context).pop();
                   }
-                },
-              )
+                }, 
+              ) : Container()
             ],
             backgroundColor: Colors.transparent,
             flexibleSpace: new FlexibleSpaceBar(
@@ -158,12 +159,12 @@ class MixDetailPageState extends State<MixDetailPage> {
                             ),
                           ),
                         ),
-                        IconButton(
+                        widget.mix.myMix ? IconButton(
                           icon: Icon(Icons.edit),
                           onPressed: () => setState(() {
                                 editName = true;
                               }),
-                        )
+                        ) : Container()
                       ],
                     ),
               background: Container(

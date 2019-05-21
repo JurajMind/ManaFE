@@ -49,10 +49,10 @@ class ColorHelper {
             new HSVColor.fromAHSV(1.0, intitColor + 0.0, 1.0, 1.0).toColor());
   }
 
-  static Offset colorToPosition(HSVColor selectedColor, Size size) {
+  static Offset colorToPosition(HSVColor selectedColor, Size size, Offset position) {
     var angle = selectedColor.hue / (2 * math.pi);
-    var x =size.width  - math.cos(angle) * (size.width / 2);
-    var y = size.width - (math.sin(angle)) * (size.width / 2);
-    return new Offset(10, 10);
+    var x = (math.cos(angle) * (size.width / 2));
+    var y = math.sin(angle) * (size.width / 2);
+    return new Offset(size.width/2, size.width/2);
   }
 }

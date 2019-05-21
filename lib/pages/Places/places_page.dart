@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:openapi/api.dart';
+import 'package:queries/collections.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PlacesPage extends StatefulWidget {
@@ -53,6 +54,7 @@ class _PlacesPageState extends State<PlacesPage> {
 //https://maps.googleapis.com/maps/api/staticmap?center=${myUserLocation.altitude},${myUserLocation.longitude}&zoom=15&format=png&maptype=roadmap&style=element:geometry%7Ccolor:0x1d2c4d&style=element:labels.text.fill%7Ccolor:0x8ec3b9&style=element:labels.text.stroke%7Ccolor:0x1a3646&style=feature:administrative.country%7Celement:geometry.stroke%7Ccolor:0x4b6878&style=feature:administrative.land_parcel%7Celement:labels.text.fill%7Ccolor:0x64779e&style=feature:administrative.province%7Celement:geometry.stroke%7Ccolor:0x4b6878&style=feature:landscape.man_made%7Celement:geometry.stroke%7Ccolor:0x334e87&style=feature:landscape.natural%7Celement:geometry%7Ccolor:0x023e58&style=feature:poi%7Celement:geometry%7Ccolor:0x283d6a&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0x6f9ba5&style=feature:poi%7Celement:labels.text.stroke%7Ccolor:0x1d2c4d&style=feature:poi.business%7Cvisibility:off&style=feature:poi.park%7Celement:geometry.fill%7Ccolor:0x023e58&style=feature:poi.park%7Celement:labels.text%7Cvisibility:off&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x3C7680&style=feature:road%7Celement:geometry%7Ccolor:0x304a7d&style=feature:road%7Celement:labels.text.fill%7Ccolor:0x98a5be&style=feature:road%7Celement:labels.text.stroke%7Ccolor:0x1d2c4d&style=feature:road.highway%7Celement:geometry%7Ccolor:0x2c6675&style=feature:road.highway%7Celement:geometry.stroke%7Ccolor:0x255763&style=feature:road.highway%7Celement:labels.text.fill%7Ccolor:0xb0d5ce&style=feature:road.highway%7Celement:labels.text.stroke%7Ccolor:0x023e58&style=feature:transit%7Celement:labels.text.fill%7Ccolor:0x98a5be&style=feature:transit%7Celement:labels.text.stroke%7Ccolor:0x1d2c4d&style=feature:transit.line%7Celement:geometry.fill%7Ccolor:0x283d6a&style=feature:transit.station%7Celement:geometry%7Ccolor:0x3a4762&style=feature:water%7Celement:geometry%7Ccolor:0x0e1626&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x4e6d70&size=900x500&key${App.googleApiKeys}
 
     var personBloc = DataProvider.getData(context).personBloc;
+    var reservationBloc = DataProvider.getData(context).reservationBloc;
     return Scaffold(
       bottomNavigationBar: SizedBox(height: 45),
       body: SafeArea(
@@ -123,7 +125,7 @@ class _PlacesPageState extends State<PlacesPage> {
                           ]),
                         );
                 }),
-            reservationBuilder(personBloc.myReservations),
+            reservationBuilder(reservationBloc.reservations),
             placeBuilder(placesBloc.places)
           ],
         ),
@@ -165,10 +167,19 @@ class _PlacesPageState extends State<PlacesPage> {
         stream: reservations,
         initialData: null,
         builder: (context, snapshot) {
+          PlacesReservationsReservationDto reservation;
+          if(snapshot.data != null)
+          {
+          var upcomingReservations = new Collection(snapshot.data);
+          reservation = upcomingReservations.where$1((predicate,_) => predicate.time.compareTo(DateTime.now()) > 0).orderBy((p) => p.time).firstOrDefault();
+          }
           return SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                return ReservationItem(reservation: snapshot.data[index]);
+                if ( reservation == null){
+                  return Container();
+                }
+                return ReservationItem(reservation: reservation?? null);
               },
               childCount:
                   snapshot.data == null ? 0 : snapshot.data.length == 0 ? 0 : 1,

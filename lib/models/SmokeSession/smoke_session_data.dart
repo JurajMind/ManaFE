@@ -26,7 +26,7 @@ class SmokeStatisticDataModel extends SignalData {
     lastPufTime = df.parse(map['lastPufTime']);
     smokeDuration = DateUtils.stringToDuration(map['smokeDuration']);
 
-    start = df.parse(map['start']);
+    start = df.parse(map['start']).add(new Duration(hours: 2));
 
     duration = DateUtils.stringToDuration(map['duration']);
 

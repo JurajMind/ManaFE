@@ -12,7 +12,13 @@ class ReservationBloc extends SignalBloc {
 
   ReservationBloc._() {
     this.connect();
+   
+var date = DateTime.now();
+    var _fromDate = DateTime(date.year, date.month, 1);
+    var _toDate = DateTime(date.year, date.month + 1, 0);
+    loadReservations(_fromDate, _toDate);
   }
+  
 
   BehaviorSubject<List<PlacesReservationsReservationDto>> reservations =
       new BehaviorSubject<List<PlacesReservationsReservationDto>>();

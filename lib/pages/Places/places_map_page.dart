@@ -107,6 +107,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
     return SafeArea(
       top: true,
       child: new Scaffold(
+        
         resizeToAvoidBottomInset: false,
         bottomNavigationBar: SizedBox(
           height: 55,
@@ -169,6 +170,12 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                       ),
                       onPressed: () => searchCity(context),
                     ),
+                  ),
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    child: IconButton(icon: Icon(Icons.chevron_left,color: Colors.black,size: 50),
+                    onPressed: () => Navigator.of(context).pop(),),
                   ),
                   Positioned(
                     top: 10,

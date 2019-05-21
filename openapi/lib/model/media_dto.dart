@@ -26,7 +26,7 @@ class MediaDto {
   MediaDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
     id = json['Id'];
-    created = json['Created'] == null ? null : DateTime.parse(json['Created']);
+   // created = json['Created'] == null ? null : DateTime.parse(json['Created']);
     path = json['Path'];
     type = json['Type'];
     isDefault = json['IsDefault'];

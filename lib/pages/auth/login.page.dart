@@ -102,7 +102,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                           data.email = value;
                         }),
                     new TextFormField(
-                        obscureText: showPassword,
+                        obscureText: !showPassword,
                         focusNode: passwordFocusNode,
                         decoration: new InputDecoration(
                                             suffixIcon: IconButton(

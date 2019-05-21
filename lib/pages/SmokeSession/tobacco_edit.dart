@@ -61,13 +61,16 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
         this.addTobacco(
             PipeAccesoryFromTobacco.tobaccoToSimple(tobacco.tobacco),
             tobacco.fraction.toDouble());
-      }
-      return;
+      }      
     }
 
     selectedTobacco = new List<PipeAccesorySimpleDto>();
     if (widget.tobacco?.id != null) {
-      this.addTobacco(widget.tobacco, widget.tobaccoWeight.toDouble());
+      var weight = widget.tobaccoWeight.toDouble();
+      if(weight == 0){
+        weight = 15;
+      }
+      this.addTobacco(widget.tobacco, weight);
     }
   }
 

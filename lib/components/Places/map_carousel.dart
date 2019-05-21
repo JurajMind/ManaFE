@@ -52,7 +52,7 @@ class _CarrousselState extends State<MapCarousel> {
   }
 
   @override
-  @override
+
   dispose() {
     controller.dispose();
     super.dispose();

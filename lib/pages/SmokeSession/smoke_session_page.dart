@@ -168,12 +168,15 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                     child: Column(
                       children: <Widget>[
                         Text('Durations', style: TextStyle(color: Colors.grey)),
-                        Text(
-                          durationString,
-                          style: Theme.of(context).textTheme.body2,
-                        ),
+                     
                         SinceTimer(
                           start: start,
+                          pufCount: asyncSnapshot.data.pufCount,
+                                                    style: Theme.of(context).textTheme.body2,
+                        ),
+                           Text(
+                          durationString,
+                          
                         )
                       ],
                     ),

@@ -35,16 +35,32 @@ class AnimationStatePicker extends StatefulWidget {
 class AnimationStatePickerState extends State<AnimationStatePicker> {
   int _focusIndex;
   bool _init = false;
+  bool _isInFocus = true;
 
   FixedExtentScrollController scrollController;
 
   @override
   void initState() {
     super.initState();
+    print("rebuild");
     _focusIndex = widget.selectedIndex;
     scrollController = new FixedExtentScrollController(
       initialItem: widget.selectedIndex ?? 0,
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    scrollController.jumpToItem(widget.selectedIndex);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void didUpdateWidget(AnimationStatePicker oldWidget) {
+    if (oldWidget.selectedIndex != widget.selectedIndex) {
+      scrollController.animateToItem(widget.selectedIndex,
+          curve: Curves.easeIn, duration: const Duration(milliseconds: 300));
+    }
   }
 
   @override
@@ -75,29 +91,31 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
     return StreamBuilder<List<StandAnimation>>(
         stream: widget.smokeSessionBloc.animations,
         initialData: List<StandAnimation>(),
-        builder: (context, snapshot) => snapshot?.data?.length == 0
-            ? Container()
-            : ListWheelScrollView(
-                itemExtent: 70.0,
-                controller: scrollController,
-                clipToSize: true,
-                diameterRatio: 10.0,
-                perspective: 0.005,
-                onSelectedItemChanged: (int index) {
-                  if (index == 0) {
-                    print('fake');
-                  }
-                  widget.onChanged(index);
-                  setState(() {
-                    _focusIndex = index;
-                    Vibrate.feedback(FeedbackType.selection);
-                  });
-                },
-                children: List.generate(
-                    snapshot.data.length,
-                    (int index) => _createAnimation(index, snapshot.data[index],
-                        context, widget.selectedIndex)),
-              ));
+        builder: (context, snapshot) {
+          return snapshot?.data?.length == 0
+              ? Container()
+              : ListWheelScrollView(
+                  itemExtent: 70.0,
+                  controller: scrollController,
+                  clipToSize: true,
+                  diameterRatio: 10.0,
+                  perspective: 0.005,
+                  onSelectedItemChanged: (int index) {
+                    if (index == 0) {
+                      print('fake');
+                    }
+                    widget.onChanged(index);
+                    setState(() {
+                      _focusIndex = index;
+                      Vibrate.feedback(FeedbackType.selection);
+                    });
+                  },
+                  children: List.generate(
+                      snapshot.data.length,
+                      (int index) => _createAnimation(index,
+                          snapshot.data[index], context, widget.selectedIndex)),
+                );
+        });
   }
 
   StreamBuilder<StandSettings> buildBottomBar() {

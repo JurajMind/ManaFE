@@ -1,3 +1,4 @@
+import 'package:app/Helpers/date_utils.dart';
 import 'package:app/Helpers/day_helper.dart';
 import 'package:app/app/app.widget.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
@@ -20,7 +21,7 @@ import 'package:openapi/api.dart';
 import 'package:queries/collections.dart';
 import 'dart:math' as math;
 import 'package:charts_flutter/flutter.dart' as charts;
-
+import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 import 'package:shimmer/shimmer.dart';
 
 class StatisticPage extends StatefulWidget {
@@ -28,15 +29,104 @@ class StatisticPage extends StatefulWidget {
   State<StatisticPage> createState() => new _StatisticPageState();
 }
 
+class TimeModel {
+  TimeModel({this.label, this.from, this.to});
+
+  TimeModel.fromCustom(DateTime from, DateTime to) {
+    label = " ${DateUtils.toStringDate(from)} - ${DateUtils.toStringDate(to)}";
+    this.from = from;
+    this.to = to;
+  }
+
+  TimeModel.fromSelect(int index) {
+    var now = new DateTime.now();
+
+    switch (index) {
+      case 1:
+        {
+          from = new DateTime(now.year, now.month, 1);
+          to = now;
+          label = 'Month ${now.month}';
+          break;
+        }
+
+      case 2:
+        {
+          from = now.subtract(new Duration(days: 7));
+          to = now;
+          label =
+              'Last week';
+          break;
+        }
+
+      case 0:
+        {
+          from = new DateTime(now.year, 1, 1);
+          to = now;
+          label = 'Year ${now.year}';
+          break;
+        }
+    }
+  }
+
+  String label;
+
+  DateTime from;
+
+  DateTime to;
+}
+
 class _StatisticPageState extends State<StatisticPage> {
   math.Random random = new math.Random();
   PageController controller;
   Authorize auth = new Authorize();
-  String selectedTime = "Year";
+  TimeModel selectedTime;
+
+  Future<int> _showDialog(BuildContext context) {
+    return showDialog<int>(
+        context: context,
+        builder: (BuildContext context) {
+          return Material(
+            color: Color.fromARGB(150, 0, 0, 0),
+            child: InkWell(
+              onTap: () => Navigator.of(context).pop(),
+              child: Center(
+                child: Container(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      durationSelector(context, 0, 'last Year'),
+                      durationSelector(context, 1, 'last Month'),
+                      durationSelector(context, 2, 'last Week'),
+                      durationSelector(context, 3, 'Custom'),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+  InkWell durationSelector(BuildContext context, int index, String label) {
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).pop(index);
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(top: 20.0),
+        child: Text(label.toUpperCase(),
+            style: Theme.of(context).textTheme.display1),
+      ),
+    );
+  }
+
   bool loading = false;
   @override
   initState() {
     super.initState();
+    selectedTime = new TimeModel.fromSelect(1);
     controller = new PageController(
         initialPage: 0, keepPage: true, viewportFraction: 0.9);
   }
@@ -125,30 +215,41 @@ class _StatisticPageState extends State<StatisticPage> {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Expanded(
-                      flex: 1,
-                      child: new TimeSelect(
-                        label: 'Week',
-                        selected: selectedTime == 'Week',
-                        onTap: () =>
-                            loadTime(bloc, new Duration(days: 7), "Week"),
+                      flex: 4,
+                      child: OutlineButton(
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0)),
+                        borderSide: BorderSide(color: Colors.white, width: 1),
+                        onPressed: () =>
+                            _showDialog(context).then((value) async {
+                              if (value == 3) {
+                                final List<DateTime> picked =
+                                    await DateRagePicker.showDatePicker(
+                                        context: context,
+                                        initialFirstDate: selectedTime.from,
+                                        initialLastDate: selectedTime.to,
+                                        firstDate: new DateTime(2017),
+                                        lastDate: new DateTime.now());
+                                if (picked != null && picked.length == 2) {
+                                  print(picked);
+
+                                  setState(() {
+                                    selectedTime = new TimeModel.fromCustom(
+                                        picked[0], picked[1]);
+                                  });
+                                  loadTime(bloc, selectedTime);
+                                }
+                              }
+                              setState(() {
+                                if (value >= 0 && value < 3) {
+                                  selectedTime =
+                                      new TimeModel.fromSelect(value);
+                                }
+                              });
+                              loadTime(bloc, selectedTime);
+                            }),
+                        child: Text(selectedTime.label),
                       )),
-                  Expanded(
-                      flex: 1,
-                      child: new TimeSelect(
-                        label: 'Month',
-                        selected: selectedTime == 'Month',
-                        onTap: () =>
-                            loadTime(bloc, new Duration(days: 31), "Month"),
-                      )),
-                  Expanded(
-                      flex: 1,
-                      child: new TimeSelect(
-                        label: 'Year',
-                        selected: selectedTime == 'Year',
-                        onTap: () =>
-                            loadTime(bloc, new Duration(days: 365), "Year"),
-                      )),
-                  Expanded(flex: 1, child: new TimeSelect(label: 'Custom')),
                   Expanded(
                       flex: 3,
                       child: Padding(
@@ -205,15 +306,12 @@ class _StatisticPageState extends State<StatisticPage> {
     );
   }
 
-  loadTime(StatisticBloc bloc, Duration duration, String label) {
+  loadTime(StatisticBloc bloc, TimeModel time) {
     setState(() {
       this.loading = true;
     });
-    bloc
-        .loadStatistic(DateTime.now().subtract(duration), DateTime.now())
-        .then((_) {
+    bloc.loadStatistic(time.from, time.to).then((_) {
       setState(() {
-        this.selectedTime = label;
         this.loading = false;
       });
     });
