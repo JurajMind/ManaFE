@@ -1,5 +1,4 @@
 import 'package:app/Helpers/helpers.dart';
-import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Callendar/flutter_calendar.dart';
 import 'package:app/components/Reservations/reservation_item.dart';
 import 'package:app/module/data_provider.dart';
@@ -19,15 +18,11 @@ class _ReservationsPageState extends State<ReservationsPage> {
   ReservationBloc reservationBloc;
   DateTime _selectedDay;
   Map<DateTime, List> _events;
-  List _selectedEvents;
   int reservationFilter = -1;
 
   @override
   void initState() {
     super.initState();
-    var today = DateTime.now();
-
-    final now = DateTime.now();
     _selectedDay = null;
   }
 

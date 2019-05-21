@@ -8,7 +8,6 @@ import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/pages/enterSmokeSesionCode.page.dart';
-import 'package:app/support/mana_icons_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 

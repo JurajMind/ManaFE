@@ -41,7 +41,7 @@ class Extensions {
 
   static String getAbsoluteurl(String relativeUrl) {
     if (relativeUrl != null) {
-      return 'https://${App.baseUri}${relativeUrl}';
+      return 'https://${App.baseUri}$relativeUrl';
     }
     return "";
   }

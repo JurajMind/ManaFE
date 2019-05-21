@@ -1,5 +1,3 @@
-import 'package:app/models/Stand/deviceSetting.dart';
-
 class DevicePreset {
   final int id;
   final String name;
@@ -13,7 +11,8 @@ class DevicePreset {
         personId = json['Usage'];
   // setting =             StandSettings.fromJson(json['setting'] as Map<String, dynamic>);
 
-
-  DevicePreset.empty() :id = -1,name= '',personId = 0;
-  
+  DevicePreset.empty()
+      : id = -1,
+        name = '',
+        personId = 0;
 }

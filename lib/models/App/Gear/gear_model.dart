@@ -1,5 +1,3 @@
-import 'package:app/models/PipeAccesory/pipe_accesory.dart';
-
 class BrandGroup {
   BrandGroup({this.id, this.name, this.picture, this.itemCount});
 

@@ -7,7 +7,6 @@ import 'package:app/models/SmokeSession/pipe_accesory_from_tobacco.dart';
 import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/SmokeSession/accesory_search.dart';
-import 'package:app/utils/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -385,8 +384,4 @@ class SuggestedTobacco extends StatelessWidget {
       ],
     );
   }
-}
-
-Widget _selectedTobacco(PipeAccesorySimpleDto t) {
-  return new Text(t.name);
 }

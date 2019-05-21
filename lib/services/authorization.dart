@@ -56,7 +56,7 @@ class Authorize {
 
   Future<bool> getLocalToken(String provider, String externalToken) async {
     var response = await http.get(
-        "https://${App.baseUri}/Account/ObtainLocalAccessToken?provider=${provider}&externalAccessToken=${externalToken}");
+        "https://${App.baseUri}/Account/ObtainLocalAccessToken?provider=$provider&externalAccessToken=$externalToken");
     final responseJson = json.decode(response.body);
     var success = await writeToken(responseJson);
     if (success != null) {
@@ -148,8 +148,6 @@ class Authorize {
     return token != null;
   }
 }
-
-class _requireConsent {}
 
 class AuthorizationPost {
   final String username;

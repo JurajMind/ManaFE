@@ -4,7 +4,6 @@ import 'package:app/app/app.dart';
 import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/pages/Places/Reservations/reservation_detail_page.dart';
 import 'package:app/pages/Places/Reservations/reservation_page.dart';
 
 import 'package:app/pages/SmokeSession/animation_select_page.dart';
