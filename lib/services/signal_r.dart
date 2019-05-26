@@ -19,6 +19,7 @@ class SignalR {
   IOWebSocketChannel _channel;
   Completer<dynamic> _completer;
   Timer connectionTimer;
+  Map<String, ServerCallParam> serversCall = Map<String, ServerCallParam>();
   bool connection = false;
 
   factory SignalR() {
@@ -51,7 +52,7 @@ class SignalR {
         "wss://$host/signalr/connect?transport=webSockets&clientProtocol=${negotiateResponse.ProtocolVersion}&connectionToken=${Uri.encodeComponent(negotiateResponse.ConnectionToken)}&connectionData=$conectionData";
 
     print(chanelUlr);
-    const oneSec = const Duration(seconds: 20);
+    var oneSec = Duration(seconds: connectionInfo.KeepAliveTimeout.toInt());
     connectionTimer = new Timer.periodic(oneSec, (Timer t) => checkConection());
     try {
       _channel = new IOWebSocketChannel.connect(chanelUlr);
@@ -68,7 +69,9 @@ class SignalR {
       print(e);
     }
 
-    await startConnection(negotiateResponse);
+    await startConnection(negotiateResponse).then((_) {
+      _completer.complete();
+    });
   }
 
   Future checkConection() async {
@@ -116,6 +119,12 @@ class SignalR {
         var serverCall = ClientCall.fromJson(json.decode(message));
         proceedCall(serverCall);
       });
+
+      new Future.delayed(new Duration(seconds: 5), () {
+        for (var call in serversCall.values) {
+          callServerFunction(call);
+        }
+      });
     } catch (e) {
       print(e);
     }
@@ -125,8 +134,9 @@ class SignalR {
 
   sendMsg(String data) {}
 
-  callServerFunction({String name, List<String> params}) {
-    var call = new ServerCall(A: params, M: name);
+  callServerFunction(ServerCallParam param) {
+    serversCall[param.name] = param;
+    var call = new ServerCall(A: param.params, M: param.name);
     _channel.sink.add(call.toJson());
   }
 
@@ -134,4 +144,10 @@ class SignalR {
     lastMsgId = serverCall.MessageId;
     if (serverCall.Data != null) clientCalls.add(serverCall);
   }
+}
+
+class ServerCallParam {
+  ServerCallParam({this.name, this.params});
+  String name;
+  List<String> params;
 }

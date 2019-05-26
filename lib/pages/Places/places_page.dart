@@ -168,18 +168,22 @@ class _PlacesPageState extends State<PlacesPage> {
         initialData: null,
         builder: (context, snapshot) {
           PlacesReservationsReservationDto reservation;
-          if(snapshot.data != null)
-          {
-          var upcomingReservations = new Collection(snapshot.data);
-          reservation = upcomingReservations.where$1((predicate,_) => predicate.time.compareTo(DateTime.now()) > 0).orderBy((p) => p.time).firstOrDefault();
+          if (snapshot.data != null) {
+            var upcomingReservations = new Collection(snapshot.data);
+            reservation = upcomingReservations
+                .where$1((predicate, _) =>
+                    predicate.time.compareTo(DateTime.now()) > 0 &&
+                    predicate.status != 1)
+                .orderBy((p) => p.time)
+                .firstOrDefault();
           }
           return SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                if ( reservation == null){
+                if (reservation == null) {
                   return Container();
                 }
-                return ReservationItem(reservation: reservation?? null);
+                return ReservationItem(reservation: reservation ?? null);
               },
               childCount:
                   snapshot.data == null ? 0 : snapshot.data.length == 0 ? 0 : 1,

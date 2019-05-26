@@ -168,15 +168,13 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                     child: Column(
                       children: <Widget>[
                         Text('Durations', style: TextStyle(color: Colors.grey)),
-                     
                         SinceTimer(
                           start: start,
                           pufCount: asyncSnapshot.data.pufCount,
-                                                    style: Theme.of(context).textTheme.body2,
+                          style: Theme.of(context).textTheme.body2,
                         ),
-                           Text(
+                        Text(
                           durationString,
-                          
                         )
                       ],
                     ),
@@ -214,7 +212,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                         child: StreamBuilder<StandSettings>(
                             stream: dataProvider.smokeSessionBloc.standSettings,
                             builder: (context, snapshot) {
-                              if(snapshot.data == null){
+                              if (snapshot.data == null) {
                                 return Container();
                               }
                               return SmokeColorWheel(

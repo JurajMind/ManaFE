@@ -38,6 +38,7 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
       Size size = MediaQuery.of(context).size;
       position = ColorHelper.colorToPosition(selectedColor, size, position);
     }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override

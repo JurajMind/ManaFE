@@ -32,7 +32,6 @@ class _ReservationsPageState extends State<ReservationsPage> {
     if (reservationBloc == null) {
       reservationBloc = DataProvider.getData(context).reservationBloc;
     }
-
   }
 
   void loadReservation(DateTime date) {
@@ -52,7 +51,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
       ),
       body: SafeArea(
         child: StreamBuilder<List<PlacesReservationsReservationDto>>(
-            stream: reservationBloc.reservations,
+            stream: reservationBloc.dynamicReservaions,
             builder: (context, snapshot) {
               var filteredReservations = _selectedDay == null
                   ? snapshot.data

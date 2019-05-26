@@ -30,7 +30,6 @@ class ColorHelper {
     var color = xy2polar(offset.dx, offset.dy);
     var hue = doublerad2deg(color);
 
-    print('hue:${hue % 360} saturation:$radius');
     return HSVColor.fromAHSV(1.0, hue % 360, radius, 1.0);
   }
 
@@ -49,10 +48,11 @@ class ColorHelper {
             new HSVColor.fromAHSV(1.0, intitColor + 0.0, 1.0, 1.0).toColor());
   }
 
-  static Offset colorToPosition(HSVColor selectedColor, Size size, Offset position) {
+  static Offset colorToPosition(
+      HSVColor selectedColor, Size size, Offset position) {
     var angle = selectedColor.hue / (2 * math.pi);
     var x = (math.cos(angle) * (size.width / 2));
     var y = math.sin(angle) * (size.width / 2);
-    return new Offset(size.width/2, size.width/2);
+    return new Offset(size.width / 2, size.width / 2);
   }
 }

@@ -158,7 +158,8 @@ class SmokeSessionBloc {
   Future _joinSession(String sessionCode) async {
     List<String> params = new List<String>();
     params.add(sessionCode);
-    this.signalR.callServerFunction(name: 'JoinSession', params: params);
+    this.signalR.callServerFunction(
+        new ServerCallParam(name: 'JoinSession', params: params));
     lastSession.add(sessionCode);
     await loadSessionData();
   }
@@ -355,7 +356,8 @@ class SmokeSessionBloc {
   _leaveOldSession(String activeSessionId) {
     List<String> params = new List<String>();
     params.add(activeSessionId);
-    this.signalR.callServerFunction(name: 'LeaveSession', params: params);
+    this.signalR.callServerFunction(
+        new ServerCallParam(name: 'LeaveSession', params: params));
     animations.add(null);
   }
 

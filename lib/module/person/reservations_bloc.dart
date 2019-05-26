@@ -12,15 +12,17 @@ class ReservationBloc extends SignalBloc {
 
   ReservationBloc._() {
     this.connect();
-   
-var date = DateTime.now();
+
+    var date = DateTime.now();
     var _fromDate = DateTime(date.year, date.month, 1);
     var _toDate = DateTime(date.year, date.month + 1, 0);
     loadReservations(_fromDate, _toDate);
   }
-  
 
   BehaviorSubject<List<PlacesReservationsReservationDto>> reservations =
+      new BehaviorSubject<List<PlacesReservationsReservationDto>>();
+
+  BehaviorSubject<List<PlacesReservationsReservationDto>> dynamicReservaions =
       new BehaviorSubject<List<PlacesReservationsReservationDto>>();
 
   BehaviorSubject<PlacesReservationsReservationDetailDto> reservationDetail =
@@ -38,16 +40,28 @@ var date = DateTime.now();
     var order = new Collection(result)
         .orderBy((keySelector) => keySelector.time)
         .toList();
-    this.reservations.add(order);
+
+    if (from.month == DateTime.now().month) {
+      this.reservations.add(order);
+    }
+
+    this.dynamicReservaions.add(order);
   }
 
   @override
   handleCall(String method, List<dynamic> data) {
     switch (method) {
-      case 'reservationChanged':
+      case 'ReservationChanged':
         {
-          this.loadReservations(
-              DateTime.now().subtract(Duration(days: 20)), DateTime.now());
+          var date = DateTime.now();
+
+          try {
+            date = DateTime.parse(data[0]['Time']);
+          } on Exception {}
+          var from = new DateTime(date.year, date.month, 1);
+          var to = new DateTime(date.year, date.month + 1, 1)
+              .subtract(new Duration(days: 1));
+          this.loadReservations(from, to);
           break;
         }
     }
