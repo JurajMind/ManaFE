@@ -4,7 +4,7 @@ import 'package:app/Helpers/date_utils.dart';
 import 'package:app/app/app.dart';
 import 'package:app/components/SmokeSession/tobacco_widget.dart';
 import 'package:app/models/SmokeSession/puf_type.dart';
-import 'package:app/pages/SmokeSession/pipe_accesory_widget.dart';
+import 'package:app/pages/SmokeSession/Components/pipe_accesory_widget.dart';
 import 'package:app/pages/Statistic/Detail/detail_page_helper.dart';
 import 'package:app/pages/Statistic/statistic_page.dart';
 import 'package:flutter/material.dart';

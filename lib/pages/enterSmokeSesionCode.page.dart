@@ -11,6 +11,8 @@ import 'package:app/services/http.service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'SmokeSession/qr_code_reader_page.dart';
+
 class EnterSmokeSessionCode extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new EnterSmokeSessionCodeState();
@@ -151,7 +153,25 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                       Expanded(
                                         flex: 1,
                                         child: InkWell(
-                                            onTap: () {},
+                                            onTap: () => Navigator.of(context)
+                                                    .push<String>(new MaterialPageRoute(
+                                                        builder: (BuildContext
+                                                            context) {
+                                                  return new QrCodeReaderPage();
+                                                })).then((smokeSessionLink) async {
+
+                                                if (smokeSessionLink != null &&
+                                                    smokeSessionLink
+                                                        .contains("/smoke/")) {
+                                                  var sessionCode =
+                                                      smokeSessionLink
+                                                          .split('/')
+                                                          .last;
+                                                  myController.text =
+                                                      sessionCode;
+                                                  await validateAndGo(
+                                                      context, sessionCode);
+                                                }}),
                                             child: Container(
                                               width: 50.0,
                                               height: 50.0,

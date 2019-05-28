@@ -7,11 +7,12 @@ import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/pages/SmokeSession/Components/animation_list.dart';
+import 'package:app/pages/SmokeSession/Components/pipe_accesory_widget.dart';
+import 'package:app/pages/SmokeSession/Components/puff_timer.dart';
 import 'package:app/pages/SmokeSession/Experimental/experimental_page.dart';
-import 'package:app/pages/SmokeSession/animation_list.dart';
 import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
-import 'package:app/pages/SmokeSession/pipe_accesory_widget.dart';
-import 'package:app/pages/SmokeSession/puff_timer.dart';
+
 
 import 'package:app/pages/SmokeSession/tobacco_widget.dart';
 import 'package:app/pages/home.page.dart';

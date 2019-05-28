@@ -1,9 +1,11 @@
-import 'package:app/models/PipeAccesory/pipe_accesory.dart';
+
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
-import 'package:app/pages/SmokeSession/metadata_item.dart';
+
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
+
+import 'Components/metadata_item.dart';
 
 class MetadataBottomSheet extends StatelessWidget {
   const MetadataBottomSheet({
