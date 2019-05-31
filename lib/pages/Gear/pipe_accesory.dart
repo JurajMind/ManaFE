@@ -177,6 +177,7 @@ class PipeAccesoryList extends StatelessWidget {
       context: context,
       builder: (BuildContext context) => child,
     ).then<void>((PipeAccesorySimpleDto value) {
+      if (value == null) return;
       Navigator.of(context)
           .push(new MaterialPageRoute(builder: (BuildContext context) {
         return new PipeAccesoryPage(pipeAccesory: value);

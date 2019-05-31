@@ -154,24 +154,29 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                         flex: 1,
                                         child: InkWell(
                                             onTap: () => Navigator.of(context)
-                                                    .push<String>(new MaterialPageRoute(
-                                                        builder: (BuildContext
-                                                            context) {
+                                                    .push<String>(
+                                                        new MaterialPageRoute(
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
                                                   return new QrCodeReaderPage();
-                                                })).then((smokeSessionLink) async {
-
-                                                if (smokeSessionLink != null &&
-                                                    smokeSessionLink
-                                                        .contains("/smoke/")) {
-                                                  var sessionCode =
-                                                      smokeSessionLink
-                                                          .split('/')
-                                                          .last;
-                                                  myController.text =
-                                                      sessionCode;
-                                                  await validateAndGo(
-                                                      context, sessionCode);
-                                                }}),
+                                                })).then(
+                                                        (smokeSessionLink) async {
+                                                  if (smokeSessionLink !=
+                                                          null &&
+                                                      smokeSessionLink.contains(
+                                                          "/smoke/")) {
+                                                    var sessionCode =
+                                                        smokeSessionLink
+                                                            .split('/')
+                                                            .last
+                                                            .trim();
+                                                    myController.text =
+                                                        sessionCode;
+                                                    await validateAndGo(
+                                                        context, sessionCode);
+                                                  }
+                                                }),
                                             child: Container(
                                               width: 50.0,
                                               height: 50.0,
