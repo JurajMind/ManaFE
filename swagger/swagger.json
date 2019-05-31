@@ -4,7 +4,7 @@
     "version": "v1",
     "title": "smartHookah"
   },
-  "host": "devmana.azurewebsites.net",
+  "host": "localhost:44324",
   "schemes": [
     "https"
   ],
@@ -170,6 +170,92 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/Animations"
+            }
+          }
+        }
+      }
+    },
+    "/api/Competition/Add": {
+      "post": {
+        "tags": [
+          "Competition"
+        ],
+        "operationId": "Competition_AddEntry",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [{
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "time",
+            "in": "query",
+            "required": true,
+            "type": "number",
+            "format": "double"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/api/Competition/Results": {
+      "get": {
+        "tags": [
+          "Competition"
+        ],
+        "operationId": "Competition_GetResults",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/smartHookahModelsRedisCompetitionEntry"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Competition/Clean": {
+      "delete": {
+        "tags": [
+          "Competition"
+        ],
+        "operationId": "Competition_Clean",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "boolean"
             }
           }
         }
@@ -3814,6 +3900,18 @@
             7
           ],
           "type": "integer"
+        }
+      }
+    },
+    "smartHookahModelsRedisCompetitionEntry": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Time": {
+          "format": "double",
+          "type": "number"
         }
       }
     },

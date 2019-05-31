@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app/Helpers/date_utils.dart';
+import 'package:app/app/app.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/module/data_provider.dart';
@@ -8,6 +9,7 @@ import 'package:app/pages/SmokeSession/Components/puff_timer.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:flutter/material.dart';
 import 'package:queries/collections.dart';
+import 'package:vibrate/vibrate.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
@@ -18,6 +20,7 @@ class SmokeTimerPage extends StatefulWidget {
 
 class _SmokeTimerPageState extends State<SmokeTimerPage> {
   double height = 10;
+  double lastPuf = 0;
   static const double maxHeight = 600;
   PufTimerDependencies dependencies;
   DataProvider dataProvider;
@@ -54,6 +57,10 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
     });
 
     dataProvider.smokeSessionBloc.smokeStatistic.listen((data) {
+      if (data.lastPuf > 2) {
+        lastPuf = data.lastPuf;
+      }
+
       charts.add(data.lastPuf);
       charts = Collection(charts)
           .orderByDescending((f) => f)
@@ -70,11 +77,52 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
     super.dispose();
   }
 
+  TextEditingController _textFieldController = TextEditingController();
+  _displayDialog(BuildContext context) async {
+    return showDialog<bool>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(lastPuf.toStringAsFixed(3)),
+            content: TextField(
+              controller: _textFieldController,
+              decoration: InputDecoration(hintText: "Name"),
+            ),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text('CANCEL'),
+                textColor: Colors.red,
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+              ),
+              new FlatButton(
+                child: new Text('SAVE'),
+                textColor: Colors.green,
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+              )
+            ],
+          );
+        }).then((result) {
+      if (!result) return;
+      App.http
+          .addCompetitionEntry(_textFieldController.text, lastPuf)
+          .then((onValue) {
+        Vibrate.feedback(FeedbackType.medium);
+        setState(() {
+          _textFieldController.text = '';
+        });
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Smoke timer'),
+        title: Text('SMOKE TIMER'),
         centerTitle: true,
         backgroundColor: Colors.black,
       ),
@@ -102,7 +150,9 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
                             ),
                             Expanded(
                               flex: 1,
-                              child: Container(),
+                              child: IconButton(
+                                  icon: Icon(Icons.add),
+                                  onPressed: () => _displayDialog(context)),
                             ),
                           ],
                         ),

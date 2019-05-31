@@ -18,7 +18,7 @@ class ApiClient {
   final _regList = RegExp(r'^List<(.*)>$');
   final _regMap = RegExp(r'^Map<String,(.*)>$');
 
-  ApiClient({this.basePath: "https://devmana.azurewebsites.net"}) {
+  ApiClient({this.basePath: "https://localhost:44324"}) {
     // Setup authentications (key: authentication name, value: authentication).
   }
 
@@ -155,6 +155,8 @@ class ApiClient {
           return SmartHookahModelsParameterObjectsChangeColor.fromJson(value);
         case 'SmartHookahModelsParameterObjectsChangeSpeed':
           return SmartHookahModelsParameterObjectsChangeSpeed.fromJson(value);
+        case 'SmartHookahModelsRedisCompetitionEntry':
+          return SmartHookahModelsRedisCompetitionEntry.fromJson(value);
         case 'SmartHookahServicesGearTobaccoFilter':
           return SmartHookahServicesGearTobaccoFilter.fromJson(value);
         case 'SmartHookahServicesPlaceReservationUsageDto':

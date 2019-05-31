@@ -226,7 +226,7 @@ class ApiClient {
       "page": page.toString(),
       "pageSize": pageSize.toString(),
       "searchType": searchType,
-      "type": type
+      "type": fixType(type)
     });
 
     return _getJson(url).then((json) {
@@ -235,6 +235,31 @@ class ApiClient {
               (data) => PipeAccesorySimpleDto.fromJson(data))
           .toList();
     });
+  }
+
+  String fixType(String oldType) {
+    switch (oldType.toLowerCase()) {
+      case 'bowl':
+        return 'Bowl';
+      case 'coal':
+        return 'Coal';
+      case 'coals':
+        return 'Coal';
+      case 'heatmanagement':
+        return 'HeatManagment';
+      case 'heatmanagment':
+        return 'HeatManagment';
+      case 'h.m.s':
+        return 'HeatManagment';
+      case 'tobacco':
+        return 'Tobacco';
+      case 'hookah':
+        return 'Pipe';
+        break;
+      case 'pipe':
+        return 'Pipe';
+    }
+    return oldType;
   }
 
   Future<String> getSessionId(String id) async {
@@ -459,6 +484,22 @@ class ApiClient {
         .postUri(url)
         .then((onValue) => true)
         .catchError((_) => false);
+  }
+
+  Future<bool> addCompetitionEntry(String name, double time) async {
+    var url = Uri.https(baseUrl, '/api/Competition/Add',
+        {'name': name, 'time': time.toString()});
+    return await _dio
+        .postUri(url)
+        .then((onValue) => true)
+        .catchError((_) => false);
+  }
+
+    Future<List<SmartHookahModelsRedisCompetitionEntry>> getCompetitionResult() async {
+    var url = Uri.https(baseUrl, '/api/Competition/Results');
+    return await _dio
+        .getUri(url)
+        .then((data) => SmartHookahModelsRedisCompetitionEntry.listFromJson(data.data));
   }
 }
 

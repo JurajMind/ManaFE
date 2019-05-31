@@ -59,7 +59,7 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://devmana.azurewebsites.net*
+All URIs are relative to *https://localhost:44324*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -68,6 +68,9 @@ Class | Method | HTTP request | Description
 *AccountApi* | [**accountRegister**](docs\/AccountApi.md#accountregister) | **POST** /api/Account/Register | 
 *AnimApi* | [**animDefaultAction**](docs\/AnimApi.md#animdefaultaction) | **POST** /api/Anim/{id} | 
 *AnimationApi* | [**animationGetAnimations**](docs\/AnimationApi.md#animationgetanimations) | **GET** /api/Animations/GetAnimations | 
+*CompetitionApi* | [**competitionAddEntry**](docs\/CompetitionApi.md#competitionaddentry) | **POST** /api/Competition/Add | 
+*CompetitionApi* | [**competitionClean**](docs\/CompetitionApi.md#competitionclean) | **DELETE** /api/Competition/Clean | 
+*CompetitionApi* | [**competitionGetResults**](docs\/CompetitionApi.md#competitiongetresults) | **GET** /api/Competition/Results | 
 *DeviceApi* | [**deviceChangeAnimation**](docs\/DeviceApi.md#devicechangeanimation) | **POST** /api/Device/{id}/ChangeAnimation | 
 *DeviceApi* | [**deviceChangeBrightness**](docs\/DeviceApi.md#devicechangebrightness) | **POST** /api/Device/{id}/ChangeBrightness | 
 *DeviceApi* | [**deviceChangeColor**](docs\/DeviceApi.md#devicechangecolor) | **POST** /api/Device/{id}/ChangeColor | 
@@ -231,6 +234,7 @@ Class | Method | HTTP request | Description
  - [SmartHookahModelsParameterObjectsChangeBrightness](docs\/SmartHookahModelsParameterObjectsChangeBrightness.md)
  - [SmartHookahModelsParameterObjectsChangeColor](docs\/SmartHookahModelsParameterObjectsChangeColor.md)
  - [SmartHookahModelsParameterObjectsChangeSpeed](docs\/SmartHookahModelsParameterObjectsChangeSpeed.md)
+ - [SmartHookahModelsRedisCompetitionEntry](docs\/SmartHookahModelsRedisCompetitionEntry.md)
  - [SmartHookahServicesGearTobaccoFilter](docs\/SmartHookahServicesGearTobaccoFilter.md)
  - [SmartHookahServicesPlaceReservationUsageDto](docs\/SmartHookahServicesPlaceReservationUsageDto.md)
  - [SmokeSessionMetaDataDto](docs\/SmokeSessionMetaDataDto.md)

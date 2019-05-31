@@ -6,6 +6,7 @@ import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/general/gear_bloc.dart';
 import 'package:app/module/person/person_bloc.dart';
+import 'package:app/pages/Gear/pipe_accesory_page.dart';
 import 'package:app/pages/SmokeSession/accesory_search.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -88,7 +89,7 @@ class PipeAccesoryList extends StatelessWidget {
                                 Icons.add,
                                 size: 50,
                               ),
-                              onPressed: () => showSearchDialog(
+                              onPressed: () => showAddDialog(
                                   bloc: bloc,
                                   context: context,
                                   child: new PipeAccesorySearch(
@@ -122,11 +123,18 @@ class PipeAccesoryList extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Expanded(
-            flex: 1,
-            child: IconButton(
+          flex: 1,
+          child: IconButton(
               icon: Icon(Icons.search),
-              onPressed: () {},
-            )),
+              onPressed: () => showSearchDialog(
+                  bloc: bloc,
+                  context: context,
+                  child: new PipeAccesorySearch(
+                    type: type,
+                    searchType: type,
+                    ownAccesories: new List<PipeAccesorySimpleDto>(),
+                  ))),
+        ),
         Expanded(
             flex: 2,
             child: Center(
@@ -140,7 +148,7 @@ class PipeAccesoryList extends StatelessWidget {
             flex: 1,
             child: IconButton(
               icon: Icon(Icons.add),
-              onPressed: () => showSearchDialog(
+              onPressed: () => showAddDialog(
                   bloc: bloc,
                   context: context,
                   child: new PipeAccesorySearch(
@@ -153,7 +161,7 @@ class PipeAccesoryList extends StatelessWidget {
     );
   }
 
-  void showSearchDialog({BuildContext context, Widget child, bloc}) {
+  void showAddDialog({BuildContext context, Widget child, bloc}) {
     showDialog<PipeAccesorySimpleDto>(
       context: context,
       builder: (BuildContext context) => child,
@@ -161,6 +169,18 @@ class PipeAccesoryList extends StatelessWidget {
       if (value != null) {
         showNumberDialog(context: context, accesory: value, bloc: bloc);
       }
+    });
+  }
+
+  void showSearchDialog({BuildContext context, Widget child, bloc}) {
+    showDialog<PipeAccesorySimpleDto>(
+      context: context,
+      builder: (BuildContext context) => child,
+    ).then<void>((PipeAccesorySimpleDto value) {
+      Navigator.of(context)
+          .push(new MaterialPageRoute(builder: (BuildContext context) {
+        return new PipeAccesoryPage(pipeAccesory: value);
+      }));
     });
   }
 

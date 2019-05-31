@@ -1,36 +1,37 @@
 part of openapi.api;
 
 class PlacesReservationsReservationDto {
+  
   int id = null;
-
+  
   DateTime created = null;
-
+  
   int personId = null;
-
+  
   int placeId = null;
-
+  
   String placeName = null;
-
+  
   DateTime started = null;
-
+  
   DateTime end = null;
-
+  
   int persons = null;
-
+  
   String duration = null;
-
+  
   DateTime time = null;
-
+  
   String text = null;
-
+  
   String name = null;
-
+  
   String displayName = null;
-
+  
   int status = null;
-
+  
   List<int> seats = [];
-
+  
   int lateDuration = null;
   PlacesReservationsReservationDto();
 
@@ -80,23 +81,16 @@ class PlacesReservationsReservationDto {
     };
   }
 
-  static List<PlacesReservationsReservationDto> listFromJson(
-      List<dynamic> json) {
-    return json == null
-        ? new List<PlacesReservationsReservationDto>()
-        : json
-            .map(
-                (value) => new PlacesReservationsReservationDto.fromJson(value))
-            .toList();
+  static List<PlacesReservationsReservationDto> listFromJson(List<dynamic> json) {
+    return json == null ? new List<PlacesReservationsReservationDto>() : json.map((value) => new PlacesReservationsReservationDto.fromJson(value)).toList();
   }
 
-  static Map<String, PlacesReservationsReservationDto> mapFromJson(
-      Map<String, dynamic> json) {
+  static Map<String, PlacesReservationsReservationDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, PlacesReservationsReservationDto>();
     if (json != null && json.length > 0) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = new PlacesReservationsReservationDto.fromJson(value));
+      json.forEach((String key, dynamic value) => map[key] = new PlacesReservationsReservationDto.fromJson(value));
     }
     return map;
   }
 }
+

@@ -292,7 +292,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     for (FocusScopeNode focusScopeNode in tabFocusNodes) {
-      focusScopeNode.detach();
+      focusScopeNode.dispose();
     }
     subscription.cancel();
     super.dispose();

@@ -1,7 +1,8 @@
-import 'package:app/components/Common/labeled_value.dart';
 import 'package:app/const/theme.dart';
+import 'package:app/pages/SmokeSession/Experimental/result_page.dart';
 import 'package:app/pages/SmokeSession/Experimental/smoke_timer_page.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ExperimentalPage extends StatelessWidget {
   @override
@@ -29,6 +30,12 @@ class ExperimentalPage extends StatelessWidget {
               bgColor: AppColors.colors[1],
               text: 'T-Rex',
               icon: Icons.games,
+            ),
+            new ExperimentItem(
+              bgColor: AppColors.colors[2],
+              text: 'Result',
+              icon: FontAwesomeIcons.trophy,
+              pageWidget: ResultPage(),
             )
           ],
         ));

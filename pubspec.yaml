@@ -14,13 +14,16 @@ dependencies:
   rxdart: ^0.21.0
   vibrate: '^0.0.4'
   intl: ^0.15.7
-  animated_background: ^1.0.1
+  animated_background:
+    git:
+      url: git://github.com/AndreBaltazar8/flutter_animated_background.git
+      ref: develop
   tuple: ^1.0.2
   percent_indicator: '^1.0.13'
   dio: ^2.0.15
   flutter_facebook_login: ^2.0.0
   geolocator: ^3.0.1
-  cached_network_image: ^0.6.1
+  cached_network_image: ^0.8.0
   date_utils: ^0.1.0
   flutter_launcher_icons: ^0.6.1
   openapi:
