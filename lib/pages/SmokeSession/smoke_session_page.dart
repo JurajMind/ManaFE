@@ -13,7 +13,6 @@ import 'package:app/pages/SmokeSession/Components/puff_timer.dart';
 import 'package:app/pages/SmokeSession/Experimental/experimental_page.dart';
 import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
 
-
 import 'package:app/pages/SmokeSession/tobacco_widget.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +41,6 @@ class StopWatches {
 class _SmokeSessionPage extends State<SmokeSessionPage> {
   DataProvider dataProvider;
   StopWatches stopWatches;
-  PufTimerDependencies dependencies;
   int action = 0;
   ScrollController scrollController;
   ScrollPhysics physics;
@@ -61,15 +59,11 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     dataProvider = DataProvider.getData(context);
-    dependencies = new PufTimerDependencies(
-        stopWatches.pufStopwatch, this.dataProvider.smokeSessionBloc);
     dataProvider.smokeSessionBloc.joinSession(widget.sessionId);
-    dependencies.smokeSessionBloc = dataProvider.smokeSessionBloc;
   }
 
   @override
   dispose() {
-    this.dependencies.dispose();
     super.dispose();
   }
 
@@ -159,7 +153,6 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                         Text('Last puf (sec)',
                             style: TextStyle(color: Colors.grey)),
                         new PuffTimeText(
-                            dependencies: dependencies,
                             completeTime: asyncSnapshot.data.toString()),
                         Text(longestString)
                       ],

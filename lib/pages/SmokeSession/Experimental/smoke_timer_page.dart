@@ -22,7 +22,6 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
   double height = 10;
   double lastPuf = 0;
   static const double maxHeight = 600;
-  PufTimerDependencies dependencies;
   DataProvider dataProvider;
   StopWatches stopWatches;
   Duration animationDuration;
@@ -39,9 +38,7 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     dataProvider = DataProvider.getData(context);
-    dependencies = new PufTimerDependencies(
-        stopWatches.pufStopwatch, this.dataProvider.smokeSessionBloc);
-    dependencies.smokeSessionBloc = dataProvider.smokeSessionBloc;
+
     subscription =
         dataProvider.smokeSessionBloc.smokeStateBroadcast.listen((data) {
       if (data == 1) {
@@ -72,7 +69,6 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
 
   @override
   dispose() {
-    this.dependencies.dispose();
     subscription.cancel();
     super.dispose();
   }
@@ -144,9 +140,7 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
                             ),
                             Expanded(
                               flex: 1,
-                              child: new PuffTimeText(
-                                  dependencies: dependencies,
-                                  completeTime: 'Test'),
+                              child: new PuffTimeText(completeTime: 'Test'),
                             ),
                             Expanded(
                               flex: 1,

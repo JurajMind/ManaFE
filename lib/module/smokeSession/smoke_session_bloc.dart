@@ -6,11 +6,11 @@ import 'package:app/models/SignalR/device_online.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
+import 'package:app/models/SmokeSession/timer_dependency.dart';
 import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/models/Stand/animation.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/models/Stand/preset.dart';
-import 'package:app/pages/home.page.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:app/utils/color.dart';
 import 'package:flushbar/flushbar.dart';
@@ -46,6 +46,8 @@ class SmokeSessionBloc {
   Observable<int> get smokeStateBroadcast {
     return this.smokeState.asBroadcastStream();
   }
+
+  PufTimerDependencies pufTimerDependencies;
 
   BehaviorSubject<String> lastSession = new BehaviorSubject<String>();
 
@@ -263,6 +265,8 @@ class SmokeSessionBloc {
     futureDevicePresetDebounce =
         futureDevicePreset.debounce(Duration(milliseconds: 800));
     futureDevicePresetDebounce.listen((onData) => _futureSetPreset(onData));
+
+    pufTimerDependencies = new PufTimerDependencies(this);
   }
 
   proceddCalls(ClientCall onData) {

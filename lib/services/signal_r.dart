@@ -16,6 +16,7 @@ class SignalR {
   NegotiateResponse connectionInfo;
   String lastMsgId = "";
   DateTime lastPing = DateTime.now();
+  BehaviorSubject<DateTime> lastPingStream;
   IOWebSocketChannel _channel;
   Completer<dynamic> _completer;
   Timer connectionTimer;
@@ -25,7 +26,9 @@ class SignalR {
   factory SignalR() {
     return _singleton;
   }
-  SignalR._internal();
+  SignalR._internal() {
+    lastPingStream = new BehaviorSubject<DateTime>.seeded(DateTime.now());
+  }
 
   Future<dynamic> connect() async {
     if (_completer == null) {
@@ -61,6 +64,7 @@ class SignalR {
         if (message == "{}") {
           // ping msg
           lastPing = DateTime.now();
+          lastPingStream.add(DateTime.now());
         }
         var serverCall = ClientCall.fromJson(json.decode(message));
         proceedCall(serverCall);

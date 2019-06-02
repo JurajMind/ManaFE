@@ -1,4 +1,5 @@
 import 'package:app/app/app.dart';
+import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Statistic/hero_test_page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/services/signal_r.dart';
@@ -13,6 +14,8 @@ class TestPage extends StatefulWidget {
 class _TestPageState extends State<TestPage> {
   @override
   Widget build(BuildContext context) {
+    var service = DataProvider.getData(context).personBloc;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Test'),
@@ -21,6 +24,15 @@ class _TestPageState extends State<TestPage> {
       body: Center(
         child: Column(
           children: <Widget>[
+            StreamBuilder<DateTime>(
+              stream: service.lastPingStream,
+              initialData: DateTime.now(),
+              builder: (BuildContext context, snapshot) {
+                return Container(
+                  child: Text(snapshot.data.toString()),
+                );
+              },
+            ),
             OutlineButton.icon(
               borderSide: BorderSide(color: Colors.white),
               icon: Icon(

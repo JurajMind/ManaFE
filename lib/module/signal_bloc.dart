@@ -1,13 +1,15 @@
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/services/signal_r.dart';
+import 'package:rxdart/rxdart.dart';
 
 class SignalBloc {
   final SignalR _signalR = new SignalR();
-
+  BehaviorSubject<DateTime> lastPingStream;
   void connect() {
     _signalR.connect().then((value) {
       _signalR.clientCalls.listen((onData) {
         _proceddCalls(onData);
+        lastPingStream = _signalR.lastPingStream;
       });
     });
   }

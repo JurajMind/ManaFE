@@ -1,110 +1,47 @@
-import 'dart:async';
-
-import 'package:app/module/smokeSession/smoke_session_bloc.dart';
+import 'package:app/models/SmokeSession/timer_dependency.dart';
+import 'package:app/module/data_provider.dart';
 import 'package:flutter/material.dart';
 
 class PuffTimeText extends StatelessWidget {
-  PuffTimeText({this.dependencies, this.completeTime});
-  final PufTimerDependencies dependencies;
+  PuffTimeText({this.completeTime});
   final String completeTime;
   @override
   @override
   Widget build(BuildContext context) {
+    var dependencies =
+        DataProvider.getData(context).smokeSessionBloc.pufTimerDependencies;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Offstage(
-          offstage: this.dependencies.showTimer == null ||
-              !this.dependencies.showTimer,
+          offstage: dependencies.showTimer == null || !dependencies.showTimer,
           child: new Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new RepaintBoundary(
                 child: new SizedBox(
                   height: 38.0,
-                  child: new MinutesAndSeconds(dependencies: this.dependencies),
+                  child: new MinutesAndSeconds(dependencies: dependencies),
                 ),
               ),
               new RepaintBoundary(
                 child: new SizedBox(
                   height: 38.0,
-                  child: new Hundreds(dependencies: this.dependencies),
+                  child: new Hundreds(dependencies: dependencies),
                 ),
               ),
             ],
           ),
         ),
         Offstage(
-            offstage: this.dependencies.showTimer,
+            offstage: dependencies.showTimer,
             child: SizedBox(
               height: 38.0,
-              child: Text(this.dependencies.alternativeText,
+              child: Text(dependencies.alternativeText,
                   style: Theme.of(context).textTheme.body2),
             ))
       ],
     );
-  }
-}
-
-class PufTimerDependencies {
-  StreamSubscription<int> subscription;
-  bool showTimer = false;
-  Timer timer;
-  String alternativeText = '';
-  int milliseconds;
-
-  PufTimerDependencies(stopwatch, smokeSessionBloc) {
-    this.stopwatch = stopwatch;
-    this.timer = new Timer.periodic(
-        new Duration(milliseconds: this.timerMillisecondsRefreshRate),
-        callback);
-
-    subscription = smokeSessionBloc.smokeStateBroadcast.listen((data) {
-      if (data != 0) {
-        print('start timer');
-        this.stopwatch.reset();
-        this.stopwatch.start();
-
-        showTimer = true;
-      }
-      if (data == 0) {
-        this.stopwatch.stop();
-        print('end timer');
-        showTimer = false;
-      }
-    });
-
-    smokeSessionBloc.smokeStatistic
-        .listen((data) => alternativeText = data.lastPuf.toStringAsFixed(2));
-  }
-
-  dispose() {
-    this.timer.cancel();
-    subscription.cancel();
-  }
-
-  final List<ValueChanged<ElapsedTime>> timerListeners =
-      <ValueChanged<ElapsedTime>>[];
-
-  Stopwatch stopwatch;
-  SmokeSessionBloc smokeSessionBloc;
-  final int timerMillisecondsRefreshRate = 30;
-
-  void callback(Timer timer) {
-    if (milliseconds != this.stopwatch.elapsedMilliseconds) {
-      milliseconds = this.stopwatch.elapsedMilliseconds;
-      final int hundreds = (milliseconds / 10).truncate();
-      final int seconds = (hundreds / 100).truncate();
-      final int minutes = (seconds / 60).truncate();
-      final ElapsedTime elapsedTime = new ElapsedTime(
-        hundreds: hundreds,
-        seconds: seconds,
-        minutes: minutes,
-      );
-      for (final listener in this.timerListeners) {
-        listener(elapsedTime);
-      }
-    }
   }
 }
 
