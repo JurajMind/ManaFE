@@ -5,6 +5,7 @@ import 'package:app/module/signal_bloc.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:openapi/api.dart';
+import 'package:queries/collections.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PersonBloc extends SignalBloc {
@@ -68,6 +69,13 @@ class PersonBloc extends SignalBloc {
 
   addSmokeSession(SmokeSessionSimpleDto smokeSessionId) {
     var newCodes = smokeSessionsCodes.value;
+
+    var collection = new Collection(newCodes);
+    var match = collection.where$1((predicate,index) => predicate.sessionId == smokeSessionId.sessionId);
+
+  if(match.count() > 0){
+    return;
+  }
     newCodes.insert(0, smokeSessionId);
     newCodes = newCodes.toSet().toList();
     this.smokeSessionsCodes.add(newCodes);
@@ -106,6 +114,7 @@ class PersonBloc extends SignalBloc {
   loadSessions() async {
     var sessions = await App.http.getPersonSessions();
     this.smokeSessions.add(sessions);
+    smokeSessionsCodes.add(sessions);
   }
 
   void handleDeviceOnline(List<dynamic> incomingData) {

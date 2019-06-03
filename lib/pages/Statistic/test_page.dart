@@ -48,6 +48,31 @@ class _TestPageState extends State<TestPage> {
             OutlineButton.icon(
               borderSide: BorderSide(color: Colors.white),
               icon: Icon(
+                Icons.cloud_off,
+                color: Colors.red,
+              ),
+              label: Text('Signal restart connection'),
+              onPressed: () async {
+                var signal = new SignalR();
+                await signal.disconnect();
+                await signal.connect(force: true);
+              },
+            ),
+            OutlineButton.icon(
+              borderSide: BorderSide(color: Colors.white),
+              icon: Icon(
+                Icons.directions_boat,
+                color: Colors.greenAccent
+              ),
+              label: Text('Signal disconect'),
+              onPressed: () async {
+                var signal = new SignalR();
+                await signal.disconnect();
+              },
+            ),
+            OutlineButton.icon(
+              borderSide: BorderSide(color: Colors.white),
+              icon: Icon(
                 Icons.delete_sweep,
                 color: Colors.red,
               ),

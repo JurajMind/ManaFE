@@ -108,6 +108,11 @@ class _HomePageState extends State<HomePage> {
     personBloc.loadInitData();
     SystemChannels.lifecycle.setMessageHandler((msg) {
       debugPrint('SystemChannels> $msg');
+      if (msg == AppLifecycleState.paused.toString() || msg == AppLifecycleState.inactive.toString()  ) {
+        var signal = new SignalR();
+
+      }
+
       if (msg == AppLifecycleState.resumed.toString()) {
         var signal = new SignalR();
         signal.checkConection();

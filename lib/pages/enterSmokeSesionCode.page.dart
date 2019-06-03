@@ -32,7 +32,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
     new Future.delayed(Duration.zero, () {
       var bloc = DataProvider.getData(context).personBloc;
       bloc.loadSessions();
-      var sessionBloc = DataProvider.getData(context).smokeSessionBloc;
+      var sessionBloc = DataProvider.getData(context).smokeSessionBloc;   
       setState(() {
         myController.text = sessionBloc.lastSession.value;
       });

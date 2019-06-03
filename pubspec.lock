@@ -21,7 +21,7 @@ packages:
       path: "."
       ref: develop
       resolved-ref: "10169a6bfbe0161295674f34bf1a39b4005954a4"
-      url: "git://github.com/AndreBaltazar8/flutter_animated_background.git"
+      url: "https://github.com/AndreBaltazar8/flutter_animated_background"
     source: git
     version: "1.0.4"
   archive:
@@ -195,7 +195,7 @@ packages:
       name: flushbar
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.3"
+    version: "1.6.0"
   flutter:
     dependency: "direct main"
     description: flutter

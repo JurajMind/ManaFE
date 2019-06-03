@@ -30,16 +30,25 @@ class SignalR {
     lastPingStream = new BehaviorSubject<DateTime>.seeded(DateTime.now());
   }
 
-  Future<dynamic> connect() async {
-    if (_completer == null) {
+  Future<dynamic> connect({bool force = false}) async {
+    if (_completer == null || force) {
       _completer = Completer();
-      _connect();
+      _connect(force: force);
     }
     return _completer.future;
   }
 
-  Future<dynamic> _connect() async {
-    if (this.connection) {
+  Future<dynamic> disconnect() async {
+    _channel = null;
+    connectionTimer.cancel();
+    var abortUrl = url +
+        '/abort?transport=webSockets&clientProtocol=${connectionInfo.ProtocolVersion}&connectionToken=${Uri.encodeComponent(connectionInfo.ConnectionToken)}&connectionData=$conectionData';
+    var result = await http.get(abortUrl);
+    print('signal disconnect ${result.body}');
+  }
+
+  Future<dynamic> _connect({bool force = false}) async {
+    if (this.connection && !force) {
       return;
     }
     var negotiateUrl =
@@ -57,37 +66,62 @@ class SignalR {
     print(chanelUlr);
     var oneSec = Duration(seconds: connectionInfo.KeepAliveTimeout.toInt());
     connectionTimer = new Timer.periodic(oneSec, (Timer t) => checkConection());
-    try {
-      _channel = new IOWebSocketChannel.connect(chanelUlr);
-      _channel.stream.listen((message) async {
-        print('From signal ' + message);
-        if (message == "{}") {
-          // ping msg
-          lastPing = DateTime.now();
-          lastPingStream.add(DateTime.now());
-        }
-        var serverCall = ClientCall.fromJson(json.decode(message));
-        proceedCall(serverCall);
-      });
-    } catch (e) {
-      print(e);
-    }
+    handleConnection(chanelUlr);
 
     await startConnection(negotiateResponse).then((_) {
       _completer.complete();
     });
   }
 
+  void handleConnection(String url) {
+    try {
+      _channel = new IOWebSocketChannel.connect(url);
+      _channel.stream.listen((message) async {
+        print('From signal ' + message);
+        if (message == "{}") {
+          lastPing = DateTime.now();
+          lastPingStream.add(DateTime.now());
+        }
+        var serverCall = ClientCall.fromJson(json.decode(message));
+        proceedCall(serverCall);
+      });
+
+          new Future.delayed(new Duration(seconds: 5), () {
+      for (var call in serversCall.values) {
+        callServerFunction(call);
+      }
+    });
+
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future checkConection() async {
-    if (lastPing.add(new Duration(seconds: 30)).microsecondsSinceEpoch >
+    if (lastPing
+            .add(new Duration(seconds: connectionInfo.KeepAliveTimeout.toInt()))
+            .microsecondsSinceEpoch >
         DateTime.now().microsecondsSinceEpoch) {
       debugPrint('not reconecting');
       return;
     }
 
-    await restartConnection();
+    if (lastPing
+            .add(
+                new Duration(seconds: connectionInfo.DisconnectTimeout.toInt()))
+            .microsecondsSinceEpoch >
+        DateTime.now().microsecondsSinceEpoch) {
+      debugPrint('reconect');
+      await restartConnection();
+      var reconectCall = new ClientCall(Data: new List<ClientMethod>());
+      reconectCall.Data.add(new ClientMethod(Method: "reconect"));
+      clientCalls.add(reconectCall);
+      return;
+    }
+
+    await this.connect(force: true);
     var reconectCall = new ClientCall(Data: new List<ClientMethod>());
-    reconectCall.Data.add(new ClientMethod(Method: "reconect"));
+    reconectCall.Data.add(new ClientMethod(Method: "new connection"));
     clientCalls.add(reconectCall);
   }
 
@@ -111,27 +145,7 @@ class SignalR {
 
     print(chanelUlr);
 
-    try {
-      _channel = new IOWebSocketChannel.connect(chanelUlr);
-      _channel.stream.listen((message) async {
-        print('From signal reconected ' + message);
-        if (message == "{}") {
-          // ping msg
-          lastPing = DateTime.now();
-          print('PingTime ' + lastPing.toString());
-        }
-        var serverCall = ClientCall.fromJson(json.decode(message));
-        proceedCall(serverCall);
-      });
-
-      new Future.delayed(new Duration(seconds: 5), () {
-        for (var call in serversCall.values) {
-          callServerFunction(call);
-        }
-      });
-    } catch (e) {
-      print(e);
-    }
+    handleConnection(chanelUlr);   
   }
 
   BehaviorSubject<ClientCall> clientCalls = new BehaviorSubject<ClientCall>();
