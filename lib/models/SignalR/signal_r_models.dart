@@ -90,3 +90,5 @@ class ClientMethod {
     return ClientMethod(Hub: json['H'], Method: json['M'], Data: json['A']);
   }
 }
+
+enum SignalStatus { none, running, stopped, paused }

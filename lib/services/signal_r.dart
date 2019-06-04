@@ -22,7 +22,9 @@ class SignalR {
   Timer connectionTimer;
   Map<String, ServerCallParam> serversCall = Map<String, ServerCallParam>();
   bool connection = false;
-
+  BehaviorSubject<ClientCall> clientCalls = new BehaviorSubject<ClientCall>();
+  BehaviorSubject<SignalStatus> connectionStatus =
+      new BehaviorSubject<SignalStatus>.seeded(SignalStatus.none);
   factory SignalR() {
     return _singleton;
   }
@@ -70,6 +72,7 @@ class SignalR {
 
     await startConnection(negotiateResponse).then((_) {
       _completer.complete();
+      connectionStatus.add(SignalStatus.running);
     });
   }
 
@@ -86,12 +89,11 @@ class SignalR {
         proceedCall(serverCall);
       });
 
-          new Future.delayed(new Duration(seconds: 5), () {
-      for (var call in serversCall.values) {
-        callServerFunction(call);
-      }
-    });
-
+      new Future.delayed(new Duration(seconds: 5), () {
+        for (var call in serversCall.values) {
+          callServerFunction(call);
+        }
+      });
     } catch (e) {
       print(e);
     }
@@ -145,12 +147,8 @@ class SignalR {
 
     print(chanelUlr);
 
-    handleConnection(chanelUlr);   
+    handleConnection(chanelUlr);
   }
-
-  BehaviorSubject<ClientCall> clientCalls = new BehaviorSubject<ClientCall>();
-
-  sendMsg(String data) {}
 
   callServerFunction(ServerCallParam param) {
     serversCall[param.name] = param;
