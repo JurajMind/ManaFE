@@ -1,13 +1,13 @@
 import 'package:app/Helpers/date_utils.dart';
 import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
+import 'package:app/components/Common/bg_painter.dart';
+import 'package:app/components/Common/circle_painter.dart';
 import 'package:app/components/Common/since_timer.dart';
-import 'package:app/components/Pickers/smoke_color_wheel.dart';
 import 'package:app/components/snap_scroll.dart';
+import 'package:app/const/theme.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
-import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/pages/SmokeSession/Components/animation_list.dart';
 import 'package:app/pages/SmokeSession/Components/pipe_accesory_widget.dart';
 import 'package:app/pages/SmokeSession/Components/puff_timer.dart';
 import 'package:app/pages/SmokeSession/Experimental/experimental_page.dart';
@@ -20,6 +20,8 @@ import 'package:flutter/painting.dart';
 import 'package:openapi/api.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:share/share.dart';
+
+import 'Components/session_control_row.dart';
 
 class SmokeSessionPage extends StatefulWidget {
   final String sessionId;
@@ -49,17 +51,19 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
   void initState() {
     stopWatches = new StopWatches(new Stopwatch(), new Stopwatch());
 
-    scrollController = new ScrollController(
-      initialScrollOffset: 600.0,
-    );
+    scrollController = new ScrollController();
+      Future.delayed(Duration.zero,(){
+   
+    dataProvider.smokeSessionBloc.joinSession(widget.sessionId);
+  });
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
+      dataProvider = DataProvider.getData(context);
     super.didChangeDependencies();
-    dataProvider = DataProvider.getData(context);
-    dataProvider.smokeSessionBloc.joinSession(widget.sessionId);
+   
   }
 
   @override
@@ -70,7 +74,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
+  
     StreamBuilder<SmokeSessionMetaDataDto> tobaccoMetaDataBuilder =
         new StreamBuilder(
       stream: dataProvider.smokeSessionBloc.smokeSessionMetaData,
@@ -138,48 +142,56 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
             DateUtils.toSecondDuration(asyncSnapshot.data.longestPuf);
 
         var start = asyncSnapshot.data.start;
-        return asyncSnapshot.data != null
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  new HeaderItem(
-                    label: 'Puf count',
-                    data: asyncSnapshot.data.pufCount.toString(),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: <Widget>[
-                        Text('Last puf (sec)',
-                            style: TextStyle(color: Colors.grey)),
-                        new PuffTimeText(
-                            completeTime: asyncSnapshot.data.toString()),
-                        Text(longestString)
-                      ],
+        return Container(
+          decoration: BoxDecoration(
+             borderRadius: new BorderRadius.circular(10.0),
+               color: Colors.black.withAlpha(160),
+          ),
+        
+          child: asyncSnapshot.data != null
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    new HeaderItem(
+                      label: 'Puf count',
+                      data: asyncSnapshot.data.pufCount.toString(),
                     ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: <Widget>[
-                        Text('Durations', style: TextStyle(color: Colors.grey)),
-                        SinceTimer(
-                          start: start,
-                          pufCount: asyncSnapshot.data.pufCount,
-                          style: Theme.of(context).textTheme.body2,
-                        ),
-                        Text(
-                          durationString,
-                        )
-                      ],
+                    Expanded(
+                      child: Column(
+                        children: <Widget>[
+                          Text('Last puf (sec)',
+                              style: TextStyle(color: Colors.grey)),
+                          new PuffTimeText(
+                              completeTime: asyncSnapshot.data.toString()),
+                          Text(longestString)
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              )
-            : Text('No data');
+                    Expanded(
+                      child: Column(
+                        children: <Widget>[
+                          Text('Durations', style: TextStyle(color: Colors.grey)),
+                          SinceTimer(
+                            start: start,
+                            pufCount: asyncSnapshot.data.pufCount,
+                            style: Theme.of(context).textTheme.body2,
+                          ),
+                          Text(
+                            durationString,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              : Text('No data'),
+        );
       },
     );
-
+    final Size screenSize = MediaQuery.of(context).size;
     return Column(
+      
       children: <Widget>[
         new Expanded(
           child: CustomScrollView(
@@ -191,46 +203,46 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
             controller: scrollController,
             shrinkWrap: false,
             slivers: <Widget>[
+                        new SliverAppBar(
+                          leading: Container(),
+                          actions: <Widget>[
+                                IconButton(
+                  icon: Icon(Icons.share),
+                  onPressed: () =>
+                      Share.share('check out my website https://example.com')),
+                          ],
+            expandedHeight: 200.0,
+            backgroundColor: Colors.black,
+            pinned: true,            
+            bottom: PreferredSize(
+                preferredSize: Size(700.0, 40.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child:                              Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Hero(
+                                tag: "${widget.sessionId}_session",
+                                child: statisticBuilder),
+                  ],
+                ),
+              ),
+            
+            ),
+            flexibleSpace: new FlexibleSpaceBar(
+          
+              collapseMode: CollapseMode.parallax,
+              background:new ColorSessionGimick(screenSize: screenSize)
+            ),
+          ),
               new SliverList(
                 delegate: new SliverChildListDelegate(<Widget>[
-                  AnimationsPicker(),
-                  SizedBox(
-                    height: 30.0,
-                    child: Center(
-                      child: Icon(Icons.arrow_drop_up),
-                    ),
-                  ),
-                  GestureDetector(
-                    child: SizedBox(
-                        height: size.width,
-                        child: StreamBuilder<StandSettings>(
-                            stream: dataProvider.smokeSessionBloc.standSettings,
-                            builder: (context, snapshot) {
-                              if (snapshot.data == null) {
-                                return Container();
-                              }
-                              return SmokeColorWheel(
-                                onColorChanged: (color) {
-                                  dataProvider.smokeSessionBloc
-                                      .setColor(color.toColor());
-                                },
-                                color: snapshot?.data?.idle?.color,
-                              );
-                            })),
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                    child: Center(
-                      child: Icon(Icons.arrow_drop_down),
-                    ),
-                  ),
+             
                   SizedBox(
                     height: size.height,
                     child: Column(
                       children: <Widget>[
-                        Hero(
-                            tag: "${widget.sessionId}_session",
-                            child: statisticBuilder),
+                        const SessionControllRow(),
                         tobaccoMetaDataBuilder,
                         metadataBuilder,
                         Padding(
@@ -389,6 +401,86 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
     });
   }
 }
+
+class ColorSessionGimick extends StatefulWidget {
+  const ColorSessionGimick({
+    Key key,
+    @required this.screenSize,
+  }) : super(key: key);
+
+  final Size screenSize;
+
+  @override
+  _ColorSessionGimickState createState() => _ColorSessionGimickState();
+}
+
+
+
+class _ColorSessionGimickState extends State<ColorSessionGimick>   with SingleTickerProviderStateMixin {
+
+  @override
+  dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+AnimationController _controller;
+  Animatable<Color> background = TweenSequence<Color>(
+  [
+    TweenSequenceItem(
+      weight: 1.0,
+      tween: ColorTween(
+        begin: Colors.red,
+        end: Colors.green,
+      ),
+    ),
+    TweenSequenceItem(
+      weight: 1.0,
+      tween: ColorTween(
+        begin: Colors.green,
+        end: Colors.blue,
+      ),
+    ),
+    TweenSequenceItem(
+      weight: 1.0,
+      tween: ColorTween(
+        begin: Colors.blue,
+        end: Colors.pink,
+      ),
+    ),
+  ],
+);
+
+@override
+void initState() {
+  super.initState();
+  _controller = AnimationController(
+    duration: const Duration(seconds: 10),
+    vsync: this,
+  )..repeat();
+}
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+     animation: _controller,
+      builder: (context, child) {
+        return CustomPaint(
+          painter: BgPainter(
+            color: background
+                      .evaluate(AlwaysStoppedAnimation(_controller.value)),
+        logoSize: 0.5,
+        
+        startPoint:  Offset(
+            widget.screenSize.width*0.5 ,-50),
+        hueRotation: -4,
+          ),
+        );
+      }
+    );
+  }
+}
+
 
 class HeaderItem extends StatelessWidget {
   final String label;

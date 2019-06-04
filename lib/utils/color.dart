@@ -22,7 +22,7 @@ class ColorHelper {
   }
 
   static HSVColor position2color(Offset offset, double size) {
-    var radius = distance(offset) / (size * 0.70);
+    var radius = distance(offset) / (size);
     if (radius > 1) {
       radius = 1;
     }

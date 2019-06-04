@@ -378,7 +378,7 @@ class _ReservationPageState extends State<ReservationPage> {
     return Column(
       children: <Widget>[
         Text(
-          'Peoples',
+          'People',
           style: TextStyle(color: Colors.grey),
         ),
         WheelPicker.integer(

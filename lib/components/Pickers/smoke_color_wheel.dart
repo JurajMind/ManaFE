@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 class SmokeColorWheel extends StatefulWidget {
   final HSVColor color;
   final ValueChanged<HSVColor> onColorChanged;
-  const SmokeColorWheel({Key key, this.color, this.onColorChanged})
+  final ValueChanged<HSVColor> onColorChanging;
+  const SmokeColorWheel(
+      {Key key, this.color, this.onColorChanged, this.onColorChanging})
       : super(key: key);
 
   @override
@@ -26,7 +28,7 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
     debugPrint('color ${widget.color}');
     selectedColor =
         widget.color != null ? widget.color : HSVColor.fromColor(Colors.white);
-    super.initState();
+    super.initState(); 
   }
 
   @override
@@ -36,7 +38,8 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
           ? widget.color
           : HSVColor.fromColor(Colors.white);
       Size size = MediaQuery.of(context).size;
-      position = ColorHelper.colorToPosition(selectedColor, size, position);
+      if(position == null)
+        position = ColorHelper.colorToPosition(selectedColor, size, position);
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -45,54 +48,46 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double width = MediaQuery.of(context).size.width;
-    return SingleChildScrollView(
-      child: Container(
-        height: 400,
-        child: Stack(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(10.0),
-              child: GestureDetector(
-                onTapDown: (d) => print('tap'),
-                onTapUp: (TapUpDetails details) {
-                  RenderBox getBox = context.findRenderObject();
-                  Offset localOffset =
-                      getBox.globalToLocal(details.globalPosition);
-                  colorUpdate(localOffset, size);
+    return Stack(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.all(10.0),
+          child: GestureDetector(           
+            onTapDown: (TapDownDetails details) {
+              RenderBox getBox = context.findRenderObject();
+              Offset localOffset = getBox.globalToLocal(details.globalPosition);
+              colorUpdate(localOffset, size);
 
-                  widget.onColorChanged(selectedColor);
-                },
-                onPanUpdate: (DragUpdateDetails details) {
-                  RenderBox getBox = context.findRenderObject();
-                  Offset localOffset =
-                      getBox.globalToLocal(details.globalPosition);
-                  colorUpdate(localOffset, size);
-                },
-                onPanEnd: (DragEndDetails details) {
-                  widget.onColorChanged(selectedColor);
-                },
-                child: RepaintBoundary(
-                  child: Transform.rotate(
-                    angle: 0.2,
-                    child: new Container(
-                      decoration: new BoxDecoration(
-                          image: new DecorationImage(
-                              image: AssetImage("images/color_wheel.png"),
-                              fit: BoxFit.fill),
-                          borderRadius:
-                              new BorderRadius.all(Radius.circular(width / 2)),
-                          border: new Border.all(
-                              color: const Color.fromRGBO(221, 221, 221, 1.0),
-                              width: 2.5)),
-                    ),
-                  ),
+              widget.onColorChanged(selectedColor);
+            },
+            onPanUpdate: (DragUpdateDetails details) {
+              RenderBox getBox = context.findRenderObject();
+              Offset localOffset = getBox.globalToLocal(details.globalPosition);
+              colorUpdate(localOffset, size);
+            },
+            onPanEnd: (DragEndDetails details) {
+              widget.onColorChanged(selectedColor);
+            },
+            child: RepaintBoundary(
+              child: Transform.rotate(
+                angle: 0.2,
+                child: new Container(
+                  decoration: new BoxDecoration(
+                      image: new DecorationImage(
+                          image: AssetImage("images/color_wheel.png"),
+                          fit: BoxFit.fill),
+                      borderRadius:
+                          new BorderRadius.all(Radius.circular(width / 2)),
+                      border: new Border.all(
+                          color: const Color.fromRGBO(221, 221, 221, 1.0),
+                          width: 2.5)),
                 ),
               ),
             ),
-            new ColorCircle(globalOffset: position, color: selectedColor),
-          ],
+          ),
         ),
-      ),
+        new ColorCircle(globalOffset: position, color: selectedColor),
+      ],
     );
   }
 
@@ -102,10 +97,12 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
     var radius = ColorHelper.distance(middle) / (size.width / 2);
     print(radius);
     if (radius > 1) return;
+
     setState(() {
       position = localOffset;
       selectedColor = ColorHelper.position2color(middle, size.width / 2);
     });
+    if (widget.onColorChanging != null) widget.onColorChanging(selectedColor);
   }
 }
 
@@ -122,16 +119,18 @@ class ColorCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: this.globalOffset?.dy ?? 0.0 - 20,
-      left: this.globalOffset?.dx ?? 0.0 - 20,
-      child: Container(
-        width: 50.0,
-        height: 50.0,
-        decoration: BoxDecoration(
-            color: color.toColor(),
-            borderRadius: new BorderRadius.all(Radius.circular(25.0)),
-            border: new Border.all(
-                color: const Color.fromRGBO(221, 221, 221, 1.0), width: 4.0)),
+      top: this.globalOffset?.dy ?? -30.0,
+      left: this.globalOffset?.dx ?? -30.0,
+      child: IgnorePointer(
+        child: Container(
+          width: 60.0,
+          height: 60.0,
+          decoration: BoxDecoration(
+              color: color.toColor(),
+              borderRadius: new BorderRadius.all(Radius.circular(25.0)),
+              border: new Border.all(
+                  color: const Color.fromRGBO(221, 221, 221, 1.0), width: 4.0)),
+        ),
       ),
     );
   }
