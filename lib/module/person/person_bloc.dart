@@ -71,11 +71,12 @@ class PersonBloc extends SignalBloc {
     var newCodes = smokeSessionsCodes.value;
 
     var collection = new Collection(newCodes);
-    var match = collection.where$1((predicate,index) => predicate.sessionId == smokeSessionId.sessionId);
+    var match = collection.where$1(
+        (predicate, index) => predicate.sessionId == smokeSessionId.sessionId);
 
-  if(match.count() > 0){
-    return;
-  }
+    if (match.count() > 0) {
+      return;
+    }
     newCodes.insert(0, smokeSessionId);
     newCodes = newCodes.toSet().toList();
     this.smokeSessionsCodes.add(newCodes);
@@ -95,8 +96,12 @@ class PersonBloc extends SignalBloc {
     var init = await App.http.getPersonInitData();
     var infoTask = App.http.getPersonInfo();
     devices.add(init.devices);
-    smokeSessions.add(init.activeSmokeSessions);
-    smokeSessionsCodes.add(init.activeSmokeSessions);
+    var sessions = new Collection(init.activeSmokeSessions);
+    sessions
+        .orderBy((s) => s.device.isOnline ? 0 : 1)
+        .thenBy((s) => s.device.name);
+    smokeSessions.add(sessions.toList());
+    smokeSessionsCodes.add(sessions.toList());
     myReservations.add(init.activeReservations);
     var info = await infoTask;
     this.info.add(info);
@@ -112,9 +117,12 @@ class PersonBloc extends SignalBloc {
   }
 
   loadSessions() async {
-    var sessions = await App.http.getPersonSessions();
-    this.smokeSessions.add(sessions);
-    smokeSessionsCodes.add(sessions);
+    var activeSmokeSessions = await App.http.getPersonSessions();
+    var sessions = new Collection(activeSmokeSessions);
+    sessions.orderBy((s) => s.device.isOnline ? 0 : 1);
+
+    this.smokeSessions.add(sessions.toList());
+    smokeSessionsCodes.add(sessions.toList());
   }
 
   void handleDeviceOnline(List<dynamic> incomingData) {

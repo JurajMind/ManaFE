@@ -32,34 +32,17 @@ class _SmokeSessionCarouselState extends State<SmokeSessionCarousel> {
         child: StreamBuilder<List<SmokeSessionSimpleDto>>(
       initialData: null,
       stream: personBloc.smokeSessionsCodes,
-      builder: (context, snapshot) => PageView.builder(
+      builder: (context, snapshot) => ListView.builder(
+          scrollDirection: Axis.horizontal,
           controller: controller,
           itemCount: snapshot.data?.length ?? 0,
           itemBuilder: (context, index) {
             var data = snapshot.data == null ? null : snapshot.data[index];
-            return AnimatedBuilder(
-              animation: controller,
-              builder: (context, child) {
-                double value = 1.0;
-                if (controller.position.haveDimensions) {
-                  value = controller.page - index;
-                  value = (1 - (value.abs() * 0.3)).clamp(0.0, 1.0);
-                }
-
-                return new Center(
-                  child: new SizedBox(
-                    height: Curves.easeOut.transform(value) * 200,
-                    width: Curves.easeOut.transform(value) * 400,
-                    child: child,
-                  ),
-                );
-              },
-              child: data != null
-                  ? new SmokeSessionCarouselItem(
-                      smokeSession: data,
-                    )
-                  : Placeholder(),
-            );
+            return data != null
+                ? new SmokeSessionCarouselItem(
+                    smokeSession: data,
+                  )
+                : Placeholder();
           }),
     ));
   }
@@ -75,6 +58,7 @@ class SmokeSessionCarouselItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var online = smokeSession.device.isOnline;
     return Hero(
       tag: "${smokeSession.sessionId}_session",
       child: Padding(
@@ -85,6 +69,8 @@ class SmokeSessionCarouselItem extends StatelessWidget {
                 return new SmokeSessionPage(sessionId: smokeSession.sessionId);
               })),
           child: Container(
+            width: 250,
+            height: 100,
             decoration: BoxDecoration(
               color: Colors.black,
               borderRadius: BorderRadius.circular(20.0),
@@ -96,7 +82,10 @@ class SmokeSessionCarouselItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(smokeSession.device.name,
-                    style: Theme.of(context).textTheme.display1),
+                    style: Theme.of(context)
+                        .textTheme
+                        .display1
+                        .apply(color: online ? Colors.green : Colors.white)),
                 Text(smokeSession.sessionId),
               ],
             )),

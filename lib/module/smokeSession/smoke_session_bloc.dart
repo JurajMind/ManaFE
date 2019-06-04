@@ -83,6 +83,10 @@ class SmokeSessionBloc {
   StreamController<Flushbar<Map<String, dynamic>>> notifications =
       new StreamController<Flushbar<Map<String, dynamic>>>.broadcast();
 
+  pauseSession() {
+    smokeState.add(0);
+  }
+
   setColor(Color color) async {
     sessionColor.add([color, ColorHelper.getOpositeColor(color)]);
     await App.http.changeColor(this.hookahCode, new HSVColor.fromColor(color));
