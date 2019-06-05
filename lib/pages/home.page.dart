@@ -23,6 +23,7 @@ import 'package:flutter/services.dart';
 
 import 'SmokeSession/Components/gradiend_color_wheel_rotate.dart';
 import 'SmokeSession/smoke_session_page.dart';
+import 'Statistic/Detail/smoke_session_detail_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -330,7 +331,7 @@ class TabNavigator extends StatelessWidget {
       '/': (context) => this.tabItem,
       '/smokeSesion': (context) {
         return new SmokeSessionPage();
-      }
+      },
     };
   }
 

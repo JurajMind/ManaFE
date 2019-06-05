@@ -477,6 +477,14 @@ class ApiClient {
         .then((data) => FinishedSessionDataDto.fromJson(data.data));
   }
 
+  Future<int> endSession(String id) async {
+     var url = Uri.https(
+        baseUrl, '/api/SmokeSession/$id/End');
+    return await _dio
+        .postUri(url)
+        .then((data) => data.data);
+  }
+
   Future<bool> changeMixName(int id, String name) async {
     var url =
         Uri.https(baseUrl, '/api/Mixology/RenameMix/$id', {'newName': name});

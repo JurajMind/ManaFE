@@ -3,6 +3,8 @@ part of openapi.api;
 class SmokeSessionSimpleDto {
   
   int id = null;
+
+  bool live = null;
   
   String sessionId = null;
   
@@ -25,6 +27,7 @@ class SmokeSessionSimpleDto {
   SmokeSessionSimpleDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
     id = json['Id'];
+    live = json['Live'];
     sessionId = json['SessionId'];
     device = new DeviceSimpleDto.fromJson(json['Device']);
     statistic = new DynamicSmokeStatisticRawDto.fromJson(json['Statistic']);

@@ -161,6 +161,10 @@ class SmokeSessionBloc {
     }
   }
 
+  Future<int> endSession() async {
+    return await App.http.endSession(this.activeSessionId);
+  }
+
   Future _joinSession(String sessionCode) async {
     List<String> params = new List<String>();
     params.add(sessionCode);

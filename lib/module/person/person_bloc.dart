@@ -119,10 +119,10 @@ class PersonBloc extends SignalBloc {
   loadSessions() async {
     var activeSmokeSessions = await App.http.getPersonSessions();
     var sessions = new Collection(activeSmokeSessions);
-    sessions.orderBy((s) => s.device.isOnline ? 0 : 1);
+    sessions.orderBy((s) => s.device.isOnline ? 0 : 1,).thenBy((s) => s.device.name).reverse();
 
     this.smokeSessions.add(sessions.toList());
-    smokeSessionsCodes.add(sessions.toList());
+    this.smokeSessionsCodes.add(sessions.toList());
   }
 
   void handleDeviceOnline(List<dynamic> incomingData) {
