@@ -64,16 +64,17 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
     dataProvider = DataProvider.getData(context);
     super.didChangeDependencies();
 
-        SystemChannels.lifecycle.setMessageHandler((msg) {
-      debugPrint('SystemChannels> $msg');    
+    SystemChannels.lifecycle.setMessageHandler((msg) {
+      debugPrint('SystemChannels> $msg');
       if (msg == AppLifecycleState.resumed.toString()) {
-          dataProvider.smokeSessionBloc.loadSessionData();
+        dataProvider.smokeSessionBloc.loadSessionData();
       }
     });
   }
 
   @override
   dispose() {
+    subscription.cancel();
     super.dispose();
   }
 
@@ -357,10 +358,9 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                   onTap: () => _restartDialog(code),
                 ),
                 new ListTile(
-                  leading: new Icon(FontAwesomeIcons.powerOff),
-                  title: new Text('End session'),
-                  onTap: () => _endDialog(context)
-                ),
+                    leading: new Icon(FontAwesomeIcons.powerOff),
+                    title: new Text('End session'),
+                    onTap: () => _endDialog(context)),
               ],
             ),
           );
@@ -368,79 +368,78 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
   }
 
   void _endDialog(BuildContext context) {
-      // flutter defined function
-      showDialog<bool>(
-        context: context,
-        builder: (BuildContext context) {
-          // return object of type Dialog
-          return AlertDialog(
-            title: new Text("End sessopn?"),
-            content: new Text("Do you want end this session?"),
-            actions: <Widget>[
-              new FlatButton(
-                child: new Text(
-                  "End",
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
+    // flutter defined function
+    showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("End sessopn?"),
+          content: new Text("Do you want end this session?"),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text(
+                "End",
               ),
-              // usually buttons at the bottom of the dialog
-              new FlatButton(
-                child: new Text("Close"),
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
-              )
-            ],
-          );
-        },
-      ).then((value) {
-        if (value) {
-          var bloc = DataProvider.getData(context).smokeSessionBloc;
-          bloc.endSession().then((value) {
-            Navigator.of(context).pop();
-          });
-        }
-      });
-    }
-  
-    void _restartDialog(String code) {
-      // flutter defined function
-      showDialog<bool>(
-        context: context,
-        builder: (BuildContext context) {
-          // return object of type Dialog
-          return AlertDialog(
-            title: new Text("Restart device?"),
-            content: new Text("Do you want restart this device ?"),
-            actions: <Widget>[
-              new FlatButton(
-                child: new Text(
-                  "Restart",
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-              ),
-              // usually buttons at the bottom of the dialog
-              new FlatButton(
-                child: new Text("Close"),
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
-              )
-            ],
-          );
-        },
-      ).then((value) {
-        if (value) {
-          App.http.restartDevice(code);
-        }
-      });
-    }
-  }  
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            )
+          ],
+        );
+      },
+    ).then((value) {
+      if (value) {
+        var bloc = DataProvider.getData(context).smokeSessionBloc;
+        bloc.endSession().then((value) {
+          Navigator.of(context).pop();
+        });
+      }
+    });
+  }
 
+  void _restartDialog(String code) {
+    // flutter defined function
+    showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Restart device?"),
+          content: new Text("Do you want restart this device ?"),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text(
+                "Restart",
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            )
+          ],
+        );
+      },
+    ).then((value) {
+      if (value) {
+        App.http.restartDevice(code);
+      }
+    });
+  }
+}
 
 class ColorSessionGimick extends StatefulWidget {
   const ColorSessionGimick({
@@ -459,11 +458,12 @@ class _ColorSessionGimickState extends State<ColorSessionGimick>
   @override
   dispose() {
     _controller.dispose();
+    subscription.cancel();
     super.dispose();
   }
 
   AnimationController _controller;
-    StreamSubscription<int> subscription;
+  StreamSubscription<int> subscription;
   Animatable<Color> background = TweenSequence<Color>(
     [
       TweenSequenceItem(
@@ -489,9 +489,23 @@ class _ColorSessionGimickState extends State<ColorSessionGimick>
       ),
       TweenSequenceItem(
         weight: 1.0,
-     tween: ColorTween(
-          begin: Colors.red,
+        tween: ColorTween(
+          begin: Colors.pink,
+          end: Colors.blue,
+        ),
+      ),
+      TweenSequenceItem(
+        weight: 1.0,
+        tween: ColorTween(
+          begin: Colors.blue,
           end: Colors.green,
+        ),
+      ),
+      TweenSequenceItem(
+        weight: 1.0,
+        tween: ColorTween(
+          begin: Colors.green,
+          end: Colors.red,
         ),
       ),
     ],
@@ -501,12 +515,12 @@ class _ColorSessionGimickState extends State<ColorSessionGimick>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration:  Duration(seconds: 50),
+      duration: Duration(seconds: 50),
       vsync: this,
     )..repeat();
   }
 
-    @override
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     var dataProvider = DataProvider.getData(context);
@@ -514,14 +528,12 @@ class _ColorSessionGimickState extends State<ColorSessionGimick>
     subscription =
         dataProvider.smokeSessionBloc.smokeStateBroadcast.listen((data) {
       if (data == 1) {
-        setState(() {
-          if (mounted) _controller.duration =  Duration(seconds: 1);         
-        });
+        _controller.duration = Duration(seconds: 10);
+        _controller.repeat();
       }
       if (data == 0) {
-        setState(() {
-          if (mounted) _controller.duration =  Duration(seconds: 50);
-        });
+        _controller.duration = Duration(seconds: 50);
+        _controller.repeat();
       }
     });
   }

@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
       setState(() {
         this._loading = true;
       });
-      if (await _auth.authorize(data.email, data.password)) {
+      if (await _auth.authorize(data.email, data.password) != null) {
         AppWidget.restartApp(context);
       } else {
         final snackBar = SnackBar(content: Text('Wrong email or password'));
@@ -105,19 +105,19 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                         obscureText: !showPassword,
                         focusNode: passwordFocusNode,
                         decoration: new InputDecoration(
-                                            suffixIcon: IconButton(
-                    icon: Icon(
-                      showPassword
-                          ? FontAwesomeIcons.eyeSlash
-                          : FontAwesomeIcons.eye,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        showPassword = !showPassword;
-                      });
-                    },
-                  ),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                showPassword
+                                    ? FontAwesomeIcons.eyeSlash
+                                    : FontAwesomeIcons.eye,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  showPassword = !showPassword;
+                                });
+                              },
+                            ),
                             labelStyle: Theme.of(context).textTheme.display1,
                             enabledBorder: new UnderlineInputBorder(
                                 borderSide:
@@ -170,7 +170,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                       width: screenSize.width,
                       child: new FlatButton(
                         child: new Text(
-                          'Forgot password?',style: Theme.of(context).textTheme.display2,
+                          'Forgot password?',
+                          style: Theme.of(context).textTheme.display2,
                         ),
                         onPressed: () {
                           navigate(context, 'auth/register');

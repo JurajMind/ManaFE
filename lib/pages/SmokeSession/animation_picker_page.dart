@@ -12,12 +12,14 @@ class _AnimationPickerPageState extends State<AnimationPickerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select animations'),
+        title: Text(
+          'SELECT ANIMATION',
+        ),
         centerTitle: true,
         backgroundColor: Colors.black,
       ),
       body: Container(
-        child:    AnimationsPicker(),
+        child: AnimationsPicker(),
       ),
     );
   }

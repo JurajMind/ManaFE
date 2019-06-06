@@ -28,14 +28,14 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
     debugPrint('color ${widget.color}');
     selectedColor =
         widget.color != null ? widget.color : HSVColor.fromColor(Colors.white);
-    super.initState(); 
+    super.initState();
   }
 
   @override
-  void didChangeDependencies(){
-      Size size = MediaQuery.of(context).size;
-      if(position == null)
-        position = ColorHelper.colorToPosition(selectedColor, size, position);
+  void didChangeDependencies() {
+    Size size = MediaQuery.of(context).size;
+    if (position == null)
+      position = ColorHelper.colorToPosition(selectedColor, size, position);
     super.didChangeDependencies();
   }
 
@@ -46,7 +46,7 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
       selectedColor = widget.color != null
           ? widget.color
           : HSVColor.fromColor(Colors.white);
-        position = ColorHelper.colorToPosition(selectedColor, size, position);
+      position = ColorHelper.colorToPosition(selectedColor, size, position);
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -59,7 +59,7 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.all(10.0),
-          child: GestureDetector(           
+          child: GestureDetector(
             onTapDown: (TapDownDetails details) {
               RenderBox getBox = context.findRenderObject();
               Offset localOffset = getBox.globalToLocal(details.globalPosition);
@@ -101,7 +101,8 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
   void colorUpdate(Offset localOffset, Size size) {
     var middle = ColorHelper.positionToCenter(
         localOffset, Offset(size.width / 2, size.width / 2));
-    var radius = ColorHelper.distance(middle) / (size.width / 2);
+    var radius = ColorHelper.distance(middle) / (size.width / 2) * 1.10;
+
     print(radius);
     if (radius > 1) return;
 
@@ -126,10 +127,10 @@ class ColorCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var top = this.globalOffset?.dy ?? -30.0;
-    var left  =this.globalOffset?.dx ?? -30.0;
+    var left = this.globalOffset?.dx ?? -30.0;
     return Positioned(
-      top: top -30,
-      left: left -30,
+      top: top - 30,
+      left: left - 30,
       child: IgnorePointer(
         child: Container(
           width: 60.0,

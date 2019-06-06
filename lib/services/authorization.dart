@@ -21,7 +21,7 @@ class Authorize {
 
   Authorize._internal();
 
-  Future<bool> authorize(String userName, String password) async {
+  Future<String> authorize(String userName, String password) async {
     final response = await http.post(
       url,
       body: {
@@ -33,11 +33,15 @@ class Authorize {
     );
 
     if (response.statusCode != 200) {
-      return false;
+      return null;
     }
 
     final responseJson = json.decode(response.body);
-    return await writeToken(responseJson) != null;
+    var sucess = await writeToken(responseJson);
+    if (sucess != null) {
+      await _storage.write(key: 'password', value: password);
+    }
+    return sucess;
   }
 
   Future<String> getToken() async {
@@ -69,6 +73,7 @@ class Authorize {
     await _storage.delete(key: 'accessToken');
     await _storage.delete(key: 'refreshToken');
     await _storage.delete(key: 'userName');
+    await _storage.delete(key: 'password');
     navigatorKey.currentState.pushReplacementNamed('auth/home');
     _token = null;
   }
@@ -93,6 +98,11 @@ class Authorize {
     );
     final responseJson = json.decode(response.body);
     if (responseJson['error'] != null) {
+      var password = await _storage.read(key: 'password');
+      var userName = await _storage.read(key: 'userName');
+      var reAuthorize = await this.authorize(userName, password);
+      if (reAuthorize != null) return reAuthorize;
+
       await _storage.delete(key: 'refreshToken');
       await _storage.delete(key: 'accessToken');
       AppWidget.restartApp(scaffoldKey.currentContext);

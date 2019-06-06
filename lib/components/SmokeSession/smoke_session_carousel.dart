@@ -10,7 +10,8 @@ class SmokeSessionCarousel extends StatefulWidget {
 
 class _SmokeSessionCarouselState extends State<SmokeSessionCarousel> {
   PageController controller;
-
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      new GlobalKey<RefreshIndicatorState>();
   @override
   initState() {
     super.initState();
@@ -30,21 +31,27 @@ class _SmokeSessionCarouselState extends State<SmokeSessionCarousel> {
 
     return new Center(
         child: StreamBuilder<List<SmokeSessionSimpleDto>>(
-      initialData: null,
-      stream: personBloc.smokeSessionsCodes,
-      builder: (context, snapshot) => ListView.builder(
-          scrollDirection: Axis.horizontal,
-          controller: controller,
-          itemCount: snapshot.data?.length ?? 0,
-          itemBuilder: (context, index) {
-            var data = snapshot.data == null ? null : snapshot.data[index];
-            return data != null
-                ? new SmokeSessionCarouselItem(
-                    smokeSession: data,
-                  )
-                : Placeholder();
-          }),
-    ));
+            initialData: null,
+            stream: personBloc.smokeSessionsCodes,
+            builder: (context, snapshot) {
+              return RefreshIndicator(
+                key: _refreshIndicatorKey,
+                onRefresh: () => personBloc.loadSessions(),
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    controller: controller,
+                    itemCount: snapshot.data?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      var data =
+                          snapshot.data == null ? null : snapshot.data[index];
+                      return data != null
+                          ? new SmokeSessionCarouselItem(
+                              smokeSession: data,
+                            )
+                          : Placeholder();
+                    }),
+              );
+            }));
   }
 }
 

@@ -1,6 +1,5 @@
 import 'package:app/app/app.dart';
 import 'package:app/models/SignalR/device_online.dart';
-import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/module/signal_bloc.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/services/signal_r.dart';
@@ -116,13 +115,19 @@ class PersonBloc extends SignalBloc {
     } catch (e) {}
   }
 
-  loadSessions() async {
+  Future loadSessions() async {
     var activeSmokeSessions = await App.http.getPersonSessions();
     var sessions = new Collection(activeSmokeSessions);
-    sessions.orderBy((s) => s.device.isOnline ? 0 : 1,).thenBy((s) => s.device.name).reverse();
+    sessions
+        .orderBy(
+          (s) => s.device.isOnline ? 0 : 1,
+        )
+        .thenBy((s) => s.device.name)
+        .reverse();
 
     this.smokeSessions.add(sessions.toList());
     this.smokeSessionsCodes.add(sessions.toList());
+    return;
   }
 
   void handleDeviceOnline(List<dynamic> incomingData) {

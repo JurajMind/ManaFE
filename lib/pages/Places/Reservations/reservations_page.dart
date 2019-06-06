@@ -19,7 +19,8 @@ class _ReservationsPageState extends State<ReservationsPage> {
   DateTime _selectedDay;
   Map<DateTime, List> _events;
   int reservationFilter = -1;
-
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      new GlobalKey<RefreshIndicatorState>();
   @override
   void initState() {
     super.initState();
@@ -34,10 +35,10 @@ class _ReservationsPageState extends State<ReservationsPage> {
     }
   }
 
-  void loadReservation(DateTime date) {
+  Future loadReservation(DateTime date) {
     _fromDate = DateTime(date.year, date.month, 1);
     _toDate = DateTime(date.year, date.month + 1, 0);
-    reservationBloc.loadReservations(_fromDate, _toDate);
+    return reservationBloc.loadReservations(_fromDate, _toDate);
   }
 
   @override
@@ -72,12 +73,17 @@ class _ReservationsPageState extends State<ReservationsPage> {
                 ),
               ));
               childrens.addAll(_buildEventList(filteredReservations));
-              return Stack(
-                children: <Widget>[
-                  ListView(
-                    children: childrens,
-                  ),
-                ],
+              return RefreshIndicator(
+                key: _refreshIndicatorKey,
+                onRefresh: () =>
+                    loadReservation(_selectedDay ?? DateTime.now()),
+                child: Stack(
+                  children: <Widget>[
+                    ListView(
+                      children: childrens,
+                    ),
+                  ],
+                ),
               );
             }),
       ),

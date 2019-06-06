@@ -1,10 +1,10 @@
 import 'package:app/components/Pickers/smoke_color_wheel.dart';
+import 'package:app/const/theme.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 
 class ColorPickerPage extends StatefulWidget {
   final Color initColor;
@@ -17,83 +17,86 @@ class ColorPickerPage extends StatefulWidget {
 class _ColorPickerPageState extends State<ColorPickerPage> {
   Color color = Colors.white;
   @override
-  initState(){
-    if(widget.initColor != null)
-    color = widget.initColor;
+  initState() {
+    if (widget.initColor != null) color = widget.initColor;
 
     super.initState();
   }
+
   Color _tempMainColor;
   @override
   Widget build(BuildContext context) {
     var smokeSessionBloc = DataProvider.getData(context).smokeSessionBloc;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Select color',style: Theme.of(context).textTheme.title,),
-        centerTitle: true,
-        backgroundColor: Colors.black,
-      ),
-      body: Container(
-        child:    Column(
+        appBar: AppBar(
+          title: Text(
+            'SELECT COLOR',
+            style: Theme.of(context).textTheme.title,
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.black,
+        ),
+        body: Container(
+            child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(top: 10,bottom: 8),
+              padding: const EdgeInsets.only(top: 10, bottom: 8),
               child: InkWell(
-                onTap: () => _openColorPicker(context),
-                
-                child: Container(
-                 decoration: BoxDecoration(
-                   color: color,
-                   shape: BoxShape.circle,
-                 ),
-                 width: 80,
-                 height: 80,
-                 child: Icon(FontAwesomeIcons.circleNotch,size: 60,),
-                )
-              ),
+                  onTap: () => _openColorPicker(context),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: color,
+                      shape: BoxShape.circle,
+                    ),
+                    width: 80,
+                    height: 80,
+                    child: Icon(
+                      FontAwesomeIcons.circleNotch,
+                      size: 60,
+                    ),
+                  )),
             ),
             Center(
               child: Container(
                 height: MediaQuery.of(context).size.width,
                 child: StreamBuilder<StandSettings>(
-                                    stream: smokeSessionBloc.standSettings,
-                                    builder: (context, snapshot) {
-                                      if (snapshot.data == null) {
-                                        return Container();
-                                      }
-                                      return SmokeColorWheel(
-                                        onColorChanging: (color) {
-                                            setState((){
-                                              this.color= color.toColor();
-                                            });
-                                        },
-                                        onColorChanged: (color) {
-                                          smokeSessionBloc
-                                              .setColor(color.toColor());
-                                        },
-                                        color: snapshot?.data?.idle?.color,
-                                      );
-                                    }),
+                    stream: smokeSessionBloc.standSettings,
+                    builder: (context, snapshot) {
+                      if (snapshot.data == null) {
+                        return Container();
+                      }
+                      return SmokeColorWheel(
+                        onColorChanging: (color) {
+                          setState(() {
+                            this.color = color.toColor();
+                          });
+                        },
+                        onColorChanged: (color) {
+                          smokeSessionBloc.setColor(color.toColor());
+                        },
+                        color: snapshot?.data?.idle?.color,
+                      );
+                    }),
               ),
             ),
           ],
-        ))
-      );
-    
+        )));
   }
 
-    void _openColorPicker(BuildContext context) async {
+  void _openColorPicker(BuildContext context) async {
     _openDialog(
       context,
       "Color picker",
       MaterialColorPicker(
-        selectedColor: Colors.red,
-        onColorChange: (pickerColor) => setState(() => _tempMainColor = pickerColor),
+        selectedColor: this.color,
+        allowShades: false,
+        onColorChange: (pickerColor) =>
+            setState(() => _tempMainColor = pickerColor),
       ),
     );
   }
 
-    void _openDialog(BuildContext context,String title, Widget content) {
+  void _openDialog(BuildContext context, String title, Widget content) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -111,13 +114,11 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
               child: Text('SUBMIT'),
               textColor: _tempMainColor,
               onPressed: () {
-               
-              setState(() => color = _tempMainColor);
+                setState(() => color = _tempMainColor);
                 var bloc = DataProvider.getData(context).smokeSessionBloc;
-                 bloc.setColor(_tempMainColor);
-                                        
-                 Navigator.of(context).pop();
+                bloc.setColor(_tempMainColor);
 
+                Navigator.of(context).pop();
               },
             ),
           ],
