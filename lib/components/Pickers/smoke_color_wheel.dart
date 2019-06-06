@@ -32,13 +32,20 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
   }
 
   @override
+  void didChangeDependencies(){
+      Size size = MediaQuery.of(context).size;
+      if(position == null)
+        position = ColorHelper.colorToPosition(selectedColor, size, position);
+    super.didChangeDependencies();
+  }
+
+  @override
   void didUpdateWidget(SmokeColorWheel oldWidget) {
     if (oldWidget.color != widget.color) {
+      Size size = MediaQuery.of(context).size;
       selectedColor = widget.color != null
           ? widget.color
           : HSVColor.fromColor(Colors.white);
-      Size size = MediaQuery.of(context).size;
-      if(position == null)
         position = ColorHelper.colorToPosition(selectedColor, size, position);
     }
     super.didUpdateWidget(oldWidget);
@@ -118,9 +125,11 @@ class ColorCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var top = this.globalOffset?.dy ?? -30.0;
+    var left  =this.globalOffset?.dx ?? -30.0;
     return Positioned(
-      top: this.globalOffset?.dy ?? -30.0,
-      left: this.globalOffset?.dx ?? -30.0,
+      top: top -30,
+      left: left -30,
       child: IgnorePointer(
         child: Container(
           width: 60.0,

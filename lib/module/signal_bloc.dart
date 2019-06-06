@@ -5,11 +5,13 @@ import 'package:rxdart/rxdart.dart';
 class SignalBloc {
   final SignalR _signalR = new SignalR();
   BehaviorSubject<DateTime> lastPingStream;
+  BehaviorSubject<SignalStatus> connectionStatus;
   void connect() {
     _signalR.connect().then((value) {
       _signalR.clientCalls.listen((onData) {
         _proceddCalls(onData);
         lastPingStream = _signalR.lastPingStream;
+        connectionStatus = _signalR.connectionStatus;
       });
     });
   }

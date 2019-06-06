@@ -45,11 +45,11 @@ class SessionControllRow extends StatelessWidget {
                 IconButton(
                   color: color,
                   iconSize: 50,
-                  icon: Icon(FontAwesomeIcons.marker),
+                  icon: Icon(Icons.color_lens),
                   onPressed: () => Navigator.of(context).push(new MaterialPageRoute(
                       fullscreenDialog: true,
                       builder: (BuildContext context) {
-                        return new ColorPickerPage();
+                        return new ColorPickerPage(initColor: snapshot?.data?.idle?.color?.toColor(),);
                       })),
                 ),
                     StreamBuilder<StandSettings>(

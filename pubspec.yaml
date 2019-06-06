@@ -56,6 +56,8 @@ dependencies:
   date_range_picker: ^1.0.5
   fast_qr_reader_view:
     git: https://github.com/facundomedica/fast_qr_reader_view
+  flutter_material_color_picker: ^1.0.0
+
 
 flutter_icons:
   android: true

@@ -4,10 +4,8 @@ import 'package:app/Helpers/date_utils.dart';
 import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Common/bg_painter.dart';
-import 'package:app/components/Common/circle_painter.dart';
 import 'package:app/components/Common/since_timer.dart';
 import 'package:app/components/snap_scroll.dart';
-import 'package:app/const/theme.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/SmokeSession/Components/pipe_accesory_widget.dart';
@@ -16,10 +14,10 @@ import 'package:app/pages/SmokeSession/Experimental/experimental_page.dart';
 import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
 
 import 'package:app/pages/SmokeSession/tobacco_widget.dart';
-import 'package:app/pages/Statistic/Detail/smoke_session_detail_page.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
 import 'package:openapi/api.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:share/share.dart';
@@ -65,6 +63,13 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
   void didChangeDependencies() {
     dataProvider = DataProvider.getData(context);
     super.didChangeDependencies();
+
+        SystemChannels.lifecycle.setMessageHandler((msg) {
+      debugPrint('SystemChannels> $msg');    
+      if (msg == AppLifecycleState.resumed.toString()) {
+          dataProvider.smokeSessionBloc.loadSessionData();
+      }
+    });
   }
 
   @override

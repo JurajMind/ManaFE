@@ -53,30 +53,34 @@ class SignalR {
     if (this.connection && !force) {
       return;
     }
-    var negotiateUrl =
-        url + '/negotiate?clientProtocol=1.5&connectionData=$conectionData';
-    var response = await http.get(negotiateUrl);
-    connection = false;
-    final responseJson = json.decode(response.body);
-
-    var negotiateResponse = NegotiateResponse.fromJson(responseJson);
-    connectionInfo = negotiateResponse;
+    NegotiateResponse negotiateResponse = await getNegotiation();
 
     var chanelUlr =
         "wss://$host/signalr/connect?transport=webSockets&clientProtocol=${negotiateResponse.ProtocolVersion}&connectionToken=${Uri.encodeComponent(negotiateResponse.ConnectionToken)}&connectionData=$conectionData";
 
     print(chanelUlr);
-    var oneSec = Duration(seconds: connectionInfo.KeepAliveTimeout.toInt());
-    connectionTimer = new Timer.periodic(oneSec, (Timer t) => checkConection());
-    handleConnection(chanelUlr);
+    handleConnection(chanelUlr, true);
 
     await startConnection(negotiateResponse).then((_) {
       _completer.complete();
       connectionStatus.add(SignalStatus.running);
     });
+      
   }
 
-  void handleConnection(String url) {
+  Future<NegotiateResponse> getNegotiation() async {
+    var negotiateUrl =
+        url + '/negotiate?clientProtocol=1.5&connectionData=$conectionData';
+    var response = await http.get(negotiateUrl);
+    connection = false;
+    final responseJson = json.decode(response.body);
+    
+    var negotiateResponse = NegotiateResponse.fromJson(responseJson);
+    connectionInfo = negotiateResponse;
+    return negotiateResponse;
+  }
+
+  void handleConnection(String url, bool connection) {
     try {
       _channel = new IOWebSocketChannel.connect(url);
       _channel.stream.listen((message) async {
@@ -87,6 +91,12 @@ class SignalR {
         }
         var serverCall = ClientCall.fromJson(json.decode(message));
         proceedCall(serverCall);
+      },
+      onError: (error){
+        print(error);
+        if(connection){
+          connectionStatus.add(SignalStatus.error);
+        }
       });
 
       new Future.delayed(new Duration(seconds: 5), () {
@@ -128,7 +138,6 @@ class SignalR {
   }
 
   Future startConnection(NegotiateResponse negotiateResponse) async {
-    if (connection) return;
     connection = true;
     var startUrl = url +
         '/start?transport=webSockets&clientProtocol=1.5&connectionToken=${Uri.encodeComponent(negotiateResponse.ConnectionToken)}&connectionData=$conectionData';
@@ -136,7 +145,7 @@ class SignalR {
 
     var connect = await http.get(startUrl);
 
-    print(connect.body);
+    print('Start connection' + connect.body);
   }
 
   Future restartConnection() async {
@@ -147,7 +156,7 @@ class SignalR {
 
     print(chanelUlr);
 
-    handleConnection(chanelUlr);
+    handleConnection(chanelUlr,false);
   }
 
   callServerFunction(ServerCallParam param) {
@@ -158,6 +167,11 @@ class SignalR {
 
   void proceedCall(ClientCall serverCall) {
     lastMsgId = serverCall.MessageId;
+    if(serverCall.Init == 1){
+        connectionStatus.add(SignalStatus.running);
+          var oneSec = Duration(seconds: connectionInfo.KeepAliveTimeout.toInt());
+       connectionTimer = new Timer.periodic(oneSec, (Timer t) => checkConection());
+    }
     if (serverCall.Data != null) clientCalls.add(serverCall);
   }
 }
