@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app/app/app.dart';
 import 'package:app/models/SignalR/device_online.dart';
 import 'package:app/module/signal_bloc.dart';
@@ -92,7 +94,10 @@ class PersonBloc extends SignalBloc {
   loadInitData({bool reload = false}) async {
     if (_loadedInit && !reload) return;
     _loadedInit = true;
+    loadInitDataFromCache();
     var init = await App.http.getPersonInitData();
+    var db = await App.cache.getDatabase();
+    var key = await db.put(json.encode(init), 'person');
     var infoTask = App.http.getPersonInfo();
     devices.add(init.devices);
     var sessions = new Collection(init.activeSmokeSessions);
@@ -113,6 +118,23 @@ class PersonBloc extends SignalBloc {
       signal.callServerFunction(
           new ServerCallParam(name: 'JoinPerson', params: params));
     } catch (e) {}
+  }
+
+  Future loadInitDataFromCache() async {
+    try {
+      var db = await App.cache.getDatabase();
+      var value = await db.get('person');
+      if (value == null) {
+        return;
+      }
+      var it = json.decode(value);
+      var fromCache = PersonActiveDataDto.fromJson(it);
+      devices.add(fromCache.devices);
+      myReservations.add(fromCache.activeReservations);
+    } catch (e) {
+      print('error');
+      print(e);
+    }
   }
 
   Future loadSessions() async {

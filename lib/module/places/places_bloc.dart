@@ -4,7 +4,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'package:flutter/services.dart';
 import 'dart:convert';
 
 class PlacesBloc {

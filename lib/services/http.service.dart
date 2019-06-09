@@ -149,10 +149,13 @@ class ApiClient {
     });
   }
 
-  Future changeColor(String deviceId, HSVColor color) async {
+  Future changeColor(String deviceId, HSVColor color, SmokeState type) async {
     var uri = Uri.https(baseUrl, 'api/Device/$deviceId/ChangeColor');
 
-    var data = {'Color': ColorDto(color), 'Type': 1};
+    var data = {
+      'Color': ColorDto(color),
+      'Type': SmokeState.values.indexOf(type)
+    };
     print('color ${ColorDto(color).toJson()}');
     await _dio.post(uri.toString(),
         data: data,
@@ -211,12 +214,11 @@ class ApiClient {
     return true;
   }
 
-  Future<List<StandAnimation>> getAnimations(String code) {
+  Future<List<SmartHookahHelpersAnimation>> getAnimations(String code) {
     var url = Uri.https(baseUrl, 'api/Animations/GetAnimations', {"id": code});
 
-    return _getJson(url).then((json) => json['Animations']).then((data) => data
-        .map<StandAnimation>((anim) => StandAnimation.fromJson(anim))
-        .toList());
+    return _getJson(url).then((json) => json['Animations']).then(
+        (data) => SmartHookahHelpersAnimation.listFromJson(data).toList());
   }
 
   Future<List<PipeAccesorySimpleDto>> searchGear(
@@ -478,11 +480,8 @@ class ApiClient {
   }
 
   Future<int> endSession(String id) async {
-     var url = Uri.https(
-        baseUrl, '/api/SmokeSession/$id/End');
-    return await _dio
-        .postUri(url)
-        .then((data) => data.data);
+    var url = Uri.https(baseUrl, '/api/SmokeSession/$id/End');
+    return await _dio.postUri(url).then((data) => data.data);
   }
 
   Future<bool> changeMixName(int id, String name) async {
@@ -503,11 +502,11 @@ class ApiClient {
         .catchError((_) => false);
   }
 
-    Future<List<SmartHookahModelsRedisCompetitionEntry>> getCompetitionResult() async {
+  Future<List<SmartHookahModelsRedisCompetitionEntry>>
+      getCompetitionResult() async {
     var url = Uri.https(baseUrl, '/api/Competition/Results');
-    return await _dio
-        .getUri(url)
-        .then((data) => SmartHookahModelsRedisCompetitionEntry.listFromJson(data.data));
+    return await _dio.getUri(url).then((data) =>
+        SmartHookahModelsRedisCompetitionEntry.listFromJson(data.data));
   }
 }
 

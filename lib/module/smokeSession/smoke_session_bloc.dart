@@ -8,7 +8,6 @@ import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/timer_dependency.dart';
 import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
-import 'package:app/models/Stand/animation.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/models/Stand/preset.dart';
 import 'package:app/services/signal_r.dart';
@@ -58,9 +57,9 @@ class SmokeSessionBloc {
   BehaviorSubject<StandSettings> standSettings =
       new BehaviorSubject<StandSettings>.seeded(new StandSettings.empty());
 
-  BehaviorSubject<List<StandAnimation>> animations =
-      new BehaviorSubject<List<StandAnimation>>.seeded(
-          new List<StandAnimation>());
+  BehaviorSubject<List<SmartHookahHelpersAnimation>> animations =
+      new BehaviorSubject<List<SmartHookahHelpersAnimation>>.seeded(
+          new List<SmartHookahHelpersAnimation>());
 
   BehaviorSubject<List<Color>> sessionColor =
       new BehaviorSubject<List<Color>>();
@@ -87,9 +86,10 @@ class SmokeSessionBloc {
     smokeState.add(0);
   }
 
-  setColor(Color color) async {
+  setColor(Color color, SmokeState smokeState) async {
     sessionColor.add([color, ColorHelper.getOpositeColor(color)]);
-    await App.http.changeColor(this.hookahCode, new HSVColor.fromColor(color));
+    await App.http.changeColor(
+        this.hookahCode, new HSVColor.fromColor(color), smokeState);
     Vibrate.feedback(FeedbackType.medium);
   }
 
@@ -112,7 +112,7 @@ class SmokeSessionBloc {
 
     editSetting.brightness = brigtness;
     curentSetting.setStateSetting(smokeState, editSetting);
-    futureSettings.add(new Tuple2(curentSetting, smokeState));
+
     Vibrate.feedback(FeedbackType.medium);
   }
 
@@ -125,7 +125,7 @@ class SmokeSessionBloc {
 
     editSetting.speed = speed;
     curentSetting.setStateSetting(smokeState, editSetting);
-    futureSettings.add(new Tuple2(curentSetting, smokeState));
+
     Vibrate.feedback(FeedbackType.medium);
   }
 
