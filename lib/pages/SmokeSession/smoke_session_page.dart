@@ -1,13 +1,13 @@
+import 'dart:async';
+
 import 'package:app/Helpers/date_utils.dart';
 import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
+import 'package:app/components/Common/bg_painter.dart';
 import 'package:app/components/Common/since_timer.dart';
-import 'package:app/components/Pickers/smoke_color_wheel.dart';
 import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
-import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/pages/SmokeSession/Components/animation_list.dart';
 import 'package:app/pages/SmokeSession/Components/pipe_accesory_widget.dart';
 import 'package:app/pages/SmokeSession/Components/puff_timer.dart';
 import 'package:app/pages/SmokeSession/Experimental/experimental_page.dart';
@@ -17,9 +17,12 @@ import 'package:app/pages/SmokeSession/tobacco_widget.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
 import 'package:openapi/api.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:share/share.dart';
+
+import 'Components/session_control_row.dart';
 
 class SmokeSessionPage extends StatefulWidget {
   final String sessionId;
@@ -49,21 +52,29 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
   void initState() {
     stopWatches = new StopWatches(new Stopwatch(), new Stopwatch());
 
-    scrollController = new ScrollController(
-      initialScrollOffset: 600.0,
-    );
+    scrollController = new ScrollController();
+    Future.delayed(Duration.zero, () {
+      dataProvider.smokeSessionBloc.joinSession(widget.sessionId);
+    });
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    super.didChangeDependencies();
     dataProvider = DataProvider.getData(context);
-    dataProvider.smokeSessionBloc.joinSession(widget.sessionId);
+    super.didChangeDependencies();
+
+    SystemChannels.lifecycle.setMessageHandler((msg) {
+      debugPrint('SystemChannels> $msg');
+      if (msg == AppLifecycleState.resumed.toString()) {
+        dataProvider.smokeSessionBloc.loadSessionData();
+      }
+    });
   }
 
   @override
   dispose() {
+    subscription.cancel();
     super.dispose();
   }
 
@@ -138,47 +149,54 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
             DateUtils.toSecondDuration(asyncSnapshot.data.longestPuf);
 
         var start = asyncSnapshot.data.start;
-        return asyncSnapshot.data != null
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  new HeaderItem(
-                    label: 'Puf count',
-                    data: asyncSnapshot.data.pufCount.toString(),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: <Widget>[
-                        Text('Last puf (sec)',
-                            style: TextStyle(color: Colors.grey)),
-                        new PuffTimeText(
-                            completeTime: asyncSnapshot.data.toString()),
-                        Text(longestString)
-                      ],
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: new BorderRadius.circular(10.0),
+            color: Colors.black.withAlpha(160),
+          ),
+          child: asyncSnapshot.data != null
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    new HeaderItem(
+                      label: 'Puf count',
+                      data: asyncSnapshot.data.pufCount.toString(),
                     ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: <Widget>[
-                        Text('Durations', style: TextStyle(color: Colors.grey)),
-                        SinceTimer(
-                          start: start,
-                          pufCount: asyncSnapshot.data.pufCount,
-                          style: Theme.of(context).textTheme.body2,
-                        ),
-                        Text(
-                          durationString,
-                        )
-                      ],
+                    Expanded(
+                      child: Column(
+                        children: <Widget>[
+                          Text('Last puf (sec)',
+                              style: TextStyle(color: Colors.grey)),
+                          new PuffTimeText(
+                              completeTime: asyncSnapshot.data.toString()),
+                          Text(longestString)
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              )
-            : Text('No data');
+                    Expanded(
+                      child: Column(
+                        children: <Widget>[
+                          Text('Durations',
+                              style: TextStyle(color: Colors.grey)),
+                          SinceTimer(
+                            start: start,
+                            pufCount: asyncSnapshot.data.pufCount,
+                            style: Theme.of(context).textTheme.body2,
+                          ),
+                          Text(
+                            durationString,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              : Text('No data'),
+        );
       },
     );
-
+    final Size screenSize = MediaQuery.of(context).size;
     return Column(
       children: <Widget>[
         new Expanded(
@@ -191,46 +209,42 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
             controller: scrollController,
             shrinkWrap: false,
             slivers: <Widget>[
-              new SliverList(
-                delegate: new SliverChildListDelegate(<Widget>[
-                  AnimationsPicker(),
-                  SizedBox(
-                    height: 30.0,
-                    child: Center(
-                      child: Icon(Icons.arrow_drop_up),
-                    ),
-                  ),
-                  GestureDetector(
-                    child: SizedBox(
-                        height: size.width,
-                        child: StreamBuilder<StandSettings>(
-                            stream: dataProvider.smokeSessionBloc.standSettings,
-                            builder: (context, snapshot) {
-                              if (snapshot.data == null) {
-                                return Container();
-                              }
-                              return SmokeColorWheel(
-                                onColorChanged: (color) {
-                                  dataProvider.smokeSessionBloc
-                                      .setColor(color.toColor());
-                                },
-                                color: snapshot?.data?.idle?.color,
-                              );
-                            })),
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                    child: Center(
-                      child: Icon(Icons.arrow_drop_down),
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.height,
+              new SliverAppBar(
+                leading: Container(),
+                actions: <Widget>[
+                  IconButton(
+                      icon: Icon(Icons.share),
+                      onPressed: () => Share.share(
+                          'check out my website https://example.com')),
+                ],
+                expandedHeight: 200.0,
+                backgroundColor: Colors.black,
+                pinned: true,
+                bottom: PreferredSize(
+                  preferredSize: Size(700.0, 40.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         Hero(
                             tag: "${widget.sessionId}_session",
                             child: statisticBuilder),
+                      ],
+                    ),
+                  ),
+                ),
+                flexibleSpace: new FlexibleSpaceBar(
+                    collapseMode: CollapseMode.parallax,
+                    background: new ColorSessionGimick(screenSize: screenSize)),
+              ),
+              new SliverList(
+                delegate: new SliverChildListDelegate(<Widget>[
+                  SizedBox(
+                    height: size.height,
+                    child: Column(
+                      children: <Widget>[
+                        const SessionControllRow(),
                         tobaccoMetaDataBuilder,
                         metadataBuilder,
                         Padding(
@@ -344,14 +358,51 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                   onTap: () => _restartDialog(code),
                 ),
                 new ListTile(
-                  leading: new Icon(FontAwesomeIcons.powerOff),
-                  title: new Text('End session'),
-                  onTap: () => {},
-                ),
+                    leading: new Icon(FontAwesomeIcons.powerOff),
+                    title: new Text('End session'),
+                    onTap: () => _endDialog(context)),
               ],
             ),
           );
         }).then((value) {});
+  }
+
+  void _endDialog(BuildContext context) {
+    // flutter defined function
+    showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("End sessopn?"),
+          content: new Text("Do you want end this session?"),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text(
+                "End",
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            )
+          ],
+        );
+      },
+    ).then((value) {
+      if (value) {
+        var bloc = DataProvider.getData(context).smokeSessionBloc;
+        bloc.endSession().then((value) {
+          Navigator.of(context).pop();
+        });
+      }
+    });
   }
 
   void _restartDialog(String code) {
@@ -387,6 +438,121 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         App.http.restartDevice(code);
       }
     });
+  }
+}
+
+class ColorSessionGimick extends StatefulWidget {
+  const ColorSessionGimick({
+    Key key,
+    @required this.screenSize,
+  }) : super(key: key);
+
+  final Size screenSize;
+
+  @override
+  _ColorSessionGimickState createState() => _ColorSessionGimickState();
+}
+
+class _ColorSessionGimickState extends State<ColorSessionGimick>
+    with SingleTickerProviderStateMixin {
+  @override
+  dispose() {
+    _controller.dispose();
+    subscription.cancel();
+    super.dispose();
+  }
+
+  AnimationController _controller;
+  StreamSubscription<int> subscription;
+  Animatable<Color> background = TweenSequence<Color>(
+    [
+      TweenSequenceItem(
+        weight: 1.0,
+        tween: ColorTween(
+          begin: Colors.red,
+          end: Colors.green,
+        ),
+      ),
+      TweenSequenceItem(
+        weight: 1.0,
+        tween: ColorTween(
+          begin: Colors.green,
+          end: Colors.blue,
+        ),
+      ),
+      TweenSequenceItem(
+        weight: 1.0,
+        tween: ColorTween(
+          begin: Colors.blue,
+          end: Colors.pink,
+        ),
+      ),
+      TweenSequenceItem(
+        weight: 1.0,
+        tween: ColorTween(
+          begin: Colors.pink,
+          end: Colors.blue,
+        ),
+      ),
+      TweenSequenceItem(
+        weight: 1.0,
+        tween: ColorTween(
+          begin: Colors.blue,
+          end: Colors.green,
+        ),
+      ),
+      TweenSequenceItem(
+        weight: 1.0,
+        tween: ColorTween(
+          begin: Colors.green,
+          end: Colors.red,
+        ),
+      ),
+    ],
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(seconds: 50),
+      vsync: this,
+    )..repeat();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    var dataProvider = DataProvider.getData(context);
+
+    subscription =
+        dataProvider.smokeSessionBloc.smokeStateBroadcast.listen((data) {
+      if (data == 1) {
+        _controller.duration = Duration(seconds: 10);
+        _controller.repeat();
+      }
+      if (data == 0) {
+        _controller.duration = Duration(seconds: 50);
+        _controller.repeat();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          return CustomPaint(
+            painter: BgPainter(
+              color: background
+                  .evaluate(AlwaysStoppedAnimation(_controller.value)),
+              logoSize: 0.5,
+              startPoint: Offset(widget.screenSize.width * 0.5, -50),
+              hueRotation: -4,
+            ),
+          );
+        });
   }
 }
 

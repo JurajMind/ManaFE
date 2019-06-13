@@ -91,4 +91,4 @@ class ClientMethod {
   }
 }
 
-enum SignalStatus { none, running, stopped, paused }
+enum SignalStatus { none, running, stopped, paused , error }

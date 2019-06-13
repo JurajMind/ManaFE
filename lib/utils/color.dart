@@ -22,7 +22,7 @@ class ColorHelper {
   }
 
   static HSVColor position2color(Offset offset, double size) {
-    var radius = distance(offset) / (size * 0.70);
+    var radius = distance(offset) / (size);
     if (radius > 1) {
       radius = 1;
     }
@@ -50,9 +50,11 @@ class ColorHelper {
 
   static Offset colorToPosition(
       HSVColor selectedColor, Size size, Offset position) {
-    var angle = selectedColor.hue / (2 * math.pi);
-    var x = (math.cos(angle) * (size.width / 2));
-    var y = math.sin(angle) * (size.width / 2);
-    return new Offset(size.width / 2, size.width / 2);
+    var angle = selectedColor.hue  * math.pi / (180);
+    var radius = selectedColor.saturation;
+    var offset = size.width / 2;
+    var x = (math.cos(angle) *offset) * radius;
+    var y = (math.sin(angle) *offset) * radius;
+    return new Offset(offset - x + 10, offset - y +10);
   }
 }

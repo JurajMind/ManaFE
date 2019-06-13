@@ -32,7 +32,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
     new Future.delayed(Duration.zero, () {
       var bloc = DataProvider.getData(context).personBloc;
       bloc.loadSessions();
-      var sessionBloc = DataProvider.getData(context).smokeSessionBloc;   
+      var sessionBloc = DataProvider.getData(context).smokeSessionBloc;
       setState(() {
         myController.text = sessionBloc.lastSession.value;
       });
@@ -69,11 +69,9 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            new Text(
-                              "Enter session code",
-                              textScaleFactor: 2.0,
-                              style: TextStyle(color: Colors.white),
-                            ),
+                            new Text("Enter session code",
+                                textScaleFactor: 2.0,
+                                style: Theme.of(context).textTheme.display3),
                             new Form(
                               key: _formKey,
                               child: new Column(

@@ -31,7 +31,7 @@ class ReservationBloc extends SignalBloc {
   DateTime from;
   DateTime to;
 
-  loadReservations(DateTime from, DateTime to) async {
+  Future loadReservations(DateTime from, DateTime to) async {
     if (compareDate(from, from) != 0 || compareDate(to, to) != 0) {
       this.reservations.add(null);
     }
@@ -46,6 +46,7 @@ class ReservationBloc extends SignalBloc {
     }
 
     this.dynamicReservaions.add(order);
+    return;
   }
 
   @override

@@ -1,6 +1,7 @@
+import 'dart:convert';
+
 import 'package:app/app/app.dart';
 import 'package:app/models/SignalR/device_online.dart';
-import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/module/signal_bloc.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/services/signal_r.dart';
@@ -71,11 +72,12 @@ class PersonBloc extends SignalBloc {
     var newCodes = smokeSessionsCodes.value;
 
     var collection = new Collection(newCodes);
-    var match = collection.where$1((predicate,index) => predicate.sessionId == smokeSessionId.sessionId);
+    var match = collection.where$1(
+        (predicate, index) => predicate.sessionId == smokeSessionId.sessionId);
 
-  if(match.count() > 0){
-    return;
-  }
+    if (match.count() > 0) {
+      return;
+    }
     newCodes.insert(0, smokeSessionId);
     newCodes = newCodes.toSet().toList();
     this.smokeSessionsCodes.add(newCodes);
@@ -92,11 +94,18 @@ class PersonBloc extends SignalBloc {
   loadInitData({bool reload = false}) async {
     if (_loadedInit && !reload) return;
     _loadedInit = true;
+    loadInitDataFromCache();
     var init = await App.http.getPersonInitData();
+    var db = await App.cache.getDatabase();
+    var key = await db.put(json.encode(init), 'person');
     var infoTask = App.http.getPersonInfo();
     devices.add(init.devices);
-    smokeSessions.add(init.activeSmokeSessions);
-    smokeSessionsCodes.add(init.activeSmokeSessions);
+    var sessions = new Collection(init.activeSmokeSessions);
+    sessions
+        .orderBy((s) => s.device.isOnline ? 0 : 1)
+        .thenBy((s) => s.device.name);
+    smokeSessions.add(sessions.toList());
+    smokeSessionsCodes.add(sessions.toList());
     myReservations.add(init.activeReservations);
     var info = await infoTask;
     this.info.add(info);
@@ -111,10 +120,36 @@ class PersonBloc extends SignalBloc {
     } catch (e) {}
   }
 
-  loadSessions() async {
-    var sessions = await App.http.getPersonSessions();
-    this.smokeSessions.add(sessions);
-    smokeSessionsCodes.add(sessions);
+  Future loadInitDataFromCache() async {
+    try {
+      var db = await App.cache.getDatabase();
+      var value = await db.get('person');
+      if (value == null) {
+        return;
+      }
+      var it = json.decode(value);
+      var fromCache = PersonActiveDataDto.fromJson(it);
+      devices.add(fromCache.devices);
+      myReservations.add(fromCache.activeReservations);
+    } catch (e) {
+      print('error');
+      print(e);
+    }
+  }
+
+  Future loadSessions() async {
+    var activeSmokeSessions = await App.http.getPersonSessions();
+    var sessions = new Collection(activeSmokeSessions);
+    sessions
+        .orderBy(
+          (s) => s.device.isOnline ? 0 : 1,
+        )
+        .thenBy((s) => s.device.name)
+        .reverse();
+
+    this.smokeSessions.add(sessions.toList());
+    this.smokeSessionsCodes.add(sessions.toList());
+    return;
   }
 
   void handleDeviceOnline(List<dynamic> incomingData) {

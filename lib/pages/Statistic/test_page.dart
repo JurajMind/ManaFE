@@ -1,10 +1,10 @@
 import 'package:app/app/app.dart';
+import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Statistic/hero_test_page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 class TestPage extends StatefulWidget {
   @override
@@ -27,6 +27,15 @@ class _TestPageState extends State<TestPage> {
             StreamBuilder<DateTime>(
               stream: service.lastPingStream,
               initialData: DateTime.now(),
+              builder: (BuildContext context, snapshot) {
+                return Container(
+                  child: Text(snapshot.data.toString()),
+                );
+              },
+            ),
+                        StreamBuilder<SignalStatus>(
+              stream: service.connectionStatus,
+              initialData: SignalStatus.none,
               builder: (BuildContext context, snapshot) {
                 return Container(
                   child: Text(snapshot.data.toString()),

@@ -21,6 +21,7 @@ class TobaccoSessionWidget extends StatelessWidget {
     return new Padding(
       padding: EdgeInsets.all(16.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           new StreamBuilder<SmokeStatisticDataModel>(
             stream: smokeSessionBloc.smokeStatistic,

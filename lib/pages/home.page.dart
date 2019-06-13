@@ -108,9 +108,10 @@ class _HomePageState extends State<HomePage> {
     personBloc.loadInitData();
     SystemChannels.lifecycle.setMessageHandler((msg) {
       debugPrint('SystemChannels> $msg');
-      if (msg == AppLifecycleState.paused.toString() || msg == AppLifecycleState.inactive.toString()  ) {
-        var signal = new SignalR();
-
+      if (msg == AppLifecycleState.paused.toString() ||
+          msg == AppLifecycleState.inactive.toString()) {
+        var smokeSessionBloc = DataProvider.getData(context).smokeSessionBloc;
+        smokeSessionBloc.pauseSession();
       }
 
       if (msg == AppLifecycleState.resumed.toString()) {
@@ -329,7 +330,7 @@ class TabNavigator extends StatelessWidget {
       '/': (context) => this.tabItem,
       '/smokeSesion': (context) {
         return new SmokeSessionPage();
-      }
+      },
     };
   }
 
