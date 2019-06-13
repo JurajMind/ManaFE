@@ -1,6 +1,7 @@
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/pages/Device/device_detail.dart';
+import 'package:app/pages/Device/device_detail_page.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';

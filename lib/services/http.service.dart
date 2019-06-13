@@ -508,6 +508,18 @@ class ApiClient {
     return await _dio.getUri(url).then((data) =>
         SmartHookahModelsRedisCompetitionEntry.listFromJson(data.data));
   }
+
+    Future<SmartHookahControllersApiDeviceInfoResponse> getDeviceInfo(int id) async {
+    var url = Uri.https(baseUrl, '/api/Device/$id/Info');
+    return await _dio.getUri(url).then((data) =>
+        SmartHookahControllersApiDeviceInfoResponse.fromJson(data.data));
+  }
+
+  Future<List<DeviceDevicePictureDto>> getDevicePicutres() async {
+     var url = Uri.https(baseUrl, '/api/Device/Pictures');
+    return await _dio.getUri(url).then((data) =>
+        DeviceDevicePictureDto.listFromJson(data.data));
+  }
 }
 
 class ColorDto {

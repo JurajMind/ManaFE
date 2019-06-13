@@ -3,7 +3,7 @@ part of openapi.api;
 class SmokeSessionSimpleDto {
   
   int id = null;
-
+  
   bool live = null;
   
   String sessionId = null;
@@ -21,7 +21,7 @@ class SmokeSessionSimpleDto {
 
   @override
   String toString() {
-    return 'SmokeSessionSimpleDto[id=$id, sessionId=$sessionId, device=$device, statistic=$statistic, metaData=$metaData, placeId=$placeId, placeName=$placeName, ]';
+    return 'SmokeSessionSimpleDto[id=$id, live=$live, sessionId=$sessionId, device=$device, statistic=$statistic, metaData=$metaData, placeId=$placeId, placeName=$placeName, ]';
   }
 
   SmokeSessionSimpleDto.fromJson(Map<String, dynamic> json) {
@@ -39,6 +39,7 @@ class SmokeSessionSimpleDto {
   Map<String, dynamic> toJson() {
     return {
       'Id': id,
+      'Live': live,
       'SessionId': sessionId,
       'Device': device,
       'Statistic': statistic,

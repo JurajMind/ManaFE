@@ -9,6 +9,7 @@ import 'package:openapi/api.dart';
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **int** |  | [optional] [default to null]
+**live** | **bool** |  | [optional] [default to null]
 **sessionId** | **String** |  | [optional] [default to null]
 **device** | [**DeviceSimpleDto**](DeviceSimpleDto.md) |  | [optional] [default to null]
 **statistic** | [**DynamicSmokeStatisticRawDto**](DynamicSmokeStatisticRawDto.md) |  | [optional] [default to null]

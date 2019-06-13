@@ -18,7 +18,7 @@ class ApiClient {
   final _regList = RegExp(r'^List<(.*)>$');
   final _regMap = RegExp(r'^Map<String,(.*)>$');
 
-  ApiClient({this.basePath: "https://localhost:44324"}) {
+  ApiClient({this.basePath: "https://devmana.azurewebsites.net"}) {
     // Setup authentications (key: authentication name, value: authentication).
   }
 
@@ -49,12 +49,16 @@ class ApiClient {
           return BrandGroupDto.fromJson(value);
         case 'BusinessHoursDto':
           return BusinessHoursDto.fromJson(value);
+        case 'DeviceDevicePictureDto':
+          return DeviceDevicePictureDto.fromJson(value);
         case 'DevicePresetDto':
           return DevicePresetDto.fromJson(value);
         case 'DeviceSettingDto':
           return DeviceSettingDto.fromJson(value);
         case 'DeviceSimpleDto':
           return DeviceSimpleDto.fromJson(value);
+        case 'DeviceUpdateDto':
+          return DeviceUpdateDto.fromJson(value);
         case 'Dto':
           return Dto.fromJson(value);
         case 'DynamicSmokeStatisticRawDto':
@@ -133,6 +137,8 @@ class ApiClient {
           return SearchPipeAccessory.fromJson(value);
         case 'SeatDto':
           return SeatDto.fromJson(value);
+        case 'SmartHookahControllersApiDeviceInfoResponse':
+          return SmartHookahControllersApiDeviceInfoResponse.fromJson(value);
         case 'SmartHookahControllersPriceGroupDto':
           return SmartHookahControllersPriceGroupDto.fromJson(value);
         case 'SmartHookahHelpersAnimation':

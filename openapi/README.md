@@ -59,7 +59,7 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://localhost:44324*
+All URIs are relative to *https://devmana.azurewebsites.net*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -71,15 +71,22 @@ Class | Method | HTTP request | Description
 *CompetitionApi* | [**competitionAddEntry**](docs\/CompetitionApi.md#competitionaddentry) | **POST** /api/Competition/Add | 
 *CompetitionApi* | [**competitionClean**](docs\/CompetitionApi.md#competitionclean) | **DELETE** /api/Competition/Clean | 
 *CompetitionApi* | [**competitionGetResults**](docs\/CompetitionApi.md#competitiongetresults) | **GET** /api/Competition/Results | 
+*DeviceApi* | [**deviceAddDevice**](docs\/DeviceApi.md#deviceadddevice) | **POST** /api/Device/{id}/Add | 
 *DeviceApi* | [**deviceChangeAnimation**](docs\/DeviceApi.md#devicechangeanimation) | **POST** /api/Device/{id}/ChangeAnimation | 
 *DeviceApi* | [**deviceChangeBrightness**](docs\/DeviceApi.md#devicechangebrightness) | **POST** /api/Device/{id}/ChangeBrightness | 
 *DeviceApi* | [**deviceChangeColor**](docs\/DeviceApi.md#devicechangecolor) | **POST** /api/Device/{id}/ChangeColor | 
 *DeviceApi* | [**deviceChangeMode**](docs\/DeviceApi.md#devicechangemode) | **POST** /api/Device/{id}/ChangeMode | 
 *DeviceApi* | [**deviceChangeSpeed**](docs\/DeviceApi.md#devicechangespeed) | **POST** /api/Device/{id}/ChangeSpeed | 
+*DeviceApi* | [**deviceGetPictures**](docs\/DeviceApi.md#devicegetpictures) | **GET** /api/Device/Pictures | 
 *DeviceApi* | [**deviceGetSetting**](docs\/DeviceApi.md#devicegetsetting) | **GET** /api/Device/{id}/GetSetting | 
+*DeviceApi* | [**deviceInfo**](docs\/DeviceApi.md#deviceinfo) | **GET** /api/Device/{id}/Info | 
+*DeviceApi* | [**devicePromptUpdate**](docs\/DeviceApi.md#devicepromptupdate) | **POST** /api/Device/{id}/Update/{updateId} | 
+*DeviceApi* | [**deviceRemoveDevice**](docs\/DeviceApi.md#deviceremovedevice) | **DELETE** /api/Device/{id}/Remove | 
 *DeviceApi* | [**deviceRestart**](docs\/DeviceApi.md#devicerestart) | **POST** /api/Device/{id}/Restart | 
+*DeviceApi* | [**deviceSetPicture**](docs\/DeviceApi.md#devicesetpicture) | **POST** /api/Device/{id}/SetPicture | 
 *DeviceApi* | [**deviceShowQrCode**](docs\/DeviceApi.md#deviceshowqrcode) | **POST** /api/Device/{id}/ShowQrCode | 
 *DeviceApi* | [**deviceSleep**](docs\/DeviceApi.md#devicesleep) | **POST** /api/Device/{id}/Sleep | 
+*DeviceApi* | [**deviceUpdates**](docs\/DeviceApi.md#deviceupdates) | **GET** /api/Device/Updates | 
 *DevicePresetApi* | [**devicePresetDeletePreset**](docs\/DevicePresetApi.md#devicepresetdeletepreset) | **DELETE** /api/Device/Preset/{id}/Delete | 
 *DevicePresetApi* | [**devicePresetGetPreset**](docs\/DevicePresetApi.md#devicepresetgetpreset) | **GET** /api/Device/Preset/{id}/GetPreset | 
 *DevicePresetApi* | [**devicePresetGetUserPresets**](docs\/DevicePresetApi.md#devicepresetgetuserpresets) | **GET** /api/Device/Preset/GetUserPresets | 
@@ -155,6 +162,7 @@ Class | Method | HTTP request | Description
 *ReservationApi* | [**reservationRemoveTable**](docs\/ReservationApi.md#reservationremovetable) | **DELETE** /api/Reservations/{id}/RemoveTable | 
 *ReservationApi* | [**reservationUpdateReservationState**](docs\/ReservationApi.md#reservationupdatereservationstate) | **POST** /api/Reservations/{id}/UpdateState | 
 *SentToDeviceApi* | [**sentToDeviceDefaultAction**](docs\/SentToDeviceApi.md#senttodevicedefaultaction) | **POST** /api/SentToDevice/{id} | 
+*SmokeSessionApi* | [**smokeSessionEndSmokeSession**](docs\/SmokeSessionApi.md#smokesessionendsmokesession) | **POST** /api/SmokeSession/{id}/End | 
 *SmokeSessionApi* | [**smokeSessionGetFinishedData**](docs\/SmokeSessionApi.md#smokesessiongetfinisheddata) | **GET** /api/SmokeSession/GetFinishedData | 
 *SmokeSessionApi* | [**smokeSessionGetMetaData**](docs\/SmokeSessionApi.md#smokesessiongetmetadata) | **GET** /api/SmokeSession/GetMetaData | 
 *SmokeSessionApi* | [**smokeSessionGetPufs**](docs\/SmokeSessionApi.md#smokesessiongetpufs) | **GET** /api/SmokeSession/GetPufs | 
@@ -181,9 +189,11 @@ Class | Method | HTTP request | Description
  - [BrandDto](docs\/BrandDto.md)
  - [BrandGroupDto](docs\/BrandGroupDto.md)
  - [BusinessHoursDto](docs\/BusinessHoursDto.md)
+ - [DeviceDevicePictureDto](docs\/DeviceDevicePictureDto.md)
  - [DevicePresetDto](docs\/DevicePresetDto.md)
  - [DeviceSettingDto](docs\/DeviceSettingDto.md)
  - [DeviceSimpleDto](docs\/DeviceSimpleDto.md)
+ - [DeviceUpdateDto](docs\/DeviceUpdateDto.md)
  - [Dto](docs\/Dto.md)
  - [DynamicSmokeStatisticRawDto](docs\/DynamicSmokeStatisticRawDto.md)
  - [FeatureMixCreatorDto](docs\/FeatureMixCreatorDto.md)
@@ -223,6 +233,7 @@ Class | Method | HTTP request | Description
  - [ReservationsTimeSlot](docs\/ReservationsTimeSlot.md)
  - [SearchPipeAccessory](docs\/SearchPipeAccessory.md)
  - [SeatDto](docs\/SeatDto.md)
+ - [SmartHookahControllersApiDeviceInfoResponse](docs\/SmartHookahControllersApiDeviceInfoResponse.md)
  - [SmartHookahControllersPriceGroupDto](docs\/SmartHookahControllersPriceGroupDto.md)
  - [SmartHookahHelpersAnimation](docs\/SmartHookahHelpersAnimation.md)
  - [SmartHookahModelsDbColor](docs\/SmartHookahModelsDbColor.md)

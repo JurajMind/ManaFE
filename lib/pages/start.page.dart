@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:animated_background/animated_background.dart';
 import 'package:app/Helpers/helpers.dart';
+import 'package:app/app/app.widget.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:flutter/material.dart';
@@ -116,10 +117,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
             var tokenResult =
                 await auth.getLocalToken("Facebook", result.accessToken.token);
             if (tokenResult) {
-              Navigator.pushReplacement(
-                  context,
-                  new MaterialPageRoute(
-                      builder: (BuildContext context) => HomePage()));
+              AppWidget.restartApp(context);
             }
             break;
           }

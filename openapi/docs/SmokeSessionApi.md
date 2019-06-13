@@ -5,10 +5,11 @@
 import 'package:openapi/api.dart';
 ```
 
-All URIs are relative to *https://localhost:44324*
+All URIs are relative to *https://devmana.azurewebsites.net*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**smokeSessionEndSmokeSession**](SmokeSessionApi.md#smokeSessionEndSmokeSession) | **POST** /api/SmokeSession/{id}/End | 
 [**smokeSessionGetFinishedData**](SmokeSessionApi.md#smokeSessionGetFinishedData) | **GET** /api/SmokeSession/GetFinishedData | 
 [**smokeSessionGetMetaData**](SmokeSessionApi.md#smokeSessionGetMetaData) | **GET** /api/SmokeSession/GetMetaData | 
 [**smokeSessionGetPufs**](SmokeSessionApi.md#smokeSessionGetPufs) | **GET** /api/SmokeSession/GetPufs | 
@@ -17,6 +18,47 @@ Method | HTTP request | Description
 [**smokeSessionSaveMetaData**](SmokeSessionApi.md#smokeSessionSaveMetaData) | **POST** /api/SmokeSession/{id}/SaveMetaData | 
 [**smokeSessionValidate**](SmokeSessionApi.md#smokeSessionValidate) | **GET** /api/SmokeSession/Validate | 
 
+
+# **smokeSessionEndSmokeSession**
+> int smokeSessionEndSmokeSession(id)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new SmokeSessionApi();
+var id = id_example; // String | 
+
+try { 
+    var result = api_instance.smokeSessionEndSmokeSession(id);
+    print(result);
+} catch (e) {
+    print("Exception when calling SmokeSessionApi->smokeSessionEndSmokeSession: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | [default to null]
+
+### Return type
+
+**int**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **smokeSessionGetFinishedData**
 > FinishedSessionDataDto smokeSessionGetFinishedData(id)
