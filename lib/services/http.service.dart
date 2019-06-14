@@ -509,16 +509,37 @@ class ApiClient {
         SmartHookahModelsRedisCompetitionEntry.listFromJson(data.data));
   }
 
-    Future<SmartHookahControllersApiDeviceInfoResponse> getDeviceInfo(int id) async {
+  Future<SmartHookahControllersApiDeviceInfoResponse> getDeviceInfo(
+      int id) async {
     var url = Uri.https(baseUrl, '/api/Device/$id/Info');
     return await _dio.getUri(url).then((data) =>
         SmartHookahControllersApiDeviceInfoResponse.fromJson(data.data));
   }
 
   Future<List<DeviceDevicePictureDto>> getDevicePicutres() async {
-     var url = Uri.https(baseUrl, '/api/Device/Pictures');
-    return await _dio.getUri(url).then((data) =>
-        DeviceDevicePictureDto.listFromJson(data.data));
+    var url = Uri.https(baseUrl, '/api/Device/Pictures');
+    return await _dio
+        .getUri(url)
+        .then((data) => DeviceDevicePictureDto.listFromJson(data.data));
+  }
+
+  Future<bool> changeDevicePicture(int deviceId, int pictureId) async {
+    var url = Uri.https(baseUrl, '/api/Device/$deviceId/SetPicture');
+    return await _dio
+        .post(url.toString(), data: pictureId)
+        .then((data) => data.data);
+  }
+
+  Future<List<DeviceUpdateDto>> getUpdates() async {
+    var url = Uri.https(baseUrl, '/api/Device/Updates');
+    return await _dio
+        .getUri(url)
+        .then((data) => DeviceUpdateDto.listFromJson(data.data));
+  }
+
+  Future<bool> pushUpdate(int deviceId, int updateId) async {
+    var url = Uri.https(baseUrl, '/api/Device/$deviceId/Update/$updateId');
+    return await _dio.postUri(url).then((data) => data.data);
   }
 }
 

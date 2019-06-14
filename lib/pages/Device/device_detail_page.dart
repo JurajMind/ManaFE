@@ -1,4 +1,3 @@
-
 import 'package:app/app/app.dart';
 import 'package:app/models/extensions.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/api.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
-import 'package:rxdart/subjects.dart';
 
 import 'components/device_picture_item.dart';
 import 'device_change_picture_page.dart';
+import 'device_update_page.dart';
 
 class DeviceDetailPage extends StatefulWidget {
   final DeviceSimpleDto device;
@@ -21,15 +20,13 @@ class DeviceDetailPage extends StatefulWidget {
 }
 
 class _DeviceDetailPageState extends State<DeviceDetailPage> {
-
   DeviceDevicePictureDto picture;
 
   @override
   void initState() {
-    App.http.getDeviceInfo(5).then((data) {   
+    App.http.getDeviceInfo(widget.device.id).then((data) {
       setState(() {
-       if(mounted)
-       picture = data.picture; 
+        if (mounted) picture = data.picture;
       });
     });
     super.initState();
@@ -52,10 +49,6 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'v ${Extensions.deviceVersion(widget.device.version)}',
-                        style: Theme.of(context).textTheme.subtitle,
-                      ),
                     ),
                     SizedBox(
                       width: 40,
@@ -110,9 +103,96 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
           ),
           new SliverList(
             delegate: new SliverChildListDelegate(<Widget>[
+              Container(
+                height: 20,
+              ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                 buildPicture()
+                  Expanded(
+                    flex: 2,
+                    child: Text('Device picture : ',
+                        style: Theme.of(context).textTheme.display2),
+                  ),
+                  Expanded(
+                      flex: 1,
+                      child: Container(
+                          child: Container(
+                              height: 64,
+                              width: 64,
+                              child:
+                                  DevicePictureItem(picture?.inlinePicture)))),
+                  Expanded(
+                      flex: 1,
+                      child: IconButton(
+                        icon: Icon(FontAwesomeIcons.cog),
+                        onPressed: () => Navigator.of(context)
+                                .push<DeviceDevicePictureDto>(
+                                    new MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                return new DeviceChangePicturePage(
+                                  slectedPictureId: picture?.id,
+                                );
+                              },
+                            )).then((newPicture) {
+                              if (newPicture == null) return;
+
+                              if (mounted) {
+                                setState(() {
+                                  picture = newPicture;
+                                });
+                              }
+                              App.http.changeDevicePicture(
+                                  widget.device.id, newPicture.id);
+                            }),
+                      ))
+                ],
+              ),
+              Container(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    flex: 2,
+                    child: Text(
+                      'Software version : ',
+                      style: Theme.of(context).textTheme.display2,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Text(
+                      'v ${Extensions.deviceVersion(widget.device.version)}',
+                      style: Theme.of(context).textTheme.display1,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: IconButton(
+                      icon: Icon(FontAwesomeIcons.cog),
+                      onPressed: () => Navigator.of(context)
+                              .push<DeviceDevicePictureDto>(
+                                  new MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return new DeviceUpdatePage(
+                                device: widget.device,
+                              );
+                            },
+                          )).then((newPicture) {
+                            if (newPicture == null) return;
+
+                            if (mounted) {
+                              setState(() {
+                                picture = newPicture;
+                              });
+                            }
+                            App.http.changeDevicePicture(
+                                widget.device.id, newPicture.id);
+                          }),
+                    ),
+                  )
                 ],
               ),
               Container(),
@@ -135,59 +215,52 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                       borderWidth: 1.0,
                       bottomMargin: 1.0,
                       height: 50.0,
-                      width: (MediaQuery.of(context).size.width) / 2 - 16,
+                      width: (MediaQuery.of(context).size.width) / 3 - 16,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: new RoundedButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(Icons.refresh),
+                          Text('RESTART')
+                        ],
+                      ),
+                      onTap: () {
+                        App.http.restartDevice(widget.device.code);
+                      },
+                      buttonColor: Colors.transparent,
+                      borderWidth: 1.0,
+                      bottomMargin: 1.0,
+                      height: 50.0,
+                      width: (MediaQuery.of(context).size.width) / 3 - 16,
                     ),
                   ),
                   new RoundedButton(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[Icon(Icons.refresh), Text('RESTART')],
+                      children: <Widget>[
+                        Icon(Icons.phonelink_ring),
+                        Text('PING')
+                      ],
                     ),
                     onTap: () {
-                      App.http.restartDevice(widget.device.code);
+                      App.http.sleepDevice(widget.device.code);
                     },
                     buttonColor: Colors.transparent,
                     borderWidth: 1.0,
                     bottomMargin: 1.0,
                     height: 50.0,
-                    width: (MediaQuery.of(context).size.width) / 2 - 16,
+                    width: (MediaQuery.of(context).size.width) / 3 - 16,
                   ),
                 ],
-              )
+              ),
             ]),
           )
         ],
       ),
-    );
-  }
-
-  Widget buildPicture() {
-   
-    
-    return Row(
-      children: <Widget>[
-        Container(
-            child: DevicePictureItem(
-                picture?.inlinePicture)),
-                                  IconButton(
-                    icon: Icon(FontAwesomeIcons.cog),
-                    onPressed: () =>
-                        Navigator.of(context).push<DeviceDevicePictureDto>(new MaterialPageRoute(
-                          builder: (BuildContext context) {
-                            return new DeviceChangePicturePage(slectedPictureId: picture?.id,);
-                          },
-                        )).then(
-                          (newPicture){
-                            if(newPicture == null)
-                            return;
-                            
-                            if(mounted){
-                              picture = newPicture;
-                            }
-                          }
-                        ),
-                  )
-      ],
     );
   }
 }
