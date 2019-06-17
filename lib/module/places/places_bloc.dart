@@ -30,7 +30,7 @@ class PlacesBloc {
     var geolocator = Geolocator();
     GeolocationStatus geolocationStatus =
         await geolocator.checkGeolocationPermissionStatus();
-    if (geolocationStatus != GeolocationStatus.granted) return;
+    if (geolocationStatus != GeolocationStatus.denied) return;
     geolocator
         .getLastKnownPosition(desiredAccuracy: LocationAccuracy.low)
         .then((value) async {

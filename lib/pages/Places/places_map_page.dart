@@ -15,6 +15,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:math' show cos, sqrt, asin;
+import 'package:flutter/services.dart' show rootBundle;
 
 class PlacesMapPage extends StatefulWidget {
   final Position position;
@@ -27,6 +28,7 @@ class PlacesMapPage extends StatefulWidget {
 }
 
 class _PlacesMapPageState extends State<PlacesMapPage> {
+  String _mapStyle;
   Completer<GoogleMapController> _controller = Completer();
   CameraPosition initView;
   CameraPosition curentView;
@@ -41,7 +43,9 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   @override
   initState() {
     super.initState();
-
+    rootBundle.loadString('assets/map_style.txt').then((string) {
+      _mapStyle = string;
+    });
     markers = new Set<Marker>();
     if (widget.position != null) {
       initView = CameraPosition(
@@ -107,7 +111,6 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
     return SafeArea(
       top: true,
       child: new Scaffold(
-        
         resizeToAvoidBottomInset: false,
         bottomNavigationBar: SizedBox(
           height: 55,
@@ -140,6 +143,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                           tiltGesturesEnabled: true,
                           initialCameraPosition: initView,
                           onMapCreated: (GoogleMapController controller) {
+                            controller.setMapStyle(_mapStyle);
                             _controller.complete(controller);
                           },
                         ),
@@ -153,7 +157,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                       height: 120,
                       width: MediaQuery.of(context).size.width,
                       child: MapCarousel(
-                        selectedPlace: _selectedPlace,
+                          selectedPlace: _selectedPlace,
                           nearbyPlaces: nearbyPlaces,
                           mapController: _controller),
                     ),
@@ -174,8 +178,11 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                   Positioned(
                     top: 0,
                     left: 0,
-                    child: IconButton(icon: Icon(Icons.chevron_left,color: Colors.black,size: 50),
-                    onPressed: () => Navigator.of(context).pop(),),
+                    child: IconButton(
+                      icon: Icon(Icons.chevron_left,
+                          color: Colors.black, size: 50),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
                   ),
                   Positioned(
                     top: 10,
@@ -233,15 +240,14 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
     markers = places.map((f) {
       return new Marker(
           icon: f.haveMana ? _manaMarker : BitmapDescriptor.defaultMarker,
-          
           onTap: () async {
             var controller = await _controller.future;
-            if(_selectedPlace == f){
-                 Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => PlaceDetailPage(place: f)));
+            if (_selectedPlace == f) {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => PlaceDetailPage(place: f)));
             }
             setState(() {
-             _selectedPlace = f; 
+              _selectedPlace = f;
             });
             controller.animateCamera(CameraUpdate.newCameraPosition(
                 CameraPosition(
