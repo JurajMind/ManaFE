@@ -1,4 +1,4 @@
-
+import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 
@@ -19,23 +19,16 @@ class MetadataBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     var smokeSessionBloc = dataProvider.smokeSessionBloc;
     var personBloc = dataProvider.personBloc;
-    return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
-      height: MediaQuery.of(context).size.height * 0.6,
-      child: Padding(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Metadata'),
+        backgroundColor: AppColors.black,
+        centerTitle: true,
+      ),
+      body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: new ListView(
           children: <Widget>[
-            Container(
-              child: SizedBox(
-                height: 25.0,
-                child: Center(
-                    child: Icon(
-                  Icons.arrow_drop_down,
-                  size: 40.0,
-                )),
-              ),
-            ),
             buildMetadataItem(
                 smokeSessionBloc,
                 "Pipe",

@@ -51,16 +51,15 @@ class PipeAccesoryWidget extends StatelessWidget {
               : IconButton(
                   icon: Icon(Icons.add_box),
                   onPressed: () async {
-                    showModalBottomSheet<void>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Theme(
-                            data: Theme.of(context)
-                                .copyWith(canvasColor: Colors.teal),
-                            child: new MetadataBottomSheet(
-                                dataProvider: this.dataProvider),
-                          );
-                        }).then((value) {
+                    Navigator.of(context)
+                        .push(new MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return new MetadataBottomSheet(
+                                dataProvider: dataProvider,
+                              );
+                            },
+                            fullscreenDialog: true))
+                        .then((value) {
                       this.dataProvider.smokeSessionBloc.saveMetaData();
                     });
                   })

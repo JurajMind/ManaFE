@@ -201,11 +201,6 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
       children: <Widget>[
         new Expanded(
           child: CustomScrollView(
-            physics: new SnapScrollPhysic(snaps: [
-              size.height * 0.75,
-              size.width + 40,
-              size.height * 0.75 + 40
-            ]),
             controller: scrollController,
             shrinkWrap: false,
             slivers: <Widget>[

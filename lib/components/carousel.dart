@@ -2,6 +2,7 @@ import 'package:app/components/Places/open_indicator.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/places_bloc.dart';
+import 'package:app/pages/Places/add_place_page.dart';
 import 'package:app/support/mana_icons_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -74,18 +75,32 @@ class _CarrousselState extends State<Carroussel> {
     return StreamBuilder<List<PlaceSimpleDto>>(
         initialData: null,
         stream: bloc.places,
-        builder: (context, snapshot) => PageView.builder(
-              onPageChanged: (value) {
-                setState(() {
-                  currentpage = value;
-                });
-              },
-              controller: controller,
-              itemCount:
-                  snapshot.data != null ? math.min(snapshot.data.length, 5) : 0,
-              itemBuilder: (context, index) =>
-                  builder(index, snapshot.data[index]),
-            ));
+        builder: (context, snapshot) {
+          if (snapshot.data.length == 0) {
+            return Row(
+              children: <Widget>[
+                Text('Its empty here , know some place ? Add it!'),
+                IconButton(
+                    icon: Icon(Icons.plus_one),
+                    onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) => AddPlacePage())))
+              ],
+            );
+          }
+          return PageView.builder(
+            onPageChanged: (value) {
+              setState(() {
+                currentpage = value;
+              });
+            },
+            controller: controller,
+            itemCount:
+                snapshot.data != null ? math.min(snapshot.data.length, 5) : 0,
+            itemBuilder: (context, index) =>
+                builder(index, snapshot.data[index]),
+          );
+        });
   }
 
   builder(int index, PlaceSimpleDto place) {

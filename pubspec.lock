@@ -188,7 +188,7 @@ packages:
       name: fluro
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.0"
+    version: "1.5.0"
   flushbar:
     dependency: "direct main"
     description:
@@ -315,7 +315,7 @@ packages:
       name: google_maps_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.17"
+    version: "0.5.19"
   google_maps_webservice:
     dependency: "direct main"
     description:
@@ -581,7 +581,7 @@ packages:
       name: sembast
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.15.4+1"
+    version: "1.16.0+2"
   sensors:
     dependency: transitive
     description:
@@ -712,7 +712,7 @@ packages:
       name: synchronized
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.0+1"
   term_glyph:
     dependency: transitive
     description:

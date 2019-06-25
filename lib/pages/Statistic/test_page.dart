@@ -1,6 +1,7 @@
 import 'package:app/app/app.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/pages/Places/add_place_page.dart';
 import 'package:app/pages/Statistic/hero_test_page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/services/signal_r.dart';
@@ -33,7 +34,7 @@ class _TestPageState extends State<TestPage> {
                 );
               },
             ),
-                        StreamBuilder<SignalStatus>(
+            StreamBuilder<SignalStatus>(
               stream: service.connectionStatus,
               initialData: SignalStatus.none,
               builder: (BuildContext context, snapshot) {
@@ -69,10 +70,7 @@ class _TestPageState extends State<TestPage> {
             ),
             OutlineButton.icon(
               borderSide: BorderSide(color: Colors.white),
-              icon: Icon(
-                Icons.directions_boat,
-                color: Colors.greenAccent
-              ),
+              icon: Icon(Icons.directions_boat, color: Colors.greenAccent),
               label: Text('Signal disconect'),
               onPressed: () async {
                 var signal = new SignalR();
@@ -133,10 +131,9 @@ class _TestPageState extends State<TestPage> {
             Hero(
               tag: "DemoTag",
               child: IconButton(
-                icon: Icon(Icons.add, size: 70),
-                onPressed: () => Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => Hero2())),
-              ),
+                  icon: Icon(Icons.add, size: 70),
+                  onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => AddPlacePage()))),
             ),
           ],
         ),
