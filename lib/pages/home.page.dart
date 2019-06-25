@@ -21,6 +21,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'Places/places_map_page.dart';
 import 'SmokeSession/Components/gradiend_color_wheel_rotate.dart';
 import 'SmokeSession/smoke_session_page.dart';
 
@@ -285,7 +286,7 @@ class _HomePageState extends State<HomePage> {
         index: _currentIndex,
         children: <Widget>[
           _buildOffstageNavigator(new MixologyList(), 0),
-          _buildOffstageNavigator(new PlacesPage(), 1),
+          _buildOffstageNavigator(new PlacesMapPage(), 1),
           _buildOffstageNavigator(
               new StartSmokeSessionPage(callback: _setActiveTab), 2),
           _buildOffstageNavigator(new GearPage(), 3),

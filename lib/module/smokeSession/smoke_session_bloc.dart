@@ -218,22 +218,22 @@ class SmokeSessionBloc {
     switch (type) {
       case 'Hookah':
         selection.pipe = accesory;
-        selection.pipeId = accesory.id;
+        selection.pipeId = accesory?.id;
         break;
 
       case 'Bowl':
         selection.bowl = accesory;
-        selection.bowlId = accesory.id;
+        selection.bowlId = accesory?.id;
         break;
 
       case 'heatmanagement':
         selection.heatManagement = accesory;
-        selection.heatManagementId = accesory.id;
+        selection.heatManagementId = accesory?.id;
         break;
 
       case 'coal':
         selection.coal = accesory;
-        selection.coalId = accesory.id;
+        selection.coalId = accesory?.id;
         break;
     }
 

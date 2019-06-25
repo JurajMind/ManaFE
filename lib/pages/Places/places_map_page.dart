@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:app/app/app.dart';
 
 import 'package:app/components/Places/map_carousel.dart';
+import 'package:app/components/Reservations/reservation_item.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
@@ -13,9 +14,12 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/api.dart';
+import 'package:queries/collections.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:math' show cos, sqrt, asin;
 import 'package:flutter/services.dart' show rootBundle;
+
+import 'Reservations/reservations_page.dart';
 
 class PlacesMapPage extends StatefulWidget {
   final Position position;
@@ -40,6 +44,9 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   PlacesBloc bloc;
   BitmapDescriptor _manaMarker;
   PlaceSimpleDto _selectedPlace;
+  bool moving = false;
+
+  StreamSubscription<Position> positionSub;
   @override
   initState() {
     super.initState();
@@ -65,6 +72,10 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
 
     new Future.delayed(Duration.zero, () {
       bloc = DataProvider.getData(context).placeBloc;
+      positionSub = bloc.location.asBroadcastStream().listen((newPosition) {
+        setView(newPosition);
+      });
+
       setMarkers(bloc.places.value);
       nearbyPlaces.add(bloc.places.value);
       bloc.places.doOnData((onData) {
@@ -77,6 +88,23 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
       }
       _createMarkerImageFromAsset(context);
     });
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+    positionSub.cancel();
+  }
+
+  Future setView(Position position) async {
+    if (widget?.position != null || widget?.place?.address != null) return;
+    if (position == null) return;
+    var view = CameraPosition(
+      target: LatLng(position.latitude, position.longitude),
+      zoom: 14.4746,
+    );
+    var c = await _controller.future;
+    c.animateCamera(CameraUpdate.newCameraPosition(view));
   }
 
   Future<void> _createMarkerImageFromAsset(BuildContext context) async {
@@ -108,6 +136,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
 
   @override
   Widget build(BuildContext context) {
+    var reservationBloc = DataProvider.getData(context).reservationBloc;
     return SafeArea(
       top: true,
       child: new Scaffold(
@@ -129,7 +158,9 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                           onCameraIdle: () {
                             var distance = calculateDistance(
                                 lastIdleView.target, curentView.target);
-
+                            setState(() {
+                              moving = false;
+                            });
                             lastIdleView = curentView;
                             if (distance > 5) {
                               loadNearby();
@@ -137,6 +168,10 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                           },
                           onCameraMove: (cv) {
                             curentView = cv;
+                            if (!moving)
+                              setState(() {
+                                moving = true;
+                              });
                           },
                           mapType: MapType.normal,
                           compassEnabled: true,
@@ -165,15 +200,17 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                   Positioned(
                     top: 10,
                     right: MediaQuery.of(context).size.width / 2,
-                    child: FloatingActionButton(
-                      heroTag: 'Search',
-                      backgroundColor: AppColors.scafBg,
-                      child: Icon(
-                        Icons.search,
-                        color: Colors.white,
-                      ),
-                      onPressed: () => searchCity(context),
-                    ),
+                    child: moving
+                        ? Container()
+                        : FloatingActionButton(
+                            heroTag: 'Search',
+                            backgroundColor: AppColors.scafBg,
+                            child: Icon(
+                              Icons.search,
+                              color: Colors.white,
+                            ),
+                            onPressed: () => searchCity(context),
+                          ),
                   ),
                   Positioned(
                     top: 0,
@@ -187,22 +224,80 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                   Positioned(
                     top: 10,
                     right: (MediaQuery.of(context).size.width / 2) - 60,
-                    child: FloatingActionButton(
-                        heroTag: "refresh",
-                        backgroundColor: AppColors.scafBg,
-                        child: loading
-                            ? CircularProgressIndicator()
-                            : Icon(
-                                Icons.refresh,
-                                color: Colors.white,
-                              ),
-                        onPressed: () => loadNearby()),
-                  )
+                    child: moving
+                        ? Container()
+                        : FloatingActionButton(
+                            heroTag: "refresh",
+                            backgroundColor: AppColors.scafBg,
+                            child: loading
+                                ? CircularProgressIndicator()
+                                : Icon(
+                                    Icons.refresh,
+                                    color: Colors.white,
+                                  ),
+                            onPressed: () => loadNearby()),
+                  ),
+                  Positioned(
+                      bottom: 150,
+                      right: (MediaQuery.of(context).size.width / 2) - 60,
+                      child: moving
+                          ? Container()
+                          : Container(
+                              child: Row(children: [
+                              OutlineButton(
+                                color: Colors.black,
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(30.0)),
+                                borderSide: BorderSide(color: Colors.white),
+                                hoverColor: Colors.black,
+                                child: Text(
+                                  'All reservations',
+                                  style: Theme.of(context).textTheme.display3,
+                                ),
+                                onPressed: () => Navigator.of(context).push(
+                                        new MaterialPageRoute(
+                                            builder: (BuildContext context) {
+                                      return new ReservationsPage();
+                                    })),
+                              )
+                            ]))),
                 ],
               );
             }),
       ),
     );
+  }
+
+  StreamBuilder<List<PlacesReservationsReservationDto>> reservationBuilder(
+      BehaviorSubject<List<PlacesReservationsReservationDto>> reservations) {
+    return StreamBuilder(
+        stream: reservations,
+        initialData: null,
+        builder: (context, snapshot) {
+          PlacesReservationsReservationDto reservation;
+          if (snapshot.data != null) {
+            var upcomingReservations = new Collection(snapshot.data);
+            reservation = upcomingReservations
+                .where$1((predicate, _) =>
+                    predicate.time.compareTo(DateTime.now()) > 0 &&
+                    predicate.status != 1)
+                .orderBy((p) => p.time)
+                .firstOrDefault();
+          }
+          return SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (reservation == null) {
+                  return Container();
+                }
+                return ReservationItem(reservation: reservation ?? null);
+              },
+              childCount:
+                  snapshot.data == null ? 0 : snapshot.data.length == 0 ? 0 : 1,
+            ),
+          );
+        });
   }
 
   void searchCity(BuildContext context) async {

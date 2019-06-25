@@ -1,5 +1,7 @@
+import 'package:app/const/theme.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
+import 'package:app/models/extensions.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/accesory_search.dart';
 import 'package:app/pages/home.page.dart';
@@ -40,10 +42,18 @@ class MetadataItem extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     flex: 4,
-                    child: Text(
-                      type,
-                      style: TextStyle(
-                          fontSize: 20.0, fontWeight: FontWeight.bold),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                            padding: EdgeInsets.only(right: 4),
+                            height: 30,
+                            child: Extensions.defaultTypePicture(this.type)),
+                        Text(
+                          type,
+                          style: TextStyle(
+                              fontSize: 20.0, fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                   ),
                   Expanded(
@@ -68,7 +78,7 @@ class MetadataItem extends StatelessWidget {
             direction: Axis.horizontal,
             alignment: WrapAlignment.start,
             crossAxisAlignment: WrapCrossAlignment.center,
-            runAlignment: WrapAlignment.center,
+            runAlignment: WrapAlignment.start,
             children: pipeAccesoryChips(pipeAccesories, selectedAccesories),
           )
         ],
@@ -78,43 +88,24 @@ class MetadataItem extends StatelessWidget {
 
   List<Widget> pipeAccesoryChips(
       List<PipeAccesorySimpleDto> acc, PipeAccesorySimpleDto selected) {
-    acc.sort((a, b) {
-      if (a.id == selected.id) {
-        return -100;
-      }
+    var sorted = new List<PipeAccesorySimpleDto>.from(acc);
+    sorted.sort((a, b) {
       return a.name.compareTo(b.name);
     });
 
-    return acc.take(5).map<Widget>((a) {
-      return filterChip(a, a.id == selected.id);
-    }).toList();
-  }
-
-  Widget filterChip(PipeAccesorySimpleDto accesory, bool selected) {
-    final shape = new RoundedRectangleBorder(
-      side: const BorderSide(
-          width: 0.66, style: BorderStyle.solid, color: Colors.white),
-      borderRadius: BorderRadius.circular(20.0),
-    );
-    var name = '';
-    if (accesory.name != null) {
-      name = '${accesory.brand} ${accesory.name}';
+    sorted = sorted.take(5).toList();
+    if (sorted.indexOf(selected) == -1) {
+      if (selected?.id != null) sorted.insert(0, selected);
     }
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
-      child: new FilterChip(
-        label: Text(name),
-        shape: shape,
-        onSelected: (value) {
-          this.bloc.setMetadataAccesory(accesory, searchType);
-        },
-        selectedColor: Colors.white,
-        disabledColor: Colors.black,
-        labelStyle: TextStyle(color: selected ? Colors.black : Colors.white),
-        backgroundColor: selected ? Colors.white : Colors.black,
-        selected: selected,
-      ),
-    );
+
+    return sorted.take(5).map<Widget>((a) {
+      return FilterChip(
+        selected: a?.id == selected?.id,
+        accesory: a,
+        bloc: bloc,
+        searchType: searchType,
+      );
+    }).toList();
   }
 
   void showSearchDialog({BuildContext context, Widget child}) {
@@ -126,5 +117,46 @@ class MetadataItem extends StatelessWidget {
         this.bloc.setMetadataAccesory(value, searchType);
       }
     });
+  }
+}
+
+class FilterChip extends StatelessWidget {
+  final PipeAccesorySimpleDto accesory;
+  final bool selected;
+  final SmokeSessionBloc bloc;
+  const FilterChip(
+      {Key key, this.accesory, this.selected, this.bloc, this.searchType})
+      : super(key: key);
+  final String searchType;
+
+  @override
+  Widget build(BuildContext context) {
+    var name = '';
+    if (accesory?.name != null) {
+      name = '${accesory.brand} ${accesory.name}';
+    }
+    return Padding(
+        padding: const EdgeInsets.all(4),
+        child: InkWell(
+          onTap: () {
+            if (selected) {
+              this.bloc.setMetadataAccesory(null, searchType);
+            } else {
+              this.bloc.setMetadataAccesory(accesory, searchType);
+            }
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                color: selected ? AppColors.colors[0] : AppColors.black,
+                borderRadius: new BorderRadius.all(const Radius.circular(30.0)),
+                border: new Border.all(
+                    color: const Color.fromRGBO(221, 221, 221, 1.0), width: 1)),
+            padding: EdgeInsets.all(5),
+            child: Text(
+              name,
+              style: Theme.of(context).textTheme.display4,
+            ),
+          ),
+        ));
   }
 }

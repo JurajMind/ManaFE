@@ -18,7 +18,7 @@ class PipeAccesoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (accesory == null) {
-      return Container();
+      Text('No data');
     }
     return Padding(
       padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
@@ -41,7 +41,7 @@ class PipeAccesoryWidget extends StatelessWidget {
             flex: 1,
           ),
           Expanded(
-            child: this.accesory.id != null
+            child: this.accesory?.id != null
                 ? Text("${accesory.brand} ${accesory.name}")
                 : Text('No data'),
             flex: 2,

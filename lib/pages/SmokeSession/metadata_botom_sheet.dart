@@ -53,7 +53,7 @@ class MetadataBottomSheet extends StatelessWidget {
                 (a) => a.bowl),
             buildMetadataItem(
                 smokeSessionBloc,
-                "Heat managment",
+                "H.M.S",
                 'heatmanagement',
                 Icons.refresh,
                 personBloc.myGear.value != null
@@ -74,8 +74,22 @@ class MetadataBottomSheet extends StatelessWidget {
                     : new List<PipeAccesorySimpleDto>(),
                 (a) => a.coal),
             SizedBox(
-              height: 50,
-            )
+              height: 20,
+            ),
+            Center(
+              child: OutlineButton.icon(
+                borderSide: BorderSide(color: Colors.white),
+                icon: Icon(
+                  Icons.save,
+                  color: AppColors.colors[0],
+                ),
+                label: Text('Save preset'),
+                onPressed: () async {},
+              ),
+            ),
+            SizedBox(
+              height: 100,
+            ),
           ],
         ),
       ),
