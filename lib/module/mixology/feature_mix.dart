@@ -10,7 +10,7 @@ class FeatureMixCreator extends StatelessWidget {
   Widget build(BuildContext context) {
     var mixologyBloc = DataProvider.getData(context).mixologyBloc;
 
-    return StreamBuilder<List<MixCreator>>(
+    return StreamBuilder<List<FeatureMixCreatorDto>>(
       stream: mixologyBloc.mixCreator,
       initialData: null,
       builder: (context, snapshot) {
@@ -30,7 +30,7 @@ class FeatureMixCreator extends StatelessWidget {
                             height: 50.0,
                             child: AppBar(
                               backgroundColor: Colors.black,
-                              title: Text(item.displayName),
+                              title: Text(item.name),
                             ),
                           ),
                           Expanded(
@@ -49,12 +49,12 @@ class FeatureMixCreator extends StatelessWidget {
                   width: 60,
                   height: 60,
                   child: CachedNetworkImage(
-                    imageUrl: Extensions.getAbsoluteurl(item.picture),
+                    imageUrl: Extensions.getAbsoluteurl(item.logoPicture),
                     errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
                 ),
                 title: Text(item.name),
-                subtitle: Text('${item.mixCount} mixes created'),
+                subtitle: Text('0 mixes created'),
               );
             });
       },

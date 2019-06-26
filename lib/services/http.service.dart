@@ -104,11 +104,11 @@ class ApiClient {
         .then((json) => TobaccoMixSimpleDto.listFromJson(json).toList());
   }
 
-  Future<List<MixCreator>> getMixCreator() async {
-    var url = Uri.https(baseUrl, '/api/Mixology/GetMixCreators');
+  Future<List<FeatureMixCreatorDto>> getMixCreator() async {
+    var url = Uri.https(baseUrl, '/api/FeatureMix/FeatureCreators');
     return _getJson(url)
-        .then((json) => MixCreatorsDto.fromJson(json))
-        .then((m) => m.mixCreatorsList);
+        .then((json) => FeatureMixCreatorDto.listFromJson(json));
+        
   }
 
   Future<SessionIdValidation> validateSessionId(String sessionId) {

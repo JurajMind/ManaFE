@@ -17,6 +17,8 @@ class StartPage extends StatefulWidget {
 }
 
 class StartPageState extends State<StartPage> with TickerProviderStateMixin {
+  bool facebookLoginLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -70,25 +72,28 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                       ),
                       new Container(
                         width: screenSize.width,
-                        child: new RoundedButton(
-                          buttonName: 'Facebook login',
-                          onTap: () {
-                            facebookLogin();
-                          },
-                          buttonColor: Colors.white,
-                          borderWidth: 1.0,
-                          bottomMargin: 1.0,
-                          height: 50.0,
-                          width: screenSize.width,
-                          textColor: Colors.black,
-                        ),
+                        child: facebookLoginLoading
+                            ? CircularProgressIndicator()
+                            : RoundedButton(
+                                buttonName: 'Facebook login',
+                                onTap: () {
+                                  facebookLogin();
+                                },
+                                buttonColor: Colors.white,
+                                borderWidth: 1.0,
+                                bottomMargin: 1.0,
+                                height: 50.0,
+                                width: screenSize.width,
+                                textColor: Colors.black,
+                              ),
                         margin: new EdgeInsets.only(top: 25.0),
                       ),
                       new Container(
                         width: screenSize.width,
                         child: new FlatButton(
                           child: new Text(
-                            'I alredy have an account',style: Theme.of(context).textTheme.display2,
+                            'I alredy have an account',
+                            style: Theme.of(context).textTheme.display2,
                           ),
                           onPressed: () {
                             navigate(context, 'auth/login');
@@ -114,10 +119,17 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
         case FacebookLoginStatus.loggedIn:
           {
             var auth = new Authorize();
+            setState(() {
+              facebookLoginLoading = true;
+            });
             var tokenResult =
                 await auth.getLocalToken("Facebook", result.accessToken.token);
             if (tokenResult) {
               AppWidget.restartApp(context);
+            } else {
+              setState(() {
+                facebookLoginLoading = false;
+              });
             }
             break;
           }
