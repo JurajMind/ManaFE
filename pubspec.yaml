@@ -20,43 +20,44 @@ dependencies:
       ref: develop
   tuple: ^1.0.2
   percent_indicator: '^1.0.13'
-  dio: ^2.1.7
-  flutter_facebook_login: ^2.0.0
-  geolocator: ^3.0.1
-  cached_network_image: ^0.8.0
+  dio: ^2.1.8
+  flutter_facebook_login: ^2.0.1
+  geolocator: ^5.0.1
+  cached_network_image: ^1.0.0
   date_utils: ^0.1.0
-  flutter_launcher_icons: ^0.6.1
+  flutter_launcher_icons: ^0.7.2+1
   openapi:
     path: ./openapi
-  sticky_headers: '^0.1.7'
+  sticky_headers: '^0.1.8'
   sembast: ^1.13.0
-  url_launcher: ^5.0.2
-  google_maps_flutter: ^0.5.17
+  url_launcher: ^5.0.3
+  google_maps_flutter: ^0.5.19
   tinycolor: ^1.0.2
   shimmer: ^1.0.0
   date_format: ^1.0.6
-  lazy_load_scrollview: ^0.0.2
+  lazy_load_scrollview: ^1.0.0
   material_design_icons_flutter: ^3.2.3595
   queries: ^0.1.9
   sliver_fab: '^1.0.0'
   font_awesome_flutter: ^8.4.0
-  flutter_advanced_networkimage: ^0.4.14
+  flutter_advanced_networkimage: ^0.4.15
   uri: ^0.11.3+1
-  google_maps_webservice: ^0.0.12
+  google_maps_webservice: ^0.0.14
   firebase_messaging: ^4.0.0+1
   charts_flutter: ^0.6.0
-  flutter_section_table_view: ^1.0.3
+  flutter_section_table_view: ^1.0.5
   shake: ^0.1.0
   wave: ^0.0.8
   share: ^0.6.1
   achievement_view: ^0.1.2
   avatar_glow: ^0.2.0
-  auto_size_text: ^2.0.0+2
-  flushbar: ^1.6.0
+  auto_size_text: ^2.0.1
+  flushbar: ^1.7.0
   date_range_picker: ^1.0.5
   fast_qr_reader_view:
     git: https://github.com/facundomedica/fast_qr_reader_view
   flutter_material_color_picker: ^1.0.0
+  flutter_form_builder: ^3.2.3
 
 flutter_icons:
   android: true

@@ -45,11 +45,13 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   BitmapDescriptor _manaMarker;
   PlaceSimpleDto _selectedPlace;
   bool moving = false;
+  bool isDefaultPage = true;
 
   StreamSubscription<Position> positionSub;
   @override
   initState() {
     super.initState();
+    isDefaultPage = widget.position == null && widget.place == null;
     rootBundle.loadString('assets/map_style.txt').then((string) {
       _mapStyle = string;
     });
@@ -216,7 +218,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                     top: 0,
                     left: 0,
                     child: IconButton(
-                      icon: Icon(Icons.chevron_left,
+                      icon: isDefaultPage ? Container():Icon(Icons.chevron_left,
                           color: Colors.black, size: 50),
                       onPressed: () => Navigator.of(context).pop(),
                     ),

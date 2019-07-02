@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:app/Helpers/place_helper.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/models/extensions.dart';
+import 'package:app/pages/Places/add_place_page.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -25,20 +26,20 @@ class _CarrousselState extends State<MapCarousel> {
   _CarrousselState();
 
   PageController controller;
-  int currentpage = 0;
+  int currentpage = 1;
   bool loading = true;
-  int clickedIndex = 0;
+  int clickedIndex = 1;
 
   @override
   initState() {
     super.initState();
 
-    if(widget.selectedPlace != null){
+    if (widget.selectedPlace != null) {
       currentpage = widget.nearbyPlaces.value.indexOf(widget.selectedPlace);
-      widget.nearbyPlaces.doOnData((onData){
-      var index = onData.indexOf(widget.selectedPlace);
-       controller.jumpToPage(index);
-     });
+      widget.nearbyPlaces.doOnData((onData) {
+        var index = onData.indexOf(widget.selectedPlace);
+        controller.jumpToPage(index);
+      });
     }
 
     controller = new PageController(
@@ -52,7 +53,6 @@ class _CarrousselState extends State<MapCarousel> {
   }
 
   @override
-
   dispose() {
     controller.dispose();
     super.dispose();
@@ -72,27 +72,60 @@ class _CarrousselState extends State<MapCarousel> {
         initialData: null,
         stream: bloc,
         builder: (context, snapshot) => PageView.builder(
-              scrollDirection: Axis.horizontal,
-              controller: controller,
-              onPageChanged: (value) async {
-                setState(() {
-                  currentpage = value;
-                });
-                var place = snapshot.data[value];
-                final GoogleMapController controller =
-                    await widget.mapController.future;
-                await controller.animateCamera(CameraUpdate.newCameraPosition(
-                    CameraPosition(
-                        bearing: 0,
-                        target: LatLng(double.parse(place.address.lat),
-                            double.parse(place.address.lng)),
-                        tilt: 0,
-                        zoom: 15.151926040649414)));
-              },
-              itemCount: snapshot.data != null ? snapshot.data.length : 0,
-              itemBuilder: (context, index) =>
-                  buildInkWell(index, snapshot.data[index]),
-            ));
+            scrollDirection: Axis.horizontal,
+            controller: controller,
+            onPageChanged: (value) async {
+              setState(() {
+                currentpage = value;
+              });
+              var place = snapshot.data[value];
+              final GoogleMapController controller =
+                  await widget.mapController.future;
+              await controller.animateCamera(CameraUpdate.newCameraPosition(
+                  CameraPosition(
+                      bearing: 0,
+                      target: LatLng(double.parse(place.address.lat),
+                          double.parse(place.address.lng)),
+                      tilt: 0,
+                      zoom: 15.151926040649414)));
+            },
+            itemCount: snapshot.data != null ? snapshot.data.length + 1 : 0,
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return buildAdd();
+              }
+              return buildInkWell(index, snapshot.data[index - 1]);
+            }));
+  }
+
+  Widget buildAdd() {
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => AddPlacePage(), fullscreenDialog: true));
+      },
+      child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Container(
+              width: MediaQuery.of(context).size.width * 0.4,
+              decoration: BoxDecoration(
+                  borderRadius: new BorderRadius.circular(10.0),
+                  border: new Border.all(color: Colors.white, width: 2),
+                  color: Colors.transparent),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(Icons.add_location),
+                  Hero(
+                    tag: 'add_new_place_label',
+                    child: Text(
+                      'Add new place',
+                      style: Theme.of(context).textTheme.display2,
+                    ),
+                  )
+                ],
+              ))),
+    );
   }
 
   InkWell buildInkWell(int index, PlaceSimpleDto place) {
@@ -105,7 +138,6 @@ class _CarrousselState extends State<MapCarousel> {
     }
     return new InkWell(
       onTap: () async {
-      
         if (currentpage > index) {
           controller.previousPage(
               duration: Duration(milliseconds: 500), curve: Curves.ease);

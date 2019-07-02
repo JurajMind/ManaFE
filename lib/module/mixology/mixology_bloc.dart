@@ -14,7 +14,7 @@ class MixologyBloc {
   final _cache = Map<int, TobaccoMixSimpleDto>();
   final _downloaders = Map<int, Future<List<TobaccoMixSimpleDto>>>();
 
-  final mixCreator = BehaviorSubject<List<MixCreator>>();
+  final mixCreator = BehaviorSubject<List<FeatureMixCreatorDto>>();
 
   final Map<String, BehaviorSubject<List<TobaccoMixSimpleDto>>>
       mixCreatorMixes =

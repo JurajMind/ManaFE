@@ -1,12 +1,7 @@
-import 'dart:async';
-import 'package:app/const/theme.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 
-import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
-import 'package:app/pages/SmokeSession/Components/picker_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/api.dart';
 import 'package:vibrate/vibrate.dart';
 
