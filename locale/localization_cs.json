@@ -14,7 +14,16 @@
     "day_short_2": "Ut",
     "day_short_3": "Str",
     "day_short_4": "Čtr",
-    "day_short_5": "Pia",
+    "day_short_5": "Pa",
     "day_short_6": "So",
-    "day_short_7": "Ne"
+    "day_short_7": "Ne",
+    "day_long_1": "Pondělí",
+    "day_long_2": "Úterý",
+    "day_long_3": "Středa",
+    "day_long_4": "Čtvrtek",
+    "day_long_5": "Pátek",
+    "day_long_6": "Sobota",
+    "day_long_7": "Neděle"
+
+
 }

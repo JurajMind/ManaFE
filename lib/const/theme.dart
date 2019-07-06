@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
 ThemeData buildDarkTheme() {
-  const Color primaryColor = const Color(0xFF0175c2);
   final ThemeData base = new ThemeData.dark();
   return base.copyWith(
-    primaryColor: primaryColor,
-    buttonColor: primaryColor,
+    primaryColor: AppColors.colors[1],
+    buttonColor: AppColors.colors[1],
     indicatorColor: Colors.white,
-    accentColor: const Color(0xFF13B9FD),
+    accentColor: AppColors.colors[1],
     canvasColor: const Color(0xFF202124),
     scaffoldBackgroundColor: Colors.black,
     backgroundColor: const Color(0xFF202124),

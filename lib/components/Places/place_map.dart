@@ -17,6 +17,9 @@ class PlaceMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (place?.address == null) {
+      return Container();
+    }
     return new InkWell(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => PlacesMapPage(

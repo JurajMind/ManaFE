@@ -1,13 +1,14 @@
 import 'dart:async';
 
 import 'package:app/app/app.dart';
+import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/start.page.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:app/utils/translations/app_translations_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:app/utils/theme.dart';
+
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 final navigatorKey = new GlobalKey<NavigatorState>();
