@@ -39,7 +39,10 @@ class _PlaceInfoState extends State<PlaceInfo> {
               new LeadingIcon(
                   color: getColor(),
                   icon: Icons.watch,
-                  child: OpenDropdown(place: widget.place)),
+                  child: OpenDropdown(
+                    place: widget.place,
+                    dark: false,
+                  )),
               widget.place.phoneNumber != null
                   ? InkWell(
                       onTap: () => launch('tel://${widget.place.phoneNumber}'),

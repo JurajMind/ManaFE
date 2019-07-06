@@ -13,5 +13,12 @@
     "day_short_4": "Thu",
     "day_short_5": "Fri",
     "day_short_6": "Sat",
-    "day_short_7": "Sun"
+    "day_short_7": "Sun",
+    "day_long_1": "Monday",
+    "day_long_2": "Tuesday",
+    "day_long_3": "Wednesday",
+    "day_long_4": "Thursday",
+    "day_long_5": "Friday",
+    "day_long_6": "Saturday",
+    "day_long_7": "Sunday"
 }
