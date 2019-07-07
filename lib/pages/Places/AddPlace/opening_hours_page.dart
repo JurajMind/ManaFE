@@ -66,9 +66,13 @@ class _OpeningHoursPageState extends State<OpeningHoursPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Opening hours'),
+        title: Text('Opening hours'.toUpperCase()),
         centerTitle: true,
         backgroundColor: Colors.black,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () => Navigator.of(context).pop(result),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(

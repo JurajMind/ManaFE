@@ -109,7 +109,6 @@ class SplashScreen extends StatelessWidget {
     return Center(
         child: new Column(
       children: <Widget>[
-        Text('Manapipes'),
         CircularProgressIndicator(),
       ],
     ));

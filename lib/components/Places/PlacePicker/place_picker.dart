@@ -622,6 +622,10 @@ class SearchInputState extends State<SearchInput> {
           ),
           Expanded(
             child: TextField(
+              style: Theme.of(context)
+                  .textTheme
+                  .display2
+                  .apply(color: Colors.black),
               decoration: InputDecoration(
                 hintText: "Search address",
                 fillColor: Colors.black,

@@ -65,7 +65,7 @@ packages:
       name: boolean_selector
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.5"
+    version: "1.0.4"
   cached_network_image:
     dependency: "direct main"
     description:
@@ -608,6 +608,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.21.0"
+  screenshot_share:
+    dependency: "direct main"
+    description:
+      name: screenshot_share
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   sembast:
     dependency: "direct main"
     description:

@@ -20,6 +20,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:openapi/api.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:screenshot_share/screenshot_share.dart';
 import 'package:share/share.dart';
 
 import 'Components/session_control_row.dart';
@@ -215,8 +216,8 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                 actions: <Widget>[
                   IconButton(
                       icon: Icon(Icons.share),
-                      onPressed: () => Share.share(
-                          'check out my website https://example.com')),
+                      onPressed: () =>
+                          ScreenshotShare.takeScreenshotAndShare()),
                 ],
                 expandedHeight: 200.0,
                 backgroundColor: Colors.black,
@@ -345,8 +346,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                 new ListTile(
                     leading: new Icon(FontAwesomeIcons.share),
                     title: new Text('Share'),
-                    onTap: () => Share.share(
-                        'check out my website https://example.com')),
+                    onTap: () => ScreenshotShare.takeScreenshotAndShare()),
                 new ListTile(
                   leading: new Icon(FontAwesomeIcons.vial),
                   title: new Text('Experiments'),
