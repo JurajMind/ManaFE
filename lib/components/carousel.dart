@@ -76,7 +76,7 @@ class _CarrousselState extends State<Carroussel> {
         initialData: null,
         stream: bloc.places,
         builder: (context, snapshot) {
-          if (snapshot.data.length == 0) {
+          if (snapshot.data == null || snapshot.data.length == 0) {
             return Row(
               children: <Widget>[
                 Text('Its empty here , know some place ? Add it!'),

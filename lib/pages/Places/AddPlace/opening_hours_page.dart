@@ -15,20 +15,19 @@ class EditablkeBusinessHour extends BusinessHoursDto {
       ? EditablkeBusinessHour.df.format(this.close)
       : 'Closed';
 
-  @override
-  int get day => this.id;
-
   DateTime open;
   DateTime close;
 
   EditablkeBusinessHour(int day, this.open, this.close) {
     super.id = day;
+    super.day = (day + 1) % 7;
   }
 
   EditablkeBusinessHour.fromDto(BusinessHoursDto bh) {
     this.open = df.parse(bh.openTine);
     this.close = df.parse(bh.closeTime);
-    super.day = bh.id;
+    super.day = bh.day;
+    super.id = day;
   }
 }
 
@@ -56,7 +55,7 @@ class _OpeningHoursPageState extends State<OpeningHoursPage> {
     } else {
       result = List.generate(7, (index) {
         var bh = new EditablkeBusinessHour(index,
-            new DateTime(1000, 1, 1, 10, 0), new DateTime(100, 1, 1, 20, 0));
+            new DateTime(1000, 1, 1, 10, 0), new DateTime(100, 1, 1, 22, 0));
         return bh;
       });
     }
@@ -108,15 +107,6 @@ class _OpeningHoursPageState extends State<OpeningHoursPage> {
                             : null,
                       ),
                       IconButton(
-                        icon: Icon(Icons.arrow_upward),
-                        onPressed: () => f.id > 1
-                            ? setState(() {
-                                result[f.id - 1].open = result[f.id].open;
-                                result[f.id - 1].close = result[f.id].close;
-                              })
-                            : null,
-                      ),
-                      IconButton(
                         icon: Icon(Icons.delete),
                         onPressed: () => f.id > 1
                             ? setState(() {
@@ -131,7 +121,7 @@ class _OpeningHoursPageState extends State<OpeningHoursPage> {
               );
             }),
             SizedBox(
-              height: 10,
+              height: 30,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -156,7 +146,8 @@ class _OpeningHoursPageState extends State<OpeningHoursPage> {
                   },
                 ),
               ],
-            )
+            ),
+            SizedBox(height: 100),
           ],
         ),
       ),
@@ -182,7 +173,7 @@ class DayEdit extends StatelessWidget {
           Text(getLongDayName(bh.id + 1, context),
               style: Theme.of(context).textTheme.display1),
           SizedBox(
-            height: 6,
+            height: 8,
           ),
           Row(
             mainAxisSize: MainAxisSize.max,
@@ -214,7 +205,10 @@ class DayEdit extends StatelessWidget {
                 ),
               ),
             ],
-          )
+          ),
+          SizedBox(
+            height: 16,
+          ),
         ],
       ),
     );

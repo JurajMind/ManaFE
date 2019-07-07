@@ -13,7 +13,7 @@ import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MapCarousel extends StatefulWidget {
-  PlaceSimpleDto selectedPlace;
+  final PlaceSimpleDto selectedPlace;
 
   MapCarousel({this.nearbyPlaces, this.mapController, this.selectedPlace});
   final Completer<GoogleMapController> mapController;

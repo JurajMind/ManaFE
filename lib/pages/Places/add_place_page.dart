@@ -1,11 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:app/app/app.dart';
 import 'package:app/components/Places/PlacePicker/place_picker.dart';
 import 'package:app/components/Places/open_dropdown.dart';
 import 'package:app/const/theme.dart';
+import 'package:app/module/data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/api.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 import 'AddPlace/opening_hours_page.dart';
 import 'add_place_submit_page.dart';
@@ -28,8 +33,17 @@ class _AddPlacePageState extends State<AddPlacePage> {
 
   bool invalidAddress = false;
 
+  bool _uploading = false;
+
   @override
   Widget build(BuildContext context) {
+    var placesBloc = DataProvider.getData(context).placeBloc;
+    LatLng initPosition;
+    if (placesBloc.location.value != null) {
+      LatLng(placesBloc.location.value.latitude,
+          placesBloc.location.value.longitude);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Hero(tag: 'add_new_place_label', child: Text('Add new place')),
@@ -57,7 +71,6 @@ class _AddPlacePageState extends State<AddPlacePage> {
                     decoration: InputDecoration(
                         labelText: "Phone number or other contact"),
                     validators: [],
-                    keyboardType: TextInputType.number,
                   ),
                   SizedBox(
                     height: 10,
@@ -87,7 +100,7 @@ class _AddPlacePageState extends State<AddPlacePage> {
                           child: IconButton(
                             icon: Icon(Icons.map),
                             onPressed: () async {
-                              showPlacePicker();
+                              showPlacePicker(initPosition);
                             },
                           ))
                     ],
@@ -153,7 +166,9 @@ class _AddPlacePageState extends State<AddPlacePage> {
                     ],
                   ),
                   FormBuilderCheckboxList(
-                    decoration: InputDecoration(labelText: "Place features"),
+                    decoration: InputDecoration(
+                        labelText: "Place features",
+                        labelStyle: TextStyle(fontSize: 24)),
                     attribute: "features",
                     initialValue: ["CASH"],
                     options: [
@@ -180,24 +195,26 @@ class _AddPlacePageState extends State<AddPlacePage> {
             SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                OutlineButton(
-                  color: Colors.green,
-                  child: Text("Submit"),
-                  onPressed: () {
-                    savePlace(context);
-                  },
-                ),
-                MaterialButton(
-                  child: Text("Reset"),
-                  onPressed: () {
-                    _fbKey.currentState.reset();
-                  },
-                ),
-              ],
-            ),
+            _uploading
+                ? CircularProgressIndicator()
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      OutlineButton(
+                        color: Colors.green,
+                        child: Text("Submit"),
+                        onPressed: () {
+                          savePlace(context);
+                        },
+                      ),
+                      MaterialButton(
+                        child: Text("Reset"),
+                        onPressed: () {
+                          _fbKey.currentState.reset();
+                        },
+                      ),
+                    ],
+                  ),
             SizedBox(
               height: 100,
             ),
@@ -209,26 +226,41 @@ class _AddPlacePageState extends State<AddPlacePage> {
 
   void savePlace(BuildContext context) {
     _fbKey.currentState.save();
+    if (_address == null) {
+      setState(() {
+        invalidAddress = true;
+        return;
+      });
+    }
     if (_fbKey.currentState.validate()) {
-      if (_address == null) {
-        setState(() {
-          invalidAddress = true;
-          return;
-        });
-      }
+      if (_address == null) return;
       print(_fbKey.currentState.value);
 
       _result = new PlaceDto();
       _result.name = _fbKey.currentState.value['name'];
-      _result.phoneNumber = _fbKey.currentState.value['phoneNumber'];
+      var contact = _fbKey.currentState.value['phoneNumber'];
+      _result.facebook =
+          _fbKey.currentState.value['owner'] ? 'owner_${contact}' : contact;
       _result.businessHours = _businessHour;
+      if (_businessHour != null) {
+        _result.businessHours.forEach((bh) {
+          bh.id = 0;
+        });
+      }
+
       _result.address = _address?.address;
       _result.flags = _fbKey.currentState.value['features'];
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => AddPlaceSubmitPage(
-                createdPlace: _result,
-              ),
-          fullscreenDialog: true));
+      _uploading = true;
+      var result = json.encode(_result);
+      App.http.addPlace(_result).then((newPlace) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => AddPlaceSubmitPage(
+                  createdPlace: newPlace,
+                ),
+            fullscreenDialog: true));
+      }).catchError((onError) {
+        _uploading = true;
+      });
     }
   }
 
@@ -238,12 +270,10 @@ class _AddPlacePageState extends State<AddPlacePage> {
     super.dispose();
   }
 
-  void showPlacePicker() async {
+  void showPlacePicker(LatLng initPosition) async {
     NearbyAddress result = await Navigator.of(context).push(MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => PlacePicker(
-              kGoogleApiKey,
-            )));
+        builder: (context) => PlacePicker(kGoogleApiKey, initPosition)));
 
     // Handle the result in your way
     print(result);

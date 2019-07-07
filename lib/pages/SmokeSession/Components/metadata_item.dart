@@ -151,7 +151,7 @@ class FilterChip extends StatelessWidget {
             padding: EdgeInsets.all(5),
             child: Text(
               name,
-              style: Theme.of(context).textTheme.display4,
+              style: Theme.of(context).textTheme.display3,
             ),
           ),
         ));

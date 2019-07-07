@@ -103,17 +103,19 @@ class MixDetailPageState extends State<MixDetailPage> {
                   icon: Icon(Icons.share),
                   onPressed: () =>
                       Share.share('check out my website https://example.com')),
-              widget.mix.myMix ? IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () async {
-                  var delete = await deleteConfirn();
-                  if (delete) {
-                    var bloc = DataProvider.getData(context).mixologyBloc;
-                    bloc.deleteMix(widget.mix);
-                    Navigator.of(context).pop();
-                  }
-                }, 
-              ) : Container()
+              widget.mix.myMix
+                  ? IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () async {
+                        var delete = await deleteConfirn();
+                        if (delete) {
+                          var bloc = DataProvider.getData(context).mixologyBloc;
+                          bloc.deleteMix(widget.mix);
+                          Navigator.of(context).pop();
+                        }
+                      },
+                    )
+                  : Container()
             ],
             backgroundColor: Colors.transparent,
             flexibleSpace: new FlexibleSpaceBar(
@@ -130,9 +132,9 @@ class MixDetailPageState extends State<MixDetailPage> {
                               color: Colors.white,
                               icon: Icon(Icons.save),
                               onPressed: () => setState(() {
-                                    editName = false;
-                                    changeName();
-                                  }),
+                                editName = false;
+                                changeName();
+                              }),
                             ),
                             hintText: 'Please enter a mix name'),
                       ),
@@ -159,12 +161,14 @@ class MixDetailPageState extends State<MixDetailPage> {
                             ),
                           ),
                         ),
-                        widget.mix.myMix ? IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () => setState(() {
-                                editName = true;
-                              }),
-                        ) : Container()
+                        widget.mix.myMix
+                            ? IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () => setState(() {
+                                  editName = true;
+                                }),
+                              )
+                            : Container()
                       ],
                     ),
               background: Container(
@@ -185,7 +189,7 @@ class MixDetailPageState extends State<MixDetailPage> {
                   children: widget.mix.tobaccos.map((f) {
                 return ListTile(
                   title: Text(f.tobacco.name,
-                      style: Theme.of(context).textTheme.display4),
+                      style: Theme.of(context).textTheme.display3),
                   trailing: Text(f.fraction.toString() + ' g'),
                   subtitle: Text(f.tobacco.brand,
                       style: Theme.of(context).textTheme.display3),

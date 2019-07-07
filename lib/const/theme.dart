@@ -14,6 +14,7 @@ ThemeData buildDarkTheme() {
     buttonTheme: const ButtonThemeData(
       textTheme: ButtonTextTheme.primary,
     ),
+    appBarTheme: AppBarTheme(color: AppColors.black),
     textTheme: TextTheme(
       headline: TextStyle(
           fontSize: 42.0,
@@ -24,6 +25,10 @@ ThemeData buildDarkTheme() {
           fontWeight: FontWeight.w700,
           fontFamily: 'Montserrat'),
       body1: TextStyle(fontSize: 14.0, fontFamily: 'Montserrat'),
+      body2: TextStyle(
+          fontSize: 30.0,
+          fontWeight: FontWeight.w700,
+          fontFamily: 'Montserrat'),
       subtitle: TextStyle(
           fontSize: 16.0,
           fontWeight: FontWeight.w700,
@@ -37,13 +42,14 @@ ThemeData buildDarkTheme() {
           fontWeight: FontWeight.w700,
           fontFamily: 'Montserrat'),
       display3: TextStyle(
-          fontSize: 12.0,
-          fontWeight: FontWeight.w700,
-          fontFamily: 'Montserrat'),
-      display4: TextStyle(
           fontSize: 14.0,
           fontWeight: FontWeight.w700,
           fontFamily: 'Montserrat'),
+      display4: TextStyle(
+          fontSize: 12.0,
+          fontWeight: FontWeight.w700,
+          fontFamily: 'Montserrat'),
+      caption: TextStyle(fontSize: 12.0, fontFamily: 'Montserrat'),
     ),
     primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
     accentTextTheme: _buildTextTheme(base.accentTextTheme),

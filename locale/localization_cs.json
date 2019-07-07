@@ -2,7 +2,7 @@
 
 
 
-    "tab_mixology": "Mixologie",
+    "tab_mixology": "Mixy",
     "tab_places": "Podniky",
     "tab_gear": "Vybavení",
     "tab_profile": "Profil",
@@ -23,7 +23,17 @@
     "day_long_4": "Čtvrtek",
     "day_long_5": "Pátek",
     "day_long_6": "Sobota",
-    "day_long_7": "Neděle"
+    "day_long_7": "Neděle",
+
+    "home": {
+        "start": "ŠTART",
+        "nearest_place": "Blízká místa"
+    },
+    "enter_code": {
+        "enter_session_code": "Zadajte kód",
+        "session_code": "Kód",
+        "enter": "Potvrď"
+    }
 
 
 }

@@ -215,14 +215,15 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                           ),
                   ),
                   Positioned(
-                    top: 0,
-                    left: 0,
-                    child: IconButton(
-                      icon: isDefaultPage ? Container():Icon(Icons.chevron_left,
-                          color: Colors.black, size: 50),
-                      onPressed: () => Navigator.of(context).pop(),
-                    ),
-                  ),
+                      top: 0,
+                      left: 0,
+                      child: isDefaultPage
+                          ? Container()
+                          : IconButton(
+                              icon: Icon(Icons.chevron_left,
+                                  color: Colors.black, size: 50),
+                              onPressed: () => Navigator.of(context).pop(),
+                            )),
                   Positioned(
                     top: 10,
                     right: (MediaQuery.of(context).size.width / 2) - 60,
@@ -258,10 +259,10 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                                   style: Theme.of(context).textTheme.display3,
                                 ),
                                 onPressed: () => Navigator.of(context).push(
-                                        new MaterialPageRoute(
-                                            builder: (BuildContext context) {
-                                      return new ReservationsPage();
-                                    })),
+                                    new MaterialPageRoute(
+                                        builder: (BuildContext context) {
+                                  return new ReservationsPage();
+                                })),
                               )
                             ]))),
                 ],

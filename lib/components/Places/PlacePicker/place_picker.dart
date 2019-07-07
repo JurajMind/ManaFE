@@ -68,8 +68,8 @@ class PlacePicker extends StatefulWidget {
   /// API key generated from Google Cloud Console. You can get an API key
   /// [here](https://cloud.google.com/maps-platform/)
   final String apiKey;
-
-  PlacePicker(this.apiKey);
+  final LatLng initialTarget;
+  PlacePicker(this.apiKey, this.initialTarget);
 
   @override
   State<StatefulWidget> createState() {
@@ -81,18 +81,12 @@ class PlacePicker extends StatefulWidget {
 class PlacePickerState extends State<PlacePicker> {
   /// Initial waiting location for the map before the current user location
   /// is fetched.
-  static final LatLng initialTarget = LatLng(5.5911921, -0.3198162);
+  LatLng initialTarget;
 
   final Completer<GoogleMapController> mapController = Completer();
 
   /// Indicator for the selected location
-  final Set<Marker> markers = Set()
-    ..add(
-      Marker(
-        position: initialTarget,
-        markerId: MarkerId("selected-location"),
-      ),
-    );
+  final Set<Marker> markers = Set();
 
   /// Result returned after user completes selection
   LocationResult locationResult;
@@ -124,6 +118,13 @@ class PlacePickerState extends State<PlacePicker> {
 
   @override
   initState() {
+    initialTarget = widget.initialTarget ?? LatLng(5.5911921, -0.3198162);
+    markers.add(
+      Marker(
+        position: initialTarget,
+        markerId: MarkerId("selected-location"),
+      ),
+    );
     super.initState();
     rootBundle.loadString('assets/map_style.txt').then((string) {
       _mapStyle = string;
@@ -485,27 +486,32 @@ class PlacePickerState extends State<PlacePicker> {
     String number;
     String street;
     String zip;
-    String city;
+    String locality;
+    String locality1;
+    String locality2;
     addressComponents.forEach((f) {
       try {
         var types = f['types'];
         number = number ?? extractAddressFeature(types, f, 'street_number');
         street = street ?? extractAddressFeature(types, f, 'route');
         zip = zip ?? extractAddressFeature(types, f, 'postal_code');
-        city = city ??
+        locality = locality ?? extractAddressFeature(types, f, 'locality');
+        locality1 = locality1 ??
             extractAddressFeature(types, f, 'administrative_area_level_1');
+        locality2 = locality2 ??
+            extractAddressFeature(types, f, 'administrative_area_level_2');
         var country = extractAddressFeature(types, f, 'country');
 
         return null;
       } catch (e) {}
     });
 
-    result.city = city;
+    result.city = locality ?? locality1 ?? locality2;
     result.number = number;
     result.ZIP = zip;
     result.street = street;
 
-    if (city != null && zip != null && street != null) return result;
+    if (zip != null && street != null) return result;
 
     return null;
   }

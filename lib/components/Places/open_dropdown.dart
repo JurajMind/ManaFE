@@ -29,6 +29,9 @@ class _OpenDropdownState extends State<OpenDropdown> {
 
     if (widget.place != null) {
       bh = widget.place.businessHours;
+      bh.forEach((f) {
+        f.id = f.id;
+      });
     }
 
     if (widget.hours != null) {

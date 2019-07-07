@@ -108,7 +108,6 @@ class ApiClient {
     var url = Uri.https(baseUrl, '/api/FeatureMix/FeatureCreators');
     return _getJson(url)
         .then((json) => FeatureMixCreatorDto.listFromJson(json));
-        
   }
 
   Future<SessionIdValidation> validateSessionId(String sessionId) {
@@ -540,6 +539,13 @@ class ApiClient {
   Future<bool> pushUpdate(int deviceId, int updateId) async {
     var url = Uri.https(baseUrl, '/api/Device/$deviceId/Update/$updateId');
     return await _dio.postUri(url).then((data) => data.data);
+  }
+
+  Future<PlaceDto> addPlace(PlaceDto newPlace) async {
+    var url = Uri.https(baseUrl, '/api/Places/Add');
+    return await _dio
+        .postUri(url, data: newPlace)
+        .then((data) => PlaceDto.fromJson(data.data));
   }
 }
 

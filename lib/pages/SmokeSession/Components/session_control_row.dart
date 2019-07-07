@@ -37,7 +37,7 @@ class SessionControllRow extends StatelessWidget {
                 'Animations',
                 style: Theme.of(context)
                     .textTheme
-                    .display4
+                    .display2
                     .apply(color: AppColors.colors[1]),
               )
             ],
@@ -67,7 +67,7 @@ class SessionControllRow extends StatelessWidget {
                           return Text('Colors',
                               style: Theme.of(context)
                                   .textTheme
-                                  .display4
+                                  .display2
                                   .apply(color: color));
                         })
                   ],

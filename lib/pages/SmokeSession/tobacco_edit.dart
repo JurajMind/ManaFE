@@ -61,13 +61,13 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
         this.addTobacco(
             PipeAccesoryFromTobacco.tobaccoToSimple(tobacco.tobacco),
             tobacco.fraction.toDouble());
-      }      
+      }
     }
 
     selectedTobacco = new List<PipeAccesorySimpleDto>();
     if (widget.tobacco?.id != null) {
       var weight = widget.tobaccoWeight.toDouble();
-      if(weight == 0){
+      if (weight == 0) {
         weight = 15;
       }
       this.addTobacco(widget.tobacco, weight);
@@ -189,8 +189,8 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                         child: new SuggestedTobacco(
                           tobacco: sugestedTobacco[0],
                           onPressed: () => setState(() {
-                                addTobacco(sugestedTobacco[0], 5);
-                              }),
+                            addTobacco(sugestedTobacco[0], 5);
+                          }),
                         ))
                     : Container(),
                 sugestedTobacco.length >= 2
@@ -199,8 +199,8 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                         child: new SuggestedTobacco(
                           tobacco: sugestedTobacco[1],
                           onPressed: () => setState(() {
-                                addTobacco(sugestedTobacco[1], 5);
-                              }),
+                            addTobacco(sugestedTobacco[1], 5);
+                          }),
                         ))
                     : Container(),
                 Expanded(
@@ -356,7 +356,7 @@ class SuggestedTobacco extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Text(tobacco.name,
-                          style: Theme.of(context).textTheme.display4,
+                          style: Theme.of(context).textTheme.display3,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis),
                     ),
