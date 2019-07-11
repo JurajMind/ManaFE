@@ -1,20 +1,22 @@
 part of openapi.api;
 
 class AddressDto {
-  
   int id = null;
-  
+
   String street = null;
-  
+
   String city = null;
-  
+
   String number = null;
-  
+
   String ZIP = null;
-  
+
   String lat = null;
-  
+
   String lng = null;
+
+  String country = null;
+
   AddressDto();
 
   @override
@@ -46,15 +48,17 @@ class AddressDto {
   }
 
   static List<AddressDto> listFromJson(List<dynamic> json) {
-    return json == null ? new List<AddressDto>() : json.map((value) => new AddressDto.fromJson(value)).toList();
+    return json == null
+        ? new List<AddressDto>()
+        : json.map((value) => new AddressDto.fromJson(value)).toList();
   }
 
   static Map<String, AddressDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, AddressDto>();
     if (json != null && json.length > 0) {
-      json.forEach((String key, dynamic value) => map[key] = new AddressDto.fromJson(value));
+      json.forEach((String key, dynamic value) =>
+          map[key] = new AddressDto.fromJson(value));
     }
     return map;
   }
 }
-

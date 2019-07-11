@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app/app/app.dart';
+import 'package:app/components/Places/PlacePicker/address_picker.dart';
 import 'package:app/components/Places/PlacePicker/place_picker.dart';
 import 'package:app/components/Places/open_dropdown.dart';
 import 'package:app/const/theme.dart';
@@ -75,36 +76,7 @@ class _AddPlacePageState extends State<AddPlacePage> {
                   SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                          flex: 4,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text('Address',
-                                  style: new TextStyle(
-                                      fontSize: 16,
-                                      color: invalidAddress
-                                          ? Colors.red
-                                          : Colors.grey)),
-                              SizedBox(height: 5),
-                              Text(_address?.name ??
-                                  (invalidAddress
-                                      ? "Adress cannot be empty"
-                                      : "No address"))
-                            ],
-                          )),
-                      Expanded(
-                          flex: 1,
-                          child: IconButton(
-                            icon: Icon(Icons.map),
-                            onPressed: () async {
-                              showPlacePicker(initPosition);
-                            },
-                          ))
-                    ],
-                  ),
+                  AddressPicker(),
                   Row(
                     children: <Widget>[
                       Expanded(
@@ -170,14 +142,15 @@ class _AddPlacePageState extends State<AddPlacePage> {
                         labelText: "Place features",
                         labelStyle: TextStyle(fontSize: 24)),
                     attribute: "features",
-                    initialValue: ["CASH"],
+                    initialValue: [],
                     options: [
                       FormBuilderFieldOption(
                           value: "WIFI", label: "Have this place Wi-Fi?"),
                       FormBuilderFieldOption(
                           value: "CARD", label: "Can pay with credit card?"),
                       FormBuilderFieldOption(
-                          value: "CASH", label: "Can pay with cash?"),
+                          value: "OUTDOOR",
+                          label: "Have this place outdoor seats?"),
                       FormBuilderFieldOption(
                           value: "FOOD", label: "Can you order food?"),
                       FormBuilderFieldOption(

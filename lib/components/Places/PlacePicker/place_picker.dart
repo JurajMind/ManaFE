@@ -489,6 +489,7 @@ class PlacePickerState extends State<PlacePicker> {
     String locality;
     String locality1;
     String locality2;
+    String country;
     addressComponents.forEach((f) {
       try {
         var types = f['types'];
@@ -500,7 +501,7 @@ class PlacePickerState extends State<PlacePicker> {
             extractAddressFeature(types, f, 'administrative_area_level_1');
         locality2 = locality2 ??
             extractAddressFeature(types, f, 'administrative_area_level_2');
-        var country = extractAddressFeature(types, f, 'country');
+        country = country ?? extractAddressFeature(types, f, 'country');
 
         return null;
       } catch (e) {}
@@ -510,7 +511,7 @@ class PlacePickerState extends State<PlacePicker> {
     result.number = number;
     result.ZIP = zip;
     result.street = street;
-
+    result.country = country;
     if (zip != null && street != null) return result;
 
     return null;

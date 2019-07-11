@@ -60,6 +60,7 @@ dependencies:
   flutter_form_builder: ^3.2.6
   image_picker: ^0.6.0+10
   screenshot_share: ^0.0.1
+  flutter_country_picker: ^0.1.4
 
 flutter_icons:
   android: true
