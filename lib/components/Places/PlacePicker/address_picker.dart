@@ -2,7 +2,6 @@ import 'package:app/components/Places/PlacePicker/place_picker.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:flutter_country_picker/flutter_country_picker.dart';
 
 class AddressPicker extends StatefulWidget {
   final ValueChanged<NearbyAddress> onAddressChange;
@@ -74,6 +73,11 @@ class _AddressPickerState extends State<AddressPicker> {
                                 // This optional block of code can be used to run
                                 // code when the user saves the form.
                               },
+                              onEditingComplete: () {
+                                _address.address.street =
+                                    this._streetController.value.text;
+                                widget.onAddressChange(_address);
+                              },
                               validator: (String value) {
                                 return value.contains('@')
                                     ? 'Do not use the @ char.'
@@ -92,6 +96,11 @@ class _AddressPickerState extends State<AddressPicker> {
                               onSaved: (String value) {
                                 // This optional block of code can be used to run
                                 // code when the user saves the form.
+                              },
+                              onEditingComplete: () {
+                                _address.address.number =
+                                    this._numberController.value.text;
+                                widget.onAddressChange(_address);
                               },
                               validator: (String value) {
                                 return value.contains('@')
@@ -116,6 +125,11 @@ class _AddressPickerState extends State<AddressPicker> {
                                 // This optional block of code can be used to run
                                 // code when the user saves the form.
                               },
+                              onEditingComplete: () {
+                                _address.address.city =
+                                    this._cityController.value.text;
+                                widget.onAddressChange(_address);
+                              },
                               validator: (String value) {
                                 return value.contains('@')
                                     ? 'Do not use the @ char.'
@@ -135,6 +149,11 @@ class _AddressPickerState extends State<AddressPicker> {
                               onSaved: (String value) {
                                 // This optional block of code can be used to run
                                 // code when the user saves the form.
+                              },
+                              onEditingComplete: () {
+                                _address.address.ZIP =
+                                    this._zipController.value.text;
+                                widget.onAddressChange(_address);
                               },
                               validator: (String value) {
                                 return value.contains('@')
@@ -165,7 +184,7 @@ class _AddressPickerState extends State<AddressPicker> {
                         children: <Widget>[
                           IconButton(
                             icon: Icon(Icons.place),
-                            onPressed: () {},
+                            onPressed: () => showLocationPicker(initPosition),
                           ),
                           Expanded(
                             flex: 1,
@@ -229,10 +248,14 @@ class _AddressPickerState extends State<AddressPicker> {
   void showPlacePicker(LatLng initPosition) async {
     NearbyAddress result = await Navigator.of(context).push(MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => PlacePicker(kGoogleApiKey, initPosition)));
+        builder: (context) => PlacePicker(
+              kGoogleApiKey,
+              _address?.latLng ?? initPosition,
+            )));
 
     // Handle the result in your way
     print(result);
+    widget.onAddressChange(result);
     setState(() {
       _address = result;
       if (result == null) {
@@ -246,7 +269,34 @@ class _AddressPickerState extends State<AddressPicker> {
         _countryController.text = result.address.country;
         _latController.text = result.address.lat;
         _lngController.text = result.address.lng;
+        initPosition = result.latLng;
       }
     });
+  }
+
+  void showLocationPicker(LatLng initPosition) async {
+    NearbyAddress result = await Navigator.of(context).push(MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => PlacePicker(
+              kGoogleApiKey,
+              _address?.latLng ?? initPosition,
+              onlyLocation: true,
+            )));
+
+    // Handle the result in your way
+    print(result);
+    setState(() {
+      _address = result;
+      if (result == null) {
+      } else {
+        initPosition = result.latLng;
+        _latController.text = result.latLng.latitude.toStringAsPrecision(9);
+        _lngController.text = result.latLng.longitude.toStringAsPrecision(9);
+        _address.latLng = result.latLng;
+        _address.address.lat = result.latLng.latitude.toString();
+        _address.address.lng = result.latLng.longitude.toString();
+      }
+    });
+    widget.onAddressChange(_address);
   }
 }

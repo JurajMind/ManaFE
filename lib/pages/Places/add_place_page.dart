@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/api.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 
 import 'AddPlace/opening_hours_page.dart';
 import 'add_place_submit_page.dart';
@@ -76,7 +75,14 @@ class _AddPlacePageState extends State<AddPlacePage> {
                   SizedBox(
                     height: 10,
                   ),
-                  AddressPicker(),
+                  AddressPicker(
+                    onAddressChange: (add) {
+                      this._address = add;
+                    },
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     children: <Widget>[
                       Expanded(

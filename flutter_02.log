@@ -1,0 +1,52 @@
+Flutter crash report; please file at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter run --machine -t lib\dev.dart -d emulator-5554 --track-widget-creation --start-paused
+
+## exception
+
+SocketException: SocketException: Write failed (OS Error: The pipe is being closed.
+, errno = 232), port = 0
+
+```
+null```
+
+## flutter doctor
+
+```
+[✓] Flutter (Channel beta, v1.7.8+hotfix.3, on Microsoft Windows [Version 10.0.17763.557], locale en-US)
+    • Flutter version 1.7.8+hotfix.3 at G:\Fluter\flutter
+    • Framework revision b712a172f9 (2 days ago), 2019-07-09 13:14:38 -0700
+    • Engine revision 54ad777fd2
+    • Dart version 2.4.0
+
+[✓] Android toolchain - develop for Android devices (Android SDK version 28.0.3)
+    • Android SDK at G:\AndroidSdk
+    • Android NDK location not configured (optional; useful for native profiling support)
+    • Platform android-28, build-tools 28.0.3
+    • ANDROID_HOME = G:\AndroidSdk
+    • ANDROID_SDK_ROOT = G:\AndroidSdk
+    • Java binary at: C:\Program Files\Android\Android Studio\jre\bin\java
+    • Java version OpenJDK Runtime Environment (build 1.8.0_152-release-1248-b01)
+    • All Android licenses accepted.
+
+[✓] Android Studio (version 3.3)
+    • Android Studio at C:\Program Files\Android\Android Studio
+    • Flutter plugin version 33.3.1
+    • Dart plugin version 182.5215
+    • Java version OpenJDK Runtime Environment (build 1.8.0_152-release-1248-b01)
+
+[✓] VS Code (version 1.33.1)
+    • VS Code at C:\Users\jurko\AppData\Local\Programs\Microsoft VS Code
+    • Flutter extension version 3.2.0
+
+[✓] VS Code, 32-bit edition (version 1.36.1)
+    • VS Code at C:\Program Files (x86)\Microsoft VS Code
+    • Flutter extension version 3.2.0
+
+[✓] Connected device (1 available)
+    • Android SDK built for x86 • emulator-5554 • android-x86 • Android 8.1.0 (API 27) (emulator)
+
+• No issues found!
+```
