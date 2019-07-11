@@ -241,30 +241,9 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                             onPressed: () => loadNearby()),
                   ),
                   Positioned(
-                      bottom: 150,
+                      bottom: 170,
                       right: (MediaQuery.of(context).size.width / 2) - 60,
-                      child: moving
-                          ? Container()
-                          : Container(
-                              child: Row(children: [
-                              OutlineButton(
-                                color: Colors.black,
-                                shape: new RoundedRectangleBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(30.0)),
-                                borderSide: BorderSide(color: Colors.white),
-                                hoverColor: Colors.black,
-                                child: Text(
-                                  'All reservations',
-                                  style: Theme.of(context).textTheme.display3,
-                                ),
-                                onPressed: () => Navigator.of(context).push(
-                                    new MaterialPageRoute(
-                                        builder: (BuildContext context) {
-                                  return new ReservationsPage();
-                                })),
-                              )
-                            ]))),
+                      child: moving ? Container() : new ReservationButton()),
                 ],
               );
             }),
@@ -361,5 +340,65 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
           position:
               LatLng(double.parse(f.address.lat), double.parse(f.address.lng)));
     }).toSet();
+  }
+}
+
+class ReservationButton extends StatelessWidget {
+  const ReservationButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var reservationsBloc = DataProvider.getData(context).reservationBloc;
+
+    return Container(
+        child: StreamBuilder<List<PlacesReservationsReservationDto>>(
+            stream: reservationsBloc.reservations,
+            builder: (context, snapshot) {
+              var upcomingCount = 0;
+              if (snapshot.data != null) {
+                var toDate = DateTime.now().add(new Duration(days: 7));
+                var upcomingReservations = new Collection(snapshot.data);
+                upcomingCount = upcomingReservations
+                    .where$1((predicate, _) =>
+                        predicate.time.compareTo(DateTime.now()) > 0 &&
+                        predicate.time.compareTo(toDate) < 0 &&
+                        predicate.status != 1)
+                    .orderBy((p) => p.time)
+                    .count();
+              }
+
+              return Row(children: [
+                OutlineButton(
+                  color: Colors.black,
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0)),
+                  borderSide: BorderSide(color: Colors.white),
+                  hoverColor: Colors.black,
+                  child: upcomingCount == -1 ? Text(
+                    'All reservations',
+                    style: Theme.of(context).textTheme.display3,
+                  ) : Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text('Upcoming reservations ',
+                    style: Theme.of(context).textTheme.display3,
+                  ),
+                  Container(
+                    child:     Center(
+                      child: Text(upcomingCount.toString(),
+                      style: Theme.of(context).textTheme.display4),
+                    ),
+                    height: 25,width: 25,decoration: BoxDecoration(shape: BoxShape.circle,color: AppColors.colors[2]),
+                  )
+                  ],),
+                  onPressed: () => Navigator.of(context).push(
+                      new MaterialPageRoute(builder: (BuildContext context) {
+                    return new ReservationsPage();
+                  })),
+                )
+              ]);
+            }));
   }
 }

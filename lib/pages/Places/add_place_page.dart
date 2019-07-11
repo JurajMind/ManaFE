@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app/app/app.dart';
+import 'package:app/components/Places/PlacePicker/address_picker.dart';
 import 'package:app/components/Places/PlacePicker/place_picker.dart';
 import 'package:app/components/Places/open_dropdown.dart';
 import 'package:app/const/theme.dart';
@@ -10,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/api.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 
 import 'AddPlace/opening_hours_page.dart';
 import 'add_place_submit_page.dart';
@@ -75,35 +75,13 @@ class _AddPlacePageState extends State<AddPlacePage> {
                   SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                          flex: 4,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text('Address',
-                                  style: new TextStyle(
-                                      fontSize: 16,
-                                      color: invalidAddress
-                                          ? Colors.red
-                                          : Colors.grey)),
-                              SizedBox(height: 5),
-                              Text(_address?.name ??
-                                  (invalidAddress
-                                      ? "Adress cannot be empty"
-                                      : "No address"))
-                            ],
-                          )),
-                      Expanded(
-                          flex: 1,
-                          child: IconButton(
-                            icon: Icon(Icons.map),
-                            onPressed: () async {
-                              showPlacePicker(initPosition);
-                            },
-                          ))
-                    ],
+                  AddressPicker(
+                    onAddressChange: (add) {
+                      this._address = add;
+                    },
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                   Row(
                     children: <Widget>[
@@ -153,6 +131,19 @@ class _AddPlacePageState extends State<AddPlacePage> {
                       Expanded(
                           flex: 1,
                           child: IconButton(
+                            icon: Icon(Icons.photo_library),
+                            onPressed: () async {
+                              var image = await ImagePicker.pickImage(
+                                  source: ImageSource.gallery);
+
+                              setState(() {
+                                _image = image;
+                              });
+                            },
+                          )),
+                      Expanded(
+                          flex: 1,
+                          child: IconButton(
                             icon: Icon(Icons.camera_enhance),
                             onPressed: () async {
                               var image = await ImagePicker.pickImage(
@@ -170,18 +161,18 @@ class _AddPlacePageState extends State<AddPlacePage> {
                         labelText: "Place features",
                         labelStyle: TextStyle(fontSize: 24)),
                     attribute: "features",
-                    initialValue: ["CASH"],
+                    initialValue: [],
                     options: [
                       FormBuilderFieldOption(
-                          value: "WIFI", label: "Have this place Wi-Fi?"),
+                          value: "WIFI", label: "Wifi available"),
                       FormBuilderFieldOption(
-                          value: "CARD", label: "Can pay with credit card?"),
+                          value: "CARD", label: "Credit card accepted"),
                       FormBuilderFieldOption(
-                          value: "CASH", label: "Can pay with cash?"),
+                          value: "OUTSIDE", label: "Outside seats available"),
                       FormBuilderFieldOption(
-                          value: "FOOD", label: "Can you order food?"),
+                          value: "FOOD", label: "Food available"),
                       FormBuilderFieldOption(
-                          value: "PET", label: "Can you bring your pet here?"),
+                          value: "PET", label: "Pet accepted"),
                     ],
                   ),
                   FormBuilderSwitch(

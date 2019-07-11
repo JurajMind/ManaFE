@@ -20,10 +20,10 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: "10169a6bfbe0161295674f34bf1a39b4005954a4"
+      resolved-ref: ff02ff3409b1e703c7287a1fa34ee599b0de84ee
       url: "https://github.com/AndreBaltazar8/flutter_animated_background"
     source: git
-    version: "1.0.4"
+    version: "1.0.5"
   archive:
     dependency: transitive
     description:
@@ -51,7 +51,7 @@ packages:
       name: auto_size_text
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.2"
   avatar_glow:
     dependency: "direct main"
     description:
@@ -128,7 +128,7 @@ packages:
       name: csslib
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.16.0"
+    version: "0.16.1"
   date_format:
     dependency: "direct main"
     description:
@@ -163,7 +163,7 @@ packages:
       name: dio
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.10"
+    version: "2.1.13"
   fast_qr_reader_view:
     dependency: "direct main"
     description:
@@ -193,7 +193,7 @@ packages:
       name: flushbar
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.7.0"
+    version: "1.7.1+1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -233,7 +233,7 @@ packages:
       name: flutter_form_builder
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.6"
+    version: "3.2.7"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -334,7 +334,7 @@ packages:
       name: google_maps_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.19"
+    version: "0.5.19+2"
   google_maps_webservice:
     dependency: "direct main"
     description:
@@ -383,7 +383,7 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.0+10"
+    version: "0.6.0+15"
   intl:
     dependency: "direct main"
     description:
@@ -432,7 +432,7 @@ packages:
       name: lazy_load_scrollview
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   location_permissions:
     dependency: transitive
     description:
@@ -621,7 +621,7 @@ packages:
       name: sembast
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.16.0+3"
+    version: "1.17.0"
   sensors:
     dependency: transitive
     description:
@@ -822,7 +822,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.3"
+    version: "5.0.5"
   utf:
     dependency: transitive
     description:
@@ -894,7 +894,7 @@ packages:
       name: web_socket_channel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.13"
+    version: "1.0.14"
   xml:
     dependency: transitive
     description:
