@@ -125,6 +125,19 @@ class _AddPlacePageState extends State<AddPlacePage> {
                       Expanded(
                           flex: 1,
                           child: IconButton(
+                            icon: Icon(Icons.photo_library),
+                            onPressed: () async {
+                              var image = await ImagePicker.pickImage(
+                                  source: ImageSource.gallery);
+
+                              setState(() {
+                                _image = image;
+                              });
+                            },
+                          )),
+                      Expanded(
+                          flex: 1,
+                          child: IconButton(
                             icon: Icon(Icons.camera_enhance),
                             onPressed: () async {
                               var image = await ImagePicker.pickImage(
@@ -145,16 +158,15 @@ class _AddPlacePageState extends State<AddPlacePage> {
                     initialValue: [],
                     options: [
                       FormBuilderFieldOption(
-                          value: "WIFI", label: "Have this place Wi-Fi?"),
+                          value: "WIFI", label: "Wifi available"),
                       FormBuilderFieldOption(
-                          value: "CARD", label: "Can pay with credit card?"),
+                          value: "CARD", label: "Credit card accepted"),
                       FormBuilderFieldOption(
-                          value: "OUTDOOR",
-                          label: "Have this place outdoor seats?"),
+                          value: "OUTSIDE", label: "Outside seats available"),
                       FormBuilderFieldOption(
-                          value: "FOOD", label: "Can you order food?"),
+                          value: "FOOD", label: "Food available"),
                       FormBuilderFieldOption(
-                          value: "PET", label: "Can you bring your pet here?"),
+                          value: "PET", label: "Pet accepted"),
                     ],
                   ),
                   FormBuilderSwitch(

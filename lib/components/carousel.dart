@@ -76,17 +76,12 @@ class _CarrousselState extends State<Carroussel> {
         initialData: null,
         stream: bloc.places,
         builder: (context, snapshot) {
-          if (snapshot.data == null || snapshot.data.length == 0) {
-            return Row(
-              children: <Widget>[
-                Text('Its empty here , know some place ? Add it!'),
-                IconButton(
-                    icon: Icon(Icons.plus_one),
-                    onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => AddPlacePage())))
-              ],
-            );
+          if (snapshot.data == null) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.data.length == 0) {
+            return Container(height: 100,child:buildAdd());
           }
           return PageView.builder(
             onPageChanged: (value) {
@@ -122,6 +117,36 @@ class _CarrousselState extends State<Carroussel> {
           );
         },
         child: buildInkWell(index, place));
+  }
+
+    Widget buildAdd() {
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => AddPlacePage(), fullscreenDialog: true));
+      },
+      child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Container(
+              width: MediaQuery.of(context).size.width * 0.4,
+              decoration: BoxDecoration(
+                  borderRadius: new BorderRadius.circular(10.0),
+                  border: new Border.all(color: Colors.white, width: 2),
+                  color: Colors.transparent),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(Icons.add_location),
+                  Hero(
+                    tag: 'add_new_place_label',
+                    child: Text(
+                      'Add new place',
+                      style: Theme.of(context).textTheme.display2,
+                    ),
+                  )
+                ],
+              ))),
+    );
   }
 
   InkWell buildInkWell(int index, PlaceSimpleDto place) {
