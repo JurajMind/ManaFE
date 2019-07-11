@@ -31,7 +31,7 @@ dependencies:
   sticky_headers: '^0.1.8'
   sembast: ^1.13.0
   url_launcher: ^5.0.3
-  google_maps_flutter: ^0.5.19
+  google_maps_flutter: ^0.5.19+2
   tinycolor: ^1.0.2
   shimmer: ^1.0.0
   date_format: ^1.0.6
