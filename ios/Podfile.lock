@@ -92,6 +92,8 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (5.3.7):
     - GoogleUtilities/Logger
+  - image_picker (0.0.1):
+    - Flutter
   - keyboard_visibility (0.5.0):
     - Flutter
     - Reachability
@@ -106,6 +108,8 @@ PODS:
     - Flutter
   - Protobuf (3.6.1)
   - Reachability (3.2)
+  - screenshot_share (0.0.1):
+    - Flutter
   - sensors (0.0.1):
     - Flutter
   - share (0.5.2):
@@ -127,9 +131,11 @@ DEPENDENCIES:
   - geolocator (from `.symlinks/plugins/geolocator/ios`)
   - google_api_availability (from `.symlinks/plugins/google_api_availability/ios`)
   - google_maps_flutter (from `.symlinks/plugins/google_maps_flutter/ios`)
+  - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - keyboard_visibility (from `.symlinks/plugins/keyboard_visibility/ios`)
   - location_permissions (from `.symlinks/plugins/location_permissions/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - screenshot_share (from `.symlinks/plugins/screenshot_share/ios`)
   - sensors (from `.symlinks/plugins/sensors/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
@@ -172,12 +178,16 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_api_availability/ios"
   google_maps_flutter:
     :path: ".symlinks/plugins/google_maps_flutter/ios"
+  image_picker:
+    :path: ".symlinks/plugins/image_picker/ios"
   keyboard_visibility:
     :path: ".symlinks/plugins/keyboard_visibility/ios"
   location_permissions:
     :path: ".symlinks/plugins/location_permissions/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  screenshot_share:
+    :path: ".symlinks/plugins/screenshot_share/ios"
   sensors:
     :path: ".symlinks/plugins/sensors/ios"
   share:
@@ -211,12 +221,14 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 621f3bc6211d5ba548debe01fafad30cf5ab6859
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   GoogleUtilities: 111a012f4c3a29c9e7c954c082fafd6ee3c999c0
+  image_picker: 16e5fec1fbc87fd3b297c53e4048521eaf17cd06
   keyboard_visibility: 96a24de806fe6823c3ad956c01ba2ec6d056616f
   location_permissions: 67cfaff583afbb027a9f9248196f4b79c40f3cdc
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  screenshot_share: 60f8cd3f052825c80d339cd20dc6972ae7565985
   sensors: b5c565b45237fd2df1c347c14bf5ceeffdb7a2be
   share: 7d22fe8baedfe93aefd864bf0b73f29711fbb0a3
   sqflite: ff1d9da63c06588cc8d1faf7256d741f16989d5a
