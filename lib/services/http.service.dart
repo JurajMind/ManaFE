@@ -547,6 +547,13 @@ class ApiClient {
         .postUri(url, data: newPlace)
         .then((data) => PlaceDto.fromJson(data.data));
   }
+
+    Future<PlaceDto> uploadPlacePicture(int placeId) async {
+    var url = Uri.https(baseUrl, '/api/Places/Add');
+    return await _dio
+        .postUri(url, data: newPlace)
+        .then((data) => PlaceDto.fromJson(data.data));
+  }
 }
 
 class ColorDto {
