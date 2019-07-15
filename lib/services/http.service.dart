@@ -548,11 +548,40 @@ class ApiClient {
         .then((data) => PlaceDto.fromJson(data.data));
   }
 
-    Future<PlaceDto> uploadPlacePicture(int placeId) async {
-    var url = Uri.https(baseUrl, '/api/Places/Add');
-    return await _dio
-        .postUri(url, data: newPlace)
-        .then((data) => PlaceDto.fromJson(data.data));
+  Future<PlaceDto> uploadPlacePicture(int placeId, File file,
+      {ValueChanged<double> progress}) async {
+    var url = Uri.https(baseUrl, '/api/Media/Place/$placeId/Add');
+
+    FormData formData = new FormData.from({
+      "file": new UploadFileInfo(file, "picture.jpg"),
+    });
+
+    return await _dio.postUri(
+      url,
+      data: formData,
+      onSendProgress: (int sent, int total) {
+        print("$sent $total");
+        if (progress != null) {
+          progress(total / sent);
+        }
+      },
+    ).then((data) => PlaceDto.fromJson(data.data));
+  }
+
+  Future<PipeAccesorySimpleDto> uploadGearPicture(int gearId, File file) async {
+    var url = Uri.https(baseUrl, '/api/Media/Gear/$gearId/Add');
+
+    FormData formData = new FormData.from({
+      "file": new UploadFileInfo(file, "picture.jpg"),
+    });
+
+    return await _dio.postUri(
+      url,
+      data: formData,
+      onSendProgress: (int sent, int total) {
+        print("$sent $total");
+      },
+    ).then((data) => PipeAccesorySimpleDto.fromJson(data.data));
   }
 }
 

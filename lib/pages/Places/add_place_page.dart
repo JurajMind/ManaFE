@@ -160,7 +160,7 @@ class _AddPlacePageState extends State<AddPlacePage> {
                     decoration: InputDecoration(
                         labelText: "Place features",
                         labelStyle: TextStyle(fontSize: 24)),
-                    attribute: "features",            
+                    attribute: "features",
                     options: [
                       FormBuilderFieldOption(
                           value: "WIFI", label: "Wifi available"),
@@ -242,7 +242,10 @@ class _AddPlacePageState extends State<AddPlacePage> {
       _result.flags = fbKey.currentState.value['features'];
       _uploading = true;
       var result = json.encode(_result);
-      App.http.addPlace(_result).then((newPlace) {
+      App.http.addPlace(_result).then((newPlace) async {
+        if (_image != null) {
+          await App.http.uploadPlacePicture(newPlace.id, _image);
+        }
         Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (context) => AddPlaceSubmitPage(
                   createdPlace: newPlace,

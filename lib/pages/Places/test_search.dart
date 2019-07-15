@@ -1,11 +1,13 @@
-import 'dart:async';
+import 'dart:io';
 
+import 'package:app/app/app.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:google_maps_webservice/places.dart';
 
 import 'package:flutter/material.dart';
-import 'dart:math';
+
+import 'package:image_picker/image_picker.dart';
 
 var kGoogleApiKey = "AIzaSyDv2o2BsQ1IJjdPS3eSjkf7f-_Jt7Fu-MU";
 
@@ -21,6 +23,7 @@ final homeScaffoldKey = GlobalKey<ScaffoldState>();
 final searchScaffoldKey = GlobalKey<ScaffoldState>();
 
 class _TestSearchState extends State<TestSearch> {
+  File _image;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,50 +34,59 @@ class _TestSearchState extends State<TestSearch> {
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[RaisedButton(onPressed: () {})],
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Expanded(
+                  flex: 4,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text('Photo',
+                          style:
+                              new TextStyle(fontSize: 16, color: Colors.grey)),
+                      SizedBox(height: 5),
+                      _image == null
+                          ? Text('No image selected.')
+                          : Image.file(_image),
+                    ],
+                  )),
+              Expanded(
+                  flex: 1,
+                  child: IconButton(
+                    icon: Icon(Icons.photo_library),
+                    onPressed: () async {
+                      var image = await ImagePicker.pickImage(
+                          source: ImageSource.gallery);
+
+                      setState(() {
+                        _image = image;
+                      });
+                    },
+                  )),
+              Expanded(
+                  flex: 1,
+                  child: IconButton(
+                    icon: Icon(Icons.camera_enhance),
+                    onPressed: () async {
+                      var image = await ImagePicker.pickImage(
+                          source: ImageSource.camera);
+
+                      setState(() {
+                        _image = image;
+                      });
+                    },
+                  ))
+            ],
+          ),
+          MaterialButton(
+            onPressed: () {
+              App.http.uploadPlacePicture(1, _image);
+            },
+            child: Text('upload'),
+          )
+        ],
       )),
     );
   }
-
-  void onError(PlacesAutocompleteResponse response) {
-    homeScaffoldKey.currentState.showSnackBar(
-      SnackBar(content: Text(response.errorMessage)),
-    );
-  }
-}
-
-Future<Null> displayPrediction(Prediction p, ScaffoldState scaffold) async {
-  if (p != null) {
-    // get detail (lat/lng)
-    PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(p.placeId);
-    final lat = detail.result.geometry.location.lat;
-    final lng = detail.result.geometry.location.lng;
-
-    scaffold.showSnackBar(
-      SnackBar(content: Text("${p.description} - $lat/$lng")),
-    );
-  }
-}
-
-class Uuid {
-  final Random _random = Random();
-
-  String generateV4() {
-    // Generate xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx / 8-4-4-4-12.
-    final int special = 8 + _random.nextInt(4);
-
-    return '${_bitsDigits(16, 4)}${_bitsDigits(16, 4)}-'
-        '${_bitsDigits(16, 4)}-'
-        '4${_bitsDigits(12, 3)}-'
-        '${_printDigits(special, 1)}${_bitsDigits(12, 3)}-'
-        '${_bitsDigits(16, 4)}${_bitsDigits(16, 4)}${_bitsDigits(16, 4)}';
-  }
-
-  String _bitsDigits(int bitCount, int digitCount) =>
-      _printDigits(_generateBits(bitCount), digitCount);
-
-  int _generateBits(int bitCount) => _random.nextInt(1 << bitCount);
-
-  String _printDigits(int value, int count) =>
-      value.toRadixString(16).padLeft(count, '0');
 }

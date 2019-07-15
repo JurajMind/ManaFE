@@ -1,3 +1,4 @@
+import 'package:app/Helpers/place_helper.dart';
 import 'package:app/components/Places/open_indicator.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
@@ -6,8 +7,13 @@ import 'package:app/pages/Places/add_place_page.dart';
 import 'package:app/support/mana_icons_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/api.dart';
 import 'dart:math' as math;
+
+import 'Places/distance_widget.dart';
 
 class Carroussel extends StatefulWidget {
   Carroussel({this.navigateToDetail});
@@ -81,24 +87,38 @@ class _CarrousselState extends State<Carroussel> {
           }
 
           if (snapshot.data.length == 0) {
-            return Container(height: 100,child:buildAdd());
+            return Container(height: 100, child: buildAdd());
           }
-          return PageView.builder(
-            onPageChanged: (value) {
-              setState(() {
-                currentpage = value;
+          return StreamBuilder<Position>(
+              stream: bloc.location,
+              builder: (context, position) {
+                Map<int, double> positions = new Map<int, double>.fromIterable(
+                    snapshot.data,
+                    key: (v) => v.id,
+                    value: (v) => PlaceHelpers.calculateDistanceFromAddress(
+                        v.address, position.data));
+                return PageView.builder(
+                  onPageChanged: (value) {
+                    setState(() {
+                      currentpage = value;
+                    });
+                  },
+                  controller: controller,
+                  itemCount: snapshot.data != null
+                      ? math.min(snapshot.data.length, 5)
+                      : 0,
+                  itemBuilder: (context, index) =>
+                      builder(index, snapshot.data[index], positions),
+                );
               });
-            },
-            controller: controller,
-            itemCount:
-                snapshot.data != null ? math.min(snapshot.data.length, 5) : 0,
-            itemBuilder: (context, index) =>
-                builder(index, snapshot.data[index]),
-          );
         });
   }
 
-  builder(int index, PlaceSimpleDto place) {
+  builder(
+    int index,
+    PlaceSimpleDto place,
+    Map<int, double> positions,
+  ) {
     return new AnimatedBuilder(
         animation: controller,
         builder: (context, child) {
@@ -116,10 +136,10 @@ class _CarrousselState extends State<Carroussel> {
             ),
           );
         },
-        child: buildInkWell(index, place));
+        child: buildInkWell(index, place, positions[place.id]));
   }
 
-    Widget buildAdd() {
+  Widget buildAdd() {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -149,7 +169,7 @@ class _CarrousselState extends State<Carroussel> {
     );
   }
 
-  InkWell buildInkWell(int index, PlaceSimpleDto place) {
+  InkWell buildInkWell(int index, PlaceSimpleDto place, double distance) {
     return new InkWell(
       onTap: () {
         print('curent');
@@ -208,19 +228,38 @@ class _CarrousselState extends State<Carroussel> {
                               ],
                             ),
                           )),
-                  new Text(
-                    Extensions.adress(place.address),
-                    style: new TextStyle(color: Colors.grey),
-                  ),
+                  new Text(Extensions.adress(place.address),
+                      style: Theme.of(context).textTheme.display3.merge(
+                            TextStyle(
+                              shadows: [
+                                Shadow(
+                                    // bottomLeft
+                                    offset: Offset(-1, -1),
+                                    color: Colors.black),
+                                Shadow(
+                                    // bottomRight
+                                    offset: Offset(1, -1),
+                                    color: Colors.black),
+                                Shadow(
+                                    // topRight
+                                    offset: Offset(1, 1),
+                                    color: Colors.black),
+                                Shadow(
+                                    // topLeft
+                                    offset: Offset(-1, 1),
+                                    color: Colors.black),
+                              ],
+                            ),
+                          )),
                   Row(
                     mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       new Flex(
                         direction: Axis.horizontal,
                         children: <Widget>[
-                          new Icon(ManaIcons.hookah),
-                          new Text(place.rating.toString()),
+                          new Icon(FontAwesomeIcons.walking),
+                          DistanceWidget(distance)
                         ],
                       ),
                       new OpenIndicator(

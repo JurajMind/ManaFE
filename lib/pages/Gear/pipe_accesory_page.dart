@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
+import 'package:rxdart/rxdart.dart';
 
 class PipeAccesoryPage extends StatefulWidget {
   final PipeAccesorySimpleDto pipeAccesory;
@@ -26,6 +27,7 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
           backgroundColor: Colors.black,
           pinned: true,
           flexibleSpace: Container(),
+          actions: <Widget>[],
           title: Hero(
               tag: '${widget.pipeAccesory.id}_name',
               child: Text(widget.pipeAccesory.name)),
