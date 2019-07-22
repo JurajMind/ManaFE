@@ -375,12 +375,12 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("End sessopn?"),
+          title: new Text("End session?"),
           content: new Text("Do you want end this session?"),
           actions: <Widget>[
             new FlatButton(
               child: new Text(
-                "End",
+                "Yes",
               ),
               onPressed: () {
                 Navigator.of(context).pop(true);
@@ -388,7 +388,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
             ),
             // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new Text("Close"),
+              child: new Text("No"),
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
@@ -399,9 +399,10 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
     ).then((value) {
       if (value) {
         var bloc = DataProvider.getData(context).smokeSessionBloc;
-        bloc.endSession().then((value) {
-          Navigator.of(context).pop();
-        });
+       // bloc.endSession().then((value) {
+       //   Navigator.of(context).pop();
+       // });
+          Navigator.popAndPushNamed(context,'/smokeStatistic',arguments: new SmokeSessionSimpleDto());          
       }
     });
   }

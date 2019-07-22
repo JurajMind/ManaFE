@@ -20,10 +20,14 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:openapi/api.dart';
 
 import 'Places/places_map_page.dart';
 import 'SmokeSession/Components/gradiend_color_wheel_rotate.dart';
 import 'SmokeSession/smoke_session_page.dart';
+import 'Statistic/Detail/smoke_session_detail_page.dart';
+
+typedef RouteWidgetBuilder = Widget Function(BuildContext context,Object argument);
 
 class HomePage extends StatefulWidget {
   @override
@@ -140,8 +144,21 @@ class _HomePageState extends State<HomePage> {
     }
     setState(() {
       _currentIndex = index;
-      _focusActiveTab();
+
     });
+          _focusActiveTab();
+    return navigatorKeys[index];
+  }
+
+    GlobalKey<NavigatorState> _setActiveTabTest(int index) {
+    if (index == _currentIndex && index == 2) {
+      if (!Platform.isIOS) {
+        navigatorKeys[index].currentState.maybePop();
+      }
+    }
+      _currentIndex = index;
+      _focusActiveTab();
+  
     return navigatorKeys[index];
   }
 
@@ -285,12 +302,12 @@ class _HomePageState extends State<HomePage> {
       child: new IndexedStack(
         index: _currentIndex,
         children: <Widget>[
-          _buildOffstageNavigator(new MixologyList(), 0),
-          _buildOffstageNavigator(new PlacesMapPage(), 1),
+          _buildOffstageNavigator(new MixologyList(), 0,_setActiveTab),
+          _buildOffstageNavigator(new PlacesMapPage(), 1,_setActiveTab),
           _buildOffstageNavigator(
-              new StartSmokeSessionPage(callback: _setActiveTab), 2),
-          _buildOffstageNavigator(new GearPage(), 3),
-          _buildOffstageNavigator(new StatisticPage(), 4),
+              new StartSmokeSessionPage(callback: _setActiveTab), 2,_setActiveTab),
+          _buildOffstageNavigator(new GearPage(), 3,_setActiveTab),
+          _buildOffstageNavigator(new StatisticPage(), 4,_setActiveTab),
         ],
       ),
     );
@@ -305,7 +322,7 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  Widget _buildOffstageNavigator(Widget tabItem, int index) {
+  Widget _buildOffstageNavigator(Widget tabItem, int index, GlobalKey<NavigatorState> Function(int index) setActiveTab) {
     return Offstage(
       offstage: _currentIndex != index,
       child: FocusScope(
@@ -313,25 +330,42 @@ class _HomePageState extends State<HomePage> {
         child: TabNavigator(
           navigatorKey: navigatorKeys[index],
           tabItem: tabItem,
+          index:index,
+          setActiveTab: setActiveTab
         ),
       ),
     );
   }
 }
 
+
+
 class TabNavigator extends StatelessWidget {
-  TabNavigator({this.navigatorKey, this.tabItem});
+  final int index;
+  final GlobalKey<NavigatorState> Function(int index) setActiveTab;
+
+  TabNavigator({this.navigatorKey, this.tabItem, this.index, this.setActiveTab});
   final GlobalKey<NavigatorState> navigatorKey;
   final Widget tabItem;
 
-  Map<String, WidgetBuilder> _routeBuilders(
-    BuildContext context,
+
+
+  Map<String, RouteWidgetBuilder> _routeBuilders(
+    BuildContext context
   ) {
     return {
-      '/': (context) => this.tabItem,
-      '/smokeSesion': (context) {
+      '/': (context, argument) => this.tabItem,
+      '/smokeSesion': (context,argument) {  
+        this.setActiveTab(2);
         return new SmokeSessionPage();
       },
+      '/smokeStatistic':(context, argument){
+      this.setActiveTab(4);
+        if(argument is SmokeSessionSimpleDto){
+                  return new SmokeSessioDetailPage(argument);
+        }
+
+      }
     };
   }
 
@@ -345,7 +379,7 @@ class TabNavigator extends StatelessWidget {
         observers: [observable],
         onGenerateRoute: (routeSettings) {
           return MaterialPageRoute(
-              builder: (context) => routeBuilders[routeSettings.name](context));
+              builder: (context) => routeBuilders[routeSettings.name](context,routeSettings.arguments));
         });
   }
 }
