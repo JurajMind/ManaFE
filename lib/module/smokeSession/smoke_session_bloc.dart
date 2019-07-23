@@ -161,8 +161,15 @@ class SmokeSessionBloc {
     }
   }
 
-  Future<int> endSession() async {
-    return await App.http.endSession(this.activeSessionId);
+  Future<SmokeSessionSimpleDto> endSession() async {
+    var endedSession = await App.http.endSession(this.activeSessionId);
+
+    if (endedSession != null) {
+      _leaveOldSession(activeSessionId);
+      this.activeSessionId = '';
+    }
+
+    return endedSession;
   }
 
   Future _joinSession(String sessionCode) async {

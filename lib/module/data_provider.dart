@@ -9,6 +9,8 @@ import 'package:app/module/places/places_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'general/app_bloc.dart';
+
 class DataProvider extends InheritedWidget {
   final MixologyBloc mixologyBloc;
   final SmokeSessionBloc smokeSessionBloc;
@@ -19,6 +21,7 @@ class DataProvider extends InheritedWidget {
   final PlaceBloc placeSingleBloc;
   final StatisticBloc statisticBloc;
   final ReservationBloc reservationBloc;
+  final AppBloc appBloc;
 
   DataProvider({
     Key key,
@@ -32,6 +35,7 @@ class DataProvider extends InheritedWidget {
         placeSingleBloc = new PlaceBloc(),
         statisticBloc = new StatisticBloc(),
         reservationBloc = new ReservationBloc(),
+        appBloc = new AppBloc(),
         super(key: key, child: child);
 
   @override

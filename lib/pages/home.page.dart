@@ -10,7 +10,6 @@ import 'package:app/module/mixology/mixology_list.dart';
 import 'package:app/module/person/person_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Gear/gear_page.dart';
-import 'package:app/pages/Places/places_page.dart';
 import 'package:app/pages/Statistic/statistic_page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';
 import 'package:app/services/signal_r.dart';
@@ -27,7 +26,8 @@ import 'SmokeSession/Components/gradiend_color_wheel_rotate.dart';
 import 'SmokeSession/smoke_session_page.dart';
 import 'Statistic/Detail/smoke_session_detail_page.dart';
 
-typedef RouteWidgetBuilder = Widget Function(BuildContext context,Object argument);
+typedef RouteWidgetBuilder = Widget Function(
+    BuildContext context, Object argument);
 
 class HomePage extends StatefulWidget {
   @override
@@ -36,25 +36,26 @@ class HomePage extends StatefulWidget {
   }
 }
 
-//Equivalent to var hc = $.hubConnection(url,options);
 final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+final Map<int, GlobalKey<NavigatorState>> navigatorKeys = {
+  0: GlobalKey<NavigatorState>(),
+  1: GlobalKey<NavigatorState>(),
+  2: GlobalKey<NavigatorState>(),
+  3: GlobalKey<NavigatorState>(),
+  4: GlobalKey<NavigatorState>(),
+};
 StreamSubscription<Flushbar<Map<String, dynamic>>> subscription;
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 2;
-  Map<int, GlobalKey<NavigatorState>> navigatorKeys = {
-    0: GlobalKey<NavigatorState>(),
-    1: GlobalKey<NavigatorState>(),
-    2: GlobalKey<NavigatorState>(),
-    3: GlobalKey<NavigatorState>(),
-    4: GlobalKey<NavigatorState>(),
-  };
 
   List<Widget> tabs;
   List<FocusScopeNode> tabFocusNodes;
 
   SmokeSessionBloc smokeSessionBloc;
   PersonBloc personBloc;
+
+  StreamSubscription<int> activeTabSub;
 
   @override
   void initState() {
@@ -111,6 +112,11 @@ class _HomePageState extends State<HomePage> {
     _focusActiveTab();
     personBloc.loadMyGear(false);
     personBloc.loadInitData();
+
+    activeTabSub =
+        DataProvider.getData(context).appBloc.activeTab.listen((index) {
+      _setActiveTab(index);
+    });
     SystemChannels.lifecycle.setMessageHandler((msg) {
       debugPrint('SystemChannels> $msg');
       if (msg == AppLifecycleState.paused.toString() ||
@@ -137,6 +143,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   GlobalKey<NavigatorState> _setActiveTab(int index) {
+    if (index == _currentIndex) return navigatorKeys[index];
+
+    DataProvider.getData(navigatorKeys[index].currentContext)
+        .appBloc
+        .changeActiveTab(index);
+
     if (index == _currentIndex && index == 2) {
       if (!Platform.isIOS) {
         navigatorKeys[index].currentState.maybePop();
@@ -144,25 +156,12 @@ class _HomePageState extends State<HomePage> {
     }
     setState(() {
       _currentIndex = index;
-
-    });
-          _focusActiveTab();
-    return navigatorKeys[index];
-  }
-
-    GlobalKey<NavigatorState> _setActiveTabTest(int index) {
-    if (index == _currentIndex && index == 2) {
-      if (!Platform.isIOS) {
-        navigatorKeys[index].currentState.maybePop();
-      }
-    }
-      _currentIndex = index;
       _focusActiveTab();
-  
+    });
     return navigatorKeys[index];
   }
 
-  Widget myBottomBar() => new Container(
+  Widget myBottomBar(context) => new Container(
         child: Material(
           color: new Color.fromARGB(230, 0, 0, 0),
           child: Ink(
@@ -242,7 +241,7 @@ class _HomePageState extends State<HomePage> {
                   bottom: -10,
                   height: 55,
                   width: MediaQuery.of(context).size.width,
-                  child: SizedBox(height: 55, child: myBottomBar())),
+                  child: SizedBox(height: 55, child: myBottomBar(context))),
               _buildCenter(),
             ])));
   }
@@ -302,12 +301,12 @@ class _HomePageState extends State<HomePage> {
       child: new IndexedStack(
         index: _currentIndex,
         children: <Widget>[
-          _buildOffstageNavigator(new MixologyList(), 0,_setActiveTab),
-          _buildOffstageNavigator(new PlacesMapPage(), 1,_setActiveTab),
+          _buildOffstageNavigator(new MixologyList(), 0),
+          _buildOffstageNavigator(new PlacesMapPage(), 1),
           _buildOffstageNavigator(
-              new StartSmokeSessionPage(callback: _setActiveTab), 2,_setActiveTab),
-          _buildOffstageNavigator(new GearPage(), 3,_setActiveTab),
-          _buildOffstageNavigator(new StatisticPage(), 4,_setActiveTab),
+              new StartSmokeSessionPage(callback: _setActiveTab), 2),
+          _buildOffstageNavigator(new GearPage(), 3),
+          _buildOffstageNavigator(new StatisticPage(), 4),
         ],
       ),
     );
@@ -319,10 +318,11 @@ class _HomePageState extends State<HomePage> {
       focusScopeNode.dispose();
     }
     subscription.cancel();
+    activeTabSub.cancel();
     super.dispose();
   }
 
-  Widget _buildOffstageNavigator(Widget tabItem, int index, GlobalKey<NavigatorState> Function(int index) setActiveTab) {
+  Widget _buildOffstageNavigator(Widget tabItem, int index) {
     return Offstage(
       offstage: _currentIndex != index,
       child: FocusScope(
@@ -330,41 +330,30 @@ class _HomePageState extends State<HomePage> {
         child: TabNavigator(
           navigatorKey: navigatorKeys[index],
           tabItem: tabItem,
-          index:index,
-          setActiveTab: setActiveTab
+          index: index,
         ),
       ),
     );
   }
 }
 
-
-
 class TabNavigator extends StatelessWidget {
   final int index;
-  final GlobalKey<NavigatorState> Function(int index) setActiveTab;
 
-  TabNavigator({this.navigatorKey, this.tabItem, this.index, this.setActiveTab});
+  TabNavigator({this.navigatorKey, this.tabItem, this.index});
   final GlobalKey<NavigatorState> navigatorKey;
   final Widget tabItem;
 
-
-
-  Map<String, RouteWidgetBuilder> _routeBuilders(
-    BuildContext context
-  ) {
+  Map<String, RouteWidgetBuilder> _routeBuilders(BuildContext context) {
     return {
       '/': (context, argument) => this.tabItem,
-      '/smokeSesion': (context,argument) {  
-        this.setActiveTab(2);
+      '/smokeSesion': (context, argument) {
         return new SmokeSessionPage();
       },
-      '/smokeStatistic':(context, argument){
-      this.setActiveTab(4);
-        if(argument is SmokeSessionSimpleDto){
-                  return new SmokeSessioDetailPage(argument);
+      '/smokeStatistic': (context, argument) {
+        if (argument is SmokeSessionSimpleDto) {
+          return new SmokeSessioDetailPage(argument);
         }
-
       }
     };
   }
@@ -379,7 +368,8 @@ class TabNavigator extends StatelessWidget {
         observers: [observable],
         onGenerateRoute: (routeSettings) {
           return MaterialPageRoute(
-              builder: (context) => routeBuilders[routeSettings.name](context,routeSettings.arguments));
+              builder: (context) => routeBuilders[routeSettings.name](
+                  context, routeSettings.arguments));
         });
   }
 }
