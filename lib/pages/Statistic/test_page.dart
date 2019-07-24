@@ -3,9 +3,12 @@ import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Places/add_place_page.dart';
 import 'package:app/pages/Statistic/hero_test_page.dart';
+import 'package:app/pages/home.page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:flutter/material.dart';
+
+import 'Detail/smoke_session_detail_page.dart';
 
 class TestPage extends StatefulWidget {
   @override
@@ -126,6 +129,21 @@ class _TestPageState extends State<TestPage> {
               onPressed: () async {
                 var auth = new Authorize();
                 await auth.messToken();
+              },
+            ),
+                        OutlineButton.icon(
+              borderSide: BorderSide(color: Colors.white),
+              icon: Icon(
+                Icons.graphic_eq,
+                color: Colors.blue,
+              ),
+              label: Text('Hard jump'),
+              onPressed: () async {
+                     var appBloc =
+            DataProvider.getData(context).appBloc;
+                appBloc.changeActiveTab(1);
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => TestPage()));
               },
             ),
             Hero(

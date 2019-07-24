@@ -92,7 +92,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                         width: screenSize.width,
                         child: new FlatButton(
                           child: new Text(
-                            'I alredy have an account',
+                            'Log in',
                             style: Theme.of(context).textTheme.display2,
                           ),
                           onPressed: () {

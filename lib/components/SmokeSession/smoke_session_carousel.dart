@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
 class SmokeSessionCarousel extends StatefulWidget {
+      final GlobalKey<NavigatorState> Function(int) callback;
+
+  const SmokeSessionCarousel({Key key, this.callback}) : super(key: key);
   @override
   State<StatefulWidget> createState() => new _SmokeSessionCarouselState();
 }

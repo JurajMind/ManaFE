@@ -77,7 +77,7 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
     final sessionCode =
         await Navigator.of(context).push(new MyCustomRoute<String>(
             builder: (BuildContext context) {
-              return new EnterSmokeSessionCode();
+              return new EnterSmokeSessionCode(callback: widget.callback,);
             },
             fullscreenDialog: false));
 

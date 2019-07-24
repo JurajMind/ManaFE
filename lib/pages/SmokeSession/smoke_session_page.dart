@@ -28,7 +28,8 @@ import 'Components/session_control_row.dart';
 
 class SmokeSessionPage extends StatefulWidget {
   final String sessionId;
-  SmokeSessionPage({this.sessionId});
+    final GlobalKey<NavigatorState> Function(int) callback;
+  SmokeSessionPage({this.sessionId, this.callback});
 
   @override
   State<StatefulWidget> createState() {
@@ -402,16 +403,14 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
     ).then((value) {
       if (value) {
         ProgressDialog pr = showEndingProgress();
-
-        var appBloc =
-            DataProvider.getData(navigatorKeys[2].currentContext).appBloc;
-        var sessionBloc = DataProvider.getData(navigatorKeys[2].currentContext)
+      
+        var sessionBloc = DataProvider.getData(context)
             .smokeSessionBloc;
         sessionBloc.endSession().then((value) {
           pr.hide();
-          Navigator.of(navigatorKeys[2].currentContext).pop();
-          appBloc.changeActiveTab(4);
-          Navigator.of(navigatorKeys[4].currentContext).push(MaterialPageRoute(
+          Navigator.of(context).pop();
+          widget.callback(4);
+          Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => SmokeSessioDetailPage(value)));
         });
       }
@@ -420,7 +419,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
 
   ProgressDialog showEndingProgress() {
     var pr = new ProgressDialog(
-        navigatorKeys[2].currentContext, ProgressDialogType.Normal);
+      context, ProgressDialogType.Normal);
     pr.setMessage('Ending smoke session...');
     pr.show();
     return pr;

@@ -14,6 +14,9 @@ import 'package:flutter/services.dart';
 import 'SmokeSession/qr_code_reader_page.dart';
 
 class EnterSmokeSessionCode extends StatefulWidget {
+    final GlobalKey<NavigatorState> Function(int) callback;
+
+  const EnterSmokeSessionCode({Key key, this.callback}) : super(key: key);
   @override
   State<StatefulWidget> createState() => new EnterSmokeSessionCodeState();
 }
@@ -204,7 +207,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                         ))),
               ),
             ),
-            Expanded(flex: 2, child: SmokeSessionCarousel()),
+            Expanded(flex: 2, child: SmokeSessionCarousel(callback: widget.callback,)),
           ],
         ),
       ),
@@ -219,7 +222,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
     if (result.id != null) {
       Navigator.of(context).pushReplacement(new MaterialPageRoute(
         builder: (BuildContext context) {
-          return new SmokeSessionPage(sessionId: sessionId);
+          return new SmokeSessionPage(sessionId: sessionId,callback: widget.callback,);
         },
       ));
     } else {

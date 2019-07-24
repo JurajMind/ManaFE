@@ -37,17 +37,18 @@ class HomePage extends StatefulWidget {
 }
 
 final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
-final Map<int, GlobalKey<NavigatorState>> navigatorKeys = {
+
+StreamSubscription<Flushbar<Map<String, dynamic>>> subscription;
+
+class _HomePageState extends State<HomePage> {
+  int _currentIndex = 2;
+  final Map<int, GlobalKey<NavigatorState>> navigatorKeys = {
   0: GlobalKey<NavigatorState>(),
   1: GlobalKey<NavigatorState>(),
   2: GlobalKey<NavigatorState>(),
   3: GlobalKey<NavigatorState>(),
   4: GlobalKey<NavigatorState>(),
 };
-StreamSubscription<Flushbar<Map<String, dynamic>>> subscription;
-
-class _HomePageState extends State<HomePage> {
-  int _currentIndex = 2;
 
   List<Widget> tabs;
   List<FocusScopeNode> tabFocusNodes;
@@ -104,7 +105,7 @@ class _HomePageState extends State<HomePage> {
         if (sessionId == null) return;
         navigatorKeys[2].currentState.push(new MaterialPageRoute(
           builder: (BuildContext context) {
-            return new SmokeSessionPage(sessionId: sessionId);
+            return new SmokeSessionPage(sessionId: sessionId,callback: _setActiveTab,);
           },
         ));
       });
