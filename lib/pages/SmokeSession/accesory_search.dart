@@ -35,7 +35,8 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
   @override
   void initState() {
     super.initState();
-    ownSimpleAccesories = widget.ownAccesories;
+    ownSimpleAccesories =
+        widget.ownAccesories ?? new List<PipeAccesorySimpleDto>();
     searchOnChange.debounce(Duration(milliseconds: 500)).listen((queryString) {
       if (queryString.length > 3) submitSearch(queryString);
     });
@@ -117,9 +118,13 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
         initialData: new List<PipeAccesorySimpleDto>(),
         builder: (context, snapshot) {
           if (snapshot.data.length == 0) {
+            if (loading) {
+              return Center(child: CircularProgressIndicator());
+            }
+
             return Center(
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 RichText(
                   text: TextSpan(
@@ -133,18 +138,22 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                     ],
                   ),
                 ),
-                SizedBox(height: 18,),
+                SizedBox(
+                  height: 18,
+                ),
                 InkWell(
-                  onTap: (){
-                      Navigator.of(context)
-                  .push<PipeAccesorySimpleDto>(MaterialPageRoute(
-                      builder: (context) => AddGearPage(selectedType: widget.searchType,),
-                      fullscreenDialog: true))
-                  .then((newGear) {
-                    Navigator.of(context).pop(newGear);
-              });
+                  onTap: () {
+                    Navigator.of(context)
+                        .push<PipeAccesorySimpleDto>(MaterialPageRoute(
+                            builder: (context) => AddGearPage(
+                                  selectedType: widget.searchType,
+                                ),
+                            fullscreenDialog: true))
+                        .then((newGear) {
+                      Navigator.of(context).pop(newGear);
+                    });
                   },
-                                  child: Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       RichText(
@@ -159,8 +168,13 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                           ],
                         ),
                       ),
-                         SizedBox(height: 18,),
-                      Icon(Icons.add,size: 40,)
+                      SizedBox(
+                        height: 18,
+                      ),
+                      Icon(
+                        Icons.add,
+                        size: 40,
+                      )
                     ],
                   ),
                 )
@@ -169,10 +183,31 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
           }
 
           return new ListView.builder(
-            itemCount: snapshot.data.length,
-            itemBuilder: (context, index) =>
-                _createResult(index, snapshot.data[index], context),
-          );
+              itemCount: snapshot.data.length + 1,
+              itemBuilder: (context, index) {
+                if (index >= snapshot.data.length) {
+                  return new ListTile(
+                    leading: false
+                        ? Icon(Icons.shopping_basket)
+                        : Container(
+                            width: 0.0,
+                            height: 10.0,
+                          ),
+                    onTap: () => Navigator.of(context)
+                        .push<PipeAccesorySimpleDto>(MaterialPageRoute(
+                            builder: (context) => AddGearPage(
+                                  selectedType: widget.searchType,
+                                ),
+                            fullscreenDialog: true))
+                        .then((newGear) {
+                      Navigator.of(context).pop(newGear);
+                    }),
+                    title: Text('Not found what you were looking for?'),
+                    subtitle: Text('Add your gear'),
+                  );
+                }
+                return _createResult(index, snapshot.data[index], context);
+              });
         });
   }
 

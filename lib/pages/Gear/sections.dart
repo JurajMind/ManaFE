@@ -56,9 +56,12 @@ class Section {
   int get hashCode => title.hashCode;
 }
 
-List<Section> getAllSections(GearBloc bloc, ScrollPhysics physics,
-    Map<int, ScrollController> controllers,int currentView,ValueChanged<int> onViewChanged) {
-
+List<Section> getAllSections(
+    GearBloc bloc,
+    ScrollPhysics physics,
+    Map<int, ScrollController> controllers,
+    int currentView,
+    ValueChanged<int> onViewChanged) {
   return <Section>[
     Section(
         title: 'DEVICES',
@@ -88,7 +91,7 @@ List<Section> getAllSections(GearBloc bloc, ScrollPhysics physics,
       backgroundAsset: 'images/gear/hookah.jpg',
       child: PipeAccesoryList(
         currentView: currentView,
-          onViewChanged: onViewChanged,
+        onViewChanged: onViewChanged,
         scrollController: controllers[2],
         scrollPhysics: physics,
         type: "Hookah",
@@ -107,7 +110,7 @@ List<Section> getAllSections(GearBloc bloc, ScrollPhysics physics,
           type: "Bowl",
         )),
     Section(
-        title: 'HEAT MANAGEMENT',
+        title: 'H.M.D',
         leftColor: Colors.blueAccent,
         rightColor: Colors.blue,
         backgroundAsset: 'images/gear/hms.jpg',

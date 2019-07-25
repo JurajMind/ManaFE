@@ -40,14 +40,6 @@ class PersonBloc extends SignalBloc {
   BehaviorSubject<List<PlacesReservationsReservationDto>> myReservations =
       new BehaviorSubject<List<PlacesReservationsReservationDto>>();
 
-  BehaviorSubject<List<PipeAccesorySimpleDto>> hookahs =
-      new BehaviorSubject<List<PipeAccesorySimpleDto>>.seeded(
-          new List<PipeAccesorySimpleDto>());
-
-  BehaviorSubject<List<PipeAccesorySimpleDto>> bowls =
-      new BehaviorSubject<List<PipeAccesorySimpleDto>>.seeded(
-          new List<PipeAccesorySimpleDto>());
-
   BehaviorSubject<List<DeviceSimpleDto>> devices =
       new BehaviorSubject<List<DeviceSimpleDto>>.seeded(
           new List<DeviceSimpleDto>());
@@ -59,6 +51,10 @@ class PersonBloc extends SignalBloc {
   BehaviorSubject<List<SmokeSessionSimpleDto>> smokeSessionsCodes =
       new BehaviorSubject<List<SmokeSessionSimpleDto>>.seeded(
           new List<SmokeSessionSimpleDto>());
+
+  List<PipeAccesorySimpleDto> getTypedGear(String type) {
+    return myGear.value.where((g) => g.type == type).toList();
+  }
 
   loadMyGear(bool reload) async {
     if (_loadedGear && !reload) return;

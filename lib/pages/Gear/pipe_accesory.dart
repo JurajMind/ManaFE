@@ -119,6 +119,8 @@ class PipeAccesoryList extends StatelessWidget {
   }
 
   Row buildSearchRow(PersonBloc bloc, BuildContext context) {
+    var typedMyGear =
+        DataProvider.getData(context).personBloc.getTypedGear(type);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
@@ -131,10 +133,9 @@ class PipeAccesoryList extends StatelessWidget {
                   bloc: bloc,
                   context: context,
                   child: new PipeAccesorySearch(
-                    type: type,
-                    searchType: type,
-                    ownAccesories: new List<PipeAccesorySimpleDto>(),
-                  ))),
+                      type: type,
+                      searchType: type,
+                      ownAccesories: typedMyGear))),
         ),
         Expanded(
             flex: 2,
@@ -237,9 +238,13 @@ class PipeAccesoryList extends StatelessWidget {
                     Expanded(
                       flex: 1,
                       child: IconButton(
-                        icon: Icon(Icons.search),
-                        onPressed: () {},
-                      ),
+                          icon: Icon(Icons.search),
+                          onPressed: () => showSearchDialog(
+                              context: context,
+                              child: new PipeAccesorySearch(
+                                type: type,
+                                searchType: type,
+                              ))),
                     ),
                     Expanded(
                       flex: 2,
