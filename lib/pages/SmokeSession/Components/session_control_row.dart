@@ -18,59 +18,52 @@ class SessionControllRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          Column(
-            children: <Widget>[
-              Container(
-                child: IconButton(
-                  color: AppColors.colors[1],
-                  iconSize: 50,
-                  icon: Icon(Icons.list),
-                  onPressed: () =>
-                      Navigator.of(context).push(new MaterialPageRoute(
-                          fullscreenDialog: true,
-                          builder: (BuildContext context) {
-                            return new AnimationPickerPage();
-                          })),
+          InkWell(
+            onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                fullscreenDialog: true,
+                builder: (BuildContext context) {
+                  return new AnimationPickerPage();
+                })),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  child: Icon(Icons.list, color: AppColors.colors[1], size: 50),
                 ),
-              ),
-              Text(
-                'Animations',
-                style: Theme.of(context)
-                    .textTheme
-                    .display2
-                    .apply(color: AppColors.colors[1]),
-              )
-            ],
+                Text(
+                  'Animations',
+                  style: Theme.of(context)
+                      .textTheme
+                      .display2
+                      .apply(color: AppColors.colors[1]),
+                )
+              ],
+            ),
           ),
           StreamBuilder<StandSettings>(
               stream: smokeSessionBloc.standSettings,
               builder: (context, snapshot) {
                 var color = snapshot?.data?.idle?.color?.toColor() ??
                     AppColors.colors[3];
-                return Column(
-                  children: <Widget>[
-                    IconButton(
-                      color: color,
-                      iconSize: 50,
-                      icon: Icon(Icons.color_lens),
-                      onPressed: () =>
-                          Navigator.of(context).push(new MaterialPageRoute(
-                              fullscreenDialog: true,
-                              builder: (BuildContext context) {
-                                return new ColorPickerPage(
-                                    initData: snapshot?.data);
-                              })),
-                    ),
-                    StreamBuilder<StandSettings>(
-                        stream: smokeSessionBloc.standSettings,
-                        builder: (context, snapshot) {
-                          return Text('Colors',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .display2
-                                  .apply(color: color));
-                        })
-                  ],
+                return InkWell(
+                  onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                      fullscreenDialog: true,
+                      builder: (BuildContext context) {
+                        return new ColorPickerPage(initData: snapshot?.data);
+                      })),
+                  child: Column(
+                    children: <Widget>[
+                      Icon(Icons.color_lens, color: color, size: 50),
+                      StreamBuilder<StandSettings>(
+                          stream: smokeSessionBloc.standSettings,
+                          builder: (context, snapshot) {
+                            return Text('Colors',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .display2
+                                    .apply(color: color));
+                          })
+                    ],
+                  ),
                 );
               })
         ]);

@@ -315,7 +315,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
 
   void setMarkers(List<PlaceSimpleDto> places) {
     markers = places.map((f) {
-      return new Marker(
+      var marker = new Marker(
           icon: f.haveMana ? _manaMarker : BitmapDescriptor.defaultMarker,
           onTap: () async {
             var controller = await _controller.future;
@@ -335,10 +335,16 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                     zoom: 15.151926040649414)));
           },
           markerId: MarkerId(f.id.toString()),
-          infoWindow:
-              InfoWindow(title: f.name, snippet: Extensions.adress(f.address)),
+          infoWindow: InfoWindow(
+              title: f.name,
+              snippet: Extensions.adress(f.address),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => PlaceDetailPage(place: f)));
+              }),
           position:
               LatLng(double.parse(f.address.lat), double.parse(f.address.lng)));
+      return marker;
     }).toSet();
   }
 }
@@ -376,23 +382,32 @@ class ReservationButton extends StatelessWidget {
                       borderRadius: new BorderRadius.circular(30.0)),
                   borderSide: BorderSide(color: Colors.white),
                   hoverColor: Colors.black,
-                  child: upcomingCount == -1 ? Text(
-                    'All reservations',
-                    style: Theme.of(context).textTheme.display3,
-                  ) : Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Text('Upcoming reservations ',
-                    style: Theme.of(context).textTheme.display3,
-                  ),
-                  Container(
-                    child:     Center(
-                      child: Text(upcomingCount.toString(),
-                      style: Theme.of(context).textTheme.display4),
-                    ),
-                    height: 25,width: 25,decoration: BoxDecoration(shape: BoxShape.circle,color: AppColors.colors[2]),
-                  )
-                  ],),
+                  child: upcomingCount == -1
+                      ? Text(
+                          'All reservations',
+                          style: Theme.of(context).textTheme.display3,
+                        )
+                      : Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              'Upcoming reservations ',
+                              style: Theme.of(context).textTheme.display3,
+                            ),
+                            Container(
+                              child: Center(
+                                child: Text(upcomingCount.toString(),
+                                    style:
+                                        Theme.of(context).textTheme.display4),
+                              ),
+                              height: 25,
+                              width: 25,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: AppColors.colors[2]),
+                            )
+                          ],
+                        ),
                   onPressed: () => Navigator.of(context).push(
                       new MaterialPageRoute(builder: (BuildContext context) {
                     return new ReservationsPage();
