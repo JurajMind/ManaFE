@@ -7,12 +7,22 @@ import 'package:openapi/api.dart';
 import 'brand_select_page.dart';
 
 class AddGearPage extends StatefulWidget {
-  AddGearPage({Key key}) : super(key: key);
+  final String selectedType;
+  AddGearPage({Key key, this.selectedType}) : super(key: key);
 
   _AddGearPageState createState() => _AddGearPageState();
 }
 
 class _AddGearPageState extends State<AddGearPage> {
+
+@override
+initState(){
+  if(widget.selectedType != null){
+    selectedType = widget.selectedType;
+  }
+  super.initState();
+}
+
   BrandGroup selectedBrand;
   String selectedType = "None";
   var types = ["None", "Tobacco", "Hookah", "Bowl", "HeatManagement", "Coal"];
@@ -114,8 +124,13 @@ class _AddGearPageState extends State<AddGearPage> {
               icon: Icon(Icons.save),
               label: uploading
                   ? CircularProgressIndicator()
-                  : Text('Use new brand'),
+                  : Text('Save and use new gear'),
               onPressed: () {
+
+                if(selectedBrand == null || selectedType == "None" || newName == null){
+                  return;
+                }
+
                 setState(() {
                   uploading = true;
                 });

@@ -233,7 +233,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
             onTap: () {
               Navigator.of(context)
                   .push<PipeAccesorySimpleDto>(MaterialPageRoute(
-                      builder: (context) => AddGearPage(),
+                      builder: (context) => AddGearPage(selectedType: 'Tobacco',),
                       fullscreenDialog: true))
                   .then((newTobacco) {
                 if (newTobacco != null) {

@@ -1,4 +1,5 @@
 import 'package:app/app/app.dart';
+import 'package:app/pages/Gear/add_gear_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -116,7 +117,55 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
         initialData: new List<PipeAccesorySimpleDto>(),
         builder: (context, snapshot) {
           if (snapshot.data.length == 0) {
-            return Center(child: Text('No result'));
+            return Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                RichText(
+                  text: TextSpan(
+                    text: 'No result for ',
+                    style: DefaultTextStyle.of(context).style,
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: controller.text,
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      TextSpan(text: ' found'),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 18,),
+                InkWell(
+                  onTap: (){
+                      Navigator.of(context)
+                  .push<PipeAccesorySimpleDto>(MaterialPageRoute(
+                      builder: (context) => AddGearPage(selectedType: widget.searchType,),
+                      fullscreenDialog: true))
+                  .then((newGear) {
+                    Navigator.of(context).pop(newGear);
+              });
+                  },
+                                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      RichText(
+                        text: TextSpan(
+                          text: 'You can add ',
+                          style: DefaultTextStyle.of(context).style,
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: controller.text,
+                                style: TextStyle(fontWeight: FontWeight.bold)),
+                            TextSpan(text: ' as new ${widget.searchType}'),
+                          ],
+                        ),
+                      ),
+                         SizedBox(height: 18,),
+                      Icon(Icons.add,size: 40,)
+                    ],
+                  ),
+                )
+              ],
+            ));
           }
 
           return new ListView.builder(
