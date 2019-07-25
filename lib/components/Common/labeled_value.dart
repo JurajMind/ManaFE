@@ -23,7 +23,7 @@ class LabeledValue extends StatelessWidget {
             label == null
                 ? Container()
                 : Text(
-                    label,
+                    label ?? '',
                     style: Theme.of(context)
                         .copyWith(
                             textTheme: TextTheme(
@@ -33,7 +33,7 @@ class LabeledValue extends StatelessWidget {
                         .title,
                   ),
             Text(
-              value,
+              value ?? '',
               style: Theme.of(context)
                   .copyWith(
                       textTheme: TextTheme(title: TextStyle(fontSize: 16)))

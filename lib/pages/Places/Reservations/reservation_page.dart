@@ -137,7 +137,16 @@ class _ReservationPageState extends State<ReservationPage> {
                                         compareDate(date, DateTime.now());
 
                                     if (dateCompare >= 0) {
-                                      await loadReservationInfo(date);
+                                      await loadReservationInfo(date)
+                                          .then((data) {
+
+                                            if(data.length == 0){
+                                              return;
+                                            }
+                                        selectedTimeLabel = data[0].label;
+                                        selectedTimeValue =
+                                            data[0].timeSlot.capacityLeft;
+                                      });
                                     }
 
                                     setState(() {
@@ -350,9 +359,12 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
   Widget buildNextButton(List<ParsedTimes> disabledTimes, int _cannotReserve) {
-    var next = disabledTimes.map((f) => f.label).contains(selectedTimeLabel) ||
+    var noNext = disabledTimes.map((f) => f.label).contains(selectedTimeLabel) ||
         (_cannotReserve < 0);
 
+    if(selectedTimeLabel == null){
+      noNext = true;
+    }
     if (loading) {
       return ColorLoader(
         colors: AppColors.colors,
@@ -361,12 +373,12 @@ class _ReservationPageState extends State<ReservationPage> {
     }
     return new RoundedButton(
       buttonName: 'Next',
-      onTap: () => next
+      onTap: () => noNext
           ? null
           : pageController.animateToPage(1,
               curve: Curves.easeIn,
               duration: const Duration(milliseconds: 500)),
-      buttonColor: next ? Colors.grey : Colors.black,
+      buttonColor: noNext ? Colors.grey : Colors.black,
       borderWidth: 0.0,
       bottomMargin: 0.0,
       height: 40.0,
@@ -378,7 +390,7 @@ class _ReservationPageState extends State<ReservationPage> {
     return Column(
       children: <Widget>[
         Text(
-          'People',
+          'Persons',
           style: TextStyle(color: Colors.grey),
         ),
         WheelPicker.integer(
