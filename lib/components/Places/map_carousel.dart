@@ -38,7 +38,7 @@ class _CarrousselState extends State<MapCarousel> {
       currentpage = widget.nearbyPlaces.value.indexOf(widget.selectedPlace);
       widget.nearbyPlaces.doOnData((onData) {
         var index = onData.indexOf(widget.selectedPlace);
-        controller.jumpToPage(index);
+        controller.jumpToPage(index + 1);
       });
     }
 
@@ -56,6 +56,17 @@ class _CarrousselState extends State<MapCarousel> {
   dispose() {
     controller.dispose();
     super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(MapCarousel oldWidget) {
+    if (oldWidget?.selectedPlace?.id != this.widget?.selectedPlace?.id) {
+      var pageIndex =
+          this.widget.nearbyPlaces.value.indexOf(this.widget.selectedPlace);
+      controller.animateToPage(pageIndex + 1,
+          curve: Curves.easeIn, duration: const Duration(milliseconds: 500));
+    }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -78,7 +89,7 @@ class _CarrousselState extends State<MapCarousel> {
               setState(() {
                 currentpage = value;
               });
-              var place = snapshot.data[value];
+              var place = snapshot.data[value - 1];
               final GoogleMapController controller =
                   await widget.mapController.future;
               await controller.animateCamera(CameraUpdate.newCameraPosition(

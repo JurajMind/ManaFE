@@ -66,13 +66,8 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      Extensions.adress(place.address),
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        color: Colors.white,
-                      ),
-                    ),
+                    Text(Extensions.adress(place.address),
+                        style: Theme.of(context).textTheme.display2),
                     new StarRating(
                       size: 15.0,
                       rating: 2.0,
@@ -156,13 +151,20 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                       children: <Widget>[
                         new Row(
                           children: <Widget>[
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: PlaceInfo(place: widget.place),
-                              ),
-                              flex: 1,
-                            ),
+                            StreamBuilder<PlaceDto>(
+                                stream: placeBloc.placeInfo,
+                                builder: (context, snapshot) {
+                                  return Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: PlaceInfo(
+                                        place: widget.place,
+                                        placeInfo: snapshot.data,
+                                      ),
+                                    ),
+                                    flex: 1,
+                                  );
+                                }),
                             Expanded(
                                 flex: 1,
                                 child: PlaceMap(

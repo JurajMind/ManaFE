@@ -1,15 +1,16 @@
 import 'package:app/Helpers/place_helper.dart';
 import 'package:app/components/Common/leading_icon.dart';
 import 'package:app/components/Places/open_dropdown.dart';
+import 'package:app/const/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/api.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PlaceInfo extends StatefulWidget {
   final PlaceSimpleDto place;
-
-  const PlaceInfo({Key key, this.place}) : super(key: key);
+  final PlaceDto placeInfo;
+  const PlaceInfo({Key key, this.place, this.placeInfo}) : super(key: key);
 
   @override
   _PlaceInfoState createState() => _PlaceInfoState();
@@ -55,17 +56,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                       ),
                     )
                   : Container(),
-              widget.place.facebook != null
-                  ? InkWell(
-                      onTap: () => launch(widget.place.facebook),
-                      child: new LeadingIcon(
-                        icon: MdiIcons.facebook,
-                        child: Text(
-                          widget.place.friendlyUrl,
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ))
-                  : Container(),
+              PlaceSocials(place: widget.placeInfo)
             ],
           );
   }
@@ -75,5 +66,82 @@ class _PlaceInfoState extends State<PlaceInfo> {
       return Colors.grey;
     }
     return isOpen ? Colors.green : Colors.red;
+  }
+}
+
+class PlaceSocials extends StatelessWidget {
+  final PlaceDto place;
+  const PlaceSocials({Key key, this.place}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (place == null) {
+      return Container();
+    }
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Container(
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            ...place.socialMedias.map((f) {
+              return this.socialWidget(f);
+            }).toList()
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget socialWidget(SmartHookahModelsDbSocialMedia f) {
+    IconData icon = Icons.battery_unknown;
+    Color color = Colors.red;
+    LinearGradient gradient;
+    switch (f.code) {
+      case "FB":
+        {
+          icon = FontAwesomeIcons.facebook;
+          color = const Color.fromRGBO(59, 89, 152, 1);
+          break;
+        }
+      case "IG":
+        {
+          icon = FontAwesomeIcons.instagram;
+          gradient = const LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                const Color.fromRGBO(64, 93, 230, 1),
+                const Color.fromRGBO(88, 81, 219, 1),
+                const Color.fromRGBO(253, 29, 29, 1),
+                const Color.fromRGBO(255, 220, 128, 1)
+              ]);
+          break;
+        }
+      case "URL":
+        {
+          icon = Icons.open_in_browser;
+          color = AppColors.colors[2];
+          break;
+        }
+      case "MSG":
+        {
+          icon = FontAwesomeIcons.facebookMessenger;
+          color = Color.fromRGBO(0, 120, 255, 1);
+          break;
+        }
+    }
+
+    return InkWell(
+      child: Container(
+        decoration: BoxDecoration(
+            gradient: gradient,
+            borderRadius: BorderRadius.circular(8.0),
+            color: color),
+        padding: EdgeInsets.all(8),
+        child: Icon(icon),
+      ),
+    );
   }
 }

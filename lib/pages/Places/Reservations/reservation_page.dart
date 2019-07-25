@@ -3,7 +3,6 @@ import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Callendar/flutter_calendar.dart';
 import 'package:app/components/Common/labeled_value.dart';
-import 'package:app/components/Loading/circle_loading.dart';
 import 'package:app/components/Pickers/WheelPicker/wheelPicker.dart';
 import 'package:app/const/theme.dart';
 
@@ -296,10 +295,7 @@ class _ReservationPageState extends State<ReservationPage> {
                                   width: 150.0,
                                 ),
                                 postingReservation
-                                    ? ColorLoader(
-                                        colors: AppColors.colors,
-                                        duration: Duration(milliseconds: 50),
-                                      )
+                                    ? CircularProgressIndicator()
                                     : new RoundedButton(
                                         buttonName: 'Reserve',
                                         onTap: () {
@@ -366,10 +362,7 @@ class _ReservationPageState extends State<ReservationPage> {
       noNext = true;
     }
     if (loading) {
-      return ColorLoader(
-        colors: AppColors.colors,
-        duration: Duration(milliseconds: 50),
-      );
+      return CircularProgressIndicator();
     }
     return new RoundedButton(
       buttonName: 'Next',

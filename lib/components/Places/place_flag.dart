@@ -29,8 +29,8 @@ class PlaceFlag extends StatelessWidget {
       case "WIFI":
         return Icon(Icons.wifi);
         break;
-      case "CASH":
-        return Icon(Icons.attach_money);
+      case "OUTDOOR":
+        return Icon(FontAwesomeIcons.tree);
         break;
       case "PET":
         return Icon(Icons.pets);
@@ -41,7 +41,7 @@ class PlaceFlag extends StatelessWidget {
       default:
         return Text(
           flag,
-          style: Theme.of(context).textTheme.body1.apply(color: Colors.black),
+          style: Theme.of(context).textTheme.body1.apply(color: Colors.white),
         );
     }
   }
