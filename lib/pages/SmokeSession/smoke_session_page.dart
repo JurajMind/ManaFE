@@ -5,6 +5,7 @@ import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Common/bg_painter.dart';
 import 'package:app/components/Common/since_timer.dart';
+import 'package:app/components/ProgressDialog/progress_dialog.dart';
 import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/module/data_provider.dart';
@@ -14,6 +15,7 @@ import 'package:app/pages/SmokeSession/Experimental/experimental_page.dart';
 import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
 
 import 'package:app/pages/SmokeSession/tobacco_widget.dart';
+import 'package:app/pages/Statistic/Detail/smoke_session_detail_page.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -21,13 +23,13 @@ import 'package:flutter/services.dart';
 import 'package:openapi/api.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:screenshot_share/screenshot_share.dart';
-import 'package:share/share.dart';
 
 import 'Components/session_control_row.dart';
 
 class SmokeSessionPage extends StatefulWidget {
   final String sessionId;
-  SmokeSessionPage({this.sessionId});
+    final GlobalKey<NavigatorState> Function(int) callback;
+  SmokeSessionPage({this.sessionId, this.callback});
 
   @override
   State<StatefulWidget> createState() {
@@ -375,12 +377,13 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("End sessopn?"),
+          title: new Text("End session?"),
           content: new Text("Do you want end this session?"),
           actions: <Widget>[
             new FlatButton(
+              textColor: Colors.green,
               child: new Text(
-                "End",
+                "Yes",
               ),
               onPressed: () {
                 Navigator.of(context).pop(true);
@@ -388,7 +391,8 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
             ),
             // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new Text("Close"),
+              textColor: Colors.red,
+              child: new Text("No"),
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
@@ -398,12 +402,27 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
       },
     ).then((value) {
       if (value) {
-        var bloc = DataProvider.getData(context).smokeSessionBloc;
-        bloc.endSession().then((value) {
+        ProgressDialog pr = showEndingProgress();
+      
+        var sessionBloc = DataProvider.getData(context)
+            .smokeSessionBloc;
+        sessionBloc.endSession().then((value) {
+          pr.hide();
           Navigator.of(context).pop();
+          widget.callback(4);
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => SmokeSessioDetailPage(value)));
         });
       }
     });
+  }
+
+  ProgressDialog showEndingProgress() {
+    var pr = new ProgressDialog(
+      context, ProgressDialogType.Normal);
+    pr.setMessage('Ending smoke session...');
+    pr.show();
+    return pr;
   }
 
   void _restartDialog(String code) {

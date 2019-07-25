@@ -44,10 +44,11 @@ class SignalR {
     _channel = null;
     connectionTimer.cancel();
     var abortUrl = url +
-        '/abort?transport=webSockets&clientProtocol=${connectionInfo.ProtocolVersion}&connectionToken=${Uri.encodeComponent(connectionInfo.ConnectionToken)}&connectionData=$conectionData';
+        '/abort?transport=webSockets&clientProtocol=${connectionInfo.ProtocolVersion}&connectionToken=${Uri.encodeComponent(connectionInfo.ConnectionToken)}&connectionData=$conectionData&tid=1';
     var result = await http.get(abortUrl);
     print('signal disconnect ${result.body}');
   }
+
 
   Future<dynamic> _connect({bool force = false}) async {
     if (this.connection && !force) {
@@ -56,7 +57,7 @@ class SignalR {
     NegotiateResponse negotiateResponse = await getNegotiation();
 
     var chanelUlr =
-        "wss://$host/signalr/connect?transport=webSockets&clientProtocol=${negotiateResponse.ProtocolVersion}&connectionToken=${Uri.encodeComponent(negotiateResponse.ConnectionToken)}&connectionData=$conectionData";
+        "wss://$host/signalr/connect?transport=webSockets&clientProtocol=${negotiateResponse.ProtocolVersion}&connectionToken=${Uri.encodeComponent(negotiateResponse.ConnectionToken)}&connectionData=$conectionData&tid=1";
 
     print(chanelUlr);
     handleConnection(chanelUlr, true);
@@ -93,9 +94,10 @@ class SignalR {
         proceedCall(serverCall);
       },
       onError: (error){
+           connectionStatus.add(SignalStatus.error);
         print(error);
         if(connection){
-          connectionStatus.add(SignalStatus.error);
+       
         }
       });
 

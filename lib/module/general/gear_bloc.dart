@@ -66,4 +66,10 @@ class GearBloc {
         return null;
     }
   }
+
+  Future<PipeAccesorySimpleDto> addGear(PipeAccesorySimpleDto newGear) async {
+    var created = await App.http.addGear(newGear);
+    // todo create
+    return created;
+  }
 }

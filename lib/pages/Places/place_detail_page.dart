@@ -9,6 +9,7 @@ import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/place_bloc.dart';
 import 'package:app/pages/Places/Reservations/reservation_page.dart';
 import 'package:app/pages/Places/menu.page.dart';
+import 'package:app/pages/Places/place_pictures_page.dart';
 import 'package:app/support/mana_icons_icons.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -87,8 +88,11 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
           ),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.photo_size_select_small),
-            ),
+                icon: Icon(Icons.photo_size_select_small),
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                    settings: RouteSettings(),
+                    builder: (context) =>
+                        PlacePicturesPage(place: placeBloc.placeInfo.value)))),
           ],
           flexibleSpace: new FlexibleSpaceBar(
             title: SizedBox(

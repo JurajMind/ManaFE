@@ -527,8 +527,16 @@ class PlacePickerState extends State<PlacePicker> {
               
                 /// Moves the camera to the provided location and updates other UI features to
                 /// match the location.
+                /// 
+                var firstJump = true;
                 void moveToLocation(LatLng latLng) {
                   this.mapController.future.then((controller) {
+                    if(firstJump && widget.initialTarget != null)
+                    {
+                       firstJump = false;
+                      return;                     
+                    }
+                 
                     controller.animateCamera(
                       CameraUpdate.newCameraPosition(
                         CameraPosition(

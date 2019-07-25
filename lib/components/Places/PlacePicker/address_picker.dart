@@ -13,7 +13,7 @@ class AddressPicker extends StatefulWidget {
 
 class _AddressPickerState extends State<AddressPicker> {
   static const kGoogleApiKey = "AIzaSyDv2o2BsQ1IJjdPS3eSjkf7f-_Jt7Fu-MU";
-  NearbyAddress _address;
+  NearbyAddress address;
   bool invalidAddress = false;
   TextEditingController _streetController;
   TextEditingController _numberController;
@@ -40,7 +40,7 @@ class _AddressPickerState extends State<AddressPicker> {
     var placesBloc = DataProvider.getData(context).placeBloc;
     LatLng initPosition;
     if (placesBloc.location.value != null) {
-      LatLng(placesBloc.location.value.latitude,
+     initPosition =  LatLng(placesBloc.location.value.latitude,
           placesBloc.location.value.longitude);
     }
 
@@ -74,9 +74,9 @@ class _AddressPickerState extends State<AddressPicker> {
                                 // code when the user saves the form.
                               },
                               onEditingComplete: () {
-                                _address.address.street =
+                                address.address.street =
                                     this._streetController.value.text;
-                                widget.onAddressChange(_address);
+                                widget.onAddressChange(address);
                               },
                               validator: (String value) {
                                 return value.contains('@')
@@ -98,9 +98,9 @@ class _AddressPickerState extends State<AddressPicker> {
                                 // code when the user saves the form.
                               },
                               onEditingComplete: () {
-                                _address.address.number =
+                                address.address.number =
                                     this._numberController.value.text;
-                                widget.onAddressChange(_address);
+                                widget.onAddressChange(address);
                               },
                               validator: (String value) {
                                 return value.contains('@')
@@ -126,9 +126,9 @@ class _AddressPickerState extends State<AddressPicker> {
                                 // code when the user saves the form.
                               },
                               onEditingComplete: () {
-                                _address.address.city =
+                                address.address.city =
                                     this._cityController.value.text;
-                                widget.onAddressChange(_address);
+                                widget.onAddressChange(address);
                               },
                               validator: (String value) {
                                 return value.contains('@')
@@ -151,9 +151,9 @@ class _AddressPickerState extends State<AddressPicker> {
                                 // code when the user saves the form.
                               },
                               onEditingComplete: () {
-                                _address.address.ZIP =
+                                address.address.ZIP =
                                     this._zipController.value.text;
-                                widget.onAddressChange(_address);
+                                widget.onAddressChange(address);
                               },
                               validator: (String value) {
                                 return value.contains('@')
@@ -250,22 +250,23 @@ class _AddressPickerState extends State<AddressPicker> {
         fullscreenDialog: true,
         builder: (context) => PlacePicker(
               kGoogleApiKey,
-              _address?.latLng ?? initPosition,
+              address?.latLng ?? initPosition,
             )));
 
     // Handle the result in your way
     print(result);
     widget.onAddressChange(result);
     setState(() {
-      _address = result;
+    
       if (result == null) {
         invalidAddress = true;
       } else {
+          address = result;
         invalidAddress = false;
         _streetController.text = result.address.street;
         _numberController.text = result.address.number;
         _cityController.text = result.address.city;
-        _zipController.text = result.address.ZIP;
+        _zipController.text = result.address.ZIP; 
         _countryController.text = result.address.country;
         _latController.text = result.address.lat;
         _lngController.text = result.address.lng;
@@ -279,24 +280,24 @@ class _AddressPickerState extends State<AddressPicker> {
         fullscreenDialog: true,
         builder: (context) => PlacePicker(
               kGoogleApiKey,
-              _address?.latLng ?? initPosition,
+              address?.latLng ?? initPosition,
               onlyLocation: true,
             )));
 
     // Handle the result in your way
     print(result);
     setState(() {
-      _address = result;
+      address = result;
       if (result == null) {
       } else {
         initPosition = result.latLng;
         _latController.text = result.latLng.latitude.toStringAsPrecision(9);
         _lngController.text = result.latLng.longitude.toStringAsPrecision(9);
-        _address.latLng = result.latLng;
-        _address.address.lat = result.latLng.latitude.toString();
-        _address.address.lng = result.latLng.longitude.toString();
+        address.latLng = result.latLng;
+        address.address.lat = result.latLng.latitude.toString();
+        address.address.lng = result.latLng.longitude.toString();
       }
     });
-    widget.onAddressChange(_address);
+    widget.onAddressChange(address);
   }
 }

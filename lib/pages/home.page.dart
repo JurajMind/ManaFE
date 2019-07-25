@@ -10,7 +10,6 @@ import 'package:app/module/mixology/mixology_list.dart';
 import 'package:app/module/person/person_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Gear/gear_page.dart';
-import 'package:app/pages/Places/places_page.dart';
 import 'package:app/pages/Statistic/statistic_page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';
 import 'package:app/services/signal_r.dart';
@@ -20,10 +19,15 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:openapi/api.dart';
 
 import 'Places/places_map_page.dart';
 import 'SmokeSession/Components/gradiend_color_wheel_rotate.dart';
 import 'SmokeSession/smoke_session_page.dart';
+import 'Statistic/Detail/smoke_session_detail_page.dart';
+
+typedef RouteWidgetBuilder = Widget Function(
+    BuildContext context, Object argument);
 
 class HomePage extends StatefulWidget {
   @override
@@ -32,25 +36,27 @@ class HomePage extends StatefulWidget {
   }
 }
 
-//Equivalent to var hc = $.hubConnection(url,options);
 final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+
 StreamSubscription<Flushbar<Map<String, dynamic>>> subscription;
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 2;
-  Map<int, GlobalKey<NavigatorState>> navigatorKeys = {
-    0: GlobalKey<NavigatorState>(),
-    1: GlobalKey<NavigatorState>(),
-    2: GlobalKey<NavigatorState>(),
-    3: GlobalKey<NavigatorState>(),
-    4: GlobalKey<NavigatorState>(),
-  };
+  final Map<int, GlobalKey<NavigatorState>> navigatorKeys = {
+  0: GlobalKey<NavigatorState>(),
+  1: GlobalKey<NavigatorState>(),
+  2: GlobalKey<NavigatorState>(),
+  3: GlobalKey<NavigatorState>(),
+  4: GlobalKey<NavigatorState>(),
+};
 
   List<Widget> tabs;
   List<FocusScopeNode> tabFocusNodes;
 
   SmokeSessionBloc smokeSessionBloc;
   PersonBloc personBloc;
+
+  StreamSubscription<int> activeTabSub;
 
   @override
   void initState() {
@@ -99,7 +105,7 @@ class _HomePageState extends State<HomePage> {
         if (sessionId == null) return;
         navigatorKeys[2].currentState.push(new MaterialPageRoute(
           builder: (BuildContext context) {
-            return new SmokeSessionPage(sessionId: sessionId);
+            return new SmokeSessionPage(sessionId: sessionId,callback: _setActiveTab,);
           },
         ));
       });
@@ -107,6 +113,11 @@ class _HomePageState extends State<HomePage> {
     _focusActiveTab();
     personBloc.loadMyGear(false);
     personBloc.loadInitData();
+
+    activeTabSub =
+        DataProvider.getData(context).appBloc.activeTab.listen((index) {
+      _setActiveTab(index);
+    });
     SystemChannels.lifecycle.setMessageHandler((msg) {
       debugPrint('SystemChannels> $msg');
       if (msg == AppLifecycleState.paused.toString() ||
@@ -133,6 +144,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   GlobalKey<NavigatorState> _setActiveTab(int index) {
+    if (index == _currentIndex) return navigatorKeys[index];
+
+    DataProvider.getData(navigatorKeys[index].currentContext)
+        .appBloc
+        .changeActiveTab(index);
+
     if (index == _currentIndex && index == 2) {
       if (!Platform.isIOS) {
         navigatorKeys[index].currentState.maybePop();
@@ -145,7 +162,7 @@ class _HomePageState extends State<HomePage> {
     return navigatorKeys[index];
   }
 
-  Widget myBottomBar() => new Container(
+  Widget myBottomBar(context) => new Container(
         child: Material(
           color: new Color.fromARGB(230, 0, 0, 0),
           child: Ink(
@@ -225,7 +242,7 @@ class _HomePageState extends State<HomePage> {
                   bottom: -10,
                   height: 55,
                   width: MediaQuery.of(context).size.width,
-                  child: SizedBox(height: 55, child: myBottomBar())),
+                  child: SizedBox(height: 55, child: myBottomBar(context))),
               _buildCenter(),
             ])));
   }
@@ -302,6 +319,7 @@ class _HomePageState extends State<HomePage> {
       focusScopeNode.dispose();
     }
     subscription.cancel();
+    activeTabSub.cancel();
     super.dispose();
   }
 
@@ -313,6 +331,7 @@ class _HomePageState extends State<HomePage> {
         child: TabNavigator(
           navigatorKey: navigatorKeys[index],
           tabItem: tabItem,
+          index: index,
         ),
       ),
     );
@@ -320,18 +339,23 @@ class _HomePageState extends State<HomePage> {
 }
 
 class TabNavigator extends StatelessWidget {
-  TabNavigator({this.navigatorKey, this.tabItem});
+  final int index;
+
+  TabNavigator({this.navigatorKey, this.tabItem, this.index});
   final GlobalKey<NavigatorState> navigatorKey;
   final Widget tabItem;
 
-  Map<String, WidgetBuilder> _routeBuilders(
-    BuildContext context,
-  ) {
+  Map<String, RouteWidgetBuilder> _routeBuilders(BuildContext context) {
     return {
-      '/': (context) => this.tabItem,
-      '/smokeSesion': (context) {
+      '/': (context, argument) => this.tabItem,
+      '/smokeSesion': (context, argument) {
         return new SmokeSessionPage();
       },
+      '/smokeStatistic': (context, argument) {
+        if (argument is SmokeSessionSimpleDto) {
+          return new SmokeSessioDetailPage(argument);
+        }
+      }
     };
   }
 
@@ -345,7 +369,8 @@ class TabNavigator extends StatelessWidget {
         observers: [observable],
         onGenerateRoute: (routeSettings) {
           return MaterialPageRoute(
-              builder: (context) => routeBuilders[routeSettings.name](context));
+              builder: (context) => routeBuilders[routeSettings.name](
+                  context, routeSettings.arguments));
         });
   }
 }

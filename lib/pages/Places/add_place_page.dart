@@ -24,7 +24,7 @@ class AddPlacePage extends StatefulWidget {
 
 class _AddPlacePageState extends State<AddPlacePage> {
   static const kGoogleApiKey = "AIzaSyDv2o2BsQ1IJjdPS3eSjkf7f-_Jt7Fu-MU";
-  final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   NearbyAddress _address;
   List<EditablkeBusinessHour> _businessHour;
   TextEditingController _addressController;
@@ -54,7 +54,7 @@ class _AddPlacePageState extends State<AddPlacePage> {
         child: Column(
           children: <Widget>[
             FormBuilder(
-              key: _fbKey,
+              key: fbKey,
               autovalidate: true,
               child: Column(
                 children: <Widget>[
@@ -161,14 +161,13 @@ class _AddPlacePageState extends State<AddPlacePage> {
                         labelText: "Place features",
                         labelStyle: TextStyle(fontSize: 24)),
                     attribute: "features",
-                    initialValue: [],
                     options: [
                       FormBuilderFieldOption(
                           value: "WIFI", label: "Wifi available"),
                       FormBuilderFieldOption(
                           value: "CARD", label: "Credit card accepted"),
                       FormBuilderFieldOption(
-                          value: "OUTSIDE", label: "Outside seats available"),
+                          value: "OUTDOOR", label: "Outdoor seats available"),
                       FormBuilderFieldOption(
                           value: "FOOD", label: "Food available"),
                       FormBuilderFieldOption(
@@ -201,7 +200,7 @@ class _AddPlacePageState extends State<AddPlacePage> {
                       MaterialButton(
                         child: Text("Reset"),
                         onPressed: () {
-                          _fbKey.currentState.reset();
+                          fbKey.currentState.reset();
                         },
                       ),
                     ],
@@ -216,22 +215,22 @@ class _AddPlacePageState extends State<AddPlacePage> {
   }
 
   void savePlace(BuildContext context) {
-    _fbKey.currentState.save();
+    fbKey.currentState.save();
     if (_address == null) {
       setState(() {
         invalidAddress = true;
         return;
       });
     }
-    if (_fbKey.currentState.validate()) {
+    if (fbKey.currentState.validate()) {
       if (_address == null) return;
-      print(_fbKey.currentState.value);
+      print(fbKey.currentState.value);
 
       _result = new PlaceDto();
-      _result.name = _fbKey.currentState.value['name'];
-      var contact = _fbKey.currentState.value['phoneNumber'];
+      _result.name = fbKey.currentState.value['name'];
+      var contact = fbKey.currentState.value['phoneNumber'];
       _result.facebook =
-          _fbKey.currentState.value['owner'] ? 'owner_${contact}' : contact;
+          fbKey.currentState.value['owner'] ? 'owner_${contact}' : contact;
       _result.businessHours = _businessHour;
       if (_businessHour != null) {
         _result.businessHours.forEach((bh) {
@@ -240,10 +239,13 @@ class _AddPlacePageState extends State<AddPlacePage> {
       }
 
       _result.address = _address?.address;
-      _result.flags = _fbKey.currentState.value['features'];
+      _result.flags = fbKey.currentState.value['features'];
       _uploading = true;
       var result = json.encode(_result);
-      App.http.addPlace(_result).then((newPlace) {
+      App.http.addPlace(_result).then((newPlace) async {
+        if (_image != null) {
+          await App.http.uploadPlacePicture(newPlace.id, _image);
+        }
         Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (context) => AddPlaceSubmitPage(
                   createdPlace: newPlace,

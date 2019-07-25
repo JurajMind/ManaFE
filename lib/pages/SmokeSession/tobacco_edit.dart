@@ -6,6 +6,7 @@ import 'package:app/const/theme.dart';
 import 'package:app/models/SmokeSession/pipe_accesory_from_tobacco.dart';
 import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/pages/Gear/add_gear_page.dart';
 import 'package:app/pages/SmokeSession/accesory_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -154,6 +155,8 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
           ),
           FatSlider(
             sliderColor: AppColors.colors[tobaccoList.indexOf(item)],
+            valueTextStyle:
+                Theme.of(context).textTheme.display3.apply(color: Colors.white),
             value: tobaccoWeight[item.id],
             onChanged: (double newValue) {
               setState(() {
@@ -220,6 +223,34 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
           ),
         ],
       ));
+
+    listWidgets.add(
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: new RoundedButton(
+            child: Text('Add new tobacco'),
+            onTap: () {
+              Navigator.of(context)
+                  .push<PipeAccesorySimpleDto>(MaterialPageRoute(
+                      builder: (context) => AddGearPage(),
+                      fullscreenDialog: true))
+                  .then((newTobacco) {
+                if (newTobacco != null) {
+                  addTobacco(newTobacco, 15);
+                }
+              });
+            },
+            buttonColor: Colors.transparent,
+            borderWidth: 1.0,
+            bottomMargin: 1.0,
+            height: 40.0,
+            width: (MediaQuery.of(context).size.width) * 0.4,
+          ),
+        ),
+      ),
+    );
+
     listWidgets.add(
       Padding(
         padding: const EdgeInsets.all(8.0),
