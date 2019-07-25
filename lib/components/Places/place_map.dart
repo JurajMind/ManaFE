@@ -1,4 +1,6 @@
+import 'package:app/Helpers/place_helper.dart';
 import 'package:app/app/app.dart';
+import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Places/places_map_page.dart';
 import 'package:app/utils/Map/location.dart';
 import 'package:app/utils/Map/map_view_type.dart';
@@ -6,9 +8,12 @@ import 'package:app/utils/Map/marker.dart';
 import 'package:app/utils/Map/static_map_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:openapi/api.dart';
+
+import 'distance_widget.dart';
 
 class PlaceMap extends StatelessWidget {
   final PlaceSimpleDto place;
@@ -20,21 +25,51 @@ class PlaceMap extends StatelessWidget {
     if (place?.address == null) {
       return Container();
     }
-    return new InkWell(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => PlacesMapPage(
-              position: Position(
-                  latitude: double.parse(place.address.lat),
-                  longitude: double.parse(place.address.lng))))),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: new CachedNetworkImage(
-          imageUrl: mapUri().toString() + '&scale=2',
-          placeholder: (context, url) => new CircularProgressIndicator(),
-          errorWidget: (context, url, error) => new Icon(Icons.error),
-        ),
-      ),
-    );
+    var location = DataProvider.getData(context).placeBloc.location;
+    return StreamBuilder<Position>(
+        stream: location,
+        builder: (context, snapshot) {
+          var distance = PlaceHelpers.calculateDistanceFromAddress(
+              place.address, snapshot.data);
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              new InkWell(
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => PlacesMapPage(
+                        position: Position(
+                            latitude: double.parse(place.address.lat),
+                            longitude: double.parse(place.address.lng))))),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: new CachedNetworkImage(
+                    imageUrl: mapUri().toString() + '&scale=2',
+                    placeholder: (context, url) =>
+                        new CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => new Icon(Icons.error),
+                  ),
+                ),
+              ),
+              Center(
+                child: new Flex(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  direction: Axis.horizontal,
+                  children: <Widget>[
+                    new Icon(
+                      FontAwesomeIcons.walking,
+                      color: Colors.black,
+                    ),
+                    DistanceWidget(distance,
+                        textStyle: Theme.of(context)
+                            .textTheme
+                            .display2
+                            .apply(color: Colors.black))
+                  ],
+                ),
+              ),
+            ],
+          );
+        });
   }
 
   Uri mapUri() {

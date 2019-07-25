@@ -136,7 +136,7 @@ class _CarrousselState extends State<Carroussel> {
             ),
           );
         },
-        child: buildInkWell(index, place, positions[place.id]));
+        child: buildPlaceInkWell(index, place, positions[place.id]));
   }
 
   Widget buildAdd() {
@@ -169,7 +169,7 @@ class _CarrousselState extends State<Carroussel> {
     );
   }
 
-  InkWell buildInkWell(int index, PlaceSimpleDto place, double distance) {
+  InkWell buildPlaceInkWell(int index, PlaceSimpleDto place, double distance) {
     return new InkWell(
       onTap: () {
         print('curent');

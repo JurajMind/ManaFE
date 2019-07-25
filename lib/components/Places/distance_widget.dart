@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class DistanceWidget extends StatelessWidget {
   final double distance;
+  final TextStyle textStyle;
 
-  const DistanceWidget(this.distance, {Key key}) : super(key: key);
+  const DistanceWidget(this.distance, {Key key, this.textStyle})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,8 @@ class DistanceWidget extends StatelessWidget {
     }
 
     return Container(
-      child: Text(text),
+      child:
+          Text(text, style: textStyle ?? Theme.of(context).textTheme.display2),
     );
   }
 }
