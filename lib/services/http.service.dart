@@ -550,6 +550,13 @@ class ApiClient {
         .then((data) => PlaceDto.fromJson(data.data));
   }
 
+  Future<PipeAccesorySimpleDto> addGear(PipeAccesorySimpleDto newGear) async {
+    var url = Uri.https(baseUrl, '/api/Gear/Add');
+    return await _dio
+        .postUri(url, data: newGear)
+        .then((data) => PipeAccesorySimpleDto.fromJson(data.data));
+  }
+
   Future<PlaceDto> uploadPlacePicture(int placeId, File file,
       {ValueChanged<double> progress}) async {
     var url = Uri.https(baseUrl, '/api/Media/Place/$placeId/Add');

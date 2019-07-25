@@ -6,6 +6,7 @@ import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/general/gear_bloc.dart';
 import 'package:app/module/person/person_bloc.dart';
+import 'package:app/pages/Gear/add_gear_page.dart';
 import 'package:app/pages/Gear/pipe_accesory_page.dart';
 import 'package:app/pages/SmokeSession/accesory_search.dart';
 import 'package:flutter/material.dart';
@@ -191,11 +192,11 @@ class PipeAccesoryList extends StatelessWidget {
     showDialog<int>(
       context: context,
       builder: (BuildContext context) => NumberDialog(
-            label: "Add ${accesory.brand} ${accesory.name}",
-            initCount: isTobacco ? 50 : 1,
-            step: isTobacco ? 50 : 1,
-            stepLabel: isTobacco ? 'g' : '',
-          ),
+        label: "Add ${accesory.brand} ${accesory.name}",
+        initCount: isTobacco ? 50 : 1,
+        step: isTobacco ? 50 : 1,
+        stepLabel: isTobacco ? 'g' : '',
+      ),
     ).then<void>((int value) async {
       if (value != null) {
         await bloc.addMyGear(accesory, value);
@@ -252,7 +253,14 @@ class PipeAccesoryList extends StatelessWidget {
                     ),
                     Expanded(
                       flex: 1,
-                      child: Container(),
+                      child: IconButton(
+                        icon: Icon(Icons.add_box),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => AddGearPage(),
+                              fullscreenDialog: true));
+                        },
+                      ),
                     )
                   ],
                 );

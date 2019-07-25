@@ -8,10 +8,12 @@ import 'package:shimmer/shimmer.dart';
 class BrandListItem extends StatelessWidget {
   final BrandGroup brand;
   final String brandType;
+  final void Function() ontap;
   const BrandListItem({
     Key key,
     this.brand,
     this.brandType,
+    this.ontap,
   }) : super(key: key);
 
   @override
@@ -22,6 +24,11 @@ class BrandListItem extends StatelessWidget {
           color: Colors.black45, borderRadius: BorderRadius.circular(20.0)),
       child: ListTile(
         onTap: () {
+          if (ontap != null) {
+            ontap();
+            return;
+          }
+
           final gearBloc = DataProvider.getData(context).gearBloc;
           gearBloc.loadBrandAccesory(brand.name, brandType ?? "Tobacco");
           Navigator.of(context)
