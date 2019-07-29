@@ -16,6 +16,7 @@ class _AddDevicePageState extends State<AddDevicePage> {
         children: <Widget>[
           Center(
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Text(
                   'Thank you!',
@@ -23,13 +24,14 @@ class _AddDevicePageState extends State<AddDevicePage> {
                 ),
                 Text(
                   'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean id metus id velit ullamcorper pulvinar. Maecenas aliquet accumsan leo. Integer pellentesque quam vel velit. Nunc dapibus tortor vel mi dapibus sollicitudin.',
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.display1,
                 ),
               ],
             ),
           ),
           Center(
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Text(
                   'Where to find codes',
@@ -40,6 +42,7 @@ class _AddDevicePageState extends State<AddDevicePage> {
           ),
           Center(
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Text(
                   'Enter device codes',
