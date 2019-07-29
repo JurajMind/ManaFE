@@ -373,6 +373,11 @@ class ApiClient {
     return await _dio.post(url.toString());
   }
 
+  Future pingDevice(String id) async {
+    var url = Uri.https(baseUrl, '/api/Device/$id/Ping');
+    return await _dio.post(url.toString());
+  }
+
   Future sleepDevice(String id) async {
     var url = Uri.https(baseUrl, '/api/Device/$id/Sleep');
     return await _dio.post(url.toString());
