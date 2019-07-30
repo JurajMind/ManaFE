@@ -465,15 +465,18 @@ class _GearScrollHomeState extends State<GearScrollHome> {
   ScrollPhysics innerScrollPhysics = NeverScrollableScrollPhysics();
   int curentView = 0;
 
-  onViewChanged(int newView){
+  onViewChanged(int newView) {
     setState(() {
-     curentView =newView; 
+      curentView = newView;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      bottomNavigationBar: SizedBox(
+        height: 55,
+      ),
       backgroundColor: _kAppBackgroundColor,
       body: new Builder(
         // Insert an element so that _buildBody can find the PrimaryScrollController.
@@ -608,8 +611,8 @@ class _GearScrollHomeState extends State<GearScrollHome> {
     innerScrollControllers[3] = ScrollController();
     innerScrollControllers[4] = ScrollController();
     innerScrollControllers[5] = ScrollController();
-    List<Section> allSections =
-        getAllSections(gearBloc, innerScrollPhysics, innerScrollControllers,curentView,onViewChanged);
+    List<Section> allSections = getAllSections(gearBloc, innerScrollPhysics,
+        innerScrollControllers, curentView, onViewChanged);
     // The scroll offset that reveals the appBarMidHeight appbar.
     final double appBarMidScrollOffset =
         statusBarHeight + appBarMaxHeight - _kAppBarMidHeight;

@@ -127,24 +127,23 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                       child: IconButton(
                         icon: Icon(FontAwesomeIcons.cog),
                         onPressed: () => Navigator.of(context)
-                                .push<DeviceDevicePictureDto>(
-                                    new MaterialPageRoute(
-                              builder: (BuildContext context) {
-                                return new DeviceChangePicturePage(
-                                  slectedPictureId: picture?.id,
-                                );
-                              },
-                            )).then((newPicture) {
-                              if (newPicture == null) return;
+                            .push<DeviceDevicePictureDto>(new MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return new DeviceChangePicturePage(
+                              slectedPictureId: picture?.id,
+                            );
+                          },
+                        )).then((newPicture) {
+                          if (newPicture == null) return;
 
-                              if (mounted) {
-                                setState(() {
-                                  picture = newPicture;
-                                });
-                              }
-                              App.http.changeDevicePicture(
-                                  widget.device.id, newPicture.id);
-                            }),
+                          if (mounted) {
+                            setState(() {
+                              picture = newPicture;
+                            });
+                          }
+                          App.http.changeDevicePicture(
+                              widget.device.id, newPicture.id);
+                        }),
                       ))
                 ],
               ),
@@ -173,24 +172,23 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                     child: IconButton(
                       icon: Icon(FontAwesomeIcons.cog),
                       onPressed: () => Navigator.of(context)
-                              .push<DeviceDevicePictureDto>(
-                                  new MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return new DeviceUpdatePage(
-                                device: widget.device,
-                              );
-                            },
-                          )).then((newPicture) {
-                            if (newPicture == null) return;
+                          .push<DeviceDevicePictureDto>(new MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return new DeviceUpdatePage(
+                            device: widget.device,
+                          );
+                        },
+                      )).then((newPicture) {
+                        if (newPicture == null) return;
 
-                            if (mounted) {
-                              setState(() {
-                                picture = newPicture;
-                              });
-                            }
-                            App.http.changeDevicePicture(
-                                widget.device.id, newPicture.id);
-                          }),
+                        if (mounted) {
+                          setState(() {
+                            picture = newPicture;
+                          });
+                        }
+                        App.http.changeDevicePicture(
+                            widget.device.id, newPicture.id);
+                      }),
                     ),
                   )
                 ],
@@ -247,7 +245,7 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                       ],
                     ),
                     onTap: () {
-                      App.http.sleepDevice(widget.device.code);
+                      App.http.pingDevice(widget.device.code);
                     },
                     buttonColor: Colors.transparent,
                     borderWidth: 1.0,

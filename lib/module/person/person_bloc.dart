@@ -156,4 +156,12 @@ class PersonBloc extends SignalBloc {
     smokeSession.sessionId = data.sessionCode;
     this.addSmokeSession(smokeSession);
   }
+
+  Future<DeviceSimpleDto> addDevice(String name) async {
+    var addedDevice = await App.http.addDevice(name);
+    var oldDevices = this.devices.value;
+    oldDevices.add(addedDevice);
+    this.devices.add(oldDevices);
+    return addedDevice;
+  }
 }

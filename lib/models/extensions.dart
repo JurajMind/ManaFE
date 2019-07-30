@@ -27,6 +27,7 @@ class Extensions {
 
   static Widget accesoryPicture(PipeAccesorySimpleDto accesory) {
     if (accesory.picture != null) {
+      return  defaultAccesoryPicture(accesory);
       return CachedNetworkImage(
           fit: BoxFit.fill,
           fadeOutDuration: Duration(milliseconds: 0),

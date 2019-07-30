@@ -156,7 +156,7 @@ packages:
       name: datetime_picker_formfield
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.0"
+    version: "0.4.0"
   dio:
     dependency: "direct main"
     description:
@@ -193,7 +193,11 @@ packages:
       name: flushbar
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.8.0"
+=======
+    version: "1.8.1"
+>>>>>>> dab0721b6be28b142f7d3bbac93d32d907f725cf
   flutter:
     dependency: "direct main"
     description: flutter
@@ -233,7 +237,11 @@ packages:
       name: flutter_form_builder
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "3.2.9"
+=======
+    version: "3.3.1"
+>>>>>>> dab0721b6be28b142f7d3bbac93d32d907f725cf
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -252,7 +260,11 @@ packages:
       name: flutter_material_color_picker
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.0.2"
+=======
+    version: "1.0.3"
+>>>>>>> dab0721b6be28b142f7d3bbac93d32d907f725cf
   flutter_section_table_view:
     dependency: "direct main"
     description:
@@ -383,7 +395,7 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.0+17"
+    version: "0.6.0+20"
   intl:
     dependency: "direct main"
     description:
@@ -488,7 +500,11 @@ packages:
       name: node_preamble
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.4.5"
+=======
+    version: "1.4.6"
+>>>>>>> dab0721b6be28b142f7d3bbac93d32d907f725cf
   openapi:
     dependency: "direct main"
     description:
@@ -572,7 +588,7 @@ packages:
       name: platform
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.0"
+    version: "2.2.1"
   pool:
     dependency: transitive
     description:
@@ -717,7 +733,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.6+2"
+    version: "1.1.6+3"
   stack_trace:
     dependency: transitive
     description:
@@ -822,7 +838,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.0"
+    version: "5.1.1"
   utf:
     dependency: transitive
     description:

@@ -1,5 +1,8 @@
+import 'dart:ui' as prefix0;
+
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/pages/Device/add_device_page.dart';
 import 'package:app/pages/Device/device_detail_page.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -28,8 +31,50 @@ class Devices extends StatelessWidget {
               physics: scrollPhysics,
               gridDelegate:
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              itemCount: snapshot.data?.length ?? 0,
+              itemCount: (snapshot.data?.length ?? 0) + 1,
               itemBuilder: (context, index) {
+                if (snapshot.data.length == index) {
+                  return InkWell(
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        settings: RouteSettings(),
+                        builder: (context) => AddDevicePage())),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Card(
+                        color: Colors.black,
+                        elevation: 3.0,
+                        child: Container(
+                          decoration: new BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            border:
+                                new Border.all(color: Colors.white, width: 2),
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                child: Text(
+                                  'Add new device',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                      fontSize: 20.0),
+                                ),
+                              ),
+                              Icon(
+                                Icons.add,
+                                size: 50,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }
+
                 var device = snapshot.data[index];
                 return Hero(
                   tag: "${device.code}_hero",
