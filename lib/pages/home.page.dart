@@ -371,11 +371,11 @@ class VisibilityStageNavigator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if( _tabIndex == index)
-    {
-      return Container();
-    }
-    return Container(
+    return Visibility(
+      visible: _tabIndex == index,
+      maintainSize: true,
+      maintainState: true,
+      maintainAnimation: true,
       child: FocusScope(
         node: tabFocusNodes[index],
         child: TabNavigator(

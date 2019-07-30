@@ -39,9 +39,9 @@ class ApiClient {
           error.response?.statusCode == 403) {
         var token = await _authorize.getToken();
         var tokenHeader = 'Bearer $token';
-        RequestOptions options = error.response.request;
+        RequestOptions options = error?.response?.request;
         // If the token has been updated, repeat directly.
-        if (token != null)
+        if (token != null || options == null)
           return await _handleAuthError(tokenHeader, options, token);
         else {
           print('Null token');
@@ -596,6 +596,13 @@ class ApiClient {
         print("$sent $total");
       },
     ).then((data) => PipeAccesorySimpleDto.fromJson(data.data));
+  }
+
+  Future<DeviceSimpleDto> addDevice(String name) async {
+    var url = Uri.https(baseUrl, '/api/Device/$name/Add');
+    return await _dio
+        .postUri(url)
+        .then((data) => DeviceSimpleDto.fromJson(data.data));
   }
 }
 

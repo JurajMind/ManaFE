@@ -49,7 +49,6 @@ class SignalR {
     print('signal disconnect ${result.body}');
   }
 
-
   Future<dynamic> _connect({bool force = false}) async {
     if (this.connection && !force) {
       return;
@@ -66,7 +65,6 @@ class SignalR {
       _completer.complete();
       connectionStatus.add(SignalStatus.running);
     });
-      
   }
 
   Future<NegotiateResponse> getNegotiation() async {
@@ -75,7 +73,7 @@ class SignalR {
     var response = await http.get(negotiateUrl);
     connection = false;
     final responseJson = json.decode(response.body);
-    
+
     var negotiateResponse = NegotiateResponse.fromJson(responseJson);
     connectionInfo = negotiateResponse;
     return negotiateResponse;
@@ -92,13 +90,10 @@ class SignalR {
         }
         var serverCall = ClientCall.fromJson(json.decode(message));
         proceedCall(serverCall);
-      },
-      onError: (error){
-           connectionStatus.add(SignalStatus.error);
+      }, onError: (error) {
+        connectionStatus.add(SignalStatus.error);
         print(error);
-        if(connection){
-       
-        }
+        if (connection) {}
       });
 
       new Future.delayed(new Duration(seconds: 5), () {
@@ -145,7 +140,9 @@ class SignalR {
         '/start?transport=webSockets&clientProtocol=1.5&connectionToken=${Uri.encodeComponent(negotiateResponse.ConnectionToken)}&connectionData=$conectionData';
     print(startUrl);
 
-    var connect = await http.get(startUrl);
+    var connect = await http.get(startUrl).catchError((onError) {
+      print(onError);
+    });
 
     print('Start connection' + connect.body);
   }
@@ -158,7 +155,7 @@ class SignalR {
 
     print(chanelUlr);
 
-    handleConnection(chanelUlr,false);
+    handleConnection(chanelUlr, false);
   }
 
   callServerFunction(ServerCallParam param) {
@@ -169,10 +166,11 @@ class SignalR {
 
   void proceedCall(ClientCall serverCall) {
     lastMsgId = serverCall.MessageId;
-    if(serverCall.Init == 1){
-        connectionStatus.add(SignalStatus.running);
-          var oneSec = Duration(seconds: connectionInfo.KeepAliveTimeout.toInt());
-       connectionTimer = new Timer.periodic(oneSec, (Timer t) => checkConection());
+    if (serverCall.Init == 1) {
+      connectionStatus.add(SignalStatus.running);
+      var oneSec = Duration(seconds: connectionInfo.KeepAliveTimeout.toInt());
+      connectionTimer =
+          new Timer.periodic(oneSec, (Timer t) => checkConection());
     }
     if (serverCall.Data != null) clientCalls.add(serverCall);
   }

@@ -63,8 +63,9 @@ class _CarrousselState extends State<MapCarousel> {
     if (oldWidget?.selectedPlace?.id != this.widget?.selectedPlace?.id) {
       var pageIndex =
           this.widget.nearbyPlaces.value.indexOf(this.widget.selectedPlace);
-      controller.animateToPage(pageIndex + 1,
-          curve: Curves.easeIn, duration: const Duration(milliseconds: 500));
+      controller.jumpToPage(pageIndex + 1);
+      // controller.animateToPage(pageIndex + 1,
+      //     curve: Curves.easeIn, duration: const Duration(milliseconds: 500));
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -90,6 +91,7 @@ class _CarrousselState extends State<MapCarousel> {
                 currentpage = value;
               });
               var place = snapshot.data[value - 1];
+
               final GoogleMapController controller =
                   await widget.mapController.future;
               await controller.animateCamera(CameraUpdate.newCameraPosition(

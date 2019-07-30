@@ -12,43 +12,25 @@ import 'package:app/pages/SmokeSession/accesory_search.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
-class PipeAccesoryList extends StatelessWidget {
-  static const Map<int, String> labels = {
-    0: 'MY GEAR',
-    1: 'BY BRAND',
-    2: 'TOP'
-  };
-
+class MyGear extends StatelessWidget {
   final ScrollController scrollController;
   final ScrollPhysics scrollPhysics;
   final String type;
   final int currentView;
   final ValueChanged<int> onViewChanged;
 
-  PipeAccesoryList(
+  const MyGear(
       {Key key,
+      this.type,
       this.scrollController,
       this.scrollPhysics,
-      this.type,
       this.currentView,
-      this.onViewChanged});
+      this.onViewChanged})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var data = DataProvider.getData(context).personBloc;
-    var gearBloc = DataProvider.getData(context).gearBloc;
-    switch (currentView) {
-      case 0:
-        return buildMyGear(data);
-        break;
-      case 1:
-        return buildByBrands(gearBloc);
-      default:
-        return buildMyGear(data);
-    }
-  }
-
-  StreamBuilder<List<PipeAccesorySimpleDto>> buildMyGear(PersonBloc bloc) {
+    var bloc = DataProvider.getData(context).personBloc;
     return StreamBuilder<List<PipeAccesorySimpleDto>>(
       stream: bloc.myGear,
       initialData: null,
@@ -73,7 +55,10 @@ class PipeAccesoryList extends StatelessWidget {
               if (filtered.length == 0) {
                 return Column(
                   children: <Widget>[
-                    buildSearchRow(bloc, context),
+                    SearchRow(
+                        currentView: currentView,
+                        onViewChanged: onViewChanged,
+                        type: type),
                     Container(
                       height: 200,
                       child: Center(
@@ -90,7 +75,7 @@ class PipeAccesoryList extends StatelessWidget {
                                 Icons.add,
                                 size: 50,
                               ),
-                              onPressed: () => showAddDialog(
+                              onPressed: () => SearchRow.showAddDialog(
                                   bloc: bloc,
                                   context: context,
                                   child: new PipeAccesorySearch(
@@ -109,7 +94,10 @@ class PipeAccesoryList extends StatelessWidget {
               }
 
               if (index == 0) {
-                return buildSearchRow(bloc, context);
+                return SearchRow(
+                    currentView: currentView,
+                    onViewChanged: onViewChanged,
+                    type: type);
               }
               var data = filtered[index - 1];
               return new PipeAccesoryListItem(pipeAccesory: data);
@@ -117,8 +105,25 @@ class PipeAccesoryList extends StatelessWidget {
       },
     );
   }
+}
 
-  Row buildSearchRow(PersonBloc bloc, BuildContext context) {
+class SearchRow extends StatelessWidget {
+  static const Map<int, String> labels = {
+    0: 'MY GEAR',
+    1: 'BY BRAND',
+    2: 'TOP'
+  };
+
+  final String type;
+  final int currentView;
+  final ValueChanged<int> onViewChanged;
+
+  const SearchRow({Key key, this.type, this.currentView, this.onViewChanged})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var bloc = DataProvider.getData(context).personBloc;
     var typedMyGear =
         DataProvider.getData(context).personBloc.getTypedGear(type);
     return Row(
@@ -163,7 +168,7 @@ class PipeAccesoryList extends StatelessWidget {
     );
   }
 
-  void showAddDialog({BuildContext context, Widget child, bloc}) {
+  static void showAddDialog({BuildContext context, Widget child, bloc}) {
     showDialog<PipeAccesorySimpleDto>(
       context: context,
       builder: (BuildContext context) => child,
@@ -174,7 +179,7 @@ class PipeAccesoryList extends StatelessWidget {
     });
   }
 
-  void showSearchDialog({BuildContext context, Widget child, bloc}) {
+  static showSearchDialog({BuildContext context, Widget child, bloc}) {
     showDialog<PipeAccesorySimpleDto>(
       context: context,
       builder: (BuildContext context) => child,
@@ -187,8 +192,11 @@ class PipeAccesoryList extends StatelessWidget {
     });
   }
 
-  void showNumberDialog(
-      {BuildContext context, PipeAccesorySimpleDto accesory, PersonBloc bloc}) {
+  static showNumberDialog(
+      {BuildContext context,
+      PipeAccesorySimpleDto accesory,
+      PersonBloc bloc,
+      String type}) {
     var isTobacco = type == 'Tobacco';
     showDialog<int>(
       context: context,
@@ -203,6 +211,49 @@ class PipeAccesoryList extends StatelessWidget {
         await bloc.addMyGear(accesory, value);
       }
     });
+  }
+}
+
+class PipeAccesoryList extends StatelessWidget {
+  final ScrollController scrollController;
+  final ScrollPhysics scrollPhysics;
+  final String type;
+  final int currentView;
+  final ValueChanged<int> onViewChanged;
+
+  PipeAccesoryList(
+      {Key key,
+      this.scrollController,
+      this.scrollPhysics,
+      this.type,
+      this.currentView,
+      this.onViewChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    var data = DataProvider.getData(context).personBloc;
+    var gearBloc = DataProvider.getData(context).gearBloc;
+    switch (currentView) {
+      case 0:
+        return MyGear(
+          currentView: currentView,
+          onViewChanged: onViewChanged,
+          scrollController: scrollController,
+          scrollPhysics: scrollPhysics,
+          type: type,
+        );
+        break;
+      case 1:
+        return buildByBrands(gearBloc);
+      default:
+        return MyGear(
+          currentView: currentView,
+          onViewChanged: onViewChanged,
+          scrollController: scrollController,
+          scrollPhysics: scrollPhysics,
+          type: type,
+        );
+    }
   }
 
   StreamBuilder<List<BrandGroup>> buildByBrands(GearBloc data) {
@@ -239,7 +290,7 @@ class PipeAccesoryList extends StatelessWidget {
                       flex: 1,
                       child: IconButton(
                           icon: Icon(Icons.search),
-                          onPressed: () => showSearchDialog(
+                          onPressed: () => SearchRow.showSearchDialog(
                               context: context,
                               child: new PipeAccesorySearch(
                                 type: type,
@@ -250,7 +301,7 @@ class PipeAccesoryList extends StatelessWidget {
                       flex: 2,
                       child: Center(
                         child: BigSelect(
-                          labels: labels,
+                          labels: SearchRow.labels,
                           curentView: currentView,
                           onSelected: onViewChanged,
                         ),
