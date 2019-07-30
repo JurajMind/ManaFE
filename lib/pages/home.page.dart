@@ -43,12 +43,12 @@ StreamSubscription<Flushbar<Map<String, dynamic>>> subscription;
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 2;
   final Map<int, GlobalKey<NavigatorState>> navigatorKeys = {
-  0: GlobalKey<NavigatorState>(),
-  1: GlobalKey<NavigatorState>(),
-  2: GlobalKey<NavigatorState>(),
-  3: GlobalKey<NavigatorState>(),
-  4: GlobalKey<NavigatorState>(),
-};
+    0: GlobalKey<NavigatorState>(),
+    1: GlobalKey<NavigatorState>(),
+    2: GlobalKey<NavigatorState>(),
+    3: GlobalKey<NavigatorState>(),
+    4: GlobalKey<NavigatorState>(),
+  };
 
   List<Widget> tabs;
   List<FocusScopeNode> tabFocusNodes;
@@ -105,7 +105,10 @@ class _HomePageState extends State<HomePage> {
         if (sessionId == null) return;
         navigatorKeys[2].currentState.push(new MaterialPageRoute(
           builder: (BuildContext context) {
-            return new SmokeSessionPage(sessionId: sessionId,callback: _setActiveTab,);
+            return new SmokeSessionPage(
+              sessionId: sessionId,
+              callback: _setActiveTab,
+            );
           },
         ));
       });
@@ -231,13 +234,55 @@ class _HomePageState extends State<HomePage> {
               return true;
             }
           } else {
-            !await navigatorKeys[_currentIndex].currentState.maybePop();
+            await navigatorKeys[_currentIndex].currentState.maybePop();
           }
         },
         child: new SafeArea(
             top: false,
             child: Stack(children: <Widget>[
-              _buildBody(),
+              Material(
+                color: Colors.transparent,
+                child: new IndexedStack(
+                  index: _currentIndex,
+                  children: <Widget>[
+                    VisibilityStageNavigator(
+                      new MixologyList(),
+                      0,
+                      currentIndex: _currentIndex,
+                      navigatorKeys: navigatorKeys,
+                      tabFocusNodes: tabFocusNodes,
+                    ),
+                    VisibilityStageNavigator(
+                      new PlacesMapPage(),
+                      1,
+                      currentIndex: _currentIndex,
+                      navigatorKeys: navigatorKeys,
+                      tabFocusNodes: tabFocusNodes,
+                    ),
+                    VisibilityStageNavigator(
+                      new StartSmokeSessionPage(callback: _setActiveTab),
+                      2,
+                      currentIndex: _currentIndex,
+                      navigatorKeys: navigatorKeys,
+                      tabFocusNodes: tabFocusNodes,
+                    ),
+                    VisibilityStageNavigator(
+                      new GearPage(),
+                      3,
+                      currentIndex: _currentIndex,
+                      navigatorKeys: navigatorKeys,
+                      tabFocusNodes: tabFocusNodes,
+                    ),
+                    VisibilityStageNavigator(
+                      new StatisticPage(),
+                      4,
+                      currentIndex: _currentIndex,
+                      navigatorKeys: navigatorKeys,
+                      tabFocusNodes: tabFocusNodes,
+                    ),
+                  ],
+                ),
+              ),
               Positioned(
                   bottom: -10,
                   height: 55,
@@ -296,23 +341,6 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
-  _buildBody() {
-    return Material(
-      color: Colors.transparent,
-      child: new IndexedStack(
-        index: _currentIndex,
-        children: <Widget>[
-          _buildOffstageNavigator(new MixologyList(), 0),
-          _buildOffstageNavigator(new PlacesMapPage(), 1),
-          _buildOffstageNavigator(
-              new StartSmokeSessionPage(callback: _setActiveTab), 2),
-          _buildOffstageNavigator(new GearPage(), 3),
-          _buildOffstageNavigator(new StatisticPage(), 4),
-        ],
-      ),
-    );
-  }
-
   @override
   void dispose() {
     for (FocusScopeNode focusScopeNode in tabFocusNodes) {
@@ -322,15 +350,37 @@ class _HomePageState extends State<HomePage> {
     activeTabSub.cancel();
     super.dispose();
   }
+}
 
-  Widget _buildOffstageNavigator(Widget tabItem, int index) {
-    return Offstage(
-      offstage: _currentIndex != index,
+class VisibilityStageNavigator extends StatelessWidget {
+  const VisibilityStageNavigator(
+    this.child,
+    this.index, {
+    Key key,
+    @required int currentIndex,
+    @required this.tabFocusNodes,
+    @required this.navigatorKeys,
+  })  : _tabIndex = currentIndex,
+        super(key: key);
+
+  final int _tabIndex;
+  final List<FocusScopeNode> tabFocusNodes;
+  final Map<int, GlobalKey<NavigatorState>> navigatorKeys;
+  final int index;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    if( _tabIndex == index)
+    {
+      return Container();
+    }
+    return Container(
       child: FocusScope(
         node: tabFocusNodes[index],
         child: TabNavigator(
           navigatorKey: navigatorKeys[index],
-          tabItem: tabItem,
+          tabItem: child,
           index: index,
         ),
       ),
