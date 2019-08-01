@@ -15,6 +15,7 @@ import 'package:shake/shake.dart';
 
 class TobaccoEditWidget extends StatefulWidget {
   final ValueChanged<TobaccoEditModel> onSave;
+final GlobalKey<NavigatorState> Function(int) callback;
   final String type;
   final PipeAccesorySimpleDto tobacco;
   final int tobaccoWeight;
@@ -25,7 +26,7 @@ class TobaccoEditWidget extends StatefulWidget {
     this.type,
     this.mix,
     this.tobaccoWeight,
-    this.onSave,
+    this.onSave, this.callback,
   }) : super(key: key);
 
   @override
@@ -226,27 +227,63 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
 
     listWidgets.add(
       Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: new RoundedButton(
-            child: Text('Add new tobacco'),
-            onTap: () {
-              Navigator.of(context)
-                  .push<PipeAccesorySimpleDto>(MaterialPageRoute(
-                      builder: (context) => AddGearPage(selectedType: 'Tobacco',),
-                      fullscreenDialog: true))
-                  .then((newTobacco) {
-                if (newTobacco != null) {
-                  addTobacco(newTobacco, 15);
-                }
-              });
-            },
-            buttonColor: Colors.transparent,
-            borderWidth: 1.0,
-            bottomMargin: 1.0,
-            height: 40.0,
-            width: (MediaQuery.of(context).size.width) * 0.4,
-          ),
+        padding: const EdgeInsets.symmetric(horizontal:8.0,vertical:16),
+        child: Row(
+          mainAxisAlignment:  widget.callback == null ? MainAxisAlignment.center : MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+          widget.callback == null ? Container() :  new RoundedButton(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text('Find mix'),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(Icons.search)
+                ],
+              ),
+              onTap: () {
+                Navigator.of(context).pop();
+                widget.callback(0);
+                 
+              },
+              buttonColor: Colors.transparent,
+              borderWidth: 1.0,
+              bottomMargin: 1.0,
+              height: 40.0,
+              width: (MediaQuery.of(context).size.width) * 0.4,
+            ),
+            new RoundedButton(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text('New tobacco'),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(Icons.add)
+                ],
+              ),
+              onTap: () {
+                Navigator.of(context)
+                    .push<PipeAccesorySimpleDto>(MaterialPageRoute(
+                        builder: (context) => AddGearPage(
+                              selectedType: 'Tobacco',
+                            ),
+                        fullscreenDialog: true))
+                    .then((newTobacco) {
+                  if (newTobacco != null) {
+                    addTobacco(newTobacco, 15);
+                  }
+                });
+              },
+              buttonColor: Colors.transparent,
+              borderWidth: 1.0,
+              bottomMargin: 1.0,
+              height: 40.0,
+              width: (MediaQuery.of(context).size.width) * 0.4,
+            ),
+          ],
         ),
       ),
     );
@@ -289,7 +326,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                   backgroundColor: Colors.black,
                   centerTitle: true,
                   title: TextField(
-                    decoration: InputDecoration(labelText: 'Mix name'),
+                    decoration: InputDecoration(labelText: 'Mix name',labelStyle: Theme.of(context).textTheme.display2.apply(color:Colors.grey)),
                     controller: controller,
                   ),
                   actions: <Widget>[

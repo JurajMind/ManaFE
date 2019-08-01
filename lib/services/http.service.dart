@@ -49,7 +49,7 @@ class ApiClient {
       } else {
         print(error.message);
         print(error.response);
-        print(error.response.request.path);
+        print(error?.response?.request?.path);
       }
       return error;
     }));

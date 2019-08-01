@@ -12,9 +12,10 @@ class TobaccoSessionWidget extends StatelessWidget {
   final PipeAccesorySimpleDto tobacco;
   final TobaccoMixSimpleDto tobaccoMix;
   final SmokeSessionBloc smokeSessionBloc;
+  final GlobalKey<NavigatorState> Function(int) callback;
 
   const TobaccoSessionWidget(
-      {this.tobacco, this.tobaccoMix, this.smokeSessionBloc});
+      {this.tobacco, this.tobaccoMix, this.smokeSessionBloc, this.callback});
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +66,7 @@ class TobaccoSessionWidget extends StatelessWidget {
         .push(new MaterialPageRoute<TobaccoEditModel>(
             builder: (BuildContext context) {
               return new TobaccoEditWidget(
+                callback: callback,
                 tobaccoWeight: this
                     .smokeSessionBloc
                     .smokeSessionMetaData

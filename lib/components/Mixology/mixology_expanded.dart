@@ -41,17 +41,20 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                         ),
                   Expanded(
                     flex: 2,
-                    child: Hero(
-                      tag: "mix_hero_${widget.tobaccoMix.id}",
-                      child: widget.tobaccoMix.name != null
-                          ? Text(
-                              widget.tobaccoMix.name,
-                              style: Theme.of(context).textTheme.subtitle,
-                            )
-                          : Text(
-                              'No name',
-                              style: Theme.of(context).textTheme.subtitle,
-                            ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4 .0),
+                      child: Hero(
+                        tag: "mix_hero_${widget.tobaccoMix.id}",
+                        child: widget.tobaccoMix.name != null
+                            ? Text(
+                                widget.tobaccoMix.name,
+                                style: Theme.of(context).textTheme.subtitle,
+                              )
+                            : Text(
+                                'No name',
+                                style: Theme.of(context).textTheme.subtitle,
+                              ),
+                      ),
                     ),
                   ),
                   widget.noTitle

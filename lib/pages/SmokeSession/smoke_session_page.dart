@@ -98,6 +98,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
               tobacco: asyncSnapshot.data.tobacco,
               tobaccoMix: asyncSnapshot.data.tobaccoMix,
               smokeSessionBloc: dataProvider.smokeSessionBloc,
+              callback: widget.callback,
             )
           ],
         );

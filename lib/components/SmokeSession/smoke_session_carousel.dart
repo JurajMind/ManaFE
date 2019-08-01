@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
 class SmokeSessionCarousel extends StatefulWidget {
-      final GlobalKey<NavigatorState> Function(int) callback;
+  final GlobalKey<NavigatorState> Function(int) callback;
 
   const SmokeSessionCarousel({Key key, this.callback}) : super(key: key);
   @override
@@ -50,6 +50,7 @@ class _SmokeSessionCarouselState extends State<SmokeSessionCarousel> {
                       return data != null
                           ? new SmokeSessionCarouselItem(
                               smokeSession: data,
+                              callback: widget.callback,
                             )
                           : Placeholder();
                     }),
@@ -60,10 +61,11 @@ class _SmokeSessionCarouselState extends State<SmokeSessionCarousel> {
 
 class SmokeSessionCarouselItem extends StatelessWidget {
   final SmokeSessionSimpleDto smokeSession;
-
+  final GlobalKey<NavigatorState> Function(int) callback;
   SmokeSessionCarouselItem({
     this.smokeSession,
     Key key,
+    this.callback,
   }) : super(key: key);
 
   @override
@@ -75,9 +77,12 @@ class SmokeSessionCarouselItem extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
           onTap: () => Navigator.of(context).pushReplacement(
-                  new MaterialPageRoute(builder: (BuildContext context) {
-                return new SmokeSessionPage(sessionId: smokeSession.sessionId);
-              })),
+              new MaterialPageRoute(builder: (BuildContext context) {
+            return new SmokeSessionPage(
+              sessionId: smokeSession.sessionId,
+              callback: callback,
+            );
+          })),
           child: Container(
             width: 250,
             height: 100,

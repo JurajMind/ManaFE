@@ -1,4 +1,5 @@
 import 'package:app/app/app.dart';
+import 'package:app/components/Mixology/use_mix_button.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -186,7 +187,7 @@ class MixDetailPageState extends State<MixDetailPage> {
           new SliverList(
             delegate: new SliverChildListDelegate(<Widget>[
               Column(
-                  children: widget.mix.tobaccos.map((f) {
+                  children: [...widget.mix.tobaccos.map((f) {
                 return ListTile(
                   title: Text(f.tobacco.name,
                       style: Theme.of(context).textTheme.display3),
@@ -194,7 +195,9 @@ class MixDetailPageState extends State<MixDetailPage> {
                   subtitle: Text(f.tobacco.brand,
                       style: Theme.of(context).textTheme.display3),
                 );
-              }).toList())
+              }),
+              UseMixButton(mix: widget.mix,)],
+              )
             ]),
           )
         ],

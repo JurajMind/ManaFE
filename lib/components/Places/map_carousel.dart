@@ -83,32 +83,37 @@ class _CarrousselState extends State<MapCarousel> {
     return StreamBuilder<List<PlaceSimpleDto>>(
         initialData: null,
         stream: bloc,
-        builder: (context, snapshot) => PageView.builder(
-            scrollDirection: Axis.horizontal,
-            controller: controller,
-            onPageChanged: (value) async {
-              setState(() {
-                currentpage = value;
-              });
-              var place = snapshot.data[value - 1];
+        builder: (context, snapshot) {
+          if (snapshot.data == null) {
+            return CircularProgressIndicator();
+          }
+          return PageView.builder(
+              scrollDirection: Axis.horizontal,
+              controller: controller,
+              onPageChanged: (value) async {
+                setState(() {
+                  currentpage = value;
+                });
+                var place = snapshot.data[value - 1];
 
-              final GoogleMapController controller =
-                  await widget.mapController.future;
-              await controller.animateCamera(CameraUpdate.newCameraPosition(
-                  CameraPosition(
-                      bearing: 0,
-                      target: LatLng(double.parse(place.address.lat),
-                          double.parse(place.address.lng)),
-                      tilt: 0,
-                      zoom: 15.151926040649414)));
-            },
-            itemCount: snapshot.data != null ? snapshot.data.length + 1 : 0,
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                return buildAdd();
-              }
-              return buildInkWell(index, snapshot.data[index - 1]);
-            }));
+                final GoogleMapController controller =
+                    await widget.mapController.future;
+                await controller.animateCamera(CameraUpdate.newCameraPosition(
+                    CameraPosition(
+                        bearing: 0,
+                        target: LatLng(double.parse(place.address.lat),
+                            double.parse(place.address.lng)),
+                        tilt: 0,
+                        zoom: 15.151926040649414)));
+              },
+              itemCount: snapshot.data != null ? snapshot.data.length + 1 : 0,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return buildAdd();
+                }
+                return buildInkWell(index, snapshot.data[index - 1]);
+              });
+        });
   }
 
   Widget buildAdd() {
