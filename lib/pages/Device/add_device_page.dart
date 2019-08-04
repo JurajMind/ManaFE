@@ -1,5 +1,6 @@
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 
 import 'device_detail_page.dart';
@@ -134,7 +135,9 @@ class _AddDevicePageState extends State<AddDevicePage> {
                 loading
                     ? CircularProgressIndicator()
                     : new RoundedButton(
-                        buttonName: 'Next',
+                        buttonName: AppTranslations.of(context)
+                            .text("common.next")
+                            .toUpperCase(),
                         onTap: () async {
                           setState(() {
                             loading = true;
@@ -171,7 +174,7 @@ class _AddDevicePageState extends State<AddDevicePage> {
 
   Widget nextButton() {
     return new RoundedButton(
-      buttonName: 'Next',
+      buttonName: AppTranslations.of(context).text("common.next").toUpperCase(),
       onTap: () => nextPage(),
       buttonColor: Colors.transparent,
       borderWidth: 2.0,

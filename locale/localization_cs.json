@@ -28,7 +28,9 @@
     "common": {
         "search": "Hledat",
         "save": "Uložit",
-        "cancel": "Zrušit"
+        "cancel": "Zrušit",
+        "next": "Další",
+        "back": "Zpátky"
     },
 
     "gear": {
@@ -71,7 +73,23 @@
     "reservations": {
         "upcoming_reservations": "Budoucí rezervace",
         "reservations": "Rezervace",
-        "add_new_place": "Přidat podnik"
+        "add_new_place": "Přidat podnik",
+        "today": "Dnes",
+        "persons": "Osoby",
+        "time": "Čas",
+        "duration": "Doba trvání",
+        "name": "Jméno",
+        "reservation_note": "Poznámka",
+        "reserve": "Rezervuj",
+        "date": "Datum"
+    },
+
+    "place": {
+        "closed": "Zavřeno",
+        "navigate": "Navigovat",
+        "go_with_taxi": "Taxi",
+        "reserve": "Rezervace",
+        "menu": "Menu"
     },
 
     "device": {
@@ -83,7 +101,15 @@
         "change_device_picture": "Změnit obrázek zařízení",
         "software_version": "Verze softwaru",
         "update_device": "Aktualizace zařízení"
+    },
+
+    "profile": {
+        "puffs": "Puffs",
+        "smoking": "Smoking",
+        "activity": "Activity"
+
     }
+
 
 
 }

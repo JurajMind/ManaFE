@@ -1,3 +1,4 @@
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -22,7 +23,7 @@ class NavigateButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       child: Text(
-        'NAVIGATE',
+        AppTranslations.of(context).text("place.navigate").toUpperCase(),
         style: TextStyle(color: Colors.black),
       ),
       onPressed: () => navigate(),

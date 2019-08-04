@@ -1,4 +1,5 @@
 import 'package:app/Helpers/day_helper.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:queries/collections.dart';
@@ -48,7 +49,8 @@ class _OpenDropdownState extends State<OpenDropdown> {
     for (int i = 1; i < 8; i++) {
       var day = new Collection(hours).firstOrDefault((d) => d.day == (i) % 7);
       if (day == null) {
-        result[i] = "${getShortDayName(i, context)} - closed";
+        result[i] =
+            "${getShortDayName(i, context)} - ${AppTranslations.of(context).text("place.closed")}";
       } else {
         var open = df.parse(day.openTine);
         var close = df.parse(day.closeTime);

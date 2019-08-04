@@ -25,7 +25,9 @@
     "common": {
         "search": "Search",
         "save": "Save",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "next": "Next",
+        "back": "Back"
     },
 
     "gear": {
@@ -69,7 +71,22 @@
     "reservations": {
         "upcoming_reservations": "Upcoming reservation",
         "reservations": "Reservations",
-        "add_new_place": "Add new place"
+        "add_new_place": "Add new place",
+        "today": "Today",
+        "persons": "Persons",
+        "time": "Time",
+        "duration": "Duration",
+        "name": "Name",
+        "reservation_note": "Reservation note",
+        "reserve": "Reserve"
+    },
+
+    "place": {
+        "closed": "Closed",
+        "navigate": "Navigate",
+        "go_with_taxi": "Go with taxi",
+        "reserve": "Reserve",
+        "menu": "Menu"
     },
 
     "device": {
