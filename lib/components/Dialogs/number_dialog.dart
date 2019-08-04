@@ -1,3 +1,4 @@
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 
 class NumberDialog extends StatefulWidget {
@@ -56,11 +57,13 @@ class _NumberDialogState extends State<NumberDialog> {
       ),
       actions: <Widget>[
         new FlatButton(
-          child: Text('Save'),
+          child: Text(
+              AppTranslations.of(context).text("common.save").toUpperCase()),
           onPressed: () => Navigator.of(context).pop(count),
         ),
         new FlatButton(
-          child: Text('Cancel'),
+          child: Text(
+              AppTranslations.of(context).text("common.cancel").toUpperCase()),
           onPressed: () => Navigator.of(context).pop(-1),
         )
       ],

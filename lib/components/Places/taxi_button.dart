@@ -1,3 +1,4 @@
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -22,7 +23,7 @@ class TaxiButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       child: Text(
-        'GO WITH TAXI',
+        AppTranslations.of(context).text("place.go_with_taxi").toUpperCase(),
         style: TextStyle(color: Colors.black),
       ),
       onPressed: () => navigate(),

@@ -2,6 +2,7 @@ import 'package:app/Helpers/date_utils.dart';
 import 'package:app/app/app.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/models/extensions.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/subjects.dart';
@@ -32,7 +33,7 @@ class _DeviceUpdatePageState extends State<DeviceUpdatePage> {
         height: 55,
       ),
       appBar: AppBar(
-        title: Text('Update device'),
+        title: Text(AppTranslations.of(context).text("device.update_device")),
         centerTitle: true,
         backgroundColor: AppColors.black,
       ),

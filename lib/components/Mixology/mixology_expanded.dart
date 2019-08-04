@@ -1,5 +1,6 @@
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/pages/Mixology/mix_detail_page.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -42,7 +43,7 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                   Expanded(
                     flex: 2,
                     child: Padding(
-                      padding: const EdgeInsets.all(4 .0),
+                      padding: const EdgeInsets.all(4.0),
                       child: Hero(
                         tag: "mix_hero_${widget.tobaccoMix.id}",
                         child: widget.tobaccoMix.name != null
@@ -51,7 +52,7 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                                 style: Theme.of(context).textTheme.subtitle,
                               )
                             : Text(
-                                'No name',
+                                AppTranslations.of(context).text('gear.no_name'),
                                 style: Theme.of(context).textTheme.subtitle,
                               ),
                       ),

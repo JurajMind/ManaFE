@@ -7,6 +7,7 @@
 import 'package:app/module/general/gear_bloc.dart';
 import 'package:app/pages/Gear/devices.dart';
 import 'package:app/pages/Gear/pipe_accesory.dart';
+import 'package:app/utils/translations/app_translations.dart';
 
 import 'package:flutter/material.dart';
 
@@ -61,10 +62,11 @@ List<Section> getAllSections(
     ScrollPhysics physics,
     Map<int, ScrollController> controllers,
     int currentView,
-    ValueChanged<int> onViewChanged) {
+    ValueChanged<int> onViewChanged,
+    BuildContext context) {
   return <Section>[
     Section(
-        title: 'DEVICES',
+        title: AppTranslations.of(context).text('gear.devices').toUpperCase(),
         leftColor: _mediumPurple,
         rightColor: _mariner,
         backgroundAsset: 'images/gear/mygear.jpg',
@@ -73,7 +75,7 @@ List<Section> getAllSections(
           scrollPhysics: physics,
         )),
     Section(
-        title: 'TOBACCO',
+        title: AppTranslations.of(context).text('gear.tobacco').toUpperCase(),
         leftColor: _tomato,
         rightColor: _mediumPurple,
         backgroundAsset: 'images/gear/tobacco.jpg',
@@ -85,7 +87,7 @@ List<Section> getAllSections(
           type: "Tobacco",
         )),
     Section(
-      title: 'HOOKAH',
+      title: AppTranslations.of(context).text('gear.pipes').toUpperCase(),
       leftColor: _mySin,
       rightColor: _tomato,
       backgroundAsset: 'images/gear/hookah.jpg',
@@ -98,7 +100,7 @@ List<Section> getAllSections(
       ),
     ),
     Section(
-        title: 'BOWLS',
+        title: AppTranslations.of(context).text('gear.bowls').toUpperCase(),
         leftColor: Colors.white,
         rightColor: _tomato,
         backgroundAsset: 'images/gear/bowls.jpg',
@@ -110,7 +112,7 @@ List<Section> getAllSections(
           type: "Bowl",
         )),
     Section(
-        title: 'H.M.D',
+        title: AppTranslations.of(context).text('gear.hmd').toUpperCase(),
         leftColor: Colors.blueAccent,
         rightColor: Colors.blue,
         backgroundAsset: 'images/gear/hms.jpg',
@@ -122,7 +124,7 @@ List<Section> getAllSections(
           type: "HeatManagement",
         )),
     Section(
-        title: 'COALS',
+        title: AppTranslations.of(context).text('gear.coals').toUpperCase(),
         leftColor: Colors.black,
         rightColor: Colors.red,
         backgroundAsset: 'images/gear/coals.jpg',

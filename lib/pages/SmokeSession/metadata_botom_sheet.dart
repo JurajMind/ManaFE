@@ -53,7 +53,7 @@ class MetadataBottomSheet extends StatelessWidget {
                 (a) => a.bowl),
             buildMetadataItem(
                 smokeSessionBloc,
-                "H.M.S",
+                "hmd",
                 'heatmanagement',
                 Icons.refresh,
                 personBloc.myGear.value != null
@@ -73,7 +73,7 @@ class MetadataBottomSheet extends StatelessWidget {
                         .toList()
                     : new List<PipeAccesorySimpleDto>(),
                 (a) => a.coal),
-                buildCoalsCountItem(smokeSessionBloc),
+            buildCoalsCountItem(smokeSessionBloc),
             SizedBox(
               height: 20,
             ),
@@ -119,17 +119,18 @@ class MetadataBottomSheet extends StatelessWidget {
     );
   }
 
-    StreamBuilder<SmokeSessionMetaDataDto> buildCoalsCountItem(
-      SmokeSessionBloc bloc,
-      ) {
+  StreamBuilder<SmokeSessionMetaDataDto> buildCoalsCountItem(
+    SmokeSessionBloc bloc,
+  ) {
     return StreamBuilder<SmokeSessionMetaDataDto>(
-      initialData: null,
-      stream: bloc.smokeSessionMetaData,
-      builder: (context, snapshot) => snapshot.data == null
-          ? new Container()
-          : Row(children: <Widget>[
-            ...List.generate(10, (a) => Text(a.toString()))
-          ],)
-    );
+        initialData: null,
+        stream: bloc.smokeSessionMetaData,
+        builder: (context, snapshot) => snapshot.data == null
+            ? new Container()
+            : Row(
+                children: <Widget>[
+                  ...List.generate(10, (a) => Text(a.toString()))
+                ],
+              ));
   }
 }

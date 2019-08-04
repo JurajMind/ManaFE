@@ -1,6 +1,7 @@
 import 'package:app/components/PipeAccesory/pipe_accesory_list_item.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/menu_bloc.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
@@ -44,7 +45,12 @@ class _MenuPageState extends State<MenuPage> {
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  this.header(context, "TOBACCO", 0),
+                  this.header(
+                      context,
+                      AppTranslations.of(context)
+                          .text("gear.tobacco")
+                          .toUpperCase(),
+                      0),
                   Expanded(
                     child: pipeAccesoryBuilder(menuBloc.tobacco),
                   )
@@ -52,7 +58,12 @@ class _MenuPageState extends State<MenuPage> {
               ),
               Column(
                 children: <Widget>[
-                  this.header(context, "HOOKAHS", 1),
+                  this.header(
+                      context,
+                      AppTranslations.of(context)
+                          .text("gear.pipes")
+                          .toUpperCase(),
+                      1),
                   Expanded(
                     child: pipeAccesoryBuilder(menuBloc.hookahs),
                   )
@@ -60,7 +71,12 @@ class _MenuPageState extends State<MenuPage> {
               ),
               Column(
                 children: <Widget>[
-                  this.header(context, "BOWLS", 2),
+                  this.header(
+                      context,
+                      AppTranslations.of(context)
+                          .text("gear.bowls")
+                          .toUpperCase(),
+                      2),
                   Expanded(
                     child: pipeAccesoryBuilder(menuBloc.bowls),
                   )

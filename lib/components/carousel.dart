@@ -5,6 +5,7 @@ import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:app/pages/Places/add_place_page.dart';
 import 'package:app/support/mana_icons_icons.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -160,7 +161,8 @@ class _CarrousselState extends State<Carroussel> {
                   Hero(
                     tag: 'add_new_place_label',
                     child: Text(
-                      'Add new place',
+                      AppTranslations.of(context)
+                          .text("reservations.add_new_place"),
                       style: Theme.of(context).textTheme.display2,
                     ),
                   )

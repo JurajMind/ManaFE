@@ -20,5 +20,83 @@
     "day_long_4": "Thursday",
     "day_long_5": "Friday",
     "day_long_6": "Saturday",
-    "day_long_7": "Sunday"
+    "day_long_7": "Sunday",
+
+    "common": {
+        "search": "Search",
+        "save": "Save",
+        "cancel": "Cancel",
+        "next": "Next",
+        "back": "Back"
+    },
+
+    "gear": {
+        "tobacco": "Tobacco",
+        "devices": "Devices",
+        "pipe": "Pipe",
+        "bowl": "Bowl",
+        "pipes": "Pipes",
+        "bowls": "Bowls",
+        "hmd": "H.M.D",
+        "coal": "Coals",
+        "coals": "Coals",
+        "no_name": "Bez jmnéna",
+        "suggestion": "Suggestions",
+        "add_new_tobacco": "Add new tobacco"
+    },
+
+    "home": {
+        "start": "START",
+        "nearest_place": "NEAREST PLACE"
+    },
+    "enter_code": {
+        "enter_session_code": "Enter session code",
+        "session_code": "Session code",
+        "enter": "Enter",
+        "validating": "Validating"
+    },
+    "smoke_session": {
+        "animations": "Animations",
+        "colors": "Colors",
+        "puf_count": "Puf count",
+        "last_puf": "Last puf (sec)",
+        "durations": "Durations",
+        "no_data": "No data",
+        "review": "Review",
+        "more": "More",
+        "experiments": "Experiments",
+        "end_session": "End session"
+    },
+
+    "reservations": {
+        "upcoming_reservations": "Upcoming reservation",
+        "reservations": "Reservations",
+        "add_new_place": "Add new place",
+        "today": "Today",
+        "persons": "Persons",
+        "time": "Time",
+        "duration": "Duration",
+        "name": "Name",
+        "reservation_note": "Reservation note",
+        "reserve": "Reserve"
+    },
+
+    "place": {
+        "closed": "Closed",
+        "navigate": "Navigate",
+        "go_with_taxi": "Go with taxi",
+        "reserve": "Reserve",
+        "menu": "Menu"
+    },
+
+    "device": {
+        "restart_stand": "Restart device",
+        "restart": "Restart",
+        "sleep": "Sleep",
+        "ping": "Ping",
+        "device_picture": "Device picture",
+        "change_device_picture": "Change device picture",
+        "software_version": "Software version",
+        "update_device": "Update device"
+    }
 }

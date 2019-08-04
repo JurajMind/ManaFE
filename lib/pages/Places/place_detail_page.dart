@@ -11,6 +11,7 @@ import 'package:app/pages/Places/Reservations/reservation_page.dart';
 import 'package:app/pages/Places/menu.page.dart';
 import 'package:app/pages/Places/place_pictures_page.dart';
 import 'package:app/support/mana_icons_icons.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -289,7 +290,7 @@ class BookMenuWidget extends StatelessWidget {
           flex: 1,
           child: FlatButton(
             child: Text(
-              'MENU',
+              AppTranslations.of(context).text("place.menu").toUpperCase(),
               style: TextStyle(color: Colors.black),
             ),
             onPressed: () {
@@ -367,7 +368,7 @@ class BookButton extends StatelessWidget {
                 color: Colors.black,
               ),
               Text(
-                'RESERVE',
+                AppTranslations.of(context).text("place.reserve").toUpperCase(),
                 style: TextStyle(color: Colors.black),
               ),
             ],

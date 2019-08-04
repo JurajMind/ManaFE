@@ -27,7 +27,7 @@ class Extensions {
 
   static Widget accesoryPicture(PipeAccesorySimpleDto accesory) {
     if (accesory.picture != null) {
-      return  defaultAccesoryPicture(accesory);
+      return defaultAccesoryPicture(accesory);
       return CachedNetworkImage(
           fit: BoxFit.fill,
           fadeOutDuration: Duration(milliseconds: 0),
@@ -64,32 +64,35 @@ class Extensions {
 
   static Widget defaultTypePicture(String type) {
     var imgPath = '';
-    switch (type) {
-      case 'Bowl':
+    switch (type.toLowerCase()) {
+      case 'bowl':
         imgPath = 'images/types/bowl.png';
         break;
-      case 'Coal':
+      case 'coal':
         imgPath = 'images/types/coal.png';
         break;
-      case 'Coals':
+      case 'coals':
         imgPath = 'images/types/coal.png';
         break;
-      case 'HeatManagement':
+      case 'heatManagement':
         imgPath = 'images/types/heatmanagment.png';
         break;
-      case 'HeatManagment':
+      case 'heatManagment':
         imgPath = 'images/types/heatmanagment.png';
         break;
-      case 'H.M.S':
+      case 'h.m.s':
         imgPath = 'images/types/heatmanagment.png';
         break;
-      case 'Tobacco':
+      case 'hmd':
+        imgPath = 'images/types/heatmanagment.png';
+        break;
+      case 'tobacco':
         imgPath = 'images/types/tobacco.png';
         break;
-      case 'Hookah':
+      case 'hookah':
         imgPath = 'images/types/hookah.png';
         break;
-      case 'Pipe':
+      case 'pipe':
         imgPath = 'images/types/hookah.png';
         break;
     }

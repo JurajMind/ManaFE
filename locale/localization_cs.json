@@ -25,15 +25,91 @@
     "day_long_6": "Sobota",
     "day_long_7": "Neděle",
 
+    "common": {
+        "search": "Hledat",
+        "save": "Uložit",
+        "cancel": "Zrušit",
+        "next": "Další",
+        "back": "Zpátky"
+    },
+
+    "gear": {
+        "devices": "Podložky",
+        "tobacco": "Tabák",
+        "pipe": "Dýmka",
+        "pipes": "Dýmky",
+        "bowl": "Korunka",
+        "bowls": "Korunky",
+        "hmd": "H.M.S",
+        "coal": "Uhlí",
+        "coals": "Uhlí",
+        "no_name": "Bez jména",
+        "suggestion": "Návrhy",
+        "add_new_tobacco": "Přidej nový tabák"
+    },
+
     "home": {
-        "start": "ŠTART",
+        "start": "START",
         "nearest_place": "Blízká místa"
     },
     "enter_code": {
-        "enter_session_code": "Zadajte kód",
+        "enter_session_code": "Vložte kód session",
         "session_code": "Kód",
-        "enter": "Potvrď"
+        "enter": "Začít",
+        "validating": "Ověřování"
+    },
+    "smoke_session": {
+        "animations": "Animace",
+        "colors": "Barvy",
+        "puf_count": "Potáhnutí",
+        "last_puf": "Poslední (sek)",
+        "durations": "Délka",
+        "no_data": "Žádná data",
+        "review": "Hodnocení",
+        "more": "Více",
+        "experiments": "Experimenty",
+        "end_session": "Ukončit session"
+    },
+    "reservations": {
+        "upcoming_reservations": "Budoucí rezervace",
+        "reservations": "Rezervace",
+        "add_new_place": "Přidat podnik",
+        "today": "Dnes",
+        "persons": "Osoby",
+        "time": "Čas",
+        "duration": "Doba trvání",
+        "name": "Jméno",
+        "reservation_note": "Poznámka",
+        "reserve": "Rezervuj",
+        "date": "Datum"
+    },
+
+    "place": {
+        "closed": "Zavřeno",
+        "navigate": "Navigovat",
+        "go_with_taxi": "Taxi",
+        "reserve": "Rezervace",
+        "menu": "Menu"
+    },
+
+    "device": {
+        "restart_stand": "Restartovat podložku",
+        "restart": "Restart",
+        "sleep": "Uspat",
+        "ping": "Ping",
+        "device_picture": "Obrázek zařízení",
+        "change_device_picture": "Změnit obrázek zařízení",
+        "software_version": "Verze softwaru",
+        "update_device": "Aktualizace zařízení"
+    },
+
+    "profile": {
+        "puffs": "Puffs",
+        "smoking": "Smoking",
+        "activity": "Activity"
+
     }
+
 
 
 }

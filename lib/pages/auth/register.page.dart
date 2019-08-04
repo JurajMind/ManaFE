@@ -7,6 +7,7 @@ import 'package:app/services/authorization.dart';
 import 'package:app/support/validators/email.validator.dart';
 import 'package:app/support/validators/max.validator.dart';
 import 'package:app/support/validators/required.validator.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -247,7 +248,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         borderSide: new BorderSide(color: Colors.white)),
                     focusedBorder: new UnderlineInputBorder(
                         borderSide: new BorderSide(color: Colors.white)),
-                    icon: Icon(FontAwesomeIcons.userCircle, color: Colors.white)),
+                    icon:
+                        Icon(FontAwesomeIcons.userCircle, color: Colors.white)),
                 onFieldSubmitted: (String textInput) {
                   data.userName = textInput;
                 },
@@ -270,7 +272,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   RoundedButton nextRoundedButton(Size screenSize) {
     return new RoundedButton(
-      buttonName: 'Next',
+      buttonName: AppTranslations.of(context).text("common.next").toUpperCase(),
       onTap: () => nextPage(),
       buttonColor: Colors.transparent,
       borderWidth: 2.0,

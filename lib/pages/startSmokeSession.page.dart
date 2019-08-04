@@ -8,6 +8,7 @@ import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/pages/enterSmokeSesionCode.page.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
@@ -77,7 +78,9 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
     final sessionCode =
         await Navigator.of(context).push(new MyCustomRoute<String>(
             builder: (BuildContext context) {
-              return new EnterSmokeSessionCode(callback: widget.callback,);
+              return new EnterSmokeSessionCode(
+                callback: widget.callback,
+              );
             },
             fullscreenDialog: false));
 
@@ -109,69 +112,70 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
         child: AnimatedBuilder(
           animation: _colorTween,
           builder: (context, child) => CustomPaint(
-                painter: CirclePainter(_colorTween.value,
-                    data: MediaQuery.of(context)),
-                child: new Column(
-                  children: <Widget>[
-                    new Expanded(flex: 1, child: Container()),
-                    new Expanded(
-                      flex: 4,
-                      child: Hero(
-                        tag: 'Circle',
-                        child: new Container(
-                            child: SizedBox(
-                          height: getCircleRadius(context) * 2,
-                          width: getCircleRadius(context) * 2,
-                          child: GestureDetector(
-                              onTap: () {
-                                _openAddEntryDialog(context, smokeSessionBloc);
-                              },
-                              child: new Container(
-                                child: new Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    new Text(
-                                      'START',
-                                      style: Theme.of(context).textTheme.title,
-                                    ),
-                                    new Icon(
-                                      Icons.play_arrow,
-                                      size: 60.0,
-                                      color: Colors.white,
-                                    )
-                                  ],
+            painter:
+                CirclePainter(_colorTween.value, data: MediaQuery.of(context)),
+            child: new Column(
+              children: <Widget>[
+                new Expanded(flex: 1, child: Container()),
+                new Expanded(
+                  flex: 4,
+                  child: Hero(
+                    tag: 'Circle',
+                    child: new Container(
+                        child: SizedBox(
+                      height: getCircleRadius(context) * 2,
+                      width: getCircleRadius(context) * 2,
+                      child: GestureDetector(
+                          onTap: () {
+                            _openAddEntryDialog(context, smokeSessionBloc);
+                          },
+                          child: new Container(
+                            child: new Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                new Text(
+                                  AppTranslations.of(context)
+                                      .text('home.start'),
+                                  style: Theme.of(context).textTheme.title,
                                 ),
-                              )),
-                        )),
-                      ),
-                    ),
-                    new Expanded(
-                        flex: 4,
-                        child: Column(
-                          children: <Widget>[
-                            SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                height:
-                                    MediaQuery.of(context).size.height / 2 - 60,
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(
-                                      'NEAREST PLACE',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.green[50]),
-                                    ),
-                                    Expanded(
-                                        child: Carroussel(
-                                            navigateToDetail: navigateToPlace)),
-                                  ],
-                                )),
-                          ],
-                        ))
-                  ],
+                                new Icon(
+                                  Icons.play_arrow,
+                                  size: 60.0,
+                                  color: Colors.white,
+                                )
+                              ],
+                            ),
+                          )),
+                    )),
+                  ),
                 ),
-              ),
+                new Expanded(
+                    flex: 4,
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height / 2 - 60,
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  AppTranslations.of(context)
+                                      .text('home.nearest_place'),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.green[50]),
+                                ),
+                                Expanded(
+                                    child: Carroussel(
+                                        navigateToDetail: navigateToPlace)),
+                              ],
+                            )),
+                      ],
+                    ))
+              ],
+            ),
+          ),
         ),
       ),
     );

@@ -3,6 +3,7 @@ import 'package:app/components/Callendar/flutter_calendar.dart';
 import 'package:app/components/Reservations/reservation_item.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/person/reservations_bloc.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:queries/collections.dart';
@@ -48,7 +49,9 @@ class _ReservationsPageState extends State<ReservationsPage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
-        title: Text('RESERVATIONS'),
+        title: Text(AppTranslations.of(context)
+            .text("reservations.reservations")
+            .toUpperCase()),
       ),
       body: SafeArea(
         child: StreamBuilder<List<PlacesReservationsReservationDto>>(
@@ -66,10 +69,10 @@ class _ReservationsPageState extends State<ReservationsPage> {
                 child: new ReservationFilterWidget(
                   reservationFilter: reservationFilter,
                   onChanged: (index) => {
-                        setState(() {
-                          reservationFilter = index;
-                        })
-                      },
+                    setState(() {
+                      reservationFilter = index;
+                    })
+                  },
                 ),
               ));
               childrens.addAll(_buildEventList(filteredReservations));

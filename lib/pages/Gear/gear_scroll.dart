@@ -612,7 +612,7 @@ class _GearScrollHomeState extends State<GearScrollHome> {
     innerScrollControllers[4] = ScrollController();
     innerScrollControllers[5] = ScrollController();
     List<Section> allSections = getAllSections(gearBloc, innerScrollPhysics,
-        innerScrollControllers, curentView, onViewChanged);
+        innerScrollControllers, curentView, onViewChanged, context);
     // The scroll offset that reveals the appBarMidHeight appbar.
     final double appBarMidScrollOffset =
         statusBarHeight + appBarMaxHeight - _kAppBarMidHeight;

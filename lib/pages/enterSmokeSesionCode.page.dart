@@ -8,13 +8,14 @@ import 'package:app/Helpers/helpers.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/services/http.service.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'SmokeSession/qr_code_reader_page.dart';
 
 class EnterSmokeSessionCode extends StatefulWidget {
-    final GlobalKey<NavigatorState> Function(int) callback;
+  final GlobalKey<NavigatorState> Function(int) callback;
 
   const EnterSmokeSessionCode({Key key, this.callback}) : super(key: key);
   @override
@@ -72,7 +73,9 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            new Text("Enter session code",
+                            new Text(
+                                AppTranslations.of(context)
+                                    .text('enter_code.enter_session_code'),
                                 textScaleFactor: 2.0,
                                 style: Theme.of(context).textTheme.display3),
                             new Form(
@@ -99,7 +102,8 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                       textAlign: TextAlign.center,
                                       autocorrect: false,
                                       decoration: new InputDecoration(
-                                        labelText: "Session code",
+                                        labelText: AppTranslations.of(context)
+                                            .text('enter_code.session_code'),
                                         labelStyle: TextStyle(
                                           color: Colors.white,
                                         ),
@@ -145,8 +149,13 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                               }
                                             },
                                             child: validating
-                                                ? new Text('Validating')
-                                                : new Text('Enter'),
+                                                ? new Text(AppTranslations.of(
+                                                        context)
+                                                    .text(
+                                                        'enter_code.validating'))
+                                                : new Text(AppTranslations.of(
+                                                        context)
+                                                    .text('enter_code.enter')),
                                             buttonColor: Colors.transparent,
                                           ),
                                         ),
@@ -207,7 +216,11 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                         ))),
               ),
             ),
-            Expanded(flex: 2, child: SmokeSessionCarousel(callback: widget.callback,)),
+            Expanded(
+                flex: 2,
+                child: SmokeSessionCarousel(
+                  callback: widget.callback,
+                )),
           ],
         ),
       ),
@@ -222,7 +235,10 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
     if (result.id != null) {
       Navigator.of(context).pushReplacement(new MaterialPageRoute(
         builder: (BuildContext context) {
-          return new SmokeSessionPage(sessionId: sessionId,callback: widget.callback,);
+          return new SmokeSessionPage(
+            sessionId: sessionId,
+            callback: widget.callback,
+          );
         },
       ));
     } else {

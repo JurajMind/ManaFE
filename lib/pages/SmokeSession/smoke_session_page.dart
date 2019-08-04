@@ -6,7 +6,6 @@ import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Common/bg_painter.dart';
 import 'package:app/components/Common/since_timer.dart';
 import 'package:app/components/ProgressDialog/progress_dialog.dart';
-import 'package:app/components/snap_scroll.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/SmokeSession/Components/pipe_accesory_widget.dart';
@@ -17,6 +16,7 @@ import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
 import 'package:app/pages/SmokeSession/tobacco_widget.dart';
 import 'package:app/pages/Statistic/Detail/smoke_session_detail_page.dart';
 import 'package:app/pages/home.page.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
@@ -28,7 +28,7 @@ import 'Components/session_control_row.dart';
 
 class SmokeSessionPage extends StatefulWidget {
   final String sessionId;
-    final GlobalKey<NavigatorState> Function(int) callback;
+  final GlobalKey<NavigatorState> Function(int) callback;
   SmokeSessionPage({this.sessionId, this.callback});
 
   @override
@@ -115,20 +115,20 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
           children: <Widget>[
             PipeAccesoryWidget(
               accesory: asyncSnapshot.data.pipe,
-              type: 'Pipe',
+              type: 'pipe',
               dataProvider: dataProvider,
             ),
             PipeAccesoryWidget(
                 accesory: asyncSnapshot.data.bowl,
-                type: 'Bowl',
+                type: 'bowl',
                 dataProvider: dataProvider),
             PipeAccesoryWidget(
                 accesory: asyncSnapshot.data.heatManagement,
-                type: 'H.M.S',
+                type: 'hmd',
                 dataProvider: dataProvider),
             PipeAccesoryWidget(
                 accesory: asyncSnapshot.data.coal,
-                type: 'Coals',
+                type: 'coal',
                 dataProvider: dataProvider),
             emptyPipeAccesoryWidget(asyncSnapshot.data)
           ],
@@ -164,13 +164,16 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     new HeaderItem(
-                      label: 'Puf count',
+                      label: AppTranslations.of(context)
+                          .text('smoke_session.puf_count'),
                       data: asyncSnapshot.data.pufCount.toString(),
                     ),
                     Expanded(
                       child: Column(
                         children: <Widget>[
-                          Text('Last puf (sec)',
+                          Text(
+                              AppTranslations.of(context)
+                                  .text('smoke_session.last_puf'),
                               style: Theme.of(context)
                                   .textTheme
                                   .display2
@@ -184,7 +187,9 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                     Expanded(
                       child: Column(
                         children: <Widget>[
-                          Text('Durations',
+                          Text(
+                              AppTranslations.of(context)
+                                  .text('smoke_session.durations'),
                               style: Theme.of(context)
                                   .textTheme
                                   .display2
@@ -255,7 +260,9 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: new RoundedButton(
-                            child: Text('REVIEW'),
+                            child: Text(AppTranslations.of(context)
+                                .text('smoke_session.review')
+                                .toUpperCase()),
                             onTap: () {},
                             buttonColor: Colors.transparent,
                             borderWidth: 1.0,
@@ -267,7 +274,9 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: new RoundedButton(
-                            child: Text('MORE'),
+                            child: Text(AppTranslations.of(context)
+                                .text('smoke_session.more')
+                                .toUpperCase()),
                             onTap: () => showMoreModal(),
                             buttonColor: Colors.transparent,
                             borderWidth: 1.0,
@@ -347,23 +356,22 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
             child: new Column(
               children: <Widget>[
                 new ListTile(
-                    leading: new Icon(FontAwesomeIcons.share),
-                    title: new Text('Share'),
-                    onTap: () => ScreenshotShare.takeScreenshotAndShare()),
-                new ListTile(
                   leading: new Icon(FontAwesomeIcons.vial),
-                  title: new Text('Experiments'),
+                  title: new Text(AppTranslations.of(context)
+                      .text("smoke_session.experiments")),
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => ExperimentalPage())),
                 ),
                 new ListTile(
                   leading: new Icon(Icons.refresh),
-                  title: new Text('Restart stand'),
+                  title: new Text(
+                      AppTranslations.of(context).text("device.restart")),
                   onTap: () => _restartDialog(code),
                 ),
                 new ListTile(
                     leading: new Icon(FontAwesomeIcons.powerOff),
-                    title: new Text('End session'),
+                    title: new Text(AppTranslations.of(context)
+                        .text("smoke_session.end_session")),
                     onTap: () => _endDialog(context)),
               ],
             ),
@@ -404,9 +412,8 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
     ).then((value) {
       if (value) {
         ProgressDialog pr = showEndingProgress();
-      
-        var sessionBloc = DataProvider.getData(context)
-            .smokeSessionBloc;
+
+        var sessionBloc = DataProvider.getData(context).smokeSessionBloc;
         sessionBloc.endSession().then((value) {
           pr.hide();
           Navigator.of(context).pop();
@@ -419,8 +426,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
   }
 
   ProgressDialog showEndingProgress() {
-    var pr = new ProgressDialog(
-      context, ProgressDialogType.Normal);
+    var pr = new ProgressDialog(context, ProgressDialogType.Normal);
     pr.setMessage('Ending smoke session...');
     pr.show();
     return pr;
