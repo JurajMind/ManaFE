@@ -7,6 +7,7 @@ import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/SmokeSession/Components/puff_timer.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:queries/collections.dart';
 import 'package:vibrate/vibrate.dart';
@@ -93,7 +94,9 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
                 },
               ),
               new FlatButton(
-                child: new Text('SAVE'),
+                child: new Text(AppTranslations.of(context)
+                    .text("common.save")
+                    .toUpperCase()),
                 textColor: Colors.green,
                 onPressed: () {
                   Navigator.of(context).pop(true);

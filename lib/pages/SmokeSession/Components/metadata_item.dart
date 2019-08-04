@@ -2,6 +2,7 @@ import 'package:app/const/theme.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/accesory_search.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
@@ -46,7 +47,8 @@ class MetadataItem extends StatelessWidget {
                             height: 30,
                             child: Extensions.defaultTypePicture(this.type)),
                         Text(
-                          type,
+                          AppTranslations.of(context)
+                              .text("gear.${type.toLowerCase()}"),
                           style: TextStyle(
                               fontSize: 20.0, fontWeight: FontWeight.bold),
                         ),

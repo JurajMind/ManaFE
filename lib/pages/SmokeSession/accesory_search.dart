@@ -1,5 +1,6 @@
 import 'package:app/app/app.dart';
 import 'package:app/pages/Gear/add_gear_page.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -75,8 +76,9 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
               ],
               centerTitle: true,
               title: TextField(
-                decoration:
-                    new InputDecoration(hintText: "Search ${widget.type}"),
+                decoration: new InputDecoration(
+                    hintText:
+                        '${AppTranslations.of(context).text("common.search")} ${AppTranslations.of(context).text("gear." + widget.type.toLowerCase())}'),
                 controller: controller,
                 onSubmitted: submitSearch,
                 onChanged: _search,

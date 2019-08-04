@@ -11,6 +11,7 @@ import 'package:app/utils/Map/location.dart';
 import 'package:app/utils/Map/map_view_type.dart';
 import 'package:app/utils/Map/marker.dart';
 import 'package:app/utils/Map/static_map_provider.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -70,12 +71,11 @@ class _PlacesPageState extends State<PlacesPage> {
                 IconButton(
                   icon: Icon(Icons.search),
                   onPressed: () => Navigator.of(context).push(
-                          new MaterialPageRoute(
-                              builder: (BuildContext context) {
-                        return new PlacesSearchPage(
-                          places: placesBloc.places.value,
-                        );
-                      })),
+                      new MaterialPageRoute(builder: (BuildContext context) {
+                    return new PlacesSearchPage(
+                      places: placesBloc.places.value,
+                    );
+                  })),
                 )
               ],
               flexibleSpace: InkWell(
@@ -102,7 +102,8 @@ class _PlacesPageState extends State<PlacesPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
                                 Text(
-                                  'Upcoming reservation',
+                                  AppTranslations.of(context).text(
+                                      "reservations.upcoming_reservations"),
                                   style: Theme.of(context).textTheme.display2,
                                 ),
                                 OutlineButton(
@@ -115,10 +116,10 @@ class _PlacesPageState extends State<PlacesPage> {
                                     style: Theme.of(context).textTheme.display3,
                                   ),
                                   onPressed: () => Navigator.of(context).push(
-                                          new MaterialPageRoute(
-                                              builder: (BuildContext context) {
-                                        return new ReservationsPage();
-                                      })),
+                                      new MaterialPageRoute(
+                                          builder: (BuildContext context) {
+                                    return new ReservationsPage();
+                                  })),
                                 ),
                               ],
                             ),
@@ -232,10 +233,10 @@ class _PlacesPageState extends State<PlacesPage> {
                           ),
                         ),
                         onTap: () => {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      PlacesMapPage(position: snapshot.data)))
-                            },
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  PlacesMapPage(position: snapshot.data)))
+                        },
                       );
               });
         });

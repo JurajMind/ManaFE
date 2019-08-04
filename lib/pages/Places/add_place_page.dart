@@ -7,6 +7,7 @@ import 'package:app/components/Places/PlacePicker/place_picker.dart';
 import 'package:app/components/Places/open_dropdown.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -46,7 +47,11 @@ class _AddPlacePageState extends State<AddPlacePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Hero(tag: 'add_new_place_label', child: Text('Add new place')),
+        title: Hero(
+            tag: 'add_new_place_label',
+            child: Text(
+              AppTranslations.of(context).text("reservations.add_new_place"),
+            )),
         backgroundColor: AppColors.black,
         centerTitle: true,
       ),

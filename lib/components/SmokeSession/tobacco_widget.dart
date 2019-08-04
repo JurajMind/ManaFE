@@ -1,6 +1,7 @@
 import 'package:app/components/Mixology/mixology_expanded.dart';
 import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:app/models/extensions.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
@@ -62,11 +63,15 @@ class TobaccoWidget extends StatelessWidget {
     if (tobacco == null || tobacco.id == null || tobacco.name == null) {
       return new Padding(
         padding: EdgeInsets.all(8.0),
-        child: Text('No tobacco'),
+        child: Center(
+            child: Text(
+          AppTranslations.of(context).text("smoke_session.no_data"),
+          style: Theme.of(context).textTheme.display2,
+        )),
       );
     } else {
       return Padding(
-        padding: const EdgeInsets.only(left:0),
+        padding: const EdgeInsets.only(left: 0),
         child: Row(
           children: <Widget>[
             Container(
@@ -77,7 +82,13 @@ class TobaccoWidget extends StatelessWidget {
               tobacco.name,
               style: Theme.of(context).textTheme.display1,
             ),
-            Text(' ' + tobacco.brand,   style: Theme.of(context).textTheme.display1.merge(new TextStyle(fontWeight:FontWeight.normal ) ),)
+            Text(
+              ' ' + tobacco.brand,
+              style: Theme.of(context)
+                  .textTheme
+                  .display1
+                  .merge(new TextStyle(fontWeight: FontWeight.normal)),
+            )
           ],
         ),
       );

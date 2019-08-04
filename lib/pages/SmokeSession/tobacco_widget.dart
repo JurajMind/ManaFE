@@ -3,6 +3,7 @@ import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/tobacco_edit.dart';
+import 'package:app/utils/translations/app_translations.dart';
 
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -27,14 +28,19 @@ class TobaccoSessionWidget extends StatelessWidget {
             stream: smokeSessionBloc.smokeStatistic,
             builder: (context, snapShot) {
               double percentage = ((snapShot?.data?.pufCount ?? 0) / 300) * 100;
+
               if (percentage > 100) {
                 percentage = 100;
               }
+
+              percentage = 100 - percentage;
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Text(
-                    'TOBACCO',
+                    AppTranslations.of(context)
+                        .text("gear.tobacco")
+                        .toUpperCase(),
                     style: new TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 16.0),
                   ),

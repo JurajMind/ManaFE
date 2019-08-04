@@ -10,6 +10,7 @@ import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/pages/Places/places_search_page.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -391,7 +392,8 @@ class ReservationButton extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Text(
-                              'Upcoming reservations ',
+                              AppTranslations.of(context)
+                                  .text("reservations.upcoming_reservations"),
                               style: Theme.of(context).textTheme.display3,
                             ),
                             Container(

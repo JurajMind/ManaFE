@@ -1,5 +1,6 @@
 import 'package:app/app/app.dart';
 import 'package:app/const/theme.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
@@ -31,7 +32,8 @@ class _DeviceChangePicturePageState extends State<DeviceChangePicturePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Change device picture'),
+          title: Text(
+              AppTranslations.of(context).text("device.change_device_picture")),
           centerTitle: true,
           backgroundColor: AppColors.black,
         ),
@@ -47,13 +49,12 @@ class _DeviceChangePicturePageState extends State<DeviceChangePicturePage> {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
-                  onTap: (){
-                    if(picture == null)
-                    return;
+                  onTap: () {
+                    if (picture == null) return;
 
                     Navigator.pop(context, picture);
                   },
-                                  child: DevicePictureItem(picture?.inlinePicture,
+                  child: DevicePictureItem(picture?.inlinePicture,
                       selected: picture?.id == widget.slectedPictureId),
                 ),
               );

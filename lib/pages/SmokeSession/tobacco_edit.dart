@@ -8,6 +8,7 @@ import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Gear/add_gear_page.dart';
 import 'package:app/pages/SmokeSession/accesory_search.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -178,7 +179,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Suggestion',
+              AppTranslations.of(context).text('gear.suggestion'),
               style: Theme.of(context).textTheme.display1,
             ),
           ),
@@ -229,11 +230,15 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
         padding: const EdgeInsets.all(8.0),
         child: Center(
           child: new RoundedButton(
-            child: Text('Add new tobacco'),
+            child: Text(AppTranslations.of(context)
+                .text("gear.add_new_tobacco")
+                .toUpperCase()),
             onTap: () {
               Navigator.of(context)
                   .push<PipeAccesorySimpleDto>(MaterialPageRoute(
-                      builder: (context) => AddGearPage(selectedType: 'Tobacco',),
+                      builder: (context) => AddGearPage(
+                            selectedType: 'Tobacco',
+                          ),
                       fullscreenDialog: true))
                   .then((newTobacco) {
                 if (newTobacco != null) {
@@ -256,7 +261,8 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
         padding: const EdgeInsets.all(8.0),
         child: Center(
           child: new RoundedButton(
-            child: Text('SAVE'),
+            child: Text(
+                AppTranslations.of(context).text("common.save").toUpperCase()),
             onTap: () {
               Navigator.pop(context, createSaveModel());
             },

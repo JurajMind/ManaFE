@@ -1,5 +1,6 @@
 import 'package:app/app/app.dart';
 import 'package:app/models/extensions.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -111,7 +112,10 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                 children: <Widget>[
                   Expanded(
                     flex: 2,
-                    child: Text('Device picture : ',
+                    child: Text(
+                        AppTranslations.of(context)
+                                .text("device.device_picture") +
+                            ' : ',
                         style: Theme.of(context).textTheme.display2),
                   ),
                   Expanded(
@@ -156,7 +160,9 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      'Software version : ',
+                      AppTranslations.of(context)
+                              .text("device.software_version") +
+                          ' : ',
                       style: Theme.of(context).textTheme.display2,
                     ),
                   ),
@@ -203,7 +209,9 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(Icons.airline_seat_individual_suite),
-                          Text('SLEEP')
+                          Text(AppTranslations.of(context)
+                              .text("device.sleep")
+                              .toUpperCase())
                         ],
                       ),
                       onTap: () {
@@ -223,7 +231,9 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(Icons.refresh),
-                          Text('RESTART')
+                          Text(AppTranslations.of(context)
+                              .text("device.restart")
+                              .toUpperCase())
                         ],
                       ),
                       onTap: () {
@@ -241,7 +251,9 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Icon(Icons.phonelink_ring),
-                        Text('PING')
+                        Text(AppTranslations.of(context)
+                            .text("device.ping")
+                            .toUpperCase())
                       ],
                     ),
                     onTap: () {

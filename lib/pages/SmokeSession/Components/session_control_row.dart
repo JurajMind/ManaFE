@@ -2,6 +2,7 @@ import 'package:app/const/theme.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/SmokeSession/color_picker_page.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 
 import '../animation_picker_page.dart';
@@ -30,7 +31,7 @@ class SessionControllRow extends StatelessWidget {
                   child: Icon(Icons.list, color: AppColors.colors[1], size: 50),
                 ),
                 Text(
-                  'Animations',
+                  AppTranslations.of(context).text('smoke_session.animations'),
                   style: Theme.of(context)
                       .textTheme
                       .display2
@@ -56,7 +57,9 @@ class SessionControllRow extends StatelessWidget {
                       StreamBuilder<StandSettings>(
                           stream: smokeSessionBloc.standSettings,
                           builder: (context, snapshot) {
-                            return Text('Colors',
+                            return Text(
+                                AppTranslations.of(context)
+                                    .text('smoke_session.colors'),
                                 style: Theme.of(context)
                                     .textTheme
                                     .display2
