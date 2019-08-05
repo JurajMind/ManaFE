@@ -1,26 +1,29 @@
 {
-    "tab_mixology": "Mixology",
-    "tab_places": "Places",
-    "tab_gear": "Gear",
-    "tab_profile": "Profile",
-
-    "tab_bag": "Bolso",
+    "tabs": {
+        "mixology": "Mixology",
+        "places": "Places",
+        "gear": "Gear",
+        "profile": "Profile"
+    },
+    
     "title_select_language": "Select language",
 
-    "day_short_1": "Mon",
-    "day_short_2": "Tue",
-    "day_short_3": "Wed",
-    "day_short_4": "Thu",
-    "day_short_5": "Fri",
-    "day_short_6": "Sat",
-    "day_short_7": "Sun",
-    "day_long_1": "Monday",
-    "day_long_2": "Tuesday",
-    "day_long_3": "Wednesday",
-    "day_long_4": "Thursday",
-    "day_long_5": "Friday",
-    "day_long_6": "Saturday",
-    "day_long_7": "Sunday",
+    "days": {
+        "short_1": "Mon",
+        "short_2": "Tue",
+        "short_3": "Wed",
+        "short_4": "Thu",
+        "short_5": "Fri",
+        "short_6": "Sat",
+        "short_7": "Sun",
+        "long_1": "Monday",
+        "long_2": "Tuesday",
+        "long_3": "Wednesday",
+        "long_4": "Thursday",
+        "long_5": "Friday",
+        "long_6": "Saturday",
+        "long_7": "Sunday"
+    },
 
     "common": {
         "search": "Search",
@@ -46,7 +49,10 @@
         "coals": "Coals",
         "no_name": "No name",
         "suggestion": "Suggestions",
-        "add_new_tobacco": "Add new tobacco"
+        "add_new_tobacco": "Add new tobacco",
+        "my_gear": "My gear",
+        "by_brand": "By brand",
+        "find_mix": "Find mix"
     },
 
     "home": {

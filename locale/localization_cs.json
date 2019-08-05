@@ -1,29 +1,30 @@
 {
 
+    "tabs":{
+        "mixology": "Mixy",
+        "places": "Podniky",
+        "gear": "Vybavení",
+        "profile": "Profil"
+    },
 
-
-    "tab_mixology": "Mixy",
-    "tab_places": "Podniky",
-    "tab_gear": "Vybavení",
-    "tab_profile": "Profil",
-
-    "tab_bag": "Bolso",
     "title_select_language": "Vyberte si jazyk",
 
-    "day_short_1": "Po",
-    "day_short_2": "Ut",
-    "day_short_3": "Str",
-    "day_short_4": "Čtr",
-    "day_short_5": "Pa",
-    "day_short_6": "So",
-    "day_short_7": "Ne",
-    "day_long_1": "Pondělí",
-    "day_long_2": "Úterý",
-    "day_long_3": "Středa",
-    "day_long_4": "Čtvrtek",
-    "day_long_5": "Pátek",
-    "day_long_6": "Sobota",
-    "day_long_7": "Neděle",
+    "days":{
+        "short_1": "Po",
+        "short_2": "Ut",
+        "short_3": "Str",
+        "short_4": "Čtr",
+        "short_5": "Pa",
+        "short_6": "So",
+        "short_7": "Ne",
+        "long_1": "Pondělí",
+        "long_2": "Úterý",
+        "long_3": "Středa",
+        "long_4": "Čtvrtek",
+        "long_5": "Pátek",
+        "long_6": "Sobota",
+        "long_7": "Neděle"
+    },
 
     "common": {
         "search": "Hledat",
@@ -51,7 +52,8 @@
         "suggestion": "Návrhy",
         "add_new_tobacco": "Přidej nový tabák",
         "my_gear": "Moje vybavení",
-        "by_brand": "podle značky "
+        "by_brand": "podle značky ",
+        "find_mix": "Najít mix"
     },
 
     "home": {

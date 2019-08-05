@@ -16,7 +16,7 @@ import 'package:shake/shake.dart';
 
 class TobaccoEditWidget extends StatefulWidget {
   final ValueChanged<TobaccoEditModel> onSave;
-final GlobalKey<NavigatorState> Function(int) callback;
+  final GlobalKey<NavigatorState> Function(int) callback;
   final String type;
   final PipeAccesorySimpleDto tobacco;
   final int tobaccoWeight;
@@ -27,7 +27,8 @@ final GlobalKey<NavigatorState> Function(int) callback;
     this.type,
     this.mix,
     this.tobaccoWeight,
-    this.onSave, this.callback,
+    this.onSave,
+    this.callback,
   }) : super(key: key);
 
   @override
@@ -228,62 +229,26 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
 
     listWidgets.add(
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal:8.0,vertical:16),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
         child: Row(
-          mainAxisAlignment:  widget.callback == null ? MainAxisAlignment.center : MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: widget.callback == null
+              ? MainAxisAlignment.center
+              : MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-          widget.callback == null ? Container() :  new RoundedButton(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text('Find mix'),
-                  SizedBox(
-                    width: 5,
+            widget.callback == null
+                ? Container()
+                : new OutlineButton.icon(
+                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+                    label: Text(AppTranslations.of(context).text('gear.find_mix')),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      widget.callback(0);
+                    },
+                    icon: Icon(Icons.search),
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0)),
+                    borderSide: BorderSide(color: Colors.white, width: 1),
                   ),
-                  Icon(Icons.search)
-                ],
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-                widget.callback(0);
-                 
-              },
-              buttonColor: Colors.transparent,
-              borderWidth: 1.0,
-              bottomMargin: 1.0,
-              height: 40.0,
-              width: (MediaQuery.of(context).size.width) * 0.4,
-            ),
-            new RoundedButton(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text('New tobacco'),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Icon(Icons.add)
-                ],
-              ),
-              onTap: () {
-                Navigator.of(context)
-                    .push<PipeAccesorySimpleDto>(MaterialPageRoute(
-                        builder: (context) => AddGearPage(
-                              selectedType: 'Tobacco',
-                            ),
-                        fullscreenDialog: true))
-                    .then((newTobacco) {
-                  if (newTobacco != null) {
-                    addTobacco(newTobacco, 15);
-                  }
-                });
-              },
-              buttonColor: Colors.transparent,
-              borderWidth: 1.0,
-              bottomMargin: 1.0,
-              height: 40.0,
-              width: (MediaQuery.of(context).size.width) * 0.4,
-            ),
           ],
         ),
       ),
@@ -293,17 +258,16 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: Center(
-          child: new RoundedButton(
-            child: Text(
-                AppTranslations.of(context).text("common.save").toUpperCase()),
-            onTap: () {
+          child: new OutlineButton.icon(
+            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+            label: Text(AppTranslations.of(context).text("common.save")),
+            onPressed: () {
               Navigator.pop(context, createSaveModel());
             },
-            buttonColor: Colors.transparent,
-            borderWidth: 1.0,
-            bottomMargin: 1.0,
-            height: 40.0,
-            width: (MediaQuery.of(context).size.width) * 0.4,
+            icon: Icon(Icons.save),
+            shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(30.0)),
+            borderSide: BorderSide(color: Colors.white, width: 1),
           ),
         ),
       ),
@@ -328,7 +292,12 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                   backgroundColor: Colors.black,
                   centerTitle: true,
                   title: TextField(
-                    decoration: InputDecoration(labelText: 'Mix name',labelStyle: Theme.of(context).textTheme.display2.apply(color:Colors.grey)),
+                    decoration: InputDecoration(
+                        labelText: 'Mix name',
+                        labelStyle: Theme.of(context)
+                            .textTheme
+                            .display2
+                            .apply(color: Colors.grey)),
                     controller: controller,
                   ),
                   actions: <Widget>[

@@ -109,8 +109,8 @@ class MyGear extends StatelessWidget {
 
 class SearchRow extends StatelessWidget {
   static const Map<int, String> labels = {
-    0: 'MY GEAR',
-    1: 'BY BRAND',
+    0: 'gear.my_gear',
+    1: 'gear.by_brand',
     2: 'TOP'
   };
 

@@ -182,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                     flex: 1,
                     child: IconButtonTitle(
                       icon: Icon(ManaIcons.leaf),
-                      text: AppTranslations.of(context).text("tab_mixology"),
+                      text: AppTranslations.of(context).text("tabs.mixology"),
                       color: _currentIndex == 0 ? Colors.white : Colors.grey,
                       tooltip: 'ss',
                       onPressed: () => _setActiveTab(0),
@@ -192,7 +192,7 @@ class _HomePageState extends State<HomePage> {
                     flex: 1,
                     child: IconButtonTitle(
                       icon: Icon(Icons.place),
-                      text: AppTranslations.of(context).text("tab_places"),
+                      text: AppTranslations.of(context).text("tabs.places"),
                       color: _currentIndex == 1 ? Colors.white : Colors.grey,
                       onPressed: () => _setActiveTab(1),
                     ),
@@ -202,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                     flex: 1,
                     child: IconButtonTitle(
                       icon: Icon(ManaIcons.hookah),
-                      text: AppTranslations.of(context).text("tab_gear"),
+                      text: AppTranslations.of(context).text("tabs.gear"),
                       color: _currentIndex == 3 ? Colors.white : Colors.grey,
                       onPressed: () => _setActiveTab(3),
                     ),
@@ -211,7 +211,7 @@ class _HomePageState extends State<HomePage> {
                     flex: 1,
                     child: IconButtonTitle(
                       icon: Icon(Icons.person),
-                      text: AppTranslations.of(context).text("tab_profile"),
+                      text: AppTranslations.of(context).text("tabs.profile"),
                       color: _currentIndex == 4 ? Colors.white : Colors.grey,
                       onPressed: () => _setActiveTab(4),
                     ),
