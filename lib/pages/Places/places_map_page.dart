@@ -315,6 +315,8 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   }
 
   void setMarkers(List<PlaceSimpleDto> places) {
+    if(places == null)
+      return;
     markers = places.map((f) {
       var marker = new Marker(
           icon: f.haveMana ? _manaMarker : BitmapDescriptor.defaultMarker,

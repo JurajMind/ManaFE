@@ -1,6 +1,7 @@
 import 'package:app/Helpers/date_utils.dart';
 import 'package:app/components/Common/labeled_value.dart';
 import 'package:app/pages/Places/Reservations/reservation_detail_page.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
@@ -20,10 +21,10 @@ class ReservationItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(16.0)),
           child: InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return new ReservationDetailPage(reservation: reservation);
-                  },
-                )),
+              builder: (BuildContext context) {
+                return new ReservationDetailPage(reservation: reservation);
+              },
+            )),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 4.0),
               child: Row(
@@ -99,25 +100,26 @@ class ReservationItem extends StatelessWidget {
 }
 
 class ReservationStatusIcon extends StatelessWidget {
-  static String stateToText(int reservationState) {
+  static String stateToText(int reservationState, BuildContext context) {
     switch (reservationState) {
       case -1:
-        return "All";
+        return AppTranslations.of(context).text("reservations.all");
       // Created
       case 0:
-        return "Created";
+        return AppTranslations.of(context).text("reservations.created");
       // Canceled
       case 1:
-        return "Canceled";
+        return AppTranslations.of(context).text("reservations.canceled");
       // Denied
       case 2:
-        return "Denied";
+        return AppTranslations.of(context).text("reservations.denied");
       // Confirmed
       case 3:
-        return "Confirmed";
+        return AppTranslations.of(context).text("reservations.confirmed");
       // ConfirmationRequired
       case 6:
-        return "Confirmation required";
+        return AppTranslations.of(context)
+            .text("reservations.confirmation_required");
       default:
         return reservationState.toString();
     }

@@ -1,6 +1,7 @@
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
@@ -38,7 +39,7 @@ class UseMixButton extends StatelessWidget {
 
           return Container(
             child: new RoundedButton(
-              buttonName: 'Use this mix',
+              buttonName: AppTranslations.of(context).text("mix.use_this_mix"),
               onTap: () async {
                 var edit = new TobaccoEditModel();
                 edit.mix = mix;

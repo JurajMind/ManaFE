@@ -181,7 +181,7 @@ class ReservationFilterWidget extends StatelessWidget {
             SizedBox(
               width: 10,
             ),
-            Text(ReservationStatusIcon.stateToText(reservationFilter))
+            Text(ReservationStatusIcon.stateToText(reservationFilter,context))
           ],
         ),
         onTap: () {

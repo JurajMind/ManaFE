@@ -33,6 +33,9 @@ class Devices extends StatelessWidget {
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               itemCount: (snapshot.data?.length ?? 0) + 1,
               itemBuilder: (context, index) {
+                if(snapshot.data == null ){
+                  return Container();
+                }
                 if (snapshot.data.length == index) {
                   return InkWell(
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(

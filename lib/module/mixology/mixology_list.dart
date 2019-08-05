@@ -23,8 +23,8 @@ class MixologyListState extends State<MixologyList> {
   int curentView = 0;
 
   static const Map<int, String> labels = {
-    0: 'My mixes',
-    1: 'Featured mix creators'
+    0: 'mix.my_mixes',
+    1: 'mix.featured_creators'
   };
 
   Future showTobaccoDialog(

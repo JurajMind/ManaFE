@@ -84,7 +84,7 @@ class _OpenDropdownState extends State<OpenDropdown> {
   Widget build(BuildContext context) {
     if (bh == null || bh.length == 0) {
       return Text(
-        'Unknown',
+       AppTranslations.of(context).text("place.unknown"),
         style: TextStyle(color: Colors.black),
       );
     }

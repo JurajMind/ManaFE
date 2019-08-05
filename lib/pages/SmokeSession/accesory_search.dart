@@ -67,7 +67,9 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                 Hero(
                   tag: "${widget.type}_search_icon",
                   child: this.loading
-                      ? CircularProgressIndicator()
+                      ? IconButton(
+                          icon: Icon(Icons.search),                     
+                        )
                       : IconButton(
                           icon: Icon(Icons.search),
                           onPressed: () => submitSearch(controller.text),

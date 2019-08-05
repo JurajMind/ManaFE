@@ -30,7 +30,11 @@
         "save": "Uložit",
         "cancel": "Zrušit",
         "next": "Další",
-        "back": "Zpátky"
+        "back": "Zpátky",
+        "keep":"Zachovat",
+        "delete": "Smazat",
+        "yes": "Ano",
+        "no": "Ne"
     },
 
     "gear": {
@@ -43,9 +47,11 @@
         "hmd": "H.M.S",
         "coal": "Uhlí",
         "coals": "Uhlí",
-        "no_name": "Bez jména",
+        "no_name": "Beze jména",
         "suggestion": "Návrhy",
-        "add_new_tobacco": "Přidej nový tabák"
+        "add_new_tobacco": "Přidej nový tabák",
+        "my_gear": "Moje vybavení",
+        "by_brand": "podle značky "
     },
 
     "home": {
@@ -58,6 +64,7 @@
         "enter": "Začít",
         "validating": "Ověřování"
     },
+
     "smoke_session": {
         "animations": "Animace",
         "colors": "Barvy",
@@ -68,8 +75,18 @@
         "review": "Hodnocení",
         "more": "Více",
         "experiments": "Experimenty",
-        "end_session": "Ukončit session"
+        "end_session": "Ukončit session",
+        "end_session_confirm":"Chcete tuto session ukončit?"
     },
+
+    "mix": {        
+        "use_this_mix": "Použít tento mix",
+        "delete_mix":"Smazat mix?",
+        "delete_mix_confirm":"Opravdu chcete smazat tento mix?",
+        "my_mixes": "Moje mixy",
+        "featured_creators": "Přední tvůrci"
+    },
+
     "reservations": {
         "upcoming_reservations": "Budoucí rezervace",
         "reservations": "Rezervace",
@@ -81,7 +98,15 @@
         "name": "Jméno",
         "reservation_note": "Poznámka",
         "reserve": "Rezervuj",
-        "date": "Datum"
+        "date": "Datum",
+        "i_will_be_late": "Přijdu pozdě",
+        "all": "Všichni",
+        "created": "Vytvořeno",
+        "canceled": "Zrušeno",
+        "denied": "Odmítnout",
+        "confirmed": "Potvrzeno",
+        "confirmation_required": "Vyžaduje se potvrzení",
+        "cancel_reservation_confirm": "Chcete zrušit tuto rezervaci?"
     },
 
     "place": {
@@ -89,7 +114,8 @@
         "navigate": "Navigovat",
         "go_with_taxi": "Taxi",
         "reserve": "Rezervace",
-        "menu": "Menu"
+        "menu": "Menu",
+        "unknown": "Neznámý"
     },
 
     "device": {

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 
 class BigSelect extends StatelessWidget {
@@ -16,7 +17,7 @@ class BigSelect extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text(labels[curentView]),
+          Text(AppTranslations.of(context).text(labels[curentView])),
           Icon(Icons.arrow_drop_down)
         ],
       ),
@@ -56,7 +57,7 @@ class BigSelect extends StatelessWidget {
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 20.0),
-        child: Text(labels[index].toUpperCase(),
+        child: Text(AppTranslations.of(context).text(labels[index]).toUpperCase(),
             style: Theme.of(context).textTheme.display1),
       ),
     );

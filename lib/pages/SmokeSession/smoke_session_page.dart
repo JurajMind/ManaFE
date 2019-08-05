@@ -386,22 +386,35 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("End session?"),
-          content: new Text("Do you want end this session?"),
+          title: new Text(
+              AppTranslations.of(context).text("smoke_session.end_session") +
+                  " ?"),
+          content: new Text(AppTranslations.of(context)
+              .text("smoke_session.end_session_confirm")),
           actions: <Widget>[
-            new FlatButton(
+            new OutlineButton.icon(
+              borderSide: BorderSide(color: Colors.white, width: 1),
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)),
               textColor: Colors.green,
-              child: new Text(
-                "Yes",
+              label: new Text(
+                AppTranslations.of(context).text("common.yes"),
               ),
+              icon: Icon(Icons.check, color: Colors.green),
               onPressed: () {
                 Navigator.of(context).pop(true);
               },
             ),
             // usually buttons at the bottom of the dialog
-            new FlatButton(
+            new OutlineButton.icon(
+              icon: Icon(Icons.cancel, color: Colors.red),
+              borderSide: BorderSide(color: Colors.white, width: 1),
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)),
               textColor: Colors.red,
-              child: new Text("No"),
+              label: new Text(
+                AppTranslations.of(context).text("common.no"),
+              ),
               onPressed: () {
                 Navigator.of(context).pop(false);
               },

@@ -30,25 +30,33 @@ class MixDetailPageState extends State<MixDetailPage> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete mix?'),
+          title: Text(AppTranslations.of(context).text("mix.delete_mix")),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Are you sure to delete this mix??'),
+                Text(AppTranslations.of(context).text("mix.delete_mix_confirm")),
               ],
             ),
           ),
           actions: <Widget>[
-            FlatButton(
-              child: Text('Keep'),
+             OutlineButton.icon(
+               borderSide: BorderSide(color: Colors.white, width: 1),
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)),
+              label: Text(AppTranslations.of(context).text("common.keep")),
               textColor: Colors.green,
+                icon: Icon(Icons.check, color: Colors.green),
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
             ),
-            FlatButton(
+            OutlineButton.icon(
+              borderSide: BorderSide(color: Colors.white, width: 1),
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)),
               textColor: Colors.red,
-              child: Text('Delete'),
+              label: Text(AppTranslations.of(context).text("common.delete")),
+               icon: Icon(Icons.cancel, color: Colors.red),
               onPressed: () {
                 Navigator.of(context).pop(true);
               },

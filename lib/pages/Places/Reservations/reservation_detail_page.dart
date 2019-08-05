@@ -7,6 +7,7 @@ import 'package:app/components/Places/place_detail.dart';
 import 'package:app/components/Places/place_map.dart';
 import 'package:app/components/Reservations/reservation_item.dart';
 import 'package:app/models/extensions.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -101,20 +102,25 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                 children: <Widget>[
                                   Row(
                                     mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
                                     children: <Widget>[
                                       LabeledValue(
                                         DateUtils.toStringDate(
                                             widget.reservation.time),
                                         icon: Icon(Icons.calendar_today),
-                                        label: 'Date: ',
+                                        label: AppTranslations.of(context)
+                                                .text("reservations.date") +
+                                            " : ",
                                       ),
                                       LabeledValue(
                                         DateUtils.toStringShortTime(
                                             widget.reservation.time),
                                         icon: Icon(Icons.timer),
-                                        label: 'Time: ',
-                                      )
+                                        label: AppTranslations.of(context)
+                                                .text("reservations.time") +
+                                            " : ",
+                                      ),
                                     ],
                                   ),
                                   Row(
@@ -123,11 +129,16 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                     children: <Widget>[
                                       LabeledValue(widget.reservation.duration,
                                           icon: Icon(Icons.timelapse),
-                                          label: 'Duration: '),
+                                          label: AppTranslations.of(context)
+                                                  .text(
+                                                      "reservations.duration") +
+                                              " : "),
                                       LabeledValue(
                                         widget.reservation.persons.toString(),
                                         icon: Icon(Icons.person),
-                                        label: 'Persons: ',
+                                        label: AppTranslations.of(context)
+                                                .text("reservations.persons") +
+                                            " : ",
                                       ),
                                     ],
                                   ),
@@ -152,7 +163,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                               reservation: widget.reservation),
                                           Text(
                                             ReservationStatusIcon.stateToText(
-                                                widget.reservation.status),
+                                                widget.reservation.status, context),
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .display2,
@@ -172,7 +183,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                               icon: Icon(Icons.cancel,
                                                   color: Colors.red),
                                               label: Text(
-                                                'Cancel',
+                                                AppTranslations.of(context).text("common.cancel"),
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .display2,
@@ -262,7 +273,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                         child: ExpansionTile(
                           title: Center(
                               child: Text(
-                            'I will be late ${(widget.reservation.lateDuration != 0 && widget.reservation.lateDuration != null) ? widget.reservation.lateDuration.toString() + ' minutes' : ''}',
+                            '${AppTranslations.of(context).text("reservations.i_will_be_late")} ${(widget.reservation.lateDuration != 0 && widget.reservation.lateDuration != null) ? widget.reservation.lateDuration.toString() + ' minutes' : ''}',
                             style: Theme.of(context).textTheme.display2,
                           )),
                           leading: !lateReservationLoading
@@ -323,8 +334,8 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: Center(child: new Text("Cancel")),
-          content: new Text("Do you want to cancel this reservation?"),
+          title: Center(child: new Text(AppTranslations.of(context).text("common.cancel"))),
+          content: new Text(AppTranslations.of(context).text("reservations.cancel_reservation_confirm")),
           actions: <Widget>[
             OutlineButton.icon(
               shape: new RoundedRectangleBorder(
@@ -332,7 +343,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
               borderSide: BorderSide(color: Colors.white, width: 1),
               icon: Icon(Icons.cancel, color: Colors.red),
               label: Text(
-                'Cancel',
+               AppTranslations.of(context).text("common.cancel"),
                 style: Theme.of(context).textTheme.display2,
               ),
               onPressed: () async {
@@ -343,12 +354,13 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                 Navigator.of(context).pop();
               },
             ),
-            OutlineButton(
+            OutlineButton.icon(
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(30.0)),
               borderSide: BorderSide(color: Colors.white, width: 1),
-              child: Text(
-                'No',
+              icon: Icon(Icons.check, color: Colors.green),
+              label: Text(
+                AppTranslations.of(context).text("common.keep"),
                 style: Theme.of(context).textTheme.display2,
               ),
               onPressed: () => Navigator.of(context).pop(),

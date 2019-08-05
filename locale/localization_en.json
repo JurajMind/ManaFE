@@ -27,7 +27,11 @@
         "save": "Save",
         "cancel": "Cancel",
         "next": "Next",
-        "back": "Back"
+        "back": "Back",
+        "keep":"Keep",
+        "delete": "Delete",
+        "yes": "Yes",
+        "no": "No"
     },
 
     "gear": {
@@ -40,7 +44,7 @@
         "hmd": "H.M.D",
         "coal": "Coals",
         "coals": "Coals",
-        "no_name": "Bez jmnéna",
+        "no_name": "No name",
         "suggestion": "Suggestions",
         "add_new_tobacco": "Add new tobacco"
     },
@@ -65,7 +69,16 @@
         "review": "Review",
         "more": "More",
         "experiments": "Experiments",
-        "end_session": "End session"
+        "end_session": "End session",
+        "end_session_confirm":"Do you want end this session?"
+    },
+    
+    "mix": {
+        "use_this_mix": "Use this mix",
+        "delete_mix":"Delete mix?",
+        "delete_mix_confirm":"Are you sure to delete this mix?",
+        "my_mixes": "My mixes",
+        "featured_creators": "Featured creators"
     },
 
     "reservations": {
@@ -78,7 +91,15 @@
         "duration": "Duration",
         "name": "Name",
         "reservation_note": "Reservation note",
-        "reserve": "Reserve"
+        "reserve": "Reserve",
+        "i_will_be_late": "I will be late",
+        "all": "All",
+        "created": "Created",
+        "canceled": "Canceled",
+        "denied": "Denied",
+        "confirmed": "Confirmed",
+        "confirmation_required": "Confirmation required",
+        "cancel_reservation_confirm": "Do you want to cancel this reservation?"
     },
 
     "place": {
@@ -86,7 +107,8 @@
         "navigate": "Navigate",
         "go_with_taxi": "Go with taxi",
         "reserve": "Reserve",
-        "menu": "Menu"
+        "menu": "Menu",
+        "unknown": "Unknown"
     },
 
     "device": {
