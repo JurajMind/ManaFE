@@ -7,7 +7,14 @@
         "profile": "Profil"
     },
 
-    "title_select_language": "Vyberte si jazyk",
+    "settings":{
+        "select_language": "Vyberte si jazyk",
+        "en": "English",
+        "cs": "Česky",
+        "settings":"Nastavení",
+        "user_profile": "Profil",
+        "sign_out": "Odhlásit"
+    },   
 
     "days":{
         "short_1": "Po",
@@ -128,7 +135,20 @@
         "device_picture": "Obrázek zařízení",
         "change_device_picture": "Změnit obrázek zařízení",
         "software_version": "Verze softwaru",
-        "update_device": "Aktualizace zařízení"
+        "update_device": "Aktualizace zařízení",
+        "welcome": "Začínáme!",
+        "welcome_text": "Vítá vás vaše chytrá dýmkařská podložka Manapipes Tear. \n Připravte se vstoupit do světa chytrého dýmkaření. Přidejte svoji podložku do inventáře a vaše dobrodružství může začít!",
+        "where_is_code": "Kde najdu kód podložky?",
+        "where_is_code_text_1":"Na displeji podložky",
+        "where_is_code_text_1_t":"Podržte ovládací tlačítko a zapněte podložku. Ovládací tlačítko nepouštějte a držte 8 vteřin, které vám odpočítají rozsvěcující se diody. Poté se na displeji zobrazí ID a kód vaší podložky. Podložku můžete následně vypnout.",
+        "where_is_code_text_2":"V nastavení Wi-Fi",
+        "where_is_code_text_2_t":"Na stránce nastavení Wi-Fi pod tlačítkem Info. Nezapomeňte, když zadáte nastavení Wi-Fi, musíte znovu nastavit Wi-Fi",
+        "enter_device_codes": "Zadejte kódy podložky",
+        "device_name": "Jmeno podložky",
+        "device_name_helper":"Vlastní název nové podložky, může zůstat prázdný",
+        "device_id": "Id podložky",
+        "pair_code": "Párovací kód",
+        "add_device": "Přidat novú podložku"              
     },
 
     "profile": {

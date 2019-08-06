@@ -35,48 +35,21 @@ class _AddDevicePageState extends State<AddDevicePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'Welcome!',
-                  style: Theme.of(context).textTheme.title,
-                ),
-                 SizedBox(
-                  height: 40,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    'Thank you for purchasing Manapipes Tear smart hookah stand.\n \n Get ready for a new generation of hookah experience – your adventure starts now! Add your stand to your inventory to begin.',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.display1,
-                  ),
-                ),
-                 SizedBox(
-                  height: 40,
-                ),
-                nextButton()
-              ],
-            ),
-          ),
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'Where is my code?',
+                  AppTranslations.of(context).text("device.welcome"),
                   style: Theme.of(context).textTheme.title,
                 ),
                 SizedBox(
                   height: 40,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal:16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
-                    'Follow the instructions in the brochure to turn your stand on. Then, open the WiFi connection menu and press Info. Your stand’s code can be found here.',
+                    AppTranslations.of(context).text("device.welcome_text"),
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.display1,
                   ),
                 ),
-                 SizedBox(
+                SizedBox(
                   height: 40,
                 ),
                 nextButton()
@@ -84,102 +57,190 @@ class _AddDevicePageState extends State<AddDevicePage> {
             ),
           ),
           Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
+            child: SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Enter device codes',
+                    AppTranslations.of(context).text("device.where_is_code"),
                     style: Theme.of(context).textTheme.title,
                   ),
                   SizedBox(
                     height: 40,
                   ),
-                  new TextFormField(
-                    maxLines: 1,
-                    controller: nameController,
-                    style: TextStyle(fontSize: 20.0),
+                  Text(
+                    AppTranslations.of(context)
+                        .text("device.where_is_code_text_1"),
                     textAlign: TextAlign.center,
-                    autocorrect: false,
-                    decoration: new InputDecoration(
-                      labelText: "Device name",
-                      labelStyle: TextStyle(
-                        color: Colors.white,
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        // width: 0.0 produces a thin "hairline" border
-                        borderSide:
-                            const BorderSide(color: Colors.white, width: 3.0),
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                        // width: 0.0 produces a thin "hairline" border
-                        borderSide:
-                            const BorderSide(color: Colors.white, width: 3.0),
-                      ),
-                      border: const OutlineInputBorder(),
-                    ),
+                    style: Theme.of(context).textTheme.display1,
                   ),
                   SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    AppTranslations.of(context)
+                        .text("device.where_is_code_text_1_t"),
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.display2,
+                  ),
+                     SizedBox(
                     height: 40,
                   ),
-                  new TextFormField(
-                    maxLines: 1,
-                    maxLength: 5,
-                    controller: codeController,
-                    style: TextStyle(fontSize: 20.0),
+                  Text(
+                    AppTranslations.of(context)
+                        .text("device.where_is_code_text_2"),
                     textAlign: TextAlign.center,
-                    autocorrect: false,
-                    decoration: new InputDecoration(
-                      labelText: "Pair code",
-                      labelStyle: TextStyle(
-                        color: Colors.white,
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        // width: 0.0 produces a thin "hairline" border
-                        borderSide:
-                            const BorderSide(color: Colors.white, width: 3.0),
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                        // width: 0.0 produces a thin "hairline" border
-                        borderSide:
-                            const BorderSide(color: Colors.white, width: 3.0),
-                      ),
-                      border: const OutlineInputBorder(),
-                    ),
+                    style: Theme.of(context).textTheme.display1,
                   ),
-                  loading
-                      ? CircularProgressIndicator()
-                      : new RoundedButton(
-                          buttonName: 'Add device',
-                          onTap: () async {
-                            setState(() {
-                              loading = true;
-                            });
-                            Future.delayed(Duration(seconds: 5))
-                                .then((_) => Navigator.of(context).pop());
-                            return;
-                            var bloc = DataProvider.getData(context).personBloc;
-                            var addedDevice =
-                                await bloc.addDevice(this.nameController.text);
-                            if (addedDevice != null) {
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    AppTranslations.of(context)
+                        .text("device.where_is_code_text_2_t"),
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.display2,
+                  ),
+                   SizedBox(
+                    height: 40,
+                  ),
+                  nextButton()
+                ],
+              ),
+                          ),
+            ),
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                              child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                     AppTranslations.of(context).text("device.enter_device_codes"),
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                                      new TextFormField(
+                      maxLines: 1,
+                      controller: nameController,
+                      style: TextStyle(fontSize: 20.0),
+                      textAlign: TextAlign.center,
+                      autocorrect: false,
+                      decoration: new InputDecoration(
+                        labelText:   AppTranslations.of(context).text("device.device_name"),
+                        helperText: AppTranslations.of(context).text("device.device_name_helper"),
+                        labelStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          // width: 0.0 produces a thin "hairline" border
+                          borderSide:
+                              const BorderSide(color: Colors.white, width: 3.0),
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          // width: 0.0 produces a thin "hairline" border
+                          borderSide:
+                              const BorderSide(color: Colors.white, width: 3.0),
+                        ),
+                        border: const OutlineInputBorder(),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    new TextFormField(
+                      maxLines: 1,
+                      controller: nameController,
+                      style: TextStyle(fontSize: 20.0),
+                      textAlign: TextAlign.center,
+                      autocorrect: false,
+                      decoration: new InputDecoration(
+                        labelText:   AppTranslations.of(context).text("device.device_id"),
+                        labelStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          // width: 0.0 produces a thin "hairline" border
+                          borderSide:
+                              const BorderSide(color: Colors.white, width: 3.0),
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          // width: 0.0 produces a thin "hairline" border
+                          borderSide:
+                              const BorderSide(color: Colors.white, width: 3.0),
+                        ),
+                        border: const OutlineInputBorder(),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    new TextFormField(
+                      maxLines: 1,
+                      maxLength: 5,
+                      controller: codeController,
+                      style: TextStyle(fontSize: 20.0),
+                      textAlign: TextAlign.center,
+                      autocorrect: false,
+                      decoration: new InputDecoration(
+                        labelText: AppTranslations.of(context).text("device.pair_code"),
+                        labelStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          // width: 0.0 produces a thin "hairline" border
+                          borderSide:
+                              const BorderSide(color: Colors.white, width: 3.0),
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          // width: 0.0 produces a thin "hairline" border
+                          borderSide:
+                              const BorderSide(color: Colors.white, width: 3.0),
+                        ),
+                        border: const OutlineInputBorder(),
+                      ),
+                    ),
+                    loading
+                        ? CircularProgressIndicator()
+                        : new RoundedButton(
+                            buttonName: AppTranslations.of(context)
+                                .text("device.add_device"),
+                            onTap: () async {
+                              setState(() {
+                                loading = true;
+                              });
                               Future.delayed(Duration(seconds: 5))
                                   .then((_) => Navigator.of(context).pop());
-                              Navigator.of(context).pop();
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  settings: RouteSettings(),
-                                  builder: (context) =>
-                                      DeviceDetailPage(device: addedDevice)));
-                            }
-                          },
-                          buttonColor: Colors.transparent,
-                          borderWidth: 2.0,
-                          bottomMargin: 1.0,
-                          height: 50.0,
-                          width: 200,
-                        )
-                ],
+                              return;
+                              var bloc = DataProvider.getData(context).personBloc;
+                              var addedDevice =
+                                  await bloc.addDevice(this.nameController.text);
+                              if (addedDevice != null) {
+                                Future.delayed(Duration(seconds: 5))
+                                    .then((_) => Navigator.of(context).pop());
+                                Navigator.of(context).pop();
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    settings: RouteSettings(),
+                                    builder: (context) =>
+                                        DeviceDetailPage(device: addedDevice)));
+                              }
+                            },
+                            buttonColor: Colors.transparent,
+                            borderWidth: 2.0,
+                            bottomMargin: 1.0,
+                            height: 50.0,
+                            width: 200,
+                          )
+                  ],
+                ),
               ),
             ),
           )

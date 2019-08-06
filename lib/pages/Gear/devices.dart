@@ -4,6 +4,7 @@ import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Device/add_device_page.dart';
 import 'package:app/pages/Device/device_detail_page.dart';
+import 'package:app/utils/translations/app_translations.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,7 @@ class Devices extends StatelessWidget {
                             children: <Widget>[
                               Container(
                                 child: Text(
-                                  'Add new device',
+                                  AppTranslations.of(context).text("device.add_device"),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700,

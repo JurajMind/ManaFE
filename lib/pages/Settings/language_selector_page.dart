@@ -1,4 +1,5 @@
 import 'package:app/app/app.dart';
+import 'package:app/const/theme.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 
@@ -22,8 +23,9 @@ class _LanguageSelectorPageState extends State<LanguageSelectorPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
+        centerTitle: true,
         title: Text(AppTranslations.of(context)
-            .text("title_select_language")
+            .text("settings.select_language")
             .toUpperCase()),
       ),
       body: _buildLanguagesList(),
@@ -49,9 +51,11 @@ class _LanguageSelectorPageState extends State<LanguageSelectorPage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0),
           child: Text(
-            language,
+            AppTranslations.of(context)
+            .text("settings.$language"),
             style: TextStyle(
               fontSize: 24.0,
+              color: AppTranslations.of(context).locale.languageCode == language ? AppColors.colors[1] : Colors.white
             ),
           ),
         ),

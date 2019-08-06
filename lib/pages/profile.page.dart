@@ -2,6 +2,7 @@ import 'package:app/pages/Settings/language_selector_page.dart';
 import 'package:app/pages/Statistic/test_page.dart';
 
 import 'package:app/services/authorization.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:app/pages/Statistic/statistic_page.dart';
 
@@ -51,7 +52,7 @@ class _DesignStatisticPageState extends State<DesignStatisticPage> {
                 itemBuilder: (BuildContext context) => [
                       PopupMenuItem(
                         value: "settings",
-                        child: Text('Settings'),
+                           child: Text(AppTranslations.of(context).text("settings.settings")),
                       ),
                      
                       PopupMenuItem(
@@ -60,11 +61,11 @@ class _DesignStatisticPageState extends State<DesignStatisticPage> {
                       ),
                       PopupMenuItem(
                         value: "testPage",
-                        child: Text('Test page'),
+                          child: Text(AppTranslations.of(context).text("settings.user_profile")),
                       ),
                          PopupMenuItem(
                         value: "signOut",
-                        child: Text('Sign out'),
+                        child: Text(AppTranslations.of(context).text("settings.sign_out")),
                       ),
                     ],
               )
