@@ -148,7 +148,19 @@
         "device_id": "Device Id",
         "pair_code": "Pair code",
         "add_device": "Add new device"
-        
+    },
 
+    "health": {
+        "title": "Health",
+        "co" : "Carbon Monoxide",
+        "co_text": "Carbon monoxide (CO) is a gas produced by incomplete combustion. Hookahs are responsible for its production of carbons. Symptoms of poisoning may be headache, dizziness and malaise.",
+        "gas": "Amount of inhaled smoke",
+        "gas_text": "How much smoke did you inhale during smoking with Manapipes?",
+        "nicotine": "Amount of absorbed nicotine",
+        "nicotine_text":"Nicotine is an alkaloid contained in tobacco leaves. It has stimulating effects on the body, but it is addictive. From the mean value you can read how much nicotine you absorbed during smoking.",
+        "time": "Time spent smoking",
+        "time_text":"How much time do you spend smoking hookah?",
+        "last_hookah": "Last hookah since",
+        "last_hookah_text": "When did you last have a hookah?"
     }
 }
