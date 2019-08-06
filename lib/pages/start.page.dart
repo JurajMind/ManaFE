@@ -73,7 +73,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                       new Container(
                         width: screenSize.width,
                         child: facebookLoginLoading
-                            ? CircularProgressIndicator()
+                            ? Container(height: 20, width: 20,child:CircularProgressIndicator())
                             : RoundedButton(
                                 buttonName: 'Facebook login',
                                 onTap: () {
@@ -140,8 +140,10 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
           break;
       }
     } catch (e) {
+             AppWidget.restartApp(context);
       Scaffold.of(context).showSnackBar(new SnackBar(
         content: new Text("Facebook login error :("),
+        
       ));
     }
   }

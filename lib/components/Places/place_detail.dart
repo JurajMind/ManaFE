@@ -51,7 +51,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                         icon: Icons.phone,
                         child: Text(
                           widget.place.phoneNumber,
-                          style: TextStyle(color: Colors.black),
+                          style: Theme.of(context).textTheme.display3.apply(color: Colors.black),
                         ),
                       ),
                     )
@@ -82,11 +82,10 @@ class PlaceSocials extends StatelessWidget {
       padding: const EdgeInsets.only(top: 16),
       child: Container(
         child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      
           children: <Widget>[
             ...place.socialMedias.map((f) {
-              return this.socialWidget(f);
+              return this.socialWidget(f,context);
             }).toList()
           ],
         ),
@@ -94,7 +93,7 @@ class PlaceSocials extends StatelessWidget {
     );
   }
 
-  Widget socialWidget(SmartHookahModelsDbSocialMedia f) {
+  Widget socialWidget(SmartHookahModelsDbSocialMedia f,BuildContext context) {
     IconData icon = Icons.battery_unknown;
     Color color = Colors.red;
     LinearGradient gradient;
@@ -121,7 +120,7 @@ class PlaceSocials extends StatelessWidget {
         }
       case "URL":
         {
-          icon = Icons.open_in_browser;
+          icon = FontAwesomeIcons.link;
           color = AppColors.colors[2];
           break;
         }
@@ -134,13 +133,14 @@ class PlaceSocials extends StatelessWidget {
     }
 
     return InkWell(
-      child: Container(
-        decoration: BoxDecoration(
-            gradient: gradient,
-            borderRadius: BorderRadius.circular(8.0),
-            color: color),
+      child: Container(       
         padding: EdgeInsets.all(8),
-        child: Icon(icon),
+        child: Row(
+          children: <Widget>[
+            Icon(icon,color: color,),
+            
+          ],
+        ),
       ),
     );
   }

@@ -210,10 +210,17 @@ class _AddDevicePageState extends State<AddDevicePage> {
                     ),
                     loading
                         ? CircularProgressIndicator()
-                        : new RoundedButton(
-                            buttonName: AppTranslations.of(context)
-                                .text("device.add_device"),
-                            onTap: () async {
+                        : new OutlineButton.icon(
+                          shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0)),
+                borderSide: BorderSide(color: Colors.white, width: 1),
+                          icon: Icon(Icons.add),
+                            label: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(AppTranslations.of(context)
+                                  .text("device.add_device"),style: Theme.of(context).textTheme.display1,),
+                            ),
+                            onPressed: () async {
                               setState(() {
                                 loading = true;
                               });
@@ -233,11 +240,7 @@ class _AddDevicePageState extends State<AddDevicePage> {
                                         DeviceDetailPage(device: addedDevice)));
                               }
                             },
-                            buttonColor: Colors.transparent,
-                            borderWidth: 2.0,
-                            bottomMargin: 1.0,
-                            height: 50.0,
-                            width: 200,
+                           
                           )
                   ],
                 ),

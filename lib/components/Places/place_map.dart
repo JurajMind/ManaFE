@@ -43,7 +43,7 @@ class PlaceMap extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: new CachedNetworkImage(
-                    imageUrl: mapUri().toString() + '&scale=2',
+                    imageUrl: mapUri().toString() + '&scale=1',
                     placeholder: (context, url) =>
                         new CircularProgressIndicator(),
                     errorWidget: (context, url, error) => new Icon(Icons.error),

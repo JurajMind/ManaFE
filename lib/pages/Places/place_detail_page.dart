@@ -9,6 +9,7 @@ import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/place_bloc.dart';
 import 'package:app/pages/Places/Reservations/reservation_page.dart';
 import 'package:app/pages/Places/menu.page.dart';
+import 'package:app/pages/Places/place_extended_info.dart';
 import 'package:app/pages/Places/place_pictures_page.dart';
 import 'package:app/support/mana_icons_icons.dart';
 import 'package:app/utils/translations/app_translations.dart';
@@ -70,7 +71,7 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                     Text(Extensions.adress(place.address),
                         style: Theme.of(context).textTheme.display2),
                     new StarRating(
-                      size: 15.0,
+                      size: 25.0,
                       rating: 2.0,
                       starCount: 5,
                       color: Colors.white,
@@ -144,88 +145,13 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
               child: Container(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20.0)),
+                  child: Container(                  
                     child: new Column(
                       children: <Widget>[
-                        new Row(
-                          children: <Widget>[
-                            StreamBuilder<PlaceDto>(
-                                stream: placeBloc.placeInfo,
-                                builder: (context, snapshot) {
-                                  return Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: PlaceInfo(
-                                        place: widget.place,
-                                        placeInfo: snapshot.data,
-                                      ),
-                                    ),
-                                    flex: 1,
-                                  );
-                                }),
-                            Expanded(
-                                flex: 1,
-                                child: PlaceMap(
-                                  place: place,
-                                ))
-                          ],
-                        ),
-                        StreamBuilder<PlaceDto>(
-                            stream: placeBloc.placeInfo,
-                            builder: (context, snapshot) {
-                              return snapshot.data == null
-                                  ? Container()
-                                  : Column(children: [
-                                      Wrap(
-                                        children: <Widget>[
-                                          new DisabledChip(ManaIcons.manam,
-                                              snapshot.data.haveMana),
-                                          new DisabledChip(
-                                              FontAwesomeIcons.columns,
-                                              snapshot.data.haveMenu),
-                                          new DisabledChip(
-                                              FontAwesomeIcons.calendarAlt,
-                                              snapshot.data.haveReservation),
-                                        ],
-                                      ),
-                                      Wrap(
-                                        children: snapshot.data.flags
-                                            .map((f) => new PlaceFlag(f))
-                                            .toList(),
-                                      )
-                                    ]);
-                            }),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: new Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              NavigateButton(
-                                place: place,
-                              ),
-                              Container(
-                                height: 14.0,
-                                width: 2.0,
-                                color: Colors.grey,
-                              ),
-                              TaxiButton(
-                                place: place,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
-                          child: new BookMenuWidget(
-                              placeBloc: placeBloc,
-                              place: place,
-                              widget: widget),
-                        )
+                        Container(
+                          height: 500,
+                          child: PlaceExtendedInfo(place: place,))      
+
                       ],
                     ),
                   ),

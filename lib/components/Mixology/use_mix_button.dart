@@ -21,7 +21,7 @@ class UseMixButton extends StatelessWidget {
               width: 150,
               height: 50,
               child: Center(
-                  child: Text("USED MIX",
+                  child: Text(AppTranslations.of(context).text("mix.used_mix"),
                       style: Theme.of(context)
                           .textTheme
                           .display2

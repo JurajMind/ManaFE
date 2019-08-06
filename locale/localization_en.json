@@ -89,6 +89,7 @@
     
     "mix": {
         "use_this_mix": "Use this mix",
+        "used_mix": "Used mix",
         "delete_mix":"Delete mix?",
         "delete_mix_confirm":"Are you sure to delete this mix?",
         "my_mixes": "My mixes",

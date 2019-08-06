@@ -13,8 +13,17 @@ class PlaceFlag extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Tooltip(
-        child: Chip(
-          label: flagToIcon(context),
+        child: Container
+        (padding: EdgeInsets.all(8),
+        width: 100,
+        decoration: BoxDecoration(  border: new Border.all(color: Colors.white, width: 2),  borderRadius: new BorderRadius.circular(10.0), ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+             flagToIcon(context),
+             SizedBox(width: 8,),
+             Text(flag)
+          ],),
         ),
         message: "Place have ${flag.toLowerCase()}",
       ),
@@ -31,6 +40,9 @@ class PlaceFlag extends StatelessWidget {
         break;
       case "OUTDOOR":
         return Icon(FontAwesomeIcons.tree);
+        break;
+        case "CASH":
+        return Icon(FontAwesomeIcons.moneyBill);
         break;
       case "PET":
         return Icon(Icons.pets);
