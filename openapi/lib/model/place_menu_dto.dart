@@ -24,25 +24,60 @@ class PlaceMenuDto {
 
   PlaceMenuDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    accessories = PipeAccesorySimpleDto.listFromJson(json['Accessories']);
-    tobaccoMixes = TobaccoMixSimpleDto.listFromJson(json['TobaccoMixes']);
-    orderExtras = SmartHookahModelsOrderExtraDto.listFromJson(json['OrderExtras']);
-    basePrice = json['BasePrice'];
-    currency = json['Currency'];
-    priceGroup = SmartHookahControllersPriceGroupDto.listFromJson(json['PriceGroup']);
-    prices = PriceGroupItems.listFromJson(json['Prices']);
+    if (json['Accessories'] == null) {
+      accessories = null;
+    } else {
+      accessories = PipeAccesorySimpleDto.listFromJson(json['Accessories']);
+    }
+    if (json['TobaccoMixes'] == null) {
+      tobaccoMixes = null;
+    } else {
+      tobaccoMixes = TobaccoMixSimpleDto.listFromJson(json['TobaccoMixes']);
+    }
+    if (json['OrderExtras'] == null) {
+      orderExtras = null;
+    } else {
+      orderExtras = SmartHookahModelsOrderExtraDto.listFromJson(json['OrderExtras']);
+    }
+    if (json['BasePrice'] == null) {
+      basePrice = null;
+    } else {
+          basePrice = json['BasePrice'];
+    }
+    if (json['Currency'] == null) {
+      currency = null;
+    } else {
+          currency = json['Currency'];
+    }
+    if (json['PriceGroup'] == null) {
+      priceGroup = null;
+    } else {
+      priceGroup = SmartHookahControllersPriceGroupDto.listFromJson(json['PriceGroup']);
+    }
+    if (json['Prices'] == null) {
+      prices = null;
+    } else {
+      prices = PriceGroupItems.listFromJson(json['Prices']);
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Accessories': accessories,
-      'TobaccoMixes': tobaccoMixes,
-      'OrderExtras': orderExtras,
-      'BasePrice': basePrice,
-      'Currency': currency,
-      'PriceGroup': priceGroup,
-      'Prices': prices
-    };
+    Map <String, dynamic> json = {};
+    if (accessories != null)
+      json['Accessories'] = accessories;
+    if (tobaccoMixes != null)
+      json['TobaccoMixes'] = tobaccoMixes;
+    if (orderExtras != null)
+      json['OrderExtras'] = orderExtras;
+    if (basePrice != null)
+      json['BasePrice'] = basePrice;
+    if (currency != null)
+      json['Currency'] = currency;
+    if (priceGroup != null)
+      json['PriceGroup'] = priceGroup;
+    if (prices != null)
+      json['Prices'] = prices;
+    return json;
   }
 
   static List<PlaceMenuDto> listFromJson(List<dynamic> json) {
@@ -51,7 +86,7 @@ class PlaceMenuDto {
 
   static Map<String, PlaceMenuDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, PlaceMenuDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new PlaceMenuDto.fromJson(value));
     }
     return map;

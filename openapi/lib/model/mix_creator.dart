@@ -18,19 +18,39 @@ class MixCreator {
 
   MixCreator.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    name = json['Name'];
-    displayName = json['DisplayName'];
-    picture = json['Picture'];
-    mixCount = json['MixCount'];
+    if (json['Name'] == null) {
+      name = null;
+    } else {
+          name = json['Name'];
+    }
+    if (json['DisplayName'] == null) {
+      displayName = null;
+    } else {
+          displayName = json['DisplayName'];
+    }
+    if (json['Picture'] == null) {
+      picture = null;
+    } else {
+          picture = json['Picture'];
+    }
+    if (json['MixCount'] == null) {
+      mixCount = null;
+    } else {
+          mixCount = json['MixCount'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Name': name,
-      'DisplayName': displayName,
-      'Picture': picture,
-      'MixCount': mixCount
-    };
+    Map <String, dynamic> json = {};
+    if (name != null)
+      json['Name'] = name;
+    if (displayName != null)
+      json['DisplayName'] = displayName;
+    if (picture != null)
+      json['Picture'] = picture;
+    if (mixCount != null)
+      json['MixCount'] = mixCount;
+    return json;
   }
 
   static List<MixCreator> listFromJson(List<dynamic> json) {
@@ -39,7 +59,7 @@ class MixCreator {
 
   static Map<String, MixCreator> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, MixCreator>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new MixCreator.fromJson(value));
     }
     return map;

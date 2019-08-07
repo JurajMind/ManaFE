@@ -18,6 +18,7 @@ Method | HTTP request | Description
 [**deviceGetPictures**](DeviceApi.md#deviceGetPictures) | **GET** /api/Device/Pictures | 
 [**deviceGetSetting**](DeviceApi.md#deviceGetSetting) | **GET** /api/Device/{id}/GetSetting | 
 [**deviceInfo**](DeviceApi.md#deviceInfo) | **GET** /api/Device/{id}/Info | 
+[**devicePing**](DeviceApi.md#devicePing) | **POST** /api/Device/{id}/Ping | 
 [**devicePromptUpdate**](DeviceApi.md#devicePromptUpdate) | **POST** /api/Device/{id}/Update/{updateId} | 
 [**deviceRemoveDevice**](DeviceApi.md#deviceRemoveDevice) | **DELETE** /api/Device/{id}/Remove | 
 [**deviceRestart**](DeviceApi.md#deviceRestart) | **POST** /api/Device/{id}/Restart | 
@@ -64,12 +65,12 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deviceChangeAnimation**
-> Object deviceChangeAnimation(id, smartHookahModelsParameterObjectsChangeAnimation)
+> Object deviceChangeAnimation(id, model)
 
 
 
@@ -79,10 +80,10 @@ import 'package:openapi/api.dart';
 
 var api_instance = new DeviceApi();
 var id = id_example; // String | 
-var smartHookahModelsParameterObjectsChangeAnimation = new SmartHookahModelsParameterObjectsChangeAnimation(); // SmartHookahModelsParameterObjectsChangeAnimation | 
+var model = new SmartHookahModelsParameterObjectsChangeAnimation(); // SmartHookahModelsParameterObjectsChangeAnimation | 
 
 try { 
-    var result = api_instance.deviceChangeAnimation(id, smartHookahModelsParameterObjectsChangeAnimation);
+    var result = api_instance.deviceChangeAnimation(id, model);
     print(result);
 } catch (e) {
     print("Exception when calling DeviceApi->deviceChangeAnimation: $e\n");
@@ -94,7 +95,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**|  | [default to null]
- **smartHookahModelsParameterObjectsChangeAnimation** | [**SmartHookahModelsParameterObjectsChangeAnimation**](SmartHookahModelsParameterObjectsChangeAnimation.md)|  | 
+ **model** | [**SmartHookahModelsParameterObjectsChangeAnimation**](SmartHookahModelsParameterObjectsChangeAnimation.md)|  | 
 
 ### Return type
 
@@ -106,13 +107,13 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deviceChangeBrightness**
-> Object deviceChangeBrightness(id, smartHookahModelsParameterObjectsChangeBrightness)
+> Object deviceChangeBrightness(id, model)
 
 
 
@@ -122,10 +123,10 @@ import 'package:openapi/api.dart';
 
 var api_instance = new DeviceApi();
 var id = id_example; // String | 
-var smartHookahModelsParameterObjectsChangeBrightness = new SmartHookahModelsParameterObjectsChangeBrightness(); // SmartHookahModelsParameterObjectsChangeBrightness | 
+var model = new SmartHookahModelsParameterObjectsChangeBrightness(); // SmartHookahModelsParameterObjectsChangeBrightness | 
 
 try { 
-    var result = api_instance.deviceChangeBrightness(id, smartHookahModelsParameterObjectsChangeBrightness);
+    var result = api_instance.deviceChangeBrightness(id, model);
     print(result);
 } catch (e) {
     print("Exception when calling DeviceApi->deviceChangeBrightness: $e\n");
@@ -137,7 +138,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**|  | [default to null]
- **smartHookahModelsParameterObjectsChangeBrightness** | [**SmartHookahModelsParameterObjectsChangeBrightness**](SmartHookahModelsParameterObjectsChangeBrightness.md)|  | 
+ **model** | [**SmartHookahModelsParameterObjectsChangeBrightness**](SmartHookahModelsParameterObjectsChangeBrightness.md)|  | 
 
 ### Return type
 
@@ -149,13 +150,13 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deviceChangeColor**
-> Object deviceChangeColor(id, smartHookahModelsParameterObjectsChangeColor)
+> Object deviceChangeColor(id, model)
 
 
 
@@ -165,10 +166,10 @@ import 'package:openapi/api.dart';
 
 var api_instance = new DeviceApi();
 var id = id_example; // String | 
-var smartHookahModelsParameterObjectsChangeColor = new SmartHookahModelsParameterObjectsChangeColor(); // SmartHookahModelsParameterObjectsChangeColor | 
+var model = new SmartHookahModelsParameterObjectsChangeColor(); // SmartHookahModelsParameterObjectsChangeColor | 
 
 try { 
-    var result = api_instance.deviceChangeColor(id, smartHookahModelsParameterObjectsChangeColor);
+    var result = api_instance.deviceChangeColor(id, model);
     print(result);
 } catch (e) {
     print("Exception when calling DeviceApi->deviceChangeColor: $e\n");
@@ -180,7 +181,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**|  | [default to null]
- **smartHookahModelsParameterObjectsChangeColor** | [**SmartHookahModelsParameterObjectsChangeColor**](SmartHookahModelsParameterObjectsChangeColor.md)|  | 
+ **model** | [**SmartHookahModelsParameterObjectsChangeColor**](SmartHookahModelsParameterObjectsChangeColor.md)|  | 
 
 ### Return type
 
@@ -192,13 +193,13 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deviceChangeMode**
-> Object deviceChangeMode(id, body)
+> Object deviceChangeMode(id, mode)
 
 
 
@@ -208,10 +209,10 @@ import 'package:openapi/api.dart';
 
 var api_instance = new DeviceApi();
 var id = id_example; // String | 
-var body = new int(); // int | 
+var mode = new int(); // int | 
 
 try { 
-    var result = api_instance.deviceChangeMode(id, body);
+    var result = api_instance.deviceChangeMode(id, mode);
     print(result);
 } catch (e) {
     print("Exception when calling DeviceApi->deviceChangeMode: $e\n");
@@ -223,7 +224,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**|  | [default to null]
- **body** | **int**|  | 
+ **mode** | **int**|  | 
 
 ### Return type
 
@@ -235,13 +236,13 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deviceChangeSpeed**
-> Object deviceChangeSpeed(id, smartHookahModelsParameterObjectsChangeSpeed)
+> Object deviceChangeSpeed(id, model)
 
 
 
@@ -251,10 +252,10 @@ import 'package:openapi/api.dart';
 
 var api_instance = new DeviceApi();
 var id = id_example; // String | 
-var smartHookahModelsParameterObjectsChangeSpeed = new SmartHookahModelsParameterObjectsChangeSpeed(); // SmartHookahModelsParameterObjectsChangeSpeed | 
+var model = new SmartHookahModelsParameterObjectsChangeSpeed(); // SmartHookahModelsParameterObjectsChangeSpeed | 
 
 try { 
-    var result = api_instance.deviceChangeSpeed(id, smartHookahModelsParameterObjectsChangeSpeed);
+    var result = api_instance.deviceChangeSpeed(id, model);
     print(result);
 } catch (e) {
     print("Exception when calling DeviceApi->deviceChangeSpeed: $e\n");
@@ -266,7 +267,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**|  | [default to null]
- **smartHookahModelsParameterObjectsChangeSpeed** | [**SmartHookahModelsParameterObjectsChangeSpeed**](SmartHookahModelsParameterObjectsChangeSpeed.md)|  | 
+ **model** | [**SmartHookahModelsParameterObjectsChangeSpeed**](SmartHookahModelsParameterObjectsChangeSpeed.md)|  | 
 
 ### Return type
 
@@ -278,8 +279,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -316,7 +317,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -357,7 +358,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -398,7 +399,48 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **devicePing**
+> Object devicePing(id)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new DeviceApi();
+var id = id_example; // String | 
+
+try { 
+    var result = api_instance.devicePing(id);
+    print(result);
+} catch (e) {
+    print("Exception when calling DeviceApi->devicePing: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | [default to null]
+
+### Return type
+
+[**Object**](Object.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -441,7 +483,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -482,7 +524,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -523,12 +565,12 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deviceSetPicture**
-> bool deviceSetPicture(id, body)
+> bool deviceSetPicture(id, pictureId)
 
 
 
@@ -538,10 +580,10 @@ import 'package:openapi/api.dart';
 
 var api_instance = new DeviceApi();
 var id = 56; // int | 
-var body = new int(); // int | 
+var pictureId = new int(); // int | 
 
 try { 
-    var result = api_instance.deviceSetPicture(id, body);
+    var result = api_instance.deviceSetPicture(id, pictureId);
     print(result);
 } catch (e) {
     print("Exception when calling DeviceApi->deviceSetPicture: $e\n");
@@ -553,7 +595,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**|  | [default to null]
- **body** | **int**|  | 
+ **pictureId** | **int**|  | 
 
 ### Return type
 
@@ -565,8 +607,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -607,7 +649,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -648,7 +690,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -685,7 +727,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

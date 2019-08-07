@@ -23,7 +23,7 @@ Method | HTTP request | Description
 
 
 # **reservationAddLateTime**
-> PlacesReservationsReservationDto reservationAddLateTime(id, body)
+> PlacesReservationsReservationDto reservationAddLateTime(id, time)
 
 
 
@@ -33,10 +33,10 @@ import 'package:openapi/api.dart';
 
 var api_instance = new ReservationApi();
 var id = 56; // int | 
-var body = new int(); // int | 
+var time = new int(); // int | 
 
 try { 
-    var result = api_instance.reservationAddLateTime(id, body);
+    var result = api_instance.reservationAddLateTime(id, time);
     print(result);
 } catch (e) {
     print("Exception when calling ReservationApi->reservationAddLateTime: $e\n");
@@ -48,7 +48,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**|  | [default to null]
- **body** | **int**|  | 
+ **time** | **int**|  | 
 
 ### Return type
 
@@ -60,13 +60,13 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **reservationAddTable**
-> PlacesReservationsReservationDto reservationAddTable(id, body)
+> PlacesReservationsReservationDto reservationAddTable(id, tableId)
 
 
 
@@ -76,10 +76,10 @@ import 'package:openapi/api.dart';
 
 var api_instance = new ReservationApi();
 var id = 56; // int | 
-var body = new int(); // int | 
+var tableId = new int(); // int | 
 
 try { 
-    var result = api_instance.reservationAddTable(id, body);
+    var result = api_instance.reservationAddTable(id, tableId);
     print(result);
 } catch (e) {
     print("Exception when calling ReservationApi->reservationAddTable: $e\n");
@@ -91,7 +91,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**|  | [default to null]
- **body** | **int**|  | 
+ **tableId** | **int**|  | 
 
 ### Return type
 
@@ -103,8 +103,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -145,12 +145,12 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **reservationCreate**
-> PlacesReservationsReservationDto reservationCreate(placesReservationsReservationDto)
+> PlacesReservationsReservationDto reservationCreate(reservation)
 
 
 
@@ -159,10 +159,10 @@ No authorization required
 import 'package:openapi/api.dart';
 
 var api_instance = new ReservationApi();
-var placesReservationsReservationDto = new PlacesReservationsReservationDto(); // PlacesReservationsReservationDto | 
+var reservation = new PlacesReservationsReservationDto(); // PlacesReservationsReservationDto | 
 
 try { 
-    var result = api_instance.reservationCreate(placesReservationsReservationDto);
+    var result = api_instance.reservationCreate(reservation);
     print(result);
 } catch (e) {
     print("Exception when calling ReservationApi->reservationCreate: $e\n");
@@ -173,7 +173,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **placesReservationsReservationDto** | [**PlacesReservationsReservationDto**](PlacesReservationsReservationDto.md)|  | 
+ **reservation** | [**PlacesReservationsReservationDto**](PlacesReservationsReservationDto.md)|  | 
 
 ### Return type
 
@@ -185,8 +185,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -229,7 +229,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -266,7 +266,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -307,7 +307,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -350,7 +350,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -393,12 +393,12 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **reservationRemoveTable**
-> PlacesReservationsReservationDto reservationRemoveTable(id, body)
+> PlacesReservationsReservationDto reservationRemoveTable(id, tableId)
 
 
 
@@ -408,10 +408,10 @@ import 'package:openapi/api.dart';
 
 var api_instance = new ReservationApi();
 var id = 56; // int | 
-var body = new int(); // int | 
+var tableId = new int(); // int | 
 
 try { 
-    var result = api_instance.reservationRemoveTable(id, body);
+    var result = api_instance.reservationRemoveTable(id, tableId);
     print(result);
 } catch (e) {
     print("Exception when calling ReservationApi->reservationRemoveTable: $e\n");
@@ -423,7 +423,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**|  | [default to null]
- **body** | **int**|  | 
+ **tableId** | **int**|  | 
 
 ### Return type
 
@@ -435,13 +435,13 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **reservationUpdateReservationState**
-> bool reservationUpdateReservationState(id, body)
+> bool reservationUpdateReservationState(id, state)
 
 
 
@@ -451,10 +451,10 @@ import 'package:openapi/api.dart';
 
 var api_instance = new ReservationApi();
 var id = 56; // int | 
-var body = new String(); // String | 
+var state = new String(); // String | 
 
 try { 
-    var result = api_instance.reservationUpdateReservationState(id, body);
+    var result = api_instance.reservationUpdateReservationState(id, state);
     print(result);
 } catch (e) {
     print("Exception when calling ReservationApi->reservationUpdateReservationState: $e\n");
@@ -466,7 +466,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**|  | [default to null]
- **body** | **String**|  | 
+ **state** | **String**|  | 
 
 ### Return type
 
@@ -478,8 +478,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

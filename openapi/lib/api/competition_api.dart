@@ -33,7 +33,7 @@ class CompetitionApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -55,9 +55,9 @@ class CompetitionApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'bool') as bool;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'bool') as bool;
     } else {
       return null;
     }
@@ -80,7 +80,7 @@ class CompetitionApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -102,9 +102,9 @@ class CompetitionApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'bool') as bool;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'bool') as bool;
     } else {
       return null;
     }
@@ -127,7 +127,7 @@ class CompetitionApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -149,9 +149,9 @@ class CompetitionApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return (apiClient.deserialize(response.body, 'List<SmartHookahModelsRedisCompetitionEntry>') as List).map((item) => item as SmartHookahModelsRedisCompetitionEntry).toList();
+      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<SmartHookahModelsRedisCompetitionEntry>') as List).map((item) => item as SmartHookahModelsRedisCompetitionEntry).toList();
     } else {
       return null;
     }

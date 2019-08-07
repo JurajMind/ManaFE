@@ -4,6 +4,8 @@ class PersonActiveDataDto {
   
   List<DeviceSimpleDto> devices = [];
   
+  DeviceUpdateInfoDto updateInfo = null;
+  
   List<SmokeSessionSimpleDto> activeSmokeSessions = [];
   
   List<PlacesReservationsReservationDto> activeReservations = [];
@@ -15,26 +17,58 @@ class PersonActiveDataDto {
 
   @override
   String toString() {
-    return 'PersonActiveDataDto[devices=$devices, activeSmokeSessions=$activeSmokeSessions, activeReservations=$activeReservations, activeHookahOrders=$activeHookahOrders, gameProfile=$gameProfile, ]';
+    return 'PersonActiveDataDto[devices=$devices, updateInfo=$updateInfo, activeSmokeSessions=$activeSmokeSessions, activeReservations=$activeReservations, activeHookahOrders=$activeHookahOrders, gameProfile=$gameProfile, ]';
   }
 
   PersonActiveDataDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    devices = DeviceSimpleDto.listFromJson(json['Devices']);
-    activeSmokeSessions = SmokeSessionSimpleDto.listFromJson(json['ActiveSmokeSessions']);
-    activeReservations = PlacesReservationsReservationDto.listFromJson(json['ActiveReservations']);
-    activeHookahOrders = HookahOrderDto.listFromJson(json['ActiveHookahOrders']);
-    gameProfile = new GameProfileSimpleDto.fromJson(json['GameProfile']);
+    if (json['Devices'] == null) {
+      devices = null;
+    } else {
+      devices = DeviceSimpleDto.listFromJson(json['Devices']);
+    }
+    if (json['UpdateInfo'] == null) {
+      updateInfo = null;
+    } else {
+      updateInfo = new DeviceUpdateInfoDto.fromJson(json['UpdateInfo']);
+    }
+    if (json['ActiveSmokeSessions'] == null) {
+      activeSmokeSessions = null;
+    } else {
+      activeSmokeSessions = SmokeSessionSimpleDto.listFromJson(json['ActiveSmokeSessions']);
+    }
+    if (json['ActiveReservations'] == null) {
+      activeReservations = null;
+    } else {
+      activeReservations = PlacesReservationsReservationDto.listFromJson(json['ActiveReservations']);
+    }
+    if (json['ActiveHookahOrders'] == null) {
+      activeHookahOrders = null;
+    } else {
+      activeHookahOrders = HookahOrderDto.listFromJson(json['ActiveHookahOrders']);
+    }
+    if (json['GameProfile'] == null) {
+      gameProfile = null;
+    } else {
+      gameProfile = new GameProfileSimpleDto.fromJson(json['GameProfile']);
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Devices': devices,
-      'ActiveSmokeSessions': activeSmokeSessions,
-      'ActiveReservations': activeReservations,
-      'ActiveHookahOrders': activeHookahOrders,
-      'GameProfile': gameProfile
-    };
+    Map <String, dynamic> json = {};
+    if (devices != null)
+      json['Devices'] = devices;
+    if (updateInfo != null)
+      json['UpdateInfo'] = updateInfo;
+    if (activeSmokeSessions != null)
+      json['ActiveSmokeSessions'] = activeSmokeSessions;
+    if (activeReservations != null)
+      json['ActiveReservations'] = activeReservations;
+    if (activeHookahOrders != null)
+      json['ActiveHookahOrders'] = activeHookahOrders;
+    if (gameProfile != null)
+      json['GameProfile'] = gameProfile;
+    return json;
   }
 
   static List<PersonActiveDataDto> listFromJson(List<dynamic> json) {
@@ -43,7 +77,7 @@ class PersonActiveDataDto {
 
   static Map<String, PersonActiveDataDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, PersonActiveDataDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new PersonActiveDataDto.fromJson(value));
     }
     return map;

@@ -18,19 +18,39 @@ class PipeAccesoryLikeDto {
 
   PipeAccesoryLikeDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['Id'];
-    personId = json['PersonId'];
-    pipeAccessoryId = json['PipeAccessoryId'];
-    value = json['Value'];
+    if (json['Id'] == null) {
+      id = null;
+    } else {
+          id = json['Id'];
+    }
+    if (json['PersonId'] == null) {
+      personId = null;
+    } else {
+          personId = json['PersonId'];
+    }
+    if (json['PipeAccessoryId'] == null) {
+      pipeAccessoryId = null;
+    } else {
+          pipeAccessoryId = json['PipeAccessoryId'];
+    }
+    if (json['Value'] == null) {
+      value = null;
+    } else {
+          value = json['Value'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Id': id,
-      'PersonId': personId,
-      'PipeAccessoryId': pipeAccessoryId,
-      'Value': value
-    };
+    Map <String, dynamic> json = {};
+    if (id != null)
+      json['Id'] = id;
+    if (personId != null)
+      json['PersonId'] = personId;
+    if (pipeAccessoryId != null)
+      json['PipeAccessoryId'] = pipeAccessoryId;
+    if (value != null)
+      json['Value'] = value;
+    return json;
   }
 
   static List<PipeAccesoryLikeDto> listFromJson(List<dynamic> json) {
@@ -39,7 +59,7 @@ class PipeAccesoryLikeDto {
 
   static Map<String, PipeAccesoryLikeDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, PipeAccesoryLikeDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new PipeAccesoryLikeDto.fromJson(value));
     }
     return map;

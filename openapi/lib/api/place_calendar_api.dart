@@ -29,7 +29,7 @@ class PlaceCalendarApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -51,9 +51,9 @@ class PlaceCalendarApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Dto') as Dto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'Dto') as Dto;
     } else {
       return null;
     }
@@ -80,7 +80,7 @@ class PlaceCalendarApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -102,9 +102,9 @@ class PlaceCalendarApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Dto') as Dto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'Dto') as Dto;
     } else {
       return null;
     }
@@ -131,7 +131,7 @@ class PlaceCalendarApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -153,9 +153,9 @@ class PlaceCalendarApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Dto') as Dto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'Dto') as Dto;
     } else {
       return null;
     }
@@ -193,7 +193,7 @@ class PlaceCalendarApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -215,9 +215,9 @@ class PlaceCalendarApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'PlaceEventCollection') as PlaceEventCollection;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PlaceEventCollection') as PlaceEventCollection;
     } else {
       return null;
     }
@@ -247,7 +247,7 @@ class PlaceCalendarApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -269,9 +269,9 @@ class PlaceCalendarApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'PlaceCalendarDto') as PlaceCalendarDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PlaceCalendarDto') as PlaceCalendarDto;
     } else {
       return null;
     }
@@ -309,7 +309,7 @@ class PlaceCalendarApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -331,9 +331,9 @@ class PlaceCalendarApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'PlaceDay') as PlaceDay;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PlaceDay') as PlaceDay;
     } else {
       return null;
     }
@@ -360,7 +360,7 @@ class PlaceCalendarApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -382,9 +382,9 @@ class PlaceCalendarApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'PlaceEvent') as PlaceEvent;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PlaceEvent') as PlaceEvent;
     } else {
       return null;
     }
@@ -408,9 +408,9 @@ class PlaceCalendarApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -432,9 +432,9 @@ class PlaceCalendarApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Dto') as Dto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'Dto') as Dto;
     } else {
       return null;
     }
@@ -458,9 +458,9 @@ class PlaceCalendarApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -482,9 +482,9 @@ class PlaceCalendarApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Dto') as Dto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'Dto') as Dto;
     } else {
       return null;
     }

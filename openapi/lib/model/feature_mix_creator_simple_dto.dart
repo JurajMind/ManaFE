@@ -22,23 +22,53 @@ class FeatureMixCreatorSimpleDto {
 
   FeatureMixCreatorSimpleDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    name = json['Name'];
-    description = json['Description'];
-    location = json['Location'];
-    logoPicture = json['LogoPicture'];
-    personId = json['PersonId'];
-    id = json['Id'];
+    if (json['Name'] == null) {
+      name = null;
+    } else {
+          name = json['Name'];
+    }
+    if (json['Description'] == null) {
+      description = null;
+    } else {
+          description = json['Description'];
+    }
+    if (json['Location'] == null) {
+      location = null;
+    } else {
+          location = json['Location'];
+    }
+    if (json['LogoPicture'] == null) {
+      logoPicture = null;
+    } else {
+          logoPicture = json['LogoPicture'];
+    }
+    if (json['PersonId'] == null) {
+      personId = null;
+    } else {
+          personId = json['PersonId'];
+    }
+    if (json['Id'] == null) {
+      id = null;
+    } else {
+          id = json['Id'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Name': name,
-      'Description': description,
-      'Location': location,
-      'LogoPicture': logoPicture,
-      'PersonId': personId,
-      'Id': id
-    };
+    Map <String, dynamic> json = {};
+    if (name != null)
+      json['Name'] = name;
+    if (description != null)
+      json['Description'] = description;
+    if (location != null)
+      json['Location'] = location;
+    if (logoPicture != null)
+      json['LogoPicture'] = logoPicture;
+    if (personId != null)
+      json['PersonId'] = personId;
+    if (id != null)
+      json['Id'] = id;
+    return json;
   }
 
   static List<FeatureMixCreatorSimpleDto> listFromJson(List<dynamic> json) {
@@ -47,7 +77,7 @@ class FeatureMixCreatorSimpleDto {
 
   static Map<String, FeatureMixCreatorSimpleDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, FeatureMixCreatorSimpleDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new FeatureMixCreatorSimpleDto.fromJson(value));
     }
     return map;

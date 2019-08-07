@@ -12,13 +12,18 @@ class PlaceCalendarDto {
 
   PlaceCalendarDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    placeDays = PlaceDay.listFromJson(json['PlaceDays']);
+    if (json['PlaceDays'] == null) {
+      placeDays = null;
+    } else {
+      placeDays = PlaceDay.listFromJson(json['PlaceDays']);
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'PlaceDays': placeDays
-    };
+    Map <String, dynamic> json = {};
+    if (placeDays != null)
+      json['PlaceDays'] = placeDays;
+    return json;
   }
 
   static List<PlaceCalendarDto> listFromJson(List<dynamic> json) {
@@ -27,7 +32,7 @@ class PlaceCalendarDto {
 
   static Map<String, PlaceCalendarDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, PlaceCalendarDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new PlaceCalendarDto.fromJson(value));
     }
     return map;

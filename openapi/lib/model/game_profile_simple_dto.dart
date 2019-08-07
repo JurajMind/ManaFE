@@ -24,25 +24,60 @@ class GameProfileSimpleDto {
 
   GameProfileSimpleDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    personId = json['PersonId'];
-    level = json['Level'];
-    testLevel = json['TestLevel'];
-    lvlProgress = json['LvlProgress'];
-    experience = json['Experience'];
-    clouds = json['Clouds'];
-    picture = new GamePictureDto.fromJson(json['Picture']);
+    if (json['PersonId'] == null) {
+      personId = null;
+    } else {
+          personId = json['PersonId'];
+    }
+    if (json['Level'] == null) {
+      level = null;
+    } else {
+          level = json['Level'];
+    }
+    if (json['TestLevel'] == null) {
+      testLevel = null;
+    } else {
+          testLevel = json['TestLevel'];
+    }
+    if (json['LvlProgress'] == null) {
+      lvlProgress = null;
+    } else {
+          lvlProgress = json['LvlProgress'];
+    }
+    if (json['Experience'] == null) {
+      experience = null;
+    } else {
+          experience = json['Experience'];
+    }
+    if (json['Clouds'] == null) {
+      clouds = null;
+    } else {
+          clouds = json['Clouds'];
+    }
+    if (json['Picture'] == null) {
+      picture = null;
+    } else {
+      picture = new GamePictureDto.fromJson(json['Picture']);
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'PersonId': personId,
-      'Level': level,
-      'TestLevel': testLevel,
-      'LvlProgress': lvlProgress,
-      'Experience': experience,
-      'Clouds': clouds,
-      'Picture': picture
-    };
+    Map <String, dynamic> json = {};
+    if (personId != null)
+      json['PersonId'] = personId;
+    if (level != null)
+      json['Level'] = level;
+    if (testLevel != null)
+      json['TestLevel'] = testLevel;
+    if (lvlProgress != null)
+      json['LvlProgress'] = lvlProgress;
+    if (experience != null)
+      json['Experience'] = experience;
+    if (clouds != null)
+      json['Clouds'] = clouds;
+    if (picture != null)
+      json['Picture'] = picture;
+    return json;
   }
 
   static List<GameProfileSimpleDto> listFromJson(List<dynamic> json) {
@@ -51,7 +86,7 @@ class GameProfileSimpleDto {
 
   static Map<String, GameProfileSimpleDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, GameProfileSimpleDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new GameProfileSimpleDto.fromJson(value));
     }
     return map;

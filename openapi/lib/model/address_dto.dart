@@ -1,22 +1,20 @@
 part of openapi.api;
 
 class AddressDto {
+  
   int id = null;
-
+  
   String street = null;
-
+  
   String city = null;
-
+  
   String number = null;
-
+  
   String ZIP = null;
-
+  
   String lat = null;
-
+  
   String lng = null;
-
-  String country = null;
-
   AddressDto();
 
   @override
@@ -26,39 +24,72 @@ class AddressDto {
 
   AddressDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['Id'];
-    street = json['Street'];
-    city = json['City'];
-    number = json['Number'];
-    ZIP = json['ZIP'];
-    lat = json['Lat'];
-    lng = json['Lng'];
+    if (json['Id'] == null) {
+      id = null;
+    } else {
+          id = json['Id'];
+    }
+    if (json['Street'] == null) {
+      street = null;
+    } else {
+          street = json['Street'];
+    }
+    if (json['City'] == null) {
+      city = null;
+    } else {
+          city = json['City'];
+    }
+    if (json['Number'] == null) {
+      number = null;
+    } else {
+          number = json['Number'];
+    }
+    if (json['ZIP'] == null) {
+      ZIP = null;
+    } else {
+          ZIP = json['ZIP'];
+    }
+    if (json['Lat'] == null) {
+      lat = null;
+    } else {
+          lat = json['Lat'];
+    }
+    if (json['Lng'] == null) {
+      lng = null;
+    } else {
+          lng = json['Lng'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Id': id,
-      'Street': street,
-      'City': city,
-      'Number': number,
-      'ZIP': ZIP,
-      'Lat': lat,
-      'Lng': lng
-    };
+    Map <String, dynamic> json = {};
+    if (id != null)
+      json['Id'] = id;
+    if (street != null)
+      json['Street'] = street;
+    if (city != null)
+      json['City'] = city;
+    if (number != null)
+      json['Number'] = number;
+    if (ZIP != null)
+      json['ZIP'] = ZIP;
+    if (lat != null)
+      json['Lat'] = lat;
+    if (lng != null)
+      json['Lng'] = lng;
+    return json;
   }
 
   static List<AddressDto> listFromJson(List<dynamic> json) {
-    return json == null
-        ? new List<AddressDto>()
-        : json.map((value) => new AddressDto.fromJson(value)).toList();
+    return json == null ? new List<AddressDto>() : json.map((value) => new AddressDto.fromJson(value)).toList();
   }
 
   static Map<String, AddressDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, AddressDto>();
-    if (json != null && json.length > 0) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = new AddressDto.fromJson(value));
+    if (json != null && json.isNotEmpty) {
+      json.forEach((String key, dynamic value) => map[key] = new AddressDto.fromJson(value));
     }
     return map;
   }
 }
+

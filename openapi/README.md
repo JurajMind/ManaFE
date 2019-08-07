@@ -80,6 +80,7 @@ Class | Method | HTTP request | Description
 *DeviceApi* | [**deviceGetPictures**](docs\/DeviceApi.md#devicegetpictures) | **GET** /api/Device/Pictures | 
 *DeviceApi* | [**deviceGetSetting**](docs\/DeviceApi.md#devicegetsetting) | **GET** /api/Device/{id}/GetSetting | 
 *DeviceApi* | [**deviceInfo**](docs\/DeviceApi.md#deviceinfo) | **GET** /api/Device/{id}/Info | 
+*DeviceApi* | [**devicePing**](docs\/DeviceApi.md#deviceping) | **POST** /api/Device/{id}/Ping | 
 *DeviceApi* | [**devicePromptUpdate**](docs\/DeviceApi.md#devicepromptupdate) | **POST** /api/Device/{id}/Update/{updateId} | 
 *DeviceApi* | [**deviceRemoveDevice**](docs\/DeviceApi.md#deviceremovedevice) | **DELETE** /api/Device/{id}/Remove | 
 *DeviceApi* | [**deviceRestart**](docs\/DeviceApi.md#devicerestart) | **POST** /api/Device/{id}/Restart | 
@@ -103,6 +104,7 @@ Class | Method | HTTP request | Description
 *FeatureMixApi* | [**featureMixGetFollowedCreators**](docs\/FeatureMixApi.md#featuremixgetfollowedcreators) | **GET** /api/FeatureMix/FollowedCreators | 
 *FeatureMixApi* | [**featureMixGetMixes**](docs\/FeatureMixApi.md#featuremixgetmixes) | **GET** /api/FeatureMix/Mixes/{id} | 
 *FeatureMixApi* | [**featureMixRemoveFollow**](docs\/FeatureMixApi.md#featuremixremovefollow) | **DELETE** /api/FeatureMix/Follow/{id} | 
+*GearApi* | [**gearAddGear**](docs\/GearApi.md#gearaddgear) | **POST** /api/Gear/Add | 
 *GearApi* | [**gearGetBrand**](docs\/GearApi.md#geargetbrand) | **GET** /api/Gear/Brand/{brandName} | 
 *GearApi* | [**gearGetBrands**](docs\/GearApi.md#geargetbrands) | **GET** /api/Gear/Brands | 
 *GearApi* | [**gearGetBrandsPrefix**](docs\/GearApi.md#geargetbrandsprefix) | **GET** /api/Gear/Brands/{prefix} | 
@@ -111,6 +113,9 @@ Class | Method | HTTP request | Description
 *GearApi* | [**gearSearch**](docs\/GearApi.md#gearsearch) | **GET** /api/Gear/Search/{search} | 
 *GearApi* | [**gearSessions**](docs\/GearApi.md#gearsessions) | **GET** /api/Gear/{id}/Sessions | 
 *GearApi* | [**gearVote**](docs\/GearApi.md#gearvote) | **POST** /api/Gear/{id}/Vote | 
+*MediaApi* | [**mediaAddGearPicture**](docs\/MediaApi.md#mediaaddgearpicture) | **POST** /api/Media/Gear/{id}/Add | 
+*MediaApi* | [**mediaAddPlacePicture**](docs\/MediaApi.md#mediaaddplacepicture) | **POST** /api/Media/Place/{id}/Add | 
+*MediaApi* | [**mediaAddReviewPicture**](docs\/MediaApi.md#mediaaddreviewpicture) | **POST** /api/Media/Review/{id}/Add | 
 *MixologyApi* | [**mixologyAddToMix**](docs\/MixologyApi.md#mixologyaddtomix) | **POST** /api/Mixology/AddToMix | 
 *MixologyApi* | [**mixologyGetFeaturedMixCreators**](docs\/MixologyApi.md#mixologygetfeaturedmixcreators) | **GET** /api/Mixology/GetMixCreators | 
 *MixologyApi* | [**mixologyGetMixes**](docs\/MixologyApi.md#mixologygetmixes) | **GET** /api/Mixology/GetMixes | 
@@ -130,6 +135,8 @@ Class | Method | HTTP request | Description
 *PersonApi* | [**personMyGear**](docs\/PersonApi.md#personmygear) | **GET** /api/Person/MyGear | 
 *PersonApi* | [**personTestNotification**](docs\/PersonApi.md#persontestnotification) | **POST** /api/Person/TestNotification | 
 *PingApi* | [**pingDefaultAction**](docs\/PingApi.md#pingdefaultaction) | **GET** /api/Ping/{id} | 
+*PlaceAdminApi* | [**placeAdminChangeState**](docs\/PlaceAdminApi.md#placeadminchangestate) | **POST** /api/Admin/Places/{id}/ChangeState | 
+*PlaceAdminApi* | [**placeAdminGetWaitingPlaces**](docs\/PlaceAdminApi.md#placeadmingetwaitingplaces) | **GET** /api/Admin/Places/Waiting | 
 *PlaceCalendarApi* | [**placeCalendarCreatePlaceEventFromFacebook**](docs\/PlaceCalendarApi.md#placecalendarcreateplaceeventfromfacebook) | **GET** /api/PlaceCalendar/CreateEventFromFacebook | 
 *PlaceCalendarApi* | [**placeCalendarDeletePlaceDay**](docs\/PlaceCalendarApi.md#placecalendardeleteplaceday) | **DELETE** /api/PlaceCalendar/DeletePlaceDay | 
 *PlaceCalendarApi* | [**placeCalendarDeletePlaceEvent**](docs\/PlaceCalendarApi.md#placecalendardeleteplaceevent) | **DELETE** /api/PlaceCalendar/DeletePlaceEvent | 
@@ -140,6 +147,7 @@ Class | Method | HTTP request | Description
 *PlaceCalendarApi* | [**placeCalendarSavePlaceDay**](docs\/PlaceCalendarApi.md#placecalendarsaveplaceday) | **POST** /api/PlaceCalendar/SavePlaceDay | 
 *PlaceCalendarApi* | [**placeCalendarSavePlaceEvent**](docs\/PlaceCalendarApi.md#placecalendarsaveplaceevent) | **POST** /api/PlaceCalendar/SavePlaceEvent | 
 *PlacesApi* | [**placesAddFlags**](docs\/PlacesApi.md#placesaddflags) | **PUT** /api/Places/{placeId}/AddFlags | 
+*PlacesApi* | [**placesAddPlace**](docs\/PlacesApi.md#placesaddplace) | **POST** /api/Places/Add | 
 *PlacesApi* | [**placesFixLocation**](docs\/PlacesApi.md#placesfixlocation) | **GET** /api/Places/FixLocation | 
 *PlacesApi* | [**placesGetDashboardData**](docs\/PlacesApi.md#placesgetdashboarddata) | **GET** /api/Places/{placeId}/DashboardData | 
 *PlacesApi* | [**placesGetPlaceInfo**](docs\/PlacesApi.md#placesgetplaceinfo) | **GET** /api/Places/GetPlaceInfo | 
@@ -194,6 +202,7 @@ Class | Method | HTTP request | Description
  - [DeviceSettingDto](docs\/DeviceSettingDto.md)
  - [DeviceSimpleDto](docs\/DeviceSimpleDto.md)
  - [DeviceUpdateDto](docs\/DeviceUpdateDto.md)
+ - [DeviceUpdateInfoDto](docs\/DeviceUpdateInfoDto.md)
  - [Dto](docs\/Dto.md)
  - [DynamicSmokeStatisticRawDto](docs\/DynamicSmokeStatisticRawDto.md)
  - [FeatureMixCreatorDto](docs\/FeatureMixCreatorDto.md)

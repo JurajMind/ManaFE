@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 
 # **smokeSessionEndSmokeSession**
-> int smokeSessionEndSmokeSession(id)
+> SmokeSessionSimpleDto smokeSessionEndSmokeSession(id)
 
 
 
@@ -47,7 +47,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**int**
+[**SmokeSessionSimpleDto**](SmokeSessionSimpleDto.md)
 
 ### Authorization
 
@@ -56,7 +56,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -97,7 +97,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -138,7 +138,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -179,7 +179,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -220,7 +220,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -261,12 +261,12 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **smokeSessionSaveMetaData**
-> SmokeSessionMetaDataDto smokeSessionSaveMetaData(id, smokeSessionMetaDataDto)
+> SmokeSessionMetaDataDto smokeSessionSaveMetaData(id, model)
 
 
 
@@ -276,10 +276,10 @@ import 'package:openapi/api.dart';
 
 var api_instance = new SmokeSessionApi();
 var id = id_example; // String | 
-var smokeSessionMetaDataDto = new SmokeSessionMetaDataDto(); // SmokeSessionMetaDataDto | 
+var model = new SmokeSessionMetaDataDto(); // SmokeSessionMetaDataDto | 
 
 try { 
-    var result = api_instance.smokeSessionSaveMetaData(id, smokeSessionMetaDataDto);
+    var result = api_instance.smokeSessionSaveMetaData(id, model);
     print(result);
 } catch (e) {
     print("Exception when calling SmokeSessionApi->smokeSessionSaveMetaData: $e\n");
@@ -291,7 +291,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**|  | [default to null]
- **smokeSessionMetaDataDto** | [**SmokeSessionMetaDataDto**](SmokeSessionMetaDataDto.md)|  | 
+ **model** | [**SmokeSessionMetaDataDto**](SmokeSessionMetaDataDto.md)|  | 
 
 ### Return type
 
@@ -303,8 +303,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -345,7 +345,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -18,19 +18,39 @@ class SeatDto {
 
   SeatDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['Id'];
-    name = json['Name'];
-    code = json['Code'];
-    capacity = json['Capacity'];
+    if (json['Id'] == null) {
+      id = null;
+    } else {
+          id = json['Id'];
+    }
+    if (json['Name'] == null) {
+      name = null;
+    } else {
+          name = json['Name'];
+    }
+    if (json['Code'] == null) {
+      code = null;
+    } else {
+          code = json['Code'];
+    }
+    if (json['Capacity'] == null) {
+      capacity = null;
+    } else {
+          capacity = json['Capacity'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Id': id,
-      'Name': name,
-      'Code': code,
-      'Capacity': capacity
-    };
+    Map <String, dynamic> json = {};
+    if (id != null)
+      json['Id'] = id;
+    if (name != null)
+      json['Name'] = name;
+    if (code != null)
+      json['Code'] = code;
+    if (capacity != null)
+      json['Capacity'] = capacity;
+    return json;
   }
 
   static List<SeatDto> listFromJson(List<dynamic> json) {
@@ -39,7 +59,7 @@ class SeatDto {
 
   static Map<String, SeatDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, SeatDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new SeatDto.fromJson(value));
     }
     return map;

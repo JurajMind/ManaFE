@@ -12,13 +12,18 @@ class SmartHookahServicesPlaceReservationUsageDto {
 
   SmartHookahServicesPlaceReservationUsageDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    timeSlots = ReservationsTimeSlot.listFromJson(json['TimeSlots']);
+    if (json['TimeSlots'] == null) {
+      timeSlots = null;
+    } else {
+      timeSlots = ReservationsTimeSlot.listFromJson(json['TimeSlots']);
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'TimeSlots': timeSlots
-    };
+    Map <String, dynamic> json = {};
+    if (timeSlots != null)
+      json['TimeSlots'] = timeSlots;
+    return json;
   }
 
   static List<SmartHookahServicesPlaceReservationUsageDto> listFromJson(List<dynamic> json) {
@@ -27,7 +32,7 @@ class SmartHookahServicesPlaceReservationUsageDto {
 
   static Map<String, SmartHookahServicesPlaceReservationUsageDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, SmartHookahServicesPlaceReservationUsageDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new SmartHookahServicesPlaceReservationUsageDto.fromJson(value));
     }
     return map;

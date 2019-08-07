@@ -10,15 +10,15 @@ class PlacesApi {
   /// 
   ///
   /// 
-  Future<PlaceDto> placesAddFlags(int placeId, List<String> requestBody) async {
-    Object postBody = requestBody;
+  Future<PlaceDto> placesAddFlags(int placeId, List<String> flags) async {
+    Object postBody = flags;
 
     // verify required params are set
     if(placeId == null) {
      throw new ApiException(400, "Missing required param: placeId");
     }
-    if(requestBody == null) {
-     throw new ApiException(400, "Missing required param: requestBody");
+    if(flags == null) {
+     throw new ApiException(400, "Missing required param: flags");
     }
 
     // create path and map variables
@@ -29,9 +29,9 @@ class PlacesApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -53,9 +53,59 @@ class PlacesApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'PlaceDto') as PlaceDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PlaceDto') as PlaceDto;
+    } else {
+      return null;
+    }
+  }
+  /// 
+  ///
+  /// 
+  Future<PlaceDto> placesAddPlace(PlaceDto importedPlace) async {
+    Object postBody = importedPlace;
+
+    // verify required params are set
+    if(importedPlace == null) {
+     throw new ApiException(400, "Missing required param: importedPlace");
+    }
+
+    // create path and map variables
+    String path = "/api/Places/Add".replaceAll("{format}","json");
+
+    // query params
+    List<QueryParam> queryParams = [];
+    Map<String, String> headerParams = {};
+    Map<String, String> formParams = {};
+
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
+
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
+    List<String> authNames = [];
+
+    if(contentType.startsWith("multipart/form-data")) {
+      bool hasFields = false;
+      MultipartRequest mp = new MultipartRequest(null, null);
+      if(hasFields)
+        postBody = mp;
+    }
+    else {
+    }
+
+    var response = await apiClient.invokeAPI(path,
+                                             'POST',
+                                             queryParams,
+                                             postBody,
+                                             headerParams,
+                                             formParams,
+                                             contentType,
+                                             authNames);
+
+    if(response.statusCode >= 400) {
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
+    } else if(response.body != null) {
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PlaceDto') as PlaceDto;
     } else {
       return null;
     }
@@ -78,7 +128,7 @@ class PlacesApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -100,7 +150,7 @@ class PlacesApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
     } else {
       return;
@@ -127,7 +177,7 @@ class PlacesApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -149,9 +199,9 @@ class PlacesApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'PlacesPlaceDashboardDto') as PlacesPlaceDashboardDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PlacesPlaceDashboardDto') as PlacesPlaceDashboardDto;
     } else {
       return null;
     }
@@ -178,7 +228,7 @@ class PlacesApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -200,9 +250,9 @@ class PlacesApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'PlaceDto') as PlaceDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PlaceDto') as PlaceDto;
     } else {
       return null;
     }
@@ -228,7 +278,7 @@ class PlacesApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -250,9 +300,9 @@ class PlacesApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'PlaceMenuDto') as PlaceMenuDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PlaceMenuDto') as PlaceMenuDto;
     } else {
       return null;
     }
@@ -275,7 +325,7 @@ class PlacesApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -297,9 +347,9 @@ class PlacesApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Object') as Object;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'Object') as Object;
     } else {
       return null;
     }
@@ -322,7 +372,7 @@ class PlacesApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -344,9 +394,9 @@ class PlacesApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Object') as Object;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'Object') as Object;
     } else {
       return null;
     }
@@ -384,7 +434,7 @@ class PlacesApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -406,9 +456,9 @@ class PlacesApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'NearbyPlacesDto') as NearbyPlacesDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'NearbyPlacesDto') as NearbyPlacesDto;
     } else {
       return null;
     }

@@ -10,15 +10,15 @@ class ReservationApi {
   /// 
   ///
   /// 
-  Future<PlacesReservationsReservationDto> reservationAddLateTime(int id, int body) async {
-    Object postBody = body;
+  Future<PlacesReservationsReservationDto> reservationAddLateTime(int id, int time) async {
+    Object postBody = time;
 
     // verify required params are set
     if(id == null) {
      throw new ApiException(400, "Missing required param: id");
     }
-    if(body == null) {
-     throw new ApiException(400, "Missing required param: body");
+    if(time == null) {
+     throw new ApiException(400, "Missing required param: time");
     }
 
     // create path and map variables
@@ -29,9 +29,9 @@ class ReservationApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -53,9 +53,9 @@ class ReservationApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'PlacesReservationsReservationDto') as PlacesReservationsReservationDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PlacesReservationsReservationDto') as PlacesReservationsReservationDto;
     } else {
       return null;
     }
@@ -63,15 +63,15 @@ class ReservationApi {
   /// 
   ///
   /// 
-  Future<PlacesReservationsReservationDto> reservationAddTable(int id, int body) async {
-    Object postBody = body;
+  Future<PlacesReservationsReservationDto> reservationAddTable(int id, int tableId) async {
+    Object postBody = tableId;
 
     // verify required params are set
     if(id == null) {
      throw new ApiException(400, "Missing required param: id");
     }
-    if(body == null) {
-     throw new ApiException(400, "Missing required param: body");
+    if(tableId == null) {
+     throw new ApiException(400, "Missing required param: tableId");
     }
 
     // create path and map variables
@@ -82,9 +82,9 @@ class ReservationApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -106,9 +106,9 @@ class ReservationApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'PlacesReservationsReservationDto') as PlacesReservationsReservationDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PlacesReservationsReservationDto') as PlacesReservationsReservationDto;
     } else {
       return null;
     }
@@ -134,7 +134,7 @@ class ReservationApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -156,9 +156,9 @@ class ReservationApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'bool') as bool;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'bool') as bool;
     } else {
       return null;
     }
@@ -166,12 +166,12 @@ class ReservationApi {
   /// 
   ///
   /// 
-  Future<PlacesReservationsReservationDto> reservationCreate(PlacesReservationsReservationDto placesReservationsReservationDto) async {
-    Object postBody = placesReservationsReservationDto;
+  Future<PlacesReservationsReservationDto> reservationCreate(PlacesReservationsReservationDto reservation) async {
+    Object postBody = reservation;
 
     // verify required params are set
-    if(placesReservationsReservationDto == null) {
-     throw new ApiException(400, "Missing required param: placesReservationsReservationDto");
+    if(reservation == null) {
+     throw new ApiException(400, "Missing required param: reservation");
     }
 
     // create path and map variables
@@ -182,9 +182,9 @@ class ReservationApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -206,9 +206,9 @@ class ReservationApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'PlacesReservationsReservationDto') as PlacesReservationsReservationDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PlacesReservationsReservationDto') as PlacesReservationsReservationDto;
     } else {
       return null;
     }
@@ -238,7 +238,7 @@ class ReservationApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -260,9 +260,9 @@ class ReservationApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'PlacesReservationsReservationManageDto') as PlacesReservationsReservationManageDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PlacesReservationsReservationManageDto') as PlacesReservationsReservationManageDto;
     } else {
       return null;
     }
@@ -285,7 +285,7 @@ class ReservationApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -307,9 +307,9 @@ class ReservationApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return (apiClient.deserialize(response.body, 'List<PlacesReservationsReservationDto>') as List).map((item) => item as PlacesReservationsReservationDto).toList();
+      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<PlacesReservationsReservationDto>') as List).map((item) => item as PlacesReservationsReservationDto).toList();
     } else {
       return null;
     }
@@ -335,7 +335,7 @@ class ReservationApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -357,9 +357,9 @@ class ReservationApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'PlacesReservationsReservationDetailDto') as PlacesReservationsReservationDetailDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PlacesReservationsReservationDetailDto') as PlacesReservationsReservationDetailDto;
     } else {
       return null;
     }
@@ -389,7 +389,7 @@ class ReservationApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -411,9 +411,9 @@ class ReservationApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'SmartHookahServicesPlaceReservationUsageDto') as SmartHookahServicesPlaceReservationUsageDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'SmartHookahServicesPlaceReservationUsageDto') as SmartHookahServicesPlaceReservationUsageDto;
     } else {
       return null;
     }
@@ -444,7 +444,7 @@ class ReservationApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -466,9 +466,9 @@ class ReservationApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return (apiClient.deserialize(response.body, 'List<PlacesReservationsReservationDto>') as List).map((item) => item as PlacesReservationsReservationDto).toList();
+      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<PlacesReservationsReservationDto>') as List).map((item) => item as PlacesReservationsReservationDto).toList();
     } else {
       return null;
     }
@@ -476,15 +476,15 @@ class ReservationApi {
   /// 
   ///
   /// 
-  Future<PlacesReservationsReservationDto> reservationRemoveTable(int id, int body) async {
-    Object postBody = body;
+  Future<PlacesReservationsReservationDto> reservationRemoveTable(int id, int tableId) async {
+    Object postBody = tableId;
 
     // verify required params are set
     if(id == null) {
      throw new ApiException(400, "Missing required param: id");
     }
-    if(body == null) {
-     throw new ApiException(400, "Missing required param: body");
+    if(tableId == null) {
+     throw new ApiException(400, "Missing required param: tableId");
     }
 
     // create path and map variables
@@ -495,9 +495,9 @@ class ReservationApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -519,9 +519,9 @@ class ReservationApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'PlacesReservationsReservationDto') as PlacesReservationsReservationDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PlacesReservationsReservationDto') as PlacesReservationsReservationDto;
     } else {
       return null;
     }
@@ -529,15 +529,15 @@ class ReservationApi {
   /// 
   ///
   /// 
-  Future<bool> reservationUpdateReservationState(int id, String body) async {
-    Object postBody = body;
+  Future<bool> reservationUpdateReservationState(int id, String state) async {
+    Object postBody = state;
 
     // verify required params are set
     if(id == null) {
      throw new ApiException(400, "Missing required param: id");
     }
-    if(body == null) {
-     throw new ApiException(400, "Missing required param: body");
+    if(state == null) {
+     throw new ApiException(400, "Missing required param: state");
     }
 
     // create path and map variables
@@ -548,9 +548,9 @@ class ReservationApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -572,9 +572,9 @@ class ReservationApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'bool') as bool;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'bool') as bool;
     } else {
       return null;
     }

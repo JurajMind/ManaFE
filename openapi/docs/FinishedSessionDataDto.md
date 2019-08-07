@@ -8,6 +8,7 @@ import 'package:openapi/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**data** | [**SmokeSessionSimpleDto**](SmokeSessionSimpleDto.md) |  | [optional] [default to null]
 **metaData** | [**SmokeSessionMetaDataDto**](SmokeSessionMetaDataDto.md) |  | [optional] [default to null]
 **statistics** | [**SmokeSessionStatisticsDto**](SmokeSessionStatisticsDto.md) |  | [optional] [default to null]
 

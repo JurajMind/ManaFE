@@ -18,19 +18,39 @@ class SmartHookahModelsOrderExtraDto {
 
   SmartHookahModelsOrderExtraDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['Id'];
-    currency = json['Currency'];
-    price = json['Price'];
-    name = json['Name'];
+    if (json['Id'] == null) {
+      id = null;
+    } else {
+          id = json['Id'];
+    }
+    if (json['Currency'] == null) {
+      currency = null;
+    } else {
+          currency = json['Currency'];
+    }
+    if (json['Price'] == null) {
+      price = null;
+    } else {
+          price = json['Price'];
+    }
+    if (json['Name'] == null) {
+      name = null;
+    } else {
+          name = json['Name'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Id': id,
-      'Currency': currency,
-      'Price': price,
-      'Name': name
-    };
+    Map <String, dynamic> json = {};
+    if (id != null)
+      json['Id'] = id;
+    if (currency != null)
+      json['Currency'] = currency;
+    if (price != null)
+      json['Price'] = price;
+    if (name != null)
+      json['Name'] = name;
+    return json;
   }
 
   static List<SmartHookahModelsOrderExtraDto> listFromJson(List<dynamic> json) {
@@ -39,7 +59,7 @@ class SmartHookahModelsOrderExtraDto {
 
   static Map<String, SmartHookahModelsOrderExtraDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, SmartHookahModelsOrderExtraDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new SmartHookahModelsOrderExtraDto.fromJson(value));
     }
     return map;

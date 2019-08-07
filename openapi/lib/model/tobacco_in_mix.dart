@@ -14,15 +14,25 @@ class TobaccoInMix {
 
   TobaccoInMix.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    tobacco = new TobaccoSimpleDto.fromJson(json['Tobacco']);
-    fraction = json['Fraction'];
+    if (json['Tobacco'] == null) {
+      tobacco = null;
+    } else {
+      tobacco = new TobaccoSimpleDto.fromJson(json['Tobacco']);
+    }
+    if (json['Fraction'] == null) {
+      fraction = null;
+    } else {
+          fraction = json['Fraction'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Tobacco': tobacco,
-      'Fraction': fraction
-    };
+    Map <String, dynamic> json = {};
+    if (tobacco != null)
+      json['Tobacco'] = tobacco;
+    if (fraction != null)
+      json['Fraction'] = fraction;
+    return json;
   }
 
   static List<TobaccoInMix> listFromJson(List<dynamic> json) {
@@ -31,7 +41,7 @@ class TobaccoInMix {
 
   static Map<String, TobaccoInMix> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, TobaccoInMix>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new TobaccoInMix.fromJson(value));
     }
     return map;

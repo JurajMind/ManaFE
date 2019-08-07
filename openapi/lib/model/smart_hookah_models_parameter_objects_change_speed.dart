@@ -15,15 +15,25 @@ class SmartHookahModelsParameterObjectsChangeSpeed {
 
   SmartHookahModelsParameterObjectsChangeSpeed.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    speed = json['Speed'];
-    type = json['Type'];
+    if (json['Speed'] == null) {
+      speed = null;
+    } else {
+          speed = json['Speed'];
+    }
+    if (json['Type'] == null) {
+      type = null;
+    } else {
+          type = json['Type'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Speed': speed,
-      'Type': type
-    };
+    Map <String, dynamic> json = {};
+    if (speed != null)
+      json['Speed'] = speed;
+    if (type != null)
+      json['Type'] = type;
+    return json;
   }
 
   static List<SmartHookahModelsParameterObjectsChangeSpeed> listFromJson(List<dynamic> json) {
@@ -32,7 +42,7 @@ class SmartHookahModelsParameterObjectsChangeSpeed {
 
   static Map<String, SmartHookahModelsParameterObjectsChangeSpeed> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, SmartHookahModelsParameterObjectsChangeSpeed>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new SmartHookahModelsParameterObjectsChangeSpeed.fromJson(value));
     }
     return map;

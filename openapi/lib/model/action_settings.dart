@@ -18,19 +18,39 @@ class ActionSettings {
 
   ActionSettings.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    color = new SmartHookahModelsDbColor.fromJson(json['Color']);
-    animationId = json['AnimationId'];
-    brightness = json['Brightness'];
-    speed = json['Speed'];
+    if (json['Color'] == null) {
+      color = null;
+    } else {
+      color = new SmartHookahModelsDbColor.fromJson(json['Color']);
+    }
+    if (json['AnimationId'] == null) {
+      animationId = null;
+    } else {
+          animationId = json['AnimationId'];
+    }
+    if (json['Brightness'] == null) {
+      brightness = null;
+    } else {
+          brightness = json['Brightness'];
+    }
+    if (json['Speed'] == null) {
+      speed = null;
+    } else {
+          speed = json['Speed'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Color': color,
-      'AnimationId': animationId,
-      'Brightness': brightness,
-      'Speed': speed
-    };
+    Map <String, dynamic> json = {};
+    if (color != null)
+      json['Color'] = color;
+    if (animationId != null)
+      json['AnimationId'] = animationId;
+    if (brightness != null)
+      json['Brightness'] = brightness;
+    if (speed != null)
+      json['Speed'] = speed;
+    return json;
   }
 
   static List<ActionSettings> listFromJson(List<dynamic> json) {
@@ -39,7 +59,7 @@ class ActionSettings {
 
   static Map<String, ActionSettings> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, ActionSettings>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new ActionSettings.fromJson(value));
     }
     return map;

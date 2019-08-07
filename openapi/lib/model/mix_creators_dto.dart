@@ -12,13 +12,18 @@ class MixCreatorsDto {
 
   MixCreatorsDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    mixCreatorsList = MixCreator.listFromJson(json['MixCreatorsList']);
+    if (json['MixCreatorsList'] == null) {
+      mixCreatorsList = null;
+    } else {
+      mixCreatorsList = MixCreator.listFromJson(json['MixCreatorsList']);
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'MixCreatorsList': mixCreatorsList
-    };
+    Map <String, dynamic> json = {};
+    if (mixCreatorsList != null)
+      json['MixCreatorsList'] = mixCreatorsList;
+    return json;
   }
 
   static List<MixCreatorsDto> listFromJson(List<dynamic> json) {
@@ -27,7 +32,7 @@ class MixCreatorsDto {
 
   static Map<String, MixCreatorsDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, MixCreatorsDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new MixCreatorsDto.fromJson(value));
     }
     return map;

@@ -12,13 +12,18 @@ class SmartHookahControllersApiDeviceInfoResponse {
 
   SmartHookahControllersApiDeviceInfoResponse.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    picture = new DeviceDevicePictureDto.fromJson(json['Picture']);
+    if (json['Picture'] == null) {
+      picture = null;
+    } else {
+      picture = new DeviceDevicePictureDto.fromJson(json['Picture']);
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Picture': picture
-    };
+    Map <String, dynamic> json = {};
+    if (picture != null)
+      json['Picture'] = picture;
+    return json;
   }
 
   static List<SmartHookahControllersApiDeviceInfoResponse> listFromJson(List<dynamic> json) {
@@ -27,7 +32,7 @@ class SmartHookahControllersApiDeviceInfoResponse {
 
   static Map<String, SmartHookahControllersApiDeviceInfoResponse> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, SmartHookahControllersApiDeviceInfoResponse>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new SmartHookahControllersApiDeviceInfoResponse.fromJson(value));
     }
     return map;

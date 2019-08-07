@@ -18,19 +18,39 @@ class UserModel {
 
   UserModel.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    confirmPassword = json['ConfirmPassword'];
-    password = json['Password'];
-    userName = json['UserName'];
-    email = json['Email'];
+    if (json['ConfirmPassword'] == null) {
+      confirmPassword = null;
+    } else {
+          confirmPassword = json['ConfirmPassword'];
+    }
+    if (json['Password'] == null) {
+      password = null;
+    } else {
+          password = json['Password'];
+    }
+    if (json['UserName'] == null) {
+      userName = null;
+    } else {
+          userName = json['UserName'];
+    }
+    if (json['Email'] == null) {
+      email = null;
+    } else {
+          email = json['Email'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'ConfirmPassword': confirmPassword,
-      'Password': password,
-      'UserName': userName,
-      'Email': email
-    };
+    Map <String, dynamic> json = {};
+    if (confirmPassword != null)
+      json['ConfirmPassword'] = confirmPassword;
+    if (password != null)
+      json['Password'] = password;
+    if (userName != null)
+      json['UserName'] = userName;
+    if (email != null)
+      json['Email'] = email;
+    return json;
   }
 
   static List<UserModel> listFromJson(List<dynamic> json) {
@@ -39,7 +59,7 @@ class UserModel {
 
   static Map<String, UserModel> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, UserModel>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new UserModel.fromJson(value));
     }
     return map;

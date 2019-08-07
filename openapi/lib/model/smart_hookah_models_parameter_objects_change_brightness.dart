@@ -15,15 +15,25 @@ class SmartHookahModelsParameterObjectsChangeBrightness {
 
   SmartHookahModelsParameterObjectsChangeBrightness.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    brightness = json['Brightness'];
-    type = json['Type'];
+    if (json['Brightness'] == null) {
+      brightness = null;
+    } else {
+          brightness = json['Brightness'];
+    }
+    if (json['Type'] == null) {
+      type = null;
+    } else {
+          type = json['Type'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Brightness': brightness,
-      'Type': type
-    };
+    Map <String, dynamic> json = {};
+    if (brightness != null)
+      json['Brightness'] = brightness;
+    if (type != null)
+      json['Type'] = type;
+    return json;
   }
 
   static List<SmartHookahModelsParameterObjectsChangeBrightness> listFromJson(List<dynamic> json) {
@@ -32,7 +42,7 @@ class SmartHookahModelsParameterObjectsChangeBrightness {
 
   static Map<String, SmartHookahModelsParameterObjectsChangeBrightness> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, SmartHookahModelsParameterObjectsChangeBrightness>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new SmartHookahModelsParameterObjectsChangeBrightness.fromJson(value));
     }
     return map;

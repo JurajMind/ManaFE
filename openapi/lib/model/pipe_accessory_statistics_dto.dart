@@ -39,39 +39,109 @@ class PipeAccessoryStatisticsDto {
 
   PipeAccessoryStatisticsDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    used = json['Used'];
-    weight = json['Weight'];
-    pipeAccessoryId = json['PipeAccessoryId'];
-    smokeDurationTicks = json['SmokeDurationTicks'];
-    pufCount = json['PufCount'];
-    blowCount = json['BlowCount'];
-    sessionDurationTick = json['SessionDurationTick'];
-    packType = json['PackType'];
-    quality = json['Quality'];
-    taste = json['Taste'];
-    smoke = json['Smoke'];
-    overall = json['Overall'];
-    smokeTimePercentil = json['SmokeTimePercentil'];
-    sessionTimePercentil = json['SessionTimePercentil'];
+    if (json['Used'] == null) {
+      used = null;
+    } else {
+          used = json['Used'];
+    }
+    if (json['Weight'] == null) {
+      weight = null;
+    } else {
+          weight = json['Weight'];
+    }
+    if (json['PipeAccessoryId'] == null) {
+      pipeAccessoryId = null;
+    } else {
+          pipeAccessoryId = json['PipeAccessoryId'];
+    }
+    if (json['SmokeDurationTicks'] == null) {
+      smokeDurationTicks = null;
+    } else {
+          smokeDurationTicks = json['SmokeDurationTicks'];
+    }
+    if (json['PufCount'] == null) {
+      pufCount = null;
+    } else {
+          pufCount = json['PufCount'];
+    }
+    if (json['BlowCount'] == null) {
+      blowCount = null;
+    } else {
+          blowCount = json['BlowCount'];
+    }
+    if (json['SessionDurationTick'] == null) {
+      sessionDurationTick = null;
+    } else {
+          sessionDurationTick = json['SessionDurationTick'];
+    }
+    if (json['PackType'] == null) {
+      packType = null;
+    } else {
+          packType = json['PackType'];
+    }
+    if (json['Quality'] == null) {
+      quality = null;
+    } else {
+          quality = json['Quality'];
+    }
+    if (json['Taste'] == null) {
+      taste = null;
+    } else {
+          taste = json['Taste'];
+    }
+    if (json['Smoke'] == null) {
+      smoke = null;
+    } else {
+          smoke = json['Smoke'];
+    }
+    if (json['Overall'] == null) {
+      overall = null;
+    } else {
+          overall = json['Overall'];
+    }
+    if (json['SmokeTimePercentil'] == null) {
+      smokeTimePercentil = null;
+    } else {
+          smokeTimePercentil = json['SmokeTimePercentil'];
+    }
+    if (json['SessionTimePercentil'] == null) {
+      sessionTimePercentil = null;
+    } else {
+          sessionTimePercentil = json['SessionTimePercentil'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Used': used,
-      'Weight': weight,
-      'PipeAccessoryId': pipeAccessoryId,
-      'SmokeDurationTicks': smokeDurationTicks,
-      'PufCount': pufCount,
-      'BlowCount': blowCount,
-      'SessionDurationTick': sessionDurationTick,
-      'PackType': packType,
-      'Quality': quality,
-      'Taste': taste,
-      'Smoke': smoke,
-      'Overall': overall,
-      'SmokeTimePercentil': smokeTimePercentil,
-      'SessionTimePercentil': sessionTimePercentil
-    };
+    Map <String, dynamic> json = {};
+    if (used != null)
+      json['Used'] = used;
+    if (weight != null)
+      json['Weight'] = weight;
+    if (pipeAccessoryId != null)
+      json['PipeAccessoryId'] = pipeAccessoryId;
+    if (smokeDurationTicks != null)
+      json['SmokeDurationTicks'] = smokeDurationTicks;
+    if (pufCount != null)
+      json['PufCount'] = pufCount;
+    if (blowCount != null)
+      json['BlowCount'] = blowCount;
+    if (sessionDurationTick != null)
+      json['SessionDurationTick'] = sessionDurationTick;
+    if (packType != null)
+      json['PackType'] = packType;
+    if (quality != null)
+      json['Quality'] = quality;
+    if (taste != null)
+      json['Taste'] = taste;
+    if (smoke != null)
+      json['Smoke'] = smoke;
+    if (overall != null)
+      json['Overall'] = overall;
+    if (smokeTimePercentil != null)
+      json['SmokeTimePercentil'] = smokeTimePercentil;
+    if (sessionTimePercentil != null)
+      json['SessionTimePercentil'] = sessionTimePercentil;
+    return json;
   }
 
   static List<PipeAccessoryStatisticsDto> listFromJson(List<dynamic> json) {
@@ -80,7 +150,7 @@ class PipeAccessoryStatisticsDto {
 
   static Map<String, PipeAccessoryStatisticsDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, PipeAccessoryStatisticsDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new PipeAccessoryStatisticsDto.fromJson(value));
     }
     return map;

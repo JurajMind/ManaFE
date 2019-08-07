@@ -267,7 +267,7 @@ class _AddressPickerState extends State<AddressPicker> {
         _numberController.text = result.address.number;
         _cityController.text = result.address.city;
         _zipController.text = result.address.ZIP; 
-        _countryController.text = result.address.country;
+        //_countryController.text = result.address.country;
         _latController.text = result.address.lat;
         _lngController.text = result.address.lng;
         initPosition = result.latLng;

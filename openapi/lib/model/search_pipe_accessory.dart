@@ -18,19 +18,39 @@ class SearchPipeAccessory {
 
   SearchPipeAccessory.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['Id'];
-    name = json['Name'];
-    brand = json['Brand'];
-    type = json['Type'];
+    if (json['Id'] == null) {
+      id = null;
+    } else {
+          id = json['Id'];
+    }
+    if (json['Name'] == null) {
+      name = null;
+    } else {
+          name = json['Name'];
+    }
+    if (json['Brand'] == null) {
+      brand = null;
+    } else {
+          brand = json['Brand'];
+    }
+    if (json['Type'] == null) {
+      type = null;
+    } else {
+          type = json['Type'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Id': id,
-      'Name': name,
-      'Brand': brand,
-      'Type': type
-    };
+    Map <String, dynamic> json = {};
+    if (id != null)
+      json['Id'] = id;
+    if (name != null)
+      json['Name'] = name;
+    if (brand != null)
+      json['Brand'] = brand;
+    if (type != null)
+      json['Type'] = type;
+    return json;
   }
 
   static List<SearchPipeAccessory> listFromJson(List<dynamic> json) {
@@ -39,7 +59,7 @@ class SearchPipeAccessory {
 
   static Map<String, SearchPipeAccessory> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, SearchPipeAccessory>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new SearchPipeAccessory.fromJson(value));
     }
     return map;

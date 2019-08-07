@@ -26,27 +26,67 @@ class ReservationsTimeSlot {
 
   ReservationsTimeSlot.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    value = json['Value'];
-    text = json['Text'];
-    reserved = json['Reserved'];
-    capacityLeft = json['CapacityLeft'];
-    tablesLeft = json['TablesLeft'];
-    maxTable = json['MaxTable'];
-    id = json['Id'];
-    orderIndex = json['OrderIndex'];
+    if (json['Value'] == null) {
+      value = null;
+    } else {
+          value = json['Value'];
+    }
+    if (json['Text'] == null) {
+      text = null;
+    } else {
+          text = json['Text'];
+    }
+    if (json['Reserved'] == null) {
+      reserved = null;
+    } else {
+          reserved = json['Reserved'];
+    }
+    if (json['CapacityLeft'] == null) {
+      capacityLeft = null;
+    } else {
+          capacityLeft = json['CapacityLeft'];
+    }
+    if (json['TablesLeft'] == null) {
+      tablesLeft = null;
+    } else {
+          tablesLeft = json['TablesLeft'];
+    }
+    if (json['MaxTable'] == null) {
+      maxTable = null;
+    } else {
+          maxTable = json['MaxTable'];
+    }
+    if (json['Id'] == null) {
+      id = null;
+    } else {
+          id = json['Id'];
+    }
+    if (json['OrderIndex'] == null) {
+      orderIndex = null;
+    } else {
+          orderIndex = json['OrderIndex'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Value': value,
-      'Text': text,
-      'Reserved': reserved,
-      'CapacityLeft': capacityLeft,
-      'TablesLeft': tablesLeft,
-      'MaxTable': maxTable,
-      'Id': id,
-      'OrderIndex': orderIndex
-    };
+    Map <String, dynamic> json = {};
+    if (value != null)
+      json['Value'] = value;
+    if (text != null)
+      json['Text'] = text;
+    if (reserved != null)
+      json['Reserved'] = reserved;
+    if (capacityLeft != null)
+      json['CapacityLeft'] = capacityLeft;
+    if (tablesLeft != null)
+      json['TablesLeft'] = tablesLeft;
+    if (maxTable != null)
+      json['MaxTable'] = maxTable;
+    if (id != null)
+      json['Id'] = id;
+    if (orderIndex != null)
+      json['OrderIndex'] = orderIndex;
+    return json;
   }
 
   static List<ReservationsTimeSlot> listFromJson(List<dynamic> json) {
@@ -55,7 +95,7 @@ class ReservationsTimeSlot {
 
   static Map<String, ReservationsTimeSlot> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, ReservationsTimeSlot>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new ReservationsTimeSlot.fromJson(value));
     }
     return map;

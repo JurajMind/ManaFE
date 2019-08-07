@@ -20,13 +20,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -59,7 +61,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -96,13 +99,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -135,7 +140,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -195,7 +201,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -233,7 +240,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "responses": {
           "200": {
@@ -259,7 +267,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "responses": {
           "200": {
@@ -282,13 +291,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -327,13 +338,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -372,13 +385,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -417,13 +432,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -462,7 +479,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -493,7 +511,40 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Device/{id}/Ping": {
+      "post": {
+        "tags": [
+          "Device"
+        ],
+        "operationId": "Device_Ping",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -524,13 +575,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -570,7 +623,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -601,7 +655,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -632,7 +687,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -663,7 +719,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -694,7 +751,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -733,7 +791,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "responses": {
           "200": {
@@ -759,7 +818,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -791,13 +851,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -838,7 +900,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "responses": {
           "200": {
@@ -864,7 +927,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -896,7 +960,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "responses": {
           "200": {
@@ -922,7 +987,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -971,7 +1037,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -1097,7 +1164,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -1129,7 +1197,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -1160,7 +1229,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -1214,7 +1284,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -1246,7 +1317,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -1307,7 +1379,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "responses": {
           "200": {
@@ -1394,7 +1467,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -1454,7 +1528,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "responses": {
           "200": {
@@ -1515,7 +1590,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -1546,7 +1622,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -1578,7 +1655,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -1612,7 +1690,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -1661,7 +1740,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -1693,13 +1773,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -1729,6 +1811,173 @@
         }
       }
     },
+    "/api/Gear/Add": {
+      "post": {
+        "tags": [
+          "Gear"
+        ],
+        "operationId": "Gear_AddGear",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "accessory",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PipeAccesorySimpleDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PipeAccesorySimpleDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Media/Place/{id}/Add": {
+      "post": {
+        "tags": [
+          "Media"
+        ],
+        "operationId": "Media_AddPlacePicture",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "A file",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MediaDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Media/Gear/{id}/Add": {
+      "post": {
+        "tags": [
+          "Media"
+        ],
+        "operationId": "Media_AddGearPicture",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "A file",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MediaDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Media/Review/{id}/Add": {
+      "post": {
+        "tags": [
+          "Media"
+        ],
+        "operationId": "Media_AddReviewPicture",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "A file",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MediaDto"
+            }
+          }
+        }
+      }
+    },
     "/api/Mixology/GetMixes": {
       "get": {
         "tags": [
@@ -1740,7 +1989,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -1800,7 +2050,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -1881,7 +2132,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -1990,13 +2242,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2037,7 +2291,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2069,7 +2324,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "responses": {
           "200": {
@@ -2092,7 +2348,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "responses": {
           "200": {
@@ -2118,7 +2375,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "responses": {
           "200": {
@@ -2144,7 +2402,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "responses": {
           "200": {
@@ -2205,7 +2464,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2239,7 +2499,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2274,7 +2535,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2313,7 +2575,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2352,7 +2615,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2378,6 +2642,73 @@
         }
       }
     },
+    "/api/Admin/Places/Waiting": {
+      "get": {
+        "tags": [
+          "PlaceAdmin"
+        ],
+        "operationId": "PlaceAdmin_GetWaitingPlaces",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PlaceSimpleDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Admin/Places/{id}/ChangeState": {
+      "post": {
+        "tags": [
+          "PlaceAdmin"
+        ],
+        "operationId": "PlaceAdmin_ChangeState",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "newState",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlaceSimpleDto"
+            }
+          }
+        }
+      }
+    },
     "/api/PlaceCalendar/SavePlaceDay": {
       "post": {
         "tags": [
@@ -2389,13 +2720,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2428,13 +2761,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2467,7 +2802,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2498,7 +2834,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2536,7 +2873,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2588,7 +2926,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2620,7 +2959,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2672,7 +3012,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2704,7 +3045,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2736,7 +3078,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2768,7 +3111,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2815,7 +3159,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2875,7 +3220,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "responses": {
           "200": {
@@ -2898,13 +3244,55 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
               "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/Places/Add": {
+      "post": {
+        "tags": [
+          "Places"
+        ],
+        "operationId": "Places_AddPlace",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "importedPlace",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PlaceDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlaceDto"
             }
           }
         }
@@ -2921,13 +3309,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -2970,7 +3360,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3002,7 +3393,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3033,7 +3425,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3064,7 +3457,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3095,7 +3489,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3134,7 +3529,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "responses": {
           "200": {
@@ -3160,7 +3556,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3202,13 +3599,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3241,7 +3640,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3280,13 +3680,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3326,13 +3728,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3373,7 +3777,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3405,7 +3810,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3437,13 +3843,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3484,13 +3892,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3566,7 +3976,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3597,7 +4008,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3628,7 +4040,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3659,7 +4072,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3690,7 +4104,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3722,7 +4137,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3757,13 +4173,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3802,7 +4220,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3816,8 +4235,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "format": "int32",
-              "type": "integer"
+              "$ref": "#/definitions/SmokeSessionSimpleDto"
             }
           }
         }
@@ -3834,7 +4252,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3865,7 +4284,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3904,7 +4324,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -3936,13 +4357,15 @@
           "text/json",
           "application/xml",
           "text/xml",
+          "multipart/form-data",
           "application/x-www-form-urlencoded"
         ],
         "produces": [
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -4038,7 +4461,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -4070,7 +4494,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -4105,7 +4530,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -4137,7 +4563,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -4186,7 +4613,8 @@
           "application/json",
           "text/json",
           "application/xml",
-          "text/xml"
+          "text/xml",
+          "multipart/form-data"
         ],
         "parameters": [
           {
@@ -4457,6 +4885,10 @@
     "DeviceSimpleDto": {
       "type": "object",
       "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
         "Name": {
           "type": "string"
         },
@@ -4679,6 +5111,9 @@
         "FileName": {
           "type": "string",
           "readOnly": true
+        },
+        "Sizes": {
+          "type": "string"
         }
       }
     },
@@ -5179,6 +5614,9 @@
             "$ref": "#/definitions/DeviceSimpleDto"
           }
         },
+        "UpdateInfo": {
+          "$ref": "#/definitions/DeviceUpdateInfoDto"
+        },
         "ActiveSmokeSessions": {
           "type": "array",
           "items": {
@@ -5199,6 +5637,17 @@
         },
         "GameProfile": {
           "$ref": "#/definitions/GameProfileSimpleDto"
+        }
+      }
+    },
+    "DeviceUpdateInfoDto": {
+      "type": "object",
+      "properties": {
+        "StableVersion": {
+          "$ref": "#/definitions/DeviceUpdateDto"
+        },
+        "BetaVersion": {
+          "$ref": "#/definitions/DeviceUpdateDto"
         }
       }
     },
@@ -5445,6 +5894,25 @@
           "type": "string"
         },
         "ShortDescriptions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "Description": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "FranchiseId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "FranchiseName": {
+          "type": "string"
+        },
+        "FranchiseLogo": {
           "type": "string"
         },
         "FriendlyUrl": {
@@ -5804,6 +6272,21 @@
           "type": "string"
         },
         "ShortDescriptions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "Description": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "FranchiseName": {
+          "type": "string"
+        },
+        "FranchiseLogo": {
           "type": "string"
         },
         "FriendlyUrl": {
@@ -5865,8 +6348,8 @@
           "type": "integer"
         },
         "Overall": {
-          "format": "int32",
-          "type": "integer"
+          "format": "double",
+          "type": "number"
         },
         "Text": {
           "type": "string"
@@ -6084,6 +6567,9 @@
     "FinishedSessionDataDto": {
       "type": "object",
       "properties": {
+        "Data": {
+          "$ref": "#/definitions/SmokeSessionSimpleDto"
+        },
         "MetaData": {
           "$ref": "#/definitions/SmokeSessionMetaDataDto"
         },

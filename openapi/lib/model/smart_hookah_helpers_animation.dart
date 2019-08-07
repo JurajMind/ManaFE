@@ -23,23 +23,53 @@ class SmartHookahHelpersAnimation {
 
   SmartHookahHelpersAnimation.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['Id'];
-    displayName = json['DisplayName'];
-    versionFrom = json['VersionFrom'];
-    versionTo = json['VersionTo'];
-    usage = json['Usage'];
-    haveColor = json['HaveColor'];
+    if (json['Id'] == null) {
+      id = null;
+    } else {
+          id = json['Id'];
+    }
+    if (json['DisplayName'] == null) {
+      displayName = null;
+    } else {
+          displayName = json['DisplayName'];
+    }
+    if (json['VersionFrom'] == null) {
+      versionFrom = null;
+    } else {
+          versionFrom = json['VersionFrom'];
+    }
+    if (json['VersionTo'] == null) {
+      versionTo = null;
+    } else {
+          versionTo = json['VersionTo'];
+    }
+    if (json['Usage'] == null) {
+      usage = null;
+    } else {
+          usage = json['Usage'];
+    }
+    if (json['HaveColor'] == null) {
+      haveColor = null;
+    } else {
+          haveColor = json['HaveColor'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Id': id,
-      'DisplayName': displayName,
-      'VersionFrom': versionFrom,
-      'VersionTo': versionTo,
-      'Usage': usage,
-      'HaveColor': haveColor
-    };
+    Map <String, dynamic> json = {};
+    if (id != null)
+      json['Id'] = id;
+    if (displayName != null)
+      json['DisplayName'] = displayName;
+    if (versionFrom != null)
+      json['VersionFrom'] = versionFrom;
+    if (versionTo != null)
+      json['VersionTo'] = versionTo;
+    if (usage != null)
+      json['Usage'] = usage;
+    if (haveColor != null)
+      json['HaveColor'] = haveColor;
+    return json;
   }
 
   static List<SmartHookahHelpersAnimation> listFromJson(List<dynamic> json) {
@@ -48,7 +78,7 @@ class SmartHookahHelpersAnimation {
 
   static Map<String, SmartHookahHelpersAnimation> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, SmartHookahHelpersAnimation>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new SmartHookahHelpersAnimation.fromJson(value));
     }
     return map;

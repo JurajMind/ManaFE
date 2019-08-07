@@ -26,27 +26,67 @@ class FeatureMixCreatorDto {
 
   FeatureMixCreatorDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    name = json['Name'];
-    description = json['Description'];
-    location = json['Location'];
-    socialMedias = SmartHookahModelsDbSocialMedia.listFromJson(json['SocialMedias']);
-    medias = MediaDto.listFromJson(json['Medias']);
-    logoPicture = json['LogoPicture'];
-    personId = json['PersonId'];
-    id = json['Id'];
+    if (json['Name'] == null) {
+      name = null;
+    } else {
+          name = json['Name'];
+    }
+    if (json['Description'] == null) {
+      description = null;
+    } else {
+          description = json['Description'];
+    }
+    if (json['Location'] == null) {
+      location = null;
+    } else {
+          location = json['Location'];
+    }
+    if (json['SocialMedias'] == null) {
+      socialMedias = null;
+    } else {
+      socialMedias = SmartHookahModelsDbSocialMedia.listFromJson(json['SocialMedias']);
+    }
+    if (json['Medias'] == null) {
+      medias = null;
+    } else {
+      medias = MediaDto.listFromJson(json['Medias']);
+    }
+    if (json['LogoPicture'] == null) {
+      logoPicture = null;
+    } else {
+          logoPicture = json['LogoPicture'];
+    }
+    if (json['PersonId'] == null) {
+      personId = null;
+    } else {
+          personId = json['PersonId'];
+    }
+    if (json['Id'] == null) {
+      id = null;
+    } else {
+          id = json['Id'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Name': name,
-      'Description': description,
-      'Location': location,
-      'SocialMedias': socialMedias,
-      'Medias': medias,
-      'LogoPicture': logoPicture,
-      'PersonId': personId,
-      'Id': id
-    };
+    Map <String, dynamic> json = {};
+    if (name != null)
+      json['Name'] = name;
+    if (description != null)
+      json['Description'] = description;
+    if (location != null)
+      json['Location'] = location;
+    if (socialMedias != null)
+      json['SocialMedias'] = socialMedias;
+    if (medias != null)
+      json['Medias'] = medias;
+    if (logoPicture != null)
+      json['LogoPicture'] = logoPicture;
+    if (personId != null)
+      json['PersonId'] = personId;
+    if (id != null)
+      json['Id'] = id;
+    return json;
   }
 
   static List<FeatureMixCreatorDto> listFromJson(List<dynamic> json) {
@@ -55,7 +95,7 @@ class FeatureMixCreatorDto {
 
   static Map<String, FeatureMixCreatorDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, FeatureMixCreatorDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new FeatureMixCreatorDto.fromJson(value));
     }
     return map;

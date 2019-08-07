@@ -16,17 +16,32 @@ class SmartHookahModelsDbSocialMedia {
 
   SmartHookahModelsDbSocialMedia.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['Id'];
-    code = json['Code'];
-    url = json['Url'];
+    if (json['Id'] == null) {
+      id = null;
+    } else {
+          id = json['Id'];
+    }
+    if (json['Code'] == null) {
+      code = null;
+    } else {
+          code = json['Code'];
+    }
+    if (json['Url'] == null) {
+      url = null;
+    } else {
+          url = json['Url'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Id': id,
-      'Code': code,
-      'Url': url
-    };
+    Map <String, dynamic> json = {};
+    if (id != null)
+      json['Id'] = id;
+    if (code != null)
+      json['Code'] = code;
+    if (url != null)
+      json['Url'] = url;
+    return json;
   }
 
   static List<SmartHookahModelsDbSocialMedia> listFromJson(List<dynamic> json) {
@@ -35,7 +50,7 @@ class SmartHookahModelsDbSocialMedia {
 
   static Map<String, SmartHookahModelsDbSocialMedia> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, SmartHookahModelsDbSocialMedia>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new SmartHookahModelsDbSocialMedia.fromJson(value));
     }
     return map;

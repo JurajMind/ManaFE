@@ -519,7 +519,7 @@ class PlacePickerState extends State<PlacePicker> {
                   result.number = number;
                   result.ZIP = zip;
                   result.street = street;
-                  result.country = country;
+                  // result.country = country;
                   if (zip != null && street != null) return result;
               
                   return null;

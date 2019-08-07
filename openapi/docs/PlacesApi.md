@@ -10,6 +10,7 @@ All URIs are relative to *https://devmana.azurewebsites.net*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**placesAddFlags**](PlacesApi.md#placesAddFlags) | **PUT** /api/Places/{placeId}/AddFlags | 
+[**placesAddPlace**](PlacesApi.md#placesAddPlace) | **POST** /api/Places/Add | 
 [**placesFixLocation**](PlacesApi.md#placesFixLocation) | **GET** /api/Places/FixLocation | 
 [**placesGetDashboardData**](PlacesApi.md#placesGetDashboardData) | **GET** /api/Places/{placeId}/DashboardData | 
 [**placesGetPlaceInfo**](PlacesApi.md#placesGetPlaceInfo) | **GET** /api/Places/GetPlaceInfo | 
@@ -20,7 +21,7 @@ Method | HTTP request | Description
 
 
 # **placesAddFlags**
-> PlaceDto placesAddFlags(placeId, requestBody)
+> PlaceDto placesAddFlags(placeId, flags)
 
 
 
@@ -30,10 +31,10 @@ import 'package:openapi/api.dart';
 
 var api_instance = new PlacesApi();
 var placeId = 56; // int | 
-var requestBody = [new List&lt;String&gt;()]; // List<String> | 
+var flags = [new List&lt;String&gt;()]; // List<String> | 
 
 try { 
-    var result = api_instance.placesAddFlags(placeId, requestBody);
+    var result = api_instance.placesAddFlags(placeId, flags);
     print(result);
 } catch (e) {
     print("Exception when calling PlacesApi->placesAddFlags: $e\n");
@@ -45,7 +46,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **placeId** | **int**|  | [default to null]
- **requestBody** | [**List&lt;String&gt;**](List.md)|  | 
+ **flags** | [**List&lt;String&gt;**](String.md)|  | 
 
 ### Return type
 
@@ -57,8 +58,49 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **placesAddPlace**
+> PlaceDto placesAddPlace(importedPlace)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new PlacesApi();
+var importedPlace = new PlaceDto(); // PlaceDto | 
+
+try { 
+    var result = api_instance.placesAddPlace(importedPlace);
+    print(result);
+} catch (e) {
+    print("Exception when calling PlacesApi->placesAddPlace: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **importedPlace** | [**PlaceDto**](PlaceDto.md)|  | 
+
+### Return type
+
+[**PlaceDto**](PlaceDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -135,7 +177,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -176,7 +218,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -217,7 +259,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -254,7 +296,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -291,7 +333,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -340,7 +382,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

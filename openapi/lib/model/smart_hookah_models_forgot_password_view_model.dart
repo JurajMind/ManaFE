@@ -12,13 +12,18 @@ class SmartHookahModelsForgotPasswordViewModel {
 
   SmartHookahModelsForgotPasswordViewModel.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    email = json['Email'];
+    if (json['Email'] == null) {
+      email = null;
+    } else {
+          email = json['Email'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Email': email
-    };
+    Map <String, dynamic> json = {};
+    if (email != null)
+      json['Email'] = email;
+    return json;
   }
 
   static List<SmartHookahModelsForgotPasswordViewModel> listFromJson(List<dynamic> json) {
@@ -27,7 +32,7 @@ class SmartHookahModelsForgotPasswordViewModel {
 
   static Map<String, SmartHookahModelsForgotPasswordViewModel> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, SmartHookahModelsForgotPasswordViewModel>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new SmartHookahModelsForgotPasswordViewModel.fromJson(value));
     }
     return map;

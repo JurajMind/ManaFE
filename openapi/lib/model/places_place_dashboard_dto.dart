@@ -12,13 +12,18 @@ class PlacesPlaceDashboardDto {
 
   PlacesPlaceDashboardDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    placeDevices = PlacesDevicePlaceDashboardDto.listFromJson(json['PlaceDevices']);
+    if (json['PlaceDevices'] == null) {
+      placeDevices = null;
+    } else {
+      placeDevices = PlacesDevicePlaceDashboardDto.listFromJson(json['PlaceDevices']);
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'PlaceDevices': placeDevices
-    };
+    Map <String, dynamic> json = {};
+    if (placeDevices != null)
+      json['PlaceDevices'] = placeDevices;
+    return json;
   }
 
   static List<PlacesPlaceDashboardDto> listFromJson(List<dynamic> json) {
@@ -27,7 +32,7 @@ class PlacesPlaceDashboardDto {
 
   static Map<String, PlacesPlaceDashboardDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, PlacesPlaceDashboardDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new PlacesPlaceDashboardDto.fromJson(value));
     }
     return map;

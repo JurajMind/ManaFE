@@ -14,15 +14,25 @@ class UsedWithDto {
 
   UsedWithDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    accessory = new PipeAccesorySimpleDto.fromJson(json['Accessory']);
-    usedCount = json['UsedCount'];
+    if (json['Accessory'] == null) {
+      accessory = null;
+    } else {
+      accessory = new PipeAccesorySimpleDto.fromJson(json['Accessory']);
+    }
+    if (json['UsedCount'] == null) {
+      usedCount = null;
+    } else {
+          usedCount = json['UsedCount'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Accessory': accessory,
-      'UsedCount': usedCount
-    };
+    Map <String, dynamic> json = {};
+    if (accessory != null)
+      json['Accessory'] = accessory;
+    if (usedCount != null)
+      json['UsedCount'] = usedCount;
+    return json;
   }
 
   static List<UsedWithDto> listFromJson(List<dynamic> json) {
@@ -31,7 +41,7 @@ class UsedWithDto {
 
   static Map<String, UsedWithDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, UsedWithDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new UsedWithDto.fromJson(value));
     }
     return map;

@@ -2,8 +2,10 @@ import 'package:app/components/Brands/brand_list_item.dart';
 import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:queries/collections.dart';
 
 class BrandSelectPage extends StatefulWidget {
   BrandSelectPage({Key key}) : super(key: key);
@@ -16,16 +18,38 @@ class _BrandSelectPageState extends State<BrandSelectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select brand'),
+        title: Text(AppTranslations.of(context)
+            .text("gear.select_brand")
+            .toUpperCase()),
+        centerTitle: true,
       ),
       body: PageView(
         children: <Widget>[
-          BrandTypeSelect("Tobacco"),
-          BrandTypeSelect("Hookah"),
-          BrandTypeSelect("Bowl"),
-          BrandTypeSelect("HeatManagement"),
-          BrandTypeSelect("Coal"),
-          NewBrandTypeSelect()
+          BrandTypeSelect(
+            "Tobacco",
+            right: true,
+          ),
+          BrandTypeSelect(
+            "Hookah",
+            right: true,
+            left: true,
+          ),
+          BrandTypeSelect(
+            "Bowl",
+            right: true,
+            left: true,
+          ),
+          BrandTypeSelect(
+            "HeatManagement",
+            displayType: "hmd",
+            right: true,
+            left: true,
+          ),
+          BrandTypeSelect(
+            "Coal",
+            left: true,
+          ),
+          // NewBrandTypeSelect()
         ],
       ),
     );
@@ -42,103 +66,276 @@ class _NewBrandTypeSelectState extends State<NewBrandTypeSelect> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(Icons.add, size: 40),
-              Container(
-                height: 40,
-                width: 40,
-              ),
-              Text(
-                'New brand',
-                style: Theme.of(context).textTheme.display1,
-              ),
-            ],
-          ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Container(
-                width: 200,
-                child: TextField(
-                  onChanged: (brandName) {
-                    setState(() {
-                      this.brandName = brandName;
-                    });
-                  },
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Enter new brand name'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(AppTranslations.of(context)
+            .text("gear.add_new_brand")
+            .toUpperCase()),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Container(
+                  width: 200,
+                  child: TextField(
+                    onChanged: (brandName) {
+                      setState(() {
+                        this.brandName = brandName;
+                      });
+                    },
+                    decoration: new InputDecoration(
+                      labelText: AppTranslations.of(context)
+                          .text("gear.enter_new_brand_name"),
+                      labelStyle: TextStyle(
+                        color: Colors.white,
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        // width: 0.0 produces a thin "hairline" border
+                        borderSide:
+                            const BorderSide(color: Colors.white, width: 3.0),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        // width: 0.0 produces a thin "hairline" border
+                        borderSide:
+                            const BorderSide(color: Colors.white, width: 3.0),
+                      ),
+                      border: const OutlineInputBorder(),
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-          OutlineButton.icon(
-            icon: Icon(Icons.save),
-            label: Text('Use new brand'),
-            onPressed: () {
-              if (this.brandName == null || this.brandName.length == 0) {
-                return;
-              }
-              var brand = new BrandGroup();
-              brand.name = this.brandName;
-              Navigator.of(context).pop(brand);
-            },
-          )
-        ],
+            SizedBox(
+              height: 16,
+            ),
+            OutlineButton.icon(
+              icon: Icon(Icons.save),
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)),
+              borderSide: BorderSide(color: Colors.white, width: 1),
+              label:
+                  Text(AppTranslations.of(context).text("gear.use_new_brand")),
+              onPressed: () {
+                if (this.brandName == null || this.brandName.length == 0) {
+                  return;
+                }
+                var brand = new BrandGroup();
+                brand.name = this.brandName;
+                Navigator.of(context).pop(brand);
+              },
+            )
+          ],
+        ),
       ),
     );
   }
 }
 
-class BrandTypeSelect extends StatelessWidget {
+class BrandTypeSelect extends StatefulWidget {
+  final bool left;
+  final bool right;
   final String type;
+  final String displayType;
   const BrandTypeSelect(
     this.type, {
     Key key,
+    this.left,
+    this.right, this.displayType,
   }) : super(key: key);
+
+  @override
+  _BrandTypeSelectState createState() => _BrandTypeSelectState();
+}
+
+class _BrandTypeSelectState extends State<BrandTypeSelect> {
+
+
+  String searchString = "";
+  bool searchMode = false;
+  var textController = new TextEditingController();
+  String display;
+
+  @override
+  initState(){
+    if(widget.displayType != null){
+      display = widget.displayType;
+    }else{
+      display = widget.type;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     var bloc = DataProvider.getData(context).gearBloc;
     return Column(
       children: <Widget>[
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-                height: 40,
-                width: 40,
-                child: Extensions.defaultTypePicture(type)),
-            Container(
-              height: 40,
-              width: 40,
-            ),
-            Text(
-              type,
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
+        !searchMode
+            ? Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () => setState(() {
+                      searchMode = true;
+                    }),
+                  ),
+                  if (widget.left ?? false) Icon(Icons.chevron_left),
+                  SizedBox(
+                    width: 40,
+                  ),
+                  Container(
+                      height: 40,
+                      width: 40,
+                      child: Extensions.defaultTypePicture(widget.type)),
+                  Container(
+                    height: 40,
+                    width: 40,
+                  ),
+                  Text(
+                    AppTranslations.of(context).text("gear.${display}"),
+                    style: Theme.of(context).textTheme.display1,
+                  ),
+                  SizedBox(
+                    width: 40,
+                  ),
+                  if (widget.right ?? false) Icon(Icons.chevron_right)
+                ],
+              )
+            : Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Flexible(
+                      child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Icon(Icons.search),
+                  )),
+                  Expanded(
+                      child: Padding(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: TextField(
+                      controller: textController,
+                      onChanged: (data) {
+                        setState(() {
+                          this.searchString = data;
+                        });
+                      },
+                      decoration: InputDecoration(
+                          hintText: 'Search',
+                          border: InputBorder.none,
+                          labelStyle: Theme.of(context).textTheme.body2),
+                    ),
+                  )),
+                  Flexible(
+                      child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: IconButton(
+                            icon: Icon(Icons.cancel),
+                            onPressed: () => setState(() {
+                              this.searchString = "";
+                              textController.text = "";
+                              searchMode = false;
+                            }),
+                          ))),
+                ],
+              ),
         Expanded(
           child: StreamBuilder<List<BrandGroup>>(
-              stream: bloc.getBrandsByType(type),
+              stream: bloc.getBrandsByType(widget.type),
               initialData: null,
               builder: (context, snapshot) {
-                if (snapshot == null) return Text('test');
+                if (snapshot?.data == null) return Container();
+                var data = snapshot.data;
+                if (data != null && this.searchString != "") {
+                  var dataCollection = Collection(data);
+                  data = dataCollection
+                      .where$1((a, _) => a.name
+                          .toUpperCase()
+                          .contains(this.searchString.toUpperCase()))
+                      .toList();
+                }
+
+                if (data.length == 0) {
+                  return Center(
+                      child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      RichText(
+                        text: TextSpan(
+                          text: 'No result for ',
+                          style: DefaultTextStyle.of(context).style,
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: searchString,
+                                style: TextStyle(fontWeight: FontWeight.bold)),
+                            TextSpan(text: ' found'),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 18,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          addNewBrand(context);
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            RichText(
+                              text: TextSpan(
+                                text: 'You can add ',
+                                style: DefaultTextStyle.of(context).style,
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: searchString,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                  TextSpan(text: ' as new brand'),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 18,
+                            ),
+                            Icon(
+                              Icons.add,
+                              size: 40,
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ));
+                }
+
                 return ListView.builder(
-                  itemCount: snapshot?.data?.length ?? 0,
+                  itemCount: data.length + 1,
                   itemBuilder: (context, index) {
-                    var brand = snapshot.data[index];
+
+                    if(index >= data.length)
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListTile(
+                          onTap: () =>  addNewBrand(context),
+                          leading: Icon(Icons.add),
+                           title: Text('Not found what you were looking for?'),
+                    subtitle: Text('Add new brand'),
+                        ),
+                      );
+
+                    var brand = data[index];
                     return BrandListItem(
+                      
                       brand: brand,
-                      brandType: type,
+                      brandType: widget.type,
                       ontap: () {
                         Navigator.of(context).pop(brand);
                       },
@@ -149,5 +346,16 @@ class BrandTypeSelect extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void addNewBrand(BuildContext context) {
+     Navigator.of(context)
+        .push<BrandGroup>(MaterialPageRoute(
+            builder: (context) => NewBrandTypeSelect(),
+            fullscreenDialog: true))
+        .then((newGear) {
+      if (newGear != null)
+        Navigator.of(context).pop(newGear);
+    });
   }
 }

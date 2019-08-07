@@ -10,6 +10,56 @@ class GearApi {
   /// 
   ///
   /// 
+  Future<PipeAccesorySimpleDto> gearAddGear(PipeAccesorySimpleDto accessory) async {
+    Object postBody = accessory;
+
+    // verify required params are set
+    if(accessory == null) {
+     throw new ApiException(400, "Missing required param: accessory");
+    }
+
+    // create path and map variables
+    String path = "/api/Gear/Add".replaceAll("{format}","json");
+
+    // query params
+    List<QueryParam> queryParams = [];
+    Map<String, String> headerParams = {};
+    Map<String, String> formParams = {};
+
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
+
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
+    List<String> authNames = [];
+
+    if(contentType.startsWith("multipart/form-data")) {
+      bool hasFields = false;
+      MultipartRequest mp = new MultipartRequest(null, null);
+      if(hasFields)
+        postBody = mp;
+    }
+    else {
+    }
+
+    var response = await apiClient.invokeAPI(path,
+                                             'POST',
+                                             queryParams,
+                                             postBody,
+                                             headerParams,
+                                             formParams,
+                                             contentType,
+                                             authNames);
+
+    if(response.statusCode >= 400) {
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
+    } else if(response.body != null) {
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PipeAccesorySimpleDto') as PipeAccesorySimpleDto;
+    } else {
+      return null;
+    }
+  }
+  /// 
+  ///
+  /// 
   Future<BrandDto> gearGetBrand(String brandName) async {
     Object postBody;
 
@@ -28,7 +78,7 @@ class GearApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -50,9 +100,9 @@ class GearApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'BrandDto') as BrandDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'BrandDto') as BrandDto;
     } else {
       return null;
     }
@@ -75,7 +125,7 @@ class GearApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -97,9 +147,9 @@ class GearApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'InlineResponse200') as InlineResponse200;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'InlineResponse200') as InlineResponse200;
     } else {
       return null;
     }
@@ -125,7 +175,7 @@ class GearApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -147,9 +197,9 @@ class GearApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return (apiClient.deserialize(response.body, 'List<String>') as List).map((item) => item as String).toList();
+      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<String>') as List).map((item) => item as String).toList();
     } else {
       return null;
     }
@@ -175,7 +225,7 @@ class GearApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -197,9 +247,9 @@ class GearApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'PipeAccessoryDetailsDto') as PipeAccessoryDetailsDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PipeAccessoryDetailsDto') as PipeAccessoryDetailsDto;
     } else {
       return null;
     }
@@ -225,7 +275,7 @@ class GearApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -247,9 +297,9 @@ class GearApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'PipeAccesorySimpleDto') as PipeAccesorySimpleDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PipeAccesorySimpleDto') as PipeAccesorySimpleDto;
     } else {
       return null;
     }
@@ -287,7 +337,7 @@ class GearApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -309,9 +359,9 @@ class GearApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return (apiClient.deserialize(response.body, 'List<SearchPipeAccessory>') as List).map((item) => item as SearchPipeAccessory).toList();
+      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<SearchPipeAccessory>') as List).map((item) => item as SearchPipeAccessory).toList();
     } else {
       return null;
     }
@@ -343,7 +393,7 @@ class GearApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -365,9 +415,9 @@ class GearApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return (apiClient.deserialize(response.body, 'List<SmokeSessionSimpleDto>') as List).map((item) => item as SmokeSessionSimpleDto).toList();
+      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<SmokeSessionSimpleDto>') as List).map((item) => item as SmokeSessionSimpleDto).toList();
     } else {
       return null;
     }
@@ -375,15 +425,15 @@ class GearApi {
   /// 
   ///
   /// 
-  Future<Object> gearVote(int id, int body) async {
-    Object postBody = body;
+  Future<Object> gearVote(int id, int value) async {
+    Object postBody = value;
 
     // verify required params are set
     if(id == null) {
      throw new ApiException(400, "Missing required param: id");
     }
-    if(body == null) {
-     throw new ApiException(400, "Missing required param: body");
+    if(value == null) {
+     throw new ApiException(400, "Missing required param: value");
     }
 
     // create path and map variables
@@ -394,9 +444,9 @@ class GearApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -418,9 +468,9 @@ class GearApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Object') as Object;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'Object') as Object;
     } else {
       return null;
     }

@@ -18,19 +18,39 @@ class DeviceDevicePictureDto {
 
   DeviceDevicePictureDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['Id'];
-    width = json['Width'];
-    height = json['Height'];
-    inlinePicture = json['InlinePicture'];
+    if (json['Id'] == null) {
+      id = null;
+    } else {
+          id = json['Id'];
+    }
+    if (json['Width'] == null) {
+      width = null;
+    } else {
+          width = json['Width'];
+    }
+    if (json['Height'] == null) {
+      height = null;
+    } else {
+          height = json['Height'];
+    }
+    if (json['InlinePicture'] == null) {
+      inlinePicture = null;
+    } else {
+          inlinePicture = json['InlinePicture'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Id': id,
-      'Width': width,
-      'Height': height,
-      'InlinePicture': inlinePicture
-    };
+    Map <String, dynamic> json = {};
+    if (id != null)
+      json['Id'] = id;
+    if (width != null)
+      json['Width'] = width;
+    if (height != null)
+      json['Height'] = height;
+    if (inlinePicture != null)
+      json['InlinePicture'] = inlinePicture;
+    return json;
   }
 
   static List<DeviceDevicePictureDto> listFromJson(List<dynamic> json) {
@@ -39,7 +59,7 @@ class DeviceDevicePictureDto {
 
   static Map<String, DeviceDevicePictureDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, DeviceDevicePictureDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new DeviceDevicePictureDto.fromJson(value));
     }
     return map;

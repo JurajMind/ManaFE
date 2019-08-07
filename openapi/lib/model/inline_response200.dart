@@ -2,43 +2,73 @@ part of openapi.api;
 
 class InlineResponse200 {
   
+  List<BrandGroupDto> bowl = [];
+  
   List<BrandGroupDto> tobacco = [];
+  
+  List<BrandGroupDto> tobaccoMix = [];
+  
+  List<BrandGroupDto> heatmanagement = [];
   
   List<BrandGroupDto> hookah = [];
   
   List<BrandGroupDto> coal = [];
-  
-  List<BrandGroupDto> heatmanagement = [];
-  
-  List<BrandGroupDto> tobaccoMix = [];
-  
-  List<BrandGroupDto> bowl = [];
   InlineResponse200();
 
   @override
   String toString() {
-    return 'InlineResponse200[tobacco=$tobacco, hookah=$hookah, coal=$coal, heatmanagement=$heatmanagement, tobaccoMix=$tobaccoMix, bowl=$bowl, ]';
+    return 'InlineResponse200[bowl=$bowl, tobacco=$tobacco, tobaccoMix=$tobaccoMix, heatmanagement=$heatmanagement, hookah=$hookah, coal=$coal, ]';
   }
 
   InlineResponse200.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    tobacco = BrandGroupDto.listFromJson(json['Tobacco']);
-    hookah = BrandGroupDto.listFromJson(json['Hookah']);
-    coal = BrandGroupDto.listFromJson(json['Coal']);
-    heatmanagement = BrandGroupDto.listFromJson(json['Heatmanagement']);
-    tobaccoMix = BrandGroupDto.listFromJson(json['TobaccoMix']);
-    bowl = BrandGroupDto.listFromJson(json['Bowl']);
+    if (json['Bowl'] == null) {
+      bowl = null;
+    } else {
+      bowl = BrandGroupDto.listFromJson(json['Bowl']);
+    }
+    if (json['Tobacco'] == null) {
+      tobacco = null;
+    } else {
+      tobacco = BrandGroupDto.listFromJson(json['Tobacco']);
+    }
+    if (json['TobaccoMix'] == null) {
+      tobaccoMix = null;
+    } else {
+      tobaccoMix = BrandGroupDto.listFromJson(json['TobaccoMix']);
+    }
+    if (json['Heatmanagement'] == null) {
+      heatmanagement = null;
+    } else {
+      heatmanagement = BrandGroupDto.listFromJson(json['Heatmanagement']);
+    }
+    if (json['Hookah'] == null) {
+      hookah = null;
+    } else {
+      hookah = BrandGroupDto.listFromJson(json['Hookah']);
+    }
+    if (json['Coal'] == null) {
+      coal = null;
+    } else {
+      coal = BrandGroupDto.listFromJson(json['Coal']);
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Tobacco': tobacco,
-      'Hookah': hookah,
-      'Coal': coal,
-      'Heatmanagement': heatmanagement,
-      'TobaccoMix': tobaccoMix,
-      'Bowl': bowl
-    };
+    Map <String, dynamic> json = {};
+    if (bowl != null)
+      json['Bowl'] = bowl;
+    if (tobacco != null)
+      json['Tobacco'] = tobacco;
+    if (tobaccoMix != null)
+      json['TobaccoMix'] = tobaccoMix;
+    if (heatmanagement != null)
+      json['Heatmanagement'] = heatmanagement;
+    if (hookah != null)
+      json['Hookah'] = hookah;
+    if (coal != null)
+      json['Coal'] = coal;
+    return json;
   }
 
   static List<InlineResponse200> listFromJson(List<dynamic> json) {
@@ -47,7 +77,7 @@ class InlineResponse200 {
 
   static Map<String, InlineResponse200> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, InlineResponse200>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new InlineResponse200.fromJson(value));
     }
     return map;

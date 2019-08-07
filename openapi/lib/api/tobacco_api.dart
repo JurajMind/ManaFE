@@ -28,7 +28,7 @@ class TobaccoApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -50,9 +50,9 @@ class TobaccoApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'TobaccoSimpleDto') as TobaccoSimpleDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'TobaccoSimpleDto') as TobaccoSimpleDto;
     } else {
       return null;
     }
@@ -78,7 +78,7 @@ class TobaccoApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -100,9 +100,9 @@ class TobaccoApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'TobaccoInformationDto') as TobaccoInformationDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'TobaccoInformationDto') as TobaccoInformationDto;
     } else {
       return null;
     }
@@ -134,7 +134,7 @@ class TobaccoApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -156,9 +156,9 @@ class TobaccoApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return (apiClient.deserialize(response.body, 'List<TobaccoReviewDto>') as List).map((item) => item as TobaccoReviewDto).toList();
+      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<TobaccoReviewDto>') as List).map((item) => item as TobaccoReviewDto).toList();
     } else {
       return null;
     }
@@ -184,7 +184,7 @@ class TobaccoApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -206,9 +206,9 @@ class TobaccoApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'PipeAccessoryStatisticsDto') as PipeAccessoryStatisticsDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PipeAccessoryStatisticsDto') as PipeAccessoryStatisticsDto;
     } else {
       return null;
     }
@@ -240,7 +240,7 @@ class TobaccoApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -262,9 +262,9 @@ class TobaccoApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return (apiClient.deserialize(response.body, 'List<SmokeSessionSimpleDto>') as List).map((item) => item as SmokeSessionSimpleDto).toList();
+      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<SmokeSessionSimpleDto>') as List).map((item) => item as SmokeSessionSimpleDto).toList();
     } else {
       return null;
     }
@@ -290,7 +290,7 @@ class TobaccoApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -312,9 +312,9 @@ class TobaccoApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return (apiClient.deserialize(response.body, 'List<TobaccoTasteDto>') as List).map((item) => item as TobaccoTasteDto).toList();
+      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<TobaccoTasteDto>') as List).map((item) => item as TobaccoTasteDto).toList();
     } else {
       return null;
     }
@@ -363,7 +363,7 @@ class TobaccoApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -385,9 +385,9 @@ class TobaccoApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return (apiClient.deserialize(response.body, 'List<TobaccoDto>') as List).map((item) => item as TobaccoDto).toList();
+      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<TobaccoDto>') as List).map((item) => item as TobaccoDto).toList();
     } else {
       return null;
     }

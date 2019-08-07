@@ -18,19 +18,39 @@ class PipeAccessoryDetailsDto {
 
   PipeAccessoryDetailsDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    usedByPerson = json['UsedByPerson'];
-    usedWith = UsedWithDto.listFromJson(json['UsedWith']);
-    ownedByPersons = json['OwnedByPersons'];
-    ownedByPlaces = json['OwnedByPlaces'];
+    if (json['UsedByPerson'] == null) {
+      usedByPerson = null;
+    } else {
+          usedByPerson = json['UsedByPerson'];
+    }
+    if (json['UsedWith'] == null) {
+      usedWith = null;
+    } else {
+      usedWith = UsedWithDto.listFromJson(json['UsedWith']);
+    }
+    if (json['OwnedByPersons'] == null) {
+      ownedByPersons = null;
+    } else {
+          ownedByPersons = json['OwnedByPersons'];
+    }
+    if (json['OwnedByPlaces'] == null) {
+      ownedByPlaces = null;
+    } else {
+          ownedByPlaces = json['OwnedByPlaces'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'UsedByPerson': usedByPerson,
-      'UsedWith': usedWith,
-      'OwnedByPersons': ownedByPersons,
-      'OwnedByPlaces': ownedByPlaces
-    };
+    Map <String, dynamic> json = {};
+    if (usedByPerson != null)
+      json['UsedByPerson'] = usedByPerson;
+    if (usedWith != null)
+      json['UsedWith'] = usedWith;
+    if (ownedByPersons != null)
+      json['OwnedByPersons'] = ownedByPersons;
+    if (ownedByPlaces != null)
+      json['OwnedByPlaces'] = ownedByPlaces;
+    return json;
   }
 
   static List<PipeAccessoryDetailsDto> listFromJson(List<dynamic> json) {
@@ -39,7 +59,7 @@ class PipeAccessoryDetailsDto {
 
   static Map<String, PipeAccessoryDetailsDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, PipeAccessoryDetailsDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new PipeAccessoryDetailsDto.fromJson(value));
     }
     return map;

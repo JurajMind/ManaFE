@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 
 # **mixologyAddToMix**
-> TobaccoMixSimpleDto mixologyAddToMix(tobaccoMixSimpleDto)
+> TobaccoMixSimpleDto mixologyAddToMix(newMix)
 
 
 
@@ -29,10 +29,10 @@ Method | HTTP request | Description
 import 'package:openapi/api.dart';
 
 var api_instance = new MixologyApi();
-var tobaccoMixSimpleDto = new TobaccoMixSimpleDto(); // TobaccoMixSimpleDto | 
+var newMix = new TobaccoMixSimpleDto(); // TobaccoMixSimpleDto | 
 
 try { 
-    var result = api_instance.mixologyAddToMix(tobaccoMixSimpleDto);
+    var result = api_instance.mixologyAddToMix(newMix);
     print(result);
 } catch (e) {
     print("Exception when calling MixologyApi->mixologyAddToMix: $e\n");
@@ -43,7 +43,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **tobaccoMixSimpleDto** | [**TobaccoMixSimpleDto**](TobaccoMixSimpleDto.md)|  | 
+ **newMix** | [**TobaccoMixSimpleDto**](TobaccoMixSimpleDto.md)|  | 
 
 ### Return type
 
@@ -103,7 +103,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -152,7 +152,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -234,7 +234,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -275,7 +275,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -323,7 +323,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **mixologyVote**
-> Object mixologyVote(id, body)
+> Object mixologyVote(id, value)
 
 
 
@@ -333,10 +333,10 @@ import 'package:openapi/api.dart';
 
 var api_instance = new MixologyApi();
 var id = 56; // int | 
-var body = new int(); // int | 
+var value = new int(); // int | 
 
 try { 
-    var result = api_instance.mixologyVote(id, body);
+    var result = api_instance.mixologyVote(id, value);
     print(result);
 } catch (e) {
     print("Exception when calling MixologyApi->mixologyVote: $e\n");
@@ -348,7 +348,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**|  | [default to null]
- **body** | **int**|  | 
+ **value** | **int**|  | 
 
 ### Return type
 
@@ -360,8 +360,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

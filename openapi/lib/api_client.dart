@@ -18,7 +18,7 @@ class ApiClient {
   final _regList = RegExp(r'^List<(.*)>$');
   final _regMap = RegExp(r'^Map<String,(.*)>$');
 
-  ApiClient({this.basePath: "https://devmana.azurewebsites.net"}) {
+  ApiClient({this.basePath = "https://devmana.azurewebsites.net"}) {
     // Setup authentications (key: authentication name, value: authentication).
   }
 
@@ -59,6 +59,8 @@ class ApiClient {
           return DeviceSimpleDto.fromJson(value);
         case 'DeviceUpdateDto':
           return DeviceUpdateDto.fromJson(value);
+        case 'DeviceUpdateInfoDto':
+          return DeviceUpdateInfoDto.fromJson(value);
         case 'Dto':
           return Dto.fromJson(value);
         case 'DynamicSmokeStatisticRawDto':
@@ -249,7 +251,10 @@ class ApiClient {
 
     _updateParamsForAuth(authNames, queryParams, headerParams);
 
-    var ps = queryParams.where((p) => p.value != null).map((p) => '${p.name}=${p.value}');
+    var ps = queryParams
+      .where((p) => p.value != null)
+      .map((p) => '${p.name}=${Uri.encodeQueryComponent(p.value)}');
+
     String queryString = ps.isNotEmpty ?
                          '?' + ps.join('&') :
                          '';
@@ -294,11 +299,9 @@ class ApiClient {
     });
   }
 
-  void setAccessToken(String accessToken) {
-    _authentications.forEach((key, auth) {
-      if (auth is OAuth) {
-        auth.setAccessToken(accessToken);
-      }
-    });
+  T getAuthentication<T extends Authentication>(String name) {
+    var authentication = _authentications[name];
+
+    return authentication is T ? authentication : null;
   }
 }

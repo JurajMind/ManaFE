@@ -42,43 +42,123 @@ class PlacesReservationsReservationDto {
 
   PlacesReservationsReservationDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['Id'];
-    created = json['Created'] == null ? null : DateTime.parse(json['Created']);
-    personId = json['PersonId'];
-    placeId = json['PlaceId'];
-    placeName = json['PlaceName'];
-    started = json['Started'] == null ? null : DateTime.parse(json['Started']);
-    end = json['End'] == null ? null : DateTime.parse(json['End']);
-    persons = json['Persons'];
-    duration = json['Duration'];
-    time = json['Time'] == null ? null : DateTime.parse(json['Time']);
-    text = json['Text'];
-    name = json['Name'];
-    displayName = json['DisplayName'];
-    status = json['Status'];
-    seats = ((json['Seats'] ?? []) as List).map((item) => item as int).toList();
-    lateDuration = json['LateDuration'];
+    if (json['Id'] == null) {
+      id = null;
+    } else {
+          id = json['Id'];
+    }
+    if (json['Created'] == null) {
+      created = null;
+    } else {
+      created = DateTime.parse(json['Created']);
+    }
+    if (json['PersonId'] == null) {
+      personId = null;
+    } else {
+          personId = json['PersonId'];
+    }
+    if (json['PlaceId'] == null) {
+      placeId = null;
+    } else {
+          placeId = json['PlaceId'];
+    }
+    if (json['PlaceName'] == null) {
+      placeName = null;
+    } else {
+          placeName = json['PlaceName'];
+    }
+    if (json['Started'] == null) {
+      started = null;
+    } else {
+      started = DateTime.parse(json['Started']);
+    }
+    if (json['End'] == null) {
+      end = null;
+    } else {
+      end = DateTime.parse(json['End']);
+    }
+    if (json['Persons'] == null) {
+      persons = null;
+    } else {
+          persons = json['Persons'];
+    }
+    if (json['Duration'] == null) {
+      duration = null;
+    } else {
+          duration = json['Duration'];
+    }
+    if (json['Time'] == null) {
+      time = null;
+    } else {
+      time = DateTime.parse(json['Time']);
+    }
+    if (json['Text'] == null) {
+      text = null;
+    } else {
+          text = json['Text'];
+    }
+    if (json['Name'] == null) {
+      name = null;
+    } else {
+          name = json['Name'];
+    }
+    if (json['DisplayName'] == null) {
+      displayName = null;
+    } else {
+          displayName = json['DisplayName'];
+    }
+    if (json['Status'] == null) {
+      status = null;
+    } else {
+          status = json['Status'];
+    }
+    if (json['Seats'] == null) {
+      seats = null;
+    } else {
+      seats = (json['Seats'] as List).cast<int>();
+    }
+    if (json['LateDuration'] == null) {
+      lateDuration = null;
+    } else {
+          lateDuration = json['LateDuration'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Id': id,
-      'Created': created == null ? '' : created.toUtc().toIso8601String(),
-      'PersonId': personId,
-      'PlaceId': placeId,
-      'PlaceName': placeName,
-      'Started': started == null ? '' : started.toUtc().toIso8601String(),
-      'End': end == null ? '' : end.toUtc().toIso8601String(),
-      'Persons': persons,
-      'Duration': duration,
-      'Time': time == null ? '' : time.toUtc().toIso8601String(),
-      'Text': text,
-      'Name': name,
-      'DisplayName': displayName,
-      'Status': status,
-      'Seats': seats,
-      'LateDuration': lateDuration
-    };
+    Map <String, dynamic> json = {};
+    if (id != null)
+      json['Id'] = id;
+    if (created != null)
+      json['Created'] = created == null ? null : created.toUtc().toIso8601String();
+    if (personId != null)
+      json['PersonId'] = personId;
+    if (placeId != null)
+      json['PlaceId'] = placeId;
+    if (placeName != null)
+      json['PlaceName'] = placeName;
+    if (started != null)
+      json['Started'] = started == null ? null : started.toUtc().toIso8601String();
+    if (end != null)
+      json['End'] = end == null ? null : end.toUtc().toIso8601String();
+    if (persons != null)
+      json['Persons'] = persons;
+    if (duration != null)
+      json['Duration'] = duration;
+    if (time != null)
+      json['Time'] = time == null ? null : time.toUtc().toIso8601String();
+    if (text != null)
+      json['Text'] = text;
+    if (name != null)
+      json['Name'] = name;
+    if (displayName != null)
+      json['DisplayName'] = displayName;
+    if (status != null)
+      json['Status'] = status;
+    if (seats != null)
+      json['Seats'] = seats;
+    if (lateDuration != null)
+      json['LateDuration'] = lateDuration;
+    return json;
   }
 
   static List<PlacesReservationsReservationDto> listFromJson(List<dynamic> json) {
@@ -87,7 +167,7 @@ class PlacesReservationsReservationDto {
 
   static Map<String, PlacesReservationsReservationDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, PlacesReservationsReservationDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new PlacesReservationsReservationDto.fromJson(value));
     }
     return map;

@@ -9,6 +9,7 @@ All URIs are relative to *https://devmana.azurewebsites.net*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**gearAddGear**](GearApi.md#gearAddGear) | **POST** /api/Gear/Add | 
 [**gearGetBrand**](GearApi.md#gearGetBrand) | **GET** /api/Gear/Brand/{brandName} | 
 [**gearGetBrands**](GearApi.md#gearGetBrands) | **GET** /api/Gear/Brands | 
 [**gearGetBrandsPrefix**](GearApi.md#gearGetBrandsPrefix) | **GET** /api/Gear/Brands/{prefix} | 
@@ -18,6 +19,47 @@ Method | HTTP request | Description
 [**gearSessions**](GearApi.md#gearSessions) | **GET** /api/Gear/{id}/Sessions | 
 [**gearVote**](GearApi.md#gearVote) | **POST** /api/Gear/{id}/Vote | 
 
+
+# **gearAddGear**
+> PipeAccesorySimpleDto gearAddGear(accessory)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new GearApi();
+var accessory = new PipeAccesorySimpleDto(); // PipeAccesorySimpleDto | 
+
+try { 
+    var result = api_instance.gearAddGear(accessory);
+    print(result);
+} catch (e) {
+    print("Exception when calling GearApi->gearAddGear: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **accessory** | [**PipeAccesorySimpleDto**](PipeAccesorySimpleDto.md)|  | 
+
+### Return type
+
+[**PipeAccesorySimpleDto**](PipeAccesorySimpleDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **gearGetBrand**
 > BrandDto gearGetBrand(brandName)
@@ -56,7 +98,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -93,7 +135,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -134,7 +176,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -175,7 +217,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -216,7 +258,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -265,7 +307,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -310,12 +352,12 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **gearVote**
-> Object gearVote(id, body)
+> Object gearVote(id, value)
 
 
 
@@ -325,10 +367,10 @@ import 'package:openapi/api.dart';
 
 var api_instance = new GearApi();
 var id = 56; // int | 
-var body = new int(); // int | 
+var value = new int(); // int | 
 
 try { 
-    var result = api_instance.gearVote(id, body);
+    var result = api_instance.gearVote(id, value);
     print(result);
 } catch (e) {
     print("Exception when calling GearApi->gearVote: $e\n");
@@ -340,7 +382,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**|  | [default to null]
- **body** | **int**|  | 
+ **value** | **int**|  | 
 
 ### Return type
 
@@ -352,8 +394,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

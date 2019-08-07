@@ -18,19 +18,39 @@ class BrandGroupDto {
 
   BrandGroupDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['Id'];
-    picture = json['Picture'];
-    name = json['Name'];
-    itemCount = json['ItemCount'];
+    if (json['Id'] == null) {
+      id = null;
+    } else {
+          id = json['Id'];
+    }
+    if (json['Picture'] == null) {
+      picture = null;
+    } else {
+          picture = json['Picture'];
+    }
+    if (json['Name'] == null) {
+      name = null;
+    } else {
+          name = json['Name'];
+    }
+    if (json['ItemCount'] == null) {
+      itemCount = null;
+    } else {
+          itemCount = json['ItemCount'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Id': id,
-      'Picture': picture,
-      'Name': name,
-      'ItemCount': itemCount
-    };
+    Map <String, dynamic> json = {};
+    if (id != null)
+      json['Id'] = id;
+    if (picture != null)
+      json['Picture'] = picture;
+    if (name != null)
+      json['Name'] = name;
+    if (itemCount != null)
+      json['ItemCount'] = itemCount;
+    return json;
   }
 
   static List<BrandGroupDto> listFromJson(List<dynamic> json) {
@@ -39,7 +59,7 @@ class BrandGroupDto {
 
   static Map<String, BrandGroupDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, BrandGroupDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new BrandGroupDto.fromJson(value));
     }
     return map;

@@ -18,19 +18,39 @@ class TobaccoTasteDto {
 
   TobaccoTasteDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    czName = json['CzName'];
-    engName = json['EngName'];
-    id = json['Id'];
-    originalName = json['OriginalName'];
+    if (json['CzName'] == null) {
+      czName = null;
+    } else {
+          czName = json['CzName'];
+    }
+    if (json['EngName'] == null) {
+      engName = null;
+    } else {
+          engName = json['EngName'];
+    }
+    if (json['Id'] == null) {
+      id = null;
+    } else {
+          id = json['Id'];
+    }
+    if (json['OriginalName'] == null) {
+      originalName = null;
+    } else {
+          originalName = json['OriginalName'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'CzName': czName,
-      'EngName': engName,
-      'Id': id,
-      'OriginalName': originalName
-    };
+    Map <String, dynamic> json = {};
+    if (czName != null)
+      json['CzName'] = czName;
+    if (engName != null)
+      json['EngName'] = engName;
+    if (id != null)
+      json['Id'] = id;
+    if (originalName != null)
+      json['OriginalName'] = originalName;
+    return json;
   }
 
   static List<TobaccoTasteDto> listFromJson(List<dynamic> json) {
@@ -39,7 +59,7 @@ class TobaccoTasteDto {
 
   static Map<String, TobaccoTasteDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, TobaccoTasteDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new TobaccoTasteDto.fromJson(value));
     }
     return map;

@@ -43,43 +43,123 @@ class SmokeSessionMetaDataDto {
 
   SmokeSessionMetaDataDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['Id'];
-    tobaccoId = json['TobaccoId'];
-    tobacco = new PipeAccesorySimpleDto.fromJson(json['Tobacco']);
-    tobaccoMix = new TobaccoMixSimpleDto.fromJson(json['TobaccoMix']);
-    tobaccoWeight = json['TobaccoWeight'];
-    anonymPeopleCount = json['AnonymPeopleCount'];
-    bowlId = json['BowlId'];
-    bowl = new PipeAccesorySimpleDto.fromJson(json['Bowl']);
-    pipeId = json['PipeId'];
-    pipe = new PipeAccesorySimpleDto.fromJson(json['Pipe']);
-    coalId = json['CoalId'];
-    coal = new PipeAccesorySimpleDto.fromJson(json['Coal']);
-    heatManagementId = json['HeatManagementId'];
-    heatManagement = new PipeAccesorySimpleDto.fromJson(json['HeatManagement']);
-    packType = json['PackType'];
-    coalCount = json['CoalCount'];
+    if (json['Id'] == null) {
+      id = null;
+    } else {
+          id = json['Id'];
+    }
+    if (json['TobaccoId'] == null) {
+      tobaccoId = null;
+    } else {
+          tobaccoId = json['TobaccoId'];
+    }
+    if (json['Tobacco'] == null) {
+      tobacco = null;
+    } else {
+      tobacco = new PipeAccesorySimpleDto.fromJson(json['Tobacco']);
+    }
+    if (json['TobaccoMix'] == null) {
+      tobaccoMix = null;
+    } else {
+      tobaccoMix = new TobaccoMixSimpleDto.fromJson(json['TobaccoMix']);
+    }
+    if (json['TobaccoWeight'] == null) {
+      tobaccoWeight = null;
+    } else {
+          tobaccoWeight = json['TobaccoWeight'];
+    }
+    if (json['AnonymPeopleCount'] == null) {
+      anonymPeopleCount = null;
+    } else {
+          anonymPeopleCount = json['AnonymPeopleCount'];
+    }
+    if (json['BowlId'] == null) {
+      bowlId = null;
+    } else {
+          bowlId = json['BowlId'];
+    }
+    if (json['Bowl'] == null) {
+      bowl = null;
+    } else {
+      bowl = new PipeAccesorySimpleDto.fromJson(json['Bowl']);
+    }
+    if (json['PipeId'] == null) {
+      pipeId = null;
+    } else {
+          pipeId = json['PipeId'];
+    }
+    if (json['Pipe'] == null) {
+      pipe = null;
+    } else {
+      pipe = new PipeAccesorySimpleDto.fromJson(json['Pipe']);
+    }
+    if (json['CoalId'] == null) {
+      coalId = null;
+    } else {
+          coalId = json['CoalId'];
+    }
+    if (json['Coal'] == null) {
+      coal = null;
+    } else {
+      coal = new PipeAccesorySimpleDto.fromJson(json['Coal']);
+    }
+    if (json['HeatManagementId'] == null) {
+      heatManagementId = null;
+    } else {
+          heatManagementId = json['HeatManagementId'];
+    }
+    if (json['HeatManagement'] == null) {
+      heatManagement = null;
+    } else {
+      heatManagement = new PipeAccesorySimpleDto.fromJson(json['HeatManagement']);
+    }
+    if (json['PackType'] == null) {
+      packType = null;
+    } else {
+          packType = json['PackType'];
+    }
+    if (json['CoalCount'] == null) {
+      coalCount = null;
+    } else {
+          coalCount = json['CoalCount'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Id': id,
-      'TobaccoId': tobaccoId,
-      'Tobacco': tobacco,
-      'TobaccoMix': tobaccoMix,
-      'TobaccoWeight': tobaccoWeight,
-      'AnonymPeopleCount': anonymPeopleCount,
-      'BowlId': bowlId,
-      'Bowl': bowl,
-      'PipeId': pipeId,
-      'Pipe': pipe,
-      'CoalId': coalId,
-      'Coal': coal,
-      'HeatManagementId': heatManagementId,
-      'HeatManagement': heatManagement,
-      'PackType': packType,
-      'CoalCount': coalCount
-    };
+    Map <String, dynamic> json = {};
+    if (id != null)
+      json['Id'] = id;
+    if (tobaccoId != null)
+      json['TobaccoId'] = tobaccoId;
+    if (tobacco != null)
+      json['Tobacco'] = tobacco;
+    if (tobaccoMix != null)
+      json['TobaccoMix'] = tobaccoMix;
+    if (tobaccoWeight != null)
+      json['TobaccoWeight'] = tobaccoWeight;
+    if (anonymPeopleCount != null)
+      json['AnonymPeopleCount'] = anonymPeopleCount;
+    if (bowlId != null)
+      json['BowlId'] = bowlId;
+    if (bowl != null)
+      json['Bowl'] = bowl;
+    if (pipeId != null)
+      json['PipeId'] = pipeId;
+    if (pipe != null)
+      json['Pipe'] = pipe;
+    if (coalId != null)
+      json['CoalId'] = coalId;
+    if (coal != null)
+      json['Coal'] = coal;
+    if (heatManagementId != null)
+      json['HeatManagementId'] = heatManagementId;
+    if (heatManagement != null)
+      json['HeatManagement'] = heatManagement;
+    if (packType != null)
+      json['PackType'] = packType;
+    if (coalCount != null)
+      json['CoalCount'] = coalCount;
+    return json;
   }
 
   static List<SmokeSessionMetaDataDto> listFromJson(List<dynamic> json) {
@@ -88,7 +168,7 @@ class SmokeSessionMetaDataDto {
 
   static Map<String, SmokeSessionMetaDataDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, SmokeSessionMetaDataDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new SmokeSessionMetaDataDto.fromJson(value));
     }
     return map;

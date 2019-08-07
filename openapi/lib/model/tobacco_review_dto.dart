@@ -10,7 +10,7 @@ class TobaccoReviewDto {
   
   int smoke = null;
   
-  int overall = null;
+  double overall = null;
   
   String text = null;
   
@@ -24,25 +24,60 @@ class TobaccoReviewDto {
 
   TobaccoReviewDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['Id'];
-    quality = json['Quality'];
-    taste = json['Taste'];
-    smoke = json['Smoke'];
-    overall = json['Overall'];
-    text = json['Text'];
-    smokeSessionId = json['SmokeSessionId'];
+    if (json['Id'] == null) {
+      id = null;
+    } else {
+          id = json['Id'];
+    }
+    if (json['Quality'] == null) {
+      quality = null;
+    } else {
+          quality = json['Quality'];
+    }
+    if (json['Taste'] == null) {
+      taste = null;
+    } else {
+          taste = json['Taste'];
+    }
+    if (json['Smoke'] == null) {
+      smoke = null;
+    } else {
+          smoke = json['Smoke'];
+    }
+    if (json['Overall'] == null) {
+      overall = null;
+    } else {
+          overall = json['Overall'];
+    }
+    if (json['Text'] == null) {
+      text = null;
+    } else {
+          text = json['Text'];
+    }
+    if (json['SmokeSessionId'] == null) {
+      smokeSessionId = null;
+    } else {
+          smokeSessionId = json['SmokeSessionId'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Id': id,
-      'Quality': quality,
-      'Taste': taste,
-      'Smoke': smoke,
-      'Overall': overall,
-      'Text': text,
-      'SmokeSessionId': smokeSessionId
-    };
+    Map <String, dynamic> json = {};
+    if (id != null)
+      json['Id'] = id;
+    if (quality != null)
+      json['Quality'] = quality;
+    if (taste != null)
+      json['Taste'] = taste;
+    if (smoke != null)
+      json['Smoke'] = smoke;
+    if (overall != null)
+      json['Overall'] = overall;
+    if (text != null)
+      json['Text'] = text;
+    if (smokeSessionId != null)
+      json['SmokeSessionId'] = smokeSessionId;
+    return json;
   }
 
   static List<TobaccoReviewDto> listFromJson(List<dynamic> json) {
@@ -51,7 +86,7 @@ class TobaccoReviewDto {
 
   static Map<String, TobaccoReviewDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, TobaccoReviewDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new TobaccoReviewDto.fromJson(value));
     }
     return map;

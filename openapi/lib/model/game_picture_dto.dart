@@ -12,13 +12,18 @@ class GamePictureDto {
 
   GamePictureDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    pictureUrl = json['PictureUrl'];
+    if (json['PictureUrl'] == null) {
+      pictureUrl = null;
+    } else {
+          pictureUrl = json['PictureUrl'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'PictureUrl': pictureUrl
-    };
+    Map <String, dynamic> json = {};
+    if (pictureUrl != null)
+      json['PictureUrl'] = pictureUrl;
+    return json;
   }
 
   static List<GamePictureDto> listFromJson(List<dynamic> json) {
@@ -27,7 +32,7 @@ class GamePictureDto {
 
   static Map<String, GamePictureDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, GamePictureDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new GamePictureDto.fromJson(value));
     }
     return map;

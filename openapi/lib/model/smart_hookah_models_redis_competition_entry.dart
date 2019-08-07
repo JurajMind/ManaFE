@@ -14,15 +14,25 @@ class SmartHookahModelsRedisCompetitionEntry {
 
   SmartHookahModelsRedisCompetitionEntry.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    name = json['Name'];
-    time = json['Time'];
+    if (json['Name'] == null) {
+      name = null;
+    } else {
+          name = json['Name'];
+    }
+    if (json['Time'] == null) {
+      time = null;
+    } else {
+          time = json['Time'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Name': name,
-      'Time': time
-    };
+    Map <String, dynamic> json = {};
+    if (name != null)
+      json['Name'] = name;
+    if (time != null)
+      json['Time'] = time;
+    return json;
   }
 
   static List<SmartHookahModelsRedisCompetitionEntry> listFromJson(List<dynamic> json) {
@@ -31,7 +41,7 @@ class SmartHookahModelsRedisCompetitionEntry {
 
   static Map<String, SmartHookahModelsRedisCompetitionEntry> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, SmartHookahModelsRedisCompetitionEntry>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new SmartHookahModelsRedisCompetitionEntry.fromJson(value));
     }
     return map;

@@ -9,6 +9,7 @@ import 'package:openapi/api.dart';
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **devices** | [**List&lt;DeviceSimpleDto&gt;**](DeviceSimpleDto.md) |  | [optional] [default to []]
+**updateInfo** | [**DeviceUpdateInfoDto**](DeviceUpdateInfoDto.md) |  | [optional] [default to null]
 **activeSmokeSessions** | [**List&lt;SmokeSessionSimpleDto&gt;**](SmokeSessionSimpleDto.md) |  | [optional] [default to []]
 **activeReservations** | [**List&lt;PlacesReservationsReservationDto&gt;**](PlacesReservationsReservationDto.md) |  | [optional] [default to []]
 **activeHookahOrders** | [**List&lt;HookahOrderDto&gt;**](HookahOrderDto.md) |  | [optional] [default to []]

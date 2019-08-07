@@ -14,15 +14,25 @@ class InitDataDto {
 
   InitDataDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    smokeSession = new SmokeSessionSimpleDto.fromJson(json['SmokeSession']);
-    deviceSettings = new DeviceSettingDto.fromJson(json['DeviceSettings']);
+    if (json['SmokeSession'] == null) {
+      smokeSession = null;
+    } else {
+      smokeSession = new SmokeSessionSimpleDto.fromJson(json['SmokeSession']);
+    }
+    if (json['DeviceSettings'] == null) {
+      deviceSettings = null;
+    } else {
+      deviceSettings = new DeviceSettingDto.fromJson(json['DeviceSettings']);
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'SmokeSession': smokeSession,
-      'DeviceSettings': deviceSettings
-    };
+    Map <String, dynamic> json = {};
+    if (smokeSession != null)
+      json['SmokeSession'] = smokeSession;
+    if (deviceSettings != null)
+      json['DeviceSettings'] = deviceSettings;
+    return json;
   }
 
   static List<InitDataDto> listFromJson(List<dynamic> json) {
@@ -31,7 +41,7 @@ class InitDataDto {
 
   static Map<String, InitDataDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, InitDataDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new InitDataDto.fromJson(value));
     }
     return map;

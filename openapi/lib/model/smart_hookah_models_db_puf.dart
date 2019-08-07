@@ -21,21 +21,46 @@ class SmartHookahModelsDbPuf {
 
   SmartHookahModelsDbPuf.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    sId = json['SId'];
-    T = json['T'];
-    D = json['D'] == null ? null : DateTime.parse(json['D']);
-    M = json['M'];
-    P = json['P'];
+    if (json['SId'] == null) {
+      sId = null;
+    } else {
+          sId = json['SId'];
+    }
+    if (json['T'] == null) {
+      T = null;
+    } else {
+          T = json['T'];
+    }
+    if (json['D'] == null) {
+      D = null;
+    } else {
+      D = DateTime.parse(json['D']);
+    }
+    if (json['M'] == null) {
+      M = null;
+    } else {
+          M = json['M'];
+    }
+    if (json['P'] == null) {
+      P = null;
+    } else {
+          P = json['P'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'SId': sId,
-      'T': T,
-      'D': D == null ? '' : D.toUtc().toIso8601String(),
-      'M': M,
-      'P': P
-    };
+    Map <String, dynamic> json = {};
+    if (sId != null)
+      json['SId'] = sId;
+    if (T != null)
+      json['T'] = T;
+    if (D != null)
+      json['D'] = D == null ? null : D.toUtc().toIso8601String();
+    if (M != null)
+      json['M'] = M;
+    if (P != null)
+      json['P'] = P;
+    return json;
   }
 
   static List<SmartHookahModelsDbPuf> listFromJson(List<dynamic> json) {
@@ -44,7 +69,7 @@ class SmartHookahModelsDbPuf {
 
   static Map<String, SmartHookahModelsDbPuf> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, SmartHookahModelsDbPuf>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new SmartHookahModelsDbPuf.fromJson(value));
     }
     return map;

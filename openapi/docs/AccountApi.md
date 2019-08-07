@@ -53,12 +53,12 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **accountForgotPassword**
-> Object accountForgotPassword(smartHookahModelsForgotPasswordViewModel)
+> Object accountForgotPassword(model)
 
 
 
@@ -67,10 +67,10 @@ No authorization required
 import 'package:openapi/api.dart';
 
 var api_instance = new AccountApi();
-var smartHookahModelsForgotPasswordViewModel = new SmartHookahModelsForgotPasswordViewModel(); // SmartHookahModelsForgotPasswordViewModel | 
+var model = new SmartHookahModelsForgotPasswordViewModel(); // SmartHookahModelsForgotPasswordViewModel | 
 
 try { 
-    var result = api_instance.accountForgotPassword(smartHookahModelsForgotPasswordViewModel);
+    var result = api_instance.accountForgotPassword(model);
     print(result);
 } catch (e) {
     print("Exception when calling AccountApi->accountForgotPassword: $e\n");
@@ -81,7 +81,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **smartHookahModelsForgotPasswordViewModel** | [**SmartHookahModelsForgotPasswordViewModel**](SmartHookahModelsForgotPasswordViewModel.md)|  | 
+ **model** | [**SmartHookahModelsForgotPasswordViewModel**](SmartHookahModelsForgotPasswordViewModel.md)|  | 
 
 ### Return type
 
@@ -93,8 +93,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -134,8 +134,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: application/json, text/json, application/xml, text/xml
+ - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

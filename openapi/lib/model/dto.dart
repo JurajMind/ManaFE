@@ -16,17 +16,32 @@ class Dto {
 
   Dto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    success = json['Success'];
-    message = json['Message'];
-    httpResponseCode = json['HttpResponseCode'];
+    if (json['Success'] == null) {
+      success = null;
+    } else {
+          success = json['Success'];
+    }
+    if (json['Message'] == null) {
+      message = null;
+    } else {
+          message = json['Message'];
+    }
+    if (json['HttpResponseCode'] == null) {
+      httpResponseCode = null;
+    } else {
+          httpResponseCode = json['HttpResponseCode'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Success': success,
-      'Message': message,
-      'HttpResponseCode': httpResponseCode
-    };
+    Map <String, dynamic> json = {};
+    if (success != null)
+      json['Success'] = success;
+    if (message != null)
+      json['Message'] = message;
+    if (httpResponseCode != null)
+      json['HttpResponseCode'] = httpResponseCode;
+    return json;
   }
 
   static List<Dto> listFromJson(List<dynamic> json) {
@@ -35,7 +50,7 @@ class Dto {
 
   static Map<String, Dto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, Dto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new Dto.fromJson(value));
     }
     return map;

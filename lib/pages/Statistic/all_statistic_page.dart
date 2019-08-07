@@ -25,6 +25,7 @@ class _AllStatisticPageState extends State<AllStatisticPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: SizedBox(height: 60,),
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text('Sessions'),

@@ -309,14 +309,7 @@ class PipeAccesoryList extends StatelessWidget {
                     ),
                     Expanded(
                       flex: 1,
-                      child: IconButton(
-                        icon: Icon(Icons.add_box),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => AddGearPage(),
-                              fullscreenDialog: true));
-                        },
-                      ),
+                      child: Container()
                     )
                   ],
                 );

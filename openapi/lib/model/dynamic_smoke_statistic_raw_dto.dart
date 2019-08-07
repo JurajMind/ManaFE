@@ -26,27 +26,67 @@ class DynamicSmokeStatisticRawDto {
 
   DynamicSmokeStatisticRawDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    pufCount = json['PufCount'];
-    lastPuf = json['LastPuf'];
-    lastPufTime = json['LastPufTime'];
-    smokeDuration = json['SmokeDuration'];
-    longestPuf = json['LongestPuf'];
-    start = json['Start'];
-    duration = json['Duration'];
-    longestPufMilis = json['LongestPufMilis'];
+    if (json['PufCount'] == null) {
+      pufCount = null;
+    } else {
+          pufCount = json['PufCount'];
+    }
+    if (json['LastPuf'] == null) {
+      lastPuf = null;
+    } else {
+          lastPuf = json['LastPuf'];
+    }
+    if (json['LastPufTime'] == null) {
+      lastPufTime = null;
+    } else {
+          lastPufTime = json['LastPufTime'];
+    }
+    if (json['SmokeDuration'] == null) {
+      smokeDuration = null;
+    } else {
+          smokeDuration = json['SmokeDuration'];
+    }
+    if (json['LongestPuf'] == null) {
+      longestPuf = null;
+    } else {
+          longestPuf = json['LongestPuf'];
+    }
+    if (json['Start'] == null) {
+      start = null;
+    } else {
+          start = json['Start'];
+    }
+    if (json['Duration'] == null) {
+      duration = null;
+    } else {
+          duration = json['Duration'];
+    }
+    if (json['LongestPufMilis'] == null) {
+      longestPufMilis = null;
+    } else {
+          longestPufMilis = json['LongestPufMilis'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'PufCount': pufCount,
-      'LastPuf': lastPuf,
-      'LastPufTime': lastPufTime,
-      'SmokeDuration': smokeDuration,
-      'LongestPuf': longestPuf,
-      'Start': start,
-      'Duration': duration,
-      'LongestPufMilis': longestPufMilis
-    };
+    Map <String, dynamic> json = {};
+    if (pufCount != null)
+      json['PufCount'] = pufCount;
+    if (lastPuf != null)
+      json['LastPuf'] = lastPuf;
+    if (lastPufTime != null)
+      json['LastPufTime'] = lastPufTime;
+    if (smokeDuration != null)
+      json['SmokeDuration'] = smokeDuration;
+    if (longestPuf != null)
+      json['LongestPuf'] = longestPuf;
+    if (start != null)
+      json['Start'] = start;
+    if (duration != null)
+      json['Duration'] = duration;
+    if (longestPufMilis != null)
+      json['LongestPufMilis'] = longestPufMilis;
+    return json;
   }
 
   static List<DynamicSmokeStatisticRawDto> listFromJson(List<dynamic> json) {
@@ -55,7 +95,7 @@ class DynamicSmokeStatisticRawDto {
 
   static Map<String, DynamicSmokeStatisticRawDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, DynamicSmokeStatisticRawDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new DynamicSmokeStatisticRawDto.fromJson(value));
     }
     return map;

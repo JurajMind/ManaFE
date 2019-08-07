@@ -16,17 +16,32 @@ class FranchiseDto {
 
   FranchiseDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['Id'];
-    name = json['Name'];
-    uril = json['Uril'];
+    if (json['Id'] == null) {
+      id = null;
+    } else {
+          id = json['Id'];
+    }
+    if (json['Name'] == null) {
+      name = null;
+    } else {
+          name = json['Name'];
+    }
+    if (json['Uril'] == null) {
+      uril = null;
+    } else {
+          uril = json['Uril'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Id': id,
-      'Name': name,
-      'Uril': uril
-    };
+    Map <String, dynamic> json = {};
+    if (id != null)
+      json['Id'] = id;
+    if (name != null)
+      json['Name'] = name;
+    if (uril != null)
+      json['Uril'] = uril;
+    return json;
   }
 
   static List<FranchiseDto> listFromJson(List<dynamic> json) {
@@ -35,7 +50,7 @@ class FranchiseDto {
 
   static Map<String, FranchiseDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, FranchiseDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new FranchiseDto.fromJson(value));
     }
     return map;

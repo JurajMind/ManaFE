@@ -28,7 +28,7 @@ class DeviceApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -50,9 +50,9 @@ class DeviceApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'DeviceSimpleDto') as DeviceSimpleDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'DeviceSimpleDto') as DeviceSimpleDto;
     } else {
       return null;
     }
@@ -60,15 +60,15 @@ class DeviceApi {
   /// 
   ///
   /// 
-  Future<Object> deviceChangeAnimation(String id, SmartHookahModelsParameterObjectsChangeAnimation smartHookahModelsParameterObjectsChangeAnimation) async {
-    Object postBody = smartHookahModelsParameterObjectsChangeAnimation;
+  Future<Object> deviceChangeAnimation(String id, SmartHookahModelsParameterObjectsChangeAnimation model) async {
+    Object postBody = model;
 
     // verify required params are set
     if(id == null) {
      throw new ApiException(400, "Missing required param: id");
     }
-    if(smartHookahModelsParameterObjectsChangeAnimation == null) {
-     throw new ApiException(400, "Missing required param: smartHookahModelsParameterObjectsChangeAnimation");
+    if(model == null) {
+     throw new ApiException(400, "Missing required param: model");
     }
 
     // create path and map variables
@@ -79,9 +79,9 @@ class DeviceApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -103,9 +103,9 @@ class DeviceApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Object') as Object;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'Object') as Object;
     } else {
       return null;
     }
@@ -113,15 +113,15 @@ class DeviceApi {
   /// 
   ///
   /// 
-  Future<Object> deviceChangeBrightness(String id, SmartHookahModelsParameterObjectsChangeBrightness smartHookahModelsParameterObjectsChangeBrightness) async {
-    Object postBody = smartHookahModelsParameterObjectsChangeBrightness;
+  Future<Object> deviceChangeBrightness(String id, SmartHookahModelsParameterObjectsChangeBrightness model) async {
+    Object postBody = model;
 
     // verify required params are set
     if(id == null) {
      throw new ApiException(400, "Missing required param: id");
     }
-    if(smartHookahModelsParameterObjectsChangeBrightness == null) {
-     throw new ApiException(400, "Missing required param: smartHookahModelsParameterObjectsChangeBrightness");
+    if(model == null) {
+     throw new ApiException(400, "Missing required param: model");
     }
 
     // create path and map variables
@@ -132,9 +132,9 @@ class DeviceApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -156,9 +156,9 @@ class DeviceApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Object') as Object;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'Object') as Object;
     } else {
       return null;
     }
@@ -166,15 +166,15 @@ class DeviceApi {
   /// 
   ///
   /// 
-  Future<Object> deviceChangeColor(String id, SmartHookahModelsParameterObjectsChangeColor smartHookahModelsParameterObjectsChangeColor) async {
-    Object postBody = smartHookahModelsParameterObjectsChangeColor;
+  Future<Object> deviceChangeColor(String id, SmartHookahModelsParameterObjectsChangeColor model) async {
+    Object postBody = model;
 
     // verify required params are set
     if(id == null) {
      throw new ApiException(400, "Missing required param: id");
     }
-    if(smartHookahModelsParameterObjectsChangeColor == null) {
-     throw new ApiException(400, "Missing required param: smartHookahModelsParameterObjectsChangeColor");
+    if(model == null) {
+     throw new ApiException(400, "Missing required param: model");
     }
 
     // create path and map variables
@@ -185,9 +185,9 @@ class DeviceApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -209,9 +209,9 @@ class DeviceApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Object') as Object;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'Object') as Object;
     } else {
       return null;
     }
@@ -219,15 +219,15 @@ class DeviceApi {
   /// 
   ///
   /// 
-  Future<Object> deviceChangeMode(String id, int body) async {
-    Object postBody = body;
+  Future<Object> deviceChangeMode(String id, int mode) async {
+    Object postBody = mode;
 
     // verify required params are set
     if(id == null) {
      throw new ApiException(400, "Missing required param: id");
     }
-    if(body == null) {
-     throw new ApiException(400, "Missing required param: body");
+    if(mode == null) {
+     throw new ApiException(400, "Missing required param: mode");
     }
 
     // create path and map variables
@@ -238,9 +238,9 @@ class DeviceApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -262,9 +262,9 @@ class DeviceApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Object') as Object;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'Object') as Object;
     } else {
       return null;
     }
@@ -272,15 +272,15 @@ class DeviceApi {
   /// 
   ///
   /// 
-  Future<Object> deviceChangeSpeed(String id, SmartHookahModelsParameterObjectsChangeSpeed smartHookahModelsParameterObjectsChangeSpeed) async {
-    Object postBody = smartHookahModelsParameterObjectsChangeSpeed;
+  Future<Object> deviceChangeSpeed(String id, SmartHookahModelsParameterObjectsChangeSpeed model) async {
+    Object postBody = model;
 
     // verify required params are set
     if(id == null) {
      throw new ApiException(400, "Missing required param: id");
     }
-    if(smartHookahModelsParameterObjectsChangeSpeed == null) {
-     throw new ApiException(400, "Missing required param: smartHookahModelsParameterObjectsChangeSpeed");
+    if(model == null) {
+     throw new ApiException(400, "Missing required param: model");
     }
 
     // create path and map variables
@@ -291,9 +291,9 @@ class DeviceApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -315,9 +315,9 @@ class DeviceApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Object') as Object;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'Object') as Object;
     } else {
       return null;
     }
@@ -340,7 +340,7 @@ class DeviceApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -362,9 +362,9 @@ class DeviceApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return (apiClient.deserialize(response.body, 'List<DeviceDevicePictureDto>') as List).map((item) => item as DeviceDevicePictureDto).toList();
+      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<DeviceDevicePictureDto>') as List).map((item) => item as DeviceDevicePictureDto).toList();
     } else {
       return null;
     }
@@ -390,7 +390,7 @@ class DeviceApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -412,9 +412,9 @@ class DeviceApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'DeviceSettingDto') as DeviceSettingDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'DeviceSettingDto') as DeviceSettingDto;
     } else {
       return null;
     }
@@ -440,7 +440,7 @@ class DeviceApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -462,9 +462,59 @@ class DeviceApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'SmartHookahControllersApiDeviceInfoResponse') as SmartHookahControllersApiDeviceInfoResponse;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'SmartHookahControllersApiDeviceInfoResponse') as SmartHookahControllersApiDeviceInfoResponse;
+    } else {
+      return null;
+    }
+  }
+  /// 
+  ///
+  /// 
+  Future<Object> devicePing(String id) async {
+    Object postBody;
+
+    // verify required params are set
+    if(id == null) {
+     throw new ApiException(400, "Missing required param: id");
+    }
+
+    // create path and map variables
+    String path = "/api/Device/{id}/Ping".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+
+    // query params
+    List<QueryParam> queryParams = [];
+    Map<String, String> headerParams = {};
+    Map<String, String> formParams = {};
+
+    List<String> contentTypes = [];
+
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
+    List<String> authNames = [];
+
+    if(contentType.startsWith("multipart/form-data")) {
+      bool hasFields = false;
+      MultipartRequest mp = new MultipartRequest(null, null);
+      if(hasFields)
+        postBody = mp;
+    }
+    else {
+    }
+
+    var response = await apiClient.invokeAPI(path,
+                                             'POST',
+                                             queryParams,
+                                             postBody,
+                                             headerParams,
+                                             formParams,
+                                             contentType,
+                                             authNames);
+
+    if(response.statusCode >= 400) {
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
+    } else if(response.body != null) {
+      return apiClient.deserialize(_decodeBodyBytes(response), 'Object') as Object;
     } else {
       return null;
     }
@@ -493,7 +543,7 @@ class DeviceApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -515,9 +565,9 @@ class DeviceApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'bool') as bool;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'bool') as bool;
     } else {
       return null;
     }
@@ -543,7 +593,7 @@ class DeviceApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -565,9 +615,9 @@ class DeviceApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'DeviceSimpleDto') as DeviceSimpleDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'DeviceSimpleDto') as DeviceSimpleDto;
     } else {
       return null;
     }
@@ -593,7 +643,7 @@ class DeviceApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -615,9 +665,9 @@ class DeviceApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Object') as Object;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'Object') as Object;
     } else {
       return null;
     }
@@ -625,15 +675,15 @@ class DeviceApi {
   /// 
   ///
   /// 
-  Future<bool> deviceSetPicture(int id, int body) async {
-    Object postBody = body;
+  Future<bool> deviceSetPicture(int id, int pictureId) async {
+    Object postBody = pictureId;
 
     // verify required params are set
     if(id == null) {
      throw new ApiException(400, "Missing required param: id");
     }
-    if(body == null) {
-     throw new ApiException(400, "Missing required param: body");
+    if(pictureId == null) {
+     throw new ApiException(400, "Missing required param: pictureId");
     }
 
     // create path and map variables
@@ -644,9 +694,9 @@ class DeviceApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","application/x-www-form-urlencoded"];
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -668,9 +718,9 @@ class DeviceApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'bool') as bool;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'bool') as bool;
     } else {
       return null;
     }
@@ -696,7 +746,7 @@ class DeviceApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -718,9 +768,9 @@ class DeviceApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Object') as Object;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'Object') as Object;
     } else {
       return null;
     }
@@ -746,7 +796,7 @@ class DeviceApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -768,9 +818,9 @@ class DeviceApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Object') as Object;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'Object') as Object;
     } else {
       return null;
     }
@@ -793,7 +843,7 @@ class DeviceApi {
 
     List<String> contentTypes = [];
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -815,9 +865,9 @@ class DeviceApi {
                                              authNames);
 
     if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, response.body);
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return (apiClient.deserialize(response.body, 'List<DeviceUpdateDto>') as List).map((item) => item as DeviceUpdateDto).toList();
+      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<DeviceUpdateDto>') as List).map((item) => item as DeviceUpdateDto).toList();
     } else {
       return null;
     }

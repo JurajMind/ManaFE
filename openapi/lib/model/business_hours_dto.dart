@@ -20,21 +20,46 @@ class BusinessHoursDto {
 
   BusinessHoursDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['Id'];
-    placeId = json['PlaceId'];
-    day = json['Day'];
-    openTine = json['OpenTine'];
-    closeTime = json['CloseTime'];
+    if (json['Id'] == null) {
+      id = null;
+    } else {
+          id = json['Id'];
+    }
+    if (json['PlaceId'] == null) {
+      placeId = null;
+    } else {
+          placeId = json['PlaceId'];
+    }
+    if (json['Day'] == null) {
+      day = null;
+    } else {
+          day = json['Day'];
+    }
+    if (json['OpenTine'] == null) {
+      openTine = null;
+    } else {
+          openTine = json['OpenTine'];
+    }
+    if (json['CloseTime'] == null) {
+      closeTime = null;
+    } else {
+          closeTime = json['CloseTime'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Id': id,
-      'PlaceId': placeId,
-      'Day': day,
-      'OpenTine': openTine,
-      'CloseTime': closeTime
-    };
+    Map <String, dynamic> json = {};
+    if (id != null)
+      json['Id'] = id;
+    if (placeId != null)
+      json['PlaceId'] = placeId;
+    if (day != null)
+      json['Day'] = day;
+    if (openTine != null)
+      json['OpenTine'] = openTine;
+    if (closeTime != null)
+      json['CloseTime'] = closeTime;
+    return json;
   }
 
   static List<BusinessHoursDto> listFromJson(List<dynamic> json) {
@@ -43,7 +68,7 @@ class BusinessHoursDto {
 
   static Map<String, BusinessHoursDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, BusinessHoursDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new BusinessHoursDto.fromJson(value));
     }
     return map;

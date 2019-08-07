@@ -15,15 +15,25 @@ class SmartHookahModelsParameterObjectsChangeColor {
 
   SmartHookahModelsParameterObjectsChangeColor.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    color = new SmartHookahModelsDbColor.fromJson(json['Color']);
-    type = json['Type'];
+    if (json['Color'] == null) {
+      color = null;
+    } else {
+      color = new SmartHookahModelsDbColor.fromJson(json['Color']);
+    }
+    if (json['Type'] == null) {
+      type = null;
+    } else {
+          type = json['Type'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Color': color,
-      'Type': type
-    };
+    Map <String, dynamic> json = {};
+    if (color != null)
+      json['Color'] = color;
+    if (type != null)
+      json['Type'] = type;
+    return json;
   }
 
   static List<SmartHookahModelsParameterObjectsChangeColor> listFromJson(List<dynamic> json) {
@@ -32,7 +42,7 @@ class SmartHookahModelsParameterObjectsChangeColor {
 
   static Map<String, SmartHookahModelsParameterObjectsChangeColor> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, SmartHookahModelsParameterObjectsChangeColor>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new SmartHookahModelsParameterObjectsChangeColor.fromJson(value));
     }
     return map;

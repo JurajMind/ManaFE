@@ -20,21 +20,46 @@ class PersonInfoDto {
 
   PersonInfoDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    displayName = json['DisplayName'];
-    email = json['Email'];
-    managedPlaces = PlaceSimpleDto.listFromJson(json['ManagedPlaces']);
-    roles = ((json['Roles'] ?? []) as List).map((item) => item as String).toList();
-    personId = json['PersonId'];
+    if (json['DisplayName'] == null) {
+      displayName = null;
+    } else {
+          displayName = json['DisplayName'];
+    }
+    if (json['Email'] == null) {
+      email = null;
+    } else {
+          email = json['Email'];
+    }
+    if (json['ManagedPlaces'] == null) {
+      managedPlaces = null;
+    } else {
+      managedPlaces = PlaceSimpleDto.listFromJson(json['ManagedPlaces']);
+    }
+    if (json['Roles'] == null) {
+      roles = null;
+    } else {
+      roles = (json['Roles'] as List).cast<String>();
+    }
+    if (json['PersonId'] == null) {
+      personId = null;
+    } else {
+          personId = json['PersonId'];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'DisplayName': displayName,
-      'Email': email,
-      'ManagedPlaces': managedPlaces,
-      'Roles': roles,
-      'PersonId': personId
-    };
+    Map <String, dynamic> json = {};
+    if (displayName != null)
+      json['DisplayName'] = displayName;
+    if (email != null)
+      json['Email'] = email;
+    if (managedPlaces != null)
+      json['ManagedPlaces'] = managedPlaces;
+    if (roles != null)
+      json['Roles'] = roles;
+    if (personId != null)
+      json['PersonId'] = personId;
+    return json;
   }
 
   static List<PersonInfoDto> listFromJson(List<dynamic> json) {
@@ -43,7 +68,7 @@ class PersonInfoDto {
 
   static Map<String, PersonInfoDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, PersonInfoDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new PersonInfoDto.fromJson(value));
     }
     return map;

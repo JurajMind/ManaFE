@@ -10,7 +10,11 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **int** |  | [optional] [default to null]
 **name** | **String** |  | [optional] [default to null]
-**shortDescriptions** | **String** |  | [optional] [default to null]
+**shortDescriptions** | **Map&lt;String, String&gt;** |  | [optional] [default to {}]
+**description** | **Map&lt;String, String&gt;** |  | [optional] [default to {}]
+**franchiseId** | **int** |  | [optional] [default to null]
+**franchiseName** | **String** |  | [optional] [default to null]
+**franchiseLogo** | **String** |  | [optional] [default to null]
 **friendlyUrl** | **String** |  | [optional] [default to null]
 **logoPath** | **String** |  | [optional] [default to null]
 **address** | [**AddressDto**](AddressDto.md) |  | [optional] [default to null]

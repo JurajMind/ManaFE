@@ -22,23 +22,53 @@ class TobaccoInformationDto {
 
   TobaccoInformationDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    tobacco = new TobaccoSimpleDto.fromJson(json['Tobacco']);
-    tobaccoTastes = TobaccoTasteDto.listFromJson(json['TobaccoTastes']);
-    personTobaccoStats = new PipeAccessoryStatisticsDto.fromJson(json['PersonTobaccoStats']);
-    allTobaccoStats = new PipeAccessoryStatisticsDto.fromJson(json['AllTobaccoStats']);
-    smokeSessions = SmokeSessionSimpleDto.listFromJson(json['SmokeSessions']);
-    reviews = TobaccoReviewDto.listFromJson(json['Reviews']);
+    if (json['Tobacco'] == null) {
+      tobacco = null;
+    } else {
+      tobacco = new TobaccoSimpleDto.fromJson(json['Tobacco']);
+    }
+    if (json['TobaccoTastes'] == null) {
+      tobaccoTastes = null;
+    } else {
+      tobaccoTastes = TobaccoTasteDto.listFromJson(json['TobaccoTastes']);
+    }
+    if (json['PersonTobaccoStats'] == null) {
+      personTobaccoStats = null;
+    } else {
+      personTobaccoStats = new PipeAccessoryStatisticsDto.fromJson(json['PersonTobaccoStats']);
+    }
+    if (json['AllTobaccoStats'] == null) {
+      allTobaccoStats = null;
+    } else {
+      allTobaccoStats = new PipeAccessoryStatisticsDto.fromJson(json['AllTobaccoStats']);
+    }
+    if (json['SmokeSessions'] == null) {
+      smokeSessions = null;
+    } else {
+      smokeSessions = SmokeSessionSimpleDto.listFromJson(json['SmokeSessions']);
+    }
+    if (json['Reviews'] == null) {
+      reviews = null;
+    } else {
+      reviews = TobaccoReviewDto.listFromJson(json['Reviews']);
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'Tobacco': tobacco,
-      'TobaccoTastes': tobaccoTastes,
-      'PersonTobaccoStats': personTobaccoStats,
-      'AllTobaccoStats': allTobaccoStats,
-      'SmokeSessions': smokeSessions,
-      'Reviews': reviews
-    };
+    Map <String, dynamic> json = {};
+    if (tobacco != null)
+      json['Tobacco'] = tobacco;
+    if (tobaccoTastes != null)
+      json['TobaccoTastes'] = tobaccoTastes;
+    if (personTobaccoStats != null)
+      json['PersonTobaccoStats'] = personTobaccoStats;
+    if (allTobaccoStats != null)
+      json['AllTobaccoStats'] = allTobaccoStats;
+    if (smokeSessions != null)
+      json['SmokeSessions'] = smokeSessions;
+    if (reviews != null)
+      json['Reviews'] = reviews;
+    return json;
   }
 
   static List<TobaccoInformationDto> listFromJson(List<dynamic> json) {
@@ -47,7 +77,7 @@ class TobaccoInformationDto {
 
   static Map<String, TobaccoInformationDto> mapFromJson(Map<String, dynamic> json) {
     var map = new Map<String, TobaccoInformationDto>();
-    if (json != null && json.length > 0) {
+    if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic value) => map[key] = new TobaccoInformationDto.fromJson(value));
     }
     return map;
