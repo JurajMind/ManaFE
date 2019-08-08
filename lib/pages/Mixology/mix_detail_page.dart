@@ -1,4 +1,5 @@
 import 'package:app/app/app.dart';
+import 'package:app/components/Mixology/favorite_mix_button.dart';
 import 'package:app/components/Mixology/use_mix_button.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
@@ -198,15 +199,16 @@ class MixDetailPageState extends State<MixDetailPage> {
           new SliverList(
             delegate: new SliverChildListDelegate(<Widget>[
               Column(
-                  children: [...widget.mix.tobaccos.map((f) {
-                return ListTile(
+                  children: [...widget.mix.tobaccos.asMap().map((index,f) {
+                return MapEntry(index,ListTile(
                   title: Text(f.tobacco.name,
-                      style: Theme.of(context).textTheme.display3),
-                  trailing: Text(f.fraction.toString() + ' g'),
+                      style: Theme.of(context).textTheme.display2),
+                  trailing: Text(f.fraction.toString() + ' g',style:Theme.of(context).textTheme.display2.apply(color:AppColors.colors[index])),
                   subtitle: Text(f.tobacco.brand,
                       style: Theme.of(context).textTheme.display3),
-                );
-              }),
+                ));
+              }).values,
+              FavoriteMixButton(mix:widget.mix),
               UseMixButton(mix: widget.mix,)],
               )
             ]),

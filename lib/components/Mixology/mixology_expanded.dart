@@ -3,6 +3,7 @@ import 'package:app/pages/Mixology/mix_detail_page.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/api.dart';
 
 class MixCardExpanded extends StatefulWidget {
@@ -69,6 +70,12 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                             color: Colors.white,
                             borderColor: Colors.white,
                           )),
+                          if(widget.tobaccoMix.liked > 0)
+                          Icon(FontAwesomeIcons.thumbsUp),
+                          if(widget.tobaccoMix.liked < 0)
+                          Icon(FontAwesomeIcons.thumbsDown),
+                          if(widget.tobaccoMix.liked == 0)
+                         Container()
                 ],
               ),
               Card(

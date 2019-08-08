@@ -9,8 +9,10 @@ import 'package:app/pages/Mixology/mix_detail_page.dart';
 import 'package:app/pages/SmokeSession/tobacco_edit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/api.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class MixologyList extends StatefulWidget {
   @override
@@ -24,7 +26,8 @@ class MixologyListState extends State<MixologyList> {
 
   static const Map<int, String> labels = {
     0: 'mix.my_mixes',
-    1: 'mix.featured_creators'
+    1: 'mix.featured_creators',
+    2: 'mix.favorite_mixes'
   };
 
   Future showTobaccoDialog(
@@ -90,12 +93,13 @@ class MixologyListState extends State<MixologyList> {
   Widget getContent(MixologyBloc mixologyBloc) {
     switch (curentView) {
       case 0:
-        return new PaggingMixListView(
+        return PaggingMixListView(
             mixologyBloc: mixologyBloc, mixCreator: 'me');
       case 1:
         return FeatureMixCreator();
       case 2:
-        return Placeholder();
+      return PaggingMixListView(
+            mixologyBloc: mixologyBloc, mixCreator: 'favorite');
     }
     return Placeholder();
   }
@@ -117,8 +121,12 @@ class PaggingMixListView extends StatelessWidget {
         stream: mixologyBloc.mixCreatorMixes[mixCreator],
         initialData: null,
         builder: (context, snapshot) {
-          if(snapshot.data == null || snapshot.data.length == 0){
-            return Center(child: Text('Is empty here, try add new mix                                                                                                                                                                       ',style: Theme.of(context).textTheme.display1,));
+          if (snapshot.data == null || snapshot.data.length == 0) {
+            return Center(
+                child: Text(
+              'Is empty here, try add new mix                                                                                                                                                                       ',
+              style: Theme.of(context).textTheme.display1,
+            ));
           }
           return LazyLoadScrollView(
             onEndOfPage: () {
@@ -129,7 +137,29 @@ class PaggingMixListView extends StatelessWidget {
               itemCount: snapshot.data?.length ?? 10,
               itemBuilder: (context, index) {
                 if (snapshot.data != null && snapshot.data[index] != null) {
-                  return MixCardExpanded(tobaccoMix: snapshot.data[index]);
+                  return Slidable(
+                    actionPane: SlidableDrawerActionPane(),
+                    child: MixCardExpanded(tobaccoMix: snapshot.data[index]),
+                    actions: <Widget>[
+                      IconSlideAction(
+                          caption: 'Like',
+                          color: Colors.green,
+                          icon: FontAwesomeIcons.thumbsUp,
+                          onTap: () => {
+                            ++snapshot.data[index].liked
+                          }),
+                     
+                    ],
+                    secondaryActions: <Widget>[
+                     IconSlideAction(
+                          caption: 'Dis Like',
+                          color: Colors.red,
+                          icon: FontAwesomeIcons.thumbsDown,
+                          onTap: () => {
+                            --snapshot.data[index].liked
+                          }),
+                    ],
+                  );
                 } else {
                   return MixCardExpandedShimmer();
                 }

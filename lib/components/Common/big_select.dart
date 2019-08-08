@@ -38,8 +38,10 @@ class BigSelect extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      mixTypeSelector(context, 0),
-                      mixTypeSelector(context, 1),
+                      ...labels.map((f,_){
+                        return MapEntry(f,mixTypeSelector(context, f));
+                      }).values
+                      
                     ],
                   ),
                 ),

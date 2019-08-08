@@ -33,11 +33,38 @@ class MixologyBloc {
   MixologyBloc._() {
     loadMixCreator();
     loadCreatorMixes('me', 0);
+    loadFavoriteMixes();
   }
 
   Future loadMixCreator() async {
     final creators = await _apiClient.getMixCreator();
     this.mixCreator.add(creators);
+  }
+
+  Future addToFavorite(TobaccoMixSimpleDto mix) {
+    String favorite = "favorite";
+    if (this.mixCreatorMixes[favorite] == null) {
+      this.mixCreatorMixes[favorite] =
+          new BehaviorSubject<List<TobaccoMixSimpleDto>>();
+    }
+
+    var old = this.mixCreatorMixes[favorite].value;
+    if (old == null) old = new List<TobaccoMixSimpleDto>();
+    old.add(mix);
+    this.mixCreatorMixes[favorite].add(old);
+  }
+
+  Future removeFromFavorite(TobaccoMixSimpleDto mix) {
+    String favorite = "favorite";
+    if (this.mixCreatorMixes[favorite] == null) {
+      this.mixCreatorMixes[favorite] =
+          new BehaviorSubject<List<TobaccoMixSimpleDto>>();
+    }
+
+    var old = this.mixCreatorMixes[favorite].value;
+    if (old == null) old = new List<TobaccoMixSimpleDto>();
+    old.remove(mix);
+    this.mixCreatorMixes[favorite].add(old);
   }
 
   Future loadCreatorMixesNextPage(String creatorName) async {
@@ -98,6 +125,13 @@ class MixologyBloc {
     myMixes.removeWhere((m) => m.id == mix.id);
 
     this.mixCreatorMixes['me'].add(myMixes);
+  }
+
+  void loadFavoriteMixes() {
+    this.mixCreatorMixes["favorite"] =
+        new BehaviorSubject<List<TobaccoMixSimpleDto>>();
+
+    this.mixCreatorMixes["favorite"].add(new List<TobaccoMixSimpleDto>());
   }
 }
 
