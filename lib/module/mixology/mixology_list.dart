@@ -93,12 +93,11 @@ class MixologyListState extends State<MixologyList> {
   Widget getContent(MixologyBloc mixologyBloc) {
     switch (curentView) {
       case 0:
-        return PaggingMixListView(
-            mixologyBloc: mixologyBloc, mixCreator: 'me');
+        return PaggingMixListView(mixologyBloc: mixologyBloc, mixCreator: 'me');
       case 1:
         return FeatureMixCreator();
       case 2:
-      return PaggingMixListView(
+        return PaggingMixListView(
             mixologyBloc: mixologyBloc, mixCreator: 'favorite');
     }
     return Placeholder();
@@ -145,19 +144,14 @@ class PaggingMixListView extends StatelessWidget {
                           caption: 'Like',
                           color: Colors.green,
                           icon: FontAwesomeIcons.thumbsUp,
-                          onTap: () => {
-                            ++snapshot.data[index].liked
-                          }),
-                     
+                          onTap: () => {++snapshot.data[index].likeCount}),
                     ],
                     secondaryActions: <Widget>[
-                     IconSlideAction(
+                      IconSlideAction(
                           caption: 'Dis Like',
                           color: Colors.red,
                           icon: FontAwesomeIcons.thumbsDown,
-                          onTap: () => {
-                            --snapshot.data[index].liked
-                          }),
+                          onTap: () => {--snapshot.data[index].likeCount}),
                     ],
                   );
                 } else {

@@ -23,10 +23,6 @@ class TobaccoMixSimpleDto {
   int likeCount = null;
   
   int disLikeCount = null;
-
-  int liked = 0;
-
-  bool favorite = false;
   TobaccoMixSimpleDto();
 
   @override
