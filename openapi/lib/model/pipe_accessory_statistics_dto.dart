@@ -19,7 +19,11 @@ class PipeAccessoryStatisticsDto {
   int packType = null;
   //enum packTypeEnum {  0,  1,  2,  3,  4,  };{
   
-  double quality = null;
+  double cut = null;
+  
+  double strength = null;
+  
+  double duration = null;
   
   double taste = null;
   
@@ -34,7 +38,7 @@ class PipeAccessoryStatisticsDto {
 
   @override
   String toString() {
-    return 'PipeAccessoryStatisticsDto[used=$used, weight=$weight, pipeAccessoryId=$pipeAccessoryId, smokeDurationTicks=$smokeDurationTicks, pufCount=$pufCount, blowCount=$blowCount, sessionDurationTick=$sessionDurationTick, packType=$packType, quality=$quality, taste=$taste, smoke=$smoke, overall=$overall, smokeTimePercentil=$smokeTimePercentil, sessionTimePercentil=$sessionTimePercentil, ]';
+    return 'PipeAccessoryStatisticsDto[used=$used, weight=$weight, pipeAccessoryId=$pipeAccessoryId, smokeDurationTicks=$smokeDurationTicks, pufCount=$pufCount, blowCount=$blowCount, sessionDurationTick=$sessionDurationTick, packType=$packType, cut=$cut, strength=$strength, duration=$duration, taste=$taste, smoke=$smoke, overall=$overall, smokeTimePercentil=$smokeTimePercentil, sessionTimePercentil=$sessionTimePercentil, ]';
   }
 
   PipeAccessoryStatisticsDto.fromJson(Map<String, dynamic> json) {
@@ -79,10 +83,20 @@ class PipeAccessoryStatisticsDto {
     } else {
           packType = json['PackType'];
     }
-    if (json['Quality'] == null) {
-      quality = null;
+    if (json['Cut'] == null) {
+      cut = null;
     } else {
-          quality = json['Quality'];
+          cut = json['Cut'];
+    }
+    if (json['Strength'] == null) {
+      strength = null;
+    } else {
+          strength = json['Strength'];
+    }
+    if (json['Duration'] == null) {
+      duration = null;
+    } else {
+          duration = json['Duration'];
     }
     if (json['Taste'] == null) {
       taste = null;
@@ -129,8 +143,12 @@ class PipeAccessoryStatisticsDto {
       json['SessionDurationTick'] = sessionDurationTick;
     if (packType != null)
       json['PackType'] = packType;
-    if (quality != null)
-      json['Quality'] = quality;
+    if (cut != null)
+      json['Cut'] = cut;
+    if (strength != null)
+      json['Strength'] = strength;
+    if (duration != null)
+      json['Duration'] = duration;
     if (taste != null)
       json['Taste'] = taste;
     if (smoke != null)

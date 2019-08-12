@@ -21,9 +21,8 @@ class TobaccoWidget extends StatelessWidget {
         children: <Widget>[
           Expanded(
             flex: 7,
-            child: this.tobaccoMix?.tobaccos != null &&
-                    this.tobaccoMix.tobaccos.length > 0
-                ? tobacoMixBody(tobaccoMix)
+            child: this.tobaccoMix != null
+                ? tobacoMixBody(context, tobaccoMix)
                 : tobacoBody(context, tobacco),
           ),
           onPressed == null
@@ -39,7 +38,17 @@ class TobaccoWidget extends StatelessWidget {
     );
   }
 
-  Widget tobacoMixBody(TobaccoMixSimpleDto tobacoMix) {
+  Widget tobacoMixBody(
+    BuildContext context,
+    TobaccoMixSimpleDto tobacoMix,
+  ) {
+    if ((tobacoMix?.tobaccos?.length ?? 0) == 0)
+      return Center(
+          child: Text(
+        AppTranslations.of(context).text("smoke_session.no_data"),
+        style: Theme.of(context).textTheme.display2,
+      ));
+
     return MixCardExpanded(
       tobaccoMix: tobacoMix,
       noTitle: true,

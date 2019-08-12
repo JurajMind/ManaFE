@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **personTobaccoStats** | [**PipeAccessoryStatisticsDto**](PipeAccessoryStatisticsDto.md) |  | [optional] [default to null]
 **allTobaccoStats** | [**PipeAccessoryStatisticsDto**](PipeAccessoryStatisticsDto.md) |  | [optional] [default to null]
 **smokeSessions** | [**List&lt;SmokeSessionSimpleDto&gt;**](SmokeSessionSimpleDto.md) |  | [optional] [default to []]
-**reviews** | [**List&lt;TobaccoReviewDto&gt;**](TobaccoReviewDto.md) |  | [optional] [default to []]
+**reviews** | [**List&lt;GearTobaccoReviewDto&gt;**](GearTobaccoReviewDto.md) |  | [optional] [default to []]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

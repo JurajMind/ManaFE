@@ -49,10 +49,10 @@ class GearUsageItem extends StatelessWidget {
                     padding: const EdgeInsets.all(4.0),
                     child: InkWell(
                       onTap: () => Navigator.of(context).push(
-                              new MaterialPageRoute(
-                                  builder: (BuildContext context) {
-                            return new PipeAccesoryPage(pipeAccesory: null);
-                          })),
+                          new MaterialPageRoute(
+                              builder: (BuildContext context) {
+                        return new PipeAccesoryPage(pipeAccesoryId: item.id);
+                      })),
                       child: Container(
                         decoration: BoxDecoration(
                             border: Border.all(color: Colors.white),

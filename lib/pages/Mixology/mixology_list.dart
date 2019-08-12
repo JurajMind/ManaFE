@@ -93,12 +93,11 @@ class MixologyListState extends State<MixologyList> {
   Widget getContent(MixologyBloc mixologyBloc) {
     switch (curentView) {
       case 0:
-        return PaggingMixListView(
-            mixologyBloc: mixologyBloc, mixCreator: 'me');
+        return PaggingMixListView(mixologyBloc: mixologyBloc, mixCreator: 'me');
       case 1:
         return FeatureMixCreator();
       case 2:
-      return PaggingMixListView(
+        return PaggingMixListView(
             mixologyBloc: mixologyBloc, mixCreator: 'favorite');
     }
     return Placeholder();
@@ -128,14 +127,22 @@ class PaggingMixListView extends StatelessWidget {
               style: Theme.of(context).textTheme.display1,
             ));
           }
+          var itemCount = 10;
+          if (snapshot?.data?.length != null) {
+            itemCount = snapshot.data.length + 1;
+          }
           return LazyLoadScrollView(
             onEndOfPage: () {
               if (!snapshot.data.contains(null))
-                mixologyBloc.loadCreatorMixesNextPage(mixCreator);
+                mixologyBloc.loadCreatorMixesNextPage(mixCreator, false);
             },
             child: ListView.builder(
-              itemCount: snapshot.data?.length ?? 10,
+              itemCount: itemCount ?? 10,
               itemBuilder: (context, index) {
+                if (index == snapshot.data.length) {
+                  return SizedBox(height: 100);
+                }
+
                 if (snapshot.data != null && snapshot.data[index] != null) {
                   return Slidable(
                     actionPane: SlidableDrawerActionPane(),
@@ -145,19 +152,14 @@ class PaggingMixListView extends StatelessWidget {
                           caption: 'Like',
                           color: Colors.green,
                           icon: FontAwesomeIcons.thumbsUp,
-                          onTap: () => {
-                            ++snapshot.data[index].liked
-                          }),
-                     
+                          onTap: () => {++snapshot.data[index].likeCount}),
                     ],
                     secondaryActions: <Widget>[
-                     IconSlideAction(
+                      IconSlideAction(
                           caption: 'Dis Like',
                           color: Colors.red,
                           icon: FontAwesomeIcons.thumbsDown,
-                          onTap: () => {
-                            --snapshot.data[index].liked
-                          }),
+                          onTap: () => {--snapshot.data[index].likeCount}),
                     ],
                   );
                 } else {

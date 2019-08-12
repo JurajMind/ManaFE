@@ -53,7 +53,8 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                                 style: Theme.of(context).textTheme.subtitle,
                               )
                             : Text(
-                                AppTranslations.of(context).text('gear.no_name'),
+                                AppTranslations.of(context)
+                                    .text('gear.no_name'),
                                 style: Theme.of(context).textTheme.subtitle,
                               ),
                       ),
@@ -70,12 +71,11 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                             color: Colors.white,
                             borderColor: Colors.white,
                           )),
-                          if(widget.tobaccoMix.liked > 0)
-                          Icon(FontAwesomeIcons.thumbsUp),
-                          if(widget.tobaccoMix.liked < 0)
-                          Icon(FontAwesomeIcons.thumbsDown),
-                          if(widget.tobaccoMix.liked == 0)
-                         Container()
+                  if (widget.tobaccoMix.likeCount > 0)
+                    Icon(FontAwesomeIcons.thumbsUp),
+                  if (widget.tobaccoMix.likeCount < 0)
+                    Icon(FontAwesomeIcons.thumbsDown),
+                  if (widget.tobaccoMix.likeCount == 0) Container()
                 ],
               ),
               Card(

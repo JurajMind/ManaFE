@@ -12,7 +12,7 @@ class TobaccoInformationDto {
   
   List<SmokeSessionSimpleDto> smokeSessions = [];
   
-  List<TobaccoReviewDto> reviews = [];
+  List<GearTobaccoReviewDto> reviews = [];
   TobaccoInformationDto();
 
   @override
@@ -50,7 +50,7 @@ class TobaccoInformationDto {
     if (json['Reviews'] == null) {
       reviews = null;
     } else {
-      reviews = TobaccoReviewDto.listFromJson(json['Reviews']);
+      reviews = GearTobaccoReviewDto.listFromJson(json['Reviews']);
     }
   }
 

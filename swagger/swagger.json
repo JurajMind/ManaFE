@@ -30,16 +30,14 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "userModel",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/UserModel"
-            }
+        "parameters": [{
+          "name": "userModel",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/UserModel"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -64,8 +62,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "userId",
             "in": "query",
             "required": true,
@@ -109,16 +106,14 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "model",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/smartHookahModelsForgotPasswordViewModel"
-            }
+        "parameters": [{
+          "name": "model",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/smartHookahModelsForgotPasswordViewModel"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -143,14 +138,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -172,14 +165,12 @@
           "application/json",
           "text/json"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -204,8 +195,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "name",
             "in": "query",
             "required": true,
@@ -301,8 +291,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -348,8 +337,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -395,8 +383,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -442,8 +429,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -482,14 +468,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -514,14 +498,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -546,14 +528,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -585,8 +565,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -626,14 +605,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -658,14 +635,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -690,14 +665,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -722,14 +695,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -754,8 +725,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -821,15 +791,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -861,8 +829,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -930,15 +897,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -990,8 +955,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "sessionCode",
             "in": "path",
             "required": true,
@@ -1040,8 +1004,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "deviceId",
             "in": "path",
             "required": true,
@@ -1084,15 +1047,13 @@
         "operationId": "DevicePreset_SetDefault",
         "consumes": [],
         "produces": [],
-        "parameters": [
-          {
-            "name": "presetId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "presetId",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "204": {
             "description": "No Content"
@@ -1108,14 +1069,12 @@
         "operationId": "DevicePreset_UseDefault",
         "consumes": [],
         "produces": [],
-        "parameters": [
-          {
-            "name": "sessionId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "sessionId",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "204": {
             "description": "No Content"
@@ -1131,8 +1090,7 @@
         "operationId": "DevicePreset_UsePreset",
         "consumes": [],
         "produces": [],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "sessionId",
             "in": "path",
             "required": true,
@@ -1167,15 +1125,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1200,14 +1156,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1232,8 +1186,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "page",
             "in": "query",
             "required": false,
@@ -1287,15 +1240,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1320,8 +1271,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -1403,15 +1353,13 @@
         "operationId": "FeatureMix_AddFollow",
         "consumes": [],
         "produces": [],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "204": {
             "description": "No Content"
@@ -1425,15 +1373,13 @@
         "operationId": "FeatureMix_RemoveFollow",
         "consumes": [],
         "produces": [],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "204": {
             "description": "No Content"
@@ -1470,8 +1416,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "search",
             "in": "path",
             "required": true,
@@ -1593,14 +1538,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "brandName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "brandName",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1625,15 +1568,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1658,14 +1599,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "prefix",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "prefix",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1693,8 +1632,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -1743,15 +1681,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1783,8 +1719,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -1832,16 +1767,14 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "accessory",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/PipeAccesorySimpleDto"
-            }
+        "parameters": [{
+          "name": "accessory",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/PipeAccesorySimpleDto"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1868,8 +1801,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -1910,8 +1842,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -1952,8 +1883,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -1992,8 +1922,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "page",
             "in": "query",
             "required": false,
@@ -2053,8 +1982,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "page",
             "in": "query",
             "required": false,
@@ -2102,15 +2030,13 @@
           "application/json",
           "text/json"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2135,15 +2061,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2175,16 +2099,14 @@
           "application/json",
           "text/json"
         ],
-        "parameters": [
-          {
-            "name": "newMix",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/TobaccoMixSimpleDto"
-            }
+        "parameters": [{
+          "name": "newMix",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/TobaccoMixSimpleDto"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2206,8 +2128,7 @@
           "application/json",
           "text/json"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -2252,8 +2173,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -2294,15 +2214,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "mixId",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "mixId",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2423,14 +2341,12 @@
         "operationId": "Person_AddNotificationToken",
         "consumes": [],
         "produces": [],
-        "parameters": [
-          {
-            "name": "token",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "token",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "204": {
             "description": "No Content"
@@ -2467,14 +2383,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "type",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2502,15 +2416,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "sessionCount",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "sessionCount",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2538,8 +2450,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -2578,8 +2489,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -2618,8 +2528,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -2683,8 +2592,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -2730,16 +2638,14 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "placeDay",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/PlaceDay"
-            }
+        "parameters": [{
+          "name": "placeDay",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/PlaceDay"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2771,16 +2677,14 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "placeEvent",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/PlaceEvent"
-            }
+        "parameters": [{
+          "name": "placeEvent",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/PlaceEvent"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2805,14 +2709,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "url",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "url",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2837,8 +2739,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "placeId",
             "in": "query",
             "required": true,
@@ -2876,8 +2777,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "placeId",
             "in": "query",
             "required": true,
@@ -2929,15 +2829,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "eventId",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "eventId",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2962,8 +2860,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "placeId",
             "in": "query",
             "required": true,
@@ -3015,15 +2912,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "dayId",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "dayId",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -3048,15 +2943,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "eventId",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "eventId",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -3081,15 +2974,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -3114,15 +3005,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -3162,8 +3051,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "page",
             "in": "query",
             "required": false,
@@ -3278,16 +3166,14 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "importedPlace",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/PlaceDto"
-            }
+        "parameters": [{
+          "name": "importedPlace",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/PlaceDto"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -3319,8 +3205,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "placeId",
             "in": "path",
             "required": true,
@@ -3363,15 +3248,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "placeId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "placeId",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -3396,14 +3279,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -3428,14 +3309,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -3460,14 +3339,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -3492,8 +3369,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -3559,8 +3435,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "from",
             "in": "query",
             "required": true,
@@ -3609,16 +3484,14 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "reservation",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/PlacesReservationsReservationDto"
-            }
+        "parameters": [{
+          "name": "reservation",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/PlacesReservationsReservationDto"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -3643,8 +3516,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -3690,8 +3562,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -3738,8 +3609,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -3780,15 +3650,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -3813,15 +3681,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -3853,8 +3719,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -3902,8 +3767,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -3930,6 +3794,250 @@
         }
       }
     },
+    "/api/Review/Place/{id}": {
+      "get": {
+        "tags": [
+          "Review"
+        ],
+        "operationId": "Review_GetPlaceReviews",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PlacesPlaceReviewDto"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Review"
+        ],
+        "operationId": "Review_AddPlaceReview",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "parameters": [{
+            "name": "reviewDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PlacesPlaceReviewDto"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlacesPlaceReviewDto"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Review"
+        ],
+        "operationId": "Review_RemovePlaceReview",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/api/Review/Session/{id}": {
+      "get": {
+        "tags": [
+          "Review"
+        ],
+        "operationId": "Review_GetSessionReview",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/smartHookahModelsDbSessionDtoSessionReviewDto"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Review"
+        ],
+        "operationId": "Review_AddSessionReview",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "parameters": [{
+            "name": "reviewDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/smartHookahModelsDbSessionDtoSessionReviewDto"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/smartHookahModelsDbSessionDtoSessionReviewDto"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Review"
+        ],
+        "operationId": "Review_RemoveSessionReview",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
     "/api/SentToDevice/{id}": {
       "post": {
         "tags": [
@@ -3938,8 +4046,7 @@
         "operationId": "SentToDevice_DefaultAction",
         "consumes": [],
         "produces": [],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -3979,14 +4086,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -4011,14 +4116,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -4043,14 +4146,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -4075,14 +4176,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -4107,15 +4206,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -4140,15 +4237,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -4183,8 +4278,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -4223,14 +4317,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -4255,14 +4347,12 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -4287,8 +4377,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "from",
             "in": "query",
             "required": true,
@@ -4327,15 +4416,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -4367,8 +4454,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "page",
             "in": "query",
             "required": true,
@@ -4464,15 +4550,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -4497,15 +4581,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -4533,15 +4615,13 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -4566,8 +4646,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -4595,7 +4674,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/TobaccoReviewDto"
+                "$ref": "#/definitions/GearTobaccoReviewDto"
               }
             }
           }
@@ -4616,8 +4695,7 @@
           "text/xml",
           "multipart/form-data"
         ],
-        "parameters": [
-          {
+        "parameters": [{
             "name": "id",
             "in": "path",
             "required": true,
@@ -6226,10 +6304,10 @@
             "$ref": "#/definitions/SeatDto"
           }
         },
-        "TobaccoReviews": {
+        "PlaceReviews": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/TobaccoReviewDto"
+            "$ref": "#/definitions/PlacesPlaceReviewDto"
           }
         },
         "Medias": {
@@ -6328,14 +6406,103 @@
         }
       }
     },
-    "TobaccoReviewDto": {
+    "PlacesPlaceReviewDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "authorId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "author": {
+          "type": "string"
+        },
+        "publishDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "placeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "sessionReview": {
+          "$ref": "#/definitions/smartHookahModelsDbSessionDtoSessionPlaceReviewDto"
+        },
+        "medias": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MediaDto"
+          }
+        }
+      }
+    },
+    "FranchiseDto": {
       "type": "object",
       "properties": {
         "Id": {
           "format": "int32",
           "type": "integer"
         },
-        "Quality": {
+        "Name": {
+          "type": "string"
+        },
+        "Uril": {
+          "type": "string"
+        }
+      }
+    },
+    "smartHookahModelsDbSessionDtoSessionPlaceReviewDto": {
+      "type": "object",
+      "properties": {
+        "authorId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "author": {
+          "type": "string"
+        },
+        "publishDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "tobaccoReview": {
+          "$ref": "#/definitions/GearTobaccoReviewDto"
+        },
+        "gearReviews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/smartHookahModelsDbGearPipeAccessoryReviewDto"
+          }
+        },
+        "medias": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MediaDto"
+          }
+        },
+        "smokeSessionId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "smokeSession": {
+          "$ref": "#/definitions/SmokeSessionSimpleDto"
+        }
+      }
+    },
+    "GearTobaccoReviewDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Cut": {
           "format": "int32",
           "type": "integer"
         },
@@ -6344,6 +6511,14 @@
           "type": "integer"
         },
         "Smoke": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Strength": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Duration": {
           "format": "int32",
           "type": "integer"
         },
@@ -6360,18 +6535,51 @@
         }
       }
     },
-    "FranchiseDto": {
+    "smartHookahModelsDbGearPipeAccessoryReviewDto": {
       "type": "object",
       "properties": {
         "Id": {
           "format": "int32",
           "type": "integer"
         },
-        "Name": {
+        "AuthorId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Author": {
           "type": "string"
         },
-        "Uril": {
+        "PublishDate": {
+          "format": "date-time",
           "type": "string"
+        },
+        "Deleted": {
+          "type": "boolean"
+        },
+        "Text": {
+          "type": "string"
+        },
+        "AccessorId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Overall": {
+          "format": "double",
+          "type": "number"
+        },
+        "SessionReviewId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "SmokeSessionId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Medias": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MediaDto"
+          }
         }
       }
     },
@@ -6524,6 +6732,58 @@
           "items": {
             "$ref": "#/definitions/HookahOrderDto"
           }
+        }
+      }
+    },
+    "smartHookahModelsDbSessionDtoSessionReviewDto": {
+      "type": "object",
+      "properties": {
+        "authorId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "author": {
+          "type": "string"
+        },
+        "publishDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "tobaccoReview": {
+          "$ref": "#/definitions/GearTobaccoReviewDto"
+        },
+        "placeReviewId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "medias": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MediaDto"
+          }
+        },
+        "smokeSessionId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "taste": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "smoke": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "strength": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "duration": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "smokeSession": {
+          "$ref": "#/definitions/SmokeSessionSimpleDto"
         }
       }
     },
@@ -6832,7 +7092,7 @@
         "Reviews": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/TobaccoReviewDto"
+            "$ref": "#/definitions/GearTobaccoReviewDto"
           }
         }
       }
@@ -6879,7 +7139,15 @@
           ],
           "type": "integer"
         },
-        "Quality": {
+        "Cut": {
+          "format": "double",
+          "type": "number"
+        },
+        "Strength": {
+          "format": "double",
+          "type": "number"
+        },
+        "Duration": {
           "format": "double",
           "type": "number"
         },

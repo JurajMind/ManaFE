@@ -79,3 +79,7 @@ class AppColors {
     const Color.fromARGB(255, 242, 160, 29),
   ];
 }
+
+class ThemeConst {
+  static const BorderSide oBBorder = BorderSide(color: Colors.white, width: 1);
+}
