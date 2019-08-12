@@ -1,6 +1,6 @@
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/module/mixology/mixology_list.dart';
+import 'package:app/pages/Mixology/feature_mix_list.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -10,7 +10,7 @@ class FeatureMixCreator extends StatelessWidget {
   Widget build(BuildContext context) {
     var mixologyBloc = DataProvider.getData(context).mixologyBloc;
 
-    return StreamBuilder<List<FeatureMixCreatorDto>>(
+    return StreamBuilder<List<FeatureMixCreatorSimpleDto>>(
       stream: mixologyBloc.mixCreator,
       initialData: null,
       builder: (context, snapshot) {
@@ -23,25 +23,7 @@ class FeatureMixCreator extends StatelessWidget {
                   mixologyBloc.loadCreatorMixes(item.name, 0);
                   Navigator.of(context)
                       .push(new MaterialPageRoute(builder: (context) {
-                    return SafeArea(
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: 50.0,
-                            child: AppBar(
-                              backgroundColor: Colors.black,
-                              title: Text(item.name),
-                            ),
-                          ),
-                          Expanded(
-                            child: PaggingMixListView(
-                              mixologyBloc: mixologyBloc,
-                              mixCreator: item.name,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
+                    return FeatureMixListView(mixCreator: item);
                   }));
                 },
                 trailing: Icon(Icons.chevron_right),

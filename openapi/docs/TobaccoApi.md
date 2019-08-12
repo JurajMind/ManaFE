@@ -101,7 +101,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **tobaccoGetTobaccoReviews**
-> List<TobaccoReviewDto> tobaccoGetTobaccoReviews(id, pageSize, page)
+> List<GearTobaccoReviewDto> tobaccoGetTobaccoReviews(id, pageSize, page)
 
 
 
@@ -132,7 +132,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<TobaccoReviewDto>**](TobaccoReviewDto.md)
+[**List<GearTobaccoReviewDto>**](GearTobaccoReviewDto.md)
 
 ### Authorization
 

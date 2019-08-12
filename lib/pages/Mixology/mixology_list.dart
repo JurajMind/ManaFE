@@ -127,14 +127,22 @@ class PaggingMixListView extends StatelessWidget {
               style: Theme.of(context).textTheme.display1,
             ));
           }
+          var itemCount = 10;
+          if (snapshot?.data?.length != null) {
+            itemCount = snapshot.data.length + 1;
+          }
           return LazyLoadScrollView(
             onEndOfPage: () {
               if (!snapshot.data.contains(null))
-                mixologyBloc.loadCreatorMixesNextPage(mixCreator);
+                mixologyBloc.loadCreatorMixesNextPage(mixCreator, false);
             },
             child: ListView.builder(
-              itemCount: snapshot.data?.length ?? 10,
+              itemCount: itemCount ?? 10,
               itemBuilder: (context, index) {
+                if (index == snapshot.data.length) {
+                  return SizedBox(height: 100);
+                }
+
                 if (snapshot.data != null && snapshot.data[index] != null) {
                   return Slidable(
                     actionPane: SlidableDrawerActionPane(),

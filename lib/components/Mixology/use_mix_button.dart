@@ -1,4 +1,5 @@
-import 'package:app/components/Buttons/roundedButton.dart';
+import 'package:app/components/Buttons/m_outlineButton.dart';
+import 'package:app/const/theme.dart';
 import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/utils/translations/app_translations.dart';
@@ -17,19 +18,10 @@ class UseMixButton extends StatelessWidget {
         stream: bloc.smokeSessionMetaData,
         builder: (context, snapshot) {
           if (snapshot?.data?.tobaccoMix?.id == mix.id) {
-            return Container(
-              width: 150,
-              height: 50,
-              child: Center(
-                  child: Text(AppTranslations.of(context).text("mix.used_mix"),
-                      style: Theme.of(context)
-                          .textTheme
-                          .display2
-                          .apply(color: Colors.grey))),
-              decoration: BoxDecoration(
-                  borderRadius:
-                      new BorderRadius.all(const Radius.circular(30.0)),
-                  border: new Border.all(color: Colors.grey, width: 2)),
+            return MButton(
+              icon: Icons.check,
+              iconColor: Colors.grey,
+              label: "mix.used_mix",
             );
           }
 
@@ -37,20 +29,15 @@ class UseMixButton extends StatelessWidget {
             return Container();
           }
 
-          return Container(
-            child: new RoundedButton(
-              buttonName: AppTranslations.of(context).text("mix.use_this_mix"),
-              onTap: () async {
-                var edit = new TobaccoEditModel();
-                edit.mix = mix;
-                bloc.setTobacco(edit);
-              },
-              buttonColor: Colors.transparent,
-              borderWidth: 2.0,
-              bottomMargin: 1.0,
-              height: 50.0,
-              width: 200,
-            ),
+          return MButton(
+            icon: Icons.check,
+            iconColor: AppColors.colors[2],
+            label: "mix.use_this_mix",
+            onPressed: () async {
+              var edit = new TobaccoEditModel();
+              edit.mix = mix;
+              bloc.setTobacco(edit);
+            },
           );
         });
   }

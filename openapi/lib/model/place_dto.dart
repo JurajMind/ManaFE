@@ -12,7 +12,7 @@ class PlaceDto {
   
   List<SeatDto> seats = [];
   
-  List<TobaccoReviewDto> tobaccoReviews = [];
+  List<PlacesPlaceReviewDto> placeReviews = [];
   
   List<MediaDto> medias = [];
   
@@ -65,7 +65,7 @@ class PlaceDto {
 
   @override
   String toString() {
-    return 'PlaceDto[url=$url, descriptions=$descriptions, baseHookahPrice=$baseHookahPrice, currency=$currency, seats=$seats, tobaccoReviews=$tobaccoReviews, medias=$medias, haveReservation=$haveReservation, minimumReservationTime=$minimumReservationTime, franchiseId=$franchiseId, franchise=$franchise, flags=$flags, socialMedias=$socialMedias, id=$id, name=$name, shortDescriptions=$shortDescriptions, description=$description, franchiseName=$franchiseName, franchiseLogo=$franchiseLogo, friendlyUrl=$friendlyUrl, logoPath=$logoPath, address=$address, businessHours=$businessHours, rating=$rating, media=$media, phoneNumber=$phoneNumber, facebook=$facebook, haveMenu=$haveMenu, haveOrders=$haveOrders, haveMana=$haveMana, ]';
+    return 'PlaceDto[url=$url, descriptions=$descriptions, baseHookahPrice=$baseHookahPrice, currency=$currency, seats=$seats, placeReviews=$placeReviews, medias=$medias, haveReservation=$haveReservation, minimumReservationTime=$minimumReservationTime, franchiseId=$franchiseId, franchise=$franchise, flags=$flags, socialMedias=$socialMedias, id=$id, name=$name, shortDescriptions=$shortDescriptions, description=$description, franchiseName=$franchiseName, franchiseLogo=$franchiseLogo, friendlyUrl=$friendlyUrl, logoPath=$logoPath, address=$address, businessHours=$businessHours, rating=$rating, media=$media, phoneNumber=$phoneNumber, facebook=$facebook, haveMenu=$haveMenu, haveOrders=$haveOrders, haveMana=$haveMana, ]';
   }
 
   PlaceDto.fromJson(Map<String, dynamic> json) {
@@ -95,10 +95,10 @@ class PlaceDto {
     } else {
       seats = SeatDto.listFromJson(json['Seats']);
     }
-    if (json['TobaccoReviews'] == null) {
-      tobaccoReviews = null;
+    if (json['PlaceReviews'] == null) {
+      placeReviews = null;
     } else {
-      tobaccoReviews = TobaccoReviewDto.listFromJson(json['TobaccoReviews']);
+      placeReviews = PlacesPlaceReviewDto.listFromJson(json['PlaceReviews']);
     }
     if (json['Medias'] == null) {
       medias = null;
@@ -234,8 +234,8 @@ class PlaceDto {
       json['Currency'] = currency;
     if (seats != null)
       json['Seats'] = seats;
-    if (tobaccoReviews != null)
-      json['TobaccoReviews'] = tobaccoReviews;
+    if (placeReviews != null)
+      json['PlaceReviews'] = placeReviews;
     if (medias != null)
       json['Medias'] = medias;
     if (haveReservation != null)

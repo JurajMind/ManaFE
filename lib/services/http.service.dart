@@ -87,27 +87,35 @@ class ApiClient {
 
   Future<List<TobaccoMixSimpleDto>> fetchtobacoMix(
       {int page: 0,
-      String category: "popular",
+      bool featured: false,
       int pageSize: 10,
       String author}) async {
+    var mixUrl = '/api/Mixology/GetMixes';
+    var featureUrl = 'api/FeatureMix/Mixes/$author';
     var params = Map<String, String>();
     params['page'] = page.toString();
     params['pageSize'] = pageSize.toString();
-    params['orderBy'] = 'name';
-    params['order'] = 'asc';
+    params['orderBy'] = 'created';
+    params['order'] = 'dsc';
     if (author != null) {
       params['author'] = author;
     }
-    var url = Uri.https(baseUrl, '/api/Mixology/GetMixes', params);
+    if (featured) {
+      mixUrl = featureUrl;
+    } else if (author != null) {
+      params['author'] = author;
+    }
+    {}
+    var url = Uri.https(baseUrl, mixUrl, params);
 
     return _getJson(url)
         .then((json) => TobaccoMixSimpleDto.listFromJson(json).toList());
   }
 
-  Future<List<FeatureMixCreatorDto>> getMixCreator() async {
+  Future<List<FeatureMixCreatorSimpleDto>> getMixCreator() async {
     var url = Uri.https(baseUrl, '/api/FeatureMix/FeatureCreators');
     return _getJson(url)
-        .then((json) => FeatureMixCreatorDto.listFromJson(json));
+        .then((json) => FeatureMixCreatorSimpleDto.listFromJson(json));
   }
 
   Future<SessionIdValidation> validateSessionId(String sessionId) {
@@ -332,6 +340,11 @@ class ApiClient {
     }
 
     return result;
+  }
+
+  Future<PipeAccesorySimpleDto> getGearInfo(int id) async {
+    var url = Uri.https(baseUrl, 'api/Gear/$id/Info');
+    return _getJson(url).then((data) => PipeAccesorySimpleDto.fromJson(data));
   }
 
   Future<PlaceMenuDto> getPlaceMenu(int id) async {
@@ -603,6 +616,20 @@ class ApiClient {
     return await _dio
         .postUri(url)
         .then((data) => DeviceSimpleDto.fromJson(data.data));
+  }
+
+  Future<bool> voteMix(int id, int value) async {
+    var url = Uri.https(baseUrl, '/api/Mixology/$id/Vote');
+    return await _dio.postUri(url, data: value).then((data) => true);
+  }
+
+  Future<FeatureMixCreatorDto> getFeatureCreatorInfo(int id) async {
+    var url = Uri.https(baseUrl, '/api/FeatureMix/FeatureCreator/${id}');
+    return await _dio
+        .get(
+          url.toString(),
+        )
+        .then((data) => FeatureMixCreatorDto.fromJson(data.data));
   }
 }
 

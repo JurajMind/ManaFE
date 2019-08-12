@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **baseHookahPrice** | **double** |  | [optional] [default to null]
 **currency** | **String** |  | [optional] [default to null]
 **seats** | [**List&lt;SeatDto&gt;**](SeatDto.md) |  | [optional] [default to []]
-**tobaccoReviews** | [**List&lt;TobaccoReviewDto&gt;**](TobaccoReviewDto.md) |  | [optional] [default to []]
+**placeReviews** | [**List&lt;PlacesPlaceReviewDto&gt;**](PlacesPlaceReviewDto.md) |  | [optional] [default to []]
 **medias** | [**List&lt;MediaDto&gt;**](MediaDto.md) |  | [optional] [default to []]
 **haveReservation** | **bool** |  | [optional] [default to null]
 **minimumReservationTime** | **int** |  | [optional] [default to null]

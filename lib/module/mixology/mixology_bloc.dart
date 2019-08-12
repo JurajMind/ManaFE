@@ -14,11 +14,19 @@ class MixologyBloc {
   final _cache = Map<int, TobaccoMixSimpleDto>();
   final _downloaders = Map<int, Future<List<TobaccoMixSimpleDto>>>();
 
-  final mixCreator = BehaviorSubject<List<FeatureMixCreatorDto>>();
+  final mixCreator = BehaviorSubject<List<FeatureMixCreatorSimpleDto>>();
 
   final Map<String, BehaviorSubject<List<TobaccoMixSimpleDto>>>
       mixCreatorMixes =
       new Map<String, BehaviorSubject<List<TobaccoMixSimpleDto>>>();
+
+  BehaviorSubject<List<TobaccoMixSimpleDto>> getCreatorMixes(String key) {
+    var result = mixCreatorMixes[key];
+    if (result != null) return result;
+
+    mixCreatorMixes[key] = new BehaviorSubject<List<TobaccoMixSimpleDto>>();
+    return mixCreatorMixes[key];
+  }
 
   final Map<String, int> mixCreatorMixesPages = new Map<String, int>();
   final List<String> fullLoaded = new List<String>();
@@ -33,7 +41,7 @@ class MixologyBloc {
   MixologyBloc._() {
     loadMixCreator();
     loadCreatorMixes('me', 0);
-    loadFavoriteMixes();
+    loadCreatorMixes('favorite', 0);
   }
 
   Future loadMixCreator() async {
@@ -42,6 +50,7 @@ class MixologyBloc {
   }
 
   Future addToFavorite(TobaccoMixSimpleDto mix) {
+    App.http.voteMix(mix.id, 1);
     String favorite = "favorite";
     if (this.mixCreatorMixes[favorite] == null) {
       this.mixCreatorMixes[favorite] =
@@ -55,6 +64,7 @@ class MixologyBloc {
   }
 
   Future removeFromFavorite(TobaccoMixSimpleDto mix) {
+    App.http.voteMix(mix.id, -1);
     String favorite = "favorite";
     if (this.mixCreatorMixes[favorite] == null) {
       this.mixCreatorMixes[favorite] =
@@ -67,17 +77,20 @@ class MixologyBloc {
     this.mixCreatorMixes[favorite].add(old);
   }
 
-  Future loadCreatorMixesNextPage(String creatorName) async {
+  Future loadCreatorMixesNextPage(String creatorName, bool featured) async {
     if (fullLoaded.contains(creatorName)) {
       return;
     }
 
-    if (this.mixCreatorMixesPages[creatorName] == null) return;
+    if (this.mixCreatorMixesPages[creatorName] == null) {
+      this.mixCreatorMixesPages[creatorName] = -1;
+    }
     var nextPage = this.mixCreatorMixesPages[creatorName] + 1;
-    await this.loadCreatorMixes(creatorName, nextPage);
+    await this.loadCreatorMixes(creatorName, nextPage, featured: featured);
   }
 
-  Future loadCreatorMixes(String creatorName, int page) async {
+  Future loadCreatorMixes(String creatorName, int page,
+      {bool featured = false}) async {
     if (this.mixCreatorMixes[creatorName] == null) {
       this.mixCreatorMixes[creatorName] =
           new BehaviorSubject<List<TobaccoMixSimpleDto>>();
@@ -97,7 +110,10 @@ class MixologyBloc {
 
     this.mixCreatorMixesPages[creatorName] = page;
     final mixes = await _apiClient.fetchtobacoMix(
-        author: creatorName, page: page, pageSize: _mixPerPage);
+        featured: featured,
+        author: creatorName,
+        page: page,
+        pageSize: _mixPerPage);
     var oldMixes = this.mixCreatorMixes[creatorName].value;
     oldMixes.removeWhere((t) => t == null);
     if (mixes.length < _mixPerPage) {

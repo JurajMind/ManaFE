@@ -1,12 +1,10 @@
 import 'dart:math';
 
-import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/SmokeSession/tobacco_slider.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/models/SmokeSession/pipe_accesory_from_tobacco.dart';
 import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/pages/Gear/add_gear_page.dart';
 import 'package:app/pages/SmokeSession/accesory_search.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/cupertino.dart';
@@ -69,7 +67,8 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
     }
 
     selectedTobacco = new List<PipeAccesorySimpleDto>();
-    if (widget.tobacco?.id != null) {
+    if (widget.tobacco?.id != null &&
+        ((widget?.mix?.tobaccos?.length ?? 0) != 0)) {
       var weight = widget.tobaccoWeight.toDouble();
       if (weight == 0) {
         weight = 15;
@@ -238,8 +237,9 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
             widget.callback == null
                 ? Container()
                 : new OutlineButton.icon(
-                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-                    label: Text(AppTranslations.of(context).text('gear.find_mix')),
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+                    label:
+                        Text(AppTranslations.of(context).text('gear.find_mix')),
                     onPressed: () {
                       Navigator.of(context).pop();
                       widget.callback(0);

@@ -6,15 +6,15 @@
         "profile": "Profile"
     },
 
-    "settings":{
+    "settings": {
         "select_language": "Select language",
         "en": "English",
         "cs": "Česky",
-        "settings":"Settings",
+        "settings": "Settings",
         "user_profile": "User profile",
         "sign_out": "Sign out"
-    },   
-    
+    },
+
 
     "days": {
         "short_1": "Mon",
@@ -39,7 +39,7 @@
         "cancel": "Cancel",
         "next": "Next",
         "back": "Back",
-        "keep":"Keep",
+        "keep": "Keep",
         "delete": "Delete",
         "yes": "Yes",
         "no": "No"
@@ -84,16 +84,19 @@
         "more": "More",
         "experiments": "Experiments",
         "end_session": "End session",
-        "end_session_confirm":"Do you want end this session?"
+        "end_session_confirm": "Do you want end this session?"
     },
-    
+
     "mix": {
         "use_this_mix": "Use this mix",
         "used_mix": "Used mix",
-        "delete_mix":"Delete mix?",
-        "delete_mix_confirm":"Are you sure to delete this mix?",
+        "delete_mix": "Delete mix?",
+        "delete_mix_confirm": "Are you sure to delete this mix?",
         "my_mixes": "My mixes",
-        "featured_creators": "Featured creators"
+        "featured_creators": "Featured creators",
+        "favorite_mixes": "Favorite mixes",
+        "remove_favorite": "Remove favorite",
+        "add_favorite": "Add favorite"
     },
 
     "reservations": {
@@ -138,13 +141,13 @@
         "welcome": "Welcome!",
         "welcome_text": "Thank you for purchasing Manapipes Tear smart hookah stand. \n Get ready for a new generation of hookah experience – your adventure starts now! \n Add your stand to your inventory to begin.",
         "where_is_code": "Where is my code?",
-        "where_is_code_text_1":"On the display",
-        "where_is_code_text_1_t":"Hold the control button and turn the stand on. Do not let go of the control button and hold it for another 8 seconds – the lights will indicate the countdown. The stand’s ID and code will be shown on the display.You can turn the stand off to continue",
-        "where_is_code_text_2":"In the Wi-Fi settings",
-        "where_is_code_text_2_t":"Inside Wi-Fi setting page under info button, remember when you enter Wi-Fi setting, you must enter your wifi setting again",
+        "where_is_code_text_1": "On the display",
+        "where_is_code_text_1_t": "Hold the control button and turn the stand on. Do not let go of the control button and hold it for another 8 seconds – the lights will indicate the countdown. The stand’s ID and code will be shown on the display.You can turn the stand off to continue",
+        "where_is_code_text_2": "In the Wi-Fi settings",
+        "where_is_code_text_2_t": "Inside Wi-Fi setting page under info button, remember when you enter Wi-Fi setting, you must enter your wifi setting again",
         "enter_device_codes": "Enter device codes",
         "device_name": "Device name",
-        "device_name_helper":"Custom name of your new device, can be left empty",
+        "device_name_helper": "Custom name of your new device, can be left empty",
         "device_id": "Device Id",
         "pair_code": "Pair code",
         "add_device": "Add new device"
@@ -152,14 +155,14 @@
 
     "health": {
         "title": "Health",
-        "co" : "Carbon Monoxide",
+        "co": "Carbon Monoxide",
         "co_text": "Carbon monoxide (CO) is a gas produced by incomplete combustion. Hookahs are responsible for its production of carbons. Symptoms of poisoning may be headache, dizziness and malaise.",
         "gas": "Amount of inhaled smoke",
         "gas_text": "How much smoke did you inhale during smoking with Manapipes?",
         "nicotine": "Amount of absorbed nicotine",
-        "nicotine_text":"Nicotine is an alkaloid contained in tobacco leaves. It has stimulating effects on the body, but it is addictive. From the mean value you can read how much nicotine you absorbed during smoking.",
+        "nicotine_text": "Nicotine is an alkaloid contained in tobacco leaves. It has stimulating effects on the body, but it is addictive. From the mean value you can read how much nicotine you absorbed during smoking.",
         "time": "Time spent smoking",
-        "time_text":"How much time do you spend smoking hookah?",
+        "time_text": "How much time do you spend smoking hookah?",
         "last_hookah": "Last hookah since",
         "last_hookah_text": "When did you last have a hookah?"
     }

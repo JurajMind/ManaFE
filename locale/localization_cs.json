@@ -1,22 +1,22 @@
 {
 
-    "tabs":{
+    "tabs": {
         "mixology": "Mixy",
         "places": "Podniky",
         "gear": "Vybavení",
         "profile": "Profil"
     },
 
-    "settings":{
+    "settings": {
         "select_language": "Vyberte si jazyk",
         "en": "English",
         "cs": "Česky",
-        "settings":"Nastavení",
+        "settings": "Nastavení",
         "user_profile": "Profil",
         "sign_out": "Odhlásit"
-    },   
+    },
 
-    "days":{
+    "days": {
         "short_1": "Po",
         "short_2": "Ut",
         "short_3": "Str",
@@ -39,7 +39,7 @@
         "cancel": "Zrušit",
         "next": "Další",
         "back": "Zpátky",
-        "keep":"Zachovat",
+        "keep": "Zachovat",
         "delete": "Smazat",
         "yes": "Ano",
         "no": "Ne"
@@ -85,14 +85,14 @@
         "more": "Více",
         "experiments": "Experimenty",
         "end_session": "Ukončit session",
-        "end_session_confirm":"Chcete tuto session ukončit?"
+        "end_session_confirm": "Chcete tuto session ukončit?"
     },
 
-    "mix": {        
+    "mix": {
         "use_this_mix": "Použít tento mix",
         "used_mix": "Použítý mix",
-        "delete_mix":"Smazat mix?",
-        "delete_mix_confirm":"Opravdu chcete smazat tento mix?",
+        "delete_mix": "Smazat mix?",
+        "delete_mix_confirm": "Opravdu chcete smazat tento mix?",
         "my_mixes": "Moje mixy",
         "featured_creators": "Přední tvůrci"
     },
@@ -140,16 +140,16 @@
         "welcome": "Začínáme!",
         "welcome_text": "Vítá vás vaše chytrá dýmkařská podložka Manapipes Tear. \n Připravte se vstoupit do světa chytrého dýmkaření. Přidejte svoji podložku do inventáře a vaše dobrodružství může začít!",
         "where_is_code": "Kde najdu kód podložky?",
-        "where_is_code_text_1":"Na displeji podložky",
-        "where_is_code_text_1_t":"Podržte ovládací tlačítko a zapněte podložku. Ovládací tlačítko nepouštějte a držte 8 vteřin, které vám odpočítají rozsvěcující se diody. Poté se na displeji zobrazí ID a kód vaší podložky. Podložku můžete následně vypnout.",
-        "where_is_code_text_2":"V nastavení Wi-Fi",
-        "where_is_code_text_2_t":"Na stránce nastavení Wi-Fi pod tlačítkem Info. Nezapomeňte, když zadáte nastavení Wi-Fi, musíte znovu nastavit Wi-Fi.",
+        "where_is_code_text_1": "Na displeji podložky",
+        "where_is_code_text_1_t": "Podržte ovládací tlačítko a zapněte podložku. Ovládací tlačítko nepouštějte a držte 8 vteřin, které vám odpočítají rozsvěcující se diody. Poté se na displeji zobrazí ID a kód vaší podložky. Podložku můžete následně vypnout.",
+        "where_is_code_text_2": "V nastavení Wi-Fi",
+        "where_is_code_text_2_t": "Na stránce nastavení Wi-Fi pod tlačítkem Info. Nezapomeňte, když zadáte nastavení Wi-Fi, musíte znovu nastavit Wi-Fi.",
         "enter_device_codes": "Zadejte kódy podložky",
         "device_name": "Jméno podložky",
-        "device_name_helper":"Vlastní název nové podložky, může zůstat prázdný",
+        "device_name_helper": "Vlastní název nové podložky, může zůstat prázdný",
         "device_id": "Id podložky",
         "pair_code": "Párovací kód",
-        "add_device": "Přidat novou podložku"              
+        "add_device": "Přidat novou podložku"
     },
 
     "profile": {
@@ -159,19 +159,23 @@
 
     },
 
-    
+
     "health": {
         "title": "Health",
-        "co" : "Carbon Monoxide",
+        "co": "Carbon Monoxide",
         "co_text": "Carbon monoxide (CO) is a gas produced by incomplete combustion. Hookahs are responsible for its production of carbons. Symptoms of poisoning may be headache, dizziness and malaise.",
         "gas": "Amount of inhaled smoke",
         "gas_text": "How much smoke did you inhale during smoking with Manapipes?",
         "nicotine": "Amount of absorbed nicotine",
-        "nicotine_text":"Nicotine is an alkaloid contained in tobacco leaves. It has stimulating effects on the body, but it is addictive. From the mean value you can read how much nicotine you absorbed during smoking.",
+        "nicotine_text": "Nicotine is an alkaloid contained in tobacco leaves. It has stimulating effects on the body, but it is addictive. From the mean value you can read how much nicotine you absorbed during smoking.",
         "time": "Čas strávený dýmkařením",
-        "time_text":"How much time do you spend smoking hookah?",
+        "time_text": "How much time do you spend smoking hookah?",
         "last_hookah": "Last hookah since",
         "last_hookah_text": "When did you last have a hookah?"
+    },
+
+    "review": {
+
     }
 
 }

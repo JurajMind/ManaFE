@@ -2,31 +2,34 @@ part of openapi.api;
 
 
 
-class TobaccoApi {
+class ReviewApi {
   final ApiClient apiClient;
 
-  TobaccoApi([ApiClient apiClient]) : apiClient = apiClient ?? defaultApiClient;
+  ReviewApi([ApiClient apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
   /// 
   ///
   /// 
-  Future<TobaccoSimpleDto> tobaccoGetTobacco(int id) async {
-    Object postBody;
+  Future<PlacesPlaceReviewDto> reviewAddPlaceReview(String id, PlacesPlaceReviewDto reviewDto) async {
+    Object postBody = reviewDto;
 
     // verify required params are set
     if(id == null) {
      throw new ApiException(400, "Missing required param: id");
     }
+    if(reviewDto == null) {
+     throw new ApiException(400, "Missing required param: reviewDto");
+    }
 
     // create path and map variables
-    String path = "/api/Tobacco/{id}/GetTobacco".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+    String path = "/api/Review/Place/{id}".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
 
     // query params
     List<QueryParam> queryParams = [];
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-    List<String> contentTypes = [];
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
 
     String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
@@ -41,7 +44,7 @@ class TobaccoApi {
     }
 
     var response = await apiClient.invokeAPI(path,
-                                             'GET',
+                                             'POST',
                                              queryParams,
                                              postBody,
                                              headerParams,
@@ -52,7 +55,7 @@ class TobaccoApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'TobaccoSimpleDto') as TobaccoSimpleDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'PlacesPlaceReviewDto') as PlacesPlaceReviewDto;
     } else {
       return null;
     }
@@ -60,23 +63,26 @@ class TobaccoApi {
   /// 
   ///
   /// 
-  Future<TobaccoInformationDto> tobaccoGetTobaccoInfo(int id) async {
-    Object postBody;
+  Future<SmartHookahModelsDbSessionDtoSessionReviewDto> reviewAddSessionReview(String id, SmartHookahModelsDbSessionDtoSessionReviewDto reviewDto) async {
+    Object postBody = reviewDto;
 
     // verify required params are set
     if(id == null) {
      throw new ApiException(400, "Missing required param: id");
     }
+    if(reviewDto == null) {
+     throw new ApiException(400, "Missing required param: reviewDto");
+    }
 
     // create path and map variables
-    String path = "/api/Tobacco/{id}/GetAllInfo".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+    String path = "/api/Review/Session/{id}".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
 
     // query params
     List<QueryParam> queryParams = [];
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
 
-    List<String> contentTypes = [];
+    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
 
     String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
     List<String> authNames = [];
@@ -91,7 +97,7 @@ class TobaccoApi {
     }
 
     var response = await apiClient.invokeAPI(path,
-                                             'GET',
+                                             'POST',
                                              queryParams,
                                              postBody,
                                              headerParams,
@@ -102,7 +108,7 @@ class TobaccoApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'TobaccoInformationDto') as TobaccoInformationDto;
+      return apiClient.deserialize(_decodeBodyBytes(response), 'SmartHookahModelsDbSessionDtoSessionReviewDto') as SmartHookahModelsDbSessionDtoSessionReviewDto;
     } else {
       return null;
     }
@@ -110,7 +116,7 @@ class TobaccoApi {
   /// 
   ///
   /// 
-  Future<List<GearTobaccoReviewDto>> tobaccoGetTobaccoReviews(int id, { int pageSize, int page }) async {
+  Future<List<PlacesPlaceReviewDto>> reviewGetPlaceReviews(int id, { int pageSize, int page }) async {
     Object postBody;
 
     // verify required params are set
@@ -119,7 +125,7 @@ class TobaccoApi {
     }
 
     // create path and map variables
-    String path = "/api/Tobacco/{id}/GetReviews".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+    String path = "/api/Review/Place/{id}".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
 
     // query params
     List<QueryParam> queryParams = [];
@@ -158,7 +164,7 @@ class TobaccoApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<GearTobaccoReviewDto>') as List).map((item) => item as GearTobaccoReviewDto).toList();
+      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<PlacesPlaceReviewDto>') as List).map((item) => item as PlacesPlaceReviewDto).toList();
     } else {
       return null;
     }
@@ -166,7 +172,7 @@ class TobaccoApi {
   /// 
   ///
   /// 
-  Future<PipeAccessoryStatisticsDto> tobaccoGetTobaccoSatistics(int id) async {
+  Future<List<SmartHookahModelsDbSessionDtoSessionReviewDto>> reviewGetSessionReview(int id, { int pageSize, int page }) async {
     Object postBody;
 
     // verify required params are set
@@ -175,57 +181,7 @@ class TobaccoApi {
     }
 
     // create path and map variables
-    String path = "/api/Tobacco/{id}/GetStatistics".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
-
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-
-    List<String> contentTypes = [];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
-      bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'GET',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'PipeAccessoryStatisticsDto') as PipeAccessoryStatisticsDto;
-    } else {
-      return null;
-    }
-  }
-  /// 
-  ///
-  /// 
-  Future<List<SmokeSessionSimpleDto>> tobaccoGetTobaccoSessions(int id, { int pageSize, int page }) async {
-    Object postBody;
-
-    // verify required params are set
-    if(id == null) {
-     throw new ApiException(400, "Missing required param: id");
-    }
-
-    // create path and map variables
-    String path = "/api/Tobacco/{id}/GetSessions".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+    String path = "/api/Review/Session/{id}".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
 
     // query params
     List<QueryParam> queryParams = [];
@@ -264,7 +220,7 @@ class TobaccoApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<SmokeSessionSimpleDto>') as List).map((item) => item as SmokeSessionSimpleDto).toList();
+      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<SmartHookahModelsDbSessionDtoSessionReviewDto>') as List).map((item) => item as SmartHookahModelsDbSessionDtoSessionReviewDto).toList();
     } else {
       return null;
     }
@@ -272,7 +228,7 @@ class TobaccoApi {
   /// 
   ///
   /// 
-  Future<List<TobaccoTasteDto>> tobaccoGetTobaccoTaste(int id) async {
+  Future<bool> reviewRemovePlaceReview(int id) async {
     Object postBody;
 
     // verify required params are set
@@ -281,7 +237,7 @@ class TobaccoApi {
     }
 
     // create path and map variables
-    String path = "/api/Tobacco/{id}/GetTaste".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+    String path = "/api/Review/Place/{id}".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
 
     // query params
     List<QueryParam> queryParams = [];
@@ -303,7 +259,7 @@ class TobaccoApi {
     }
 
     var response = await apiClient.invokeAPI(path,
-                                             'GET',
+                                             'DELETE',
                                              queryParams,
                                              postBody,
                                              headerParams,
@@ -314,7 +270,7 @@ class TobaccoApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<TobaccoTasteDto>') as List).map((item) => item as TobaccoTasteDto).toList();
+      return apiClient.deserialize(_decodeBodyBytes(response), 'bool') as bool;
     } else {
       return null;
     }
@@ -322,44 +278,21 @@ class TobaccoApi {
   /// 
   ///
   /// 
-  Future<List<TobaccoDto>> tobaccoSearch(int page, int pageSize, { List<int> filterTastes, int filterSortBy, String filterBrand, bool filterOwned, bool filterSmoked, int filterSortDirection }) async {
+  Future<bool> reviewRemoveSessionReview(int id) async {
     Object postBody;
 
     // verify required params are set
-    if(page == null) {
-     throw new ApiException(400, "Missing required param: page");
-    }
-    if(pageSize == null) {
-     throw new ApiException(400, "Missing required param: pageSize");
+    if(id == null) {
+     throw new ApiException(400, "Missing required param: id");
     }
 
     // create path and map variables
-    String path = "/api/Tobacco/search".replaceAll("{format}","json");
+    String path = "/api/Review/Session/{id}".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
 
     // query params
     List<QueryParam> queryParams = [];
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
-      queryParams.addAll(_convertParametersForCollectionFormat("", "page", page));
-      queryParams.addAll(_convertParametersForCollectionFormat("", "pageSize", pageSize));
-    if(filterTastes != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat("multi", "filter.tastes", filterTastes));
-    }
-    if(filterSortBy != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat("", "filter.sortBy", filterSortBy));
-    }
-    if(filterBrand != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat("", "filter.brand", filterBrand));
-    }
-    if(filterOwned != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat("", "filter.owned", filterOwned));
-    }
-    if(filterSmoked != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat("", "filter.smoked", filterSmoked));
-    }
-    if(filterSortDirection != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat("", "filter.sortDirection", filterSortDirection));
-    }
 
     List<String> contentTypes = [];
 
@@ -376,7 +309,7 @@ class TobaccoApi {
     }
 
     var response = await apiClient.invokeAPI(path,
-                                             'GET',
+                                             'DELETE',
                                              queryParams,
                                              postBody,
                                              headerParams,
@@ -387,7 +320,7 @@ class TobaccoApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<TobaccoDto>') as List).map((item) => item as TobaccoDto).toList();
+      return apiClient.deserialize(_decodeBodyBytes(response), 'bool') as bool;
     } else {
       return null;
     }

@@ -12,6 +12,7 @@ import 'package:app/pages/SmokeSession/Components/pipe_accesory_widget.dart';
 import 'package:app/pages/SmokeSession/Components/puff_timer.dart';
 import 'package:app/pages/SmokeSession/Experimental/experimental_page.dart';
 import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
+import 'package:app/pages/SmokeSession/session_review.dart';
 
 import 'package:app/pages/SmokeSession/tobacco_widget.dart';
 import 'package:app/pages/Statistic/Detail/smoke_session_detail_page.dart';
@@ -130,7 +131,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                 accesory: asyncSnapshot.data.coal,
                 type: 'coal',
                 dataProvider: dataProvider),
-            emptyPipeAccesoryWidget(asyncSnapshot.data)
+            // emptyPipeAccesoryWidget(asyncSnapshot.data)
           ],
         );
       },
@@ -263,7 +264,11 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                             child: Text(AppTranslations.of(context)
                                 .text('smoke_session.review')
                                 .toUpperCase()),
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  fullscreenDialog: true,
+                                  builder: (context) => SessionReview()));
+                            },
                             buttonColor: Colors.transparent,
                             borderWidth: 1.0,
                             bottomMargin: 1.0,

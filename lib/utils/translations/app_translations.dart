@@ -41,6 +41,11 @@ class AppTranslations {
     return this._resolve(key, _sentence);
   }
 
+    String dbText(Map<String,String> texts) {
+      var text = texts[locale.countryCode];
+      return text;
+  }
+
   String tr(String key, {List<String> args}) {
     String res = this._resolve(key, _sentence);
     if (args != null) {
