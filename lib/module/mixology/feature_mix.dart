@@ -35,8 +35,11 @@ class FeatureMixCreator extends StatelessWidget {
                     errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
                 ),
-                title: Text(item.name),
-                subtitle: Text('0 mixes created'),
+                title: Hero(
+                  tag: "mix_brnad_${item.name}",
+                  child: Text(item.name,
+                      style: Theme.of(context).textTheme.display2),
+                ),
               );
             });
       },

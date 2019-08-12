@@ -46,7 +46,9 @@ class _FeatureMixListViewState extends State<FeatureMixListView> {
     var mixologyBloc = DataProvider.getData(context).mixologyBloc;
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.mixCreator.name),
+        title: Hero(
+            tag: "mix_brnad_${widget.mixCreator.name}",
+            child: Text(widget.mixCreator.name)),
         centerTitle: true,
       ),
       body: Container(
