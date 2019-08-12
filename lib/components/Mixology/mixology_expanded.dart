@@ -20,6 +20,9 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
   bool expanded = false;
   @override
   Widget build(BuildContext context) {
+    if (widget.tobaccoMix.tobaccos.length == 0) {
+      return Container();
+    }
     //timeDilation = 6;
     return SingleChildScrollView(
       child: GestureDetector(

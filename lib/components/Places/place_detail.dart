@@ -60,7 +60,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                       ),
                     )
                   : Container(),
-              SocialsList(socials: widget.placeInfo.socialMedias)
+              SocialsList(socials: widget.placeInfo?.socialMedias)
             ],
           );
   }
