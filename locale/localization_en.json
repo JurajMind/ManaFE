@@ -165,5 +165,8 @@
         "time_text": "How much time do you spend smoking hookah?",
         "last_hookah": "Last hookah since",
         "last_hookah_text": "When did you last have a hookah?"
+    },
+    "review": {
+        "session_title": "Session review"
     }
 }

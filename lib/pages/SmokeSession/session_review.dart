@@ -33,8 +33,8 @@ class _SessionReviewState extends State<SessionReview> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            if (bloc.smokeSessionMetaData.value.tobacco != null ||
-                bloc.smokeSessionMetaData.value.tobaccoMix != null) ...{
+            if (bloc.smokeSessionMetaData.value.tobacco == null &&
+                bloc.smokeSessionMetaData.value.tobaccoMix == null) ...{
               Text(
                 'Tobacco not filled, please fill tobacco metadata for precision data:',
                 textAlign: TextAlign.center,
