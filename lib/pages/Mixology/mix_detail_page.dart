@@ -35,29 +35,30 @@ class MixDetailPageState extends State<MixDetailPage> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(AppTranslations.of(context).text("mix.delete_mix_confirm")),
+                Text(
+                    AppTranslations.of(context).text("mix.delete_mix_confirm")),
               ],
             ),
           ),
           actions: <Widget>[
-             OutlineButton.icon(
-               borderSide: BorderSide(color: Colors.white, width: 1),
-                shape: new RoundedRectangleBorder(
+            OutlineButton.icon(
+              borderSide: BorderSide(color: Colors.white, width: 1),
+              shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(30.0)),
               label: Text(AppTranslations.of(context).text("common.keep")),
               textColor: Colors.green,
-                icon: Icon(Icons.check, color: Colors.green),
+              icon: Icon(Icons.check, color: Colors.green),
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
             ),
             OutlineButton.icon(
               borderSide: BorderSide(color: Colors.white, width: 1),
-                shape: new RoundedRectangleBorder(
+              shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(30.0)),
               textColor: Colors.red,
               label: Text(AppTranslations.of(context).text("common.delete")),
-               icon: Icon(Icons.cancel, color: Colors.red),
+              icon: Icon(Icons.cancel, color: Colors.red),
               onPressed: () {
                 Navigator.of(context).pop(true);
               },
@@ -199,17 +200,30 @@ class MixDetailPageState extends State<MixDetailPage> {
           new SliverList(
             delegate: new SliverChildListDelegate(<Widget>[
               Column(
-                  children: [...widget.mix.tobaccos.asMap().map((index,f) {
-                return MapEntry(index,ListTile(
-                  title: Text(f.tobacco.name,
-                      style: Theme.of(context).textTheme.display2),
-                  trailing: Text(f.fraction.toString() + ' g',style:Theme.of(context).textTheme.display2.apply(color:AppColors.colors[index])),
-                  subtitle: Text(f.tobacco.brand,
-                      style: Theme.of(context).textTheme.display3),
-                ));
-              }).values,
-              FavoriteMixButton(mix:widget.mix),
-              UseMixButton(mix: widget.mix,)],
+                children: [
+                  ...widget.mix.tobaccos.asMap().map((index, f) {
+                    return MapEntry(
+                        index,
+                        ListTile(
+                          title: Text(f.tobacco.name,
+                              style: Theme.of(context).textTheme.display2),
+                          trailing: Text(f.fraction.toString() + ' g',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .display2
+                                  .apply(color: AppColors.colors[index])),
+                          subtitle: Text(f.tobacco.brand,
+                              style: Theme.of(context).textTheme.display3),
+                        ));
+                  }).values,
+                  FavoriteMixButton(mix: widget.mix),
+                  UseMixButton(
+                    mix: widget.mix,
+                  ),
+                  SizedBox(
+                    height: 100,
+                  )
+                ],
               )
             ]),
           )
