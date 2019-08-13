@@ -2,7 +2,6 @@ import 'package:app/Helpers/date_utils.dart';
 import 'package:app/components/Common/labeled_value.dart';
 import 'package:app/pages/Statistic/Detail/smoke_session_detail_page.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:openapi/api.dart';
 
 class SmokeSessionListItem extends StatelessWidget {

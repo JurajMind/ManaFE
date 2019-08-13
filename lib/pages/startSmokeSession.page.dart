@@ -37,12 +37,9 @@ class StartSmokeSessionPage extends StatefulWidget {
 
   final GlobalKey<NavigatorState> Function(int) callback;
 
-  var channel;
-  main() async {}
 
   @override
   StartSmokeSessionPageState createState() {
-    main();
     return new StartSmokeSessionPageState(callback: callback);
   }
 }

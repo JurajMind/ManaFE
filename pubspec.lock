@@ -156,7 +156,7 @@ packages:
       name: datetime_picker_formfield
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-pre.2"
+    version: "1.0.0-pre.3"
   dio:
     dependency: "direct main"
     description:
@@ -180,6 +180,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0+4"
+  fl_chart:
+    dependency: "direct main"
+    description:
+      name: fl_chart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.5"
   fluro:
     dependency: "direct main"
     description:
@@ -320,7 +327,7 @@ packages:
       name: geolocator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.1+1"
+    version: "5.1.2"
   glob:
     dependency: transitive
     description:
@@ -390,7 +397,7 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.1"
+    version: "0.6.1+2"
   intl:
     dependency: "direct main"
     description:
@@ -744,14 +751,14 @@ packages:
     description:
       name: stack_trace
       url: "https://pub.dartlang.org"
-    source: hostde
+    source: hosted
     version: "1.9.3"
   sticky_headers:
     dependency: "direct main"
     description:
       name: sticky_headers
       url: "https://pub.dartlang.org"
-    source: hosted5
+    source: hosted
     version: "0.1.8"
   stream_channel:
     dependency: transitive
@@ -915,7 +922,7 @@ packages:
       name: web_socket_channel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.14"
+    version: "1.0.15"
   xml:
     dependency: transitive
     description:

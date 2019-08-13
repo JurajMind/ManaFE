@@ -262,20 +262,6 @@ class _FatSliderState extends State<FatSlider>
 
   bool get _isInteractive => widget.onChanged != null;
 
-  Widget _buildMinMaxLabels(BuildContext context,
-      {Widget custom, double value, Alignment alignment, EdgeInsets padding}) {
-    final TextStyle textStyle =
-        widget.labelsTextStyle ?? Theme.of(context).accentTextTheme.title;
-
-    return Padding(
-      padding: padding,
-      child: Align(
-        alignment: alignment,
-        child: custom ?? Text('${value.toInt()}', style: textStyle),
-      ),
-    );
-  }
-
   Widget _buildBackgraund(BuildContext context,
       {double value, Alignment alignment, EdgeInsets padding}) {
     final TextStyle textStyle =

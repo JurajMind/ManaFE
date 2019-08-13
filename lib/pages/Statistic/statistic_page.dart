@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:app/Helpers/date_utils.dart';
-import 'package:app/Helpers/day_helper.dart';
 import 'package:app/app/app.widget.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/SmokeSession/smoke_session_list_item.dart';
@@ -16,6 +17,7 @@ import 'package:app/pages/Statistic/health_page.dart';
 import 'package:app/pages/Statistic/test_page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/support/mana_icons_icons.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/Charts/sparkline.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -25,6 +27,9 @@ import 'dart:math' as math;
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 import 'package:shimmer/shimmer.dart';
+
+import 'Components/session_time_graph.dart';
+import 'Components/week_day_graph.dart';
 
 class StatisticPage extends StatefulWidget {
   @override
@@ -90,6 +95,7 @@ class _StatisticPageState extends State<StatisticPage> {
   PageController controller;
   Authorize auth = new Authorize();
   TimeModel selectedTime;
+  StreamController<LineTouchResponse> touchController;
 
   Future<int> _showDialog(BuildContext context) {
     return showDialog<int>(
@@ -136,6 +142,10 @@ class _StatisticPageState extends State<StatisticPage> {
   @override
   initState() {
     super.initState();
+    touchController = StreamController();
+    touchController.stream.distinct().listen((LineTouchResponse response) {
+      print('response: ${response.touchInput}');
+    });
     selectedTime = new TimeModel.fromSelect(1);
     controller = new PageController(
         initialPage: 0, keepPage: true, viewportFraction: 0.9);
@@ -144,6 +154,7 @@ class _StatisticPageState extends State<StatisticPage> {
   @override
   void dispose() {
     controller.dispose();
+    touchController.close();
     super.dispose();
   }
 
@@ -181,27 +192,27 @@ class _StatisticPageState extends State<StatisticPage> {
                   }
                 },
                 itemBuilder: (BuildContext context) => [
-                      PopupMenuItem(
-                        value: "settings",
-                        child: Text('Settings'),
-                      ),
-                      PopupMenuItem(
-                        value: "test",
-                        child: Text('User profile'),
-                      ),
-                      PopupMenuItem(
-                        value: "testPage",
-                        child: Text('Test page'),
-                      ),
-                      PopupMenuItem(
-                        value: "testPlaces",
-                        child: Text('Test places'),
-                      ),
-                      PopupMenuItem(
-                        value: "signOut",
-                        child: Text('Sign out'),
-                      ),
-                    ],
+                  PopupMenuItem(
+                    value: "settings",
+                    child: Text('Settings'),
+                  ),
+                  PopupMenuItem(
+                    value: "test",
+                    child: Text('User profile'),
+                  ),
+                  PopupMenuItem(
+                    value: "testPage",
+                    child: Text('Test page'),
+                  ),
+                  PopupMenuItem(
+                    value: "testPlaces",
+                    child: Text('Test places'),
+                  ),
+                  PopupMenuItem(
+                    value: "signOut",
+                    child: Text('Sign out'),
+                  ),
+                ],
               )
             ],
             backgroundColor: Colors.black,
@@ -232,32 +243,31 @@ class _StatisticPageState extends State<StatisticPage> {
                         borderSide: BorderSide(color: Colors.white, width: 1),
                         onPressed: () =>
                             _showDialog(context).then((value) async {
-                              if (value == 4) {
-                                final List<DateTime> picked =
-                                    await DateRagePicker.showDatePicker(
-                                        context: context,
-                                        initialFirstDate: selectedTime.from,
-                                        initialLastDate: selectedTime.to,
-                                        firstDate: new DateTime(2017),
-                                        lastDate: new DateTime.now());
-                                if (picked != null && picked.length == 2) {
-                                  print(picked);
+                          if (value == 4) {
+                            final List<DateTime> picked =
+                                await DateRagePicker.showDatePicker(
+                                    context: context,
+                                    initialFirstDate: selectedTime.from,
+                                    initialLastDate: selectedTime.to,
+                                    firstDate: new DateTime(2017),
+                                    lastDate: new DateTime.now());
+                            if (picked != null && picked.length == 2) {
+                              print(picked);
 
-                                  setState(() {
-                                    selectedTime = new TimeModel.fromCustom(
-                                        picked[0], picked[1]);
-                                  });
-                                  loadTime(bloc, selectedTime);
-                                }
-                              }
                               setState(() {
-                                if (value >= 0 && value < 4) {
-                                  selectedTime =
-                                      new TimeModel.fromSelect(value);
-                                }
+                                selectedTime = new TimeModel.fromCustom(
+                                    picked[0], picked[1]);
                               });
                               loadTime(bloc, selectedTime);
-                            }),
+                            }
+                          }
+                          setState(() {
+                            if (value >= 0 && value < 4) {
+                              selectedTime = new TimeModel.fromSelect(value);
+                            }
+                          });
+                          loadTime(bloc, selectedTime);
+                        }),
                         child: Text(selectedTime.label),
                       )),
                   Expanded(
@@ -345,9 +355,12 @@ class _StatisticPageState extends State<StatisticPage> {
   List<Widget> buildSmokeSession(StatisticBloc bloc) {
     var result = new List<Widget>();
     result.add(Center(
-      child: new Text(
-        'Smoke sessions',
-        style: Theme.of(context).textTheme.display2,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: new Text(
+          'Smoke sessions',
+          style: Theme.of(context).textTheme.display2,
+        ),
       ),
     ));
     result.add(StreamBuilder<List<SmokeSessionSimpleDto>>(
@@ -356,7 +369,9 @@ class _StatisticPageState extends State<StatisticPage> {
         builder: (BuildContext context,
             AsyncSnapshot<List<SmokeSessionSimpleDto>> snapshot) {
           if (snapshot.data == null) {
-            return Placeholder();
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           }
 
           List<Widget> sessions = snapshot.data
@@ -389,28 +404,32 @@ class _StatisticPageState extends State<StatisticPage> {
 
   Widget buildGearUsage(StatisticBloc bloc) {
     return Container(
-      height: 400,
-      width: 200,
       child: StreamBuilder<List<PipeAccessoryUsageDto>>(
           stream: bloc.gearUsage,
           initialData: null,
           builder: (context, snapshot) {
-            return Padding(
-              padding: EdgeInsets.all(8.0),
-              child: PageView(
-                controller: controller,
-                children: <Widget>[
-                  GearUsageItem(
-                    label: "Tobacco",
-                    gears: getUsageByType(snapshot.data, "Tobacco"),
-                  ),
-                  GearUsageItem(
-                      label: "Hookah",
-                      gears: getUsageByType(snapshot.data, "Hookah")),
-                  GearUsageItem(
-                      label: "Bowl",
-                      gears: getUsageByType(snapshot.data, "Bowl")),
-                ],
+            if (snapshot.data == null) return Container();
+
+            return Container(
+              height: 400,
+              width: 200,
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: PageView(
+                  controller: controller,
+                  children: <Widget>[
+                    GearUsageItem(
+                      label: "Tobacco",
+                      gears: getUsageByType(snapshot.data, "Tobacco"),
+                    ),
+                    GearUsageItem(
+                        label: "Hookah",
+                        gears: getUsageByType(snapshot.data, "Hookah")),
+                    GearUsageItem(
+                        label: "Bowl",
+                        gears: getUsageByType(snapshot.data, "Bowl")),
+                  ],
+                ),
               ),
             );
           }),
@@ -484,9 +503,9 @@ class _StatisticPageState extends State<StatisticPage> {
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
                 onTap: () => Navigator.of(context).push(
-                        new MaterialPageRoute(builder: (BuildContext context) {
-                      return HealthPage();
-                    })),
+                    new MaterialPageRoute(builder: (BuildContext context) {
+                  return HealthPage();
+                })),
                 child: Row(
                   children: <Widget>[
                     Expanded(
@@ -497,8 +516,8 @@ class _StatisticPageState extends State<StatisticPage> {
                       flex: 4,
                       child: Column(
                         children: <Widget>[
-                          Text('Some health text'),
-                          Text('Some health text 2')
+                          Text('Some health text',
+                              style: Theme.of(context).textTheme.display2),
                         ],
                       ),
                     ),
@@ -552,6 +571,7 @@ class _StatisticPageState extends State<StatisticPage> {
                       pointsMode: PointsMode.none,
                       pointSize: 5.0,
                       pointColor: Colors.amber,
+                      lineWidth: 3,
                     ),
             );
           }),
@@ -570,26 +590,11 @@ class _StatisticPageState extends State<StatisticPage> {
             return Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: Container(
-                height: 250,
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      'Week days',
-                      style: Theme.of(context).textTheme.display2,
-                    ),
-                    Expanded(
-                      child: new charts.BarChart(
-                        _createSampleData(seriesList, (f, i) {
-                          var day = getShortDayName(int.parse(f) + 1, context);
-                          return new ChartData(day, i);
-                        }),
-                        animate: true,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            );
+                  height: 250, child:Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: WeekDayGraph(graphData: seriesList,),
+                  ),
+            ));
           }),
     );
   }
@@ -608,24 +613,11 @@ class _StatisticPageState extends State<StatisticPage> {
               var seriesList =
                   snapshot.data.timeStatistics.sessionStartTimeDistribution;
               return Container(
-                height: 250,
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      'Start time',
-                      style: Theme.of(context).textTheme.display2,
-                    ),
-                    Expanded(
-                      child: new charts.BarChart(
-                        _createSampleData(seriesList, (f, i) {
-                          return new ChartData(f, i, order: int.parse(f));
-                        }),
-                        animate: true,
-                      ),
-                    )
-                  ],
-                ),
-              );
+                  height: 250,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SessionDayGraph(seriesList)
+                  ));
             }),
       ),
     );
