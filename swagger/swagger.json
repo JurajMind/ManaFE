@@ -1311,7 +1311,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/PipeAccesorySimpleDto"
+                "$ref": "#/definitions/TobaccoMixSimpleDto"
               }
             }
           }
@@ -5195,7 +5195,7 @@
         }
       }
     },
-    "PipeAccesorySimpleDto": {
+    "TobaccoMixSimpleDto": {
       "type": "object",
       "properties": {
         "Likes": {
@@ -5203,6 +5203,15 @@
           "items": {
             "$ref": "#/definitions/PipeAccesoryLikeDto"
           }
+        },
+        "Tobaccos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TobaccoInMix"
+          }
+        },
+        "MyMix": {
+          "type": "boolean"
         },
         "Id": {
           "format": "int32",
@@ -5249,6 +5258,56 @@
           "type": "integer"
         },
         "Value": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "TobaccoInMix": {
+      "type": "object",
+      "properties": {
+        "Tobacco": {
+          "$ref": "#/definitions/TobaccoSimpleDto"
+        },
+        "Fraction": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "TobaccoSimpleDto": {
+      "type": "object",
+      "properties": {
+        "Likes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PipeAccesoryLikeDto"
+          }
+        },
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Brand": {
+          "type": "string"
+        },
+        "BrandId": {
+          "type": "string"
+        },
+        "Picture": {
+          "type": "string"
+        },
+        "Type": {
+          "type": "string"
+        },
+        "LikeCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "DisLikeCount": {
           "format": "int32",
           "type": "integer"
         }
@@ -5340,6 +5399,44 @@
         },
         "DisplayName": {
           "type": "string"
+        }
+      }
+    },
+    "PipeAccesorySimpleDto": {
+      "type": "object",
+      "properties": {
+        "Likes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PipeAccesoryLikeDto"
+          }
+        },
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Brand": {
+          "type": "string"
+        },
+        "BrandId": {
+          "type": "string"
+        },
+        "Picture": {
+          "type": "string"
+        },
+        "Type": {
+          "type": "string"
+        },
+        "LikeCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "DisLikeCount": {
+          "format": "int32",
+          "type": "integer"
         }
       }
     },
@@ -5521,103 +5618,6 @@
         "CoalCount": {
           "format": "double",
           "type": "number"
-        }
-      }
-    },
-    "TobaccoMixSimpleDto": {
-      "type": "object",
-      "properties": {
-        "Likes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/PipeAccesoryLikeDto"
-          }
-        },
-        "Tobaccos": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/TobaccoInMix"
-          }
-        },
-        "MyMix": {
-          "type": "boolean"
-        },
-        "Id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Name": {
-          "type": "string"
-        },
-        "Brand": {
-          "type": "string"
-        },
-        "BrandId": {
-          "type": "string"
-        },
-        "Picture": {
-          "type": "string"
-        },
-        "Type": {
-          "type": "string"
-        },
-        "LikeCount": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "DisLikeCount": {
-          "format": "int32",
-          "type": "integer"
-        }
-      }
-    },
-    "TobaccoInMix": {
-      "type": "object",
-      "properties": {
-        "Tobacco": {
-          "$ref": "#/definitions/TobaccoSimpleDto"
-        },
-        "Fraction": {
-          "format": "int32",
-          "type": "integer"
-        }
-      }
-    },
-    "TobaccoSimpleDto": {
-      "type": "object",
-      "properties": {
-        "Likes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/PipeAccesoryLikeDto"
-          }
-        },
-        "Id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Name": {
-          "type": "string"
-        },
-        "Brand": {
-          "type": "string"
-        },
-        "BrandId": {
-          "type": "string"
-        },
-        "Picture": {
-          "type": "string"
-        },
-        "Type": {
-          "type": "string"
-        },
-        "LikeCount": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "DisLikeCount": {
-          "format": "int32",
-          "type": "integer"
         }
       }
     },
@@ -6426,6 +6426,18 @@
         },
         "text": {
           "type": "string"
+        },
+        "service": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "ambience": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "overall": {
+          "format": "int32",
+          "type": "integer"
         },
         "placeId": {
           "format": "int32",

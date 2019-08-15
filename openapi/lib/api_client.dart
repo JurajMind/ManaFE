@@ -8,6 +8,7 @@ class QueryParam {
 }
 
 class ApiClient {
+
   String basePath;
   var client = Client();
 
@@ -22,7 +23,7 @@ class ApiClient {
   }
 
   void addDefaultHeader(String key, String value) {
-    _defaultHeaderMap[key] = value;
+     _defaultHeaderMap[key] = value;
   }
 
   dynamic _deserialize(dynamic value, String targetType) {
@@ -76,7 +77,8 @@ class ApiClient {
           return GamePictureDto.fromJson(value);
         case 'GameProfileSimpleDto':
           return GameProfileSimpleDto.fromJson(value);
-
+        case 'GearTobaccoReviewDto':
+          return GearTobaccoReviewDto.fromJson(value);
         case 'HookahOrderDto':
           return HookahOrderDto.fromJson(value);
         case 'InitDataDto':
@@ -125,7 +127,8 @@ class ApiClient {
           return PlacesDevicePlaceDashboardDto.fromJson(value);
         case 'PlacesPlaceDashboardDto':
           return PlacesPlaceDashboardDto.fromJson(value);
-
+        case 'PlacesPlaceReviewDto':
+          return PlacesPlaceReviewDto.fromJson(value);
         case 'PlacesReservationsReservationDetailDto':
           return PlacesReservationsReservationDetailDto.fromJson(value);
         case 'PlacesReservationsReservationDto':
@@ -148,7 +151,14 @@ class ApiClient {
           return SmartHookahHelpersAnimation.fromJson(value);
         case 'SmartHookahModelsDbColor':
           return SmartHookahModelsDbColor.fromJson(value);
-
+        case 'SmartHookahModelsDbGearPipeAccessoryReviewDto':
+          return SmartHookahModelsDbGearPipeAccessoryReviewDto.fromJson(value);
+        case 'SmartHookahModelsDbPuf':
+          return SmartHookahModelsDbPuf.fromJson(value);
+        case 'SmartHookahModelsDbSessionDtoSessionPlaceReviewDto':
+          return SmartHookahModelsDbSessionDtoSessionPlaceReviewDto.fromJson(value);
+        case 'SmartHookahModelsDbSessionDtoSessionReviewDto':
+          return SmartHookahModelsDbSessionDtoSessionReviewDto.fromJson(value);
         case 'SmartHookahModelsDbSocialMedia':
           return SmartHookahModelsDbSocialMedia.fromJson(value);
         case 'SmartHookahModelsForgotPasswordViewModel':
@@ -156,11 +166,9 @@ class ApiClient {
         case 'SmartHookahModelsOrderExtraDto':
           return SmartHookahModelsOrderExtraDto.fromJson(value);
         case 'SmartHookahModelsParameterObjectsChangeAnimation':
-          return SmartHookahModelsParameterObjectsChangeAnimation.fromJson(
-              value);
+          return SmartHookahModelsParameterObjectsChangeAnimation.fromJson(value);
         case 'SmartHookahModelsParameterObjectsChangeBrightness':
-          return SmartHookahModelsParameterObjectsChangeBrightness.fromJson(
-              value);
+          return SmartHookahModelsParameterObjectsChangeBrightness.fromJson(value);
         case 'SmartHookahModelsParameterObjectsChangeColor':
           return SmartHookahModelsParameterObjectsChangeColor.fromJson(value);
         case 'SmartHookahModelsParameterObjectsChangeSpeed':
@@ -213,11 +221,9 @@ class ApiClient {
           }
       }
     } on Exception catch (e, stack) {
-      throw ApiException.withInner(
-          500, 'Exception during deserialization.', e, stack);
+      throw ApiException.withInner(500, 'Exception during deserialization.', e, stack);
     }
-    throw ApiException(
-        500, 'Could not find a suitable class for deserialization');
+    throw ApiException(500, 'Could not find a suitable class for deserialization');
   }
 
   dynamic deserialize(String json, String targetType) {
@@ -242,29 +248,31 @@ class ApiClient {
 
   // We don't use a Map<String, String> for queryParams.
   // If collectionFormat is 'multi' a key might appear multiple times.
-  Future<Response> invokeAPI(
-      String path,
-      String method,
-      Iterable<QueryParam> queryParams,
-      Object body,
-      Map<String, String> headerParams,
-      Map<String, String> formParams,
-      String contentType,
-      List<String> authNames) async {
+  Future<Response> invokeAPI(String path,
+                             String method,
+                             Iterable<QueryParam> queryParams,
+                             Object body,
+                             Map<String, String> headerParams,
+                             Map<String, String> formParams,
+                             String contentType,
+                             List<String> authNames) async {
+
     _updateParamsForAuth(authNames, queryParams, headerParams);
 
     var ps = queryParams
-        .where((p) => p.value != null)
-        .map((p) => '${p.name}=${Uri.encodeQueryComponent(p.value)}');
+      .where((p) => p.value != null)
+      .map((p) => '${p.name}=${Uri.encodeQueryComponent(p.value)}');
 
-    String queryString = ps.isNotEmpty ? '?' + ps.join('&') : '';
+    String queryString = ps.isNotEmpty ?
+                         '?' + ps.join('&') :
+                         '';
 
     String url = basePath + path + queryString;
 
     headerParams.addAll(_defaultHeaderMap);
     headerParams['Content-Type'] = contentType;
 
-    if (body is MultipartRequest) {
+    if(body is MultipartRequest) {
       var request = MultipartRequest(method, Uri.parse(url));
       request.fields.addAll(body.fields);
       request.files.addAll(body.files);
@@ -273,10 +281,8 @@ class ApiClient {
       var response = await client.send(request);
       return Response.fromStream(response);
     } else {
-      var msgBody = contentType == "application/x-www-form-urlencoded"
-          ? formParams
-          : serialize(body);
-      switch (method) {
+      var msgBody = contentType == "application/x-www-form-urlencoded" ? formParams : serialize(body);
+      switch(method) {
         case "POST":
           return client.post(url, headers: headerParams, body: msgBody);
         case "PUT":
@@ -293,12 +299,10 @@ class ApiClient {
 
   /// Update query and header parameters based on authentication settings.
   /// @param authNames The authentications to apply
-  void _updateParamsForAuth(List<String> authNames,
-      List<QueryParam> queryParams, Map<String, String> headerParams) {
+  void _updateParamsForAuth(List<String> authNames, List<QueryParam> queryParams, Map<String, String> headerParams) {
     authNames.forEach((authName) {
       Authentication auth = _authentications[authName];
-      if (auth == null)
-        throw ArgumentError("Authentication undefined: " + authName);
+      if (auth == null) throw ArgumentError("Authentication undefined: " + authName);
       auth.applyToParams(queryParams, headerParams);
     });
   }

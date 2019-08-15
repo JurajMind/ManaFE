@@ -1,50 +1,121 @@
 import 'package:app/components/StarRating/star_ratting.dart';
+import 'package:app/module/data_provider.dart';
+import 'package:app/module/mixology/mix_card_expanded_shimmer.dart';
+import 'package:app/pages/Places/place_review.dart';
 import 'package:flutter/material.dart';
+import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
+import 'package:openapi/api.dart';
 
 class ReviewPlaceWidget extends StatefulWidget {
+  final PlaceSimpleDto place;
+
+  const ReviewPlaceWidget({Key key, this.place}) : super(key: key);
+
   @override
   _ReviewPlaceWidgetState createState() => _ReviewPlaceWidgetState();
 }
 
 class _ReviewPlaceWidgetState extends State<ReviewPlaceWidget> {
-  List<int> reviews;
-
   @override
   void initState() {
-    reviews = List<int>.generate(100, (i) {
-      return i;
-    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Text("Review:", style: Theme.of(context).textTheme.body1),
-              new StarRating(
-                size: 40.0,
-                rating: 2.5,
-                starCount: 5,
-                color: Colors.white,
-                borderColor: Colors.white,
-              ),
-              Icon(Icons.add,size:40)
-            ],
+    var bloc = DataProvider.getData(context).placeSingleBloc;
+    return StreamBuilder<List<PlacesPlaceReviewDto>>(
+      stream: bloc.reviews,
+      initialData: null,
+      builder: (BuildContext context, snapshot) {
+        if (snapshot.data == null) {
+          return CircularProgressIndicator();
+        }
+
+        var itemCount = snapshot?.data?.length;
+        if (itemCount != null) {
+          itemCount++;
+        }
+        return Container(
+            child: LazyLoadScrollView(
+          onEndOfPage: () {
+            if (!snapshot.data.contains(null)) bloc.loadReview();
+          },
+          child: ListView.builder(
+            itemCount: itemCount ?? 10,
+            itemBuilder: (context, index) {
+              if ((snapshot?.data?.length ?? 0) == 0) {
+                return Center(
+                  child: Column(
+                    children: <Widget>[
+                      Text('No review'),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              fullscreenDialog: true,
+                              builder: (context) => PlaceReview(
+                                    place: widget.place,
+                                  )));
+                        },
+                        child: Flex(
+                          direction: Axis.vertical,
+                          children: <Widget>[
+                            Text('review.add_new_review'),
+                            Icon(Icons.add)
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              }
+
+              if (index == 0) {
+                return Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text("Review:", style: Theme.of(context).textTheme.body1),
+                    new StarRating(
+                      size: 40.0,
+                      rating: 2.5,
+                      starCount: 5,
+                      color: Colors.white,
+                      borderColor: Colors.white,
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.add, size: 40),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            fullscreenDialog: true,
+                            builder: (context) => PlaceReview(
+                                  place: widget.place,
+                                )));
+                      },
+                    )
+                  ],
+                );
+              }
+
+              if (snapshot.data != null && snapshot.data[index - 1] != null) {
+                var item = snapshot.data[index - 1];
+                return PlaceReviewItem(item);
+              } else {
+                return MixCardExpandedShimmer();
+              }
+            },
           ),
-          ...reviews.map((f) => PlaceReviewItem())
-        ],
-      ),
+        ));
+      },
     );
   }
 }
 
 class PlaceReviewItem extends StatelessWidget {
+  final PlacesPlaceReviewDto review;
+
+  const PlaceReviewItem(this.review, {Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -55,19 +126,19 @@ class PlaceReviewItem extends StatelessWidget {
           Row(
             children: <Widget>[
               Icon(Icons.person),
-              Text('Jack black'),
+              Text(review.author),
             ],
           ),
           new StarRating(
             size: 15.0,
-            rating: 2.5,
+            rating: review.overall / 2,
             starCount: 5,
             color: Colors.white,
             borderColor: Colors.white,
           )
         ],
       ),
-      subtitle: Text('It is simple and straight-forward to use list generate. Even though, it doesn’t work in all cases, it comes very handy in many situations.'),
+      subtitle: Text(review.text ?? ''),
       trailing: Icon(Icons.chevron_right),
     );
   }

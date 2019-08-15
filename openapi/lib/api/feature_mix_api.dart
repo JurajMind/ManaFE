@@ -261,7 +261,7 @@ class FeatureMixApi {
   /// 
   ///
   /// 
-  Future<List<PipeAccesorySimpleDto>> featureMixGetMixes(int id, int page, int pageSize, String orderBy, String order) async {
+  Future<List<TobaccoMixSimpleDto>> featureMixGetMixes(int id, int page, int pageSize, String orderBy, String order) async {
     Object postBody;
 
     // verify required params are set
@@ -319,7 +319,7 @@ class FeatureMixApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
-      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<PipeAccesorySimpleDto>') as List).map((item) => item as PipeAccesorySimpleDto).toList();
+      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<TobaccoMixSimpleDto>') as List).map((item) => item as TobaccoMixSimpleDto).toList();
     } else {
       return null;
     }

@@ -12,6 +12,12 @@ class PlacesPlaceReviewDto {
   
   String text = null;
   
+  int service = null;
+  
+  int ambience = null;
+  
+  int overall = null;
+  
   int placeId = null;
   
   SmartHookahModelsDbSessionDtoSessionPlaceReviewDto sessionReview = null;
@@ -21,7 +27,7 @@ class PlacesPlaceReviewDto {
 
   @override
   String toString() {
-    return 'PlacesPlaceReviewDto[id=$id, authorId=$authorId, author=$author, publishDate=$publishDate, text=$text, placeId=$placeId, sessionReview=$sessionReview, medias=$medias, ]';
+    return 'PlacesPlaceReviewDto[id=$id, authorId=$authorId, author=$author, publishDate=$publishDate, text=$text, service=$service, ambience=$ambience, overall=$overall, placeId=$placeId, sessionReview=$sessionReview, medias=$medias, ]';
   }
 
   PlacesPlaceReviewDto.fromJson(Map<String, dynamic> json) {
@@ -50,6 +56,21 @@ class PlacesPlaceReviewDto {
       text = null;
     } else {
           text = json['text'];
+    }
+    if (json['service'] == null) {
+      service = null;
+    } else {
+          service = json['service'];
+    }
+    if (json['ambience'] == null) {
+      ambience = null;
+    } else {
+          ambience = json['ambience'];
+    }
+    if (json['overall'] == null) {
+      overall = null;
+    } else {
+          overall = json['overall'];
     }
     if (json['placeId'] == null) {
       placeId = null;
@@ -80,6 +101,12 @@ class PlacesPlaceReviewDto {
       json['publishDate'] = publishDate == null ? null : publishDate.toUtc().toIso8601String();
     if (text != null)
       json['text'] = text;
+    if (service != null)
+      json['service'] = service;
+    if (ambience != null)
+      json['ambience'] = ambience;
+    if (overall != null)
+      json['overall'] = overall;
     if (placeId != null)
       json['placeId'] = placeId;
     if (sessionReview != null)
