@@ -631,6 +631,23 @@ class ApiClient {
         )
         .then((data) => FeatureMixCreatorDto.fromJson(data.data));
   }
+
+  Future<List<PlacesPlaceReviewDto>> getPlaceReview(int id,
+      {int pageSize = 10, page = 0}) async {
+    var url = Uri.https(baseUrl, '/api/Review/Place/$id');
+    return await _dio.get(url.toString(), queryParameters: {
+      "pageSize": pageSize,
+      "page": page
+    }).then((data) => PlacesPlaceReviewDto.listFromJson(data.data));
+  }
+
+  Future<PlacesPlaceReviewDto> addPlaceReview(
+      int id, PlacesPlaceReviewDto review) async {
+    var url = Uri.https(baseUrl, '/api/Review/Place/$id');
+    return await _dio
+        .post(url.toString(), data: review)
+        .then((data) => PlacesPlaceReviewDto.fromJson(data.data));
+  }
 }
 
 class ColorDto {

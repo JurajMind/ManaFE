@@ -16,7 +16,6 @@ class PlaceExtendedInfo extends StatefulWidget {
 class _PlaceExtendedInfoState extends State<PlaceExtendedInfo> {
   @override
   Widget build(BuildContext context) {
-    
     return Container(
       child: DefaultTabController(
         length: 3,
@@ -45,9 +44,13 @@ class _PlaceExtendedInfoState extends State<PlaceExtendedInfo> {
             Expanded(
               child: Container(
                 child: TabBarView(children: [
-                  AboutPlaceWidget(place: widget.place,),
-                 ExtraPlaceWidget(),
-               ReviewPlaceWidget(),
+                  AboutPlaceWidget(
+                    place: widget.place,
+                  ),
+                  ExtraPlaceWidget(),
+                  ReviewPlaceWidget(
+                    place: widget.place,
+                  ),
                 ]),
               ),
             )

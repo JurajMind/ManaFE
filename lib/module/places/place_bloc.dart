@@ -6,13 +6,19 @@ import 'package:rxdart/rxdart.dart';
 class PlaceBloc {
   bool _initLoad = false;
   PlaceSimpleDto _place;
+  static const pageSize = 10;
 
   BehaviorSubject<PlaceSimpleDto> place = new BehaviorSubject();
 
   BehaviorSubject<PlaceDto> placeInfo = new BehaviorSubject();
 
+  BehaviorSubject<List<PlacesPlaceReviewDto>> reviews = new BehaviorSubject();
+
   BehaviorSubject<List<ReservationsTimeSlot>> reservationInfo =
       new BehaviorSubject();
+
+  int lastPage = 0;
+  BehaviorSubject<bool> haveMoreReviews = new BehaviorSubject.seeded(true);
 
   static final PlaceBloc _instance = new PlaceBloc._();
 
@@ -26,7 +32,32 @@ class PlaceBloc {
       placeInfo.add(null);
       this.place.add(place);
     }
-    await App.http.getPlaceInfo(place.id).then((data) => placeInfo.add(data));
+    await App.http.getPlaceInfo(place.id).then((data) {
+      placeInfo.add(data);
+      reviews.add(data.placeReviews);
+    });
+  }
+
+  Future loadReview({force = false}) async {
+    if (!haveMoreReviews.value && !force) return;
+
+    await App.http
+        .getPlaceReview(_place.id, page: lastPage + 1, pageSize: pageSize)
+        .then((data) {
+      if (data.length < pageSize) {
+        haveMoreReviews.add(false);
+        var oldData = reviews.value;
+        oldData.addAll(data);
+        reviews.add(oldData);
+      }
+    });
+  }
+
+  Future addReview(int placeId, PlacesPlaceReviewDto review) async {
+    var newReview = await App.http.addPlaceReview(placeId, review);
+    var oldData = reviews.value;
+    oldData.insert(0, newReview);
+    reviews.add(oldData);
   }
 
   Future loadReservationInfo(DateTime date) async {
