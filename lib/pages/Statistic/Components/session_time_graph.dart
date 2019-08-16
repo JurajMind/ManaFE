@@ -53,19 +53,22 @@ class SessionDayGraphState extends State<SessionDayGraph> {
 
   List<BarChartGroupData> mapData(Map<String, int> data) {
     max = 0;
+    var parsedData = data.map((k, v) => MapEntry(int.parse(k), v));
     for (int i = 0; i < 24; i++) {
-      if (data[i.toString()] == null) {
-        data[i.toString()] = 0;
+      if (parsedData[i] == null) {
+        parsedData[i] = 0;
+      } else {
+        max = math.max(max, parsedData[i]);
       }
     }
 
-    final items = [
-      ...data.map((k, v) {
-        var value = int.parse(k);
-        var data = makeGroupData(value, v + 0.0);
-        return MapEntry(k, data);
-      }).values
-    ];
+    final items = parsedData
+        .map((k, v) {
+          var data = makeGroupData(k, v + 0.0);
+          return MapEntry(k, data);
+        })
+        .values
+        .toList();
 
     var cItems = Collection(items);
 
@@ -202,14 +205,14 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                               fontWeight: FontWeight.bold,
                               fontSize: 14),
                           margin: 16,
-                          reservedSize: max + 0.0 ,
+                          reservedSize: max + 0.0,
                           getTitles: (value) {
                             if (max < 50) {
                               if (value % 10 == 0)
                                 return value.toStringAsFixed(0);
                             }
 
-                             if (max < 100) {
+                            if (max < 100) {
                               if (value % 20 == 0)
                                 return value.toStringAsFixed(0);
                             }
@@ -242,15 +245,15 @@ class SessionDayGraphState extends State<SessionDayGraph> {
   }
 
   BarChartGroupData makeGroupData(int x, double y) {
-    max = math.max(max, x);
+   
     return BarChartGroupData(x: x, barRods: [
       BarChartRodData(
         y: y,
         color: AppColors.colors[2],
         width: width,
         isRound: true,
-        backDrawRodData:
-            BackgroundBarChartRodData(show: true, y: max + 0.0, color: Colors.black),
+        backDrawRodData: BackgroundBarChartRodData(
+            show: true, y: max + 0.0, color: Colors.black),
       ),
     ]);
   }
