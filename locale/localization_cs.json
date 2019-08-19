@@ -1,50 +1,15 @@
 {
-
-    "tabs": {
-        "mixology": "Mixy",
-        "places": "Podniky",
-        "gear": "Vybavení",
-        "profile": "Profil"
-    },
-
-    "settings": {
-        "select_language": "Vyberte si jazyk",
-        "en": "English",
-        "cs": "Česky",
-        "settings": "Nastavení",
-        "user_profile": "Profil",
-        "sign_out": "Odhlásit"
-    },
-
-    "days": {
-        "short_1": "Po",
-        "short_2": "Ut",
-        "short_3": "Str",
-        "short_4": "Čtr",
-        "short_5": "Pa",
-        "short_6": "So",
-        "short_7": "Ne",
-        "long_1": "Pondělí",
-        "long_2": "Úterý",
-        "long_3": "Středa",
-        "long_4": "Čtvrtek",
-        "long_5": "Pátek",
-        "long_6": "Sobota",
-        "long_7": "Neděle"
-    },
-
     "common": {
         "search": "Hledat",
         "save": "Uložit",
         "cancel": "Zrušit",
         "next": "Další",
-        "back": "Zpátky",
+        "back": "Zpět",
         "keep": "Zachovat",
         "delete": "Smazat",
         "yes": "Ano",
         "no": "Ne"
     },
-
     "gear": {
         "devices": "Podložky",
         "tobacco": "Tabák",
@@ -56,69 +21,66 @@
         "coal": "Uhlí",
         "coals": "Uhlí",
         "no_name": "Beze jména",
-        "suggestion": "Návrhy",
-        "add_new_tobacco": "Přidej nový tabák",
+        "suggestion": "Návrh",
+        "add_new_tobacco": "Přidat nový tabák",
         "my_gear": "Moje vybavení",
-        "by_brand": "podle značky ",
+        "by_brand": "Podle značky",
         "find_mix": "Najít mix"
     },
-
     "home": {
         "start": "START",
-        "nearest_place": "Blízká místa"
+        "nearest_place": "Poblíž"
     },
     "enter_code": {
-        "enter_session_code": "Vložte kód session",
-        "session_code": "Kód",
+        "enter_session_code": "Zadej kód session",
+        "session_code": "Kód session",
         "enter": "Začít",
         "validating": "Ověřování"
     },
-
     "smoke_session": {
         "animations": "Animace",
         "colors": "Barvy",
         "puf_count": "Potáhnutí",
-        "last_puf": "Poslední (sek)",
+        "last_puf": "Poslední (s)",
         "durations": "Délka",
         "no_data": "Žádná data",
         "review": "Hodnocení",
         "more": "Více",
         "experiments": "Experimenty",
         "end_session": "Ukončit session",
-        "end_session_confirm": "Chcete tuto session ukončit?"
+        "end_session_confirm": "Chceš tuto session ukončit?"
     },
-
     "mix": {
         "use_this_mix": "Použít tento mix",
-        "used_mix": "Použítý mix",
         "delete_mix": "Smazat mix?",
-        "delete_mix_confirm": "Opravdu chcete smazat tento mix?",
+        "delete_mix_confirm": "Opravdu chceš tento mix smazat?",
         "my_mixes": "Moje mixy",
-        "featured_creators": "Přední tvůrci"
+        "featured_creators": "Přední tvůrci",
+        "used_mix": "Použítý mix",
+        "favorite_mixes": "",
+        "remove_favorite": "",
+        "add_favorite": ""
     },
-
-    "reservations": { 
+    "reservations": {
         "upcoming_reservations": "Budoucí rezervace",
         "reservations": "Rezervace",
         "add_new_place": "Přidat podnik",
         "today": "Dnes",
-        "persons": "Osoby",
+        "persons": "Počet osob",
         "time": "Čas",
-        "duration": "Doba trvání",
+        "duration": "Délka návštěvy",
         "name": "Jméno",
         "reservation_note": "Poznámka",
-        "reserve": "Rezervuj",
-        "date": "Datum",
-        "i_will_be_late": "Přijdu pozdě",
+        "reserve": "Rezervovat",
+        "i_will_be_late": "Mám zpoždění",
         "all": "Všichni",
         "created": "Vytvořeno",
         "canceled": "Zrušeno",
-        "denied": "Odmítnout",
+        "denied": "Zamítnuto",
         "confirmed": "Potvrzeno",
         "confirmation_required": "Vyžaduje se potvrzení",
-        "cancel_reservation_confirm": "Chcete zrušit tuto rezervaci?"
+        "cancel_reservation_confirm": "Chceš tuto rezervaci zrušit?"
     },
-
     "place": {
         "closed": "Zavřeno",
         "navigate": "Navigovat",
@@ -127,7 +89,6 @@
         "menu": "Menu",
         "unknown": "Neznámý"
     },
-
     "device": {
         "restart_stand": "Restartovat podložku",
         "restart": "Restart",
@@ -138,44 +99,63 @@
         "software_version": "Verze softwaru",
         "update_device": "Aktualizace zařízení",
         "welcome": "Začínáme!",
-        "welcome_text": "Vítá vás vaše chytrá dýmkařská podložka Manapipes Tear. \n Připravte se vstoupit do světa chytrého dýmkaření. Přidejte svoji podložku do inventáře a vaše dobrodružství může začít!",
+        "welcome_text": "Vítá tě chytrá dýmkařská podložka Manapipes Tear!\n Připrav se vstoupit do světa chytrého dýmkaření. Přidej svoji podložku do inventáře a tvé dobrodružství může začít!",
         "where_is_code": "Kde najdu kód podložky?",
         "where_is_code_text_1": "Na displeji podložky",
-        "where_is_code_text_1_t": "Podržte ovládací tlačítko a zapněte podložku. Ovládací tlačítko nepouštějte a držte 8 vteřin, které vám odpočítají rozsvěcující se diody. Poté se na displeji zobrazí ID a kód vaší podložky. Podložku můžete následně vypnout.",
+        "where_is_code_text_1_t": "Podrž ovládací tlačítko a zapni podložku. Ovládací tlačítko nepouštěj a drž 8 vteřin, které odpočítají rozsvěcující se diody. Poté se na displeji zobrazí ID a kód tvé podložky. Podložku můžeš následně vypnout.",
         "where_is_code_text_2": "V nastavení Wi-Fi",
-        "where_is_code_text_2_t": "Na stránce nastavení Wi-Fi pod tlačítkem Info. Nezapomeňte, když zadáte nastavení Wi-Fi, musíte znovu nastavit Wi-Fi.",
-        "enter_device_codes": "Zadejte kódy podložky",
+        "where_is_code_text_2_t": "Na stránce nastavení Wi-Fi pod tlačítkem Info. Nezapomeň, když zadáš nastavení Wi-Fi, musíš také znovu nastavit Wi-Fi.",
+        "enter_device_codes": "Zadej kódy podložky",
         "device_name": "Jméno podložky",
         "device_name_helper": "Vlastní název nové podložky, může zůstat prázdný",
         "device_id": "Id podložky",
         "pair_code": "Párovací kód",
         "add_device": "Přidat novou podložku"
     },
-
-    "profile": {
-        "puffs": "Puffs",
-        "smoking": "Smoking",
-        "activity": "Activity"
-
+    "tabs": {
+        "mixology": "Mixy",
+        "places": "Podniky",
+        "gear": "Vybavení",
+        "profile": "Profil"
     },
-
-
+    "settings": {
+        "select_language": "Jazyk",
+        "en": "English",
+        "cs": "Česky",
+        "settings": "Nastavení",
+        "user_profile": "Profil",
+        "sign_out": "Odhlásit"
+    },
+    "days": {
+        "short_1": "Po",
+        "short_2": "Út",
+        "short_3": "St",
+        "short_4": "Čt",
+        "short_5": "Pá",
+        "short_6": "So",
+        "short_7": "Ne",
+        "long_1": "Pondělí",
+        "long_2": "Úterý",
+        "long_3": "Středa",
+        "long_4": "Čtvrtek",
+        "long_5": "Pátek",
+        "long_6": "Sobota",
+        "long_7": "Neděle"
+    },
     "health": {
-        "title": "Health",
-        "co": "Carbon Monoxide",
-        "co_text": "Carbon monoxide (CO) is a gas produced by incomplete combustion. Hookahs are responsible for its production of carbons. Symptoms of poisoning may be headache, dizziness and malaise.",
-        "gas": "Amount of inhaled smoke",
-        "gas_text": "How much smoke did you inhale during smoking with Manapipes?",
-        "nicotine": "Amount of absorbed nicotine",
-        "nicotine_text": "Nicotine is an alkaloid contained in tobacco leaves. It has stimulating effects on the body, but it is addictive. From the mean value you can read how much nicotine you absorbed during smoking.",
+        "title": "Zdraví",
+        "co": "Oxid uhelnatý",
+        "co_text": "Oxid uhelnatý (CO) je plyn, který vzniká při nedokonalém spalování. U vodních dýmek jsou za jeho produkci odpovědné uhlíky. Příznakem otravy může být bolest hlavy, závrať a malátnost.",
+        "gas": "Množství inhalovaného dýmu",
+        "gas_text": "Jaký objem dýmu tvé plíce během dýmkaření s Manapipes inhalovaly?",
+        "nicotine": "Množství vstřebaného nikotinu",
+        "nicotine_text": "Nikotin je alkaloid obsažený v tabákových listech. Na organismus má stimulační účinky, je však návykový. Z průměrné hodnoty můžeš vyčíst, kolik mg nikotinu tvé tělo během dýmkaření vstřebalo.",
         "time": "Čas strávený dýmkařením",
-        "time_text": "How much time do you spend smoking hookah?",
-        "last_hookah": "Last hookah since",
-        "last_hookah_text": "When did you last have a hookah?"
+        "time_text": "Kolik času už máš celkem nadýmeno?",
+        "last_hookah": "Poslední session",
+        "last_hookah_text": "Kdy byla tvoje poslední session s Manapipes?"
     },
-
     "review": {
         "session_title": "Recenze"
     }
-
 }
