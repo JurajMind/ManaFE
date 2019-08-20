@@ -615,6 +615,43 @@ class ApiClient {
     ).then((data) => PipeAccesorySimpleDto.fromJson(data.data));
   }
 
+  Future<MediaDto> uploadSessionReviewFile(int reviewId, File file) async {
+    var url = Uri.https(baseUrl, '/api/Media/SessionReview/$reviewId/Add');
+
+    FormData formData = new FormData.from({
+      "file": new UploadFileInfo(file, "picture.jpg"),
+    });
+
+    return await _dio.postUri(
+      url,
+      data: formData,
+      onSendProgress: (int sent, int total) {
+        print("$sent $total");
+      },
+    ).then((data) {
+      if (data.data['Created'] != null) {
+        data.data['Created'] = DateTime.now().toString();
+      }
+      return MediaDto.fromJson(data.data);
+    });
+  }
+
+  Future<MediaDto> uploadPlaceReviewFile(int reviewId, File file) async {
+    var url = Uri.https(baseUrl, '/api/Media/PlaceReview/$reviewId/Add');
+
+    FormData formData = new FormData.from({
+      "file": new UploadFileInfo(file, "picture.jpg"),
+    });
+
+    return await _dio.postUri(
+      url,
+      data: formData,
+      onSendProgress: (int sent, int total) {
+        print("$sent $total");
+      },
+    ).then((data) => MediaDto.fromJson(data.data));
+  }
+
   Future<DeviceSimpleDto> addDevice(String name) async {
     var url = Uri.https(baseUrl, '/api/Device/$name/Add');
     return await _dio
@@ -685,6 +722,14 @@ class ApiClient {
       "page": page
     }).then((data) =>
         SmartHookahModelsDbSessionDtoSessionReviewDto.listFromJson(data.data));
+  }
+
+  Future<bool> removeSessionReview(int id,
+      {int pageSize = 10, page = 0}) async {
+    var url = Uri.https(baseUrl, '/api/Review/Session/$id');
+    return await _dio
+        .delete(url.toString())
+        .then((data) => data.statusCode == 200);
   }
 }
 

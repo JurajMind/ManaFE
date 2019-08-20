@@ -1,4 +1,5 @@
 import 'package:app/components/Buttons/m_outlineButton.dart';
+import 'package:app/components/StarRating/m_star_ratting.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/utils/translations/app_translations.dart';
@@ -99,7 +100,7 @@ class _PlaceReviewState extends State<PlaceReview> {
                       });
                       await bloc
                           .addReview(widget.place.id, review)
-                          .then((_) => Navigator.of(context).pop());
+                          .then((_) { Navigator.of(context).pop();});
                     },
                   ),
             SizedBox(
@@ -108,50 +109,6 @@ class _PlaceReviewState extends State<PlaceReview> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class MStarRating extends StatelessWidget {
-  final double rating;
-  final String title;
-  final int colorIndex;
-  final RatingChangeCallback onRatingChanged;
-  const MStarRating(
-      {Key key,
-      this.rating,
-      this.title,
-      this.colorIndex = 0,
-      this.onRatingChanged})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-          child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: Text(
-              "$title : ",
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ),
-          SmoothStarRating(
-              allowHalfRating: true,
-              onRatingChanged: onRatingChanged,
-              starCount: 5,
-              rating: rating,
-              size: 40.0,
-              color: AppColors.colors[colorIndex],
-              borderColor: AppColors.colors[colorIndex],
-              spacing: 0.0)
-        ],
-      )),
     );
   }
 }

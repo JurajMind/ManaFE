@@ -10,7 +10,7 @@ class PersonInfoDto {
   
   List<String> roles = [];
   
-  String personId = null;
+  int personId = null;
   PersonInfoDto();
 
   @override

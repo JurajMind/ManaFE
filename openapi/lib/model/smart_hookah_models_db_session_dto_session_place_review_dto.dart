@@ -2,6 +2,8 @@ part of openapi.api;
 
 class SmartHookahModelsDbSessionDtoSessionPlaceReviewDto {
   
+  int id = null;
+  
   int authorId = null;
   
   String author = null;
@@ -21,11 +23,16 @@ class SmartHookahModelsDbSessionDtoSessionPlaceReviewDto {
 
   @override
   String toString() {
-    return 'SmartHookahModelsDbSessionDtoSessionPlaceReviewDto[authorId=$authorId, author=$author, publishDate=$publishDate, tobaccoReview=$tobaccoReview, gearReviews=$gearReviews, medias=$medias, smokeSessionId=$smokeSessionId, smokeSession=$smokeSession, ]';
+    return 'SmartHookahModelsDbSessionDtoSessionPlaceReviewDto[id=$id, authorId=$authorId, author=$author, publishDate=$publishDate, tobaccoReview=$tobaccoReview, gearReviews=$gearReviews, medias=$medias, smokeSessionId=$smokeSessionId, smokeSession=$smokeSession, ]';
   }
 
   SmartHookahModelsDbSessionDtoSessionPlaceReviewDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
+    if (json['id'] == null) {
+      id = null;
+    } else {
+          id = json['id'];
+    }
     if (json['authorId'] == null) {
       authorId = null;
     } else {
@@ -70,6 +77,8 @@ class SmartHookahModelsDbSessionDtoSessionPlaceReviewDto {
 
   Map<String, dynamic> toJson() {
     Map <String, dynamic> json = {};
+    if (id != null)
+      json['id'] = id;
     if (authorId != null)
       json['authorId'] = authorId;
     if (author != null)

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:app/app/app.dart';
+import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -10,9 +11,8 @@ typedef void FileUploaded(File file);
 
 class UploadPicturePage extends StatefulWidget {
   final FileUploaded onFileUploaded;
-  
-  const UploadPicturePage( {Key key, this.onFileUploaded})
-      : super(key: key);
+
+  const UploadPicturePage({Key key, this.onFileUploaded}) : super(key: key);
 
   @override
   _UploadPicturePageState createState() => _UploadPicturePageState();
@@ -31,7 +31,7 @@ class _UploadPicturePageState extends State<UploadPicturePage> {
           height: 55,
         ),
         appBar: AppBar(
-          title: Text('Upload a photo'),
+          title: Text('Upload photo'),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -41,53 +41,81 @@ class _UploadPicturePageState extends State<UploadPicturePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text('Photo',
-                        style: new TextStyle(fontSize: 16, color: Colors.grey)),
                     SizedBox(height: 5),
-                    _image == null
-                        ? Text('No image selected.')
-                        : Container(width: 160,child:Image.file(
-                            _image,
-                            fit: BoxFit.fitHeight,
-                          )),
+                    Center(
+                      child: Container(
+                        width: 300,
+                        height: 300,
+                        child: _image == null
+                            ? Center(child: Text('No image selected.'))
+                            : Container(
+                               height: 280,
+                                child: Image.file(
+                                  _image,
+                                  fit: BoxFit.fitHeight,
+                                )),
+                      ),
+                    ),
                   ],
                 )),
             Expanded(
               flex: 2,
               child: Row(
                 children: <Widget>[
+                  SizedBox(
+                    width: 10,
+                  ),
                   Expanded(
                       flex: 1,
-                      child: IconButton(
-                        icon: Icon(Icons.photo_library),
-                        onPressed: () async {
-                          var image = await ImagePicker.pickImage(
-                              source: ImageSource.gallery);
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(16.0)),
+                        child: IconButton(
+                          icon: Icon(Icons.photo_library),
+                          onPressed: () async {
+                            var image = await ImagePicker.pickImage(
+                                source: ImageSource.gallery);
 
-                          setState(() {
-                            _image = image;
-                          });
-                        },
+                            setState(() {
+                              _image = image;
+                            });
+                          },
+                        ),
                       )),
+                  SizedBox(
+                    width: 10,
+                  ),
                   Expanded(
                       flex: 1,
-                      child: IconButton(
-                        icon: Icon(Icons.camera_enhance),
-                        onPressed: () async {
-                          var image = await ImagePicker.pickImage(
-                              source: ImageSource.camera);
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(16.0)),
+                        child: IconButton(
+                          icon: Icon(Icons.camera_enhance),
+                          onPressed: () async {
+                            var image = await ImagePicker.pickImage(
+                                maxHeight: 1600,
+                                imageQuality: 50,
+                                source: ImageSource.camera);
 
-                          setState(() {
-                            _image = image;
-                          });
-                        },
-                      ))
+                            setState(() {
+                              _image = image;
+                            });
+                          },
+                        ),
+                      )),
+                  SizedBox(
+                    width: 10,
+                  ),
                 ],
               ),
             ),
-            MaterialButton(
+            MButton(
               onPressed: () => uploadFile(),
-              child: Text('Upload'),
+              label: 'Use this photo',
+              icon: Icons.add_photo_alternate,
             ),
             SizedBox(
               height: 55,
@@ -101,8 +129,8 @@ class _UploadPicturePageState extends State<UploadPicturePage> {
       _uploading = true;
     });
 
-      widget.onFileUploaded(this._image);
-      Navigator.of(context).pop();
+    widget.onFileUploaded(this._image);
+    Navigator.of(context).pop();
   }
 
   updateProgress(double progress) {

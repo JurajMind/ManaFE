@@ -6211,7 +6211,8 @@
           }
         },
         "PersonId": {
-          "type": "string"
+          "format": "int32",
+          "type": "integer"
         }
       }
     },
@@ -6726,6 +6727,10 @@
     "smartHookahModelsDbSessionDtoSessionPlaceReviewDto": {
       "type": "object",
       "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
         "authorId": {
           "format": "int32",
           "type": "integer"
@@ -7004,6 +7009,10 @@
     "smartHookahModelsDbSessionDtoSessionReviewDto": {
       "type": "object",
       "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
         "authorId": {
           "format": "int32",
           "type": "integer"

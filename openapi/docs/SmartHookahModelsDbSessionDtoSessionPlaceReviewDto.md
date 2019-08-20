@@ -8,6 +8,7 @@ import 'package:openapi/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**id** | **int** |  | [optional] [default to null]
 **authorId** | **int** |  | [optional] [default to null]
 **author** | **String** |  | [optional] [default to null]
 **publishDate** | [**DateTime**](DateTime.md) |  | [optional] [default to null]

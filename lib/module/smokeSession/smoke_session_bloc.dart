@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:app/app/app.dart';
 import 'package:app/const/theme.dart';
@@ -54,7 +55,7 @@ class SmokeSessionBloc {
       new BehaviorSubject<SmokeSessionMetaDataDto>.seeded(
           new SmokeSessionMetaDataDto());
 
-            BehaviorSubject<SmokeSessionSimpleDto> smokeSession =
+  BehaviorSubject<SmokeSessionSimpleDto> smokeSession =
       new BehaviorSubject<SmokeSessionSimpleDto>.seeded(
           new SmokeSessionSimpleDto());
 
@@ -79,8 +80,9 @@ class SmokeSessionBloc {
   BehaviorSubject<DevicePreset> selectedPreset =
       new BehaviorSubject<DevicePreset>.seeded(DevicePreset.empty());
 
-        BehaviorSubject<List<SmartHookahModelsDbSessionDtoSessionReviewDto>> sessionReviews =
-      new BehaviorSubject<List<SmartHookahModelsDbSessionDtoSessionReviewDto>>();
+  BehaviorSubject<List<SmartHookahModelsDbSessionDtoSessionReviewDto>>
+      sessionReviews = new BehaviorSubject<
+          List<SmartHookahModelsDbSessionDtoSessionReviewDto>>();
 
   PublishSubject<DevicePreset> futureDevicePreset =
       new PublishSubject<DevicePreset>();
@@ -191,20 +193,18 @@ class SmokeSessionBloc {
   Future loadSessionData() async {
     if (this.activeSessionId == null) return;
     var sessionData = await App.http.getInitData(this.activeSessionId);
-    App.http.getSessionReview(sessionData.dtoSession.id).then((reviews){
+    App.http.getSessionReview(sessionData.dtoSession.id).then((reviews) {
       sessionReviews.add(reviews);
     });
     standSettings.add(sessionData.setting);
     smokeStatistic.add(sessionData.session.smokeSessionData);
     smokeSessionMetaData.add(sessionData.dtoSession.metaData);
-smokeSession.add(sessionData.dtoSession);
+    smokeSession.add(sessionData.dtoSession);
     hookahCode = sessionData.session.hookah.code;
     if (animations.value == null) {
       animations
           .add(await App.http.getAnimations(sessionData.session.hookah.code));
     }
-
-
   }
 
   loadAnimation() async {
@@ -391,6 +391,9 @@ smokeSession.add(sessionData.dtoSession);
     this.signalR.callServerFunction(
         new ServerCallParam(name: 'LeaveSession', params: params));
     animations.add(null);
+    sessionReviews.add(null);
+    smokeSession.add(null);
+    smokeSessionMetaData.add(new SmokeSessionMetaDataDto());
   }
 
   void handleSettingChanged(ClientMethod f) {
@@ -400,10 +403,33 @@ smokeSession.add(sessionData.dtoSession);
     this.standSettings.add(newSettingJson);
   }
 
-  Future saveReview(SmartHookahModelsDbSessionDtoSessionReviewDto review) async {
+  Future saveReview(SmartHookahModelsDbSessionDtoSessionReviewDto review,
+      List<File> media) async {
     var newReview = await App.http.addSessionReview(review);
+
+    var mediaDto = new List<MediaDto>();
+    if (media != null && media.length > 0) {
+      media.forEach((f) async {
+        try {
+          mediaDto.add(await App.http.uploadSessionReviewFile(newReview.id, f));
+        } catch (e) {
+          print(e);
+        }
+      });
+    }
+    newReview.medias = mediaDto;
+
     var allReviews = sessionReviews.value;
     allReviews.insert(0, newReview);
+    sessionReviews.add(allReviews);
+  }
+
+  Future removeReview(
+      SmartHookahModelsDbSessionDtoSessionReviewDto review) async {
+    var state = await App.http.removeSessionReview(review.id);
+    var allReviews = sessionReviews.value;
+    var reviewIndex = allReviews.indexWhere((test) => test.id == review.id);
+    allReviews.removeAt(reviewIndex);
     sessionReviews.add(allReviews);
   }
 }

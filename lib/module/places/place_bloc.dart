@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/app/app.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:openapi/api.dart';
@@ -53,8 +55,18 @@ class PlaceBloc {
     });
   }
 
-  Future addReview(int placeId, PlacesPlaceReviewDto review) async {
+  Future addReview(int placeId, PlacesPlaceReviewDto review,
+      {List<File> media}) async {
     var newReview = await App.http.addPlaceReview(placeId, review);
+    var mediaDto = new List<MediaDto>();
+    if (media != null && media.length > 0) {
+      media.forEach((f) async {
+        try {
+          mediaDto.add(await App.http.uploadPlaceReviewFile(newReview.id, f));
+        } catch (_) {}
+      });
+    }
+    newReview.medias = mediaDto;
     var oldData = reviews.value;
     oldData.insert(0, newReview);
     reviews.add(oldData);
