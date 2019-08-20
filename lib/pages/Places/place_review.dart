@@ -17,13 +17,17 @@ class _PlaceReviewState extends State<PlaceReview> {
   double ambience = 2.5;
   double service = 2.5;
   double overall = 2.5;
-
   bool posting = false;
+  TextEditingController controller;
+
+  @override
+  initState(){
+    controller = new TextEditingController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var bloc = DataProvider.getData(context).smokeSessionBloc;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -61,6 +65,7 @@ class _PlaceReviewState extends State<PlaceReview> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                controller: controller,
                 decoration: new InputDecoration(
                     hintText: 'Place note',
                     labelText: 'Place note',
@@ -88,6 +93,7 @@ class _PlaceReviewState extends State<PlaceReview> {
                       review.ambience = (ambience * 2).toInt();
                       review.service = (service * 2).toInt();
                       review.overall = (overall * 2).toInt();
+                      review.text = controller.text;
                       setState(() {
                         posting = true;
                       });

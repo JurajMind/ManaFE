@@ -88,6 +88,10 @@ class _CarrousselState extends State<MapCarousel> {
           if (snapshot.data == null) {
             return CircularProgressIndicator();
           }
+
+          if(snapshot.data.length == 0){
+              return buildAdd();
+          }
           return PageView.builder(
               scrollDirection: Axis.horizontal,
               controller: controller,

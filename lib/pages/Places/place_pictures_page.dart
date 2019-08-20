@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:app/app/app.dart';
+import 'package:app/components/Media/media.widget.dart';
 import 'package:app/pages/Common/upload_picture.page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +10,16 @@ import 'package:openapi/api.dart';
 class PlacePicturesPage extends StatelessWidget {
   final PlaceDto place;
   const PlacePicturesPage({Key key, this.place}) : super(key: key);
+
+  void uploadPicture(File file){
+      App.http
+            .uploadPlacePicture(place.id, file,
+            )
+            .then((_) {
+            
+        });
+        
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +33,8 @@ class PlacePicturesPage extends StatelessWidget {
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                 settings: RouteSettings(),
                 builder: (context) =>
-                    UploadPicturePage(place.id, UploadType.Place))),
-          )
+                    UploadPicturePage(onFileUploaded: (file) => uploadPicture(file),)),
+          ))
         ],
       ),
       body: Container(
@@ -29,16 +42,7 @@ class PlacePicturesPage extends StatelessWidget {
           itemCount: place.medias.length,
           itemBuilder: (context, index) {
             var item = place.medias[index];
-            return Column(
-              children: <Widget>[
-                Text(item.path),
-                CachedNetworkImage(
-                    fit: BoxFit.fill,
-                    fadeOutDuration: Duration(milliseconds: 0),
-                    fadeInCurve: Curves.linear,
-                    imageUrl: 'https://${App.baseUri}${item.path}'),
-              ],
-            );
+            return Container(height: 400,child: MediaWidget(item,size: MediaSize.Large,));
           },
         ),
       ),

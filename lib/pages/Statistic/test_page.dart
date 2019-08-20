@@ -84,8 +84,9 @@ class _TestPageState extends State<TestPage> {
               ),
               label: Text('Test date format'),
               onPressed: () async {
-                var date = '2019-03-04T22:20:49.595651Z';
+                var date = '2019-08-19T15:51:12.9241371Z';
                 var a = DateTime.parse(date);
+                print(a.toIso8601String());
               },
             ),
             OutlineButton.icon(

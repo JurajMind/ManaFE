@@ -137,6 +137,20 @@ class Authorize {
     return "ERROR";
   }
 
+    Future<bool> forgotPassword(String email) async {
+    _token = null;
+    final response = await http.post(
+      'https://${App.baseUri}/api/Account/ForgotPassword',
+      body: {
+        "Email": email     
+      },
+    );
+      if(response.statusCode == 200){
+        return true;
+      }
+      return false;
+  }
+
   Future<String> writeToken(dynamic responseJson) async {
     var token = TokenResponse.fromJson(responseJson as Map<String, dynamic>);
     if (token.accessToken != null) {

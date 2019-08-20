@@ -12,6 +12,8 @@ class SmartHookahModelsDbSessionDtoSessionReviewDto {
   
   int placeReviewId = null;
   
+  PlacesPlaceReviewDto placeReview = null;
+  
   List<MediaDto> medias = [];
   
   int smokeSessionId = null;
@@ -29,7 +31,7 @@ class SmartHookahModelsDbSessionDtoSessionReviewDto {
 
   @override
   String toString() {
-    return 'SmartHookahModelsDbSessionDtoSessionReviewDto[authorId=$authorId, author=$author, publishDate=$publishDate, tobaccoReview=$tobaccoReview, placeReviewId=$placeReviewId, medias=$medias, smokeSessionId=$smokeSessionId, taste=$taste, smoke=$smoke, strength=$strength, duration=$duration, smokeSession=$smokeSession, ]';
+    return 'SmartHookahModelsDbSessionDtoSessionReviewDto[authorId=$authorId, author=$author, publishDate=$publishDate, tobaccoReview=$tobaccoReview, placeReviewId=$placeReviewId, placeReview=$placeReview, medias=$medias, smokeSessionId=$smokeSessionId, taste=$taste, smoke=$smoke, strength=$strength, duration=$duration, smokeSession=$smokeSession, ]';
   }
 
   SmartHookahModelsDbSessionDtoSessionReviewDto.fromJson(Map<String, dynamic> json) {
@@ -58,6 +60,11 @@ class SmartHookahModelsDbSessionDtoSessionReviewDto {
       placeReviewId = null;
     } else {
           placeReviewId = json['placeReviewId'];
+    }
+    if (json['placeReview'] == null) {
+      placeReview = null;
+    } else {
+      placeReview = new PlacesPlaceReviewDto.fromJson(json['placeReview']);
     }
     if (json['medias'] == null) {
       medias = null;
@@ -108,6 +115,8 @@ class SmartHookahModelsDbSessionDtoSessionReviewDto {
       json['tobaccoReview'] = tobaccoReview;
     if (placeReviewId != null)
       json['placeReviewId'] = placeReviewId;
+    if (placeReview != null)
+      json['placeReview'] = placeReview;
     if (medias != null)
       json['medias'] = medias;
     if (smokeSessionId != null)

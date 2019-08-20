@@ -1,10 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
-import 'package:app/models/Stand/animation.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/models/Stand/preset.dart';
 import 'package:app/services/authorization.dart';
@@ -125,14 +125,18 @@ class ApiClient {
     return _getJson(url).then((json) => SessionIdValidation.fromJson(json));
   }
 
-  Future<Tuple2<SmokeSession, StandSettings>> getInitData(String sessionId) {
+  Future<SmokeSessionWrapper> getInitData(String sessionId) {
     var url =
         Uri.https(baseUrl, 'api/SmokeSession/InitData', {"id": sessionId});
     return _getJson(url).then((json) {
-      return new Tuple2(
-          SmokeSession.fromJson(json['SmokeSession'] as Map<String, dynamic>),
-          StandSettings.fromJson(
-              json['DeviceSettings'] as Map<String, dynamic>));
+      var result = SmokeSessionWrapper();
+      result.setting = StandSettings.fromJson(
+          json['DeviceSettings'] as Map<String, dynamic>);
+      result.session =
+          SmokeSession.fromJson(json['SmokeSession'] as Map<String, dynamic>);
+      var i = InitDataDto.fromJson(json);
+      result.dtoSession = i.smokeSession;
+      return result;
     });
   }
 
@@ -644,9 +648,43 @@ class ApiClient {
   Future<PlacesPlaceReviewDto> addPlaceReview(
       int id, PlacesPlaceReviewDto review) async {
     var url = Uri.https(baseUrl, '/api/Review/Place/$id');
-    return await _dio
-        .post(url.toString(), data: review)
-        .then((data) => PlacesPlaceReviewDto.fromJson(data.data));
+    return await _dio.post(url.toString(), data: review).then((data) {
+      if (data.data['publishDate'] != null) {
+        data.data['publishDate'] = DateTime.now().toString();
+      }
+      return PlacesPlaceReviewDto.fromJson(data.data);
+    });
+  }
+
+  Future<SmartHookahModelsDbSessionDtoSessionReviewDto> addSessionReview(
+      SmartHookahModelsDbSessionDtoSessionReviewDto review) async {
+    var url =
+        Uri.https(baseUrl, '/api/Review/Session/${review.smokeSessionId}');
+    var a = json.encode(review);
+    return await _dio.post(url.toString(), data: review).then((data) {
+      if (data.data['publishDate'] != null) {
+        data.data['publishDate'] = DateTime.now().toString();
+        if (data.data['tobaccoReview'] != null) {
+          data.data['tobaccoReview']['publishDate'] = DateTime.now().toString();
+        }
+        if (data.data['placeReview'] != null) {
+          data.data['placeReview']['publishDate'] = DateTime.now().toString();
+        }
+      }
+      return SmartHookahModelsDbSessionDtoSessionReviewDto.fromJson(data.data);
+    });
+  }
+
+  Future<List<SmartHookahModelsDbSessionDtoSessionReviewDto>> getSessionReview(
+      int id,
+      {int pageSize = 10,
+      page = 0}) async {
+    var url = Uri.https(baseUrl, '/api/Review/Session/$id');
+    return await _dio.get(url.toString(), queryParameters: {
+      "pageSize": pageSize,
+      "page": page
+    }).then((data) =>
+        SmartHookahModelsDbSessionDtoSessionReviewDto.listFromJson(data.data));
   }
 }
 

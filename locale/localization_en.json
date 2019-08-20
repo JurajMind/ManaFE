@@ -8,7 +8,25 @@
         "keep": "Keep",
         "delete": "Delete",
         "yes": "Yes",
-        "no": "No"
+        "no": "No",
+        "close": "Close"
+    },
+
+    "login": {
+        "sign_up": "Sign up",
+        "facebook_login": "Facebook login",
+        "log_in": "Log in",
+        "name": "Name",
+        "email": "E-Mail",
+        "password": "Password",
+        "confirm_password": "Confirm password",
+        "term_of_usage": "Term of usage",
+        "accept_register": "Accept & register",
+        "login": "E-mail",
+        "forgot_password": "Forgot password",
+        "reset_password": "Reset password",
+        "forgot_dialog_title": "Forgot password",
+        "forgot_dialog": "A password reset procedure has been sent to you by email."
     },
     "gear": {
         "devices": "Devices",

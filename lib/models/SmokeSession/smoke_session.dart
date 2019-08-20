@@ -1,4 +1,5 @@
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
+import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:openapi/api.dart';
 
 class Hookah {
@@ -12,6 +13,13 @@ class Hookah {
       : name = json['Name'],
         code = json['Code'],
         isOnline = json['IsOnline'];
+}
+
+class SmokeSessionWrapper {
+  SmokeSession session;
+  SmokeSessionSimpleDto dtoSession;
+
+  StandSettings setting;
 }
 
 class SmokeSession {

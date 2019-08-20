@@ -66,6 +66,7 @@ Class | Method | HTTP request | Description
 *AccountApi* | [**accountConfirmEmail**](docs\/AccountApi.md#accountconfirmemail) | **POST** /api/Account/api/Account/ConfirmEmail | 
 *AccountApi* | [**accountForgotPassword**](docs\/AccountApi.md#accountforgotpassword) | **POST** /api/Account/ForgotPassword | 
 *AccountApi* | [**accountRegister**](docs\/AccountApi.md#accountregister) | **POST** /api/Account/Register | 
+*AccountApi* | [**accountResetPassword**](docs\/AccountApi.md#accountresetpassword) | **POST** /api/Account/api/Account/ResetPassword | 
 *AnimApi* | [**animDefaultAction**](docs\/AnimApi.md#animdefaultaction) | **POST** /api/Anim/{id} | 
 *AnimationApi* | [**animationGetAnimations**](docs\/AnimationApi.md#animationgetanimations) | **GET** /api/Animations/GetAnimations | 
 *CompetitionApi* | [**competitionAddEntry**](docs\/CompetitionApi.md#competitionaddentry) | **POST** /api/Competition/Add | 
@@ -115,7 +116,8 @@ Class | Method | HTTP request | Description
 *GearApi* | [**gearVote**](docs\/GearApi.md#gearvote) | **POST** /api/Gear/{id}/Vote | 
 *MediaApi* | [**mediaAddGearPicture**](docs\/MediaApi.md#mediaaddgearpicture) | **POST** /api/Media/Gear/{id}/Add | 
 *MediaApi* | [**mediaAddPlacePicture**](docs\/MediaApi.md#mediaaddplacepicture) | **POST** /api/Media/Place/{id}/Add | 
-*MediaApi* | [**mediaAddReviewPicture**](docs\/MediaApi.md#mediaaddreviewpicture) | **POST** /api/Media/Review/{id}/Add | 
+*MediaApi* | [**mediaAddPlaceReview**](docs\/MediaApi.md#mediaaddplacereview) | **POST** /api/Media/PlaceReview/{id}/Add | 
+*MediaApi* | [**mediaAddSessionReview**](docs\/MediaApi.md#mediaaddsessionreview) | **POST** /api/Media/SessionReview/{id}/Add | 
 *MixologyApi* | [**mixologyAddToMix**](docs\/MixologyApi.md#mixologyaddtomix) | **POST** /api/Mixology/AddToMix | 
 *MixologyApi* | [**mixologyGetFeaturedMixCreators**](docs\/MixologyApi.md#mixologygetfeaturedmixcreators) | **GET** /api/Mixology/GetMixCreators | 
 *MixologyApi* | [**mixologyGetMixes**](docs\/MixologyApi.md#mixologygetmixes) | **GET** /api/Mixology/GetMixes | 

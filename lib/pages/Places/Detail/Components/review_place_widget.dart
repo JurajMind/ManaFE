@@ -42,6 +42,8 @@ class _ReviewPlaceWidgetState extends State<ReviewPlaceWidget> {
             if (!snapshot.data.contains(null)) bloc.loadReview();
           },
           child: ListView.builder(
+            shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
             itemCount: itemCount ?? 10,
             itemBuilder: (context, index) {
               if ((snapshot?.data?.length ?? 0) == 0) {

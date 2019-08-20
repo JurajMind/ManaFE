@@ -5,6 +5,7 @@ import 'package:app/Helpers/helpers.dart';
 import 'package:app/app/app.widget.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:app/services/authorization.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
@@ -58,7 +59,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                       new Container(
                         width: screenSize.width,
                         child: new RoundedButton(
-                          buttonName: 'Sign up',
+                          buttonName: AppTranslations.of(context).text("login.sign_up").toUpperCase(),
                           onTap: () {
                             navigate(context, 'auth/register');
                           },
@@ -75,7 +76,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                         child: facebookLoginLoading
                             ? Container(height: 20, width: 20,child:CircularProgressIndicator())
                             : RoundedButton(
-                                buttonName: 'Facebook login',
+                                buttonName: AppTranslations.of(context).text("login.facebook_login").toUpperCase(),
                                 onTap: () {
                                   facebookLogin();
                                 },
@@ -92,7 +93,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                         width: screenSize.width,
                         child: new FlatButton(
                           child: new Text(
-                            'Log in',
+                          AppTranslations.of(context).text("login.log_in").toUpperCase(),
                             style: Theme.of(context).textTheme.display2,
                           ),
                           onPressed: () {
@@ -100,7 +101,18 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                           },
                         ),
                         margin: new EdgeInsets.only(top: 20.0),
-                      )
+                      ),
+                      Align(
+                        heightFactor: 2,
+                        alignment: Alignment.bottomCenter ,child:  new FlatButton(
+                          child: new Text(
+                            AppTranslations.of(context).currentLanguage.toString().toUpperCase(),
+                            style: Theme.of(context).textTheme.display2,
+                          ),
+                          onPressed: () {
+                            navigate(context, 'auth/lang');
+                          },
+                        ),)
                     ],
                   ))
             ],

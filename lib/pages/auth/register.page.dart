@@ -81,7 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
         padding: EdgeInsets.only(left: 24.0, right: 24.0),
         children: <Widget>[
           ShadowText(
-            'E-MAIL',
+            AppTranslations.of(context).text("login.email").toUpperCase(),
             style: Theme.of(context).textTheme.headline,
             textScaleFactor: 1.0,
             softWrap: true,
@@ -100,8 +100,8 @@ class _RegisterPageState extends State<RegisterPage> {
               },
               keyboardType: TextInputType.emailAddress,
               decoration: new InputDecoration(
-                  hintText: 'E-mail',
-                  labelText: 'E-mail',
+                  hintText:  AppTranslations.of(context).text("login.email"),
+                  labelText:  AppTranslations.of(context).text("login.email"),
                   labelStyle: Theme.of(context).textTheme.body2,
                   enabledBorder: new UnderlineInputBorder(
                       borderSide: new BorderSide(color: Colors.white)),
@@ -162,20 +162,24 @@ class _RegisterPageState extends State<RegisterPage> {
             centerTitle: true,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
-              title: ShadowText(
-                'TERM OF USSAGE',
-                style: Theme.of(context)
-                    .copyWith(
-                        textTheme: TextTheme(
-                            headline: TextStyle(
-                      fontSize: 23.0,
-                    )))
-                    .textTheme
-                    .headline,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                textScaleFactor: 1.0,
-                softWrap: true,
+              title: Container(
+                width: 200,
+                child: ShadowText(
+                 AppTranslations.of(context).text('login.term_of_usage').toUpperCase(),
+                 textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .copyWith(
+                          textTheme: TextTheme(
+                              headline: TextStyle(
+                        fontSize: 16.0,
+                      )))
+                      .textTheme
+                      .headline,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textScaleFactor: 1.0,
+                  softWrap: true,
+                ),
               ),
             ),
           ),
@@ -200,7 +204,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     width: screenSize.width,
                   )
                 : RoundedButton(
-                    buttonName: 'ACCEPT & REGISTER',
+                    buttonName: AppTranslations.of(context).text('login.accept_register'),
                     onTap: () => register(context),
                     buttonColor: Colors.transparent,
                     borderWidth: 2.0,
@@ -228,7 +232,7 @@ class _RegisterPageState extends State<RegisterPage> {
         padding: EdgeInsets.only(left: 24.0, right: 24.0),
         children: <Widget>[
           ShadowText(
-            'NAME',
+           AppTranslations.of(context).text('login.name'),
             style: Theme.of(context).textTheme.headline,
             textScaleFactor: 1.0,
             softWrap: true,
@@ -241,8 +245,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 controller: nameController,
                 keyboardType: TextInputType.text,
                 decoration: new InputDecoration(
-                    hintText: 'Your display name',
-                    labelText: 'Name',
+                    hintText: AppTranslations.of(context).text('login.name_hint'),
+                    labelText: AppTranslations.of(context).text('login.name'),
                     labelStyle: Theme.of(context).textTheme.body2,
                     enabledBorder: new UnderlineInputBorder(
                         borderSide: new BorderSide(color: Colors.white)),
@@ -290,7 +294,7 @@ class _RegisterPageState extends State<RegisterPage> {
         padding: EdgeInsets.only(left: 24.0, right: 24.0),
         children: <Widget>[
           ShadowText(
-            'PASSWORD',
+           AppTranslations.of(context).text("login.password").toUpperCase(),
             style: Theme.of(context).textTheme.headline,
             textScaleFactor: 1.0,
             softWrap: true,
@@ -316,8 +320,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       });
                     },
                   ),
-                  hintText: 'Password',
-                  labelText: 'Password',
+                  hintText:  AppTranslations.of(context).text("login.password"),
+                  labelText: AppTranslations.of(context).text("login.password"),
                   labelStyle: Theme.of(context).textTheme.display3,
                   enabledBorder: new UnderlineInputBorder(
                       borderSide: new BorderSide(color: Colors.white)),
@@ -351,8 +355,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       });
                     },
                   ),
-                  hintText: 'Confirm password',
-                  labelText: 'Confirm password',
+                  hintText: AppTranslations.of(context).text("login.confirm_password"),
+                  labelText: AppTranslations.of(context).text("login.confirm_password"),
                   labelStyle: Theme.of(context).textTheme.display3,
                   enabledBorder: new UnderlineInputBorder(
                       borderSide: new BorderSide(color: Colors.white)),

@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **publishDate** | [**DateTime**](DateTime.md) |  | [optional] [default to null]
 **tobaccoReview** | [**GearTobaccoReviewDto**](GearTobaccoReviewDto.md) |  | [optional] [default to null]
 **placeReviewId** | **int** |  | [optional] [default to null]
+**placeReview** | [**PlacesPlaceReviewDto**](PlacesPlaceReviewDto.md) |  | [optional] [default to null]
 **medias** | [**List&lt;MediaDto&gt;**](MediaDto.md) |  | [optional] [default to []]
 **smokeSessionId** | **int** |  | [optional] [default to null]
 **taste** | **int** |  | [optional] [default to null]

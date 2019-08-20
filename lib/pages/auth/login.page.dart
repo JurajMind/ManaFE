@@ -5,6 +5,7 @@ import 'package:app/support/validators/max.validator.dart';
 import 'package:app/support/validators/min.validator.dart';
 import 'package:app/support/validators/required.validator.dart';
 import 'package:app/support/validators/string.validator.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/services/authorization.dart';
@@ -59,13 +60,14 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     final Size screenSize = MediaQuery.of(context).size;
 
     return new Scaffold(
+      appBar:   new AppBar(
+            title: new Text(AppTranslations.of(context).text("login.log_in").toUpperCase()),
+            backgroundColor: Colors.transparent,
+          ),
       body: new SingleChildScrollView(
           child: new Column(
         children: <Widget>[
-          new AppBar(
-            title: new Text('LOG IN'),
-            backgroundColor: Colors.transparent,
-          ),
+        
           Builder(builder: (BuildContext context) {
             return new Container(
               padding: new EdgeInsets.fromLTRB(60.0, 60.0, 60.0, 0.0),
@@ -86,7 +88,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                     new BorderSide(color: Colors.white)),
                             icon: Icon(Icons.mail, color: Colors.white),
                             hintText: 'your@email.com',
-                            labelText: 'E-mail'),
+                            labelText: AppTranslations.of(context).text("login.email")),
                         validator: (String value) {
                           return validate(value, 'E-mail Address', [
                             new RequiredValidator(),
@@ -126,7 +128,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                 borderSide:
                                     new BorderSide(color: Colors.white)),
                             icon: Icon(Icons.security, color: Colors.white),
-                            labelText: 'Password'),
+                            labelText: AppTranslations.of(context).text("login.password")),
                         validator: (String value) {
                           return validate(value, 'Password', [
                             new RequiredValidator(),
@@ -156,7 +158,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                               ),
                             )
                           : new RoundedButton(
-                              buttonName: 'Login',
+                              buttonName: AppTranslations.of(context).text("login.log_in").toUpperCase(),
                               onTap: () => this.submit(context),
                               buttonColor: Colors.transparent,
                               borderWidth: 1.0,
@@ -170,11 +172,11 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                       width: screenSize.width,
                       child: new FlatButton(
                         child: new Text(
-                          'Forgot password?',
+                          AppTranslations.of(context).text("login.forgot_password")+ " ?",
                           style: Theme.of(context).textTheme.display2,
                         ),
                         onPressed: () {
-                          navigate(context, 'auth/register');
+                          navigate(context, 'auth/forgotpassword');
                         },
                       ),
                       margin: new EdgeInsets.only(top: 20.0),

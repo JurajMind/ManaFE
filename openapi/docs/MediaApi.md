@@ -11,7 +11,8 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**mediaAddGearPicture**](MediaApi.md#mediaAddGearPicture) | **POST** /api/Media/Gear/{id}/Add | 
 [**mediaAddPlacePicture**](MediaApi.md#mediaAddPlacePicture) | **POST** /api/Media/Place/{id}/Add | 
-[**mediaAddReviewPicture**](MediaApi.md#mediaAddReviewPicture) | **POST** /api/Media/Review/{id}/Add | 
+[**mediaAddPlaceReview**](MediaApi.md#mediaAddPlaceReview) | **POST** /api/Media/PlaceReview/{id}/Add | 
+[**mediaAddSessionReview**](MediaApi.md#mediaAddSessionReview) | **POST** /api/Media/SessionReview/{id}/Add | 
 
 
 # **mediaAddGearPicture**
@@ -100,8 +101,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **mediaAddReviewPicture**
-> MediaDto mediaAddReviewPicture(id, file)
+# **mediaAddPlaceReview**
+> MediaDto mediaAddPlaceReview(id, file)
 
 
 
@@ -114,10 +115,53 @@ var id = 56; // int |
 var file = BINARY_DATA_HERE; // MultipartFile | A file
 
 try { 
-    var result = api_instance.mediaAddReviewPicture(id, file);
+    var result = api_instance.mediaAddPlaceReview(id, file);
     print(result);
 } catch (e) {
-    print("Exception when calling MediaApi->mediaAddReviewPicture: $e\n");
+    print("Exception when calling MediaApi->mediaAddPlaceReview: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**|  | [default to null]
+ **file** | **MultipartFile**| A file | [default to null]
+
+### Return type
+
+[**MediaDto**](MediaDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **mediaAddSessionReview**
+> MediaDto mediaAddSessionReview(id, file)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new MediaApi();
+var id = 56; // int | 
+var file = BINARY_DATA_HERE; // MultipartFile | A file
+
+try { 
+    var result = api_instance.mediaAddSessionReview(id, file);
+    print(result);
+} catch (e) {
+    print("Exception when calling MediaApi->mediaAddSessionReview: $e\n");
 }
 ```
 

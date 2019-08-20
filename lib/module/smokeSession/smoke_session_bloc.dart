@@ -54,6 +54,10 @@ class SmokeSessionBloc {
       new BehaviorSubject<SmokeSessionMetaDataDto>.seeded(
           new SmokeSessionMetaDataDto());
 
+            BehaviorSubject<SmokeSessionSimpleDto> smokeSession =
+      new BehaviorSubject<SmokeSessionSimpleDto>.seeded(
+          new SmokeSessionSimpleDto());
+
   BehaviorSubject<StandSettings> standSettings =
       new BehaviorSubject<StandSettings>.seeded(new StandSettings.empty());
 
@@ -74,6 +78,9 @@ class SmokeSessionBloc {
 
   BehaviorSubject<DevicePreset> selectedPreset =
       new BehaviorSubject<DevicePreset>.seeded(DevicePreset.empty());
+
+        BehaviorSubject<List<SmartHookahModelsDbSessionDtoSessionReviewDto>> sessionReviews =
+      new BehaviorSubject<List<SmartHookahModelsDbSessionDtoSessionReviewDto>>();
 
   PublishSubject<DevicePreset> futureDevicePreset =
       new PublishSubject<DevicePreset>();
@@ -184,14 +191,20 @@ class SmokeSessionBloc {
   Future loadSessionData() async {
     if (this.activeSessionId == null) return;
     var sessionData = await App.http.getInitData(this.activeSessionId);
-    standSettings.add(sessionData.item2);
-    smokeStatistic.add(sessionData.item1.smokeSessionData);
-    smokeSessionMetaData.add(sessionData.item1.metaData);
-    hookahCode = sessionData.item1.hookah.code;
+    App.http.getSessionReview(sessionData.dtoSession.id).then((reviews){
+      sessionReviews.add(reviews);
+    });
+    standSettings.add(sessionData.setting);
+    smokeStatistic.add(sessionData.session.smokeSessionData);
+    smokeSessionMetaData.add(sessionData.dtoSession.metaData);
+smokeSession.add(sessionData.dtoSession);
+    hookahCode = sessionData.session.hookah.code;
     if (animations.value == null) {
       animations
-          .add(await App.http.getAnimations(sessionData.item1.hookah.code));
+          .add(await App.http.getAnimations(sessionData.session.hookah.code));
     }
+
+
   }
 
   loadAnimation() async {
@@ -385,6 +398,13 @@ class SmokeSessionBloc {
         StandSettings.fromJson(f.Data[0] as Map<String, dynamic>);
 
     this.standSettings.add(newSettingJson);
+  }
+
+  Future saveReview(SmartHookahModelsDbSessionDtoSessionReviewDto review) async {
+    var newReview = await App.http.addSessionReview(review);
+    var allReviews = sessionReviews.value;
+    allReviews.insert(0, newReview);
+    sessionReviews.add(allReviews);
   }
 }
 

@@ -6,10 +6,12 @@ import 'package:image_picker/image_picker.dart';
 
 enum UploadType { Place, Gear, Review }
 
+typedef void FileUploaded(File file);
+
 class UploadPicturePage extends StatefulWidget {
-  final int uploadKey;
-  final UploadType uploadType;
-  const UploadPicturePage(this.uploadKey, this.uploadType, {Key key})
+  final FileUploaded onFileUploaded;
+  
+  const UploadPicturePage( {Key key, this.onFileUploaded})
       : super(key: key);
 
   @override
@@ -44,10 +46,10 @@ class _UploadPicturePageState extends State<UploadPicturePage> {
                     SizedBox(height: 5),
                     _image == null
                         ? Text('No image selected.')
-                        : Image.file(
+                        : Container(width: 160,child:Image.file(
                             _image,
                             fit: BoxFit.fitHeight,
-                          ),
+                          )),
                   ],
                 )),
             Expanded(
@@ -84,7 +86,7 @@ class _UploadPicturePageState extends State<UploadPicturePage> {
               ),
             ),
             MaterialButton(
-              onPressed: () {},
+              onPressed: () => uploadFile(),
               child: Text('Upload'),
             ),
             SizedBox(
@@ -99,30 +101,8 @@ class _UploadPicturePageState extends State<UploadPicturePage> {
       _uploading = true;
     });
 
-    switch (widget.uploadType) {
-      case UploadType.Place:
-        App.http
-            .uploadPlacePicture(widget.uploadKey, _image,
-                progress: (p) => updateProgress(p))
-            .then((_) {
-          setState(() {
-            _uploading = false;
-            done = true;
-          });
-        });
-        break;
-      case UploadType.Gear:
-        App.http.uploadGearPicture(widget.uploadKey, _image).then((_) {
-          setState(() {
-            _uploading = false;
-            done = true;
-          });
-        });
-        break;
-
-      default:
-        break;
-    }
+      widget.onFileUploaded(this._image);
+      Navigator.of(context).pop();
   }
 
   updateProgress(double progress) {

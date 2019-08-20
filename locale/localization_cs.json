@@ -8,8 +8,26 @@
         "keep": "Zachovat",
         "delete": "Smazat",
         "yes": "Ano",
-        "no": "Ne"
+        "no": "Ne",
+        "close": "Zavřít"
     },
+    "login": {
+        "sign_up": "Registrovat se",
+        "facebook_login": "Facebook přihlášení",
+        "log_in": "Přihlásit se",
+        "name": "Jméno",
+        "email": "E-Mail",
+        "password": "Heslo",
+        "confirm_password": "Potvrzení hesla",
+        "term_of_usage": "Všeobecné obchodní podmínky",
+        "accept_register": "Přijmout a zaregistrovat",
+        "login": "E-mail",
+        "forgot_password": "Zapomenuté heslo",
+        "reset_password": "Resetovat heslo",
+        "forgot_dialog_title": "Zapomenuté heslo",
+        "forgot_dialog": "Postup na resetování hesla vam byl zaslán  na email."
+    },
+
     "gear": {
         "devices": "Podložky",
         "tobacco": "Tabák",
