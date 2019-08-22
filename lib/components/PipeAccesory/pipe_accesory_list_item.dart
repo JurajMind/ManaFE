@@ -1,5 +1,6 @@
 import 'package:app/models/extensions.dart';
 import 'package:app/pages/Gear/pipe_accesory_page.dart';
+import 'package:app/pages/Gear/tobacco_page.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:shimmer/shimmer.dart';
@@ -20,7 +21,7 @@ class PipeAccesoryListItem extends StatelessWidget {
       child: ListTile(
         onTap: () => Navigator.of(context)
                 .push(new MaterialPageRoute(builder: (BuildContext context) {
-              return new PipeAccesoryPage(pipeAccesory: pipeAccesory);
+              return pipeAccesory.type == "Tobacco" ? TobaccoPage(tobacco: pipeAccesory) : PipeAccesoryPage(pipeAccesory: pipeAccesory);
             })),
         trailing: Icon(Icons.chevron_right),
         leading: SizedBox(

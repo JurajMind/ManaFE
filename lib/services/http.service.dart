@@ -732,17 +732,31 @@ class ApiClient {
         .then((data) => data.statusCode == 200);
   }
 
-  
-  Future<List<GearTobaccoReviewDto>> getTobaccoReview(
-      int id,
-      {int pageSize = 10,
-      page = 0}) async {
+  Future<List<GearTobaccoReviewDto>> getTobaccoReview(int id,
+      {int pageSize = 10, page = 0}) async {
     var url = Uri.https(baseUrl, '/api/Review/Tobacco/$id');
     return await _dio.get(url.toString(), queryParameters: {
       "pageSize": pageSize,
       "page": page
-    }).then((data) =>
-        GearTobaccoReviewDto.listFromJson(data.data));
+    }).then((data) => GearTobaccoReviewDto.listFromJson(data.data));
+  }
+
+  Future<TobaccoInformationDto> getTobaccoInfo(
+    int id,
+  ) async {
+    var url = Uri.https(baseUrl, '/api/Tobacco/$id/GetAllInfo');
+    return await _dio
+        .get(url.toString())
+        .then((data) => TobaccoInformationDto.fromJson(data.data));
+  }
+
+    Future<List<TobaccoMixSimpleDto>> getTobaccoInMix(
+    int id,
+  ) async {
+    var url = Uri.https(baseUrl, '/api/Tobacco/$id/InMix');
+    return await _dio
+        .get(url.toString())
+        .then((data) => TobaccoMixSimpleDto.listFromJson(data.data));
   }
 }
 

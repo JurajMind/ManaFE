@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:app/Helpers/date_utils.dart';
 import 'package:app/app/app.widget.dart';
+import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
+import 'package:app/components/SmokeSession/session_list.dart';
 import 'package:app/components/SmokeSession/smoke_session_list_item.dart';
 import 'package:app/components/Statistic/recap.dart';
 import 'package:app/const/theme.dart';
@@ -345,61 +347,28 @@ class _StatisticPageState extends State<StatisticPage> {
     result.add(buildTimeStatistic(bloc));
     result.add(buildDayStatistic(bloc));
     result.add(SizedBox(height: 10));
-    result.addAll(buildSmokeSession(bloc));
+    result.add(buildSmokeSession(bloc));
     result.add(SizedBox(
       height: 70,
     ));
     return result;
   }
 
-  List<Widget> buildSmokeSession(StatisticBloc bloc) {
-    var result = new List<Widget>();
-    result.add(Center(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: new Text(
-          'Smoke sessions',
-          style: Theme.of(context).textTheme.display2,
-        ),
-      ),
-    ));
-    result.add(StreamBuilder<List<SmokeSessionSimpleDto>>(
+  Widget buildSmokeSession(StatisticBloc bloc) {
+    return StreamBuilder<List<SmokeSessionSimpleDto>>(
         stream: bloc.smokeSessions,
         initialData: null,
         builder: (BuildContext context,
             AsyncSnapshot<List<SmokeSessionSimpleDto>> snapshot) {
-          if (snapshot.data == null) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          List<Widget> sessions = snapshot.data
-              .map((f) {
-                return SmokeSessionListItem(session: f);
-              })
-              .take(5)
-              .cast<Widget>()
-              .toList();
-          sessions.add(
-            OutlineButton.icon(
-              borderSide: BorderSide(color: Colors.white),
-              icon: Icon(
-                Icons.clear_all,
-                color: Colors.red,
-              ),
-              label: Text('All sessions (${snapshot.data.length})'),
-              onPressed: () async {
-                Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) =>
-                        AllStatisticPage(seed: snapshot.data)));
-              },
-            ),
+          return SessionList(
+            sessions: snapshot.data,
+            sessionCount: 5,
+            onPressed: () async {
+              Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (context) => AllStatisticPage(seed: snapshot.data)));
+            },
           );
-
-          return Column(children: sessions);
-        }));
-    return result;
+        });
   }
 
   Widget buildGearUsage(StatisticBloc bloc) {
@@ -588,13 +557,16 @@ class _StatisticPageState extends State<StatisticPage> {
             }
             var seriesList = snapshot.data.timeStatistics.dayOfWeekDistribution;
             return Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Container(
-                  height: 250, child:Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Container(
+                  height: 250,
+                  child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: WeekDayGraph(graphData: seriesList,),
+                    child: WeekDayGraph(
+                      graphData: seriesList,
+                    ),
                   ),
-            ));
+                ));
           }),
     );
   }
@@ -615,9 +587,8 @@ class _StatisticPageState extends State<StatisticPage> {
               return Container(
                   height: 250,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SessionDayGraph(seriesList)
-                  ));
+                      padding: const EdgeInsets.all(8.0),
+                      child: SessionDayGraph(seriesList)));
             }),
       ),
     );

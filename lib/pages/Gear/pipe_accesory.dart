@@ -8,6 +8,7 @@ import 'package:app/module/general/gear_bloc.dart';
 import 'package:app/module/person/person_bloc.dart';
 import 'package:app/pages/Gear/add_gear_page.dart';
 import 'package:app/pages/Gear/pipe_accesory_page.dart';
+import 'package:app/pages/Gear/tobacco_page.dart';
 import 'package:app/pages/SmokeSession/accesory_search.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -187,7 +188,7 @@ class SearchRow extends StatelessWidget {
       if (value == null) return;
       Navigator.of(context)
           .push(new MaterialPageRoute(builder: (BuildContext context) {
-        return new PipeAccesoryPage(pipeAccesory: value);
+        return value.type == "Tobacco" ? TobaccoPage(tobacco: value) : PipeAccesoryPage(pipeAccesory: value);
       }));
     });
   }

@@ -2,8 +2,11 @@ import 'package:app/app/app.dart';
 import 'package:app/components/Mixology/favorite_mix_button.dart';
 import 'package:app/components/Mixology/use_mix_button.dart';
 import 'package:app/components/Reviews/tobacco_review_list.dart';
+import 'package:app/components/SmokeSession/session_list.dart';
 import 'package:app/const/theme.dart';
+import 'package:app/models/extensions%20copy.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/pages/Gear/tobacco_page.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +28,8 @@ class MixDetailPageState extends State<MixDetailPage> {
   final double _appBarHeight = 256.0;
   var data = [0.0, 1.0, 1.5, 2.0, 0.0, 0.0, -0.5, -1.0, -0.5, 0.0, 0.0];
   bool editName;
-  BehaviorSubject<List<GearTobaccoReviewDto>> reviews =
-      new BehaviorSubject<List<GearTobaccoReviewDto>>();
+  BehaviorSubject<TobaccoInformationDto> information =
+      new BehaviorSubject<TobaccoInformationDto>();
 
   @override
   initState() {
@@ -34,8 +37,10 @@ class MixDetailPageState extends State<MixDetailPage> {
     this.nameController =
         new TextEditingController(text: widget.mix.name ?? "");
 
-    Future.delayed(Duration.zero,(){
-      App.http.getTobaccoReview(widget.mix.id).then((data) => this.reviews.add(data));
+    Future.delayed(Duration.zero, () {
+      App.http
+          .getTobaccoInfo(widget.mix.id)
+          .then((data) => this.information.add(data));
     });
     super.initState();
   }
@@ -213,6 +218,12 @@ class MixDetailPageState extends State<MixDetailPage> {
                     return MapEntry(
                         index,
                         ListTile(
+                          onTap: () => Navigator.of(context).push(
+                              new MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                            return TobaccoPage(
+                                tobacco: Convertor.getPipeAccesory(f.tobacco));
+                          })),
                           title: Text(f.tobacco.name,
                               style: Theme.of(context).textTheme.display2),
                           trailing: Text(f.fraction.toString() + ' g',
@@ -229,13 +240,29 @@ class MixDetailPageState extends State<MixDetailPage> {
                     mix: widget.mix,
                   ),
                   Divider(),
-                  SizedBox(height: 8,),
-                  StreamBuilder<List<GearTobaccoReviewDto>>(
-                    stream: this.reviews,
-                    builder: (context, snapshot) {
-                      return TobaccoReviewList(reviews: snapshot.data,);
-                    }
+                  SizedBox(
+                    height: 8,
                   ),
+                  StreamBuilder<TobaccoInformationDto>(
+                      stream: this.information,
+                      builder: (context, snapshot) {
+                        return TobaccoReviewList(info: snapshot.data);
+                      }),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Divider(),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  StreamBuilder<TobaccoInformationDto>(
+                      stream: this.information,
+                      builder: (context, snapshot) {
+                        return SessionList(
+                          info: snapshot.data,
+                          sessionCount: 5,
+                        );
+                      }),
                   SizedBox(
                     height: 100,
                   ),

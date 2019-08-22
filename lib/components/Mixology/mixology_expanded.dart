@@ -1,4 +1,5 @@
 import 'package:app/components/StarRating/star_ratting.dart';
+import 'package:app/const/theme.dart';
 import 'package:app/pages/Mixology/mix_detail_page.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,8 +9,9 @@ import 'package:openapi/api.dart';
 
 class MixCardExpanded extends StatefulWidget {
   final TobaccoMixSimpleDto tobaccoMix;
+  final int highlightId;
   final bool noTitle;
-  MixCardExpanded({this.tobaccoMix, this.noTitle = false});
+  MixCardExpanded({this.tobaccoMix, this.noTitle = false, this.highlightId});
 
   @override
   _MixologyExpandedState createState() => new _MixologyExpandedState();
@@ -147,7 +149,7 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
             Text(
               item.tobacco?.name ?? 'd',
               style: new TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.black),
+                  fontWeight: FontWeight.bold, color: widget.highlightId == item.tobacco.id ? AppColors.colors[1] : Colors.black),
             ),
             Text(
               item.tobacco?.brand ?? 'b',

@@ -66,7 +66,8 @@
         "more": "Více",
         "experiments": "Experimenty",
         "end_session": "Ukončit session",
-        "end_session_confirm": "Chceš tuto session ukončit?"
+        "end_session_confirm": "Chceš tuto session ukončit?",
+        "no_smoke_session": "Žádná session"
     },
     "mix": {
         "use_this_mix": "Použít tento mix",

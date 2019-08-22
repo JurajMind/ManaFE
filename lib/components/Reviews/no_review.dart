@@ -1,3 +1,4 @@
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 
 typedef AddCallback = void Function();
@@ -15,7 +16,7 @@ class NoReview extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Text(
-              'review.no_review',
+              AppTranslations.of(context).text('review.no_review'),
               style: Theme.of(context).textTheme.display1,
             ),
             SizedBox(
@@ -26,7 +27,7 @@ class NoReview extends StatelessWidget {
               child: Flex(
                 direction: Axis.vertical,
                 children: <Widget>[
-                  Text('review.add_new_review'),
+                  Text( AppTranslations.of(context).text('review.add_new_review'),),
                   Icon(
                     Icons.add,
                     size: 40,
