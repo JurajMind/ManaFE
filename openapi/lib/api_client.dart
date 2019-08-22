@@ -77,6 +77,8 @@ class ApiClient {
           return GamePictureDto.fromJson(value);
         case 'GameProfileSimpleDto':
           return GameProfileSimpleDto.fromJson(value);
+        case 'GearTobaccoReviewDetailDto':
+          return GearTobaccoReviewDetailDto.fromJson(value);
         case 'GearTobaccoReviewDto':
           return GearTobaccoReviewDto.fromJson(value);
         case 'HookahOrderDto':
@@ -151,8 +153,6 @@ class ApiClient {
           return SmartHookahHelpersAnimation.fromJson(value);
         case 'SmartHookahModelsDbColor':
           return SmartHookahModelsDbColor.fromJson(value);
-        case 'SmartHookahModelsDbGearPipeAccessoryReviewDto':
-          return SmartHookahModelsDbGearPipeAccessoryReviewDto.fromJson(value);
         case 'SmartHookahModelsDbPuf':
           return SmartHookahModelsDbPuf.fromJson(value);
         case 'SmartHookahModelsDbSessionDtoSessionPlaceReviewDto':

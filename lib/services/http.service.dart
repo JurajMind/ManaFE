@@ -731,6 +731,19 @@ class ApiClient {
         .delete(url.toString())
         .then((data) => data.statusCode == 200);
   }
+
+  
+  Future<List<GearTobaccoReviewDto>> getTobaccoReview(
+      int id,
+      {int pageSize = 10,
+      page = 0}) async {
+    var url = Uri.https(baseUrl, '/api/Review/Tobacco/$id');
+    return await _dio.get(url.toString(), queryParameters: {
+      "pageSize": pageSize,
+      "page": page
+    }).then((data) =>
+        GearTobaccoReviewDto.listFromJson(data.data));
+  }
 }
 
 class ColorDto {

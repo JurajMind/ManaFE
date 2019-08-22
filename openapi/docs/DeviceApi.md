@@ -14,6 +14,7 @@ Method | HTTP request | Description
 [**deviceChangeBrightness**](DeviceApi.md#deviceChangeBrightness) | **POST** /api/Device/{id}/ChangeBrightness | 
 [**deviceChangeColor**](DeviceApi.md#deviceChangeColor) | **POST** /api/Device/{id}/ChangeColor | 
 [**deviceChangeMode**](DeviceApi.md#deviceChangeMode) | **POST** /api/Device/{id}/ChangeMode | 
+[**deviceChangeName**](DeviceApi.md#deviceChangeName) | **POST** /api/Device/{id}/ChangeName | 
 [**deviceChangeSpeed**](DeviceApi.md#deviceChangeSpeed) | **POST** /api/Device/{id}/ChangeSpeed | 
 [**deviceGetPictures**](DeviceApi.md#deviceGetPictures) | **GET** /api/Device/Pictures | 
 [**deviceGetSetting**](DeviceApi.md#deviceGetSetting) | **GET** /api/Device/{id}/GetSetting | 
@@ -29,7 +30,7 @@ Method | HTTP request | Description
 
 
 # **deviceAddDevice**
-> DeviceSimpleDto deviceAddDevice(id)
+> DeviceSimpleDto deviceAddDevice(id, code, newName)
 
 
 
@@ -39,9 +40,11 @@ import 'package:openapi/api.dart';
 
 var api_instance = new DeviceApi();
 var id = id_example; // String | 
+var code = code_example; // String | 
+var newName = newName_example; // String | 
 
 try { 
-    var result = api_instance.deviceAddDevice(id);
+    var result = api_instance.deviceAddDevice(id, code, newName);
     print(result);
 } catch (e) {
     print("Exception when calling DeviceApi->deviceAddDevice: $e\n");
@@ -53,6 +56,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**|  | [default to null]
+ **code** | **String**|  | [default to null]
+ **newName** | **String**|  | [default to null]
 
 ### Return type
 
@@ -237,6 +242,49 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **deviceChangeName**
+> DeviceSimpleDto deviceChangeName(id, newName)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new DeviceApi();
+var id = id_example; // String | 
+var newName = newName_example; // String | 
+
+try { 
+    var result = api_instance.deviceChangeName(id, newName);
+    print(result);
+} catch (e) {
+    print("Exception when calling DeviceApi->deviceChangeName: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | [default to null]
+ **newName** | **String**|  | [default to null]
+
+### Return type
+
+[**DeviceSimpleDto**](DeviceSimpleDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

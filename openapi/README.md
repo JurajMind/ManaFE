@@ -77,6 +77,7 @@ Class | Method | HTTP request | Description
 *DeviceApi* | [**deviceChangeBrightness**](docs\/DeviceApi.md#devicechangebrightness) | **POST** /api/Device/{id}/ChangeBrightness | 
 *DeviceApi* | [**deviceChangeColor**](docs\/DeviceApi.md#devicechangecolor) | **POST** /api/Device/{id}/ChangeColor | 
 *DeviceApi* | [**deviceChangeMode**](docs\/DeviceApi.md#devicechangemode) | **POST** /api/Device/{id}/ChangeMode | 
+*DeviceApi* | [**deviceChangeName**](docs\/DeviceApi.md#devicechangename) | **POST** /api/Device/{id}/ChangeName | 
 *DeviceApi* | [**deviceChangeSpeed**](docs\/DeviceApi.md#devicechangespeed) | **POST** /api/Device/{id}/ChangeSpeed | 
 *DeviceApi* | [**deviceGetPictures**](docs\/DeviceApi.md#devicegetpictures) | **GET** /api/Device/Pictures | 
 *DeviceApi* | [**deviceGetSetting**](docs\/DeviceApi.md#devicegetsetting) | **GET** /api/Device/{id}/GetSetting | 
@@ -173,10 +174,14 @@ Class | Method | HTTP request | Description
 *ReservationApi* | [**reservationUpdateReservationState**](docs\/ReservationApi.md#reservationupdatereservationstate) | **POST** /api/Reservations/{id}/UpdateState | 
 *ReviewApi* | [**reviewAddPlaceReview**](docs\/ReviewApi.md#reviewaddplacereview) | **POST** /api/Review/Place/{id} | 
 *ReviewApi* | [**reviewAddSessionReview**](docs\/ReviewApi.md#reviewaddsessionreview) | **POST** /api/Review/Session/{id} | 
+*ReviewApi* | [**reviewAddTobaccoReview**](docs\/ReviewApi.md#reviewaddtobaccoreview) | **POST** /api/Review/Tobacco/{id} | 
 *ReviewApi* | [**reviewGetPlaceReviews**](docs\/ReviewApi.md#reviewgetplacereviews) | **GET** /api/Review/Place/{id} | 
 *ReviewApi* | [**reviewGetSessionReview**](docs\/ReviewApi.md#reviewgetsessionreview) | **GET** /api/Review/Session/{id} | 
+*ReviewApi* | [**reviewGetTobaccoReview**](docs\/ReviewApi.md#reviewgettobaccoreview) | **GET** /api/Review/Tobacco/{id} | 
 *ReviewApi* | [**reviewRemovePlaceReview**](docs\/ReviewApi.md#reviewremoveplacereview) | **DELETE** /api/Review/Place/{id} | 
 *ReviewApi* | [**reviewRemoveSessionReview**](docs\/ReviewApi.md#reviewremovesessionreview) | **DELETE** /api/Review/Session/{id} | 
+*ReviewApi* | [**reviewRemoveTobaccoReview**](docs\/ReviewApi.md#reviewremovetobaccoreview) | **DELETE** /api/Review/Tobacco/{id} | 
+*ReviewApi* | [**reviewTobaccoReviewDetail**](docs\/ReviewApi.md#reviewtobaccoreviewdetail) | **DELETE** /api/Review/Tobacco/{id}/Detail | 
 *SentToDeviceApi* | [**sentToDeviceDefaultAction**](docs\/SentToDeviceApi.md#senttodevicedefaultaction) | **POST** /api/SentToDevice/{id} | 
 *SmokeSessionApi* | [**smokeSessionEndSmokeSession**](docs\/SmokeSessionApi.md#smokesessionendsmokesession) | **POST** /api/SmokeSession/{id}/End | 
 *SmokeSessionApi* | [**smokeSessionGetFinishedData**](docs\/SmokeSessionApi.md#smokesessiongetfinisheddata) | **GET** /api/SmokeSession/GetFinishedData | 
@@ -219,6 +224,7 @@ Class | Method | HTTP request | Description
  - [FranchiseDto](docs\/FranchiseDto.md)
  - [GamePictureDto](docs\/GamePictureDto.md)
  - [GameProfileSimpleDto](docs\/GameProfileSimpleDto.md)
+ - [GearTobaccoReviewDetailDto](docs\/GearTobaccoReviewDetailDto.md)
  - [GearTobaccoReviewDto](docs\/GearTobaccoReviewDto.md)
  - [HookahOrderDto](docs\/HookahOrderDto.md)
  - [InitDataDto](docs\/InitDataDto.md)
@@ -256,7 +262,6 @@ Class | Method | HTTP request | Description
  - [SmartHookahControllersPriceGroupDto](docs\/SmartHookahControllersPriceGroupDto.md)
  - [SmartHookahHelpersAnimation](docs\/SmartHookahHelpersAnimation.md)
  - [SmartHookahModelsDbColor](docs\/SmartHookahModelsDbColor.md)
- - [SmartHookahModelsDbGearPipeAccessoryReviewDto](docs\/SmartHookahModelsDbGearPipeAccessoryReviewDto.md)
  - [SmartHookahModelsDbPuf](docs\/SmartHookahModelsDbPuf.md)
  - [SmartHookahModelsDbSessionDtoSessionPlaceReviewDto](docs\/SmartHookahModelsDbSessionDtoSessionPlaceReviewDto.md)
  - [SmartHookahModelsDbSessionDtoSessionReviewDto](docs\/SmartHookahModelsDbSessionDtoSessionReviewDto.md)

@@ -734,6 +734,56 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "newName",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeviceSimpleDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Device/{id}/ChangeName": {
+      "post": {
+        "tags": [
+          "Device"
+        ],
+        "operationId": "Device_ChangeName",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "newName",
+            "in": "query",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -4262,6 +4312,165 @@
         }
       }
     },
+    "/api/Review/Tobacco/{id}": {
+      "get": {
+        "tags": [
+          "Review"
+        ],
+        "operationId": "Review_GetTobaccoReview",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GearTobaccoReviewDto"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Review"
+        ],
+        "operationId": "Review_AddTobaccoReview",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "reviewDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GearTobaccoReviewDto"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GearTobaccoReviewDto"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Review"
+        ],
+        "operationId": "Review_RemoveTobaccoReview",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/api/Review/Tobacco/{id}/Detail": {
+      "delete": {
+        "tags": [
+          "Review"
+        ],
+        "operationId": "Review_TobaccoReviewDetail",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GearTobaccoReviewDetailDto"
+            }
+          }
+        }
+      }
+    },
     "/api/SentToDevice/{id}": {
       "post": {
         "tags": [
@@ -6745,12 +6954,6 @@
         "tobaccoReview": {
           "$ref": "#/definitions/GearTobaccoReviewDto"
         },
-        "gearReviews": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/smartHookahModelsDbGearPipeAccessoryReviewDto"
-          }
-        },
         "medias": {
           "type": "array",
           "items": {
@@ -6803,54 +7006,10 @@
         "SmokeSessionId": {
           "format": "int32",
           "type": "integer"
-        }
-      }
-    },
-    "smartHookahModelsDbGearPipeAccessoryReviewDto": {
-      "type": "object",
-      "properties": {
-        "Id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "AuthorId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Author": {
-          "type": "string"
-        },
-        "PublishDate": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "Deleted": {
-          "type": "boolean"
-        },
-        "Text": {
-          "type": "string"
-        },
-        "AccessorId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Overall": {
-          "format": "double",
-          "type": "number"
         },
         "SessionReviewId": {
           "format": "int32",
           "type": "integer"
-        },
-        "SmokeSessionId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Medias": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/MediaDto"
-          }
         }
       }
     },
@@ -7062,6 +7221,49 @@
         },
         "smokeSession": {
           "$ref": "#/definitions/SmokeSessionSimpleDto"
+        }
+      }
+    },
+    "GearTobaccoReviewDetailDto": {
+      "type": "object",
+      "properties": {
+        "SmokeSessionId": {
+          "$ref": "#/definitions/smartHookahModelsDbSessionDtoSessionReviewDto"
+        },
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Cut": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Taste": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Smoke": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Strength": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Duration": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Overall": {
+          "format": "double",
+          "type": "number"
+        },
+        "Text": {
+          "type": "string"
+        },
+        "SessionReviewId": {
+          "format": "int32",
+          "type": "integer"
         }
       }
     },

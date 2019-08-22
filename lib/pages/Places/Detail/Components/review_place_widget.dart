@@ -1,3 +1,4 @@
+import 'package:app/components/Reviews/no_review.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mix_card_expanded_shimmer.dart';
@@ -43,32 +44,18 @@ class _ReviewPlaceWidgetState extends State<ReviewPlaceWidget> {
           },
           child: ListView.builder(
             shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             itemCount: itemCount ?? 10,
             itemBuilder: (context, index) {
               if ((snapshot?.data?.length ?? 0) == 0) {
-                return Center(
-                  child: Column(
-                    children: <Widget>[
-                      Text('No review'),
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              fullscreenDialog: true,
-                              builder: (context) => PlaceReview(
-                                    place: widget.place,
-                                  )));
-                        },
-                        child: Flex(
-                          direction: Axis.vertical,
-                          children: <Widget>[
-                            Text('review.add_new_review'),
-                            Icon(Icons.add)
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                return NoReview(
+                  onAdd: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        fullscreenDialog: true,
+                        builder: (context) => PlaceReview(
+                              place: widget.place,
+                            )));
+                  },
                 );
               }
 

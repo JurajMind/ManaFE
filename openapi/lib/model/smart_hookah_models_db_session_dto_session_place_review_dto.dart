@@ -12,8 +12,6 @@ class SmartHookahModelsDbSessionDtoSessionPlaceReviewDto {
   
   GearTobaccoReviewDto tobaccoReview = null;
   
-  List<SmartHookahModelsDbGearPipeAccessoryReviewDto> gearReviews = [];
-  
   List<MediaDto> medias = [];
   
   int smokeSessionId = null;
@@ -23,7 +21,7 @@ class SmartHookahModelsDbSessionDtoSessionPlaceReviewDto {
 
   @override
   String toString() {
-    return 'SmartHookahModelsDbSessionDtoSessionPlaceReviewDto[id=$id, authorId=$authorId, author=$author, publishDate=$publishDate, tobaccoReview=$tobaccoReview, gearReviews=$gearReviews, medias=$medias, smokeSessionId=$smokeSessionId, smokeSession=$smokeSession, ]';
+    return 'SmartHookahModelsDbSessionDtoSessionPlaceReviewDto[id=$id, authorId=$authorId, author=$author, publishDate=$publishDate, tobaccoReview=$tobaccoReview, medias=$medias, smokeSessionId=$smokeSessionId, smokeSession=$smokeSession, ]';
   }
 
   SmartHookahModelsDbSessionDtoSessionPlaceReviewDto.fromJson(Map<String, dynamic> json) {
@@ -52,11 +50,6 @@ class SmartHookahModelsDbSessionDtoSessionPlaceReviewDto {
       tobaccoReview = null;
     } else {
       tobaccoReview = new GearTobaccoReviewDto.fromJson(json['tobaccoReview']);
-    }
-    if (json['gearReviews'] == null) {
-      gearReviews = null;
-    } else {
-      gearReviews = SmartHookahModelsDbGearPipeAccessoryReviewDto.listFromJson(json['gearReviews']);
     }
     if (json['medias'] == null) {
       medias = null;
@@ -87,8 +80,6 @@ class SmartHookahModelsDbSessionDtoSessionPlaceReviewDto {
       json['publishDate'] = publishDate == null ? null : publishDate.toUtc().toIso8601String();
     if (tobaccoReview != null)
       json['tobaccoReview'] = tobaccoReview;
-    if (gearReviews != null)
-      json['gearReviews'] = gearReviews;
     if (medias != null)
       json['medias'] = medias;
     if (smokeSessionId != null)

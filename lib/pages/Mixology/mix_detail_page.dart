@@ -1,6 +1,7 @@
 import 'package:app/app/app.dart';
 import 'package:app/components/Mixology/favorite_mix_button.dart';
 import 'package:app/components/Mixology/use_mix_button.dart';
+import 'package:app/components/Reviews/tobacco_review_list.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/utils/translations/app_translations.dart';
@@ -8,6 +9,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:openapi/api.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:share/share.dart';
 
 class MixDetailPage extends StatefulWidget {
@@ -23,6 +25,20 @@ class MixDetailPageState extends State<MixDetailPage> {
   final double _appBarHeight = 256.0;
   var data = [0.0, 1.0, 1.5, 2.0, 0.0, 0.0, -0.5, -1.0, -0.5, 0.0, 0.0];
   bool editName;
+  BehaviorSubject<List<GearTobaccoReviewDto>> reviews =
+      new BehaviorSubject<List<GearTobaccoReviewDto>>();
+
+  @override
+  initState() {
+    this.editName = false;
+    this.nameController =
+        new TextEditingController(text: widget.mix.name ?? "");
+
+    Future.delayed(Duration.zero,(){
+      App.http.getTobaccoReview(widget.mix.id).then((data) => this.reviews.add(data));
+    });
+    super.initState();
+  }
 
   TextEditingController nameController;
   Future<bool> deleteConfirn() async {
@@ -88,14 +104,6 @@ class MixDetailPageState extends State<MixDetailPage> {
             '${row.name}: ${row.brand}',
       )
     ];
-  }
-
-  @override
-  initState() {
-    this.editName = false;
-    this.nameController =
-        new TextEditingController(text: widget.mix.name ?? "");
-    super.initState();
   }
 
   changeName() async {
@@ -220,9 +228,17 @@ class MixDetailPageState extends State<MixDetailPage> {
                   UseMixButton(
                     mix: widget.mix,
                   ),
+                  Divider(),
+                  SizedBox(height: 8,),
+                  StreamBuilder<List<GearTobaccoReviewDto>>(
+                    stream: this.reviews,
+                    builder: (context, snapshot) {
+                      return TobaccoReviewList(reviews: snapshot.data,);
+                    }
+                  ),
                   SizedBox(
                     height: 100,
-                  )
+                  ),
                 ],
               )
             ]),

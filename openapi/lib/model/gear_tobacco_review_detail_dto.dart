@@ -1,6 +1,8 @@
 part of openapi.api;
 
-class GearTobaccoReviewDto {
+class GearTobaccoReviewDetailDto {
+  
+  SmartHookahModelsDbSessionDtoSessionReviewDto smokeSessionId = null;
   
   int id = null;
   
@@ -18,18 +20,21 @@ class GearTobaccoReviewDto {
   
   String text = null;
   
-  int smokeSessionId = null;
-  
   int sessionReviewId = null;
-  GearTobaccoReviewDto();
+  GearTobaccoReviewDetailDto();
 
   @override
   String toString() {
-    return 'GearTobaccoReviewDto[id=$id, cut=$cut, taste=$taste, smoke=$smoke, strength=$strength, duration=$duration, overall=$overall, text=$text, smokeSessionId=$smokeSessionId, sessionReviewId=$sessionReviewId, ]';
+    return 'GearTobaccoReviewDetailDto[smokeSessionId=$smokeSessionId, id=$id, cut=$cut, taste=$taste, smoke=$smoke, strength=$strength, duration=$duration, overall=$overall, text=$text, sessionReviewId=$sessionReviewId, ]';
   }
 
-  GearTobaccoReviewDto.fromJson(Map<String, dynamic> json) {
+  GearTobaccoReviewDetailDto.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
+    if (json['SmokeSessionId'] == null) {
+      smokeSessionId = null;
+    } else {
+      smokeSessionId = new SmartHookahModelsDbSessionDtoSessionReviewDto.fromJson(json['SmokeSessionId']);
+    }
     if (json['Id'] == null) {
       id = null;
     } else {
@@ -70,11 +75,6 @@ class GearTobaccoReviewDto {
     } else {
           text = json['Text'];
     }
-    if (json['SmokeSessionId'] == null) {
-      smokeSessionId = null;
-    } else {
-          smokeSessionId = json['SmokeSessionId'];
-    }
     if (json['SessionReviewId'] == null) {
       sessionReviewId = null;
     } else {
@@ -84,6 +84,8 @@ class GearTobaccoReviewDto {
 
   Map<String, dynamic> toJson() {
     Map <String, dynamic> json = {};
+    if (smokeSessionId != null)
+      json['SmokeSessionId'] = smokeSessionId;
     if (id != null)
       json['Id'] = id;
     if (cut != null)
@@ -100,21 +102,19 @@ class GearTobaccoReviewDto {
       json['Overall'] = overall;
     if (text != null)
       json['Text'] = text;
-    if (smokeSessionId != null)
-      json['SmokeSessionId'] = smokeSessionId;
     if (sessionReviewId != null)
       json['SessionReviewId'] = sessionReviewId;
     return json;
   }
 
-  static List<GearTobaccoReviewDto> listFromJson(List<dynamic> json) {
-    return json == null ? new List<GearTobaccoReviewDto>() : json.map((value) => new GearTobaccoReviewDto.fromJson(value)).toList();
+  static List<GearTobaccoReviewDetailDto> listFromJson(List<dynamic> json) {
+    return json == null ? new List<GearTobaccoReviewDetailDto>() : json.map((value) => new GearTobaccoReviewDetailDto.fromJson(value)).toList();
   }
 
-  static Map<String, GearTobaccoReviewDto> mapFromJson(Map<String, dynamic> json) {
-    var map = new Map<String, GearTobaccoReviewDto>();
+  static Map<String, GearTobaccoReviewDetailDto> mapFromJson(Map<String, dynamic> json) {
+    var map = new Map<String, GearTobaccoReviewDetailDto>();
     if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = new GearTobaccoReviewDto.fromJson(value));
+      json.forEach((String key, dynamic value) => map[key] = new GearTobaccoReviewDetailDto.fromJson(value));
     }
     return map;
   }

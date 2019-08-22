@@ -3,12 +3,9 @@ import 'dart:io';
 import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/components/Media/review_media_upload.widget.dart';
 import 'package:app/components/StarRating/m_star_ratting.dart';
-import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
-import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class SessionReview extends StatefulWidget {
   SessionReview({Key key}) : super(key: key);
