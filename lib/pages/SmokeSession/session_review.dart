@@ -103,7 +103,7 @@ class _SessionReviewState extends State<SessionReview> {
               ReviewMediaUpload(
                 files: files,
               ),
-              MButton(
+              posting ? Center(child: SizedBox(height: 50,width: 50,child: CircularProgressIndicator(),),):MButton(
                   label: "common.save",
                   icon: Icons.save,
                   onPressed: () => saveReview(placeSession)),
@@ -116,6 +116,10 @@ class _SessionReviewState extends State<SessionReview> {
   }
 
   saveReview(bool placeSession) {
+
+    setState(() {
+      posting = true;
+    });
     var bloc = DataProvider.getData(context).smokeSessionBloc;
 
     var review = new SmartHookahModelsDbSessionDtoSessionReviewDto();
@@ -134,12 +138,11 @@ class _SessionReviewState extends State<SessionReview> {
     tobaccoReview.text = sessionText.text;
 
     review.tobaccoReview = tobaccoReview;
-    setState(() {
-      posting = true;
-    });
+
     bloc.saveReview(review,files).then((_) {
       Navigator.of(context).pop();
     });
+       
   }
 
   List<Widget> buildPlaceReview() {

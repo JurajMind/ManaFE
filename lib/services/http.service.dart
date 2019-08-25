@@ -11,7 +11,6 @@ import 'package:app/services/authorization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
-import 'package:tuple/tuple.dart';
 import 'package:openapi/api.dart';
 
 class ApiClient {
@@ -706,6 +705,9 @@ class ApiClient {
         }
         if (data.data['placeReview'] != null) {
           data.data['placeReview']['publishDate'] = DateTime.now().toString();
+          if (data.data['placeReview']['sessionReview'] != null)
+            data.data['placeReview']['sessionReview']['publishDate'] =
+                DateTime.now().toString();
         }
       }
       return SmartHookahModelsDbSessionDtoSessionReviewDto.fromJson(data.data);
@@ -750,12 +752,15 @@ class ApiClient {
         .then((data) => TobaccoInformationDto.fromJson(data.data));
   }
 
-    Future<List<TobaccoMixSimpleDto>> getTobaccoInMix(
-    int id,
+  Future<List<TobaccoMixSimpleDto>> getTobaccoInMix(
+    int id, {int pageSize = 10, page = 0}
   ) async {
-    var url = Uri.https(baseUrl, '/api/Tobacco/$id/InMix');
+    var url = Uri.https(baseUrl, '/api/Tobacco/$id/InMix',);
     return await _dio
-        .get(url.toString())
+        .get(url.toString(), queryParameters: {
+      "pageSize": pageSize,
+      "page": page
+    })
         .then((data) => TobaccoMixSimpleDto.listFromJson(data.data));
   }
 }

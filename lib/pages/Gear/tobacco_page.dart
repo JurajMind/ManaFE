@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
+import 'Tobacco/in_mixes_lazy_list.dart';
+
 class TobaccoPage extends StatefulWidget {
   final PipeAccesorySimpleDto tobacco;
   final int pipeAccesoryId;
@@ -79,15 +81,19 @@ class _TobaccoPageState extends State<TobaccoPage> {
             SizedBox(
               height: 8,
             ),
-            Divider(color: Colors.white,),
+            Divider(
+              color: Colors.white,
+            ),
             SizedBox(
               height: 8,
             ),
             StreamBuilder<TobaccoInformationDto>(
                 stream: this.information,
                 builder: (context, snapshot) {
-               
-                  return TobaccoReviewList(info: snapshot.data,label: true,);
+                  return TobaccoReviewList(
+                    info: snapshot.data,
+                    label: true,
+                  );
                 }),
             SizedBox(
               height: 8,
@@ -99,7 +105,6 @@ class _TobaccoPageState extends State<TobaccoPage> {
             StreamBuilder<TobaccoInformationDto>(
                 stream: this.information,
                 builder: (context, snapshot) {
-               
                   return SessionList(
                     info: snapshot.data,
                     sessionCount: 5,
@@ -113,16 +118,20 @@ class _TobaccoPageState extends State<TobaccoPage> {
                 stream: this.inMix,
                 builder: (context, snapshot) {
                   return InMixList(
-                    sourceTobacco: pipeAccesory.id,
-                    mixes: snapshot.data,
-                    mixCount: 5,
-                  );
+                      sourceTobacco: pipeAccesory.id,
+                      mixes: snapshot.data,
+                      mixCount: 5,
+                      onPressed: () =>
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => InMixesLazyList(
+                              initInMixes: snapshot.data,tobacco: pipeAccesory,
+                            ),
+                          )));
                 }),
-                   SizedBox(
+            SizedBox(
               height: 100,
             ),
           ]),
-          
         )
       ],
     ));
