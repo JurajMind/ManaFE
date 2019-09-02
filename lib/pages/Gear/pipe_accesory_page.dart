@@ -1,4 +1,6 @@
 import 'package:app/app/app.dart';
+import 'package:app/components/Buttons/use_gear_button.dart';
+import 'package:app/components/SmokeSession/session_list.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
@@ -17,6 +19,9 @@ class PipeAccesoryPage extends StatefulWidget {
 
 class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
   PipeAccesorySimpleDto pipeAccesory;
+  BehaviorSubject<List<SmokeSessionSimpleDto>> smokeSessions =
+      new BehaviorSubject<List<SmokeSessionSimpleDto>>();
+
   @override
   void initState() {
     if (widget.pipeAccesory == null) {
@@ -26,6 +31,10 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
     } else {
       pipeAccesory = widget.pipeAccesory;
     }
+    App.http
+        .getGearSession(widget?.pipeAccesoryId ?? widget.pipeAccesory.id,
+            pageSize: 6)
+        .then((sessions) => this.smokeSessions.add(sessions));
     super.initState();
   }
 
@@ -52,7 +61,26 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
           centerTitle: true,
         ),
         SliverList(
-          delegate: new SliverChildListDelegate(<Widget>[Placeholder()]),
+          delegate: new SliverChildListDelegate(<Widget>[
+          
+            SizedBox(
+              height: 8,
+            ),
+            UseGearButton(
+              gear: pipeAccesory,
+            ),  SizedBox(
+              height: 8,
+            ),
+            StreamBuilder<List<SmokeSessionSimpleDto>>(
+                stream: this.smokeSessions,
+                builder: (context, snapshot) {
+                  return SessionList(
+                    sessions: snapshot.data,
+                    sessionCount: 5,                  );
+                }),  SizedBox(
+              height: 100,
+            ),
+          ]),
         )
       ],
     ));

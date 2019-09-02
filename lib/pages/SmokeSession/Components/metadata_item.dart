@@ -92,10 +92,12 @@ class MetadataItem extends StatelessWidget {
       return a.name.compareTo(b.name);
     });
 
-    sorted = sorted.take(5).toList();
-    if (sorted.indexOf(selected) == -1) {
+    if (sorted.indexWhere((a) => a.id == selected?.id) == -1)
+    {
       if (selected?.id != null) sorted.insert(0, selected);
     }
+
+    sorted = sorted.take(5).toList();
 
     return sorted.take(5).map<Widget>((a) {
       return FilterChip(
@@ -113,7 +115,7 @@ class MetadataItem extends StatelessWidget {
       builder: (BuildContext context) => child,
     ).then<void>((PipeAccesorySimpleDto value) {
       if (value != null) {
-        this.bloc.setMetadataAccesory(value, searchType);
+        this.bloc.setMetadataAccesory(value);
       }
     });
   }
@@ -139,9 +141,9 @@ class FilterChip extends StatelessWidget {
         child: InkWell(
           onTap: () {
             if (selected) {
-              this.bloc.setMetadataAccesory(null, searchType);
+              this.bloc.setMetadataAccesory(null, type: searchType);
             } else {
-              this.bloc.setMetadataAccesory(accesory, searchType);
+              this.bloc.setMetadataAccesory(accesory);
             }
           },
           child: Container(

@@ -177,12 +177,10 @@ class BookMenuWidget extends StatelessWidget {
     Key key,
     @required this.placeBloc,
     @required this.place,
-    @required this.widget,
   }) : super(key: key);
 
   final PlaceBloc placeBloc;
   final PlaceSimpleDto place;
-  final PlaceDetailPage widget;
 
   @override
   Widget build(BuildContext context) {
@@ -222,7 +220,7 @@ class BookMenuWidget extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
                   settings: RouteSettings(),
-                  builder: (context) => MenuPage(place: widget.place)));
+                  builder: (context) => MenuPage(place: place)));
             },
           ),
         )

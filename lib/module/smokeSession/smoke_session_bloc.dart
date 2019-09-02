@@ -215,6 +215,16 @@ class SmokeSessionBloc {
   setTobacco(TobaccoEditModel setModel) {
     metaDataChanged = true;
     var selection = this.smokeSessionMetaData.value;
+
+    if (setModel == null) {
+      selection.tobaccoId = 0;
+      selection.tobacco = null;
+      selection.tobaccoMix = null; 
+      this.smokeSessionMetaData.add(selection);
+      saveMetaData();
+      return;
+    }
+                             
     if (setModel.mix == null) {
       selection.tobacco = setModel.tobacco;
       selection.tobaccoId = setModel.tobacco.id;
@@ -232,16 +242,16 @@ class SmokeSessionBloc {
     saveMetaData();
   }
 
-  setMetadataAccesory(PipeAccesorySimpleDto accesory, String type) {
+  setMetadataAccesory(PipeAccesorySimpleDto accesory, {String type}) {
     metaDataChanged = true;
     var selection = this.smokeSessionMetaData.value;
-    switch (type) {
-      case 'Hookah':
+    switch (accesory?.type?.toLowerCase() ?? type?.toLowerCase()) {
+      case 'hookah':
         selection.pipe = accesory;
         selection.pipeId = accesory?.id;
         break;
 
-      case 'Bowl':
+      case 'bowl':
         selection.bowl = accesory;
         selection.bowlId = accesory?.id;
         break;

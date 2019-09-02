@@ -62,7 +62,7 @@ class AboutPlaceWidget extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20.0)),
                         child: new BookMenuWidget(
                                 placeBloc: placeBloc,
-                                place: place,
+                                place: place,                                
                               ),
                       ),
                         SizedBox(height: 20,),

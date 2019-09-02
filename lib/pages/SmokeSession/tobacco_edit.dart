@@ -41,9 +41,12 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
   List<PipeAccesorySimpleDto> selectedTobacco;
   List<PipeAccesorySimpleDto> tobaccoList = new List<PipeAccesorySimpleDto>();
   Map<int, double> tobaccoWeight = new Map<int, double>();
+  TextEditingController controller;
+
   @override
   void initState() {
     super.initState();
+    controller = new TextEditingController(text: widget?.mix?.name ?? null);
     new Future.delayed(Duration.zero, () {
       var ownedTobacco = DataProvider.getData(context)
           .personBloc
@@ -124,7 +127,6 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
     return result;
   }
 
-  TextEditingController controller = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     var ownedTobacco = DataProvider.getData(context)
@@ -282,10 +284,14 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                   elevation: 0,
                   backgroundColor: Colors.black,
                   actions: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.refresh),
-                      onPressed: () => randomTobacco(ownedTobacco),
-                    )
+                    this.tobaccoList.length == 0
+                        ? IconButton(
+                            icon: Icon(Icons.refresh),
+                            onPressed: () => randomTobacco(ownedTobacco),
+                          )
+                        : IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () => cleanTobacco())
                   ],
                 )
               : AppBar(
@@ -301,10 +307,14 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                     controller: controller,
                   ),
                   actions: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.refresh),
-                      onPressed: () => randomTobacco(ownedTobacco),
-                    )
+                    this.tobaccoList.length == 0
+                        ? IconButton(
+                            icon: Icon(Icons.refresh),
+                            onPressed: () => randomTobacco(ownedTobacco),
+                          )
+                        : IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () => cleanTobacco())
                   ],
                 ),
           Expanded(
@@ -343,10 +353,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
 
   void randomTobacco(List<PipeAccesorySimpleDto> ownedTobacco) {
     var rng = new Random();
-    setState(() {
-      tobaccoList = new List<PipeAccesorySimpleDto>();
-      tobaccoWeight = new Map<int, double>();
-    });
+    this.cleanTobacco();
     var tobaccoCount = rng.nextInt(2) + 2;
     for (int i = 0; i < tobaccoCount; i++) {
       var tobaccoIndex = rng.nextInt(ownedTobacco.length);
@@ -356,6 +363,14 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
         tobaccoWeight[tobacco.id] = (rng.nextInt(5) + 5).truncateToDouble();
       });
     }
+  }
+
+  void cleanTobacco() {
+    setState(() {
+      tobaccoList = new List<PipeAccesorySimpleDto>();
+      tobaccoWeight = new Map<int, double>();
+      controller = new TextEditingController();
+    });
   }
 }
 

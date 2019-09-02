@@ -9,8 +9,8 @@ class SessionList extends StatelessWidget {
   final List<SmokeSessionSimpleDto> sessions;
   final VoidCallback onPressed;
   final int sessionCount;
-    final TobaccoInformationDto info;
-
+  final TobaccoInformationDto info;
+  
   const SessionList(
       {Key key, this.sessions, this.onPressed, this.sessionCount = 5, this.info})
       : super(key: key);

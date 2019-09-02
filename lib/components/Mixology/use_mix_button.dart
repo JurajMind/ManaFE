@@ -19,14 +19,15 @@ class UseMixButton extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot?.data?.tobaccoMix?.id == mix.id) {
             return MButton(
-              icon: Icons.check,
-              iconColor: Colors.grey,
-              label: "mix.used_mix",
+              icon: Icons.delete,
+              iconColor: Colors.red,
+              label: "mix.remove_mix",
+              onPressed: () => bloc.setTobacco(null),
             );
           }
 
           if (snapshot?.data?.id == null) {
-            return Container();
+            Container();
           }
 
           return MButton(

@@ -763,6 +763,18 @@ class ApiClient {
     })
         .then((data) => TobaccoMixSimpleDto.listFromJson(data.data));
   }
+
+    Future<List<SmokeSessionSimpleDto>> getGearSession(
+    int id, {int pageSize = 10, page = 0}
+  ) async {
+    var url = Uri.https(baseUrl, '/api/Gear/$id/Sessions',);
+    return await _dio
+        .get(url.toString(), queryParameters: {
+      "pageSize": pageSize,
+      "page": page
+    })
+        .then((data) => SmokeSessionSimpleDto.listFromJson(data.data));
+  }
 }
 
 class ColorDto {

@@ -52,8 +52,9 @@ class _MenuPageState extends State<MenuPage> {
                           .toUpperCase(),
                       0),
                   Expanded(
-                    child: pipeAccesoryBuilder(menuBloc.tobacco),
-                  )
+                    child:
+                        new StreamAccessoryList(accesorries: menuBloc.tobacco),
+                  ),
                 ],
               ),
               Column(
@@ -65,7 +66,8 @@ class _MenuPageState extends State<MenuPage> {
                           .toUpperCase(),
                       1),
                   Expanded(
-                    child: pipeAccesoryBuilder(menuBloc.hookahs),
+                    child:
+                        new StreamAccessoryList(accesorries: menuBloc.hookahs),
                   )
                 ],
               ),
@@ -78,7 +80,7 @@ class _MenuPageState extends State<MenuPage> {
                           .toUpperCase(),
                       2),
                   Expanded(
-                    child: pipeAccesoryBuilder(menuBloc.bowls),
+                    child: new StreamAccessoryList(accesorries: menuBloc.bowls),
                   )
                 ],
               ),
@@ -125,28 +127,7 @@ class _MenuPageState extends State<MenuPage> {
     );
   }
 
-  StreamBuilder<List<PipeAccesorySimpleDto>> pipeAccesoryBuilder(
-      BehaviorSubject<List<PipeAccesorySimpleDto>> accesorries) {
-    return StreamBuilder(
-        stream: accesorries,
-        initialData: null,
-        builder: (context, snapshot) {
-          return snapshot == null
-              ? ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return new PipeAccesoryListItemShimmer();
-                  },
-                )
-              : ListView.builder(
-                  itemBuilder: (context, index) =>
-                      _createPlaceItem(index, snapshot.data[index]),
-                  itemCount: snapshot.data == null ? 0 : snapshot.data.length,
-                );
-        });
-  }
-
-  StreamBuilder<List<SmartHookahModelsOrderExtraDto>> extraBuilder(
+  Widget extraBuilder(
       BehaviorSubject<List<SmartHookahModelsOrderExtraDto>> accesorries) {
     return StreamBuilder(
         stream: accesorries,
@@ -167,10 +148,40 @@ class _MenuPageState extends State<MenuPage> {
           );
         });
   }
+}
 
-  Widget _createPlaceItem(int index, PipeAccesorySimpleDto data) {
-    return new PipeAccesoryListItem(
-      pipeAccesory: data,
-    );
+class StreamAccessoryList extends StatelessWidget {
+  const StreamAccessoryList({
+    Key key,
+    @required this.accesorries,
+  }) : super(key: key);
+
+  final BehaviorSubject<List<PipeAccesorySimpleDto>> accesorries;
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+        stream: accesorries,
+        initialData: null,
+        builder: (context, snapshot) {
+          return snapshot == null
+              ? ListView.builder(
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return new PipeAccesoryListItemShimmer();
+                  },
+                )
+              : ListView.builder(
+                  itemBuilder: (context, index) {
+                    if (index >= snapshot.data.length) {
+                      return SizedBox(height: 100);
+                    }
+                    return PipeAccesoryListItem(
+                        pipeAccesory: snapshot.data[index]);
+                  },
+                  itemCount:
+                      snapshot.data == null ? 0 : snapshot.data.length + 1,
+                );
+        });
   }
 }
