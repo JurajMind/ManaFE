@@ -76,9 +76,9 @@
         "my_mixes": "Moje mixy",
         "featured_creators": "Přední tvůrci",
         "used_mix": "Použítý mix",
-        "favorite_mixes": "",
-        "remove_favorite": "",
-        "add_favorite": ""
+        "favorite_mixes": "Oblíbené mixy",
+        "remove_favorite": "Odebrat oblíbený",
+        "add_favorite": "Přidat oblíbený"
     },
     "reservations": {
         "upcoming_reservations": "Budoucí rezervace",
