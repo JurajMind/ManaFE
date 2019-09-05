@@ -87,6 +87,14 @@ class PersonBloc extends SignalBloc {
     this.myGear.add(oldGear.toSet().toList());
   }
 
+  Future removeMyGear(PipeAccesorySimpleDto accesory, int count) async {
+    PipeAccesorySimpleDto addedAccesory =
+        await App.http.addMyGear(accesory.id, count * -1);
+    var oldGear = this.myGear.value;
+    oldGear.removeWhere((a) => a.id == addedAccesory.id);
+    this.myGear.add(oldGear.toSet().toList());
+  }
+
   loadInitData({bool reload = false}) async {
     if (_loadedInit && !reload) return;
     _loadedInit = true;

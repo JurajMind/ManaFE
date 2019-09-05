@@ -42,7 +42,7 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                Container(width: 10),
+                  Container(width: 10),
                   Expanded(
                     flex: 2,
                     child: Padding(
@@ -73,11 +73,11 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                             color: Colors.white,
                             borderColor: Colors.white,
                           )),
-                  if (widget.tobaccoMix.likeCount > 0)
+                  if ((widget.tobaccoMix.likeCount ?? 0) > 0)
                     Icon(FontAwesomeIcons.thumbsUp),
-                  if (widget.tobaccoMix.likeCount < 0)
+                  if ((widget.tobaccoMix.likeCount ?? 0) < 0)
                     Icon(FontAwesomeIcons.thumbsDown),
-                  if (widget.tobaccoMix.likeCount == 0) Container()
+                  if ((widget.tobaccoMix.likeCount ?? 0) == 0) Container()
                 ],
               ),
               Card(
@@ -86,14 +86,15 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                 ),
                 color: Colors.white,
                 child: Container(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [..._createTobaccoRow(widget.tobaccoMix),
-                          ]),
-                      ),
-                    ),        
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          ..._createTobaccoRow(widget.tobaccoMix),
+                        ]),
+                  ),
+                ),
                 elevation: 8.0,
                 margin: EdgeInsets.zero,
               )
@@ -107,14 +108,13 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
   List<Widget> _createTobaccoRow(TobaccoMixSimpleDto mix) {
     return mix.tobaccos.map((item) {
       return Flexible(
-              child: Padding(
+        child: Padding(
           padding: const EdgeInsets.only(left: 4.0, right: 4.0),
           child: new Column(
             children: <Widget>[
               AutoSizeText(
-                
                 item.tobacco?.name ?? 'd',
-                  overflow: TextOverflow.ellipsis,
+                overflow: TextOverflow.ellipsis,
                 style: new TextStyle(
                     fontWeight: FontWeight.bold,
                     color: widget.highlightId == item.tobacco.id
@@ -123,7 +123,7 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
               ),
               AutoSizeText(
                 item.tobacco?.brand ?? 'b',
-                  overflow: TextOverflow.ellipsis,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(color: Colors.black),
               ),
               Text(item.fraction.toString() + 'g',

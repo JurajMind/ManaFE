@@ -43,7 +43,9 @@
         "add_new_tobacco": "Přidat nový tabák",
         "my_gear": "Moje vybavení",
         "by_brand": "Podle značky",
-        "find_mix": "Najít mix"
+        "find_mix": "Najít mix",
+        "add_to_my_gear": "Přidat k mému vybavení",
+        "remove_from_my_gear": "Odebrat z mého vybavení"
     },
     "home": {
         "start": "START",

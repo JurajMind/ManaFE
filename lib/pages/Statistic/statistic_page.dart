@@ -30,6 +30,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 import 'package:shimmer/shimmer.dart';
 
+import 'Components/gear_usage_stat.dart';
 import 'Components/session_time_graph.dart';
 import 'Components/week_day_graph.dart';
 
@@ -321,7 +322,18 @@ class _StatisticPageState extends State<StatisticPage> {
             )),
           ),
           new SliverList(
-            delegate: SliverChildListDelegate(buildBody(bloc)),
+            delegate: SliverChildListDelegate([
+              buildStatRecap(bloc),
+              new HealthWidget(bloc: bloc),
+              new GearUsageStat(controller: controller),
+              new TimeStatisticStream(bloc: bloc),
+              new DayStatisticStream(bloc: bloc),
+              SizedBox(height: 10),
+              new SmokeSessionStat(bloc: bloc),
+              SizedBox(
+                height: 70,
+              )
+            ]),
           )
         ],
       ),
@@ -337,84 +349,6 @@ class _StatisticPageState extends State<StatisticPage> {
         this.loading = false;
       });
     });
-  }
-
-  List<Widget> buildBody(StatisticBloc bloc) {
-    var result = new List<Widget>();
-    result.add(buildStatRecap(bloc));
-    result.add(buildHealth(bloc));
-    result.add(buildGearUsage(bloc));
-    result.add(buildTimeStatistic(bloc));
-    result.add(buildDayStatistic(bloc));
-    result.add(SizedBox(height: 10));
-    result.add(buildSmokeSession(bloc));
-    result.add(SizedBox(
-      height: 70,
-    ));
-    return result;
-  }
-
-  Widget buildSmokeSession(StatisticBloc bloc) {
-    return StreamBuilder<List<SmokeSessionSimpleDto>>(
-        stream: bloc.smokeSessions,
-        initialData: null,
-        builder: (BuildContext context,
-            AsyncSnapshot<List<SmokeSessionSimpleDto>> snapshot) {
-          return SessionList(
-            sessions: snapshot.data,
-            sessionCount: 5,
-            onPressed: () async {
-              Navigator.of(context).push(new MaterialPageRoute(
-                  builder: (context) => AllStatisticPage(seed: snapshot.data)));
-            },
-          );
-        });
-  }
-
-  Widget buildGearUsage(StatisticBloc bloc) {
-    return Container(
-      child: StreamBuilder<List<PipeAccessoryUsageDto>>(
-          stream: bloc.gearUsage,
-          initialData: null,
-          builder: (context, snapshot) {
-            if (snapshot.data == null) return Container();
-
-            return Container(
-              height: 400,
-              width: 200,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: PageView(
-                  controller: controller,
-                  children: <Widget>[
-                    GearUsageItem(
-                      label: "Tobacco",
-                      gears: getUsageByType(snapshot.data, "Tobacco"),
-                    ),
-                    GearUsageItem(
-                        label: "Hookah",
-                        gears: getUsageByType(snapshot.data, "Hookah")),
-                    GearUsageItem(
-                        label: "Bowl",
-                        gears: getUsageByType(snapshot.data, "Bowl")),
-                  ],
-                ),
-              ),
-            );
-          }),
-    );
-  }
-
-  List<PipeAccessoryUsageDto> getUsageByType(
-      List<PipeAccessoryUsageDto> usage, String type) {
-    if (usage == null) {
-      return null;
-    }
-
-    return Collection(usage)
-        .where((f) => f.type == type)
-        .orderByDescending((o) => o.used)
-        .toList();
   }
 
   Widget buildStatRecap(StatisticBloc bloc) {
@@ -460,7 +394,118 @@ class _StatisticPageState extends State<StatisticPage> {
     );
   }
 
-  Widget buildHealth(StatisticBloc bloc) {
+  String getShortTime(Duration duration) {
+    if (duration == null) {
+      return null;
+    }
+
+    if (duration.inHours > 0) {
+      return "${duration.inHours}hrs ${duration.inHours ~/ 24}m";
+    }
+
+    return duration.toString();
+  }
+
+  Positioned buildPositioned(
+      StatisticBloc bloc, int color, double funct(StatisticItem s)) {
+    return Positioned(
+      top: 40,
+      child: StreamBuilder<List<StatisticItem>>(
+          stream: bloc.topGraphData,
+          builder: (context, snapshot) {
+            return Container(
+              height: 200,
+              width: MediaQuery.of(context).size.width,
+              child: snapshot.data == null || snapshot.data.length == 0
+                  ? Container()
+                  : Sparkline(
+                      cubicSmoothingFactor: 0.3,
+                      useCubicSmoothing: true,
+                      sharpCorners: false,
+                      data: snapshot.data.map((f) => funct(f)).toList(),
+                      lineColor: AppColors.colors[color],
+                      fillMode: FillMode.below,
+                      fillColor: AppColors.colors[color].withAlpha(60),
+                      pointsMode: PointsMode.none,
+                      pointSize: 5.0,
+                      pointColor: Colors.amber,
+                      lineWidth: 3,
+                    ),
+            );
+          }),
+    );
+  }
+
+  static List<charts.Series<ChartData, String>> _createSampleData(
+      Map<String, int> imput, Function funct) {
+    var convertedData = new List<ChartData>();
+    imput.forEach((f, i) {
+      convertedData.add(funct(f, i));
+    });
+
+    var ordered = new Collection(convertedData)
+        .orderBy((keySelector) => keySelector.order);
+
+    return [
+      new charts.Series<ChartData, String>(
+          id: 'Sales',
+          colorFn: (data, __) {
+            if (data.sales > 4) {
+              return charts.MaterialPalette.red.shadeDefault;
+            }
+            return charts.MaterialPalette.green.shadeDefault;
+          },
+          domainFn: (ChartData sales, _) => sales.label,
+          measureFn: (ChartData sales, _) => sales.sales,
+          data: ordered.toList())
+    ];
+  }
+}
+
+class DayStatisticStream extends StatelessWidget {
+  const DayStatisticStream({
+    Key key,
+    @required this.bloc,
+  }) : super(key: key);
+
+  final StatisticBloc bloc;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: StreamBuilder<PersonStatisticsOverallDto>(
+          stream: bloc.statistic,
+          builder: (context, snapshot) {
+            if (snapshot.data == null) {
+              return Container();
+            }
+            var seriesList = snapshot.data.timeStatistics.dayOfWeekDistribution;
+            return Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Container(
+                  height: 250,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: WeekDayGraph(
+                      graphData: seriesList,
+                    ),
+                  ),
+                ));
+          }),
+    );
+  }
+}
+
+class HealthWidget extends StatelessWidget {
+  const HealthWidget({
+    Key key,
+    @required this.bloc,
+  }) : super(key: key);
+
+  final StatisticBloc bloc;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
           border: Border.all(color: Colors.white),
@@ -504,74 +549,18 @@ class _StatisticPageState extends State<StatisticPage> {
           }),
     );
   }
+}
 
-  String getShortTime(Duration duration) {
-    if (duration == null) {
-      return null;
-    }
+class TimeStatisticStream extends StatelessWidget {
+  const TimeStatisticStream({
+    Key key,
+    @required this.bloc,
+  }) : super(key: key);
 
-    if (duration.inHours > 0) {
-      return "${duration.inHours}hrs ${duration.inHours ~/ 24}m";
-    }
+  final StatisticBloc bloc;
 
-    return duration.toString();
-  }
-
-  Positioned buildPositioned(
-      StatisticBloc bloc, int color, double funct(StatisticItem s)) {
-    return Positioned(
-      top: 40,
-      child: StreamBuilder<List<StatisticItem>>(
-          stream: bloc.topGraphData,
-          builder: (context, snapshot) {
-            return Container(
-              height: 200,
-              width: MediaQuery.of(context).size.width,
-              child: snapshot.data == null || snapshot.data.length == 0
-                  ? Container()
-                  : Sparkline(
-                      cubicSmoothingFactor: 0.3,
-                      useCubicSmoothing: true,
-                      sharpCorners: false,
-                      data: snapshot.data.map((f) => funct(f)).toList(),
-                      lineColor: AppColors.colors[color],
-                      fillMode: FillMode.below,
-                      fillColor: AppColors.colors[color].withAlpha(60),
-                      pointsMode: PointsMode.none,
-                      pointSize: 5.0,
-                      pointColor: Colors.amber,
-                      lineWidth: 3,
-                    ),
-            );
-          }),
-    );
-  }
-
-  Widget buildDayStatistic(StatisticBloc bloc) {
-    return Container(
-      child: StreamBuilder<PersonStatisticsOverallDto>(
-          stream: bloc.statistic,
-          builder: (context, snapshot) {
-            if (snapshot.data == null) {
-              return Container();
-            }
-            var seriesList = snapshot.data.timeStatistics.dayOfWeekDistribution;
-            return Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Container(
-                  height: 250,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: WeekDayGraph(
-                      graphData: seriesList,
-                    ),
-                  ),
-                ));
-          }),
-    );
-  }
-
-  Widget buildTimeStatistic(StatisticBloc bloc) {
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Container(
@@ -593,30 +582,32 @@ class _StatisticPageState extends State<StatisticPage> {
       ),
     );
   }
+}
 
-  static List<charts.Series<ChartData, String>> _createSampleData(
-      Map<String, int> imput, Function funct) {
-    var convertedData = new List<ChartData>();
-    imput.forEach((f, i) {
-      convertedData.add(funct(f, i));
-    });
+class SmokeSessionStat extends StatelessWidget {
+  const SmokeSessionStat({
+    Key key,
+    @required this.bloc,
+  }) : super(key: key);
 
-    var ordered = new Collection(convertedData)
-        .orderBy((keySelector) => keySelector.order);
+  final StatisticBloc bloc;
 
-    return [
-      new charts.Series<ChartData, String>(
-          id: 'Sales',
-          colorFn: (data, __) {
-            if (data.sales > 4) {
-              return charts.MaterialPalette.red.shadeDefault;
-            }
-            return charts.MaterialPalette.green.shadeDefault;
-          },
-          domainFn: (ChartData sales, _) => sales.label,
-          measureFn: (ChartData sales, _) => sales.sales,
-          data: ordered.toList())
-    ];
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<List<SmokeSessionSimpleDto>>(
+        stream: bloc.smokeSessions,
+        initialData: null,
+        builder: (BuildContext context,
+            AsyncSnapshot<List<SmokeSessionSimpleDto>> snapshot) {
+          return SessionList(
+            sessions: snapshot.data,
+            sessionCount: 5,
+            onPressed: () async {
+              Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (context) => AllStatisticPage(seed: snapshot.data)));
+            },
+          );
+        });
   }
 }
 

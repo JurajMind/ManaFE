@@ -93,6 +93,7 @@ class MixDetailPageState extends State<MixDetailPage> {
   List<charts.Series<TobaccoSimpleDto, int>> _createSampleData() {
     return [
       new charts.Series<TobaccoSimpleDto, int>(
+        strokeWidthPxFn: (d, _) => 100,
         id: 'Tobacco mix',
         colorFn: (t, i) {
           var color = AppColors.colors[i];
@@ -206,8 +207,15 @@ class MixDetailPageState extends State<MixDetailPage> {
                 animate: false,
                 defaultRenderer: new charts.ArcRendererConfig(
                   arcWidth: 60,
-                  startAngle: 20
-
+                  startAngle: 20,
+                  strokeWidthPx: 2.0,
+                  arcRendererDecorators: [
+                    new charts.ArcLabelDecorator(
+                        labelPosition: charts.ArcLabelPosition.inside,
+                        insideLabelStyleSpec: new charts.TextStyleSpec(
+                            fontSize: 16,
+                            color: charts.Color.fromHex(code: "#FFFFFF")))
+                  ],
                 ),
               )))),
             ),
@@ -224,11 +232,9 @@ class MixDetailPageState extends State<MixDetailPage> {
                             height: 40,
                             width: 30,
                             decoration: BoxDecoration(
-                              shape:  BoxShape.circle,
-                               color: AppColors.colors[index]
-                            ),
-                           
-                            ),
+                                shape: BoxShape.circle,
+                                color: AppColors.colors[index]),
+                          ),
                           onTap: () => Navigator.of(context).push(
                               new MaterialPageRoute(
                                   builder: (BuildContext context) {
@@ -238,10 +244,7 @@ class MixDetailPageState extends State<MixDetailPage> {
                           title: Text(f.tobacco.name,
                               style: Theme.of(context).textTheme.display2),
                           trailing: Text(f.fraction.toString() + ' g',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .display2
-                                ),
+                              style: Theme.of(context).textTheme.display2),
                           subtitle: Text(f.tobacco.brand,
                               style: Theme.of(context).textTheme.display3),
                         ));

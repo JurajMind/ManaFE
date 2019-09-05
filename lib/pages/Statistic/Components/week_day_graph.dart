@@ -4,6 +4,7 @@ import 'package:app/const/theme.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 class WeekDayGraph extends StatefulWidget {
   final Map<String, int> graphData;
@@ -17,7 +18,8 @@ class WeekDayGraph extends StatefulWidget {
 class WeekDayGraphState extends State<WeekDayGraph> {
   final Color barBackgroundColor = Colors.red;
   final Color barColor = Colors.white;
-  final double width = 22;
+  final double width = 10;
+  double max = 0;
   Map<String, int> graphData;
 
   List<BarChartGroupData> rawBarGroups;
@@ -31,7 +33,7 @@ class WeekDayGraphState extends State<WeekDayGraph> {
   void initState() {
     super.initState();
     graphData = widget.graphData;
-    var items = makeData(graphData);
+    var items = mapData(graphData);
     rawBarGroups = items;
 
     showingBarGroups = rawBarGroups;
@@ -75,41 +77,37 @@ class WeekDayGraphState extends State<WeekDayGraph> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    var items = makeData(graphData);
-
-    setState(() {
-      rawBarGroups = items;
-
-      showingBarGroups = rawBarGroups;
-    });
-  }
-
-  @override
   void didUpdateWidget(WeekDayGraph oldWidget) {
-    if (oldWidget.graphData != graphData) {
-      var items = makeData(widget.graphData);
-      graphData = widget.graphData;
+    if (oldWidget.graphData != widget.graphData) {
+      var items = mapData(widget.graphData);
       setState(() {
         rawBarGroups = items;
-
         showingBarGroups = rawBarGroups;
       });
       super.didUpdateWidget(oldWidget);
     }
   }
 
-  List<BarChartGroupData> makeData(Map<String, int> graphData) {
+  @override
+  void didChangeDependencies() {
+    List<BarChartGroupData> items = mapData(widget.graphData);
 
-    final items = 
-      graphData.map((d,v){
-        var day = int.parse(d);
-        var value = v + 0.0;
-        var data = makeGroupData(day, value);
-        return MapEntry(d,data);
-      }).values;
-    ;
+    setState(() {
+      rawBarGroups = items;
+      showingBarGroups = rawBarGroups;
+    });
+    super.didChangeDependencies();
+  }
+
+  List<BarChartGroupData> mapData(Map<String, int> graphData) {
+    max = 0;
+    final items = graphData.map((d, v) {
+      var day = int.parse(d);
+      var value = v + 0.0;
+      max = math.max(max, value);
+      var data = makeGroupData(day, value);
+      return MapEntry(d, data);
+    }).values;
 
     return items.toList();
   }
@@ -199,15 +197,27 @@ class WeekDayGraphState extends State<WeekDayGraph> {
                           margin: 32,
                           reservedSize: 14,
                           getTitles: (value) {
-                            if (value == 0) {
-                              return '1K';
-                            } else if (value == 10) {
-                              return '5K';
-                            } else if (value == 19) {
-                              return '10K';
-                            } else {
-                              return '';
+                            if (max < 50) {
+                              if (value % 10 == 0)
+                                return value.toStringAsFixed(0);
                             }
+
+                            if (max < 100) {
+                              if (value % 20 == 0)
+                                return value.toStringAsFixed(0);
+                            }
+
+                            if (max < 200) {
+                              if (value % 40 == 0)
+                                return value.toStringAsFixed(0);
+                            }
+
+                            if (max < 1000) {
+                              if (value % 100 == 0)
+                                return value.toStringAsFixed(0);
+                            }
+
+                            return '';
                           },
                         ),
                       ),
@@ -236,8 +246,8 @@ class WeekDayGraphState extends State<WeekDayGraph> {
         color: AppColors.colors[1],
         width: width,
         isRound: true,
-        backDrawRodData:
-            BackgroundBarChartRodData(show: true, y: 20, color: Colors.black),
+        backDrawRodData: BackgroundBarChartRodData(
+            show: true, y: max == 0 ? 20 : max + 0.0, color: Colors.black),
       ),
     ]);
   }

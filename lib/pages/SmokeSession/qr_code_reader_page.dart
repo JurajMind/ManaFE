@@ -15,9 +15,11 @@ class _QrCodeReaderPageState extends State<QrCodeReaderPage>
   @override
   void initState() {
     super.initState();
-     availableCameras().then((onValue) {cameras = onValue;
-       onNewCameraSelected(cameras[0]);});
-       
+    availableCameras().then((onValue) {
+      cameras = onValue;
+      onNewCameraSelected(cameras[0]);
+    });
+
     animationController = new AnimationController(
       vsync: this,
       duration: new Duration(seconds: 3),
@@ -38,7 +40,6 @@ class _QrCodeReaderPageState extends State<QrCodeReaderPage>
       });
 
     // pick the first available camera
-  
   }
 
   Animation<double> verticalPosition;
@@ -83,39 +84,34 @@ class _QrCodeReaderPageState extends State<QrCodeReaderPage>
     }
   }
 
-    void onNewCameraSelected(CameraDescription cameraDescription) async {
+  void onNewCameraSelected(CameraDescription cameraDescription) async {
     if (controller != null) {
       await controller.dispose();
     }
-    controller = new QRReaderController(cameraDescription, ResolutionPreset.low,
-        [CodeFormat.qr, CodeFormat.pdf417], onCodeRead);
+    controller = new QRReaderController(cameraDescription,
+        ResolutionPreset.high, [CodeFormat.qr, CodeFormat.pdf417], onCodeRead);
 
     // If the controller is updated then update the UI.
     controller.addListener(() {
       if (mounted) setState(() {});
-      if (controller.value.hasError) {
-   
-      }
+      if (controller.value.hasError) {}
     });
 
     try {
       await controller.initialize();
-    } on QRReaderException catch (e) {   
-    }
+    } on QRReaderException catch (e) {}
 
     if (mounted) {
       setState(() {});
       controller.startScanning();
     }
   }
-  
-    void onCodeRead(dynamic value) {  
-      print(value);
-      Navigator.of(_scaffoldKey.currentContext).pop(value);
+
+  void onCodeRead(dynamic value) {
+    print(value);
+    Navigator.of(_scaffoldKey.currentContext).pop(value);
     // ... do something
     // wait 5 seconds then start scanning again.
     new Future.delayed(const Duration(seconds: 5), controller.startScanning);
   }
-
- 
 }

@@ -42,15 +42,19 @@ class PipeAccesoryWidget extends StatelessWidget {
           ),
           Expanded(
             child: InkWell(
-                                    onTap: () {
-                          Navigator.of(context)
-          .push(new MaterialPageRoute(builder: (BuildContext context) {
-      return PipeAccesoryPage(pipeAccesory: accesory);
-                      }));},
-                          child: this.accesory?.id != null
-                  ? Text("${accesory.brand} ${accesory.name}",style: Theme.of(context).textTheme.display3)
+              onTap: () {
+                if (accesory == null) return;
+                Navigator.of(context).push(
+                    new MaterialPageRoute(builder: (BuildContext context) {
+                  return PipeAccesoryPage(pipeAccesory: accesory);
+                }));
+              },
+              child: this.accesory?.id != null
+                  ? Text("${accesory.brand} ${accesory.name}",
+                      style: Theme.of(context).textTheme.display3)
                   : Text(
-                      AppTranslations.of(context).text('smoke_session.no_data'),style: Theme.of(context).textTheme.display3),
+                      AppTranslations.of(context).text('smoke_session.no_data'),
+                      style: Theme.of(context).textTheme.display3),
             ),
             flex: 2,
           ),

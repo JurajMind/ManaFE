@@ -31,7 +31,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
   @override
   void didUpdateWidget(SessionDayGraph oldWidget) {
     if (oldWidget.graphData != widget.graphData) {
-      List<BarChartGroupData> items = mapData(widget.graphData);
+      var items = mapData(widget.graphData);
       setState(() {
         rawBarGroups = items;
         showingBarGroups = rawBarGroups;
@@ -52,7 +52,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
   }
 
   List<BarChartGroupData> mapData(Map<String, int> data) {
-    if(data == null){
+    if (data == null) {
       var a = List.generate(24, (index) => index).asMap();
     }
     max = 0;
@@ -248,7 +248,6 @@ class SessionDayGraphState extends State<SessionDayGraph> {
   }
 
   BarChartGroupData makeGroupData(int x, double y) {
-   
     return BarChartGroupData(x: x, barRods: [
       BarChartRodData(
         y: y,
@@ -256,7 +255,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
         width: width,
         isRound: true,
         backDrawRodData: BackgroundBarChartRodData(
-            show: true, y: max + 0.0, color: Colors.black),
+            show: true, y: max == 0 ? 20 : max + 0.0, color: Colors.black),
       ),
     ]);
   }

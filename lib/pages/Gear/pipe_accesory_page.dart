@@ -1,4 +1,5 @@
 import 'package:app/app/app.dart';
+import 'package:app/components/Buttons/add_remove_gear_button.dart';
 import 'package:app/components/Buttons/use_gear_button.dart';
 import 'package:app/components/SmokeSession/session_list.dart';
 import 'package:flutter/material.dart';
@@ -62,13 +63,19 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
         ),
         SliverList(
           delegate: new SliverChildListDelegate(<Widget>[
-          
+            SizedBox(
+              height: 8,
+            ),
+            AddRemoveGearButton(
+              gear: pipeAccesory,
+            ),
             SizedBox(
               height: 8,
             ),
             UseGearButton(
               gear: pipeAccesory,
-            ),  SizedBox(
+            ),
+            SizedBox(
               height: 8,
             ),
             StreamBuilder<List<SmokeSessionSimpleDto>>(
@@ -76,8 +83,10 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
                 builder: (context, snapshot) {
                   return SessionList(
                     sessions: snapshot.data,
-                    sessionCount: 5,                  );
-                }),  SizedBox(
+                    sessionCount: 5,
+                  );
+                }),
+            SizedBox(
               height: 100,
             ),
           ]),

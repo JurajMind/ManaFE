@@ -17,7 +17,10 @@ class BigSelect extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text(AppTranslations.of(context).text(labels[curentView])),
+          Text(
+            AppTranslations.of(context).text(labels[curentView]),
+            style: Theme.of(context).textTheme.display2,
+          ),
           Icon(Icons.arrow_drop_down)
         ],
       ),
@@ -38,10 +41,9 @@ class BigSelect extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      ...labels.map((f,_){
-                        return MapEntry(f,mixTypeSelector(context, f));
+                      ...labels.map((f, _) {
+                        return MapEntry(f, mixTypeSelector(context, f));
                       }).values
-                      
                     ],
                   ),
                 ),
@@ -58,8 +60,9 @@ class BigSelect extends StatelessWidget {
         Navigator.of(context).pop();
       },
       child: Padding(
-        padding: const EdgeInsets.only(top: 20.0),
-        child: Text(AppTranslations.of(context).text(labels[index]).toUpperCase(),
+        padding: const EdgeInsets.only(top: 25.0),
+        child: Text(
+            AppTranslations.of(context).text(labels[index]).toUpperCase(),
             style: Theme.of(context).textTheme.display1),
       ),
     );
