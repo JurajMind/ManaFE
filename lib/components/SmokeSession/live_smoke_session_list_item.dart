@@ -4,19 +4,13 @@ import 'package:app/pages/Statistic/Detail/smoke_session_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
-import 'live_smoke_session_list_item.dart';
-
-class SmokeSessionListItem extends StatelessWidget {
+class LiveSmokeSessionListItem extends StatelessWidget {
   final SmokeSessionSimpleDto session;
 
-  SmokeSessionListItem({Key key, this.session}) : super(key: key);
+  LiveSmokeSessionListItem({Key key, this.session}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-    if(session.live == true){
-      return LiveSmokeSessionListItem(session: session,);
-    }
     var start =
         new DateTime.fromMillisecondsSinceEpoch(session.statistic.start);
 
@@ -44,24 +38,24 @@ class SmokeSessionListItem extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Expanded(
-                      flex: 4,
+                      flex: 2,
                       child: LabeledValue(
-                        '${DateUtils.toStringDate(start)} ${DateUtils.toStringShortTime(start)}',
-                        icon: Icon(Icons.calendar_today),
+                        'Live',
+                        icon: Icon(Icons.check_circle,color: Colors.green,),
                       ),
                     ),
                     Expanded(
                       flex: 3,
                       child: LabeledValue(
-                        DateUtils.toStringDuration(duration),
-                        icon: Icon(Icons.timelapse),
+                      session.device.name,
+                        icon: Icon(Icons.devices),
                       ),
                     ),
                     Expanded(
                       flex: 2,
                       child: LabeledValue(
-                        session.statistic.pufCount.toString(),
-                        icon: Icon(Icons.cloud),
+                      session.sessionId,
+                        icon: Icon(Icons.code),
                       ),
                     )
                   ],

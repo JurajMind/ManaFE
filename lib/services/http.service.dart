@@ -664,7 +664,7 @@ class ApiClient {
   }
 
   Future<FeatureMixCreatorDto> getFeatureCreatorInfo(int id) async {
-    var url = Uri.https(baseUrl, '/api/FeatureMix/FeatureCreator/${id}');
+    var url = Uri.https(baseUrl, '/api/FeatureMix/FeatureCreator/$id');
     return await _dio
         .get(
           url.toString(),

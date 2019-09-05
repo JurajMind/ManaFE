@@ -332,24 +332,6 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
     return Container();
   }
 
-  void staticModal() {
-    scaffoldKey.currentState
-        .showBottomSheet((context) {
-          return new Container(
-            height: MediaQuery.of(context).size.height,
-            color: Colors.greenAccent,
-            child: new Center(
-              child: new Text("Hi BottomSheet"),
-            ),
-          );
-        })
-        .closed
-        .whenComplete(() {
-          if (mounted) {
-            setState(() {});
-          }
-        });
-  }
 
   void showBottomModal() {
     showModalBottomSheet<void>(

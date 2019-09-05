@@ -2,6 +2,7 @@ import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/pages/Mixology/mix_detail_page.dart';
 import 'package:app/utils/translations/app_translations.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -41,11 +42,7 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  widget.noTitle
-                      ? Container()
-                      : Icon(
-                          Icons.add,
-                        ),
+                Container(width: 10),
                   Expanded(
                     flex: 2,
                     child: Padding(
@@ -88,39 +85,15 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 color: Colors.white,
-                child: Column(
-                  children: <Widget>[
-                    Container(
+                child: Container(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: widget.tobaccoMix.tobaccos.length > 2
-                            ? _longMix(widget.tobaccoMix)
-                            : Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: _createTobaccoRow(widget.tobaccoMix)),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [..._createTobaccoRow(widget.tobaccoMix),
+                          ]),
                       ),
-                    ),
-                    new AnimatedContainer(
-                      curve: Curves.easeInOut,
-                      duration: const Duration(milliseconds: 500),
-                      height: _bodyHeight,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: Divider(
-                                height: 2.0,
-                                color: Colors.black,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                    ),        
                 elevation: 8.0,
                 margin: EdgeInsets.zero,
               )
@@ -131,33 +104,32 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
     );
   }
 
-  SingleChildScrollView _longMix(TobaccoMixSimpleDto mix) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: _createTobaccoRow(mix)),
-    );
-  }
-
   List<Widget> _createTobaccoRow(TobaccoMixSimpleDto mix) {
     return mix.tobaccos.map((item) {
-      return Padding(
-        padding: const EdgeInsets.only(left: 4.0, right: 4.0),
-        child: new Column(
-          children: <Widget>[
-            Text(
-              item.tobacco?.name ?? 'd',
-              style: new TextStyle(
-                  fontWeight: FontWeight.bold, color: widget.highlightId == item.tobacco.id ? AppColors.colors[1] : Colors.black),
-            ),
-            Text(
-              item.tobacco?.brand ?? 'b',
-              style: TextStyle(color: Colors.black),
-            ),
-            Text(item.fraction.toString() + 'g',
-                style: TextStyle(color: Colors.grey)),
-          ],
+      return Flexible(
+              child: Padding(
+          padding: const EdgeInsets.only(left: 4.0, right: 4.0),
+          child: new Column(
+            children: <Widget>[
+              AutoSizeText(
+                
+                item.tobacco?.name ?? 'd',
+                  overflow: TextOverflow.ellipsis,
+                style: new TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: widget.highlightId == item.tobacco.id
+                        ? AppColors.colors[1]
+                        : Colors.black),
+              ),
+              AutoSizeText(
+                item.tobacco?.brand ?? 'b',
+                  overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: Colors.black),
+              ),
+              Text(item.fraction.toString() + 'g',
+                  style: TextStyle(color: Colors.grey)),
+            ],
+          ),
         ),
       );
     }).toList();

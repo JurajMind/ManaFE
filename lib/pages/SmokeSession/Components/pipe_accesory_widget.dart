@@ -1,5 +1,6 @@
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/pages/Gear/pipe_accesory_page.dart';
 import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,10 +41,17 @@ class PipeAccesoryWidget extends StatelessWidget {
             flex: 1,
           ),
           Expanded(
-            child: this.accesory?.id != null
-                ? Text("${accesory.brand} ${accesory.name}")
-                : Text(
-                    AppTranslations.of(context).text('smoke_session.no_data')),
+            child: InkWell(
+                                    onTap: () {
+                          Navigator.of(context)
+          .push(new MaterialPageRoute(builder: (BuildContext context) {
+      return PipeAccesoryPage(pipeAccesory: accesory);
+                      }));},
+                          child: this.accesory?.id != null
+                  ? Text("${accesory.brand} ${accesory.name}",style: Theme.of(context).textTheme.display3)
+                  : Text(
+                      AppTranslations.of(context).text('smoke_session.no_data'),style: Theme.of(context).textTheme.display3),
+            ),
             flex: 2,
           ),
           this.dataProvider == null

@@ -205,7 +205,9 @@ class MixDetailPageState extends State<MixDetailPage> {
                 _createSampleData(),
                 animate: false,
                 defaultRenderer: new charts.ArcRendererConfig(
-                  arcWidth: 200,
+                  arcWidth: 60,
+                  startAngle: 20
+
                 ),
               )))),
             ),
@@ -218,6 +220,15 @@ class MixDetailPageState extends State<MixDetailPage> {
                     return MapEntry(
                         index,
                         ListTile(
+                          leading: Container(
+                            height: 40,
+                            width: 30,
+                            decoration: BoxDecoration(
+                              shape:  BoxShape.circle,
+                               color: AppColors.colors[index]
+                            ),
+                           
+                            ),
                           onTap: () => Navigator.of(context).push(
                               new MaterialPageRoute(
                                   builder: (BuildContext context) {
@@ -230,7 +241,7 @@ class MixDetailPageState extends State<MixDetailPage> {
                               style: Theme.of(context)
                                   .textTheme
                                   .display2
-                                  .apply(color: AppColors.colors[index])),
+                                ),
                           subtitle: Text(f.tobacco.brand,
                               style: Theme.of(context).textTheme.display3),
                         ));

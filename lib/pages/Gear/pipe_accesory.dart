@@ -215,7 +215,7 @@ class SearchRow extends StatelessWidget {
   }
 }
 
-class PipeAccesoryList extends StatelessWidget {
+class PipeAccesoryList extends StatefulWidget {
   final ScrollController scrollController;
   final ScrollPhysics scrollPhysics;
   final String type;
@@ -231,40 +231,54 @@ class PipeAccesoryList extends StatelessWidget {
       this.onViewChanged});
 
   @override
+  _PipeAccesoryListState createState() => _PipeAccesoryListState();
+}
+
+class _PipeAccesoryListState extends State<PipeAccesoryList> {
+
+  ScrollPhysics scrollPhysics; 
+  @override
+  void initState() {
+    // TODO: implement initState
+    scrollPhysics = widget.scrollPhysics;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var data = DataProvider.getData(context).personBloc;
     var gearBloc = DataProvider.getData(context).gearBloc;
-    switch (currentView) {
+    switch (widget.currentView) {
       case 0:
         return MyGear(
-          currentView: currentView,
-          onViewChanged: onViewChanged,
-          scrollController: scrollController,
+          currentView: widget.currentView,
+          onViewChanged: widget.onViewChanged,
+          scrollController: widget.scrollController,
           scrollPhysics: scrollPhysics,
-          type: type,
+          type: widget.type,
         );
         break;
       case 1:
         return buildByBrands(gearBloc);
       default:
         return MyGear(
-          currentView: currentView,
-          onViewChanged: onViewChanged,
-          scrollController: scrollController,
+          currentView: widget.currentView,
+          onViewChanged: widget.onViewChanged,
+          scrollController: widget.scrollController,
           scrollPhysics: scrollPhysics,
-          type: type,
+          type: widget.type,
         );
     }
   }
 
   StreamBuilder<List<BrandGroup>> buildByBrands(GearBloc data) {
     return StreamBuilder<List<BrandGroup>>(
-      stream: data.getBrandsByType(type),
+      stream: data.getBrandsByType(widget.type),
       initialData: null,
       builder: (context, snapshot) {
         if (snapshot.data == null) {
           return ListView.builder(
-              controller: scrollController,
+              controller: widget.scrollController,
               physics: scrollPhysics,
               itemCount: 10,
               itemBuilder: (context, index) {
@@ -274,12 +288,12 @@ class PipeAccesoryList extends StatelessWidget {
 
         if (snapshot.data.length == 0) {
           return Center(
-            child: Text('No $type brand'),
+            child: Text('No ${widget.type} brand'),
           );
         }
 
         return ListView.builder(
-            controller: scrollController,
+            controller: widget.scrollController,
             physics: scrollPhysics,
             itemCount: snapshot.data.length + 1,
             itemBuilder: (context, index) {
@@ -294,8 +308,8 @@ class PipeAccesoryList extends StatelessWidget {
                           onPressed: () => SearchRow.showSearchDialog(
                               context: context,
                               child: new PipeAccesorySearch(
-                                type: type,
-                                searchType: type,
+                                type: widget.type,
+                                searchType: widget.type,
                               ))),
                     ),
                     Expanded(
@@ -303,8 +317,8 @@ class PipeAccesoryList extends StatelessWidget {
                       child: Center(
                         child: BigSelect(
                           labels: SearchRow.labels,
-                          curentView: currentView,
-                          onSelected: onViewChanged,
+                          curentView: widget.currentView,
+                          onSelected: widget.onViewChanged,
                         ),
                       ),
                     ),
@@ -318,7 +332,7 @@ class PipeAccesoryList extends StatelessWidget {
               var data = snapshot.data[index - 1];
               return new BrandListItem(
                 brand: data,
-                brandType: type,
+                brandType: widget.type,
               );
             });
       },

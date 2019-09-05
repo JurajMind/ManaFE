@@ -500,7 +500,7 @@ class _GearScrollHomeState extends State<GearScrollHome> {
     if (notification.depth == 0 && notification is ScrollUpdateNotification) {
       if (_scrollController.position.pixels >= (_kAppBarMaxHeight - 55)) {
         setState(() {
-          innerScrollPhysics = ClampingScrollPhysics();
+          innerScrollPhysics = AlwaysScrollableScrollPhysics();
         });
       }
       final ScrollPhysics physics =
@@ -543,7 +543,7 @@ class _GearScrollHomeState extends State<GearScrollHome> {
         });
       }
     }
-    return false;
+   
   }
 
   bool _handlePageNotification(ScrollNotification notification,
@@ -605,6 +605,7 @@ class _GearScrollHomeState extends State<GearScrollHome> {
     GearBloc gearBloc = dataProvider.gearBloc;
     Map<int, ScrollController> innerScrollControllers =
         new Map<int, ScrollController>();
+        
     innerScrollControllers[0] = ScrollController();
     innerScrollControllers[1] = ScrollController();
     innerScrollControllers[2] = ScrollController();

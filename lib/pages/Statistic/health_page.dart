@@ -43,7 +43,7 @@ class _HealthPageState extends State<HealthPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.black,
-        title: Text('Healt'),
+        title: Text(AppTranslations.of(context).text('health.title')),
         centerTitle: true,
       ),
       body: ListView(

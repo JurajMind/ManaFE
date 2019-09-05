@@ -52,6 +52,9 @@ class SessionDayGraphState extends State<SessionDayGraph> {
   }
 
   List<BarChartGroupData> mapData(Map<String, int> data) {
+    if(data == null){
+      var a = List.generate(24, (index) => index).asMap();
+    }
     max = 0;
     var parsedData = data.map((k, v) => MapEntry(int.parse(k), v));
     for (int i = 0; i < 24; i++) {
@@ -205,7 +208,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                               fontWeight: FontWeight.bold,
                               fontSize: 14),
                           margin: 16,
-                          reservedSize: max + 0.0,
+                          reservedSize: 10.0,
                           getTitles: (value) {
                             if (max < 50) {
                               if (value % 10 == 0)

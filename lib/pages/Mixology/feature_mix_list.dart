@@ -44,14 +44,7 @@ class _FeatureMixListViewState extends State<FeatureMixListView> {
   @override
   Widget build(BuildContext context) {
     var mixologyBloc = DataProvider.getData(context).mixologyBloc;
-    return Scaffold(
-      appBar: AppBar(
-        title: Hero(
-            tag: "mix_brnad_${widget.mixCreator.name}",
-            child: Text(widget.mixCreator.name)),
-        centerTitle: true,
-      ),
-      body: Container(
+    return Container(
         child: StreamBuilder<List<TobaccoMixSimpleDto>>(
             stream:
                 mixologyBloc.getCreatorMixes(widget.mixCreator.id.toString()),
@@ -124,7 +117,7 @@ class _FeatureMixListViewState extends State<FeatureMixListView> {
                 ),
               );
             }),
-      ),
-    );
+      );
+    
   }
 }
