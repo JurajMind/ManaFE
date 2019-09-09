@@ -8,8 +8,8 @@ ThemeData buildDarkTheme() {
     indicatorColor: Colors.white,
     accentColor: AppColors.colors[1],
     canvasColor: const Color(0xFF202124),
-    scaffoldBackgroundColor: Colors.black,
-    backgroundColor: const Color(0xFF202124),
+    scaffoldBackgroundColor: const Color(0xFF000d1a),
+    backgroundColor: const Color(0xFF000d1a),
     errorColor: const Color(0xFFB00020),
     buttonTheme: const ButtonThemeData(
       textTheme: ButtonTextTheme.primary,

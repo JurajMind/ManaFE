@@ -251,12 +251,23 @@ class SmokeSessionBloc {
         selection.pipeId = accesory?.id;
         break;
 
+              case 'pipe':
+        selection.pipe = accesory;
+        selection.pipeId = accesory?.id;
+        break;
+
       case 'bowl':
         selection.bowl = accesory;
         selection.bowlId = accesory?.id;
         break;
 
       case 'heatmanagement':
+        selection.heatManagement = accesory;
+        selection.heatManagementId = accesory?.id;
+        break;
+
+        
+      case 'heatmanagment':
         selection.heatManagement = accesory;
         selection.heatManagementId = accesory?.id;
         break;

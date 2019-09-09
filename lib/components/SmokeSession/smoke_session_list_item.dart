@@ -26,7 +26,9 @@ class SmokeSessionListItem extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: Container(
+      
         decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.1),
             border: Border.all(color: Colors.white),
             borderRadius: BorderRadius.circular(16.0)),
         child: InkWell(

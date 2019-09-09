@@ -241,7 +241,7 @@ class _HomePageState extends State<HomePage> {
             top: false,
             child: Stack(children: <Widget>[
               Material(
-                color: Colors.transparent,
+                color: Theme.of(context).backgroundColor,                                                                                                                                                                                                        
                 child: new IndexedStack(
                   index: _currentIndex,
                   children: <Widget>[

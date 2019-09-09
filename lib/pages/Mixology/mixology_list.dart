@@ -55,38 +55,38 @@ class MixologyListState extends State<MixologyList> {
   Widget build(BuildContext context) {
     final mixologyBloc = DataProvider.getMixology(context);
 
-    return Column(
-      children: <Widget>[
-        SafeArea(
-          child: SizedBox(
-            height: 55,
-            child: AppBar(
-              actions: <Widget>[
-                curentView == 0
-                    ? IconButton(
-                        icon: Icon(Icons.add),
-                        onPressed: () => showTobaccoDialog(
-                            context: context, mixologyBloc: mixologyBloc),
-                      )
-                    : Container()
-              ],
-              title: Center(
-                  child: BigSelect(
-                curentView: curentView,
-                labels: labels,
-                onSelected: (val) {
-                  setState(() {
-                    curentView = val;
-                  });
-                },
-              )),
-              backgroundColor: Colors.transparent,
-              centerTitle: true,
-            ),
-          ),
-        ),
-        Expanded(child: getContent(mixologyBloc)),
-      ],
+    return SafeArea(
+          child: Column(
+        children: <Widget>[
+          SizedBox(
+              height: 55,
+              child: AppBar(
+                actions: <Widget>[
+                  curentView == 0
+                      ? IconButton(
+                          icon: Icon(Icons.add),
+                          onPressed: () => showTobaccoDialog(
+                              context: context, mixologyBloc: mixologyBloc),
+                        )
+                      : Container()
+                ],
+                title: Center(
+                    child: BigSelect(
+                  curentView: curentView,
+                  labels: labels,
+                  onSelected: (val) {
+                    setState(() {
+                      curentView = val;
+                    });
+                  },
+                )),
+                backgroundColor: Colors.transparent,
+                centerTitle: true,
+              ),
+            ),          
+          Expanded(child: getContent(mixologyBloc)),
+        ],
+      ),
     );
   }
 

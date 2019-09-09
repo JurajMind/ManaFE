@@ -47,6 +47,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       key: _scaffoldKey,
       bottomNavigationBar: SizedBox(
         height: 55,
@@ -63,6 +64,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
             new Expanded(
               flex: 4,
               child: Container(
+                
                 height: getCircleRadius(context) * 2,
                 width: getCircleRadius(context) * 2,
                 child: Center(

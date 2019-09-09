@@ -44,9 +44,15 @@ class SessionList extends StatelessWidget {
       Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: new Text(
-            'Smoke sessions',
-            style: Theme.of(context).textTheme.display1,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Text(
+                'Smoke sessions',
+                style: Theme.of(context).textTheme.display1,
+              ),
+              Icon(Icons.list)
+            ],
           ),
         ),
       ),
@@ -55,7 +61,7 @@ class SessionList extends StatelessWidget {
       if (data.length > 0) ...{
         ...data.take(sc).map((s) => SmokeSessionListItem(session: s)),
       },
-      if (data.length > 0 && data.length < sc)
+      if (data.length > 0 && data.length > sc)
         MButton(
             iconColor: Colors.red,
             icon: Icons.clear_all,

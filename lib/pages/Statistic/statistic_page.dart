@@ -2,17 +2,14 @@ import 'dart:async';
 
 import 'package:app/Helpers/date_utils.dart';
 import 'package:app/app/app.widget.dart';
-import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/SmokeSession/session_list.dart';
-import 'package:app/components/SmokeSession/smoke_session_list_item.dart';
 import 'package:app/components/Statistic/recap.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/person/statistic_bloc.dart';
 import 'package:app/pages/Places/test_search.dart';
 import 'package:app/pages/Settings/language_selector_page.dart';
-import 'package:app/pages/Statistic/Components/gear_usage_item.dart';
 import 'package:app/pages/Statistic/UserProfile/user_profile_page.dart';
 import 'package:app/pages/Statistic/all_statistic_page.dart';
 import 'package:app/pages/Statistic/health_page.dart';
@@ -165,6 +162,7 @@ class _StatisticPageState extends State<StatisticPage> {
   Widget build(BuildContext context) {
     var bloc = DataProvider.getData(context).statisticBloc;
     return new Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -218,18 +216,21 @@ class _StatisticPageState extends State<StatisticPage> {
                 ],
               )
             ],
-            backgroundColor: Colors.black,
+           
             pinned: true,
             expandedHeight: 300.0,
             automaticallyImplyLeading: true,
             primary: true,
             flexibleSpace: new FlexibleSpaceBar(
-              background: Stack(
-                children: <Widget>[
-                  buildPositioned(bloc, 1, (f) => f.pufCount.toDouble()),
-                  buildPositioned(bloc, 0, (f) => f.smokeSessions.toDouble()),
-                  buildPositioned(bloc, 2, (f) => f.activity.toDouble()),
-                ],
+              background: Container(
+                color: Theme.of(context).backgroundColor,
+                child: Stack(
+                  children: <Widget>[
+                    buildPositioned(bloc, 1, (f) => f.pufCount.toDouble()),
+                    buildPositioned(bloc, 0, (f) => f.smokeSessions.toDouble()),
+                    buildPositioned(bloc, 2, (f) => f.activity.toDouble()),
+                  ],
+                ),
               ),
             ),
             bottom: PreferredSize(
@@ -414,6 +415,7 @@ class _StatisticPageState extends State<StatisticPage> {
           stream: bloc.topGraphData,
           builder: (context, snapshot) {
             return Container(
+              
               height: 200,
               width: MediaQuery.of(context).size.width,
               child: snapshot.data == null || snapshot.data.length == 0
