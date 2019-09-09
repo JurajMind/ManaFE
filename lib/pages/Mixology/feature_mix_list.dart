@@ -45,79 +45,79 @@ class _FeatureMixListViewState extends State<FeatureMixListView> {
   Widget build(BuildContext context) {
     var mixologyBloc = DataProvider.getData(context).mixologyBloc;
     return Container(
-        child: StreamBuilder<List<TobaccoMixSimpleDto>>(
-            stream:
-                mixologyBloc.getCreatorMixes(widget.mixCreator.id.toString()),
-            initialData: null,
-            builder: (context, snapshot) {
-              if (snapshot.data == null) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-
-              if (snapshot.data.length == 0) {
-                return Center(
-                    child: Text(
-                  'Is empty here, try add new mix                                                                                                                                                                       ',
-                  style: Theme.of(context).textTheme.display1,
-                ));
-              }
-              var itemCount = 10;
-              if (snapshot?.data?.length != null) {
-                itemCount = snapshot.data.length + 2;
-              }
-              return LazyLoadScrollView(
-                onEndOfPage: () {
-                  if (!snapshot.data.contains(null))
-                    mixologyBloc.loadCreatorMixesNextPage(
-                        widget.mixCreator.id.toString(), true);
-                },
-                child: ListView.builder(
-                  itemCount: itemCount ?? 10,
-                  itemBuilder: (context, index) {
-                    if (index == 0) {
-                      return FeatureMixInfo(
-                        creatorInfo: creatorInfo,
-                        simple: widget.mixCreator,
-                      );
-                    }
-
-                    if (index == snapshot.data.length + 1) {
-                      return SizedBox(height: 100);
-                    }
-
-                    if (snapshot.data != null &&
-                        snapshot.data[index - 1] != null) {
-                      return Slidable(
-                        actionPane: SlidableDrawerActionPane(),
-                        child: MixCardExpanded(
-                            tobaccoMix: snapshot.data[index - 1]),
-                        actions: <Widget>[
-                          IconSlideAction(
-                              caption: 'Like',
-                              color: Colors.green,
-                              icon: FontAwesomeIcons.thumbsUp,
-                              onTap: () =>
-                                  {++snapshot.data[index - 1].likeCount}),
-                        ],
-                        secondaryActions: <Widget>[
-                          IconSlideAction(
-                              caption: 'Dis Like',
-                              color: Colors.red,
-                              icon: FontAwesomeIcons.thumbsDown,
-                              onTap: () =>
-                                  {--snapshot.data[index - 1].likeCount}),
-                        ],
-                      );
-                    } else {
-                      return MixCardExpandedShimmer();
-                    }
-                  },
-                ),
+      child: StreamBuilder<List<TobaccoMixSimpleDto>>(
+          stream: mixologyBloc.getCreatorMixes(widget.mixCreator.id.toString()),
+          initialData: null,
+          builder: (context, snapshot) {
+            if (snapshot.data == null) {
+              return Center(
+                child: CircularProgressIndicator(),
               );
-            }),
-      );
-    
+            }
+
+            if (snapshot.data.length == 0) {
+              return Center(
+                  child: Text(
+                'Is empty here, try add new mix                                                                                                                                                                       ',
+                style: Theme.of(context).textTheme.display1,
+              ));
+            }
+            var itemCount = 10;
+            if (snapshot?.data?.length != null) {
+              itemCount = snapshot.data.length + 2;
+            }
+            return LazyLoadScrollView(
+              onEndOfPage: () {
+                if (!snapshot.data.contains(null))
+                  mixologyBloc.loadCreatorMixesNextPage(
+                      widget.mixCreator.id.toString(), true);
+              },
+              child: ListView.builder(
+                itemCount: itemCount ?? 10,
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return FeatureMixInfo(
+                      creatorInfo: creatorInfo,
+                      simple: widget.mixCreator,
+                    );
+                  }
+
+                  if (index == snapshot.data.length + 1) {
+                    return SizedBox(height: 100);
+                  }
+
+                  if (snapshot.data != null &&
+                      snapshot.data[index - 1] != null) {
+                    return Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+                      child:
+                          MixCardExpanded(tobaccoMix: snapshot.data[index - 1]),
+                      actions: <Widget>[
+                        IconSlideAction(
+                            caption: 'Like',
+                            color: Colors.green,
+                            icon: FontAwesomeIcons.thumbsUp,
+                            onTap: () =>
+                                {++snapshot.data[index - 1].likeCount}),
+                      ],
+                      secondaryActions: <Widget>[
+                        IconSlideAction(
+                            caption: 'Dis Like',
+                            color: Colors.red,
+                            icon: FontAwesomeIcons.thumbsDown,
+                            onTap: () =>
+                                {--snapshot.data[index - 1].likeCount}),
+                      ],
+                    );
+                  } else {
+                    return MixCardExpandedShimmer(
+                      move: false,
+                    );
+                  }
+                },
+              ),
+            );
+          }),
+    );
   }
 }

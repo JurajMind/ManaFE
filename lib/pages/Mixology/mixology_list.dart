@@ -56,9 +56,10 @@ class MixologyListState extends State<MixologyList> {
     final mixologyBloc = DataProvider.getMixology(context);
 
     return SafeArea(
-          child: Column(
-        children: <Widget>[
-          SizedBox(
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            SizedBox(
               height: 55,
               child: AppBar(
                 actions: <Widget>[
@@ -83,9 +84,10 @@ class MixologyListState extends State<MixologyList> {
                 backgroundColor: Colors.transparent,
                 centerTitle: true,
               ),
-            ),          
-          Expanded(child: getContent(mixologyBloc)),
-        ],
+            ),
+            Expanded(child: getContent(mixologyBloc)),
+          ],
+        ),
       ),
     );
   }
@@ -163,7 +165,9 @@ class PaggingMixListView extends StatelessWidget {
                     ],
                   );
                 } else {
-                  return MixCardExpandedShimmer();
+                  return MixCardExpandedShimmer(
+                    move: false,
+                  );
                 }
               },
             ),

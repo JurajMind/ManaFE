@@ -90,7 +90,9 @@ class _ReviewPlaceWidgetState extends State<ReviewPlaceWidget> {
                 var item = snapshot.data[index - 1];
                 return PlaceReviewItem(item);
               } else {
-                return MixCardExpandedShimmer();
+                return MixCardExpandedShimmer(
+                  move: false,
+                );
               }
             },
           ),
