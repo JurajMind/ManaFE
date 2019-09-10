@@ -137,6 +137,7 @@ class PaggingMixListView extends StatelessWidget {
                 mixologyBloc.loadCreatorMixesNextPage(mixCreator, false);
             },
             child: ListView.builder(
+              physics: ClampingScrollPhysics(),
               itemCount: itemCount ?? 10,
               itemBuilder: (context, index) {
                 if (index == snapshot.data.length) {

@@ -165,10 +165,19 @@ class PersonBloc extends SignalBloc {
     this.addSmokeSession(smokeSession);
   }
 
-  Future<DeviceSimpleDto> addDevice(String name) async {
-    var addedDevice = await App.http.addDevice(name);
+  Future<DeviceSimpleDto> addDevice(
+      String id, String code, String newName) async {
+    var addedDevice = await App.http.addDevice(id, newName, code);
     var oldDevices = this.devices.value;
     oldDevices.add(addedDevice);
+    this.devices.add(oldDevices);
+    return addedDevice;
+  }
+
+  Future<DeviceSimpleDto> removeDevice(String id) async {
+    var addedDevice = await App.http.removeDevice(id);
+    var oldDevices = this.devices.value;
+    oldDevices.removeWhere((addedDevice) => addedDevice.code == id);
     this.devices.add(oldDevices);
     return addedDevice;
   }

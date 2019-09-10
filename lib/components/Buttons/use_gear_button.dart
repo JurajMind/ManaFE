@@ -12,42 +12,42 @@ class UseGearButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var bloc = DataProvider.getData(context).smokeSessionBloc;
 
-    return StreamBuilder<SmokeSessionMetaDataDto>(
-        stream: bloc.smokeSessionMetaData,
-        builder: (context, snapshot) {
-          if (matchAccessory(snapshot)) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: StreamBuilder<SmokeSessionMetaDataDto>(
+          stream: bloc.smokeSessionMetaData,
+          builder: (context, snapshot) {
+            if (matchAccessory(snapshot)) {
+              return MButton(
+                icon: Icons.delete,
+                iconColor: Colors.red,
+                label: "gear.remove_this_accessorry",
+                onPressed: () async {
+                  bloc.setMetadataAccesory(null, type: gear.type);
+                },
+              );
+            }
+
+            if (snapshot?.data?.id == null) {
+              return Container();
+            }
+
             return MButton(
-              icon: Icons.delete,
-              iconColor: Colors.red,
-              label: "gear.remove_this_accessorry",
-                onPressed: () async {             
-            
-              bloc.setMetadataAccesory(null,type: gear.type);
-            },
+              icon: Icons.check,
+              iconColor: AppColors.colors[1],
+              label: "gear.use_this_accessory",
+              onPressed: () async {
+                bloc.setMetadataAccesory(gear);
+              },
             );
-          }
-
-          if (snapshot?.data?.id == null) {
-            return Container();
-          }
-
-          return MButton(
-            icon: Icons.check,
-            iconColor: AppColors.colors[3],
-            label: "gear.use_this_accessory",
-            onPressed: () async {             
-            
-              bloc.setMetadataAccesory(gear);
-            },
-          );
-        });
+          }),
+    );
   }
 
-  bool matchAccessory(AsyncSnapshot<SmokeSessionMetaDataDto> snapshot){
-    return  snapshot?.data?.bowlId == gear.id
-          ||snapshot?.data?.pipeId== gear.id
-          ||snapshot?.data?.coalId== gear.id
-          ||snapshot?.data?.heatManagementId== gear.id
-      ;
+  bool matchAccessory(AsyncSnapshot<SmokeSessionMetaDataDto> snapshot) {
+    return snapshot?.data?.bowlId == gear.id ||
+        snapshot?.data?.pipeId == gear.id ||
+        snapshot?.data?.coalId == gear.id ||
+        snapshot?.data?.heatManagementId == gear.id;
   }
 }

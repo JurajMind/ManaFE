@@ -13,6 +13,7 @@ class AddDevicePage extends StatefulWidget {
 
 class _AddDevicePageState extends State<AddDevicePage> {
   final nameController = TextEditingController();
+  final idController = TextEditingController();
   final codeController = TextEditingController();
   var loading = false;
   PageController controller;
@@ -58,85 +59,88 @@ class _AddDevicePageState extends State<AddDevicePage> {
           ),
           Center(
             child: SingleChildScrollView(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    AppTranslations.of(context).text("device.where_is_code"),
-                    style: Theme.of(context).textTheme.title,
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Text(
-                    AppTranslations.of(context)
-                        .text("device.where_is_code_text_1"),
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.display1,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    AppTranslations.of(context)
-                        .text("device.where_is_code_text_1_t"),
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.display2,
-                  ),
-                     SizedBox(
-                    height: 40,
-                  ),
-                  Text(
-                    AppTranslations.of(context)
-                        .text("device.where_is_code_text_2"),
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.display1,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    AppTranslations.of(context)
-                        .text("device.where_is_code_text_2_t"),
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.display2,
-                  ),
-                   SizedBox(
-                    height: 40,
-                  ),
-                  nextButton()
-                ],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      AppTranslations.of(context).text("device.where_is_code"),
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Text(
+                      AppTranslations.of(context)
+                          .text("device.where_is_code_text_1"),
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.display1,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      AppTranslations.of(context)
+                          .text("device.where_is_code_text_1_t"),
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.display2,
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Text(
+                      AppTranslations.of(context)
+                          .text("device.where_is_code_text_2"),
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.display1,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      AppTranslations.of(context)
+                          .text("device.where_is_code_text_2_t"),
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.display2,
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    nextButton()
+                  ],
+                ),
               ),
-                          ),
             ),
           ),
           Center(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: SingleChildScrollView(
-                              child: Column(
+                child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                     AppTranslations.of(context).text("device.enter_device_codes"),
+                      AppTranslations.of(context)
+                          .text("device.enter_device_codes"),
                       style: Theme.of(context).textTheme.title,
                     ),
                     SizedBox(
                       height: 40,
                     ),
-                                      new TextFormField(
+                    new TextFormField(
                       maxLines: 1,
                       controller: nameController,
                       style: TextStyle(fontSize: 20.0),
                       textAlign: TextAlign.center,
                       autocorrect: false,
                       decoration: new InputDecoration(
-                        labelText:   AppTranslations.of(context).text("device.device_name"),
-                        helperText: AppTranslations.of(context).text("device.device_name_helper"),
+                        labelText: AppTranslations.of(context)
+                            .text("device.device_name"),
+                        helperText: AppTranslations.of(context)
+                            .text("device.device_name_helper"),
                         labelStyle: TextStyle(
                           color: Colors.white,
                         ),
@@ -158,12 +162,13 @@ class _AddDevicePageState extends State<AddDevicePage> {
                     ),
                     new TextFormField(
                       maxLines: 1,
-                      controller: nameController,
+                      controller: idController,
                       style: TextStyle(fontSize: 20.0),
                       textAlign: TextAlign.center,
                       autocorrect: false,
                       decoration: new InputDecoration(
-                        labelText:   AppTranslations.of(context).text("device.device_id"),
+                        labelText: AppTranslations.of(context)
+                            .text("device.device_id"),
                         labelStyle: TextStyle(
                           color: Colors.white,
                         ),
@@ -191,7 +196,8 @@ class _AddDevicePageState extends State<AddDevicePage> {
                       textAlign: TextAlign.center,
                       autocorrect: false,
                       decoration: new InputDecoration(
-                        labelText: AppTranslations.of(context).text("device.pair_code"),
+                        labelText: AppTranslations.of(context)
+                            .text("device.pair_code"),
                         labelStyle: TextStyle(
                           color: Colors.white,
                         ),
@@ -211,28 +217,31 @@ class _AddDevicePageState extends State<AddDevicePage> {
                     loading
                         ? CircularProgressIndicator()
                         : new OutlineButton.icon(
-                          shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0)),
-                borderSide: BorderSide(color: Colors.white, width: 1),
-                          icon: Icon(Icons.add),
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30.0)),
+                            borderSide:
+                                BorderSide(color: Colors.white, width: 1),
+                            icon: Icon(Icons.add),
                             label: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(AppTranslations.of(context)
-                                  .text("device.add_device"),style: Theme.of(context).textTheme.display1,),
+                              child: Text(
+                                AppTranslations.of(context)
+                                    .text("device.add_device"),
+                                style: Theme.of(context).textTheme.display1,
+                              ),
                             ),
                             onPressed: () async {
                               setState(() {
                                 loading = true;
                               });
-                              Future.delayed(Duration(seconds: 5))
-                                  .then((_) => Navigator.of(context).pop());
-                              return;
-                              var bloc = DataProvider.getData(context).personBloc;
-                              var addedDevice =
-                                  await bloc.addDevice(this.nameController.text);
+
+                              var bloc =
+                                  DataProvider.getData(context).personBloc;
+                              var addedDevice = await bloc.addDevice(
+                                  this.idController.text,
+                                  this.codeController.text,
+                                  this.nameController.text);
                               if (addedDevice != null) {
-                                Future.delayed(Duration(seconds: 5))
-                                    .then((_) => Navigator.of(context).pop());
                                 Navigator.of(context).pop();
                                 Navigator.of(context).push(MaterialPageRoute(
                                     settings: RouteSettings(),
@@ -240,7 +249,6 @@ class _AddDevicePageState extends State<AddDevicePage> {
                                         DeviceDetailPage(device: addedDevice)));
                               }
                             },
-                           
                           )
                   ],
                 ),

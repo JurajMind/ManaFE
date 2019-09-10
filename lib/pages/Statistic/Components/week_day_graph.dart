@@ -141,7 +141,7 @@ class WeekDayGraphState extends State<WeekDayGraph> {
                     width: 8,
                   ),
                   Text(
-                    "Week days",
+                    AppTranslations.of(context).text('profile.week_days'),
                     style: Theme.of(context).textTheme.display1,
                   ),
                 ],
@@ -162,6 +162,9 @@ class WeekDayGraphState extends State<WeekDayGraph> {
                             tooltipBgColor: Colors.blueGrey,
                             getTooltipItems: (touchedSpots) {
                               return touchedSpots.map((touchedSpot) {
+                                if (touchedSpot.spot == null) {
+                                  return "";
+                                }
                                 String weekDay;
                                 weekDay = AppTranslations.of(context).text(
                                     "days.long_${touchedSpot.spot.x.toInt() + 1}");

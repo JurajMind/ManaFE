@@ -71,7 +71,8 @@ class SessionList extends StatelessWidget {
         MButton(
             iconColor: Colors.red,
             icon: Icons.clear_all,
-            label: 'All sessions',
+            label:
+                AppTranslations.of(context).text('smoke_session.all_session'),
             onPressed: onPressed),
     ]);
   }

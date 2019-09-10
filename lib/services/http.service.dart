@@ -650,8 +650,29 @@ class ApiClient {
     ).then((data) => MediaDto.fromJson(data.data));
   }
 
-  Future<DeviceSimpleDto> addDevice(String name) async {
-    var url = Uri.https(baseUrl, '/api/Device/$name/Add');
+  Future<DeviceSimpleDto> addDevice(String id, String name, String code) async {
+    Map<String, String> params = new Map<String, String>();
+    params['code'] = code;
+    params['newName'] = name;
+    var url = Uri.https(baseUrl, '/api/Device/$id/Add', params);
+    return await _dio
+        .postUri(url)
+        .then((data) => DeviceSimpleDto.fromJson(data.data));
+  }
+
+  Future<DeviceSimpleDto> removeDevice(
+    String id,
+  ) async {
+    var url = Uri.https(baseUrl, '/api/Device/$id/Remove');
+    return await _dio
+        .deleteUri(url)
+        .then((data) => DeviceSimpleDto.fromJson(data.data));
+  }
+
+  Future<DeviceSimpleDto> changeDeviceName(String id, String name) async {
+    Map<String, String> params = new Map<String, String>();
+    params['newName'] = name;
+    var url = Uri.https(baseUrl, '/api/Device/$id/ChangeName');
     return await _dio
         .postUri(url)
         .then((data) => DeviceSimpleDto.fromJson(data.data));

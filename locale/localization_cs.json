@@ -46,7 +46,8 @@
         "find_mix": "Najít mix",
         "add_to_my_gear": "Přidat k mému vybavení",
         "remove_from_my_gear": "Odebrat z mého vybavení",
-        "use_this_accessory": "Použít v session"
+        "use_this_accessory": "Použít v session",
+        "remove_this_accessorry": "Odstranit ze session"
     },
     "home": {
         "start": "START",
@@ -77,7 +78,8 @@
         "inhale": "Vdechování",
         "brightness": "Jas",
         "speed": "Rychlost",
-        "animation": "Animace"
+        "animation": "Animace",
+        "all_session": "Všechny session"
     },
     "mix": {
         "use_this_mix": "Použít tento mix",
@@ -143,7 +145,8 @@
         "device_name_helper": "Vlastní název nové podložky, může zůstat prázdný",
         "device_id": "Id podložky",
         "pair_code": "Párovací kód",
-        "add_device": "Přidat novou podložku"
+        "add_device": "Přidat novou podložku",
+        "remove_device": "Odebrat podložku"
     },
     "tabs": {
         "mixology": "Mixy",
@@ -188,6 +191,15 @@
         "last_hookah": "Poslední session",
         "last_hookah_text": "Kdy byla tvoje poslední session s Manapipes?"
     },
+
+    "profile": {
+        "puffs": "Potáhnutí",
+        "smoking": "Tahání",
+        "activity": "Aktivita",
+        "session_times": "Časy session",
+        "week_days": "Dni session"
+    },
+
     "review": {
         "session_title": "Recenze",
         "no_review": "Žádná recenze",

@@ -16,6 +16,7 @@ import 'package:app/pages/Statistic/health_page.dart';
 import 'package:app/pages/Statistic/test_page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/support/mana_icons_icons.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/Charts/sparkline.dart';
@@ -245,6 +246,9 @@ class _StatisticPageState extends State<StatisticPage> {
                         borderSide: BorderSide(color: Colors.white, width: 1),
                         onPressed: () =>
                             _showDialog(context).then((value) async {
+                          if (value == null) {
+                            return;
+                          }
                           if (value == 4) {
                             final List<DateTime> picked =
                                 await DateRagePicker.showDatePicker(
@@ -366,21 +370,21 @@ class _StatisticPageState extends State<StatisticPage> {
               children: <Widget>[
                 Expanded(
                   child: new StatisticRecapWidget(
-                    label: "puffs",
+                    label: AppTranslations.of(context).text("profile.puffs"),
                     ballColor: AppColors.colors[1],
                     value: snapshot?.data?.pufCount?.toString(),
                   ),
                 ),
                 Expanded(
                   child: new StatisticRecapWidget(
-                    label: "smoking",
+                    label: AppTranslations.of(context).text("profile.smoking"),
                     ballColor: AppColors.colors[0],
                     duration: snapshot?.data?.smokingTime,
                   ),
                 ),
                 Expanded(
                   child: new StatisticRecapWidget(
-                    label: "activity",
+                    label: AppTranslations.of(context).text("profile.activity"),
                     ballColor: AppColors.colors[2],
                     duration: snapshot?.data?.activity,
                   ),
@@ -504,7 +508,7 @@ class HealthWidget extends StatelessWidget {
                       flex: 4,
                       child: Column(
                         children: <Widget>[
-                          Text('Some health text',
+                          Text(AppTranslations.of(context).text('health.title'),
                               style: Theme.of(context).textTheme.display2),
                         ],
                       ),

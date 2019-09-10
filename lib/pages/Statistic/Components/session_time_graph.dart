@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app/const/theme.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:queries/collections.dart';
@@ -152,7 +153,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                     width: 8,
                   ),
                   Text(
-                    "Session times",
+                    AppTranslations.of(context).text('profile.session_times'),
                     style: Theme.of(context).textTheme.display1,
                   ),
                 ],
@@ -173,6 +174,9 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                             tooltipBgColor: Colors.blueGrey,
                             getTooltipItems: (touchedSpots) {
                               return touchedSpots.map((touchedSpot) {
+                                if (touchedSpot.spot == null) {
+                                  return "";
+                                }
                                 String weekDay =
                                     touchedSpot.spot.x.toInt().toString();
                                 return TooltipItem(

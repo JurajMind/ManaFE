@@ -46,7 +46,8 @@
         "find_mix": "Find mix",
         "add_to_my_gear": "Add to my gear",
         "remove_from_my_gear": "Remove from my gear",
-        "use_this_accessory": "Use in session"
+        "use_this_accessory": "Use in session",
+        "remove_this_accessorry": "Remove from session"
     },
     "home": {
         "start": "START",
@@ -77,7 +78,8 @@
         "inhale": "Inhale",
         "brightness": "Brightness",
         "speed": "Speed",
-        "animation": "Animation"
+        "animation": "Animation",
+        "all_session": "All session"
     },
     "mix": {
         "use_this_mix": "Use this mix",
@@ -143,7 +145,9 @@
         "device_name_helper": "Device custom name (can be empty)",
         "device_id": "Device ID",
         "pair_code": "Pairing code",
-        "add_device": "Add new device"
+        "add_device": "Add new device",
+        "remove_device": "Remove device",
+        "remove_device_dialog": "Do you realy want to remove this device? All session from this device will be preserved in your profile"
     },
     "tabs": {
         "mixology": "Mixology",
@@ -187,6 +191,13 @@
         "time_text": "The total amount of hours you have spent enjoying a hookah.",
         "last_hookah": "Last hookah session",
         "last_hookah_text": "When was the last time you packed a bowl?"
+    },
+    "profile": {
+        "puffs": "Puffs",
+        "smoking": "Inhaling",
+        "activity": "Activity",
+        "session_times": "Session times",
+        "week_days": "Week days"
     },
     "review": {
         "session_title": "Review",
