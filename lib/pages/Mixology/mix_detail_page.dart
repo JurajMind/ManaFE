@@ -30,6 +30,7 @@ class MixDetailPageState extends State<MixDetailPage> {
   bool editName;
   BehaviorSubject<TobaccoInformationDto> information =
       new BehaviorSubject<TobaccoInformationDto>();
+  TextEditingController nameController;
 
   @override
   initState() {
@@ -45,7 +46,6 @@ class MixDetailPageState extends State<MixDetailPage> {
     super.initState();
   }
 
-  TextEditingController nameController;
   Future<bool> deleteConfirn() async {
     return showDialog<bool>(
       context: context,
