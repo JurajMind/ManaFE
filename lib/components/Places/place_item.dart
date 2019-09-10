@@ -1,3 +1,4 @@
+import 'package:app/components/Media/media.widget.dart';
 import 'package:app/components/Places/open_indicator.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
@@ -32,7 +33,7 @@ class PlaceItem extends StatelessWidget {
             tag: '${place.friendlyUrl}_place',
             child: new Image(
               image: new CachedNetworkImageProvider(
-                  Extensions.getPlaceImage(place)),
+                  Extensions.getPlaceImage(place, MediaSize.Small)),
               fit: BoxFit.cover,
             ),
           )),

@@ -1,4 +1,5 @@
 import 'package:app/Helpers/place_helper.dart';
+import 'package:app/components/Media/media.widget.dart';
 import 'package:app/components/Places/open_indicator.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
@@ -197,7 +198,7 @@ class _CarrousselState extends State<Carroussel> {
                 color: Colors.grey[300],
                 image: DecorationImage(
                     image: CachedNetworkImageProvider(
-                        Extensions.getPlaceImage(place)),
+                        Extensions.getPlaceImage(place, MediaSize.Medium)),
                     fit: BoxFit.cover)),
             child: Padding(
               padding: const EdgeInsets.all(8.0),

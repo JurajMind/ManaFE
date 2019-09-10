@@ -2,6 +2,7 @@ import 'package:app/Helpers/date_utils.dart';
 import 'package:app/Helpers/type_helper.dart';
 import 'package:app/app/app.dart';
 import 'package:app/components/Common/labeled_value.dart';
+import 'package:app/components/Media/media.widget.dart';
 import 'package:app/components/Places/navigate_button.dart';
 import 'package:app/components/Places/place_detail.dart';
 import 'package:app/components/Places/place_map.dart';
@@ -71,7 +72,8 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                   : new Image(
                                       image: new CachedNetworkImageProvider(
                                           Extensions.getFullPlaceImage(
-                                              snapshot.data.place)),
+                                              snapshot.data.place,
+                                              MediaSize.Large)),
                                       fit: BoxFit.cover,
                                       height: _appBarHeight,
                                     );
@@ -163,7 +165,8 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                               reservation: widget.reservation),
                                           Text(
                                             ReservationStatusIcon.stateToText(
-                                                widget.reservation.status, context),
+                                                widget.reservation.status,
+                                                context),
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .display2,
@@ -183,7 +186,8 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                               icon: Icon(Icons.cancel,
                                                   color: Colors.red),
                                               label: Text(
-                                                AppTranslations.of(context).text("common.cancel"),
+                                                AppTranslations.of(context)
+                                                    .text("common.cancel"),
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .display2,
@@ -334,8 +338,11 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: Center(child: new Text(AppTranslations.of(context).text("common.cancel"))),
-          content: new Text(AppTranslations.of(context).text("reservations.cancel_reservation_confirm")),
+          title: Center(
+              child:
+                  new Text(AppTranslations.of(context).text("common.cancel"))),
+          content: new Text(AppTranslations.of(context)
+              .text("reservations.cancel_reservation_confirm")),
           actions: <Widget>[
             OutlineButton.icon(
               shape: new RoundedRectangleBorder(
@@ -343,7 +350,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
               borderSide: BorderSide(color: Colors.white, width: 1),
               icon: Icon(Icons.cancel, color: Colors.red),
               label: Text(
-               AppTranslations.of(context).text("common.cancel"),
+                AppTranslations.of(context).text("common.cancel"),
                 style: Theme.of(context).textTheme.display2,
               ),
               onPressed: () async {

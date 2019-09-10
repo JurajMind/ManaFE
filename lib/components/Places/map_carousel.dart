@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app/Helpers/place_helper.dart';
+import 'package:app/components/Media/media.widget.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/pages/Places/add_place_page.dart';
@@ -89,8 +90,8 @@ class _CarrousselState extends State<MapCarousel> {
             return CircularProgressIndicator();
           }
 
-          if(snapshot.data.length == 0){
-              return buildAdd();
+          if (snapshot.data.length == 0) {
+            return buildAdd();
           }
           return PageView.builder(
               scrollDirection: Axis.horizontal,
@@ -205,7 +206,7 @@ class _CarrousselState extends State<MapCarousel> {
                   color: Colors.grey[300],
                   image: DecorationImage(
                       image: CachedNetworkImageProvider(
-                          Extensions.getPlaceImage(place)),
+                          Extensions.getPlaceImage(place, MediaSize.Medium)),
                       fit: BoxFit.cover)),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

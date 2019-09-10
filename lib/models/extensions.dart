@@ -1,24 +1,25 @@
 import 'package:app/app/app.dart';
+import 'package:app/components/Media/media.widget.dart';
 import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
 class Extensions {
-  static String getPlaceImage(PlaceSimpleDto place) {
+  static String getPlaceImage(PlaceSimpleDto place, MediaSize size) {
     var image = place?.media?.path;
     if (image == null) {
       return 'https://${App.baseUri}/Content/Placeholder/place.jpg';
     }
-    return 'https://${App.baseUri}${image}original.jpg';
+    return 'https://${App.baseUri}${image}${MediaWidget.getSize(size)}';
   }
 
-  static String getFullPlaceImage(PlaceDto place) {
+  static String getFullPlaceImage(PlaceDto place, MediaSize size) {
     var image = place?.medias?.first?.path;
     if (image == null) {
       return 'https://${App.baseUri}/Content/Placeholder/place.jpg';
     }
-    return 'https://${App.baseUri}${image}original.jpg';
+    return 'https://${App.baseUri}${MediaWidget.getSize(size)}';
   }
 
   static String adress(AddressDto adress) {

@@ -37,7 +37,7 @@ class MediaWidget extends StatelessWidget {
     );
   }
 
-  String getSize(MediaSize size) {
+  static String getSize(MediaSize size) {
     switch (size) {
       case MediaSize.Small:
         return "180.jpg";

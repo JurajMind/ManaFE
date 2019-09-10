@@ -1,3 +1,4 @@
+import 'package:app/components/Media/media.widget.dart';
 import 'package:app/components/Places/navigate_button.dart';
 import 'package:app/components/Places/place_detail.dart';
 import 'package:app/components/Places/place_flag.dart';
@@ -129,7 +130,7 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                   tag: '${place.friendlyUrl}_place',
                   child: new Image(
                     image: new CachedNetworkImageProvider(
-                        Extensions.getPlaceImage(place)),
+                        Extensions.getPlaceImage(place, MediaSize.Large)),
                     fit: BoxFit.cover,
                     height: _appBarHeight,
                   ),
@@ -145,13 +146,14 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
               child: Container(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Container(                  
+                  child: Container(
                     child: new Column(
                       children: <Widget>[
                         Container(
-                          height: 500,
-                          child: PlaceExtendedInfo(place: place,))      
-
+                            height: 500,
+                            child: PlaceExtendedInfo(
+                              place: place,
+                            ))
                       ],
                     ),
                   ),

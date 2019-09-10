@@ -38,7 +38,6 @@ class StartSmokeSessionPage extends StatefulWidget {
 
   final GlobalKey<NavigatorState> Function(int) callback;
 
-
   @override
   StartSmokeSessionPageState createState() {
     return new StartSmokeSessionPageState(callback: callback);
@@ -104,15 +103,22 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
   Widget build(BuildContext context) {
     final smokeSessionBloc = DataProvider.getSmokeSession(context);
 
-    return Scaffold(backgroundColor: Theme.of(context).backgroundColor,
+    return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       body: new SafeArea(
         top: false,
-        child: AnimatedBuilder(
-          animation: _colorTween,
-          builder: (context, child) => CustomPaint(
-            painter:
-                CirclePainter(_colorTween.value, data: MediaQuery.of(context)),
-            child: new Column(
+        child: Stack(
+          children: <Widget>[
+                        AnimatedBuilder(
+              animation: _colorTween,
+              builder: (context, child) => CustomPaint(
+                  painter: CirclePainter(_colorTween.value,
+                      data: MediaQuery.of(context)),
+                  child: Container(
+                    height: 1000,
+                  )),
+            ),
+            Column(
               children: <Widget>[
                 new Expanded(flex: 1, child: Container()),
                 new Expanded(
@@ -173,7 +179,8 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
                     ))
               ],
             ),
-          ),
+
+          ],
         ),
       ),
     );
