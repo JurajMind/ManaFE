@@ -2,9 +2,7 @@ import 'dart:math';
 
 import 'package:app/Helpers/date_utils.dart';
 import 'package:app/app/app.dart';
-import 'package:app/components/SmokeSession/tobacco_widget.dart';
 import 'package:app/models/SmokeSession/puf_type.dart';
-import 'package:app/pages/SmokeSession/Components/pipe_accesory_widget.dart';
 import 'package:app/pages/Statistic/Detail/detail_page_helper.dart';
 
 import 'package:flutter/material.dart';
@@ -91,7 +89,7 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage>
                     child: StreamBuilder<FinishedSessionDataDto>(
                       stream: this.data,
                       initialData: null,
-                      builder: (BuildContext context, snapshot) {                    
+                      builder: (BuildContext context, snapshot) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Card(
@@ -141,7 +139,7 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage>
                   ),
                 );
               }),
-                   AnimatedBuilder(
+          AnimatedBuilder(
               animation: animationController,
               builder: (BuildContext context, Widget child) {
                 return FadeTransition(
@@ -158,9 +156,9 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage>
                           stream: this.pufs,
                           initialData: null,
                           builder: (BuildContext context, snapshot) {
-                         return SmokeProgressGraph(
-                          snapshot.data
-                         );
+                            if (snapshot.data == null)
+                              return SmokeProgressGraphShimer();
+                            return SmokeProgressGraph(snapshot.data);
                           },
                         ),
                       ),
@@ -174,7 +172,6 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage>
     );
   }
 }
-
 
 class HrWidget extends StatelessWidget {
   @override
@@ -230,43 +227,6 @@ class HrWidget extends StatelessWidget {
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class SessionStatisticGraph extends StatefulWidget {
-  final BehaviorSubject<List<SmartHookahModelsDbPuf>> pufs;
-
-  SessionStatisticGraph({Key key, this.pufs}) : super(key: key);
-
-  _SessionStatisticGraphState createState() => _SessionStatisticGraphState();
-}
-
-class _SessionStatisticGraphState extends State<SessionStatisticGraph> {
-  List<List<SmartHookahModelsDbPuf>> data;
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: StreamBuilder<List<SmartHookahModelsDbPuf>>(
-        stream: widget.pufs,
-        initialData: null,
-        builder: (BuildContext context, snapshot) {
-          if (snapshot.data == null) return Container();
-
-          var processData =
-              DetailPageHelper.createHistogram(snapshot.data, 300);
-          return Container(
-            child: Column(
-              children: <Widget>[],
-            ),
-          );
-        },
       ),
     );
   }

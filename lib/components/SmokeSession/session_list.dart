@@ -10,27 +10,27 @@ class SessionList extends StatelessWidget {
   final VoidCallback onPressed;
   final int sessionCount;
   final TobaccoInformationDto info;
-  
+
   const SessionList(
-      {Key key, this.sessions, this.onPressed, this.sessionCount = 5, this.info})
+      {Key key,
+      this.sessions,
+      this.onPressed,
+      this.sessionCount = 5,
+      this.info})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-
-     List<SmokeSessionSimpleDto> data = null;
+    List<SmokeSessionSimpleDto> data;
     if (info != null) {
       if (info.smokeSessions == null) {
         data = new List<SmokeSessionSimpleDto>();
-      }
-      else{
+      } else {
         data = info.smokeSessions;
       }
     } else {
       data = sessions;
     }
-
 
     if (data == null) {
       return Center(
@@ -48,16 +48,22 @@ class SessionList extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Text(
-                'Smoke sessions',
+                'Sessions',
                 style: Theme.of(context).textTheme.display1,
+              ),
+              const SizedBox(
+                width: 4,
               ),
               Icon(Icons.list)
             ],
           ),
         ),
       ),
-      if(data.length == 0)
-        Text(AppTranslations.of(context).text('smoke_session.no_smoke_session'),style: Theme.of(context).textTheme.display2,),      
+      if (data.length == 0)
+        Text(
+          AppTranslations.of(context).text('smoke_session.no_smoke_session'),
+          style: Theme.of(context).textTheme.display2,
+        ),
       if (data.length > 0) ...{
         ...data.take(sc).map((s) => SmokeSessionListItem(session: s)),
       },

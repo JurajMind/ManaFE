@@ -69,7 +69,14 @@
         "experiments": "Experimenty",
         "end_session": "Ukončit session",
         "end_session_confirm": "Chceš tuto session ukončit?",
-        "no_smoke_session": "Žádná session"
+        "no_smoke_session": "Žádná session",
+        "select_color": "Vyberte barvu",
+        "idle": "Nečinnost",
+        "blow": "Foukání",
+        "inhale": "Vdechování",
+        "brightness": "Jas",
+        "speed": "Rychlost",
+        "animation": "Animace"
     },
     "mix": {
         "use_this_mix": "Použít tento mix",
@@ -80,7 +87,9 @@
         "used_mix": "Použítý mix",
         "favorite_mixes": "Oblíbené mixy",
         "remove_favorite": "Odebrat oblíbený",
-        "add_favorite": "Přidat oblíbený"
+        "add_favorite": "Přidat oblíbený",
+        "used_in_mixes": "Použíto v mixech",
+        "mix.all_ussage_in_mix": "Všechny mixy"
     },
     "reservations": {
         "upcoming_reservations": "Budoucí rezervace",
@@ -108,7 +117,9 @@
         "go_with_taxi": "Taxi",
         "reserve": "Rezervace",
         "menu": "Menu",
-        "unknown": "Neznámý"
+        "unknown": "Neznámý",
+        "about_place": "O Podniku",
+        "reviews": "Recenze"
     },
     "device": {
         "restart_stand": "Restartovat podložku",

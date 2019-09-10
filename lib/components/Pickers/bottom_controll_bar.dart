@@ -4,6 +4,7 @@ import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/Components/picker_slider.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -79,7 +80,9 @@ class BottomControllBar extends StatelessWidget {
             child: SimpleDialog(
               elevation: 2.0,
               backgroundColor: Colors.transparent,
-              title: Center(child: const Text('Speed')),
+              title: Center(
+                  child: Text(
+                      AppTranslations.of(context).text("smoke_session.speed"))),
               children: <Widget>[
                 SizedBox(
                   height: 400.0,
@@ -109,7 +112,9 @@ class BottomControllBar extends StatelessWidget {
             width: 20.0,
             height: MediaQuery.of(context).size.height - 80,
             child: SimpleDialog(
-              title: Center(child: const Text('Brightness')),
+              title: Center(
+                  child: Text(AppTranslations.of(context)
+                      .text("smoke_session.brightness"))),
               backgroundColor: Colors.transparent,
               children: <Widget>[
                 SizedBox(

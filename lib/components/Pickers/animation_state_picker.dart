@@ -33,7 +33,6 @@ class AnimationStatePicker extends StatefulWidget {
 class AnimationStatePickerState extends State<AnimationStatePicker> {
   int _focusIndex;
   bool _init = false;
-  bool _isInFocus = true;
 
   FixedExtentScrollController scrollController;
 
@@ -58,6 +57,7 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
       scrollController.animateToItem(widget.selectedIndex,
           curve: Curves.easeIn, duration: const Duration(milliseconds: 300));
     }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override

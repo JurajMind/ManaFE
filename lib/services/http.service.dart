@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
@@ -696,7 +695,6 @@ class ApiClient {
       SmartHookahModelsDbSessionDtoSessionReviewDto review) async {
     var url =
         Uri.https(baseUrl, '/api/Review/Session/${review.smokeSessionId}');
-    var a = json.encode(review);
     return await _dio.post(url.toString(), data: review).then((data) {
       if (data.data['publishDate'] != null) {
         data.data['publishDate'] = DateTime.now().toString();
@@ -752,28 +750,28 @@ class ApiClient {
         .then((data) => TobaccoInformationDto.fromJson(data.data));
   }
 
-  Future<List<TobaccoMixSimpleDto>> getTobaccoInMix(
-    int id, {int pageSize = 10, page = 0}
-  ) async {
-    var url = Uri.https(baseUrl, '/api/Tobacco/$id/InMix',);
-    return await _dio
-        .get(url.toString(), queryParameters: {
+  Future<List<TobaccoMixSimpleDto>> getTobaccoInMix(int id,
+      {int pageSize = 10, page = 0}) async {
+    var url = Uri.https(
+      baseUrl,
+      '/api/Tobacco/$id/InMix',
+    );
+    return await _dio.get(url.toString(), queryParameters: {
       "pageSize": pageSize,
       "page": page
-    })
-        .then((data) => TobaccoMixSimpleDto.listFromJson(data.data));
+    }).then((data) => TobaccoMixSimpleDto.listFromJson(data.data));
   }
 
-    Future<List<SmokeSessionSimpleDto>> getGearSession(
-    int id, {int pageSize = 10, page = 0}
-  ) async {
-    var url = Uri.https(baseUrl, '/api/Gear/$id/Sessions',);
-    return await _dio
-        .get(url.toString(), queryParameters: {
+  Future<List<SmokeSessionSimpleDto>> getGearSession(int id,
+      {int pageSize = 10, page = 0}) async {
+    var url = Uri.https(
+      baseUrl,
+      '/api/Gear/$id/Sessions',
+    );
+    return await _dio.get(url.toString(), queryParameters: {
       "pageSize": pageSize,
       "page": page
-    })
-        .then((data) => SmokeSessionSimpleDto.listFromJson(data.data));
+    }).then((data) => SmokeSessionSimpleDto.listFromJson(data.data));
   }
 }
 

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:animated_background/animated_background.dart';
 import 'package:app/Helpers/helpers.dart';
 import 'package:app/app/app.widget.dart';
-import 'package:app/pages/home.page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +58,9 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                       new Container(
                         width: screenSize.width,
                         child: new RoundedButton(
-                          buttonName: AppTranslations.of(context).text("login.sign_up").toUpperCase(),
+                          buttonName: AppTranslations.of(context)
+                              .text("login.sign_up")
+                              .toUpperCase(),
                           onTap: () {
                             navigate(context, 'auth/register');
                           },
@@ -74,9 +75,14 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                       new Container(
                         width: screenSize.width,
                         child: facebookLoginLoading
-                            ? Container(height: 20, width: 20,child:CircularProgressIndicator())
+                            ? Container(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator())
                             : RoundedButton(
-                                buttonName: AppTranslations.of(context).text("login.facebook_login").toUpperCase(),
+                                buttonName: AppTranslations.of(context)
+                                    .text("login.facebook_login")
+                                    .toUpperCase(),
                                 onTap: () {
                                   facebookLogin();
                                 },
@@ -93,7 +99,9 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                         width: screenSize.width,
                         child: new FlatButton(
                           child: new Text(
-                          AppTranslations.of(context).text("login.log_in").toUpperCase(),
+                            AppTranslations.of(context)
+                                .text("login.log_in")
+                                .toUpperCase(),
                             style: Theme.of(context).textTheme.display2,
                           ),
                           onPressed: () {
@@ -104,15 +112,20 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                       ),
                       Align(
                         heightFactor: 2,
-                        alignment: Alignment.bottomCenter ,child:  new FlatButton(
+                        alignment: Alignment.bottomCenter,
+                        child: new FlatButton(
                           child: new Text(
-                            AppTranslations.of(context).currentLanguage.toString().toUpperCase(),
+                            AppTranslations.of(context)
+                                .currentLanguage
+                                .toString()
+                                .toUpperCase(),
                             style: Theme.of(context).textTheme.display2,
                           ),
                           onPressed: () {
                             navigate(context, 'auth/lang');
                           },
-                        ),)
+                        ),
+                      )
                     ],
                   ))
             ],
@@ -152,10 +165,9 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
           break;
       }
     } catch (e) {
-             AppWidget.restartApp(context);
+      AppWidget.restartApp(context);
       Scaffold.of(context).showSnackBar(new SnackBar(
         content: new Text("Facebook login error :("),
-        
       ));
     }
   }

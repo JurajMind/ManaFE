@@ -9,8 +9,8 @@ class StatisticBloc {
   factory StatisticBloc() => StatisticBloc._instance;
 
   StatisticBloc._() {
-    loadStatistic(
-        DateTime.now().subtract(new Duration(days: 365)), DateTime.now());
+    var now = DateTime.now();
+    loadStatistic(new DateTime(now.year, now.month, 1), DateTime.now());
   }
 
   BehaviorSubject<PersonStatisticsOverallDto> statistic =

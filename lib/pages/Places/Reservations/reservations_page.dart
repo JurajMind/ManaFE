@@ -53,7 +53,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
             .text("reservations.reservations")
             .toUpperCase()),
       ),
-      body: SafeArea(
+      body: Container(
         child: StreamBuilder<List<PlacesReservationsReservationDto>>(
             stream: reservationBloc.dynamicReservaions,
             builder: (context, snapshot) {
@@ -181,7 +181,7 @@ class ReservationFilterWidget extends StatelessWidget {
             SizedBox(
               width: 10,
             ),
-            Text(ReservationStatusIcon.stateToText(reservationFilter,context))
+            Text(ReservationStatusIcon.stateToText(reservationFilter, context))
           ],
         ),
         onTap: () {

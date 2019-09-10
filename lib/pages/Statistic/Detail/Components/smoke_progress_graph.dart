@@ -86,7 +86,6 @@ class SmokeProgressGraphState extends State<SmokeProgressGraph> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                   
                   SizedBox(
                     height: 18,
                   ),
@@ -103,8 +102,6 @@ class SmokeProgressGraphState extends State<SmokeProgressGraph> {
                     text: "Blows",
                     isSquare: true,
                   ),
-                       
-                 
                   SizedBox(
                     height: 18,
                   ),
@@ -136,10 +133,10 @@ class SmokeProgressGraphState extends State<SmokeProgressGraph> {
                             margin: 10,
                             getTitles: (value) {
                               var cValue = inList.length < 5 ? 3 : 6;
-                              if((value % cValue ) == 0){
-                                return (value * 5 ).toStringAsFixed(0)+ 'min';
-                              } 
-                              
+                              if ((value % cValue) == 0) {
+                                return (value * 5).toStringAsFixed(0) + 'm';
+                              }
+
                               return '';
                             },
                           ),
@@ -151,10 +148,10 @@ class SmokeProgressGraphState extends State<SmokeProgressGraph> {
                               fontSize: 14,
                             ),
                             getTitles: (value) {
-                               if((value % 3 ) == 0){
+                              if ((value % 3) == 0) {
                                 return value.toStringAsFixed(0);
-                              } 
-                              
+                              }
+
                               return '';
                             },
                             margin: 8,
@@ -233,5 +230,54 @@ class SmokeProgressGraphState extends State<SmokeProgressGraph> {
   void dispose() {
     super.dispose();
     controller.close();
+  }
+}
+
+class SmokeProgressGraphShimer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+        aspectRatio: 1.23,
+        child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(18)),
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xff2c274c),
+                    Color(0xff46426c),
+                  ],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                )),
+            child: Padding(
+              padding: EdgeInsets.all(8),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Icon(Icons.multiline_chart),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          "Progress",
+                          style: Theme.of(context).textTheme.display1,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  ]),
+            )));
   }
 }

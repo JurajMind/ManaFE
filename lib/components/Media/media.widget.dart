@@ -52,6 +52,7 @@ class MediaWidget extends StatelessWidget {
         return "original.jpg";
         break;
     }
+    return "original.jpg";
   }
 }
 

@@ -3,16 +3,11 @@ import 'dart:io';
 import 'package:app/app/app.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:google_maps_webservice/places.dart';
-
 import 'package:flutter/material.dart';
 
 import 'package:image_picker/image_picker.dart';
 
 var kGoogleApiKey = "AIzaSyDv2o2BsQ1IJjdPS3eSjkf7f-_Jt7Fu-MU";
-
-// to get places detail (lat/lng)
-GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
 
 class TestSearch extends StatefulWidget {
   @override

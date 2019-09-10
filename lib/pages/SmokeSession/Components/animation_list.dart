@@ -7,6 +7,7 @@ import 'package:app/models/Stand/preset.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/preset_picker.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:openapi/api.dart';
@@ -23,9 +24,6 @@ class AnimationsPicker extends StatefulWidget {
 }
 
 class _AnimationsPickerState extends State<AnimationsPicker> {
-  static const _kDuration = const Duration(milliseconds: 300);
-  static const _kCurve = Curves.ease;
-
   @override
   initState() {
     super.initState();
@@ -49,12 +47,24 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
             controller: controller,
             children: <Widget>[
               //  devicePresetPickerBuilder(),
-              animationStatePickerBuilder(smokeSessionBloc.standSettings,
-                  SmokeState.idle, 'IDLE', false, true),
-              animationStatePickerBuilder(smokeSessionBloc.standSettings,
-                  SmokeState.puf, 'SMOKING', true, true),
-              animationStatePickerBuilder(smokeSessionBloc.standSettings,
-                  SmokeState.blow, 'PURGE', true, false),
+              animationStatePickerBuilder(
+                  smokeSessionBloc.standSettings,
+                  SmokeState.idle,
+                  AppTranslations.of(context).text("smoke_session.idle"),
+                  false,
+                  true),
+              animationStatePickerBuilder(
+                  smokeSessionBloc.standSettings,
+                  SmokeState.puf,
+                  AppTranslations.of(context).text("smoke_session.inhale"),
+                  true,
+                  true),
+              animationStatePickerBuilder(
+                  smokeSessionBloc.standSettings,
+                  SmokeState.blow,
+                  AppTranslations.of(context).text("smoke_session.blow"),
+                  true,
+                  false),
             ],
           ),
         ],

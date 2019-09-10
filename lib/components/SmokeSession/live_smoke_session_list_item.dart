@@ -11,12 +11,6 @@ class LiveSmokeSessionListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var start =
-        new DateTime.fromMillisecondsSinceEpoch(session.statistic.start);
-
-    var duration =
-        new Duration(microseconds: session.statistic.duration * 1000);
-
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: Container(
@@ -25,12 +19,12 @@ class LiveSmokeSessionListItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.0)),
         child: InkWell(
           onTap: () => Navigator.of(context)
-                  .push(new MaterialPageRoute(builder: (BuildContext context) {
-                    if(session.live == true){
-                      return Placeholder();
-                    }
-                return SmokeSessioDetailPage(session);
-              })),
+              .push(new MaterialPageRoute(builder: (BuildContext context) {
+            if (session.live == true) {
+              return Placeholder();
+            }
+            return SmokeSessioDetailPage(session);
+          })),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 4.0),
             child: Column(
@@ -41,20 +35,23 @@ class LiveSmokeSessionListItem extends StatelessWidget {
                       flex: 2,
                       child: LabeledValue(
                         'Live',
-                        icon: Icon(Icons.check_circle,color: Colors.green,),
+                        icon: Icon(
+                          Icons.check_circle,
+                          color: Colors.green,
+                        ),
                       ),
                     ),
                     Expanded(
                       flex: 3,
                       child: LabeledValue(
-                      session.device.name,
+                        session.device.name,
                         icon: Icon(Icons.devices),
                       ),
                     ),
                     Expanded(
                       flex: 2,
                       child: LabeledValue(
-                      session.sessionId,
+                        session.sessionId,
                         icon: Icon(Icons.code),
                       ),
                     )

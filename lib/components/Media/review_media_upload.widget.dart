@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:app/pages/Common/upload_picture.page.dart';
-import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 
 class ReviewMediaUpload extends StatefulWidget {
@@ -31,7 +30,7 @@ class _ReviewMediaUploadState extends State<ReviewMediaUpload> {
             'Media',
             style: Theme.of(context).textTheme.display1,
           ),
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
           Container(
@@ -59,7 +58,7 @@ class _ReviewMediaUploadState extends State<ReviewMediaUpload> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
-                              SizedBox(
+                              const SizedBox(
                                 height: 3,
                               ),
                               Container(
@@ -88,7 +87,7 @@ class _ReviewMediaUploadState extends State<ReviewMediaUpload> {
                     },
                   ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
         ],

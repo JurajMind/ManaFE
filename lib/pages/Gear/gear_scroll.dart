@@ -32,7 +32,6 @@ const double _kAppBarMaxHeight = 610.0;
 
 // Initially occupies the same space as the status bar and gets smaller as
 // the primary scrollable scrolls upwards.
-// TODO(hansmuller): it would be worth adding something like this to the framework.
 class _RenderStatusBarPaddingSliver extends RenderSliver {
   _RenderStatusBarPaddingSliver({
     @required double maxHeight,
@@ -543,7 +542,6 @@ class _GearScrollHomeState extends State<GearScrollHome> {
         });
       }
     }
-   
   }
 
   bool _handlePageNotification(ScrollNotification notification,
@@ -605,7 +603,7 @@ class _GearScrollHomeState extends State<GearScrollHome> {
     GearBloc gearBloc = dataProvider.gearBloc;
     Map<int, ScrollController> innerScrollControllers =
         new Map<int, ScrollController>();
-        
+
     innerScrollControllers[0] = ScrollController();
     innerScrollControllers[1] = ScrollController();
     innerScrollControllers[2] = ScrollController();

@@ -21,7 +21,6 @@ class _BrandPageState extends State<BrandPage> {
   }
 
   @override
-  FocusNode _focusNode = new FocusNode();
   Widget build(BuildContext context) {
     final gearBloc = DataProvider.getData(context).gearBloc;
     return new SafeArea(

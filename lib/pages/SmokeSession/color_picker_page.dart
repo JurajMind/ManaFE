@@ -1,9 +1,9 @@
 import 'package:app/components/Pickers/bottom_controll_bar.dart';
 import 'package:app/components/Pickers/smoke_color_wheel.dart';
-import 'package:app/const/theme.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -43,7 +43,9 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'SELECT COLOR',
+          AppTranslations.of(context)
+              .text('smoke_session.select_color')
+              .toUpperCase(),
         ),
         centerTitle: true,
         backgroundColor: Colors.black,
@@ -82,19 +84,22 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                     BottomControllBar(
                       haveLeftChevron: false,
                       haveRightChevron: true,
-                      label: "IDLE",
+                      label: AppTranslations.of(context)
+                          .text("smoke_session.idle"),
                       state: SmokeState.idle,
                     ),
                     BottomControllBar(
                       haveLeftChevron: true,
                       haveRightChevron: true,
-                      label: "SMOKING",
+                      label: AppTranslations.of(context)
+                          .text("smoke_session.inhale"),
                       state: SmokeState.puf,
                     ),
                     BottomControllBar(
                       haveLeftChevron: true,
                       haveRightChevron: false,
-                      label: "BLOW",
+                      label: AppTranslations.of(context)
+                          .text("smoke_session.blow"),
                       state: SmokeState.blow,
                     )
                   ],

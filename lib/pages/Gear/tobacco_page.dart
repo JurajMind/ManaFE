@@ -68,12 +68,13 @@ class _TobaccoPageState extends State<TobaccoPage> {
                   SizedBox(
                     width: 8,
                   ),
+                  Text(pipeAccesory.brand),
+                  SizedBox(
+                    width: 8,
+                  ),
                   Text(pipeAccesory.name),
                 ],
               )),
-          bottom: PreferredSize(
-              preferredSize: Size.fromHeight(20),
-              child: Text(pipeAccesory.brand)),
           centerTitle: true,
         ),
         SliverList(
@@ -124,7 +125,8 @@ class _TobaccoPageState extends State<TobaccoPage> {
                       onPressed: () =>
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => InMixesLazyList(
-                              initInMixes: snapshot.data,tobacco: pipeAccesory,
+                              initInMixes: snapshot.data,
+                              tobacco: pipeAccesory,
                             ),
                           )));
                 }),

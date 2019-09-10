@@ -69,7 +69,14 @@
         "experiments": "Experiments",
         "end_session": "End session",
         "end_session_confirm": "Do you want to end this session?",
-        "no_smoke_session": "No smoke sessions"
+        "no_smoke_session": "No smoke sessions",
+        "select_color": "Select color",
+        "idle": "Idle",
+        "blow": "Blow",
+        "inhale": "Inhale",
+        "brightness": "Brightness",
+        "speed": "Speed",
+        "animation": "Animation"
     },
     "mix": {
         "use_this_mix": "Use this mix",
@@ -80,7 +87,9 @@
         "used_mix": "Used mix",
         "favorite_mixes": "Favorite mixes",
         "remove_favorite": "Remove favorite",
-        "add_favorite": "Add favorite"
+        "add_favorite": "Add favorite",
+        "used_in_mixes": "Used in mixes",
+        "mix.all_ussage_in_mix": "All mixes"
     },
     "reservations": {
         "upcoming_reservations": "Upcoming reservations",
@@ -108,7 +117,9 @@
         "go_with_taxi": "Take a cab",
         "reserve": "Reserve",
         "menu": "Menu",
-        "unknown": "Unknown"
+        "unknown": "Unknown",
+        "about_place": "About place",
+        "reviews": "Reviews"
     },
     "device": {
         "restart_stand": "Restart device",

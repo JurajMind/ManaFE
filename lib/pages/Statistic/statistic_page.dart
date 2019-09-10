@@ -21,9 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:app/components/Charts/sparkline.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/api.dart';
-import 'package:queries/collections.dart';
 import 'dart:math' as math;
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 import 'package:shimmer/shimmer.dart';
 
@@ -164,6 +162,7 @@ class _StatisticPageState extends State<StatisticPage> {
     return new Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: CustomScrollView(
+        physics: ClampingScrollPhysics(),
         slivers: <Widget>[
           SliverAppBar(
             actions: <Widget>[
@@ -216,7 +215,6 @@ class _StatisticPageState extends State<StatisticPage> {
                 ],
               )
             ],
-           
             pinned: true,
             expandedHeight: 300.0,
             automaticallyImplyLeading: true,
@@ -415,7 +413,6 @@ class _StatisticPageState extends State<StatisticPage> {
           stream: bloc.topGraphData,
           builder: (context, snapshot) {
             return Container(
-              
               height: 200,
               width: MediaQuery.of(context).size.width,
               child: snapshot.data == null || snapshot.data.length == 0
@@ -436,31 +433,6 @@ class _StatisticPageState extends State<StatisticPage> {
             );
           }),
     );
-  }
-
-  static List<charts.Series<ChartData, String>> _createSampleData(
-      Map<String, int> imput, Function funct) {
-    var convertedData = new List<ChartData>();
-    imput.forEach((f, i) {
-      convertedData.add(funct(f, i));
-    });
-
-    var ordered = new Collection(convertedData)
-        .orderBy((keySelector) => keySelector.order);
-
-    return [
-      new charts.Series<ChartData, String>(
-          id: 'Sales',
-          colorFn: (data, __) {
-            if (data.sales > 4) {
-              return charts.MaterialPalette.red.shadeDefault;
-            }
-            return charts.MaterialPalette.green.shadeDefault;
-          },
-          domainFn: (ChartData sales, _) => sales.label,
-          measureFn: (ChartData sales, _) => sales.sales,
-          data: ordered.toList())
-    ];
   }
 }
 

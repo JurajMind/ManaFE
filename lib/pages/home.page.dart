@@ -236,12 +236,13 @@ class _HomePageState extends State<HomePage> {
           } else {
             await navigatorKeys[_currentIndex].currentState.maybePop();
           }
+          return false;
         },
         child: new SafeArea(
             top: false,
             child: Stack(children: <Widget>[
               Material(
-                color: Theme.of(context).backgroundColor,                                                                                                                                                                                                        
+                color: Theme.of(context).backgroundColor,
                 child: new IndexedStack(
                   index: _currentIndex,
                   children: <Widget>[
@@ -371,18 +372,12 @@ class VisibilityStageNavigator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Visibility(
-      visible: _tabIndex == index,
-      maintainSize: true,
-      maintainState: true,
-      maintainAnimation: true,
-      child: FocusScope(
-        node: tabFocusNodes[index],
-        child: TabNavigator(
-          navigatorKey: navigatorKeys[index],
-          tabItem: child,
-          index: index,
-        ),
+    return FocusScope(
+      node: tabFocusNodes[index],
+      child: TabNavigator(
+        navigatorKey: navigatorKeys[index],
+        tabItem: child,
+        index: index,
       ),
     );
   }

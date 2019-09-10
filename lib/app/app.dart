@@ -73,9 +73,9 @@ class App {
   static LocaleChangeCallback onLocaleChanged;
 
   Future onDidReceiveLocalNotification(
-      int id, String title, String body, String payload) {}
+      int id, String title, String body, String payload) async {}
 
-  Future onSelectNotification(String payload) {}
+  Future onSelectNotification(String payload) async {}
 }
 
 typedef void LocaleChangeCallback(Locale locale);

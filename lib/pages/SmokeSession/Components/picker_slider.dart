@@ -53,11 +53,6 @@ class _SpringySliderState extends State<SpringySlider>
 
   @override
   Widget build(BuildContext context) {
-    double sliderPercent = sliderController.sliderValue;
-    if (sliderController.state == SpringySliderState.springing) {
-      sliderPercent = sliderController.springingPercent;
-    }
-
     return SliderDragger(
       sliderController: sliderController,
       paddingTop: paddingTop,
@@ -368,6 +363,7 @@ class SliderClipper extends CustomClipper<Path> {
       case SpringySliderState.springing:
         return _clipIdle(size);
     }
+    return _clipIdle(size);
   }
 
   Path _clipIdle(Size size) {
@@ -455,99 +451,6 @@ class SliderClipper extends CustomClipper<Path> {
     }
 
     compositePath.addPath(curve, const Offset(0.0, 0.0));
-
-    return compositePath;
-  }
-
-  Path _clipSpringing(Size size) {
-    Path compositePath = new Path();
-
-    final top = paddingTop;
-    final bottom = size.height - paddingBottom;
-    final height = bottom - top;
-    final basePercentFromBottom = 1.0 - sliderController.springingPercent;
-    final crestSpringPercentFromBottom =
-        1.0 - sliderController.crestSpringingPercent;
-
-    final baseY = top + (basePercentFromBottom * height);
-    final leftX = -0.85 * size.width;
-    final leftPoint = Point(leftX, baseY);
-
-    final centerX = 0.15 * size.width;
-    final centerPoint = Point(centerX, baseY);
-
-    final rightX = 1.15 * size.width;
-    final rightPoint = Point(rightX, baseY);
-
-    final crestY = top + (crestSpringPercentFromBottom * height);
-    final crestPoint = Point((rightX - centerX) / 2 + centerX, crestY);
-
-    final troughY = baseY + (baseY - crestY);
-    final troughPoint = Point((centerX - leftX) / 2 + leftX, troughY);
-
-    final controlPointWidth = 100.0;
-
-    final rect = new Path();
-    rect.moveTo(leftPoint.x, leftPoint.y);
-    rect.lineTo(rightPoint.x, rightPoint.y);
-    rect.lineTo(rightPoint.x, size.height);
-    rect.lineTo(leftPoint.x, size.height);
-    rect.lineTo(leftPoint.x, leftPoint.y);
-    rect.close();
-
-    compositePath.addPath(rect, const Offset(0.0, 0.0));
-
-    final leftCurve = new Path();
-    leftCurve.moveTo(troughPoint.x, troughPoint.y);
-    leftCurve.quadraticBezierTo(
-      troughPoint.x - controlPointWidth,
-      troughPoint.y,
-      leftPoint.x,
-      leftPoint.y,
-    );
-
-    leftCurve.moveTo(troughPoint.x, troughPoint.y);
-    leftCurve.quadraticBezierTo(
-      troughPoint.x + controlPointWidth,
-      troughPoint.y,
-      centerPoint.x,
-      centerPoint.y,
-    );
-
-    leftCurve.lineTo(leftPoint.x, leftPoint.y);
-    leftCurve.close();
-
-    if (crestSpringPercentFromBottom < basePercentFromBottom) {
-      compositePath.fillType = PathFillType.evenOdd;
-    }
-
-    compositePath.addPath(leftCurve, const Offset(0.0, 0.0));
-
-    final rightCurve = new Path();
-    rightCurve.moveTo(crestPoint.x, crestPoint.y);
-    rightCurve.quadraticBezierTo(
-      crestPoint.x - controlPointWidth,
-      crestPoint.y,
-      centerPoint.x,
-      centerPoint.y,
-    );
-
-    rightCurve.moveTo(crestPoint.x, crestPoint.y);
-    rightCurve.quadraticBezierTo(
-      crestPoint.x + controlPointWidth,
-      crestPoint.y,
-      rightPoint.x,
-      rightPoint.y,
-    );
-
-    rightCurve.lineTo(centerPoint.x, centerPoint.y);
-    rightCurve.close();
-
-    if (crestSpringPercentFromBottom > basePercentFromBottom) {
-      compositePath.fillType = PathFillType.evenOdd;
-    }
-
-    compositePath.addPath(rightCurve, const Offset(0.0, 0.0));
 
     return compositePath;
   }
@@ -646,9 +549,9 @@ class Points extends StatelessWidget {
           isAboveSlider ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: <Widget>[
         FractionalTranslation(
-            translation: Offset(-0.05 * percent, isAboveSlider ? 0.18 : -0.18),
-            child: Icon(this.icon, size: pointTextSize),
-          ),
+          translation: Offset(-0.05 * percent, isAboveSlider ? 0.18 : -0.18),
+          child: Icon(this.icon, size: pointTextSize),
+        ),
       ],
     );
   }

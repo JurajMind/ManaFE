@@ -1,3 +1,4 @@
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
@@ -25,7 +26,7 @@ class _PlaceExtendedInfoState extends State<PlaceExtendedInfo> {
               constraints: BoxConstraints.expand(height: 70),
               child: TabBar(tabs: [
                 Tab(
-                  text: "About place",
+                  text: AppTranslations.of(context).text("place.about_place"),
                   icon: Icon(Icons.info),
                 ),
                 Tab(
@@ -33,7 +34,7 @@ class _PlaceExtendedInfoState extends State<PlaceExtendedInfo> {
                   icon: Icon(Icons.extension),
                 ),
                 Tab(
-                  text: "Reviews",
+                  text: AppTranslations.of(context).text("place.reviews"),
                   icon: Icon(Icons.star_half),
                 ),
               ]),

@@ -9,10 +9,8 @@ import 'package:app/pages/Mixology/mix_detail_page.dart';
 import 'package:app/pages/SmokeSession/tobacco_edit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/api.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 
 class MixologyList extends StatefulWidget {
   @override
@@ -146,24 +144,7 @@ class PaggingMixListView extends StatelessWidget {
                 }
 
                 if (snapshot.data != null && snapshot.data[index] != null) {
-                  return Slidable(
-                    actionPane: SlidableDrawerActionPane(),
-                    child: MixCardExpanded(tobaccoMix: snapshot.data[index]),
-                    actions: <Widget>[
-                      IconSlideAction(
-                          caption: 'Like',
-                          color: Colors.green,
-                          icon: FontAwesomeIcons.thumbsUp,
-                          onTap: () => {++snapshot.data[index].likeCount}),
-                    ],
-                    secondaryActions: <Widget>[
-                      IconSlideAction(
-                          caption: 'Dis Like',
-                          color: Colors.red,
-                          icon: FontAwesomeIcons.thumbsDown,
-                          onTap: () => {--snapshot.data[index].likeCount}),
-                    ],
-                  );
+                  return MixCardExpanded(tobaccoMix: snapshot.data[index]);
                 } else {
                   return MixCardExpandedShimmer(
                     move: false,

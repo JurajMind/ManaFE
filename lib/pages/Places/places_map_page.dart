@@ -203,17 +203,19 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                   Positioned(
                     top: 10,
                     right: MediaQuery.of(context).size.width / 2,
-                    child: moving
-                        ? Container()
-                        : FloatingActionButton(
-                            heroTag: 'Search',
-                            backgroundColor: AppColors.scafBg,
-                            child: Icon(
-                              Icons.search,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => searchCity(context),
-                          ),
+                    child: AnimatedOpacity(
+                      opacity: !moving ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: 500),
+                      child: FloatingActionButton(
+                        heroTag: 'Search',
+                        backgroundColor: AppColors.scafBg,
+                        child: Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
+                        onPressed: () => searchCity(context),
+                      ),
+                    ),
                   ),
                   Positioned(
                       top: 0,
@@ -228,23 +230,28 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                   Positioned(
                     top: 10,
                     right: (MediaQuery.of(context).size.width / 2) - 60,
-                    child: moving
-                        ? Container()
-                        : FloatingActionButton(
-                            heroTag: "refresh",
-                            backgroundColor: AppColors.scafBg,
-                            child: loading
-                                ? CircularProgressIndicator()
-                                : Icon(
-                                    Icons.refresh,
-                                    color: Colors.white,
-                                  ),
-                            onPressed: () => loadNearby()),
+                    child: AnimatedOpacity(
+                      opacity: !moving ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: 500),
+                      child: FloatingActionButton(
+                          heroTag: "refresh",
+                          backgroundColor: AppColors.scafBg,
+                          child: loading
+                              ? CircularProgressIndicator()
+                              : Icon(
+                                  Icons.refresh,
+                                  color: Colors.white,
+                                ),
+                          onPressed: () => loadNearby()),
+                    ),
                   ),
                   Positioned(
                       bottom: 170,
                       right: (MediaQuery.of(context).size.width / 2) - 60,
-                      child: moving ? Container() : new ReservationButton()),
+                      child: AnimatedOpacity(
+                          opacity: !moving ? 1.0 : 0.0,
+                          duration: Duration(milliseconds: 500),
+                          child: new ReservationButton())),
                 ],
               );
             }),
@@ -315,8 +322,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   }
 
   void setMarkers(List<PlaceSimpleDto> places) {
-    if(places == null)
-      return;
+    if (places == null) return;
     markers = places.map((f) {
       var marker = new Marker(
           icon: f.haveMana ? _manaMarker : BitmapDescriptor.defaultMarker,
@@ -385,28 +391,27 @@ class ReservationButton extends StatelessWidget {
                       borderRadius: new BorderRadius.circular(30.0)),
                   borderSide: BorderSide(color: Colors.white),
                   hoverColor: Colors.black,
-                  icon:                             Container(
-                              child: Center(
-                                child: Text(upcomingCount.toString(),
-                                    style:
-                                        Theme.of(context).textTheme.display4),
-                              ),
-                              height: 25,
-                              width: 25,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: AppColors.colors[2]),
-                            ),
+                  icon: Container(
+                    child: Center(
+                      child: Text(upcomingCount.toString(),
+                          style: Theme.of(context).textTheme.display4),
+                    ),
+                    height: 25,
+                    width: 25,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: AppColors.colors[2]),
+                  ),
                   label: upcomingCount == -1
                       ? Text(
                           'All reservations',
                           style: Theme.of(context).textTheme.display3,
                         )
                       : Text(
-                              AppTranslations.of(context)
-                                  .text("reservations.upcoming_reservations")+ " ",
-                              style: Theme.of(context).textTheme.display3,
-                            ),
+                          AppTranslations.of(context)
+                                  .text("reservations.upcoming_reservations") +
+                              " ",
+                          style: Theme.of(context).textTheme.display3,
+                        ),
                   onPressed: () => Navigator.of(context).push(
                       new MaterialPageRoute(builder: (BuildContext context) {
                     return new ReservationsPage();

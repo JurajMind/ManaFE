@@ -52,9 +52,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
   }
 
   List<BarChartGroupData> mapData(Map<String, int> data) {
-    if (data == null) {
-      var a = List.generate(24, (index) => index).asMap();
-    }
+    if (data == null) {}
     max = 0;
     var parsedData = data.map((k, v) => MapEntry(int.parse(k), v));
     for (int i = 0; i < 24; i++) {

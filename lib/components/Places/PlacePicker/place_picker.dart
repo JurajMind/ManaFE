@@ -565,8 +565,7 @@ class PlacePickerState extends State<PlacePicker> {
                       moveToLocation(target);
                     }
                   }).catchError((error) {
-                    // TODO: Handle the exception here
-                    print(error);
+                     print(error);
                   });
                 }
               

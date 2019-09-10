@@ -68,7 +68,8 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                   tag: "${widget.type}_search_icon",
                   child: this.loading
                       ? IconButton(
-                          icon: Icon(Icons.search),                     
+                          onPressed: () {},
+                          icon: Icon(Icons.search),
                         )
                       : IconButton(
                           icon: Icon(Icons.search),

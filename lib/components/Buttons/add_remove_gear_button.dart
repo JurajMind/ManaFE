@@ -43,6 +43,5 @@ class AddRemoveGearButton extends StatelessWidget {
 
   bool matchAccessory(AsyncSnapshot<List<PipeAccesorySimpleDto>> snapshot) {
     return snapshot.data.indexWhere((a) => a.id == gear.id) != -1;
-    ;
   }
 }

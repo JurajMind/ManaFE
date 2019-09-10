@@ -18,7 +18,6 @@ class MixCardExpanded extends StatefulWidget {
 }
 
 class _MixologyExpandedState extends State<MixCardExpanded> {
-  double _bodyHeight = 0.0;
   bool expanded = false;
   @override
   Widget build(BuildContext context) {

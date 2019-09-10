@@ -85,8 +85,6 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
     StreamBuilder<SmokeSessionMetaDataDto> tobaccoMetaDataBuilder =
         new StreamBuilder(
       stream: dataProvider.smokeSessionBloc.smokeSessionMetaData,
@@ -641,9 +639,5 @@ class HeaderItem extends StatelessWidget {
       ),
       flex: 1,
     );
-  }
-
-  TextStyle _labelStyle() {
-    return new TextStyle(color: Colors.grey, fontSize: 20);
   }
 }

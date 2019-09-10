@@ -1,3 +1,4 @@
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 
 import 'Components/animation_list.dart';
@@ -13,10 +14,11 @@ class _AnimationPickerPageState extends State<AnimationPickerPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'SELECT ANIMATION',
+          AppTranslations.of(context)
+              .text("smoke_session.animation")
+              .toUpperCase(),
         ),
         centerTitle: true,
-        backgroundColor: Colors.black,
       ),
       body: Container(
         child: AnimationsPicker(),
