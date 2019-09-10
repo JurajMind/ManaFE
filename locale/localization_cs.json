@@ -45,7 +45,8 @@
         "by_brand": "Podle značky",
         "find_mix": "Najít mix",
         "add_to_my_gear": "Přidat k mému vybavení",
-        "remove_from_my_gear": "Odebrat z mého vybavení"
+        "remove_from_my_gear": "Odebrat z mého vybavení",
+        "use_this_accessory": "Použít v session"
     },
     "home": {
         "start": "START",
@@ -89,7 +90,7 @@
         "remove_favorite": "Odebrat oblíbený",
         "add_favorite": "Přidat oblíbený",
         "used_in_mixes": "Použíto v mixech",
-        "mix.all_ussage_in_mix": "Všechny mixy"
+        "all_ussage_in_mix": "Všechny mixy"
     },
     "reservations": {
         "upcoming_reservations": "Budoucí rezervace",

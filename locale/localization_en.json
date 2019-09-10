@@ -45,7 +45,8 @@
         "by_brand": "By brand",
         "find_mix": "Find mix",
         "add_to_my_gear": "Add to my gear",
-        "remove_from_my_gear": "Remove from my gear"
+        "remove_from_my_gear": "Remove from my gear",
+        "use_this_accessory": "Use in session"
     },
     "home": {
         "start": "START",
@@ -89,7 +90,7 @@
         "remove_favorite": "Remove favorite",
         "add_favorite": "Add favorite",
         "used_in_mixes": "Used in mixes",
-        "mix.all_ussage_in_mix": "All mixes"
+        "all_ussage_in_mix": "All mixes"
     },
     "reservations": {
         "upcoming_reservations": "Upcoming reservations",

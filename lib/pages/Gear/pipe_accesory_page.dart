@@ -46,52 +46,59 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
         child: CircularProgressIndicator(),
       );
     }
-    return new SafeArea(
+    return new Container(
+        color: Theme.of(context).backgroundColor,
         child: CustomScrollView(
-      slivers: <Widget>[
-        SliverAppBar(
-          backgroundColor: Colors.black,
-          pinned: true,
-          flexibleSpace: Container(),
-          actions: <Widget>[],
-          title: Hero(
-              tag: '${pipeAccesory.id}_name', child: Text(pipeAccesory.name)),
-          bottom: PreferredSize(
-              preferredSize: Size.fromHeight(20),
-              child: Text(pipeAccesory.brand)),
-          centerTitle: true,
-        ),
-        SliverList(
-          delegate: new SliverChildListDelegate(<Widget>[
-            SizedBox(
-              height: 8,
+          slivers: <Widget>[
+            SliverAppBar(
+              backgroundColor: Colors.black,
+              pinned: true,
+              flexibleSpace: Container(),
+              actions: <Widget>[],
+              title: Hero(
+                  tag: '${pipeAccesory.id}_name',
+                  child: Row(
+                    children: <Widget>[
+                      Text(pipeAccesory.brand),
+                      SizedBox(
+                        width: 4,
+                      ),
+                      Text(pipeAccesory.name),
+                    ],
+                  )),
+              centerTitle: true,
             ),
-            AddRemoveGearButton(
-              gear: pipeAccesory,
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            UseGearButton(
-              gear: pipeAccesory,
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            StreamBuilder<List<SmokeSessionSimpleDto>>(
-                stream: this.smokeSessions,
-                builder: (context, snapshot) {
-                  return SessionList(
-                    sessions: snapshot.data,
-                    sessionCount: 5,
-                  );
-                }),
-            SizedBox(
-              height: 100,
-            ),
-          ]),
-        )
-      ],
-    ));
+            SliverList(
+              delegate: new SliverChildListDelegate(<Widget>[
+                SizedBox(
+                  height: 8,
+                ),
+                AddRemoveGearButton(
+                  gear: pipeAccesory,
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                UseGearButton(
+                  gear: pipeAccesory,
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                StreamBuilder<List<SmokeSessionSimpleDto>>(
+                    stream: this.smokeSessions,
+                    builder: (context, snapshot) {
+                      return SessionList(
+                        sessions: snapshot.data,
+                        sessionCount: 5,
+                      );
+                    }),
+                SizedBox(
+                  height: 100,
+                ),
+              ]),
+            )
+          ],
+        ));
   }
 }
