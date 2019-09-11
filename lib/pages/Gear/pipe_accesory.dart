@@ -173,9 +173,9 @@ class SearchRow extends StatelessWidget {
     showDialog<PipeAccesorySimpleDto>(
       context: context,
       builder: (BuildContext context) => child,
-    ).then<void>((PipeAccesorySimpleDto value) {
+    ).then<void>((PipeAccesorySimpleDto value) async {
       if (value != null) {
-        showNumberDialog(context: context, accesory: value, bloc: bloc);
+        await bloc.addMyGear(value, 1000);
       }
     });
   }

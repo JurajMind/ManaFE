@@ -6,12 +6,14 @@ class MButton extends StatelessWidget {
   final Color iconColor;
   final String label;
   final VoidCallback onPressed;
+  final bool uploading;
   const MButton({
     Key key,
     this.icon,
     this.label,
     this.onPressed,
     this.iconColor = Colors.white,
+    this.uploading,
   }) : super(key: key);
 
   @override
@@ -20,6 +22,15 @@ class MButton extends StatelessWidget {
         borderRadius: new BorderRadius.circular(30.0));
     var side = BorderSide(
         color: onPressed != null ? Colors.white : Colors.grey, width: 2);
+
+    if (uploading ?? false)
+      return OutlineButton(
+          shape: shape,
+          borderSide: side,
+          onPressed: onPressed,
+          child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CircularProgressIndicator()));
 
     if (icon == null)
       return OutlineButton(

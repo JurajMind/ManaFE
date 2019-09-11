@@ -1,8 +1,10 @@
 import 'package:app/app/app.dart';
+import 'package:app/components/Buttons/add_remove_gear_button.dart';
 import 'package:app/components/Reviews/tobacco_review_list.dart';
 import 'package:app/components/SmokeSession/inMix_list.dart';
 import 'package:app/components/SmokeSession/session_list.dart';
 import 'package:app/models/extensions.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
@@ -61,33 +63,38 @@ class _TobaccoPageState extends State<TobaccoPage> {
               pinned: true,
               flexibleSpace: Container(),
               actions: <Widget>[],
-              title: Hero(
-                  tag: '${pipeAccesory.id}_name',
-                  child: Row(
-                    children: <Widget>[
-                      Extensions.accesoryPicture(pipeAccesory),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Text(pipeAccesory.brand),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Text(pipeAccesory.name),
-                    ],
-                  )),
+              title: Row(
+                children: <Widget>[
+                  Hero(
+                      tag: '${pipeAccesory.id}_name',
+                      child: Extensions.accesoryPicture(pipeAccesory)),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Container(
+                      width: MediaQuery.of(context).size.width - 160,
+                      child: AutoSizeText(
+                        "${pipeAccesory.brand} ${pipeAccesory.name}",
+                        maxLines: 1,
+                        minFontSize: 8,
+                      ))
+                ],
+              ),
               centerTitle: true,
             ),
             SliverList(
               delegate: new SliverChildListDelegate(<Widget>[
-                SizedBox(
-                  height: 8,
+                const SizedBox(
+                  height: 16,
                 ),
-                Divider(
-                  color: Colors.white,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: AddRemoveGearButton(
+                    gear: pipeAccesory,
+                  ),
                 ),
-                SizedBox(
-                  height: 8,
+                const SizedBox(
+                  height: 16,
                 ),
                 StreamBuilder<TobaccoInformationDto>(
                     stream: this.information,

@@ -47,7 +47,20 @@
         "add_to_my_gear": "Add to my gear",
         "remove_from_my_gear": "Remove from my gear",
         "use_this_accessory": "Use in session",
-        "remove_this_accessorry": "Remove from session"
+        "remove_this_accessorry": "Remove from session",
+        "select_brand": "Select brand",
+        "no_result_1": "No result for ",
+        "no_result_2": " found",
+        "no_result_3": "You can add ",
+        "no_result_4": " as new ",
+        "add_new_gear": "Add new gear",
+        "brand": "Brand",
+        "type": "Type",
+        "name": "Name",
+        "enter_new_gear_name": "Enter new gear name",
+        "save_and_use_new_gear": "Save and use new gear",
+        "not_found_tile": "Not found what you were looking for ?"
+
     },
     "home": {
         "start": "START",

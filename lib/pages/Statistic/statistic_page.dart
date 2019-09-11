@@ -50,9 +50,10 @@ class TimeModel {
     switch (index) {
       case 1:
         {
-          from = new DateTime(now.year, now.month, 1);
+          from = now.subtract(new Duration(days: 30));
           to = now;
-          label = 'Month ${now.month}';
+          label =
+              '${DateUtils.toStringDate(from)} - ${DateUtils.toStringDate(to)}';
           break;
         }
 
@@ -60,7 +61,8 @@ class TimeModel {
         {
           from = now.subtract(new Duration(days: 7));
           to = now;
-          label = 'Last week';
+          label =
+              '${DateUtils.toStringDate(from)} - ${DateUtils.toStringDate(to)}';
           break;
         }
 
@@ -111,8 +113,8 @@ class _StatisticPageState extends State<StatisticPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       durationSelector(context, 0, 'last Year'),
-                      durationSelector(context, 1, 'last Month'),
-                      durationSelector(context, 2, 'last Week'),
+                      durationSelector(context, 1, 'last 30 days'),
+                      durationSelector(context, 2, 'last 7 days'),
                       durationSelector(context, 3, 'Whole time'),
                       durationSelector(context, 4, 'Custom'),
                     ],
@@ -274,7 +276,15 @@ class _StatisticPageState extends State<StatisticPage> {
                           });
                           loadTime(bloc, selectedTime);
                         }),
-                        child: Text(selectedTime.label),
+                        child: Row(
+                          children: <Widget>[
+                            const Icon(Icons.calendar_today),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            Text(selectedTime.label),
+                          ],
+                        ),
                       )),
                   Expanded(
                       flex: 3,
@@ -303,6 +313,9 @@ class _StatisticPageState extends State<StatisticPage> {
                                               Theme.of(context).textTheme.title,
                                         );
                                 }),
+                            const SizedBox(
+                              width: 4,
+                            ),
                             Icon(
                               ManaIcons.hookah,
                               size: 40,

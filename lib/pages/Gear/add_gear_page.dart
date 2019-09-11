@@ -1,6 +1,8 @@
 import 'package:app/app/app.dart';
+import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
@@ -8,31 +10,39 @@ import 'brand_select_page.dart';
 
 class AddGearPage extends StatefulWidget {
   final String selectedType;
-  AddGearPage({Key key, this.selectedType}) : super(key: key);
+  final String pretypedName;
+  AddGearPage({Key key, this.selectedType, this.pretypedName})
+      : super(key: key);
 
   _AddGearPageState createState() => _AddGearPageState();
 }
 
 class _AddGearPageState extends State<AddGearPage> {
-
-@override
-initState(){
-  if(widget.selectedType != null){
-    selectedType = widget.selectedType;
+  @override
+  initState() {
+    if (widget.selectedType != null) {
+      selectedType = widget.selectedType;
+    }
+    if (widget.pretypedName != null) {
+      controller = new TextEditingController(text: widget.pretypedName);
+    } else {
+      controller = new TextEditingController();
+    }
+    super.initState();
   }
-  super.initState();
-}
 
   BrandGroup selectedBrand;
   String selectedType = "None";
   var types = ["None", "Tobacco", "Hookah", "Bowl", "HeatManagement", "Coal"];
   String newName = "";
+  TextEditingController controller;
 
   bool uploading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Add new gear')),
+      appBar: AppBar(
+          title: Text(AppTranslations.of(context).text("gear.add_new_gear"))),
       body: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -42,7 +52,7 @@ initState(){
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Brand:',
+                    AppTranslations.of(context).text("gear.brand") + " :",
                     style: Theme.of(context).textTheme.display2,
                   ),
                   SizedBox(
@@ -70,7 +80,7 @@ initState(){
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'Type:',
+                  AppTranslations.of(context).text("gear.type") + " :",
                   style: Theme.of(context).textTheme.display2,
                 ),
                 SizedBox(
@@ -99,7 +109,7 @@ initState(){
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'Name:',
+                  AppTranslations.of(context).text("gear.name") + " :",
                   style: Theme.of(context).textTheme.display2,
                 ),
                 SizedBox(
@@ -108,6 +118,7 @@ initState(){
                 Container(
                   width: 200,
                   child: TextField(
+                    controller: controller,
                     onChanged: (name) {
                       setState(() {
                         this.newName = name;
@@ -115,19 +126,21 @@ initState(){
                     },
                     decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Enter new gear name'),
+                        hintText: AppTranslations.of(context)
+                            .text("gear.enter_new_gear_name")),
                   ),
                 ),
               ],
             ),
-            OutlineButton.icon(
-              icon: Icon(Icons.save),
-              label: uploading
-                  ? CircularProgressIndicator()
-                  : Text('Save and use new gear'),
+            MButton(
+              icon: Icons.save,
+              uploading: uploading,
+              label: AppTranslations.of(context)
+                  .text('gear.save_and_use_new_gear'),
               onPressed: () {
-
-                if(selectedBrand == null || selectedType == "None" || newName == null){
+                if (selectedBrand == null ||
+                    selectedType == "None" ||
+                    newName == null) {
                   return;
                 }
 

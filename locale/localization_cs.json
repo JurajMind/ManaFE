@@ -47,7 +47,19 @@
         "add_to_my_gear": "Přidat k mému vybavení",
         "remove_from_my_gear": "Odebrat z mého vybavení",
         "use_this_accessory": "Použít v session",
-        "remove_this_accessorry": "Odstranit ze session"
+        "remove_this_accessorry": "Odstranit ze session",
+        "select_brand": "Vyberte značku ",
+        "no_result_1": "Žádný výsledek pro ",
+        "no_result_2": " nebyl nalezen",
+        "no_result_3": "Můžeš přidat ",
+        "no_result_4": " jako nový",
+        "add_new_gear": "Přidat nové",
+        "brand": "Značka",
+        "type": "Typ",
+        "name": "Jméno",
+        "enter_new_gear_name": "Zadejte název",
+        "save_and_use_new_gear": "Uložit a použit",
+        "not_found_tile": "Nenašli jste, co jste hledali ? "
     },
     "home": {
         "start": "START",

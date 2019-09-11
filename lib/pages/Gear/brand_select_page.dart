@@ -4,7 +4,6 @@ import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:queries/collections.dart';
 
 class BrandSelectPage extends StatefulWidget {
@@ -145,7 +144,8 @@ class BrandTypeSelect extends StatefulWidget {
     this.type, {
     Key key,
     this.left,
-    this.right, this.displayType,
+    this.right,
+    this.displayType,
   }) : super(key: key);
 
   @override
@@ -153,18 +153,16 @@ class BrandTypeSelect extends StatefulWidget {
 }
 
 class _BrandTypeSelectState extends State<BrandTypeSelect> {
-
-
   String searchString = "";
   bool searchMode = false;
   var textController = new TextEditingController();
   String display;
 
   @override
-  initState(){
-    if(widget.displayType != null){
+  initState() {
+    if (widget.displayType != null) {
       display = widget.displayType;
-    }else{
+    } else {
       display = widget.type;
     }
     super.initState();
@@ -221,6 +219,7 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
                       child: Padding(
                     padding: const EdgeInsets.only(left: 15.0),
                     child: TextField(
+                      autofocus: true,
                       controller: textController,
                       onChanged: (data) {
                         setState(() {
@@ -269,13 +268,17 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
                     children: <Widget>[
                       RichText(
                         text: TextSpan(
-                          text: 'No result for ',
+                          text: AppTranslations.of(context)
+                              .text("gear.no_result_1"),
                           style: DefaultTextStyle.of(context).style,
                           children: <TextSpan>[
                             TextSpan(
                                 text: searchString,
                                 style: TextStyle(fontWeight: FontWeight.bold)),
-                            TextSpan(text: ' found'),
+                            TextSpan(
+                              text: AppTranslations.of(context)
+                                  .text("gear.no_result_2"),
+                            ),
                           ],
                         ),
                       ),
@@ -291,7 +294,8 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
                           children: <Widget>[
                             RichText(
                               text: TextSpan(
-                                text: 'You can add ',
+                                text: AppTranslations.of(context)
+                                    .text("gear.no_result_3"),
                                 style: DefaultTextStyle.of(context).style,
                                 children: <TextSpan>[
                                   TextSpan(
@@ -319,21 +323,24 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
                 return ListView.builder(
                   itemCount: data.length + 1,
                   itemBuilder: (context, index) {
-
-                    if(index >= data.length)
+                    if (index >= data.length)
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ListTile(
-                          onTap: () =>  addNewBrand(context),
+                          onTap: () => addNewBrand(context),
                           leading: Icon(Icons.add),
-                           title: Text('Not found what you were looking for?'),
-                    subtitle: Text('Add new brand'),
+                          title: Text('Not found what you were looking for?'),
+                          subtitle: Row(
+                            children: <Widget>[
+                              Icon(Icons.add),
+                              Text('Add new brand'),
+                            ],
+                          ),
                         ),
                       );
 
                     var brand = data[index];
                     return BrandListItem(
-                      
                       brand: brand,
                       brandType: widget.type,
                       ontap: () {
@@ -349,13 +356,11 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
   }
 
   void addNewBrand(BuildContext context) {
-     Navigator.of(context)
+    Navigator.of(context)
         .push<BrandGroup>(MaterialPageRoute(
-            builder: (context) => NewBrandTypeSelect(),
-            fullscreenDialog: true))
+            builder: (context) => NewBrandTypeSelect(), fullscreenDialog: true))
         .then((newGear) {
-      if (newGear != null)
-        Navigator.of(context).pop(newGear);
+      if (newGear != null) Navigator.of(context).pop(newGear);
     });
   }
 }

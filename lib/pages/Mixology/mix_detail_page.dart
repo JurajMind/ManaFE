@@ -26,7 +26,6 @@ class MixDetailPage extends StatefulWidget {
 
 class MixDetailPageState extends State<MixDetailPage> {
   final double _appBarHeight = 256.0;
-  var data = [0.0, 1.0, 1.5, 2.0, 0.0, 0.0, -0.5, -1.0, -0.5, 0.0, 0.0];
   bool editName;
   BehaviorSubject<TobaccoInformationDto> information =
       new BehaviorSubject<TobaccoInformationDto>();
