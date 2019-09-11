@@ -10,7 +10,7 @@ class StatisticBloc {
 
   StatisticBloc._() {
     var now = DateTime.now();
-    loadStatistic(new DateTime(now.year, now.month, 1), DateTime.now());
+    loadStatistic(now.subtract(new Duration(days: 30)), DateTime.now());
   }
 
   BehaviorSubject<PersonStatisticsOverallDto> statistic =

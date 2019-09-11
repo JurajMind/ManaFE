@@ -30,6 +30,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
           new List<PipeAccesorySimpleDto>());
   final searchOnChange = new BehaviorSubject<String>();
   bool loading = false;
+  String lastSearch = "";
 
   List<PipeAccesorySimpleDto> ownSimpleAccesories;
 
@@ -103,8 +104,10 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
 
   void submitSearch(text) {
     if (text == "") return;
+    if (text == lastSearch) return;
     setState(() {
       loading = true;
+      lastSearch = text;
     });
     this.searchResult.add(new List<PipeAccesorySimpleDto>());
     App.http
@@ -133,13 +136,15 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
               children: <Widget>[
                 RichText(
                   text: TextSpan(
-                    text: 'No result for ',
+                    text: AppTranslations.of(context).text("gear.no_result_1"),
                     style: DefaultTextStyle.of(context).style,
                     children: <TextSpan>[
                       TextSpan(
                           text: controller.text,
                           style: TextStyle(fontWeight: FontWeight.bold)),
-                      TextSpan(text: ' found'),
+                      TextSpan(
+                          text: AppTranslations.of(context)
+                              .text("gear.no_result_2")),
                     ],
                   ),
                 ),
@@ -152,6 +157,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                         .push<PipeAccesorySimpleDto>(MaterialPageRoute(
                             builder: (context) => AddGearPage(
                                   selectedType: widget.searchType,
+                                  pretypedName: controller.text,
                                 ),
                             fullscreenDialog: true))
                         .then((newGear) {
@@ -163,13 +169,17 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                     children: <Widget>[
                       RichText(
                         text: TextSpan(
-                          text: 'You can add ',
+                          text: AppTranslations.of(context)
+                              .text("gear.no_result_3"),
                           style: DefaultTextStyle.of(context).style,
                           children: <TextSpan>[
                             TextSpan(
                                 text: controller.text,
                                 style: TextStyle(fontWeight: FontWeight.bold)),
-                            TextSpan(text: ' as new ${widget.searchType}'),
+                            TextSpan(
+                                text: AppTranslations.of(context)
+                                        .text("gear.no_result_4") +
+                                    ' ${widget.searchType}'),
                           ],
                         ),
                       ),
@@ -192,23 +202,37 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
               itemBuilder: (context, index) {
                 if (index >= snapshot.data.length) {
                   return new ListTile(
-                    leading: false
-                        ? Icon(Icons.shopping_basket)
-                        : Container(
-                            width: 0.0,
-                            height: 10.0,
-                          ),
+                    leading: Icon(Icons.add),
                     onTap: () => Navigator.of(context)
                         .push<PipeAccesorySimpleDto>(MaterialPageRoute(
                             builder: (context) => AddGearPage(
                                   selectedType: widget.searchType,
+                                  pretypedName: controller.text,
                                 ),
                             fullscreenDialog: true))
                         .then((newGear) {
                       Navigator.of(context).pop(newGear);
                     }),
-                    title: Text('Not found what you were looking for?'),
-                    subtitle: Text('Add your gear'),
+                    title: Center(
+                        child: Text('Not found what you were looking for?')),
+                    subtitle: Center(
+                      child: RichText(
+                        text: TextSpan(
+                          text: AppTranslations.of(context)
+                              .text("gear.no_result_3"),
+                          style: DefaultTextStyle.of(context).style,
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: controller.text,
+                                style: TextStyle(fontWeight: FontWeight.bold)),
+                            TextSpan(
+                                text: AppTranslations.of(context)
+                                        .text("gear.no_result_4") +
+                                    '${widget.searchType}'),
+                          ],
+                        ),
+                      ),
+                    ),
                   );
                 }
                 return _createResult(index, snapshot.data[index], context);

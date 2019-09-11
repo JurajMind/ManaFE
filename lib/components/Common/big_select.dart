@@ -19,9 +19,12 @@ class BigSelect extends StatelessWidget {
         children: <Widget>[
           Text(
             AppTranslations.of(context).text(labels[curentView]),
-            style: Theme.of(context).textTheme.display2,
+            style: Theme.of(context).textTheme.display1,
           ),
-          Icon(Icons.arrow_drop_down)
+          Icon(
+            Icons.arrow_drop_down,
+            size: 30,
+          )
         ],
       ),
     );

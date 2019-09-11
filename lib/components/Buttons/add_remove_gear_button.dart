@@ -21,7 +21,7 @@ class AddRemoveGearButton extends StatelessWidget {
               iconColor: Colors.red,
               label: "gear.remove_from_my_gear",
               onPressed: () async {
-                bloc.removeMyGear(gear, 1);
+                bloc.removeMyGear(gear, 1000);
               },
             );
           }
@@ -35,7 +35,7 @@ class AddRemoveGearButton extends StatelessWidget {
             iconColor: AppColors.colors[1],
             label: "gear.add_to_my_gear",
             onPressed: () async {
-              bloc.addMyGear(gear, 1);
+              bloc.addMyGear(gear, 1000);
             },
           );
         });
