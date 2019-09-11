@@ -51,7 +51,7 @@ class MyGear extends StatelessWidget {
         return ListView.builder(
             controller: scrollController,
             physics: scrollPhysics,
-            itemCount: filtered.length + 1,
+            itemCount: filtered.length + 2,
             itemBuilder: (context, index) {
               if (filtered.length == 0) {
                 return Column(
@@ -100,8 +100,14 @@ class MyGear extends StatelessWidget {
                     onViewChanged: onViewChanged,
                     type: type);
               }
+
+              if(index >= filtered.length){
+                return SizedBox(height: 40,);
+              }
               var data = filtered[index - 1];
               return new PipeAccesoryListItem(pipeAccesory: data);
+
+              
             });
       },
     );

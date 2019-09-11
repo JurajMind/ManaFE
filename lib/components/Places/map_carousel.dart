@@ -142,10 +142,13 @@ class _CarrousselState extends State<MapCarousel> {
                   Icon(Icons.add_location),
                   Hero(
                     tag: 'add_new_place_label',
-                    child: Text(
-                      AppTranslations.of(context)
-                          .text("reservations.add_new_place"),
-                      style: Theme.of(context).textTheme.display2,
+                    child: Center(
+                      child: Text(
+                        AppTranslations.of(context)
+                            .text("reservations.add_new_place"),
+                             textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.display2,
+                      ),
                     ),
                   )
                 ],

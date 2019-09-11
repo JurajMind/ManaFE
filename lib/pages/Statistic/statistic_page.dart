@@ -17,6 +17,7 @@ import 'package:app/pages/Statistic/test_page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/support/mana_icons_icons.dart';
 import 'package:app/utils/translations/app_translations.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/Charts/sparkline.dart';
@@ -282,7 +283,7 @@ class _StatisticPageState extends State<StatisticPage> {
                             const SizedBox(
                               width: 4,
                             ),
-                            Text(selectedTime.label),
+                            Expanded(child: AutoSizeText(selectedTime.label,maxLines: 1,)),
                           ],
                         ),
                       )),

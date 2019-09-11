@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class LabeledValue extends StatelessWidget {
@@ -32,13 +33,11 @@ class LabeledValue extends StatelessWidget {
                         .textTheme
                         .title,
                   ),
-            Text(
+            AutoSizeText(
               value ?? '',
-              style: Theme.of(context)
-                  .copyWith(
-                      textTheme: TextTheme(title: TextStyle(fontSize: 16)))
-                  .textTheme
-                  .title,
+              maxLines: 1,
+              minFontSize: 10,
+              maxFontSize: 16,
             ),
           ]),
     );
