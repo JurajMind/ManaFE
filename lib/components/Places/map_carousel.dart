@@ -36,6 +36,7 @@ class _CarrousselState extends State<MapCarousel> {
   initState() {
     super.initState();
 
+    
     if (widget.selectedPlace != null) {
       currentpage = widget.nearbyPlaces.value.indexOf(widget.selectedPlace);
       widget.nearbyPlaces.doOnData((onData) {
@@ -69,6 +70,11 @@ class _CarrousselState extends State<MapCarousel> {
       // controller.animateToPage(pageIndex + 1,
       //     curve: Curves.easeIn, duration: const Duration(milliseconds: 500));
     }
+
+   var pageIndex =
+          this.widget.nearbyPlaces?.value?.indexOf(this.widget.selectedPlace);
+          print(pageIndex);
+          
     super.didUpdateWidget(oldWidget);
   }
 

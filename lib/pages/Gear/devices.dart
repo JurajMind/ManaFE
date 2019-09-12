@@ -28,8 +28,7 @@ class Devices extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: GridView.builder(
-              controller: scrollController,
-              physics: scrollPhysics,
+              physics: const AlwaysScrollableScrollPhysics(),
               gridDelegate:
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               itemCount: (snapshot.data?.length ?? 0) + 1,

@@ -8,7 +8,6 @@ import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/person/person_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
-import 'package:app/pages/Gear/gear_page.dart';
 import 'package:app/pages/Statistic/statistic_page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';
 import 'package:app/services/signal_r.dart';
@@ -20,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:openapi/api.dart';
 
+import 'Gear/gear_scroll.dart';
 import 'Mixology/mixology_list.dart';
 import 'Places/places_map_page.dart';
 import 'SmokeSession/Components/gradiend_color_wheel_rotate.dart';
@@ -42,6 +42,7 @@ StreamSubscription<Flushbar<Map<String, dynamic>>> subscription;
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 2;
+  
   final Map<int, GlobalKey<NavigatorState>> navigatorKeys = {
     0: GlobalKey<NavigatorState>(),
     1: GlobalKey<NavigatorState>(),
@@ -57,10 +58,12 @@ class _HomePageState extends State<HomePage> {
   PersonBloc personBloc;
 
   StreamSubscription<int> activeTabSub;
+  Stream popNotification;
 
   @override
   void initState() {
     super.initState();
+    
     final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
     _firebaseMessaging.requestNotificationPermissions();
     try {
@@ -223,10 +226,13 @@ class _HomePageState extends State<HomePage> {
         ),
       );
 
+
+  
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async {
+          
           if (!navigatorKeys[_currentIndex].currentState.canPop()) {
             if (_currentIndex != 2) {
               _setActiveTab(2);
@@ -268,7 +274,7 @@ class _HomePageState extends State<HomePage> {
                       tabFocusNodes: tabFocusNodes,
                     ),
                     VisibilityStageNavigator(
-                      new GearPage(),
+                      new GearScrollHome(),
                       3,
                       currentIndex: _currentIndex,
                       navigatorKeys: navigatorKeys,

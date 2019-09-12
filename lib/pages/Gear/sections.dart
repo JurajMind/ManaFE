@@ -59,8 +59,7 @@ class Section {
 
 List<Section> getAllSections(
     GearBloc bloc,
-    ScrollPhysics physics,
-    Map<int, ScrollController> controllers,
+    ScrollPhysics physics,   
     int currentView,
     ValueChanged<int> onViewChanged,
     BuildContext context) {
@@ -71,7 +70,7 @@ List<Section> getAllSections(
         rightColor: _mariner,
         backgroundAsset: 'images/gear/mygear.jpg',
         child: Devices(
-          scrollController: controllers[0],
+         
           scrollPhysics: physics,
         )),
     Section(
@@ -82,7 +81,7 @@ List<Section> getAllSections(
         child: PipeAccesoryList(
           currentView: currentView,
           onViewChanged: onViewChanged,
-          scrollController: controllers[1],
+         
           scrollPhysics: physics,
           type: "Tobacco",
         )),
@@ -94,7 +93,7 @@ List<Section> getAllSections(
       child: PipeAccesoryList(
         currentView: currentView,
         onViewChanged: onViewChanged,
-        scrollController: controllers[2],
+        
         scrollPhysics: physics,
         type: "Hookah",
       ),
@@ -107,7 +106,7 @@ List<Section> getAllSections(
         child: PipeAccesoryList(
           currentView: currentView,
           onViewChanged: onViewChanged,
-          scrollController: controllers[3],
+       
           scrollPhysics: physics,
           type: "Bowl",
         )),
@@ -119,7 +118,7 @@ List<Section> getAllSections(
         child: PipeAccesoryList(
           currentView: currentView,
           onViewChanged: onViewChanged,
-          scrollController: controllers[4],
+        
           scrollPhysics: physics,
           type: "HeatManagement",
         )),
@@ -131,7 +130,7 @@ List<Section> getAllSections(
         child: PipeAccesoryList(
           currentView: currentView,
           onViewChanged: onViewChanged,
-          scrollController: controllers[5],
+       
           scrollPhysics: physics,
           type: "Coal",
         )),

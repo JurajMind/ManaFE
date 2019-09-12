@@ -246,9 +246,8 @@ class PipeAccesoryList extends StatelessWidget {
       case 0:
         return MyGear(
           currentView: currentView,
-          onViewChanged: onViewChanged,
-          scrollController: scrollController,
-          scrollPhysics: scrollPhysics,
+          onViewChanged: onViewChanged,         
+          scrollPhysics: const AlwaysScrollableScrollPhysics(),
           type: type,
         );
         break;
@@ -258,8 +257,7 @@ class PipeAccesoryList extends StatelessWidget {
         return MyGear(
           currentView: currentView,
           onViewChanged: onViewChanged,
-          scrollController: scrollController,
-          scrollPhysics: scrollPhysics,
+          scrollPhysics: const AlwaysScrollableScrollPhysics(),
           type: type,
         );
     }
@@ -272,8 +270,8 @@ class PipeAccesoryList extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.data == null) {
           return ListView.builder(
-              controller: scrollController,
-              physics: scrollPhysics,
+            
+              physics: const AlwaysScrollableScrollPhysics(),
               itemCount: 10,
               itemBuilder: (context, index) {
                 return new PipeAccesoryListItemShimmer();
@@ -287,8 +285,7 @@ class PipeAccesoryList extends StatelessWidget {
         }
 
         return ListView.builder(
-            controller: scrollController,
-            physics: scrollPhysics,
+            physics: const AlwaysScrollableScrollPhysics(),
             itemCount: snapshot.data.length + 1,
             itemBuilder: (context, index) {
               if (index == 0) {
