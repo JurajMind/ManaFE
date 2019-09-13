@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:app/utils/numbers_helper.dart';
@@ -397,13 +397,13 @@ class SliderClipper extends CustomClipper<Path> {
 
     final baseY = top + (basePercentFromBottom * height);
     final leftX = -0.15 * size.width;
-    final leftPoint = Point(leftX, baseY);
+    final leftPoint = math.Point(leftX, baseY);
     final rightX = 1.15 * size.width;
-    final rightPoint = Point(rightX, baseY);
+    final rightPoint = math.Point(rightX, baseY);
 
     final dragX = sliderController.draggingHorizontalPercent * size.width;
     final dragY = top + (dragPercentFromBottom * height);
-    final crestPoint = Point(dragX, dragY.clamp(top, bottom));
+    final crestPoint = math.Point(dragX, dragY.clamp(top, bottom));
 
     double excessDrag = 0.0;
     if (sliderController.draggingPercent < 0.0) {

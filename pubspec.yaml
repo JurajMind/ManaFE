@@ -13,7 +13,7 @@ dependencies:
   flutter_secure_storage: ^3.2.1+1
   rxdart: ^0.21.0
   vibrate: '^0.0.4'
-  intl: ^0.15.7
+  intl: ^0.16.0
   animated_background:
     git:
       url: https://github.com/AndreBaltazar8/flutter_animated_background
@@ -44,7 +44,7 @@ dependencies:
   uri: ^0.11.3+1
   google_maps_webservice: ^0.0.14
   firebase_messaging: ^4.0.0+1
-  charts_flutter: ^0.6.0
+  charts_flutter: ^0.8.0
   flutter_section_table_view: ^1.0.5
   shake: ^0.1.0
   wave: ^0.0.8
@@ -64,6 +64,9 @@ dependencies:
   flutter_slidable: '^0.5.3'
   smooth_star_rating: ^1.0.3
   fl_chart: ^0.1.5
+
+dependency_overrides:
+  intl: ^0.16.0
 
 flutter_icons:
   android: true
