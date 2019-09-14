@@ -154,3 +154,15 @@ class Extensions {
     ];
   }
 }
+
+class Convertor {
+  static PipeAccesorySimpleDto getPipeAccesory(TobaccoSimpleDto tobacco) {
+    var result = PipeAccesorySimpleDto();
+    result.brand = tobacco.brand;
+    result.brandId = tobacco.brandId;
+    result.id = tobacco.id;
+    result.name = tobacco.name;
+    result.type = "Tobacco";
+    return result;
+  }
+}

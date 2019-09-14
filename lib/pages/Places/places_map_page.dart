@@ -81,7 +81,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
 
       setMarkers(bloc.places.value);
       nearbyPlaces.add(bloc.places.value);
-      bloc.places.doOnData((onData) {
+      bloc.places.listen((onData) {
         setMarkers(onData);
         nearbyPlaces.add(onData);
       });
@@ -314,8 +314,17 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
     var position = imPosition ?? curentView.target;
     var newPlaces = await App.http
         .getNearbyPlaces(lat: position.latitude, lng: position.longitude);
-    nearbyPlaces.add(newPlaces);
-    setMarkers(newPlaces);
+
+    var oldPlaces = nearbyPlaces.value;
+    var merge = new List<PlaceSimpleDto>();
+    merge.addAll(oldPlaces);
+    merge.addAll(newPlaces);
+
+    var comparer = new PalceComparer();
+    var a = new Collection(merge).distinct(comparer).toList();
+    this.nearbyPlaces.add(a);
+    setMarkers(a);
+
     setState(() {
       loading = false;
     });
@@ -419,5 +428,17 @@ class ReservationButton extends StatelessWidget {
                 )
               ]);
             }));
+  }
+}
+
+class PalceComparer implements IEqualityComparer<PlaceSimpleDto> {
+  @override
+  bool equals(a, b) {
+    return a?.id == b?.id;
+  }
+
+  @override
+  int getHashCode(object) {
+    return object.id;
   }
 }

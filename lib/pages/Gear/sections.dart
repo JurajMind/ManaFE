@@ -36,15 +36,13 @@ class Section {
       this.leftColor,
       this.rightColor,
       this.child,
-      this.children,
-      this.scrollController});
+      this.children});
   final String title;
   final String backgroundAsset;
   final Color leftColor;
   final Color rightColor;
   final Widget child;
   final List<Widget> children;
-  final ScrollController scrollController;
 
   @override
   bool operator ==(Object other) {
@@ -57,12 +55,8 @@ class Section {
   int get hashCode => title.hashCode;
 }
 
-List<Section> getAllSections(
-    GearBloc bloc,
-    ScrollPhysics physics,   
-    int currentView,
-    ValueChanged<int> onViewChanged,
-    BuildContext context) {
+List<Section> getAllSections(GearBloc bloc, ScrollPhysics physics,
+    int currentView, ValueChanged<int> onViewChanged, BuildContext context) {
   return <Section>[
     Section(
         title: AppTranslations.of(context).text('gear.devices').toUpperCase(),
@@ -70,7 +64,6 @@ List<Section> getAllSections(
         rightColor: _mariner,
         backgroundAsset: 'images/gear/mygear.jpg',
         child: Devices(
-         
           scrollPhysics: physics,
         )),
     Section(
@@ -81,7 +74,6 @@ List<Section> getAllSections(
         child: PipeAccesoryList(
           currentView: currentView,
           onViewChanged: onViewChanged,
-         
           scrollPhysics: physics,
           type: "Tobacco",
         )),
@@ -93,7 +85,6 @@ List<Section> getAllSections(
       child: PipeAccesoryList(
         currentView: currentView,
         onViewChanged: onViewChanged,
-        
         scrollPhysics: physics,
         type: "Hookah",
       ),
@@ -106,7 +97,6 @@ List<Section> getAllSections(
         child: PipeAccesoryList(
           currentView: currentView,
           onViewChanged: onViewChanged,
-       
           scrollPhysics: physics,
           type: "Bowl",
         )),
@@ -118,7 +108,6 @@ List<Section> getAllSections(
         child: PipeAccesoryList(
           currentView: currentView,
           onViewChanged: onViewChanged,
-        
           scrollPhysics: physics,
           type: "HeatManagement",
         )),
@@ -130,7 +119,6 @@ List<Section> getAllSections(
         child: PipeAccesoryList(
           currentView: currentView,
           onViewChanged: onViewChanged,
-       
           scrollPhysics: physics,
           type: "Coal",
         )),

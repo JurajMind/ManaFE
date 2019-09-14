@@ -31,15 +31,18 @@ class _CarrousselState extends State<MapCarousel> {
   int currentpage = 1;
   bool loading = true;
   int clickedIndex = 1;
-
+  int selectPlaceId = 0;
+  BehaviorSubject<List<PlaceSimpleDto>> nearbyPlaces;
+  StreamSubscription<List<PlaceSimpleDto>> subscription;
   @override
   initState() {
     super.initState();
 
-    
     if (widget.selectedPlace != null) {
-      currentpage = widget.nearbyPlaces.value.indexOf(widget.selectedPlace);
-      widget.nearbyPlaces.doOnData((onData) {
+      selectPlaceId = widget.selectedPlace.id;
+      nearbyPlaces = widget.nearbyPlaces;
+      currentpage = nearbyPlaces.value.indexOf(widget.selectedPlace);
+      subscription = nearbyPlaces.listen((onData) {
         var index = onData.indexOf(widget.selectedPlace);
         controller.jumpToPage(index + 1);
       });
@@ -58,24 +61,34 @@ class _CarrousselState extends State<MapCarousel> {
   @override
   dispose() {
     controller.dispose();
+    subscription.cancel();
     super.dispose();
   }
 
   @override
   void didUpdateWidget(MapCarousel oldWidget) {
+    super.didUpdateWidget(oldWidget);
     if (oldWidget?.selectedPlace?.id != this.widget?.selectedPlace?.id) {
+      selectPlaceId = widget?.selectedPlace?.id;
       var pageIndex =
           this.widget.nearbyPlaces.value.indexOf(this.widget.selectedPlace);
       controller.jumpToPage(pageIndex + 1);
       // controller.animateToPage(pageIndex + 1,
       //     curve: Curves.easeIn, duration: const Duration(milliseconds: 500));
-    }
 
-   var pageIndex =
-          this.widget.nearbyPlaces?.value?.indexOf(this.widget.selectedPlace);
-          print(pageIndex);
-          
-    super.didUpdateWidget(oldWidget);
+    }
+    if (oldWidget.selectedPlace == null && this.widget.selectedPlace == null) {
+      if (widget.nearbyPlaces.value == null) return;
+      var newPageIndex = this
+          .widget
+          .nearbyPlaces
+          .value
+          .indexWhere((s) => s.id == this.selectPlaceId);
+      if (newPageIndex == -1) return;
+      if (currentpage != newPageIndex) {
+        controller.jumpToPage(newPageIndex + 1);
+      }
+    }
   }
 
   @override
@@ -105,6 +118,8 @@ class _CarrousselState extends State<MapCarousel> {
               onPageChanged: (value) async {
                 setState(() {
                   currentpage = value;
+                  this.selectPlaceId =
+                      widget.nearbyPlaces.value[currentpage - 1].id;
                 });
                 var place = snapshot.data[value - 1];
 
@@ -152,7 +167,7 @@ class _CarrousselState extends State<MapCarousel> {
                       child: Text(
                         AppTranslations.of(context)
                             .text("reservations.add_new_place"),
-                             textAlign: TextAlign.center,
+                        textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.display2,
                       ),
                     ),

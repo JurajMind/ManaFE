@@ -445,9 +445,8 @@ class _SnappingScrollPhysics extends ClampingScrollPhysics {
 }
 
 class GearScrollHome extends StatefulWidget {
-    final Function callback;
-  const GearScrollHome({Key key,this.callback}) : super(key: key);
-
+  final Function callback;
+  const GearScrollHome({Key key, this.callback}) : super(key: key);
 
   @override
   _GearScrollHomeState createState() => new _GearScrollHomeState();
@@ -472,7 +471,7 @@ class _GearScrollHomeState extends State<GearScrollHome> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(      
+    return new Scaffold(
       bottomNavigationBar: SizedBox(
         height: 55,
       ),
@@ -485,9 +484,8 @@ class _GearScrollHomeState extends State<GearScrollHome> {
   }
 
   void _handleBackButton(double midScrollOffset) {
-    
     setState(() {
-     showBack = false; 
+      showBack = false;
     });
     if (_scrollController.offset >= midScrollOffset)
       _scrollController.animateTo(0.0,
@@ -522,19 +520,19 @@ class _GearScrollHomeState extends State<GearScrollHome> {
   void _maybeScroll(double midScrollOffset, int pageIndex, double xOffset) {
     if (_scrollController.offset < midScrollOffset) {
       setState(() {
-       showBack = true; 
+        showBack = true;
       });
       // Scroll the overall list to the point where only one section card shows.
       // At the same time scroll the PageViews to the page at pageIndex.
       _headingPageController.animateToPage(pageIndex,
           curve: _kScrollCurve, duration: _kScrollDuration);
-      _scrollController.animateTo(midScrollOffset,
-          curve: _kScrollCurve, duration: _kScrollDuration).then(
-            (a) {
-               _scrollController.animateTo(600,
-          curve: _kScrollCurve, duration: _kScrollDuration);
-            }
-          );
+      _scrollController
+          .animateTo(midScrollOffset,
+              curve: _kScrollCurve, duration: _kScrollDuration)
+          .then((a) {
+        _scrollController.animateTo(600,
+            curve: _kScrollCurve, duration: _kScrollDuration);
+      });
     } else {
       // One one section card is showing: scroll one page forward or back.
       final double centerX =
@@ -546,7 +544,6 @@ class _GearScrollHomeState extends State<GearScrollHome> {
     }
   }
 
-
   bool _handlePageNotification(ScrollNotification notification,
       PageController leader, PageController follower) {
     if (notification.depth == 0 && notification is ScrollUpdateNotification) {
@@ -555,9 +552,9 @@ class _GearScrollHomeState extends State<GearScrollHome> {
         follower.position.jumpToWithoutSettling(
             leader.position.pixels); // ignore: deprecated_member_use
 
-            if( leader.position.pixels == 0){
-              _handleBackButton(200);
-            }
+      if (leader.position.pixels == 0) {
+        // _handleBackButton(200);
+      }
     }
     if (notification.depth == 1 && notification is ScrollStartNotification) {}
     return false;
@@ -601,7 +598,6 @@ class _GearScrollHomeState extends State<GearScrollHome> {
     return headings;
   }
 
-  
   Widget _buildBody(BuildContext context) {
     final MediaQueryData mediaQueryData = MediaQuery.of(context);
     final double statusBarHeight = mediaQueryData.padding.top;
@@ -609,9 +605,9 @@ class _GearScrollHomeState extends State<GearScrollHome> {
     final double appBarMaxHeight = screenHeight - statusBarHeight - 50;
     DataProvider dataProvider = DataProvider.getData(context);
     GearBloc gearBloc = dataProvider.gearBloc;
-   
-    List<Section> allSections = getAllSections(gearBloc, innerScrollPhysics,
-         curentView, onViewChanged, context);
+
+    List<Section> allSections = getAllSections(
+        gearBloc, innerScrollPhysics, curentView, onViewChanged, context);
     // The scroll offset that reveals the appBarMidHeight appbar.
     final double appBarMidScrollOffset =
         statusBarHeight + appBarMaxHeight - _kAppBarMidHeight;
@@ -667,9 +663,7 @@ class _GearScrollHomeState extends State<GearScrollHome> {
                         children: allSections.map((Section section) {
                           return NotificationListener<ScrollNotification>(
                               onNotification:
-                                  (ScrollNotification notification) {
-                               
-                              },
+                                  (ScrollNotification notification) {},
                               child: section.child);
                         }).toList(),
                       ),
@@ -683,9 +677,9 @@ class _GearScrollHomeState extends State<GearScrollHome> {
             top: statusBarHeight,
             left: 0.0,
             child: AnimatedOpacity(
-               opacity: showBack ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: 500),
-                          child: new IconTheme(
+              opacity: showBack ? 1.0 : 0.0,
+              duration: Duration(milliseconds: 500),
+              child: new IconTheme(
                 data: const IconThemeData(color: Colors.white),
                 child: new SafeArea(
                   top: false,

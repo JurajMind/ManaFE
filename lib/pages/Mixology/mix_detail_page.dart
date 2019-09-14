@@ -4,7 +4,8 @@ import 'package:app/components/Mixology/use_mix_button.dart';
 import 'package:app/components/Reviews/tobacco_review_list.dart';
 import 'package:app/components/SmokeSession/session_list.dart';
 import 'package:app/const/theme.dart';
-import 'package:app/models/extensions%20copy.dart';
+import 'package:app/models/extensions.dart';
+
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Gear/tobacco_page.dart';
 import 'package:app/utils/translations/app_translations.dart';
