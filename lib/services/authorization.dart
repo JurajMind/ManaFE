@@ -11,7 +11,7 @@ import 'package:openapi/api.dart';
 class Authorize {
   static final Authorize _singleton = new Authorize._internal();
   String url = 'https://${App.baseUri}/token';
-  final _storage = new FlutterSecureStorage();
+  FlutterSecureStorage _storage;
   String _token;
   String _userName;
 
@@ -19,7 +19,9 @@ class Authorize {
     return _singleton;
   }
 
-  Authorize._internal();
+  Authorize._internal() {
+    this._storage = new FlutterSecureStorage();
+  }
 
   Future<String> authorize(String userName, String password) async {
     final response = await http.post(
@@ -137,18 +139,16 @@ class Authorize {
     return "ERROR";
   }
 
-    Future<bool> forgotPassword(String email) async {
+  Future<bool> forgotPassword(String email) async {
     _token = null;
     final response = await http.post(
       'https://${App.baseUri}/api/Account/ForgotPassword',
-      body: {
-        "Email": email     
-      },
+      body: {"Email": email},
     );
-      if(response.statusCode == 200){
-        return true;
-      }
-      return false;
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
   }
 
   Future<String> writeToken(dynamic responseJson) async {

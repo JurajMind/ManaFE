@@ -270,9 +270,9 @@ packages:
   flutter_secure_storage:
     dependency: "direct main"
     description:
-      name: flutter_secure_storage
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: flutter_secure_storage-develop
+      relative: true
+    source: path
     version: "3.3.1"
   flutter_slidable:
     dependency: "direct main"
@@ -300,6 +300,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.1"
+  flutter_web_plugins:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   font_awesome_flutter:
     dependency: "direct main"
     description:
@@ -837,6 +842,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.6"
+  universal_html:
+    dependency: transitive
+    description:
+      name: universal_html
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.6"
+  universal_io:
+    dependency: transitive
+    description:
+      name: universal_io
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.8.4"
   uri:
     dependency: "direct main"
     description:
@@ -937,6 +956,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.16"
+  zone_local:
+    dependency: transitive
+    description:
+      name: zone_local
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
 sdks:
   dart: ">=2.4.0 <3.0.0"
   flutter: ">=1.6.0 <2.0.0"

@@ -5,6 +5,7 @@ import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/start.page.dart';
 import 'package:app/pages/home.page.dart';
+import 'package:app/services/authorization.dart';
 import 'package:app/utils/translations/app_translations_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -31,6 +32,7 @@ class _AppWidgetState extends State<AppWidget> {
   bool _isAuthorized = false;
   bool splash = true;
   AppTranslationsDelegate _newLocaleDelegate;
+  var authorization = new Authorize();
 
   @override
   void initState() {
@@ -94,12 +96,7 @@ class _AppWidgetState extends State<AppWidget> {
   }
 
   Future<bool> isUserAuthorized() async {
-    final storage = new FlutterSecureStorage();
-    String token = await storage.read(key: "accessToken");
-
-    if (token != null) return true;
-
-    return false;
+    return this.authorization.isAuthorized();
   }
 }
 
