@@ -475,7 +475,7 @@ class _GearScrollHomeState extends State<GearScrollHome> {
       bottomNavigationBar: SizedBox(
         height: 55,
       ),
-      backgroundColor: _kAppBackgroundColor,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: new Builder(
         // Insert an element so that _buildBody can find the PrimaryScrollController.
         builder: _buildBody,
@@ -581,7 +581,7 @@ class _GearScrollHomeState extends State<GearScrollHome> {
     final List<Widget> headings = <Widget>[];
     for (int index = 0; index < allSections.length; index++) {
       headings.add(new Container(
-        color: _kAppBackgroundColor,
+        color: Theme.of(context).backgroundColor,
         child: new ClipRect(
           child: new _AllSectionsView(
             sectionIndex: index,

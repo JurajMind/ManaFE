@@ -3,6 +3,7 @@ import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/utils/translations/app_translations.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -96,7 +97,14 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                       ),
                     )
                   : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      Text(widget.device.name.toUpperCase()),
+                      SizedBox(
+                        width: 200,
+                        child: AutoSizeText(
+                          widget.device.name.toUpperCase(),
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                        ),
+                      ),
                       IconButton(
                         icon: Icon(Icons.edit),
                         onPressed: () => setState(() {

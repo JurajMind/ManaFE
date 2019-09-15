@@ -1,4 +1,5 @@
 import 'package:app/app/app.dart';
+import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Gear/add_gear_page.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/cupertino.dart';
@@ -197,63 +198,78 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
             ));
           }
 
-          return new ListView.builder(
-              itemCount: snapshot.data.length + 1,
-              itemBuilder: (context, index) {
-                if (index >= snapshot.data.length) {
-                  return new ListTile(
-                    leading: Icon(Icons.add),
-                    onTap: () => Navigator.of(context)
-                        .push<PipeAccesorySimpleDto>(MaterialPageRoute(
-                            builder: (context) => AddGearPage(
-                                  selectedType: widget.searchType,
-                                  pretypedName: controller.text,
-                                ),
-                            fullscreenDialog: true))
-                        .then((newGear) {
-                      Navigator.of(context).pop(newGear);
-                    }),
-                    title: Center(
-                        child: Text('Not found what you were looking for?')),
-                    subtitle: Center(
-                      child: RichText(
-                        text: TextSpan(
-                          text: AppTranslations.of(context)
-                              .text("gear.no_result_3"),
-                          style: DefaultTextStyle.of(context).style,
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: controller.text,
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                            TextSpan(
+          var data = DataProvider.getData(context).personBloc;
+          return StreamBuilder<List<PipeAccesorySimpleDto>>(
+              stream: data.myGear,
+              builder: (context, ownSs) {
+                return new ListView.builder(
+                    itemCount: snapshot.data.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index >= snapshot.data.length) {
+                        return new ListTile(
+                          leading: Icon(Icons.add),
+                          onTap: () => Navigator.of(context)
+                              .push<PipeAccesorySimpleDto>(MaterialPageRoute(
+                                  builder: (context) => AddGearPage(
+                                        selectedType: widget.searchType,
+                                        pretypedName: controller.text,
+                                      ),
+                                  fullscreenDialog: true))
+                              .then((newGear) {
+                            Navigator.of(context).pop(newGear);
+                          }),
+                          title: Center(
+                              child:
+                                  Text('Not found what you were looking for?')),
+                          subtitle: Center(
+                            child: RichText(
+                              text: TextSpan(
                                 text: AppTranslations.of(context)
-                                        .text("gear.no_result_4") +
-                                    '${widget.searchType}'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                return _createResult(index, snapshot.data[index], context);
+                                    .text("gear.no_result_3"),
+                                style: DefaultTextStyle.of(context).style,
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: controller.text,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                  TextSpan(
+                                      text: AppTranslations.of(context)
+                                              .text("gear.no_result_4") +
+                                          '${widget.searchType}'),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+
+                      var owned = (ownSs.data?.indexWhere(
+                                  (a) => a.id == snapshot.data[index].id) ??
+                              -1) !=
+                          -1;
+
+                      return _createResult(
+                          index, snapshot.data[index], context, owned);
+                    });
               });
         });
   }
 
   Widget buildDefault() {
     return new ListView(
-      children:
-          ownSimpleAccesories.map((f) => _createResult(0, f, context)).toList(),
+      children: ownSimpleAccesories
+          .map((f) => _createResult(0, f, context, true))
+          .toList(),
     );
   }
 
   ListTile _createResult(
-      int index, PipeAccesorySimpleDto data, BuildContext context) {
+      int index, PipeAccesorySimpleDto data, BuildContext context, bool owned) {
     var text = '${data.brand} ${data.name}';
 
     return new ListTile(
-        leading: false
-            ? Icon(Icons.shopping_basket)
+        leading: owned
+            ? Icon(Icons.check_circle_outline)
             : Container(
                 width: 0.0,
                 height: 10.0,

@@ -447,10 +447,19 @@ class ApiClient {
   }
 
   Future<PipeAccesorySimpleDto> addMyGear(int id, int count) async {
-    var url = Uri.https(baseUrl, '/api/Person/MyGear/$id/Add/$count');
+    Map<String, String> params = new Map<String, String>();
+    //params['count'] = count.toString();
+    var url = Uri.https(baseUrl, '/api/Person/MyGear/$id/Add', params);
     return await _dio
         .postUri(url)
         .then((data) => PipeAccesorySimpleDto.fromJson(data.data));
+  }
+
+  Future<bool> removeMyGear(int id) async {
+    Map<String, String> params = new Map<String, String>();
+    // params['count'] = '0';
+    var url = Uri.https(baseUrl, '/api/Person/MyGear/$id/Delete', params);
+    return await _dio.postUri(url).then((data) => true);
   }
 
   Future<PersonInfoDto> getPersonInfo() async {

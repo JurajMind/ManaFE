@@ -42,7 +42,7 @@ StreamSubscription<Flushbar<Map<String, dynamic>>> subscription;
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 2;
-  
+
   final Map<int, GlobalKey<NavigatorState>> navigatorKeys = {
     0: GlobalKey<NavigatorState>(),
     1: GlobalKey<NavigatorState>(),
@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    
+
     final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
     _firebaseMessaging.requestNotificationPermissions();
     try {
@@ -187,7 +187,8 @@ class _HomePageState extends State<HomePage> {
                       icon: Icon(ManaIcons.leaf),
                       text: AppTranslations.of(context).text("tabs.mixology"),
                       color: _currentIndex == 0 ? Colors.white : Colors.grey,
-                      tooltip: 'ss',
+                      tooltip:
+                          'AppTranslations.of(context).text("tabs.mixology")',
                       onPressed: () => _setActiveTab(0),
                     ),
                   ),
@@ -226,13 +227,10 @@ class _HomePageState extends State<HomePage> {
         ),
       );
 
-
-  
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async {
-          
           if (!navigatorKeys[_currentIndex].currentState.canPop()) {
             if (_currentIndex != 2) {
               _setActiveTab(2);
@@ -334,6 +332,7 @@ class _HomePageState extends State<HomePage> {
                           )),
                     )
                   : InkWell(
+                      borderRadius: BorderRadius.circular(20.0),
                       onTap: () => _setActiveTab(2),
                       child: GradientColorWheelRotate(
                           size: new Size(centerSize, centerSize),
@@ -367,10 +366,8 @@ class VisibilityStageNavigator extends StatelessWidget {
     @required int currentIndex,
     @required this.tabFocusNodes,
     @required this.navigatorKeys,
-  })  : _tabIndex = currentIndex,
-        super(key: key);
+  }) : super(key: key);
 
-  final int _tabIndex;
   final List<FocusScopeNode> tabFocusNodes;
   final Map<int, GlobalKey<NavigatorState>> navigatorKeys;
   final int index;

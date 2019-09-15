@@ -1,4 +1,5 @@
 import 'package:app/components/Common/big_select.dart';
+import 'package:app/components/LazyScroll/lazy_load_scroll_view.dart';
 import 'package:app/components/Mixology/mixology_expanded.dart';
 import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/module/data_provider.dart';
@@ -10,7 +11,6 @@ import 'package:app/pages/SmokeSession/tobacco_edit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
-import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 
 class MixologyList extends StatefulWidget {
   @override
@@ -93,7 +93,12 @@ class MixologyListState extends State<MixologyList> {
   Widget getContent(MixologyBloc mixologyBloc) {
     switch (curentView) {
       case 0:
-        return PaggingMixListView(mixologyBloc: mixologyBloc, mixCreator: 'me');
+        return PaggingMixListView(
+          mixologyBloc: mixologyBloc,
+          mixCreator: 'me',
+          showTobaccoDialog: () =>
+              showTobaccoDialog(context: context, mixologyBloc: mixologyBloc),
+        );
       case 1:
         return FeatureMixCreator();
       case 2:
@@ -109,10 +114,12 @@ class PaggingMixListView extends StatelessWidget {
     Key key,
     @required this.mixologyBloc,
     this.mixCreator,
+    this.showTobaccoDialog,
   }) : super(key: key);
 
   final MixologyBloc mixologyBloc;
   final String mixCreator;
+  final VoidCallback showTobaccoDialog;
 
   @override
   Widget build(BuildContext context) {
@@ -122,9 +129,33 @@ class PaggingMixListView extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.data == null || snapshot.data.length == 0) {
             return Center(
-                child: Text(
-              'Is empty here, try add new mix                                                                                                                                                                       ',
-              style: Theme.of(context).textTheme.display1,
+                child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Is empty here :(',
+                  style: Theme.of(context).textTheme.display1,
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                if (mixCreator == "me") ...{
+                  Text(
+                    'Try add new mix',
+                    style: Theme.of(context).textTheme.display1,
+                  ),
+                  IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () => showTobaccoDialog())
+                },
+                if (mixCreator == "favorite")
+                  Text(
+                    'Try add your mix to favorite',
+                    style: Theme.of(context).textTheme.display1,
+                  )
+              ],
             ));
           }
           var itemCount = 10;
@@ -132,6 +163,7 @@ class PaggingMixListView extends StatelessWidget {
             itemCount = snapshot.data.length + 1;
           }
           return LazyLoadScrollView(
+            onRefresh: () => Future.delayed(Duration.zero, () => {}),
             onEndOfPage: () {
               if (!snapshot.data.contains(null))
                 mixologyBloc.loadCreatorMixesNextPage(mixCreator, false);

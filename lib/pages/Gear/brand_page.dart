@@ -40,10 +40,15 @@ class _BrandPageState extends State<BrandPage> {
             builder: (data, snapshot) {
               return snapshot.data != null
                   ? SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                          (context, index) => PipeAccesoryListItem(
-                              pipeAccesory: snapshot.data[index]),
-                          childCount: snapshot.data.length),
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        if (index >= snapshot.data.length) {
+                          return const SizedBox(
+                            height: 100,
+                          );
+                        }
+                        return PipeAccesoryListItem(
+                            pipeAccesory: snapshot.data[index]);
+                      }, childCount: snapshot.data.length + 1),
                     )
                   : SliverList(
                       delegate: SliverChildBuilderDelegate(

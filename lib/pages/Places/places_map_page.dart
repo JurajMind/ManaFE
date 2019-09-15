@@ -393,40 +393,36 @@ class ReservationButton extends StatelessWidget {
                     .count();
               }
 
-              return Row(children: [
-                OutlineButton.icon(
-                  color: Colors.black,
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0)),
-                  borderSide: BorderSide(color: Colors.white),
-                  hoverColor: Colors.black,
-                  icon: Container(
-                    child: Center(
-                      child: Text(upcomingCount.toString(),
-                          style: Theme.of(context).textTheme.display4),
-                    ),
-                    height: 25,
-                    width: 25,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: AppColors.colors[2]),
+              return OutlineButton.icon(
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0)),
+                borderSide: BorderSide(color: Colors.white),
+                icon: Container(
+                  child: Center(
+                    child: Text(upcomingCount.toString(),
+                        style: Theme.of(context).textTheme.display4),
                   ),
-                  label: upcomingCount == -1
-                      ? Text(
-                          'All reservations',
-                          style: Theme.of(context).textTheme.display3,
-                        )
-                      : Text(
-                          AppTranslations.of(context)
-                                  .text("reservations.upcoming_reservations") +
-                              " ",
-                          style: Theme.of(context).textTheme.display3,
-                        ),
-                  onPressed: () => Navigator.of(context).push(
-                      new MaterialPageRoute(builder: (BuildContext context) {
-                    return new ReservationsPage();
-                  })),
-                )
-              ]);
+                  height: 25,
+                  width: 25,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: AppColors.colors[2]),
+                ),
+                label: upcomingCount == -1
+                    ? Text(
+                        'All reservations',
+                        style: Theme.of(context).textTheme.display3,
+                      )
+                    : Text(
+                        AppTranslations.of(context)
+                                .text("reservations.upcoming_reservations") +
+                            " ",
+                        style: Theme.of(context).textTheme.display3,
+                      ),
+                onPressed: () => Navigator.of(context).push(
+                    new MaterialPageRoute(builder: (BuildContext context) {
+                  return new ReservationsPage();
+                })),
+              );
             }));
   }
 }

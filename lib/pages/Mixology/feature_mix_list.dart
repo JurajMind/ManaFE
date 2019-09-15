@@ -1,11 +1,11 @@
 import 'package:app/app/app.dart';
+import 'package:app/components/LazyScroll/lazy_load_scroll_view.dart';
 import 'package:app/components/Mixology/mixology_expanded.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mix_card_expanded_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -55,18 +55,13 @@ class _FeatureMixListViewState extends State<FeatureMixListView> {
               );
             }
 
-            if (snapshot.data.length == 0) {
-              return Center(
-                  child: Text(
-                'Is empty here, try add new mix                                                                                                                                                                       ',
-                style: Theme.of(context).textTheme.display1,
-              ));
-            }
             var itemCount = 10;
             if (snapshot?.data?.length != null) {
               itemCount = snapshot.data.length + 2;
             }
             return LazyLoadScrollView(
+              onRefresh: () => mixologyBloc.loadCreatorMixesRefresh(
+                  widget.mixCreator.id.toString(), true),
               onEndOfPage: () {
                 if (!snapshot.data.contains(null))
                   mixologyBloc.loadCreatorMixesNextPage(

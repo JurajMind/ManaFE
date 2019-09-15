@@ -1,8 +1,8 @@
 import 'package:app/app/app.dart';
+import 'package:app/components/LazyScroll/lazy_load_scroll_view.dart';
 import 'package:app/components/Mixology/mixology_expanded.dart';
 import 'package:app/module/mixology/mix_card_expanded_shimmer.dart';
 import 'package:flutter/material.dart';
-import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -28,21 +28,29 @@ class _InMixesLazyListState extends State<InMixesLazyList> {
     return !endOfPage;
   }
 
-  loadMoreMixes(List<TobaccoMixSimpleDto> mixes) {
+  Future<dynamic> loadMoreMixes(List<TobaccoMixSimpleDto> mixes,
+      {bool refresh = false}) async {
     if (!loadMore(mixes)) return true;
 
     var mock = inMixes.value;
     mock.addAll(List.generate(10, (_) => null));
     inMixes.add(mock);
-    maxPage++;
-    App.http.getTobaccoInMix(widget.tobacco.id, page: maxPage).then((data) {
-      if (data.length < pageSize) endOfPage = true;
+    if (refresh) {
+      maxPage = 0;
+      inMixes.add(List.generate(10, (index) => null));
+    } else {
+      maxPage++;
+    }
 
-      var oldData = inMixes.value;
-      oldData.removeWhere((test) => test == null);
-      oldData.addAll(data);
-      inMixes.add(oldData);
-    });
+    var data = await App.http.getTobaccoInMix(widget.tobacco.id, page: maxPage);
+
+    if (data.length < pageSize) endOfPage = true;
+
+    var oldData = inMixes.value;
+    oldData.removeWhere((test) => test == null);
+    oldData.addAll(data);
+    inMixes.add(oldData);
+    return true;
   }
 
   @override
@@ -64,33 +72,37 @@ class _InMixesLazyListState extends State<InMixesLazyList> {
           ],
         ),
       ),
-      body: 
-           StreamBuilder<List<TobaccoMixSimpleDto>>(
-              stream: inMixes,
-              initialData: null,
-              builder: (context, snapshot) {
-                return LazyLoadScrollView(
-                  onEndOfPage: () => loadMoreMixes(snapshot.data),
-                  child: ListView.builder(
-                      itemCount: (snapshot?.data?.length ?? 0) + 1,
-                      itemBuilder: (context, index) {
-                        if (index >= snapshot.data.length) {
-                          return SizedBox(
-                            height: 100,
-                          );
-                        }
+      body: StreamBuilder<List<TobaccoMixSimpleDto>>(
+          stream: inMixes,
+          initialData: null,
+          builder: (context, snapshot) {
+            return LazyLoadScrollView(
+              onRefresh: () => loadMoreMixes(snapshot.data, refresh: true),
+              onEndOfPage: () => loadMoreMixes(snapshot.data),
+              child: ListView.builder(
+                  itemCount: (snapshot?.data?.length ?? 0) + 1,
+                  itemBuilder: (context, index) {
+                    if (index >= snapshot.data.length) {
+                      return SizedBox(
+                        height: 100,
+                      );
+                    }
 
-                        var item = snapshot.data[index];
-                        if (item == null) {
-                          return Container(width: 20,child: MixCardExpandedShimmer(move: false,));
-                        } else {
-                          return MixCardExpanded(
-                              tobaccoMix: snapshot.data[index],
-                              highlightId: widget.tobacco.id);
-                        }
-                      }),
-                );
-              }),
+                    var item = snapshot.data[index];
+                    if (item == null) {
+                      return Container(
+                          width: 20,
+                          child: MixCardExpandedShimmer(
+                            move: false,
+                          ));
+                    } else {
+                      return MixCardExpanded(
+                          tobaccoMix: snapshot.data[index],
+                          highlightId: widget.tobacco.id);
+                    }
+                  }),
+            );
+          }),
     );
   }
 }

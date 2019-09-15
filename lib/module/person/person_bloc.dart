@@ -52,10 +52,6 @@ class PersonBloc extends SignalBloc {
       new BehaviorSubject<List<SmokeSessionSimpleDto>>.seeded(
           new List<SmokeSessionSimpleDto>());
 
-  List<PipeAccesorySimpleDto> getTypedGear(String type) {
-    return myGear.value.where((g) => g.type == type).toList();
-  }
-
   loadMyGear(bool reload) async {
     if (_loadedGear && !reload) return;
     _loadedGear = true;
@@ -88,10 +84,9 @@ class PersonBloc extends SignalBloc {
   }
 
   Future removeMyGear(PipeAccesorySimpleDto accesory, int count) async {
-    PipeAccesorySimpleDto addedAccesory =
-        await App.http.addMyGear(accesory.id, count * -1);
+    var removed = await App.http.removeMyGear(accesory.id);
     var oldGear = this.myGear.value;
-    oldGear.removeWhere((a) => a.id == addedAccesory.id);
+    oldGear.removeWhere((a) => a.id == accesory.id);
     this.myGear.add(oldGear.toSet().toList());
   }
 

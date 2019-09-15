@@ -1,10 +1,11 @@
+import 'package:app/components/LazyScroll/lazy_load_scroll_view.dart';
 import 'package:app/components/Reviews/no_review.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mix_card_expanded_shimmer.dart';
 import 'package:app/pages/Places/place_review.dart';
 import 'package:flutter/material.dart';
-import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
+
 import 'package:openapi/api.dart';
 
 class ReviewPlaceWidget extends StatefulWidget {
@@ -39,6 +40,7 @@ class _ReviewPlaceWidgetState extends State<ReviewPlaceWidget> {
         }
         return Container(
             child: LazyLoadScrollView(
+          onRefresh: () => Future.delayed(Duration.zero, () => {}),
           onEndOfPage: () {
             if (!snapshot.data.contains(null)) bloc.loadReview();
           },

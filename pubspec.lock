@@ -173,6 +173,13 @@ packages:
       url: "https://github.com/facundomedica/fast_qr_reader_view"
     source: git
     version: "0.1.6"
+  firebase_dynamic_links:
+    dependency: "direct main"
+    description:
+      name: firebase_dynamic_links
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.0+1"
   firebase_messaging:
     dependency: "direct main"
     description:
@@ -440,13 +447,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.5.6"
-  lazy_load_scrollview:
-    dependency: "direct main"
-    description:
-      name: lazy_load_scrollview
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   location_permissions:
     dependency: transitive
     description:

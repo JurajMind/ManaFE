@@ -212,6 +212,16 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                           margin: 16,
                           reservedSize: 10.0,
                           getTitles: (value) {
+                            if (max < 5) {
+                              if (value % 2 == 0)
+                                return value.toStringAsFixed(0);
+                            }
+
+                            if (max < 20) {
+                              if (value % 5 == 0)
+                                return value.toStringAsFixed(0);
+                            }
+
                             if (max < 50) {
                               if (value % 10 == 0)
                                 return value.toStringAsFixed(0);

@@ -89,6 +89,19 @@ class MixologyBloc {
     await this.loadCreatorMixes(creatorName, nextPage, featured: featured);
   }
 
+  Future loadCreatorMixesRefresh(String creatorName, bool featured) async {
+    fullLoaded.remove(creatorName);
+    if (this.mixCreatorMixesPages[creatorName] == null) {
+      this.mixCreatorMixesPages[creatorName] = 0;
+    } else {
+      this.mixCreatorMixesPages[creatorName] = 0;
+    }
+
+    var nextPage = 0;
+    this.mixCreatorMixes[creatorName].add(new List<TobaccoMixSimpleDto>());
+    await this.loadCreatorMixes(creatorName, nextPage, featured: featured);
+  }
+
   Future loadCreatorMixes(String creatorName, int page,
       {bool featured = false}) async {
     if (this.mixCreatorMixes[creatorName] == null) {

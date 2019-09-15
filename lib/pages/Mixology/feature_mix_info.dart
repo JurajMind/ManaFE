@@ -28,12 +28,14 @@ class FeatureMixInfo extends StatelessWidget {
               return Container(
                 child: Column(
                   children: <Widget>[
- AppBar(
-        title: Hero(
-            tag: "mix_brnad_${simple.name}",
-            child: Text(simple.name)),
-        centerTitle: true,
-      ),
+                    AppBar(
+                      backgroundColor: Theme.of(context).backgroundColor,
+                      elevation: 20,
+                      title: Hero(
+                          tag: "mix_brnad_${simple.name}",
+                          child: Text(simple.name)),
+                      centerTitle: true,
+                    ),
                     new Image(
                         image: new CachedNetworkImageProvider(
                             snapshot.data.logoPicture),

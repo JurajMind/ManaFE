@@ -33,7 +33,7 @@ class Devices extends StatelessWidget {
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               itemCount: (snapshot.data?.length ?? 0) + 1,
               itemBuilder: (context, index) {
-                if(snapshot.data == null ){
+                if (snapshot.data == null) {
                   return Container();
                 }
                 if (snapshot.data.length == index) {
@@ -58,7 +58,8 @@ class Devices extends StatelessWidget {
                             children: <Widget>[
                               Container(
                                 child: Text(
-                                  AppTranslations.of(context).text("device.add_device"),
+                                  AppTranslations.of(context)
+                                      .text("device.add_device"),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700,
@@ -103,9 +104,13 @@ class Devices extends StatelessWidget {
                               child: Container(
                                 child: Column(
                                   children: <Widget>[
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
                                     Center(
                                       child: Text(
                                         device.name,
+                                        textAlign: TextAlign.center,
                                         style: TextStyle(
                                             fontWeight: FontWeight.w700,
                                             color: Colors.black,

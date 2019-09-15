@@ -1,17 +1,15 @@
-import 'package:app/components/Brands/brand_list_item.dart';
 import 'package:app/components/Common/big_select.dart';
 import 'package:app/components/Dialogs/number_dialog.dart';
 import 'package:app/components/PipeAccesory/pipe_accesory_list_item.dart';
-import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/module/general/gear_bloc.dart';
 import 'package:app/module/person/person_bloc.dart';
-import 'package:app/pages/Gear/add_gear_page.dart';
 import 'package:app/pages/Gear/pipe_accesory_page.dart';
 import 'package:app/pages/Gear/tobacco_page.dart';
 import 'package:app/pages/SmokeSession/accesory_search.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
+
+import 'Components/brand_list.dart';
 
 class MyGear extends StatelessWidget {
   final ScrollController scrollController;
@@ -53,7 +51,7 @@ class MyGear extends StatelessWidget {
             physics: scrollPhysics,
             itemCount: filtered.length + 2,
             itemBuilder: (context, index) {
-              if (filtered.length == 0) {
+              if (filtered.length == 0 && index == 0) {
                 return Column(
                   children: <Widget>[
                     SearchRow(
@@ -101,13 +99,13 @@ class MyGear extends StatelessWidget {
                     type: type);
               }
 
-              if(index >= filtered.length){
-                return SizedBox(height: 40,);
+              if (index > filtered.length) {
+                return SizedBox(
+                  height: 40,
+                );
               }
               var data = filtered[index - 1];
               return new PipeAccesoryListItem(pipeAccesory: data);
-
-              
             });
       },
     );
@@ -131,8 +129,13 @@ class SearchRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var bloc = DataProvider.getData(context).personBloc;
-    var typedMyGear =
-        DataProvider.getData(context).personBloc.getTypedGear(type);
+
+    var typedMyGear = DataProvider.getData(context)
+        .personBloc
+        .myGear
+        .value
+        .where((s) => s.type == type)
+        .toList();
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
@@ -161,16 +164,22 @@ class SearchRow extends StatelessWidget {
         Expanded(
             flex: 1,
             child: IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () => showAddDialog(
+                icon: Icon(Icons.add),
+                onPressed: () => showSearchDialog(
+                    bloc: bloc,
+                    context: context,
+                    child: new PipeAccesorySearch(
+                        type: type, searchType: type, ownAccesories: null))
+                /*  onPressed: () => showAddDialog(
                   bloc: bloc,
                   context: context,
                   child: new PipeAccesorySearch(
                     type: type,
                     searchType: type,
                     ownAccesories: new List<PipeAccesorySimpleDto>(),
-                  )),
-            )),
+                  )),*/
+
+                )),
       ],
     );
   }
@@ -229,6 +238,7 @@ class PipeAccesoryList extends StatelessWidget {
   final String type;
   final int currentView;
   final ValueChanged<int> onViewChanged;
+  final String brandFilter;
 
   PipeAccesoryList(
       {Key key,
@@ -236,23 +246,26 @@ class PipeAccesoryList extends StatelessWidget {
       this.scrollPhysics,
       this.type,
       this.currentView,
-      this.onViewChanged});
+      this.onViewChanged,
+      this.brandFilter});
 
   @override
   Widget build(BuildContext context) {
-    var data = DataProvider.getData(context).personBloc;
-    var gearBloc = DataProvider.getData(context).gearBloc;
     switch (currentView) {
       case 0:
         return MyGear(
           currentView: currentView,
-          onViewChanged: onViewChanged,         
+          onViewChanged: onViewChanged,
           scrollPhysics: const AlwaysScrollableScrollPhysics(),
           type: type,
         );
         break;
       case 1:
-        return buildByBrands(gearBloc);
+        return new BrandList(
+            type: type,
+            brandFilter: brandFilter,
+            currentView: currentView,
+            onViewChanged: onViewChanged);
       default:
         return MyGear(
           currentView: currentView,
@@ -261,69 +274,5 @@ class PipeAccesoryList extends StatelessWidget {
           type: type,
         );
     }
-  }
-
-  StreamBuilder<List<BrandGroup>> buildByBrands(GearBloc data) {
-    return StreamBuilder<List<BrandGroup>>(
-      stream: data.getBrandsByType(type),
-      initialData: null,
-      builder: (context, snapshot) {
-        if (snapshot.data == null) {
-          return ListView.builder(
-            
-              physics: const AlwaysScrollableScrollPhysics(),
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return new PipeAccesoryListItemShimmer();
-              });
-        }
-
-        if (snapshot.data.length == 0) {
-          return Center(
-            child: Text('No ${type} brand'),
-          );
-        }
-
-        return ListView.builder(
-            physics: const AlwaysScrollableScrollPhysics(),
-            itemCount: snapshot.data.length + 1,
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: IconButton(
-                          icon: Icon(Icons.search),
-                          onPressed: () => SearchRow.showSearchDialog(
-                              context: context,
-                              child: new PipeAccesorySearch(
-                                type: type,
-                                searchType: type,
-                              ))),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Center(
-                        child: BigSelect(
-                          labels: SearchRow.labels,
-                          curentView: currentView,
-                          onSelected: onViewChanged,
-                        ),
-                      ),
-                    ),
-                    Expanded(flex: 1, child: Container())
-                  ],
-                );
-              }
-              var data = snapshot.data[index - 1];
-              return new BrandListItem(
-                brand: data,
-                brandType: type,
-              );
-            });
-      },
-    );
   }
 }

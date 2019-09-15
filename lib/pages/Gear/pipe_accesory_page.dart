@@ -53,7 +53,6 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
         child: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
-              backgroundColor: Colors.black,
               pinned: true,
               flexibleSpace: Container(),
               actions: <Widget>[],

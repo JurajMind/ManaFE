@@ -200,6 +200,16 @@ class WeekDayGraphState extends State<WeekDayGraph> {
                           margin: 32,
                           reservedSize: 14,
                           getTitles: (value) {
+                            if (max < 5) {
+                              if (value % 2 == 0)
+                                return value.toStringAsFixed(0);
+                            }
+
+                            if (max < 20) {
+                              if (value % 5 == 0)
+                                return value.toStringAsFixed(0);
+                            }
+
                             if (max < 50) {
                               if (value % 10 == 0)
                                 return value.toStringAsFixed(0);
@@ -250,7 +260,7 @@ class WeekDayGraphState extends State<WeekDayGraph> {
         width: width,
         isRound: true,
         backDrawRodData: BackgroundBarChartRodData(
-            show: true, y: max == 0 ? 20 : max + 0.0, color: Colors.black),
+            show: true, y: max < 5 ? 5 : max + 0.0, color: Colors.black),
       ),
     ]);
   }

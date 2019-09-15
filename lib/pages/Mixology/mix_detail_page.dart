@@ -12,6 +12,7 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:share/share.dart';
@@ -119,6 +120,7 @@ class MixDetailPageState extends State<MixDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    var bloc = DataProvider.getData(context).personBloc;
     return Scaffold(
       body: new CustomScrollView(
         slivers: <Widget>[
@@ -222,66 +224,82 @@ class MixDetailPageState extends State<MixDetailPage> {
           ),
           new SliverList(
             delegate: new SliverChildListDelegate(<Widget>[
-              Column(
-                children: [
-                  ...widget.mix.tobaccos.asMap().map((index, f) {
-                    return MapEntry(
-                        index,
-                        ListTile(
-                          leading: Container(
-                            height: 40,
-                            width: 30,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColors.colors[index]),
-                          ),
-                          onTap: () => Navigator.of(context).push(
-                              new MaterialPageRoute(
-                                  builder: (BuildContext context) {
-                            return TobaccoPage(
-                                tobacco: Convertor.getPipeAccesory(f.tobacco));
-                          })),
-                          title: Text(f.tobacco.name,
-                              style: Theme.of(context).textTheme.display2),
-                          trailing: Text(f.fraction.toString() + ' g',
-                              style: Theme.of(context).textTheme.display2),
-                          subtitle: Text(f.tobacco.brand,
-                              style: Theme.of(context).textTheme.display3),
-                        ));
-                  }).values,
-                  FavoriteMixButton(mix: widget.mix),
-                  UseMixButton(
-                    mix: widget.mix,
-                  ),
-                  Divider(),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  StreamBuilder<TobaccoInformationDto>(
-                      stream: this.information,
-                      builder: (context, snapshot) {
-                        return TobaccoReviewList(info: snapshot.data);
-                      }),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Divider(),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  StreamBuilder<TobaccoInformationDto>(
-                      stream: this.information,
-                      builder: (context, snapshot) {
-                        return SessionList(
-                          info: snapshot.data,
-                          sessionCount: 5,
-                        );
-                      }),
-                  SizedBox(
-                    height: 100,
-                  ),
-                ],
-              )
+              StreamBuilder<List<PipeAccesorySimpleDto>>(
+                  stream: bloc.myGear,
+                  builder: (context, snapshot) {
+                    return Column(
+                      children: [
+                        ...widget.mix.tobaccos.asMap().map((index, f) {
+                          var owned = (snapshot.data?.indexWhere(
+                                      (a) => a.id == f.tobacco.id) ??
+                                  -1) !=
+                              -1;
+
+                          return MapEntry(
+                              index,
+                              ListTile(
+                                leading: Container(
+                                  height: 40,
+                                  width: 30,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: AppColors.colors[index]),
+                                  child: owned
+                                      ? Icon(Icons.check)
+                                      : Icon(FontAwesomeIcons.times),
+                                ),
+                                onTap: () => Navigator.of(context).push(
+                                    new MaterialPageRoute(
+                                        builder: (BuildContext context) {
+                                  return TobaccoPage(
+                                      tobacco:
+                                          Convertor.getPipeAccesory(f.tobacco));
+                                })),
+                                title: Text(f.tobacco.name,
+                                    style:
+                                        Theme.of(context).textTheme.display2),
+                                trailing: Text(f.fraction.toString() + ' g',
+                                    style:
+                                        Theme.of(context).textTheme.display2),
+                                subtitle: Text(f.tobacco.brand,
+                                    style:
+                                        Theme.of(context).textTheme.display3),
+                              ));
+                        }).values,
+                        FavoriteMixButton(mix: widget.mix),
+                        UseMixButton(
+                          mix: widget.mix,
+                        ),
+                        Divider(),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        StreamBuilder<TobaccoInformationDto>(
+                            stream: this.information,
+                            builder: (context, snapshot) {
+                              return TobaccoReviewList(info: snapshot.data);
+                            }),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Divider(),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        StreamBuilder<TobaccoInformationDto>(
+                            stream: this.information,
+                            builder: (context, snapshot) {
+                              return SessionList(
+                                info: snapshot.data,
+                                sessionCount: 5,
+                              );
+                            }),
+                        SizedBox(
+                          height: 100,
+                        ),
+                      ],
+                    );
+                  })
             ]),
           )
         ],

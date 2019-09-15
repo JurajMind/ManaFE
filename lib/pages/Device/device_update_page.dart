@@ -107,18 +107,25 @@ class DeviceUpdateListItem extends StatelessWidget {
     }
 
     return Container(
-      child: ListTile(
-        onTap: () => promptUpdate(context),
-        trailing: Icon(Icons.file_download),
-        leading: Text(
-          'v ${Extensions.deviceVersion(update.version)}',
-          style: Theme.of(context).textTheme.display2.apply(
-              color: device.version >= update.version
-                  ? Colors.white
-                  : Colors.green),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.black45, borderRadius: BorderRadius.circular(20.0)),
+          child: ListTile(
+            onTap: () => promptUpdate(context),
+            trailing: Icon(Icons.file_download),
+            leading: Text(
+              'v ${Extensions.deviceVersion(update.version)}',
+              style: Theme.of(context).textTheme.display2.apply(
+                  color: device.version >= update.version
+                      ? Colors.white
+                      : Colors.green),
+            ),
+            title: Text(update.releseNote),
+            subtitle: Text(DateUtils.toStringDate(update.releseDate)),
+          ),
         ),
-        title: Text(update.releseNote),
-        subtitle: Text(DateUtils.toStringDate(update.releseDate)),
       ),
     );
   }

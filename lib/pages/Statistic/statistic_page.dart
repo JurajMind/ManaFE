@@ -283,7 +283,11 @@ class _StatisticPageState extends State<StatisticPage> {
                             const SizedBox(
                               width: 4,
                             ),
-                            Expanded(child: AutoSizeText(selectedTime.label,maxLines: 1,)),
+                            Expanded(
+                                child: AutoSizeText(
+                              selectedTime.label,
+                              maxLines: 1,
+                            )),
                           ],
                         ),
                       )),
