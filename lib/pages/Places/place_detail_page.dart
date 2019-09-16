@@ -1,9 +1,4 @@
 import 'package:app/components/Media/media.widget.dart';
-import 'package:app/components/Places/navigate_button.dart';
-import 'package:app/components/Places/place_detail.dart';
-import 'package:app/components/Places/place_flag.dart';
-import 'package:app/components/Places/place_map.dart';
-import 'package:app/components/Places/taxi_button.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
@@ -12,19 +7,20 @@ import 'package:app/pages/Places/Reservations/reservation_page.dart';
 import 'package:app/pages/Places/menu.page.dart';
 import 'package:app/pages/Places/place_extended_info.dart';
 import 'package:app/pages/Places/place_pictures_page.dart';
-import 'package:app/support/mana_icons_icons.dart';
+import 'package:app/services/share.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PlaceDetailPage extends StatefulWidget {
   final PlaceSimpleDto place;
   final PlaceBloc placeBloc;
+  final int placeId;
 
-  PlaceDetailPage({this.place, this.placeBloc});
+  PlaceDetailPage({this.place, this.placeBloc, this.placeId});
 
   @override
   State<StatefulWidget> createState() {
@@ -33,27 +29,41 @@ class PlaceDetailPage extends StatefulWidget {
 }
 
 class _PlaceDetailState extends State<PlaceDetailPage> {
+  PlaceSimpleDto place;
   @override
-  void didChangeDependencies() {
+  Future didChangeDependencies() async {
     super.didChangeDependencies();
     if (placeBloc == null) {
       placeBloc = DataProvider.getData(context).placeSingleBloc;
     }
-    placeBloc.loadPlace(place: this.place);
+    if (this.place != null)
+      placeBloc.loadPlace(place: this.place);
+    else {
+      var newPlace = await placeBloc.loadPlace(placeId: widget.placeId);
+      setState(() {
+        place = newPlace;
+      });
+    }
   }
 
   @override
   void initState() {
     super.initState();
+    place = widget.place;
   }
 
   final double _appBarHeight = 256.0;
-  final PlaceSimpleDto place;
   PlaceBloc placeBloc;
   _PlaceDetailState(this.place, this.placeBloc);
 
   @override
   Widget build(BuildContext context) {
+    if (place == null) {
+      return Center(
+          child: SizedBox(
+              height: 60, width: 60, child: CircularProgressIndicator()));
+    }
+
     return new Scaffold(
         body: new CustomScrollView(
       slivers: <Widget>[
@@ -85,6 +95,12 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
             preferredSize: Size(15.0, 15.0),
           ),
           actions: <Widget>[
+            IconButton(
+                icon: Icon(Icons.share),
+                onPressed: () async {
+                  var url = await ShareService.placeShareLink(widget.place.id);
+                  Share.share(url.toString());
+                }),
             IconButton(
                 icon: Icon(Icons.photo_size_select_small),
                 onPressed: () => Navigator.of(context).push(MaterialPageRoute(
@@ -142,7 +158,7 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
         new SliverList(
           delegate: new SliverChildListDelegate(<Widget>[
             Hero(
-              tag: "${widget.place.friendlyUrl}_reservation",
+              tag: "${place.friendlyUrl}_reservation",
               child: Container(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),

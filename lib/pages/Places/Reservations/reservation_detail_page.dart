@@ -11,9 +11,7 @@ import 'package:app/models/extensions.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:openapi/api.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ReservationDetailPage extends StatefulWidget {

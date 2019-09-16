@@ -136,6 +136,8 @@ class _TestPageState extends State<TestPage> {
               ),
               label: Text('Hard jump'),
               onPressed: () async {
+                Navigator.pushNamed(context, 'mix');
+                return;
                 var appBloc = DataProvider.getData(context).appBloc;
                 appBloc.changeActiveTab(1);
                 Navigator.of(context)

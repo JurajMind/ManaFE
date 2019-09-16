@@ -8,6 +8,7 @@ import 'package:app/models/extensions.dart';
 
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Gear/tobacco_page.dart';
+import 'package:app/services/share.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,9 @@ import 'package:share/share.dart';
 
 class MixDetailPage extends StatefulWidget {
   final TobaccoMixSimpleDto mix;
+  final int mixId;
 
-  const MixDetailPage({Key key, this.mix}) : super(key: key);
+  const MixDetailPage({Key key, this.mix, this.mixId}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new MixDetailPageState();
@@ -32,16 +34,25 @@ class MixDetailPageState extends State<MixDetailPage> {
   BehaviorSubject<TobaccoInformationDto> information =
       new BehaviorSubject<TobaccoInformationDto>();
   TextEditingController nameController;
+  TobaccoMixSimpleDto mix;
 
   @override
   initState() {
+    mix = widget.mix;
+    if (mix == null) {
+      App.http.getTobaccoMix(widget.mixId).then((data) {
+        setState(() {
+          mix = data;
+        });
+      });
+    }
     this.editName = false;
     this.nameController =
-        new TextEditingController(text: widget.mix.name ?? "");
+        new TextEditingController(text: widget?.mix?.name ?? "");
 
     Future.delayed(Duration.zero, () {
       App.http
-          .getTobaccoInfo(widget.mix.id)
+          .getTobaccoInfo(widget?.mix?.id ?? widget.mixId)
           .then((data) => this.information.add(data));
     });
     super.initState();
@@ -102,10 +113,9 @@ class MixDetailPageState extends State<MixDetailPage> {
               a: color.alpha, b: color.blue, g: color.green, r: color.red);
         },
         domainFn: (TobaccoSimpleDto sales, _) => sales.id,
-        measureFn: (TobaccoSimpleDto sales, _) => widget.mix.tobaccos
-            .firstWhere((t) => t.tobacco.id == sales.id)
-            .fraction,
-        data: widget.mix.tobaccos.map((f) => f.tobacco).toList(),
+        measureFn: (TobaccoSimpleDto sales, _) =>
+            mix.tobaccos.firstWhere((t) => t.tobacco.id == sales.id).fraction,
+        data: mix.tobaccos.map((f) => f.tobacco).toList(),
         // Set a label accessor to control the text of the arc label.
         labelAccessorFn: (TobaccoSimpleDto row, _) =>
             '${row.name}: ${row.brand}',
@@ -114,13 +124,20 @@ class MixDetailPageState extends State<MixDetailPage> {
   }
 
   changeName() async {
-    widget.mix.name = nameController.value.text;
-    await App.http.changeMixName(widget.mix.id, nameController.value.text);
+    mix.name = nameController.value.text;
+    await App.http.changeMixName(mix.id, nameController.value.text);
   }
 
   @override
   Widget build(BuildContext context) {
     var bloc = DataProvider.getData(context).personBloc;
+
+    if (mix == null) {
+      return Center(
+          child: SizedBox(
+              height: 60, width: 60, child: CircularProgressIndicator()));
+    }
+
     return Scaffold(
       body: new CustomScrollView(
         slivers: <Widget>[
@@ -129,16 +146,18 @@ class MixDetailPageState extends State<MixDetailPage> {
             actions: <Widget>[
               IconButton(
                   icon: Icon(Icons.share),
-                  onPressed: () =>
-                      Share.share('check out my website https://example.com')),
-              widget.mix.myMix
+                  onPressed: () async {
+                    var url = await ShareService.mixShareLink(mix.id);
+                    Share.share(url.toString());
+                  }),
+              mix.myMix
                   ? IconButton(
                       icon: Icon(Icons.delete),
                       onPressed: () async {
                         var delete = await deleteConfirn();
                         if (delete) {
                           var bloc = DataProvider.getData(context).mixologyBloc;
-                          bloc.deleteMix(widget.mix);
+                          bloc.deleteMix(mix);
                           Navigator.of(context).pop();
                         }
                       },
@@ -176,10 +195,10 @@ class MixDetailPageState extends State<MixDetailPage> {
                           child: Align(
                             alignment: Alignment.bottomCenter,
                             child: Hero(
-                              tag: "mix_hero_${widget.mix.id}",
+                              tag: "mix_hero_${mix.id}",
                               child: Container(
                                 child: AutoSizeText(
-                                  widget.mix.name ??
+                                  mix.name ??
                                       AppTranslations.of(context)
                                           .text('gear.no_name'),
                                   maxLines: 1,
@@ -191,7 +210,7 @@ class MixDetailPageState extends State<MixDetailPage> {
                             ),
                           ),
                         ),
-                        widget.mix.myMix
+                        mix.myMix
                             ? IconButton(
                                 icon: Icon(Icons.edit),
                                 onPressed: () => setState(() {
@@ -229,7 +248,7 @@ class MixDetailPageState extends State<MixDetailPage> {
                   builder: (context, snapshot) {
                     return Column(
                       children: [
-                        ...widget.mix.tobaccos.asMap().map((index, f) {
+                        ...mix.tobaccos.asMap().map((index, f) {
                           var owned = (snapshot.data?.indexWhere(
                                       (a) => a.id == f.tobacco.id) ??
                                   -1) !=
@@ -266,9 +285,9 @@ class MixDetailPageState extends State<MixDetailPage> {
                                         Theme.of(context).textTheme.display3),
                               ));
                         }).values,
-                        FavoriteMixButton(mix: widget.mix),
+                        FavoriteMixButton(mix: mix),
                         UseMixButton(
-                          mix: widget.mix,
+                          mix: mix,
                         ),
                         Divider(),
                         SizedBox(

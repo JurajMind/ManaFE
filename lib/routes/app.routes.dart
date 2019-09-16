@@ -1,3 +1,4 @@
+import 'package:app/pages/Mixology/mix_detail_page.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:fluro/fluro.dart';
@@ -10,10 +11,14 @@ class AppRoutes {
       return new HomePage();
     }));
 
-
     router.define('smokeSession', handler: new Handler(
         handlerFunc: (BuildContext context, Map<String, dynamic> params) {
       return new SmokeSessionPage();
+    }));
+
+    router.define('mix', handler: new Handler(
+        handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+      return new MixDetailPage();
     }));
   }
 }

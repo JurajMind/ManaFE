@@ -780,6 +780,15 @@ class ApiClient {
         .then((data) => TobaccoInformationDto.fromJson(data.data));
   }
 
+  Future<TobaccoMixSimpleDto> getTobaccoMix(
+    int id,
+  ) async {
+    var url = Uri.https(baseUrl, '/api/Mixology/$id/GetMix');
+    return await _dio
+        .get(url.toString())
+        .then((data) => TobaccoMixSimpleDto.fromJson(data.data));
+  }
+
   Future<List<TobaccoMixSimpleDto>> getTobaccoInMix(int id,
       {int pageSize = 10, page = 0}) async {
     var url = Uri.https(

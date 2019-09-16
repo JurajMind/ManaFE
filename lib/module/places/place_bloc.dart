@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app/Helpers/type_helper.dart';
 import 'package:app/app/app.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:openapi/api.dart';
@@ -28,16 +29,21 @@ class PlaceBloc {
 
   PlaceBloc._() {}
 
-  Future loadPlace({PlaceSimpleDto place}) async {
+  Future<PlaceSimpleDto> loadPlace({int placeId, PlaceSimpleDto place}) async {
     _place = place;
+    var _placeId = place?.id ?? placeId;
     if (this.place.value == null || place.id != this.place.value.id) {
       placeInfo.add(null);
       this.place.add(place);
     }
-    await App.http.getPlaceInfo(place.id).then((data) {
-      placeInfo.add(data);
-      reviews.add(data.placeReviews);
-    });
+    var data = await App.http.getPlaceInfo(_placeId);
+    placeInfo.add(data);
+    if (_place == null) {
+      _place = toSimpePlace(data);
+      return _place;
+    }
+    reviews.add(data.placeReviews);
+    return _place;
   }
 
   Future loadReview({force = false}) async {

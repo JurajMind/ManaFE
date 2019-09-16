@@ -10,16 +10,20 @@ import 'package:app/module/person/person_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Statistic/statistic_page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';
+import 'package:app/services/share.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:app/support/mana_icons_icons.dart';
 import 'package:app/utils/translations/app_translations.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:openapi/api.dart';
+import 'package:share/share.dart';
 
 import 'Gear/gear_scroll.dart';
+import 'Mixology/mix_detail_page.dart';
 import 'Mixology/mixology_list.dart';
 import 'Places/places_map_page.dart';
 import 'SmokeSession/Components/gradiend_color_wheel_rotate.dart';
@@ -63,6 +67,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    this.initDynamicLinks();
 
     final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
     _firebaseMessaging.requestNotificationPermissions();
@@ -143,6 +148,29 @@ class _HomePageState extends State<HomePage> {
   void didUpdateWidget(dynamic oldWidget) {
     super.didUpdateWidget(oldWidget);
     _focusActiveTab();
+  }
+
+  void initDynamicLinks() async {
+    final PendingDynamicLinkData data =
+        await FirebaseDynamicLinks.instance.getInitialLink();
+    final Uri deepLink = data?.link;
+
+    if (deepLink != null) {
+      ShareService.deepLinkNavigation(_setActiveTab, deepLink.path, context);
+    }
+
+    FirebaseDynamicLinks.instance.onLink(
+        onSuccess: (PendingDynamicLinkData dynamicLink) async {
+      final Uri deepLink = dynamicLink?.link;
+      print(dynamicLink.toString());
+
+      if (deepLink != null) {
+        ShareService.deepLinkNavigation(_setActiveTab, deepLink.path, context);
+      }
+    }, onError: (OnLinkErrorException e) async {
+      print('onLinkError');
+      print(e.message);
+    });
   }
 
   void _focusActiveTab() {
