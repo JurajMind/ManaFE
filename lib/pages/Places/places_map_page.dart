@@ -47,6 +47,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   PlaceSimpleDto _selectedPlace;
   bool moving = false;
   bool isDefaultPage = true;
+  String searchLabel;
 
   StreamSubscription<Position> positionSub;
   @override
@@ -296,14 +297,26 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
       return new PlacesSearchPage(
         places: nearbyPlaces.value,
         returnToMap: true,
+        searchLabel: searchLabel,
       );
     }));
 
     if (result != null) {
       var controller = await _controller.future;
-      var location = result as LatLng;
-      controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-          bearing: 0, target: location, tilt: 0, zoom: 15.151926040649414)));
+      var location = result as PlacesSearchResult;
+      nearbyPlaces.add(location.places);
+      this.searchLabel = location.label;
+      controller
+          .animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+              bearing: 0,
+              target: location.position,
+              tilt: 0,
+              zoom: 15.151926040649414)))
+          .then((_) {
+        setState(() {
+          this._selectedPlace = location.places.first;
+        });
+      });
     }
   }
 

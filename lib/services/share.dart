@@ -1,3 +1,4 @@
+import 'package:app/pages/Gear/pipe_accesory_page.dart';
 import 'package:app/pages/Mixology/mix_detail_page.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
@@ -18,6 +19,12 @@ class ShareService {
     var link = Uri.parse(_appUrl + "/place/${place.id}");
     return await createDynamicLink(
         true, link.toString(), "${place.name}", "Someone shered you a place");
+  }
+
+  static Future<Uri> gearShareLink(PipeAccesorySimpleDto gear) async {
+    var link = Uri.parse(_appUrl + "/gear/${gear.id}");
+    return await createDynamicLink(
+        true, link.toString(), "${gear.name}", "Someone shered you a gear");
   }
 
   static Future<Uri> createDynamicLink(
@@ -76,6 +83,17 @@ class ShareService {
               builder: (context) => PlaceDetailPage(
                     placeId: placeId,
                   )));
+          break;
+        }
+      case 'gear':
+        {
+          var navigator = callback(3);
+          var gearId = int.parse(chunk[2]);
+          navigator.currentState.push(MaterialPageRoute(
+              builder: (context) => PipeAccesoryPage(
+                    pipeAccesoryId: gearId,
+                  )));
+          break;
         }
     }
   }

@@ -811,7 +811,7 @@ class ApiClient {
       "pageSize": pageSize,
       "page": page
     }).then((data) => SmokeSessionSimpleDto.listFromJson(data.data));
-  }
+  }   
 }
 
 class ColorDto {

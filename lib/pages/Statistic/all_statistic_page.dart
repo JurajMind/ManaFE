@@ -19,7 +19,7 @@ class _AllStatisticPageState extends State<AllStatisticPage> {
   void initState() {
     smokeSessions =
         new BehaviorSubject<List<SmokeSessionSimpleDto>>.seeded(widget.seed);
-    super.initState();
+    super.initState(); 
   }
 
   @override

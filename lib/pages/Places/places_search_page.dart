@@ -13,10 +13,17 @@ import 'package:queries/collections.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+class PlacesSearchResult {
+  LatLng position;
+  List<PlaceSimpleDto> places;
+  String label;
+}
+
 class PlacesSearchPage extends StatefulWidget {
   final List<PlaceSimpleDto> places;
   final bool returnToMap;
-  PlacesSearchPage({Key key, this.places, this.returnToMap = false})
+  final String searchLabel;
+  PlacesSearchPage({Key key, this.places, this.returnToMap = false, this.searchLabel})
       : super(key: key);
 
   _PlacesSearchPageState createState() => _PlacesSearchPageState();
@@ -39,7 +46,7 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
     session = Uuid().generateV4();
     super.initState();
     places = new BehaviorSubject.seeded(widget.places);
-    this.currentLocation = "Current location";
+    this.currentLocation = widget.searchLabel ?? "Current location";
     new Future.delayed(Duration.zero, () {
       placesBloc = DataProvider.getData(context).placeBloc;
     });
@@ -225,24 +232,28 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                               );
                       }),
                 ),
-
               ],
             ),
-                          if(widget.returnToMap)  Positioned(
-                  right: 10,
-                  top: 12,
-                  child: FloatingActionButton(
-                    heroTag: 'Search',
-                    backgroundColor: AppColors.colors[0],
-                    child: Icon(
-                      Icons.map,
-                      color: Colors.white,
-                    ),
-                    onPressed: () => {
-                      Navigator.of(context).pop(this.currentCitiLocation)
-                    },
+            if (widget.returnToMap)
+              Positioned(
+                right: 10,
+                top: 12,
+                child: FloatingActionButton(
+                  heroTag: 'Search',
+                  backgroundColor: AppColors.colors[0],
+                  child: Icon(
+                    Icons.map,
+                    color: Colors.white,
                   ),
+                  onPressed: () {
+                    var result = new PlacesSearchResult();
+                    result.position = this.currentCitiLocation;
+                    result.places = this.places.value;
+                    result.label = this.currentLocation;
+                    Navigator.of(context).pop(result);
+                  },
                 ),
+              ),
           ],
         ),
       ),

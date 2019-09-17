@@ -5,7 +5,9 @@ import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/start.page.dart';
 import 'package:app/pages/home.page.dart';
+import 'package:app/services/share.dart';
 import 'package:app/utils/translations/app_translations_delegate.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -31,17 +33,29 @@ class _AppWidgetState extends State<AppWidget> {
   bool _isAuthorized = false;
   bool splash = true;
   AppTranslationsDelegate _newLocaleDelegate;
+  Uri deeplink;
 
   @override
   void initState() {
     super.initState();
     // initPlatformState();
+    initDynamicLinks();
     App.onLocaleChanged = onLocaleChange;
     _newLocaleDelegate = AppTranslationsDelegate(newLocale: null);
     isUserAuthorized().then((authorized) => setState(() {
           _isAuthorized = authorized;
           splash = false;
         }));
+  }
+
+    void initDynamicLinks() async {
+    final PendingDynamicLinkData data =
+        await FirebaseDynamicLinks.instance.getInitialLink();
+    final Uri _deepLink = data?.link;
+
+    if (_deepLink != null) {
+        deeplink = _deepLink;     
+    };
   }
 
   Future restartApp() async {
@@ -87,7 +101,7 @@ class _AppWidgetState extends State<AppWidget> {
     if (splash) return new SplashScreen();
 
     if (_isAuthorized) {
-      return new HomePage();
+      return new HomePage(deeplink: deeplink);
     }
 
     return new StartPage();

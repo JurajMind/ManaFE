@@ -20,10 +20,8 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:openapi/api.dart';
-import 'package:share/share.dart';
 
 import 'Gear/gear_scroll.dart';
-import 'Mixology/mix_detail_page.dart';
 import 'Mixology/mixology_list.dart';
 import 'Places/places_map_page.dart';
 import 'SmokeSession/Components/gradiend_color_wheel_rotate.dart';
@@ -34,6 +32,10 @@ typedef RouteWidgetBuilder = Widget Function(
     BuildContext context, Object argument);
 
 class HomePage extends StatefulWidget {
+  final Uri deeplink;
+
+  const HomePage({Key key, this.deeplink}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return new _HomePageState();
@@ -68,6 +70,10 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     this.initDynamicLinks();
+
+
+    WidgetsBinding.instance
+        .scheduleFrameCallback((_) => firstDeepJump(context));
 
     final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
     _firebaseMessaging.requestNotificationPermissions();
@@ -148,17 +154,10 @@ class _HomePageState extends State<HomePage> {
   void didUpdateWidget(dynamic oldWidget) {
     super.didUpdateWidget(oldWidget);
     _focusActiveTab();
+  
   }
 
   void initDynamicLinks() async {
-    final PendingDynamicLinkData data =
-        await FirebaseDynamicLinks.instance.getInitialLink();
-    final Uri deepLink = data?.link;
-
-    if (deepLink != null) {
-      ShareService.deepLinkNavigation(_setActiveTab, deepLink.path, context);
-    }
-
     FirebaseDynamicLinks.instance.onLink(
         onSuccess: (PendingDynamicLinkData dynamicLink) async {
       final Uri deepLink = dynamicLink?.link;
@@ -171,6 +170,12 @@ class _HomePageState extends State<HomePage> {
       print('onLinkError');
       print(e.message);
     });
+  }
+
+  void firstDeepJump(BuildContext context) {
+     if (widget.deeplink != null) {
+      ShareService.deepLinkNavigation(_setActiveTab, widget.deeplink.path, context);
+    }
   }
 
   void _focusActiveTab() {

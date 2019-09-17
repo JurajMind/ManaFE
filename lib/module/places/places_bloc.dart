@@ -86,4 +86,8 @@ class PlacesBloc {
     localizationnPermision.add(res);
     return res;
   }
+
+  replacePlaces(List<PlaceSimpleDto> value) {
+    this.places.add(value);
+  }
 }
