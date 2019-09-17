@@ -152,8 +152,9 @@
     },
     "settings": {
         "select_language": "Sprache",
-        "en": "Englisch",
-        "cs": "Englisch",
+"en": "English",
+        "cs": "Česky",
+        "de": "Deutsch",
         "settings": "Einstellungen",
         "user_profile": "Profil",
         "sign_out": "Abmelden"

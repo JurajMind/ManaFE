@@ -16,6 +16,7 @@ class _LanguageSelectorPageState extends State<LanguageSelectorPage> {
   final Map<dynamic, dynamic> languagesMap = {
     languagesList[0]: languageCodesList[0],
     languagesList[1]: languageCodesList[1],
+    languagesList[2]: languageCodesList[2],
   };
 
   @override
@@ -51,12 +52,13 @@ class _LanguageSelectorPageState extends State<LanguageSelectorPage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0),
           child: Text(
-            AppTranslations.of(context)
-            .text("settings.$language"),
+            AppTranslations.of(context).text("settings.$language"),
             style: TextStyle(
-              fontSize: 24.0,
-              color: AppTranslations.of(context).locale.languageCode == language ? AppColors.colors[1] : Colors.white
-            ),
+                fontSize: 24.0,
+                color:
+                    AppTranslations.of(context).locale.languageCode == language
+                        ? AppColors.colors[1]
+                        : Colors.white),
           ),
         ),
       ),

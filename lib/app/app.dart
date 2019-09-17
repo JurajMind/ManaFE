@@ -65,6 +65,7 @@ class App {
   static final List<String> supportedLanguagesCodes = [
     "en",
     "cs",
+    "de"
   ];
 
   static Iterable<Locale> supportedLocales() =>

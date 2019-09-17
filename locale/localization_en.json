@@ -172,6 +172,7 @@
         "select_language": "Select language",
         "en": "English",
         "cs": "Česky",
+        "de": "Deutsch",
         "settings": "Settings",
         "user_profile": "User profile",
         "sign_out": "Sign out"

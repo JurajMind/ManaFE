@@ -170,6 +170,7 @@
         "select_language": "Jazyk",
         "en": "English",
         "cs": "Česky",
+        "de": "Deutsch",
         "settings": "Nastavení",
         "user_profile": "Profil",
         "sign_out": "Odhlásit"
