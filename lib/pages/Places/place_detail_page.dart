@@ -98,7 +98,7 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
             IconButton(
                 icon: Icon(Icons.share),
                 onPressed: () async {
-                  var url = await ShareService.placeShareLink(widget.place.id);
+                  var url = await ShareService.placeShareLink(place);
                   Share.share(url.toString());
                 }),
             IconButton(
