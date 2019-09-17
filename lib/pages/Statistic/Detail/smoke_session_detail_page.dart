@@ -4,12 +4,14 @@ import 'package:app/Helpers/date_utils.dart';
 import 'package:app/app/app.dart';
 import 'package:app/models/SmokeSession/puf_type.dart';
 import 'package:app/pages/Statistic/Detail/detail_page_helper.dart';
+import 'package:app/services/share.dart';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/api.dart';
 import 'package:queries/collections.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:share/share.dart';
 
 import 'Components/session_metadata_detail.dart';
 import 'Components/session_statistic_detail.dart';
@@ -17,7 +19,9 @@ import 'Components/smoke_progress_graph.dart';
 
 class SmokeSessioDetailPage extends StatefulWidget {
   final SmokeSessionSimpleDto session;
-  SmokeSessioDetailPage(this.session, {Key key}) : super(key: key);
+  final int sessionId;
+  SmokeSessioDetailPage( {Key key, this.sessionId,this.session,})
+      : super(key: key);
 
   _SmokeSessioDetailPageState createState() => _SmokeSessioDetailPageState();
 }
@@ -26,6 +30,7 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage>
     with TickerProviderStateMixin {
   DateTime start;
   AnimationController animationController;
+  SmokeSessionSimpleDto session;
 
   BehaviorSubject<FinishedSessionDataDto> data =
       new BehaviorSubject<FinishedSessionDataDto>();
@@ -39,15 +44,17 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage>
 
   @override
   initState() {
+    session = widget.session;
+    var id = session?.id ?? widget.sessionId;
     animationController = new AnimationController(
       vsync: this,
       duration: new Duration(milliseconds: 1000),
     );
     animationController.forward();
 
-    start =
-        new DateTime.fromMillisecondsSinceEpoch(widget.session.statistic.start);
-    var id = widget.session.id;
+    if (widget.session != null)
+      start = new DateTime.fromMillisecondsSinceEpoch(
+          widget.session.statistic.start);
     App.http.getPufs(id).then((data) {
       this.pufs.add(data);
       this.inDurations =
@@ -57,12 +64,27 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage>
       this.idleDurations =
           DetailPageHelper.getDuration((p) => p.T == PufType.IDLE.index, data);
     });
-    App.http.getFinishedData(id).then((data) => this.data.add(data));
+    App.http.getFinishedData(id).then((data) {
+      this.data.add(data);
+      if (session == null) {
+        setState(() {
+          session = data.data;
+          start = new DateTime.fromMillisecondsSinceEpoch(
+              data.data.statistic.start);
+        });
+      }
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (session == null) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -71,11 +93,14 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage>
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.share),
-              onPressed: () {},
+              onPressed: () async {
+                var url = await ShareService.sessionShareLink(session);
+                Share.share(url.toString());
+              },
             )
           ],
           title: Text(
-              "${DateUtils.toStringDate(start)} - ${DateUtils.toStringShortTime(start)} ${widget.session.sessionId}")),
+              "${DateUtils.toStringDate(start)} - ${DateUtils.toStringShortTime(start)} ${session.sessionId}")),
       body: ListView(
         children: <Widget>[
           AnimatedBuilder(

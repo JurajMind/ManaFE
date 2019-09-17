@@ -13,6 +13,8 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
+import 'Common/relese_notes.dart';
+
 class MyCustomRoute<T> extends MaterialPageRoute<T> {
   MyCustomRoute(
       {WidgetBuilder builder, RouteSettings settings, bool fullscreenDialog})
@@ -120,6 +122,7 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
             ),
             Column(
               children: <Widget>[
+                ReleaseNotes(),
                 new Expanded(flex: 1, child: Container()),
                 new Expanded(
                   flex: 4,

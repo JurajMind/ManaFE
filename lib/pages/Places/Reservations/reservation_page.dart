@@ -79,7 +79,7 @@ class _ReservationPageState extends State<ReservationPage> {
 
   @override
   Widget build(BuildContext context) {
-    var placeBloc = DataProvider.getData(context).placeSingleBloc;
+    
     var reservationBloc = DataProvider.getData(context).reservationBloc;
     var personBloc = DataProvider.getData(context).personBloc;
     nameTextController.text = personBloc?.info?.value?.displayName ?? "";

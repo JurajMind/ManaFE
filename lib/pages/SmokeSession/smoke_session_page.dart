@@ -457,7 +457,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
           Navigator.of(context).pop();
           widget.callback(4);
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => SmokeSessioDetailPage(value)));
+              builder: (context) => SmokeSessioDetailPage(session:value)));
         });
       }
     });

@@ -1,6 +1,7 @@
 import 'package:app/pages/Gear/pipe_accesory_page.dart';
 import 'package:app/pages/Mixology/mix_detail_page.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
+import 'package:app/pages/Statistic/Detail/smoke_session_detail_page.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -26,8 +27,12 @@ class ShareService {
     return await createDynamicLink(
         true, link.toString(), "${gear.name}", "Someone shered you a gear");
   }
-  
-  
+
+  static Future<Uri> sessionShareLink(SmokeSessionSimpleDto session) async {
+    var link = Uri.parse(_appUrl + "/session/${session.id}");
+    return await createDynamicLink(true, link.toString(),
+        "${session.sessionId}", "Someone shered you a session");
+  }
 
   static Future<Uri> createDynamicLink(
       bool short, String inputUrl, String socTitle, String socDesc) async {
@@ -94,6 +99,16 @@ class ShareService {
           navigator.currentState.push(MaterialPageRoute(
               builder: (context) => PipeAccesoryPage(
                     pipeAccesoryId: gearId,
+                  )));
+          break;
+        }
+      case 'session':
+        {
+          var navigator = callback(3);
+          var sessionId = int.parse(chunk[2]);
+          navigator.currentState.push(MaterialPageRoute(
+              builder: (context) => SmokeSessioDetailPage(
+                    sessionId: sessionId,
                   )));
           break;
         }

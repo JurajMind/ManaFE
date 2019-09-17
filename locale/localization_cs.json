@@ -9,7 +9,8 @@
         "delete": "Smazat",
         "yes": "Ano",
         "no": "Ne",
-        "close": "Zavřít"
+        "close": "Zavřít",
+        "ok": "OK"
     },
     "login": {
         "sign_up": "Registrovat se",
@@ -217,5 +218,9 @@
         "session_title": "Recenze",
         "no_review": "Žádná recenze",
         "add_new_review": "Přidejte novou recenzi"
+    },
+    "release_note": {
+        "title": "Whats new",
+        "text": "German translation \n Mix ,Finished session & gear sharing,\n This release note :) "
     }
 }

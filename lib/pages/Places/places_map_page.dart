@@ -140,7 +140,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
 
   @override
   Widget build(BuildContext context) {
-    var reservationBloc = DataProvider.getData(context).reservationBloc;
+    
     return SafeArea(
       top: true,
       child: new Scaffold(

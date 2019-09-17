@@ -434,7 +434,7 @@ class TabNavigator extends StatelessWidget {
       },
       '/smokeStatistic': (context, argument) {
         if (argument is SmokeSessionSimpleDto) {
-          return new SmokeSessioDetailPage(argument);
+          return new SmokeSessioDetailPage(session: argument);
         }
       }
     };

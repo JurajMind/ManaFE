@@ -37,7 +37,7 @@ class SmokeSessionListItem extends StatelessWidget {
                     if(session.live == true){
                       return Placeholder();
                     }
-                return SmokeSessioDetailPage(session);
+                return SmokeSessioDetailPage(session:session);
               })),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 4.0),

@@ -9,7 +9,8 @@
         "delete": "Löschen",
         "yes": "Ja",
         "no": "Nein",
-        "close": "Schliessen"
+        "close": "Schliessen",
+        "ok": "OK"
     },
     "gear": {
         "devices": "Unterlegscheiben",

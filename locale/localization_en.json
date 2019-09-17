@@ -9,7 +9,8 @@
         "delete": "Delete",
         "yes": "Yes",
         "no": "No",
-        "close": "Close"
+        "close": "Close",
+        "ok": "OK"
     },
 
     "login": {
@@ -217,5 +218,9 @@
         "session_title": "Review",
         "no_review": "No review",
         "add_new_review": "Add new review"
+    },
+    "release_note": {
+        "title": "Release notes",
+        "text": "German translation \n \n Mix ,Finished session & gear sharing,\n \n This release note :) "
     }
 }

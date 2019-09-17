@@ -30,8 +30,6 @@ class _PlacesPageState extends State<PlacesPage> {
   var staticMapProvider = new StaticMapProvider(App.googleApiKeys);
 
   Location myUserLocation;
-  bool _permission = false;
-
   PlacesBloc placesBloc;
   PlaceBloc placeBloc;
 
