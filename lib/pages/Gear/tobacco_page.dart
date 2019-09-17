@@ -4,10 +4,12 @@ import 'package:app/components/Reviews/tobacco_review_list.dart';
 import 'package:app/components/SmokeSession/inMix_list.dart';
 import 'package:app/components/SmokeSession/session_list.dart';
 import 'package:app/models/extensions.dart';
+import 'package:app/services/share.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:share/share.dart';
 
 import 'Tobacco/in_mixes_lazy_list.dart';
 
@@ -62,7 +64,12 @@ class _TobaccoPageState extends State<TobaccoPage> {
               backgroundColor: Colors.black,
               pinned: true,
               flexibleSpace: Container(),
-              actions: <Widget>[],
+              actions: <Widget>[                              IconButton(
+                  icon: Icon(Icons.share),
+                  onPressed: () async {
+                    var url = await ShareService.gearShareLink(this.pipeAccesory);
+                    Share.share(url.toString());
+                  }),],
               title: Row(
                 children: <Widget>[
                   Hero(
@@ -72,7 +79,7 @@ class _TobaccoPageState extends State<TobaccoPage> {
                     width: 8,
                   ),
                   Container(
-                      width: MediaQuery.of(context).size.width - 160,
+                      width: MediaQuery.of(context).size.width - 200,
                       child: AutoSizeText(
                         "${pipeAccesory.brand} ${pipeAccesory.name}",
                         maxLines: 1,

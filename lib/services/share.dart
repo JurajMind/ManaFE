@@ -26,6 +26,8 @@ class ShareService {
     return await createDynamicLink(
         true, link.toString(), "${gear.name}", "Someone shered you a gear");
   }
+  
+  
 
   static Future<Uri> createDynamicLink(
       bool short, String inputUrl, String socTitle, String socDesc) async {

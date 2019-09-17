@@ -3,6 +3,7 @@ import 'package:app/components/Buttons/add_remove_gear_button.dart';
 import 'package:app/components/Buttons/use_gear_button.dart';
 import 'package:app/components/SmokeSession/session_list.dart';
 import 'package:app/models/extensions.dart';
+import 'package:app/pages/Gear/tobacco_page.dart';
 import 'package:app/services/share.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -32,10 +33,25 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
     if (widget.pipeAccesory == null) {
       App.http.getGearInfo(widget.pipeAccesoryId).then((g) => setState(() {
             pipeAccesory = g;
+            if (pipeAccesory.type == "Tobacco") {
+              Route route = MaterialPageRoute(
+                  builder: (context) => TobaccoPage(
+                        tobacco:pipeAccesory,
+                      ));
+              Navigator.pushReplacement(context, route);
+            }
           }));
     } else {
       pipeAccesory = widget.pipeAccesory;
+      if (widget.pipeAccesory.type == "Tobacco") {
+        Route route = MaterialPageRoute(
+            builder: (context) => TobaccoPage(
+                  tobacco: widget.pipeAccesory,
+                ));
+        Navigator.pushReplacement(context, route);
+      }
     }
+
     App.http
         .getGearSession(widget?.pipeAccesoryId ?? widget.pipeAccesory.id,
             pageSize: 6)
@@ -58,12 +74,13 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
               pinned: true,
               flexibleSpace: Container(),
               actions: <Widget>[
-                              IconButton(
-                  icon: Icon(Icons.share),
-                  onPressed: () async {
-                    var url = await ShareService.gearShareLink(this.pipeAccesory);
-                    Share.share(url.toString());
-                  }),
+                IconButton(
+                    icon: Icon(Icons.share),
+                    onPressed: () async {
+                      var url =
+                          await ShareService.gearShareLink(this.pipeAccesory);
+                      Share.share(url.toString());
+                    }),
               ],
               title: Row(
                 children: <Widget>[
