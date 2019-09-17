@@ -121,6 +121,7 @@ flutter:
 
     - locale/localization_en.json
     - locale/localization_cs.json
+    - locale/localization_de.json
 
     - assets/term_of_ussage.txt
     - assets/sprite.png

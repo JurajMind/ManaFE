@@ -24,3 +24,4 @@ class AppTranslationsDelegate extends LocalizationsDelegate<AppTranslations> {
     return true;
   }
 }
+ 
