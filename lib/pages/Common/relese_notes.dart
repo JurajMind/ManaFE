@@ -5,7 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 
 class ReleaseNotes extends StatefulWidget {
-  static const String _key = "17.9.2019_4";
+  static const String _key = "18.9.2019_4";
   @override
   _ReleaseNotesState createState() => _ReleaseNotesState();
 }
@@ -40,11 +40,12 @@ class _ReleaseNotesState extends State<ReleaseNotes> {
               flareAnimation: 'light_open',
               onlyOkButton: true,
               title: Text(
-                AppTranslations.of(context).text("release_note.title"),
+                'Release note', //AppTranslations.of(context).text("release_note.title"),
                 style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
               ),
               description: Text(
-                  AppTranslations.of(context).text("release_note.text"),
+                  //  AppTranslations.of(context).text("release_note.text"),
+                  'Place review view \n \n Whole time statistic graph',
                   style:
                       TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600)),
               onOkButtonPressed: () {
