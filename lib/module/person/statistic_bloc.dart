@@ -56,7 +56,8 @@ class StatisticBloc {
       var thisDaySmokeSession = statistic.where((s) {
         var start = DateTime.fromMillisecondsSinceEpoch(s.statistic.start);
         if (month) {
-          return start.month == curentDate.month;
+          return start.month == curentDate.month &&
+              start.year == curentDate.year;
         }
         return start.difference(curentDate).inDays == 0;
       });

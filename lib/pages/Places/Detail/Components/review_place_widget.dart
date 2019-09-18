@@ -1,5 +1,6 @@
 import 'package:app/components/LazyScroll/lazy_load_scroll_view.dart';
 import 'package:app/components/Reviews/no_review.dart';
+import 'package:app/components/Reviews/review_view.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mix_card_expanded_shimmer.dart';
@@ -112,6 +113,9 @@ class PlaceReviewItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () {
+        openAlertBox(context);
+      },
       title: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -131,8 +135,31 @@ class PlaceReviewItem extends StatelessWidget {
           )
         ],
       ),
-      subtitle: Text(review.text ?? ''),
+      subtitle: Row(
+        children: <Widget>[
+          if (review.sessionReview != null) Icon(Icons.pie_chart),
+          if (review.text != null && review.text != '') Icon(Icons.edit),
+          if (review.medias != null && review.medias.length != 0)
+            Icon(Icons.photo)
+        ],
+      ),
       trailing: Icon(Icons.chevron_right),
     );
+  }
+
+  openAlertBox(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(32.0))),
+            contentPadding: EdgeInsets.only(top: 10.0),
+            content: Container(
+                width: size.width * 0.9,
+                child: ReviewView(placeReview: review)),
+          );
+        });
   }
 }

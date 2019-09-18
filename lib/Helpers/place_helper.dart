@@ -10,7 +10,7 @@ class PlaceHelpers {
       if (place.businessHours == null) return null;
       if (place.businessHours.length == 0) return null;
       var today = Collection(place.businessHours)
-          .firstOrDefault((a) => a.day == (DateTime.now().weekday - 1));
+          .firstOrDefault((a) => a.day == (DateTime.now().weekday));
       if (today == null) return false;
       if (today.openTine == null || today.closeTime == null) return false;
       var now = DateTime.now();
