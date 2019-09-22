@@ -27,7 +27,6 @@ class GaugeChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var paint = new Paint();
     paint.color = handColor ?? Colors.black87;
     paint.style = PaintingStyle.fill;
@@ -47,10 +46,10 @@ class GaugeChart extends StatelessWidget {
               child: new CustomPaint(
                 size: new Size(200, 200),
                 foregroundPainter: new HandPainter(
-                  hours: 10,
-                  minutes: 10,
-                  hourHandPaint: paint
-                ),
+                    min: minValue,
+                    max: maxValue,
+                    value: value,
+                    hourHandPaint: paint),
               )),
         ),
         Positioned.fill(
@@ -79,7 +78,7 @@ class GaugeChart extends StatelessWidget {
         id: 'Segments',
         domainFn: (GaugeSegment segment, _) => segment.segment,
         measureFn: (GaugeSegment segment, _) => segment.size,
-        areaColorFn: (GaugeSegment segment, _) =>  charts.Color(r: segment.size),
+        areaColorFn: (GaugeSegment segment, _) => charts.Color(r: segment.size),
         data: data,
       )
     ];
@@ -95,16 +94,14 @@ class GaugeSegment {
 }
 
 class HandPainter extends CustomPainter {
+  static const minAngel = -0.7;
+  static const maxAngel = 0.7;
   final Paint hourHandPaint;
-  int hours;
-  int minutes;
+  int min;
+  int max;
+  double value;
 
-  HandPainter({
-    this.hours,
-    this.minutes,
-    this.hourHandPaint
-  });
-  
+  HandPainter({this.min, this.max, this.value, this.hourHandPaint});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -113,11 +110,12 @@ class HandPainter extends CustomPainter {
     canvas.save();
 
     canvas.translate(radius, radius);
-
-    //checks if hour is greater than 12 before calculating rotation
-    canvas.rotate(this.hours >= 12
-        ? 2 * pi * ((this.hours - 12) / 12 + (this.minutes / 720))
-        : 2 * pi * ((this.hours / 12) + (this.minutes / 720)));
+    if (value > 0) {
+      var angel = minAngel + ((1.4) / ((max - min)) * value);
+      canvas.rotate(1 * pi * (angel));
+    } else {
+      canvas.rotate(1 * pi * minAngel);
+    }
 
     Path path = new Path();
 

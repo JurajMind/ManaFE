@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'dart:math' as math;
 
+import '../all_gear_page.dart';
+import 'gear_usage_item_list.dart';
+
 class GearUsageItem extends StatelessWidget {
   final String label;
   final List<PipeAccessoryUsageDto> gears;
@@ -45,50 +48,29 @@ class GearUsageItem extends StatelessWidget {
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     var item = gears[index];
-                    var style = Theme.of(context).textTheme.display2;
+
                     return Padding(
                       padding: const EdgeInsets.all(4.0),
-                      child: InkWell(
-                        onTap: () => Navigator.of(context).push(
-                            new MaterialPageRoute(
-                                builder: (BuildContext context) {
-                          return new PipeAccesoryPage(pipeAccesoryId: item.id);
-                        })),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white),
-                              borderRadius: BorderRadius.circular(16.0)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(children: <Widget>[
-                              Expanded(
-                                  flex: 4,
-                                  child: Text(
-                                      "${item.brandName} ${item.accName}",
-                                      style: style)),
-                              Expanded(
-                                  flex: 1,
-                                  child: Text("${item.used} x", style: style)),
-                            ]),
-                          ),
-                        ),
-                      ),
+                      child: new UsageItemListItem(item: item),
                     );
                   },
                 ),
               ),
             if ((gears?.length ?? 0) > 0)
               Center(
-                child: OutlineButton(
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0)),
-                    borderSide: BorderSide(color: Colors.white),
-                    child: Text(
-                      'All ${label.toLowerCase()}',
-                      style: Theme.of(context).textTheme.display3,
-                    ),
-                    onPressed: () {}),
-              )
+                  child: OutlineButton(
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(30.0)),
+                      borderSide: BorderSide(color: Colors.white),
+                      child: Text(
+                        'All ${label.toLowerCase()}',
+                        style: Theme.of(context).textTheme.display3,
+                      ),
+                      onPressed: () => Navigator.of(context).push(
+                              new MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                            return AllGearPage(label: label, gears: gears);
+                          }))))
           ],
         ));
   }

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import "package:intl/intl.dart";
 
 class DateUtils {
@@ -168,6 +169,13 @@ class DateUtils {
 
   static String toStringDuration(Duration duration) {
     return '${duration.inHours}:${duration.inMinutes % 60}:${duration.inSeconds % 60}';
+  }
+
+  static String toStrungLongDuration(BuildContext context, Duration duration) {
+    if (duration.inDays < 0)
+      return '${duration.inHours}:${duration.inMinutes % 60}:${duration.inSeconds % 60}';
+
+    return '${duration.inDays} days ${duration.inHours % 24} hours ${duration.inMinutes % 60} minutes';
   }
 
   static String toSecondDuration(Duration duration) {

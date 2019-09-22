@@ -11,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 import 'package:openapi/api.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class ApiClient {
   final Dio _dio;
@@ -61,6 +62,15 @@ class ApiClient {
       print(options.data);
       return options;
     }));
+
+    _dio.interceptors.add(PrettyDioLogger(
+        requestHeader: true,
+        requestBody: true,
+        responseBody: true,
+        responseHeader: false,
+        error: true,
+        compact: true,
+        maxWidth: 90));
   }
 
   _handleAuthError(
@@ -811,7 +821,19 @@ class ApiClient {
       "pageSize": pageSize,
       "page": page
     }).then((data) => SmokeSessionSimpleDto.listFromJson(data.data));
-  }   
+  }
+
+  Future<List<SmokeSessionSimpleDto>> getDeviceSessions(int id,
+      {int page = 0, int pageSize = 10}) async {
+    var url = Uri.https(
+      baseUrl,
+      '/api/Device/$id/Sessions',
+    );
+    return await _dio.get(url.toString(), queryParameters: {
+      "pageSize": pageSize,
+      "page": page
+    }).then((data) => SmokeSessionSimpleDto.listFromJson(data.data));
+  }
 }
 
 class ColorDto {

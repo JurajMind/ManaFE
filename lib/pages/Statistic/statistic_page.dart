@@ -12,7 +12,6 @@ import 'package:app/pages/Places/test_search.dart';
 import 'package:app/pages/Settings/language_selector_page.dart';
 import 'package:app/pages/Statistic/UserProfile/user_profile_page.dart';
 import 'package:app/pages/Statistic/all_statistic_page.dart';
-import 'package:app/pages/Statistic/health_page.dart';
 import 'package:app/pages/Statistic/test_page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/support/mana_icons_icons.dart';
@@ -30,6 +29,7 @@ import 'package:shimmer/shimmer.dart';
 import 'Components/gear_usage_stat.dart';
 import 'Components/session_time_graph.dart';
 import 'Components/week_day_graph.dart';
+import 'Health/health_page.dart';
 
 class StatisticPage extends StatefulWidget {
   @override
@@ -98,6 +98,7 @@ class _StatisticPageState extends State<StatisticPage> {
   Authorize auth = new Authorize();
   TimeModel selectedTime;
   StreamController<LineTouchResponse> touchController;
+  bool loading = false;
 
   Future<int> _showDialog(BuildContext context) {
     return showDialog<int>(
@@ -140,7 +141,6 @@ class _StatisticPageState extends State<StatisticPage> {
     );
   }
 
-  bool loading = false;
   @override
   initState() {
     super.initState();
@@ -345,7 +345,7 @@ class _StatisticPageState extends State<StatisticPage> {
           new SliverList(
             delegate: SliverChildListDelegate([
               buildStatRecap(bloc),
-              new HealthWidget(bloc: bloc),
+              new HealthWidget(bloc: bloc, time: this.selectedTime),
               new GearUsageStat(controller: controller),
               new TimeStatisticStream(bloc: bloc),
               new DayStatisticStream(bloc: bloc),
@@ -493,9 +493,11 @@ class DayStatisticStream extends StatelessWidget {
 }
 
 class HealthWidget extends StatelessWidget {
+  final TimeModel time;
   const HealthWidget({
     Key key,
     @required this.bloc,
+    this.time,
   }) : super(key: key);
 
   final StatisticBloc bloc;
@@ -514,7 +516,10 @@ class HealthWidget extends StatelessWidget {
               child: InkWell(
                 onTap: () => Navigator.of(context).push(
                     new MaterialPageRoute(builder: (BuildContext context) {
-                  return HealthPage();
+                  return HealthPage(
+                    from: this.time.from,
+                    to: this.time.to,
+                  );
                 })),
                 child: Row(
                   children: <Widget>[

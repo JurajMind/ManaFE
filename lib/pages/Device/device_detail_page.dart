@@ -1,5 +1,6 @@
 import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/m_outlineButton.dart';
+import 'package:app/components/SmokeSession/session_list.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/utils/translations/app_translations.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/api.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
+import 'package:rxdart/rxdart.dart';
 
 import 'components/device_picture_item.dart';
 import 'device_change_picture_page.dart';
@@ -25,6 +27,8 @@ class DeviceDetailPage extends StatefulWidget {
 
 class _DeviceDetailPageState extends State<DeviceDetailPage> {
   DeviceDevicePictureDto picture;
+  BehaviorSubject<List<SmokeSessionSimpleDto>> sessions =
+      new BehaviorSubject<List<SmokeSessionSimpleDto>>();
   bool editName = false;
   TextEditingController nameController;
   @override
@@ -35,6 +39,11 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
       setState(() {
         if (mounted) picture = data.picture;
       });
+    });
+    App.http
+        .getDeviceSessions(widget.device.id, page: 0, pageSize: 6)
+        .then((data) {
+      sessions.add(data);
     });
     super.initState();
   }
@@ -320,26 +329,43 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
               const SizedBox(
                 height: 16,
               ),
+              StreamBuilder<List<SmokeSessionSimpleDto>>(
+                  stream: sessions,
+                  builder: (context, snapshot) {
+                    return SessionList(
+                      sessions: snapshot.data,
+                      sessionCount: 5,
+                    );
+                  }),
+              const SizedBox(
+                height: 16,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: MButton(
-                  icon: Icons.delete,
-                  iconColor: Colors.red,
-                  label: 'device.remove_device',
-                  onPressed: () {
-                    _removeDialog().then((data) => {
-                          if (data)
-                            {
-                              DataProvider.getData(context)
-                                  .personBloc
-                                  .removeDevice(widget.device.code)
-                                  .then(
-                                      (onValue) => Navigator.of(context).pop())
-                            }
-                        });
-                  },
+                child: FractionallySizedBox(
+                  widthFactor: 0.7,
+                  child: MButton(
+                    icon: Icons.delete,
+                    iconColor: Colors.red,
+                    label: 'device.remove_device',
+                    onPressed: () {
+                      _removeDialog().then((data) => {
+                            if (data)
+                              {
+                                DataProvider.getData(context)
+                                    .personBloc
+                                    .removeDevice(widget.device.code)
+                                    .then((onValue) =>
+                                        Navigator.of(context).pop())
+                              }
+                          });
+                    },
+                  ),
                 ),
-              )
+              ),
+              SizedBox(
+                height: 100,
+              ),
             ]),
           )
         ],
