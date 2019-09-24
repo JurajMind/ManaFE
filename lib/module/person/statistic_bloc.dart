@@ -13,6 +13,9 @@ class StatisticBloc {
     loadStatistic(now.subtract(new Duration(days: 30)), DateTime.now());
   }
 
+  DateTime from;
+  DateTime to;
+
   BehaviorSubject<PersonStatisticsOverallDto> statistic =
       new BehaviorSubject<PersonStatisticsOverallDto>();
 
@@ -28,6 +31,8 @@ class StatisticBloc {
   BehaviorSubject<StatisticRecap> recap = new BehaviorSubject<StatisticRecap>();
 
   Future loadStatistic(DateTime from, DateTime to) async {
+    this.from = from;
+    this.to = to;
     var result = await App.http.getStatistic(from, to);
     this.statistic.add(result);
     var month = false;
@@ -99,6 +104,16 @@ class StatisticBloc {
         smokingTime: smokingTime,
         activity: activityTyme,
         sessionCount: sessions.length);
+  }
+
+  Future<bool> unAssignSession(int id) async {
+    var session = this.smokeSessions.value;
+    session.removeWhere((a) => a.id == id);
+    this.smokeSessions.add(session);
+
+    await App.http.unAssignSession(id);
+    this.loadStatistic(from, to);
+    return true;
   }
 }
 

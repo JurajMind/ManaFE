@@ -834,6 +834,24 @@ class ApiClient {
       "page": page
     }).then((data) => SmokeSessionSimpleDto.listFromJson(data.data));
   }
+
+  Future<SmokeSessionSimpleDto> assignSession(int id) async {
+    var url = Uri.https(
+      baseUrl,
+      '/api/Person/AssignSession/$id',
+    );
+    return await _dio
+        .post(url.toString())
+        .then((data) => SmokeSessionSimpleDto.fromJson(data.data));
+  }
+
+  Future<bool> unAssignSession(int id) async {
+    var url = Uri.https(
+      baseUrl,
+      '/api/Person/UnAssignSession/$id',
+    );
+    return await _dio.post(url.toString()).then((data) => data.data);
+  }
 }
 
 class ColorDto {

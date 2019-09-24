@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:animated_background/animated_background.dart';
 import 'package:app/Helpers/helpers.dart';
@@ -8,6 +9,8 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+
+import 'auth/AppleSignIn/apple_sign_in.dart';
 
 class StartPage extends StatefulWidget {
   @override
@@ -95,6 +98,14 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                               ),
                         margin: new EdgeInsets.only(top: 25.0),
                       ),
+                      if (Platform.isIOS) ...{
+                        SizedBox(
+                          height: 8,
+                        ),
+                        new Container(
+                          child: MAppleLogin(),
+                        ),
+                      },
                       new Container(
                         width: screenSize.width,
                         child: new FlatButton(

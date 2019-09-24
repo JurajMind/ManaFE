@@ -5,6 +5,7 @@ import 'package:app/models/SignalR/device_online.dart';
 import 'package:app/module/signal_bloc.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/services/signal_r.dart';
+import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:queries/collections.dart';
 import 'package:rxdart/rxdart.dart';
@@ -31,6 +32,8 @@ class PersonBloc extends SignalBloc {
         }
     }
   }
+
+  GlobalKey<NavigatorState> Function(int, Widget) callback;
 
   BehaviorSubject<PersonInfoDto> info = new BehaviorSubject<PersonInfoDto>();
 

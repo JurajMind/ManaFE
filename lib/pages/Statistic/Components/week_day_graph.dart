@@ -162,7 +162,7 @@ class WeekDayGraphState extends State<WeekDayGraph> {
                             tooltipBgColor: Colors.blueGrey,
                             getTooltipItems: (touchedSpots) {
                               return touchedSpots.map((touchedSpot) {
-                                if (touchedSpot.spot == null) {
+                                if (touchedSpot?.spot == null) {
                                   return "";
                                 }
                                 String weekDay;

@@ -71,7 +71,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     this.initDynamicLinks();
 
-
     WidgetsBinding.instance
         .scheduleFrameCallback((_) => firstDeepJump(context));
 
@@ -130,6 +129,7 @@ class _HomePageState extends State<HomePage> {
     _focusActiveTab();
     personBloc.loadMyGear(false);
     personBloc.loadInitData();
+    personBloc.callback = _setActiveAndJumpTab;
 
     activeTabSub =
         DataProvider.getData(context).appBloc.activeTab.listen((index) {
@@ -154,7 +154,6 @@ class _HomePageState extends State<HomePage> {
   void didUpdateWidget(dynamic oldWidget) {
     super.didUpdateWidget(oldWidget);
     _focusActiveTab();
-  
   }
 
   void initDynamicLinks() async {
@@ -173,8 +172,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   void firstDeepJump(BuildContext context) {
-     if (widget.deeplink != null) {
-      ShareService.deepLinkNavigation(_setActiveTab, widget.deeplink.path, context);
+    if (widget.deeplink != null) {
+      ShareService.deepLinkNavigation(
+          _setActiveTab, widget.deeplink.path, context);
     }
   }
 
@@ -199,6 +199,11 @@ class _HomePageState extends State<HomePage> {
       _focusActiveTab();
     });
     return navigatorKeys[index];
+  }
+
+  GlobalKey<NavigatorState> _setActiveAndJumpTab(int index, Widget widget) {
+    var bc = _setActiveTab(index);
+    bc.currentState.push(MaterialPageRoute(builder: (context) => widget));
   }
 
   Widget myBottomBar(context) => new Container(

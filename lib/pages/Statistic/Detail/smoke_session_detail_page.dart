@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:app/Helpers/date_utils.dart';
 import 'package:app/app/app.dart';
+import 'package:app/components/SmokeSession/leave_session_button.dart';
 import 'package:app/models/SmokeSession/puf_type.dart';
 import 'package:app/pages/Statistic/Detail/detail_page_helper.dart';
 import 'package:app/services/share.dart';
@@ -20,8 +21,11 @@ import 'Components/smoke_progress_graph.dart';
 class SmokeSessioDetailPage extends StatefulWidget {
   final SmokeSessionSimpleDto session;
   final int sessionId;
-  SmokeSessioDetailPage( {Key key, this.sessionId,this.session,})
-      : super(key: key);
+  SmokeSessioDetailPage({
+    Key key,
+    this.sessionId,
+    this.session,
+  }) : super(key: key);
 
   _SmokeSessioDetailPageState createState() => _SmokeSessioDetailPageState();
 }
@@ -191,7 +195,15 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage>
                   ),
                 );
               }),
-          SizedBox(height: 100)
+          const SizedBox(
+            height: 16,
+          ),
+          FractionallySizedBox(
+              widthFactor: 0.7,
+              child: LeaveSessionButton(
+                sessionId: widget.session.id,
+              )),
+          const SizedBox(height: 100)
         ],
       ),
     );

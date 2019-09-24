@@ -1,13 +1,16 @@
-import 'package:app/Helpers/date_utils.dart';
 import 'package:app/components/Common/labeled_value.dart';
+import 'package:app/module/data_provider.dart';
+import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/pages/Statistic/Detail/smoke_session_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
 class LiveSmokeSessionListItem extends StatelessWidget {
   final SmokeSessionSimpleDto session;
+  final GlobalKey<NavigatorState> Function(int) callback;
 
-  LiveSmokeSessionListItem({Key key, this.session}) : super(key: key);
+  LiveSmokeSessionListItem({Key key, this.session, this.callback})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +21,22 @@ class LiveSmokeSessionListItem extends StatelessWidget {
             border: Border.all(color: Colors.white),
             borderRadius: BorderRadius.circular(16.0)),
         child: InkWell(
-          onTap: () => Navigator.of(context)
-              .push(new MaterialPageRoute(builder: (BuildContext context) {
+          onTap: () async {
+            var bloc = DataProvider.getData(context).personBloc;
+
             if (session.live == true) {
-              return Placeholder();
+              bloc.callback(
+                  2,
+                  new SmokeSessionPage(
+                    sessionId: session.sessionId,
+                  ));
+            } else {
+              return Navigator.of(context)
+                  .push(new MaterialPageRoute(builder: (BuildContext context) {
+                return SmokeSessioDetailPage(session: session);
+              }));
             }
-            return SmokeSessioDetailPage(session:session);
-          })),
+          },
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 4.0),
             child: Column(

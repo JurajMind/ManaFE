@@ -8,14 +8,18 @@ import 'live_smoke_session_list_item.dart';
 
 class SmokeSessionListItem extends StatelessWidget {
   final SmokeSessionSimpleDto session;
+  final GlobalKey<NavigatorState> Function(int) callback;
 
-  SmokeSessionListItem({Key key, this.session}) : super(key: key);
+  SmokeSessionListItem({Key key, this.session, this.callback})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-    if(session.live == true){
-      return LiveSmokeSessionListItem(session: session,);
+    if (session.live == true) {
+      return LiveSmokeSessionListItem(
+        session: session,
+        callback: callback,
+      );
     }
     var start =
         new DateTime.fromMillisecondsSinceEpoch(session.statistic.start);
@@ -26,19 +30,18 @@ class SmokeSessionListItem extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: Container(
-      
         decoration: BoxDecoration(
             color: Colors.black.withOpacity(0.1),
             border: Border.all(color: Colors.white),
             borderRadius: BorderRadius.circular(16.0)),
         child: InkWell(
           onTap: () => Navigator.of(context)
-                  .push(new MaterialPageRoute(builder: (BuildContext context) {
-                    if(session.live == true){
-                      return Placeholder();
-                    }
-                return SmokeSessioDetailPage(session:session);
-              })),
+              .push(new MaterialPageRoute(builder: (BuildContext context) {
+            if (session.live == true) {
+              return Placeholder();
+            }
+            return SmokeSessioDetailPage(session: session);
+          })),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 4.0),
             child: Column(

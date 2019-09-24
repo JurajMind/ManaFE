@@ -174,15 +174,15 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                             tooltipBgColor: Colors.blueGrey,
                             getTooltipItems: (touchedSpots) {
                               return touchedSpots.map((touchedSpot) {
-                                if (touchedSpot.spot == null) {
+                                if (touchedSpot?.spot == null) {
                                   return "";
                                 }
                                 String weekDay =
-                                    touchedSpot.spot.x.toInt().toString();
+                                    touchedSpot?.spot?.x?.toInt().toString();
                                 return TooltipItem(
                                     weekDay +
                                         '\n' +
-                                        touchedSpot.spot.y.toString(),
+                                        touchedSpot?.spot?.y.toString(),
                                     TextStyle(color: Colors.yellow));
                               }).toList();
                             }),
