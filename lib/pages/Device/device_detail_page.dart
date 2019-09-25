@@ -51,6 +51,7 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Theme.of(context).backgroundColor,
       child: CustomScrollView(
         slivers: <Widget>[
           new SliverAppBar(

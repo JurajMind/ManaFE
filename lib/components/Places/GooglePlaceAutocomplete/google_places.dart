@@ -142,9 +142,9 @@ class _PlacesAutocompleteOverlayState extends PlacesAutocompleteState {
             children: _response.predictions
                 .map(
                   (p) => PredictionTile(
-                        prediction: p,
-                        onTap: Navigator.of(context).pop,
-                      ),
+                    prediction: p,
+                    onTap: Navigator.of(context).pop,
+                  ),
                 )
                 .toList(),
           ),
@@ -353,7 +353,7 @@ abstract class PlacesAutocompleteState extends State<PlacesAutocompleteWidget> {
     _queryTextController.addListener(_onQueryChange);
 
     _queryBehavior.stream
-        .debounce(const Duration(milliseconds: 300))
+        .debounceTime(const Duration(milliseconds: 300))
         .listen(doSearch);
   }
 

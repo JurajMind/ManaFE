@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
-
 class TobaccoReviewItem extends StatelessWidget {
   final GearTobaccoReviewDto review;
 
@@ -84,19 +83,18 @@ class TobaccoReviewItem extends StatelessWidget {
     );
   }
 
-  openAlertBox(BuildContext context) {  
-    var size = MediaQuery.of(context).size; 
+  openAlertBox(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(32.0))),
-            contentPadding: EdgeInsets.only(top: 10.0),
-            content: Container(
-              width: size.width * 0.9,
-              child: Placeholder())
-          );
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(32.0))),
+              contentPadding: EdgeInsets.only(top: 10.0),
+              content: Container(
+                  width: size.width * 0.9,
+                  child: SessionReviewView(gearReview: this.review)));
         });
   }
 }

@@ -40,7 +40,9 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
     super.initState();
     ownSimpleAccesories =
         widget.ownAccesories ?? new List<PipeAccesorySimpleDto>();
-    searchOnChange.debounce(Duration(milliseconds: 500)).listen((queryString) {
+    searchOnChange
+        .debounceTime(Duration(milliseconds: 500))
+        .listen((queryString) {
       if (queryString.length > 3) submitSearch(queryString);
     });
   }

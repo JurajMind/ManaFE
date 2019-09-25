@@ -59,18 +59,18 @@ class ApiClient {
       options.headers['Authorization'] = 'Bearer $token';
       options.headers["Accept"] = "application/json";
       options.headers['content-type'] = 'application/json';
-      print(options.data);
+      print(options.uri.toString());
       return options;
     }));
 
-    _dio.interceptors.add(PrettyDioLogger(
+    /*  _dio.interceptors.add(PrettyDioLogger(
         requestHeader: true,
         requestBody: true,
         responseBody: true,
         responseHeader: false,
-        error: true,
+        error: false,
         compact: true,
-        maxWidth: 90));
+        maxWidth: 90)); */
   }
 
   _handleAuthError(
@@ -850,7 +850,16 @@ class ApiClient {
       baseUrl,
       '/api/Person/UnAssignSession/$id',
     );
-    return await _dio.post(url.toString()).then((data) => data.data);
+    var data = await _dio
+        .postUri(url,
+            data: null,
+            options: Options(
+              contentType: ContentType.json,
+            ))
+        .then((data) {
+      return true;
+    });
+    return data;
   }
 }
 

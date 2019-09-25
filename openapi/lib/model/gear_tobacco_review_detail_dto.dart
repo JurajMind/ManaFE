@@ -21,11 +21,13 @@ class GearTobaccoReviewDetailDto {
   String text = null;
   
   int sessionReviewId = null;
+  
+  List<MediaDto> medias = [];
   GearTobaccoReviewDetailDto();
 
   @override
   String toString() {
-    return 'GearTobaccoReviewDetailDto[smokeSessionId=$smokeSessionId, id=$id, cut=$cut, taste=$taste, smoke=$smoke, strength=$strength, duration=$duration, overall=$overall, text=$text, sessionReviewId=$sessionReviewId, ]';
+    return 'GearTobaccoReviewDetailDto[smokeSessionId=$smokeSessionId, id=$id, cut=$cut, taste=$taste, smoke=$smoke, strength=$strength, duration=$duration, overall=$overall, text=$text, sessionReviewId=$sessionReviewId, medias=$medias, ]';
   }
 
   GearTobaccoReviewDetailDto.fromJson(Map<String, dynamic> json) {
@@ -80,6 +82,11 @@ class GearTobaccoReviewDetailDto {
     } else {
           sessionReviewId = json['SessionReviewId'];
     }
+    if (json['Medias'] == null) {
+      medias = null;
+    } else {
+      medias = MediaDto.listFromJson(json['Medias']);
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -104,6 +111,8 @@ class GearTobaccoReviewDetailDto {
       json['Text'] = text;
     if (sessionReviewId != null)
       json['SessionReviewId'] = sessionReviewId;
+    if (medias != null)
+      json['Medias'] = medias;
     return json;
   }
 

@@ -196,7 +196,7 @@ class MediaApi {
     }
 
     // create path and map variables
-    String path = "/api/Media/SessionReview/{id}/Add".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+    String path = "/api/Media/TobaccoReview/{id}/Add".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
 
     // query params
     List<QueryParam> queryParams = [];

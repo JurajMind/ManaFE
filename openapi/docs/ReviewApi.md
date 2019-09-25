@@ -18,7 +18,7 @@ Method | HTTP request | Description
 [**reviewRemovePlaceReview**](ReviewApi.md#reviewRemovePlaceReview) | **DELETE** /api/Review/Place/{id} | 
 [**reviewRemoveSessionReview**](ReviewApi.md#reviewRemoveSessionReview) | **DELETE** /api/Review/Session/{id} | 
 [**reviewRemoveTobaccoReview**](ReviewApi.md#reviewRemoveTobaccoReview) | **DELETE** /api/Review/Tobacco/{id} | 
-[**reviewTobaccoReviewDetail**](ReviewApi.md#reviewTobaccoReviewDetail) | **DELETE** /api/Review/Tobacco/{id}/Detail | 
+[**reviewTobaccoReviewDetail**](ReviewApi.md#reviewTobaccoReviewDetail) | **GET** /api/Review/Tobacco/{id}/Detail | 
 
 
 # **reviewAddPlaceReview**
@@ -74,7 +74,7 @@ No authorization required
 import 'package:openapi/api.dart';
 
 var api_instance = new ReviewApi();
-var id = id_example; // String | 
+var id = 56; // int | 
 var reviewDto = new SmartHookahModelsDbSessionDtoSessionReviewDto(); // SmartHookahModelsDbSessionDtoSessionReviewDto | 
 
 try { 
@@ -89,7 +89,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  | [default to null]
+ **id** | **int**|  | [default to null]
  **reviewDto** | [**SmartHookahModelsDbSessionDtoSessionReviewDto**](SmartHookahModelsDbSessionDtoSessionReviewDto.md)|  | 
 
 ### Return type

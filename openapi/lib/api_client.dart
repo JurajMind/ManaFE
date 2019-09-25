@@ -89,10 +89,6 @@ class ApiClient {
           return InlineResponse200.fromJson(value);
         case 'MediaDto':
           return MediaDto.fromJson(value);
-        case 'MixCreator':
-          return MixCreator.fromJson(value);
-        case 'MixCreatorsDto':
-          return MixCreatorsDto.fromJson(value);
         case 'NearbyPlacesDto':
           return NearbyPlacesDto.fromJson(value);
         case 'PersonActiveDataDto':

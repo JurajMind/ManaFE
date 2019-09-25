@@ -29,36 +29,49 @@ class GradientColorWheelRotateState extends State<GradientColorWheelRotate> {
     super.initState();
   }
 
-  StreamBuilder<List<Color>> buildCircle(
-      SmokeSessionBloc smokeSessionBloc, Size size) {
-    return StreamBuilder<List<Color>>(
-      stream: smokeSessionBloc.sessionColor,
-      initialData: widget.defaultColors,
-      builder: (context, snapshot) => Container(
-          height: size.height,
-          width: size.width,
-          child: widget.child,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(
-                  stops: [0.4, 1.0],
-                  tileMode: TileMode.clamp,
-                  colors: snapshot.data != null
-                      ? snapshot.data
-                      : widget.defaultColors))),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final smokeSessionBloc = DataProvider.getSmokeSession(context);
 
     Size size = widget.size == null ? MediaQuery.of(context).size : widget.size;
 
-    return Container(
-      child: SmokeRotation(
-        child: RepaintBoundary(child: buildCircle(smokeSessionBloc, size)),
-      ),
+    return Stack(
+      children: <Widget>[
+        Container(
+          child: SmokeRotation(
+            child: RepaintBoundary(
+                child: StreamBuilder<List<Color>>(
+              stream: smokeSessionBloc.sessionColor,
+              initialData: widget.defaultColors,
+              builder: (context, snapshot) => Container(
+                  height: size.height,
+                  width: size.width,
+                  child: Container(),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                          stops: [0.4, 1.0],
+                          tileMode: TileMode.clamp,
+                          colors: snapshot.data != null
+                              ? snapshot.data
+                              : widget.defaultColors))),
+            )),
+          ),
+        ),
+        Positioned(
+          child: Container(
+              height: size.height,
+              width: size.width,
+              child: Center(
+                  child: Container(
+                      height: size.height - 20,
+                      width: size.width - 20,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white.withAlpha(180)),
+                      child: widget.child))),
+        ),
+      ],
     );
   }
 }

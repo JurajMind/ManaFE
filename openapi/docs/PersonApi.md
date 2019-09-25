@@ -9,8 +9,9 @@ All URIs are relative to *https://devmana.azurewebsites.net*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**personAddMyGear**](PersonApi.md#personAddMyGear) | **POST** /api/Person/MyGear/{id}/Add/{count} | 
+[**personAddMyGear**](PersonApi.md#personAddMyGear) | **POST** /api/Person/MyGear/{id}/Add | 
 [**personAddNotificationToken**](PersonApi.md#personAddNotificationToken) | **PUT** /api/Person/NotificationToken | 
+[**personAssignSession**](PersonApi.md#personAssignSession) | **POST** /api/Person/AssignSession/{id} | 
 [**personDeleteMyGear**](PersonApi.md#personDeleteMyGear) | **POST** /api/Person/MyGear/{id}/Delete | 
 [**personGetPersonActiveData**](PersonApi.md#personGetPersonActiveData) | **GET** /api/Person/InitData | 
 [**personGetPersonDevices**](PersonApi.md#personGetPersonDevices) | **GET** /api/Person/Devices | 
@@ -19,6 +20,7 @@ Method | HTTP request | Description
 [**personGetRecentAccessories**](PersonApi.md#personGetRecentAccessories) | **GET** /api/Person/MyGear/Used/{sessionCount} | 
 [**personMyGear**](PersonApi.md#personMyGear) | **GET** /api/Person/MyGear | 
 [**personTestNotification**](PersonApi.md#personTestNotification) | **POST** /api/Person/TestNotification | 
+[**personUnAssignSession**](PersonApi.md#personUnAssignSession) | **POST** /api/Person/UnAssignSession/{id} | 
 
 
 # **personAddMyGear**
@@ -47,7 +49,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**|  | [default to null]
- **count** | **int**|  | [default to null]
+ **count** | **int**|  | [optional] [default to null]
 
 ### Return type
 
@@ -104,6 +106,47 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **personAssignSession**
+> SmokeSessionSimpleDto personAssignSession(id)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new PersonApi();
+var id = 56; // int | 
+
+try { 
+    var result = api_instance.personAssignSession(id);
+    print(result);
+} catch (e) {
+    print("Exception when calling PersonApi->personAssignSession: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**|  | [default to null]
+
+### Return type
+
+[**SmokeSessionSimpleDto**](SmokeSessionSimpleDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **personDeleteMyGear**
 > bool personDeleteMyGear(id, count)
 
@@ -130,7 +173,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**|  | [default to null]
- **count** | **int**|  | [default to null]
+ **count** | **int**|  | [optional] [default to null]
 
 ### Return type
 
@@ -410,6 +453,47 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **personUnAssignSession**
+> bool personUnAssignSession(id)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new PersonApi();
+var id = 56; // int | 
+
+try { 
+    var result = api_instance.personUnAssignSession(id);
+    print(result);
+} catch (e) {
+    print("Exception when calling PersonApi->personUnAssignSession: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**|  | [default to null]
+
+### Return type
+
+**bool**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

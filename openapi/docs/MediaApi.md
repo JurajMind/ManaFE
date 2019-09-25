@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**mediaAddGearPicture**](MediaApi.md#mediaAddGearPicture) | **POST** /api/Media/Gear/{id}/Add | 
 [**mediaAddPlacePicture**](MediaApi.md#mediaAddPlacePicture) | **POST** /api/Media/Place/{id}/Add | 
 [**mediaAddPlaceReview**](MediaApi.md#mediaAddPlaceReview) | **POST** /api/Media/PlaceReview/{id}/Add | 
-[**mediaAddSessionReview**](MediaApi.md#mediaAddSessionReview) | **POST** /api/Media/SessionReview/{id}/Add | 
+[**mediaAddSessionReview**](MediaApi.md#mediaAddSessionReview) | **POST** /api/Media/TobaccoReview/{id}/Add | 
 
 
 # **mediaAddGearPicture**

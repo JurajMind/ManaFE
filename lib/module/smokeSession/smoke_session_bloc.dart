@@ -197,6 +197,10 @@ class SmokeSessionBloc {
       sessionReviews.add(reviews);
     });
     standSettings.add(sessionData.setting);
+    sessionColor.add([
+      sessionData.setting.puf.color.toColor(),
+      ColorHelper.getOpositeColor(sessionData.setting.puf.color.toColor())
+    ]);
     smokeStatistic.add(sessionData.session.smokeSessionData);
     smokeSessionMetaData.add(sessionData.dtoSession.metaData);
     smokeSession.add(sessionData.dtoSession);
@@ -219,12 +223,12 @@ class SmokeSessionBloc {
     if (setModel == null) {
       selection.tobaccoId = 0;
       selection.tobacco = null;
-      selection.tobaccoMix = null; 
+      selection.tobaccoMix = null;
       this.smokeSessionMetaData.add(selection);
       saveMetaData();
       return;
     }
-                             
+
     if (setModel.mix == null) {
       selection.tobacco = setModel.tobacco;
       selection.tobaccoId = setModel.tobacco.id;
@@ -251,7 +255,7 @@ class SmokeSessionBloc {
         selection.pipeId = accesory?.id;
         break;
 
-              case 'pipe':
+      case 'pipe':
         selection.pipe = accesory;
         selection.pipeId = accesory?.id;
         break;
@@ -266,7 +270,6 @@ class SmokeSessionBloc {
         selection.heatManagementId = accesory?.id;
         break;
 
-        
       case 'heatmanagment':
         selection.heatManagement = accesory;
         selection.heatManagementId = accesory?.id;
@@ -308,11 +311,11 @@ class SmokeSessionBloc {
     });
 
     futureSettingDebounce =
-        futureSettings.debounce(Duration(milliseconds: 800));
+        futureSettings.debounceTime(Duration(milliseconds: 800));
     futureSettingDebounce.listen((onData) => _futureSetAnimation(onData));
 
     futureDevicePresetDebounce =
-        futureDevicePreset.debounce(Duration(milliseconds: 800));
+        futureDevicePreset.debounceTime(Duration(milliseconds: 800));
     futureDevicePresetDebounce.listen((onData) => _futureSetPreset(onData));
 
     pufTimerDependencies = new PufTimerDependencies(this);
@@ -452,6 +455,12 @@ class SmokeSessionBloc {
     var reviewIndex = allReviews.indexWhere((test) => test.id == review.id);
     allReviews.removeAt(reviewIndex);
     sessionReviews.add(allReviews);
+  }
+
+  Future<bool> unAssignSession() async {
+    await App.http.unAssignSession(this.smokeSession.value.id);
+    this._leaveOldSession(activeSessionId);
+    return true;
   }
 }
 

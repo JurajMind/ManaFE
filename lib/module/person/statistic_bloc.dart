@@ -115,6 +115,17 @@ class StatisticBloc {
     this.loadStatistic(from, to);
     return true;
   }
+
+  Future<bool> assignSession(int id) async {
+    var session = await App.http.assignSession(id);
+    var sessions = this.smokeSessions.value;
+    sessions.add(session);
+    this.smokeSessions.add(sessions);
+
+    await App.http.assignSession(id);
+    this.loadStatistic(from, to);
+    return true;
+  }
 }
 
 class StatisticItem {

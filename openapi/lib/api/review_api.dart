@@ -63,7 +63,7 @@ class ReviewApi {
   /// 
   ///
   /// 
-  Future<SmartHookahModelsDbSessionDtoSessionReviewDto> reviewAddSessionReview(String id, SmartHookahModelsDbSessionDtoSessionReviewDto reviewDto) async {
+  Future<SmartHookahModelsDbSessionDtoSessionReviewDto> reviewAddSessionReview(int id, SmartHookahModelsDbSessionDtoSessionReviewDto reviewDto) async {
     Object postBody = reviewDto;
 
     // verify required params are set
@@ -518,7 +518,7 @@ class ReviewApi {
     }
 
     var response = await apiClient.invokeAPI(path,
-                                             'DELETE',
+                                             'GET',
                                              queryParams,
                                              postBody,
                                              headerParams,

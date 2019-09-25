@@ -330,6 +330,18 @@ class _HomePageState extends State<HomePage> {
                   bottom: -10,
                   height: 55,
                   width: MediaQuery.of(context).size.width,
+                  child: SizedBox(
+                      height: 55,
+                      child: ClipRect(
+                        child: BackdropFilter(
+                          filter:
+                              new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                        ),
+                      ))),
+              Positioned(
+                  bottom: -10,
+                  height: 55,
+                  width: MediaQuery.of(context).size.width,
                   child: SizedBox(height: 55, child: myBottomBar(context))),
               _buildCenter(),
             ])));
@@ -347,11 +359,17 @@ class _HomePageState extends State<HomePage> {
               shape: BoxShape.circle,
               color: Colors.transparent,
               boxShadow: <BoxShadow>[
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(1.0, 6.0),
-                  blurRadius: 40.0,
-                ),
+                _currentIndex == 2
+                    ? BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(1.0, 6.0),
+                        blurRadius: 40.0,
+                      )
+                    : BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset.zero,
+                        blurRadius: 0,
+                      ),
               ],
             ),
             child: SizedBox(

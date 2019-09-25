@@ -1,20 +1,28 @@
 import 'package:app/components/Media/media.widget.dart';
 import 'package:app/components/StarRating/m_star_ratting.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/pages/Places/place_review.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
 class SessionReviewView extends StatelessWidget {
   final SmartHookahModelsDbSessionDtoSessionReviewDto review;
+  final GearTobaccoReviewDto gearReview;
 
-  const SessionReviewView({Key key, this.review}) : super(key: key);
+  const SessionReviewView({Key key, this.review, this.gearReview})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var taste = review?.taste ?? gearReview?.taste ?? 0;
+    var smoke = review?.smoke ?? gearReview?.smoke ?? 0;
+    var strength = review?.strength ?? gearReview?.strength ?? 0;
+    var authorId = review?.authorId ?? 0;
+    var medias = review?.medias ?? gearReview.medias ?? [];
+    var text = review?.tobaccoReview?.text ?? gearReview.text ?? '';
+
     var bloc = DataProvider.getData(context).personBloc;
     var id = bloc.info.value.personId;
-    var placeSession = review.placeReview != null;
+    var placeSession = review?.placeReview != null;
     return Container(
       child: SingleChildScrollView(
         child: Column(
@@ -31,28 +39,27 @@ class SessionReviewView extends StatelessWidget {
             ),
             MStarRating(
               title: 'Taste',
-              rating: review.taste / 2,
+              rating: taste / 2,
               colorIndex: 1,
             ),
             MStarRating(
               title: 'Smoke',
-              rating: review.smoke / 2,
+              rating: smoke / 2,
               colorIndex: 2,
             ),
             MStarRating(
               title: 'Strength',
-              rating: review.strength / 2,
+              rating: strength / 2,
               colorIndex: 0,
             ),
             Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(review?.tobaccoReview?.text ?? '')),
+                padding: const EdgeInsets.all(8.0), child: Text(text ?? '')),
             if (placeSession) ...buildPlaceReview(context),
             SizedBox(
               height: 8,
             ),
-            buildMediaGrid(context),
-            if (review.authorId == id)
+            buildMediaGrid(medias, context),
+            if (authorId == id)
               InkWell(
                 onTap: () {
                   var sessionBloc =
@@ -120,7 +127,7 @@ class SessionReviewView extends StatelessWidget {
     ];
   }
 
-  Widget buildMediaGrid(BuildContext context) {
+  Widget buildMediaGrid(List<MediaDto> medias, BuildContext context) {
     return Column(
       children: <Widget>[
         Divider(
@@ -136,17 +143,17 @@ class SessionReviewView extends StatelessWidget {
         Container(
           height: 250,
           child: Center(
-            child: review.medias.length == 1
+            child: medias.length == 1
                 ? Center(
                     child: MediaWidget(
-                    review.medias[0],
+                    medias[0],
                     openOnClick: true,
                   ))
                 : ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: review.medias.length,
+                    itemCount: medias.length,
                     itemBuilder: (context, index) {
-                      var media = review.medias[index];
+                      var media = medias[index];
                       return Hero(
                           tag: "media_hero_${media.id}",
                           child: MediaWidget(

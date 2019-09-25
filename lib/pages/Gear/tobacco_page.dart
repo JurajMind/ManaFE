@@ -64,12 +64,15 @@ class _TobaccoPageState extends State<TobaccoPage> {
               backgroundColor: Colors.black,
               pinned: true,
               flexibleSpace: Container(),
-              actions: <Widget>[                              IconButton(
-                  icon: Icon(Icons.share),
-                  onPressed: () async {
-                    var url = await ShareService.gearShareLink(this.pipeAccesory);
-                    Share.share(url.toString());
-                  }),],
+              actions: <Widget>[
+                IconButton(
+                    icon: Icon(Icons.share),
+                    onPressed: () async {
+                      var url =
+                          await ShareService.gearShareLink(this.pipeAccesory);
+                      Share.share(url.toString());
+                    }),
+              ],
               title: Row(
                 children: <Widget>[
                   Hero(
@@ -96,8 +99,11 @@ class _TobaccoPageState extends State<TobaccoPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: AddRemoveGearButton(
-                    gear: pipeAccesory,
+                  child: FractionallySizedBox(
+                    widthFactor: 0.7,
+                    child: AddRemoveGearButton(
+                      gear: pipeAccesory,
+                    ),
                   ),
                 ),
                 const SizedBox(

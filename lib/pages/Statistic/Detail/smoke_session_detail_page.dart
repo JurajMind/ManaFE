@@ -198,11 +198,23 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage>
           const SizedBox(
             height: 16,
           ),
-          FractionallySizedBox(
-              widthFactor: 0.7,
-              child: LeaveSessionButton(
-                sessionId: widget.session.id,
-              )),
+          StreamBuilder<FinishedSessionDataDto>(
+              stream: this.data,
+              builder: (context, snapshot) {
+                if (snapshot.data == null) return Container();
+
+                return FractionallySizedBox(
+                    widthFactor: 0.7,
+                    child: LeaveSessionButton(
+                      sessionId: widget.session.id,
+                      assigned: snapshot.data.assigned,
+                      callback: (value) {
+                        var old = this.data.value;
+                        old.assigned = value;
+                        this.data.add(old);
+                      },
+                    ));
+              }),
           const SizedBox(height: 100)
         ],
       ),

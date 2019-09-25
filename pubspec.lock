@@ -93,14 +93,14 @@ packages:
       name: charts_common
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.0"
+    version: "0.8.1"
   charts_flutter:
     dependency: "direct main"
     description:
       name: charts_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.0"
+    version: "0.8.1"
   chewie:
     dependency: transitive
     description:
@@ -135,7 +135,7 @@ packages:
       name: crypto
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.2"
+    version: "2.1.3"
   csslib:
     dependency: transitive
     description:
@@ -170,14 +170,14 @@ packages:
       name: datetime_picker_formfield
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-pre.4"
+    version: "1.0.0-pre.5"
   dio:
     dependency: "direct main"
     description:
       name: dio
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.16"
+    version: "2.2.2"
   fast_qr_reader_view:
     dependency: "direct main"
     description:
@@ -200,7 +200,7 @@ packages:
       name: firebase_messaging
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0+4"
+    version: "5.1.6"
   fl_chart:
     dependency: "direct main"
     description:
@@ -214,14 +214,14 @@ packages:
       name: flare_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.6"
+    version: "1.4.7"
   flare_flutter:
     dependency: transitive
     description:
       name: flare_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.8"
+    version: "1.5.9"
   fluro:
     dependency: "direct main"
     description:
@@ -261,21 +261,21 @@ packages:
       name: flutter_chips_input
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.1"
+    version: "1.5.0"
   flutter_facebook_login:
     dependency: "direct main"
     description:
       name: flutter_facebook_login
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "3.0.0"
   flutter_form_builder:
     dependency: "direct main"
     description:
       name: flutter_form_builder
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.5.2"
+    version: "3.5.4"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -294,7 +294,7 @@ packages:
       name: flutter_material_color_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.5"
   flutter_section_table_view:
     dependency: "direct main"
     description:
@@ -308,7 +308,7 @@ packages:
       name: flutter_secure_storage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.3.1"
+    version: "3.3.1+1"
   flutter_slidable:
     dependency: "direct main"
     description:
@@ -341,14 +341,14 @@ packages:
       name: flutter_widget_from_html
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.3"
+    version: "0.2.3+2"
   flutter_widget_from_html_core:
     dependency: transitive
     description:
       name: flutter_widget_from_html_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.3"
+    version: "0.2.3+2"
   font_awesome_flutter:
     dependency: "direct main"
     description:
@@ -404,14 +404,14 @@ packages:
       name: google_maps_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.21"
+    version: "0.5.21+3"
   google_maps_webservice:
     dependency: "direct main"
     description:
       name: google_maps_webservice
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.14"
+    version: "0.0.15"
   html:
     dependency: transitive
     description:
@@ -551,7 +551,7 @@ packages:
       name: node_preamble
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.7"
+    version: "1.4.8"
   open_iconic_flutter:
     dependency: transitive
     description:
@@ -684,7 +684,7 @@ packages:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.21.0"
+    version: "0.22.2"
   screen:
     dependency: transitive
     description:
@@ -768,7 +768,7 @@ packages:
       name: shimmer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -815,7 +815,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.6+4"
+    version: "1.1.6+5"
   stack_trace:
     dependency: transitive
     description:
@@ -1020,7 +1020,7 @@ packages:
       name: yaml
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.16"
+    version: "2.2.0"
 sdks:
   dart: ">=2.4.0 <3.0.0"
   flutter: ">=1.7.8+hotfix.3 <2.0.0"

@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**gearGetBrandsPrefix**](GearApi.md#gearGetBrandsPrefix) | **GET** /api/Gear/Brands/{prefix} | 
 [**gearGetDetails**](GearApi.md#gearGetDetails) | **GET** /api/Gear/{id}/Detail | 
 [**gearInfo**](GearApi.md#gearInfo) | **GET** /api/Gear/{id}/Info | 
+[**gearMerge**](GearApi.md#gearMerge) | **POST** /api/Gear/Merge | 
 [**gearSearch**](GearApi.md#gearSearch) | **GET** /api/Gear/Search/{search} | 
 [**gearSessions**](GearApi.md#gearSessions) | **GET** /api/Gear/{id}/Sessions | 
 [**gearVote**](GearApi.md#gearVote) | **POST** /api/Gear/{id}/Vote | 
@@ -246,6 +247,49 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**|  | [default to null]
+
+### Return type
+
+[**PipeAccesorySimpleDto**](PipeAccesorySimpleDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **gearMerge**
+> PipeAccesorySimpleDto gearMerge(targetId, sourceId)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new GearApi();
+var targetId = 56; // int | 
+var sourceId = 56; // int | 
+
+try { 
+    var result = api_instance.gearMerge(targetId, sourceId);
+    print(result);
+} catch (e) {
+    print("Exception when calling GearApi->gearMerge: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **targetId** | **int**|  | [default to null]
+ **sourceId** | **int**|  | [default to null]
 
 ### Return type
 

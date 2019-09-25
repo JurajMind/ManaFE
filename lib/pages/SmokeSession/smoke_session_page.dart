@@ -398,6 +398,17 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                     title: new Text(AppTranslations.of(context)
                         .text("smoke_session.end_session")),
                     onTap: () => _endDialog(context)),
+                new ListTile(
+                    leading: new Icon(FontAwesomeIcons.reply),
+                    title: new Text(AppTranslations.of(context)
+                        .text("smoke_session.leave_session")),
+                    onTap: () {
+                      var bloc = DataProvider.getData(context).smokeSessionBloc;
+                      bloc.unAssignSession().then((data) {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                      });
+                    }),
               ],
             ),
           );
@@ -457,7 +468,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
           Navigator.of(context).pop();
           widget.callback(4);
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => SmokeSessioDetailPage(session:value)));
+              builder: (context) => SmokeSessioDetailPage(session: value)));
         });
       }
     });

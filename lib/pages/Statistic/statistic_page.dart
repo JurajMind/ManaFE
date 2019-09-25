@@ -9,7 +9,6 @@ import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/person/statistic_bloc.dart';
 import 'package:app/pages/Places/test_search.dart';
-import 'package:app/pages/Settings/language_selector_page.dart';
 import 'package:app/pages/Statistic/UserProfile/user_profile_page.dart';
 import 'package:app/pages/Statistic/all_statistic_page.dart';
 import 'package:app/pages/Statistic/test_page.dart';
@@ -30,6 +29,7 @@ import 'Components/gear_usage_stat.dart';
 import 'Components/session_time_graph.dart';
 import 'Components/week_day_graph.dart';
 import 'Health/health_page.dart';
+import 'Setting/setting.page.dart';
 
 class StatisticPage extends StatefulWidget {
   @override
@@ -175,7 +175,7 @@ class _StatisticPageState extends State<StatisticPage> {
                   switch (value) {
                     case 'settings':
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => LanguageSelectorPage()));
+                          builder: (context) => SettingPage()));
                       break;
                     case 'signOut':
                       auth.signOut();
@@ -198,23 +198,51 @@ class _StatisticPageState extends State<StatisticPage> {
                 itemBuilder: (BuildContext context) => [
                   PopupMenuItem(
                     value: "settings",
-                    child: Text('Settings'),
+                    child: Row(
+                      children: <Widget>[
+                        const Icon(Icons.settings),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Text('Settings'),
+                      ],
+                    ),
                   ),
                   PopupMenuItem(
                     value: "test",
-                    child: Text('User profile'),
+                    child: Row(
+                      children: <Widget>[
+                        const Icon(Icons.person),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Text('User profile'),
+                      ],
+                    ),
                   ),
                   PopupMenuItem(
                     value: "testPage",
-                    child: Text('Test page'),
-                  ),
-                  PopupMenuItem(
-                    value: "testPlaces",
-                    child: Text('Test places'),
+                    child: Row(
+                      children: <Widget>[
+                        const Icon(Icons.category),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Text('Test page'),
+                      ],
+                    ),
                   ),
                   PopupMenuItem(
                     value: "signOut",
-                    child: Text('Sign out'),
+                    child: Row(
+                      children: <Widget>[
+                        const Icon(FontAwesomeIcons.signOutAlt),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Text('Sign out'),
+                      ],
+                    ),
                   ),
                 ],
               )

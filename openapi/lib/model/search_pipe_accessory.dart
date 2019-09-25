@@ -9,11 +9,13 @@ class SearchPipeAccessory {
   String brand = null;
   
   String type = null;
+  
+  bool nonVerified = null;
   SearchPipeAccessory();
 
   @override
   String toString() {
-    return 'SearchPipeAccessory[id=$id, name=$name, brand=$brand, type=$type, ]';
+    return 'SearchPipeAccessory[id=$id, name=$name, brand=$brand, type=$type, nonVerified=$nonVerified, ]';
   }
 
   SearchPipeAccessory.fromJson(Map<String, dynamic> json) {
@@ -38,6 +40,11 @@ class SearchPipeAccessory {
     } else {
           type = json['Type'];
     }
+    if (json['NonVerified'] == null) {
+      nonVerified = null;
+    } else {
+          nonVerified = json['NonVerified'];
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -50,6 +57,8 @@ class SearchPipeAccessory {
       json['Brand'] = brand;
     if (type != null)
       json['Type'] = type;
+    if (nonVerified != null)
+      json['NonVerified'] = nonVerified;
     return json;
   }
 

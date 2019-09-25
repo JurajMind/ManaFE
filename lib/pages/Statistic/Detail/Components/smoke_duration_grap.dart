@@ -136,7 +136,7 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
                       width: 8,
                     ),
                     Text(
-                      "Smoke",
+                      "Distribution",
                       style: Theme.of(context).textTheme.display1,
                     ),
                   ],
@@ -210,5 +210,56 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
         ),
       ),
     );
+  }
+}
+
+class SmokeDurationGraphShimer extends StatelessWidget {
+  const SmokeDurationGraphShimer({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+        aspectRatio: 1.23,
+        child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(18)),
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xff2c274c),
+                    Color(0xff46426c),
+                  ],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                )),
+            child: Padding(
+              padding: EdgeInsets.all(8),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Icon(Icons.pie_chart),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          "Distribution",
+                          style: Theme.of(context).textTheme.display1,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  ]),
+            )));
   }
 }

@@ -64,8 +64,6 @@ part 'model/hookah_order_dto.dart';
 part 'model/init_data_dto.dart';
 part 'model/inline_response200.dart';
 part 'model/media_dto.dart';
-part 'model/mix_creator.dart';
-part 'model/mix_creators_dto.dart';
 part 'model/nearby_places_dto.dart';
 part 'model/person_active_data_dto.dart';
 part 'model/person_info_dto.dart';

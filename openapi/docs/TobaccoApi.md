@@ -10,8 +10,8 @@ All URIs are relative to *https://devmana.azurewebsites.net*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**tobaccoGetTobacco**](TobaccoApi.md#tobaccoGetTobacco) | **GET** /api/Tobacco/{id}/GetTobacco | 
+[**tobaccoGetTobaccoInMixes**](TobaccoApi.md#tobaccoGetTobaccoInMixes) | **GET** /api/Tobacco/{id}/InMix | 
 [**tobaccoGetTobaccoInfo**](TobaccoApi.md#tobaccoGetTobaccoInfo) | **GET** /api/Tobacco/{id}/GetAllInfo | 
-[**tobaccoGetTobaccoReviews**](TobaccoApi.md#tobaccoGetTobaccoReviews) | **GET** /api/Tobacco/{id}/GetReviews | 
 [**tobaccoGetTobaccoSatistics**](TobaccoApi.md#tobaccoGetTobaccoSatistics) | **GET** /api/Tobacco/{id}/GetStatistics | 
 [**tobaccoGetTobaccoSessions**](TobaccoApi.md#tobaccoGetTobaccoSessions) | **GET** /api/Tobacco/{id}/GetSessions | 
 [**tobaccoGetTobaccoTaste**](TobaccoApi.md#tobaccoGetTobaccoTaste) | **GET** /api/Tobacco/{id}/GetTaste | 
@@ -59,6 +59,51 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **tobaccoGetTobaccoInMixes**
+> List<TobaccoMixSimpleDto> tobaccoGetTobaccoInMixes(id, pageSize, page)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new TobaccoApi();
+var id = 56; // int | 
+var pageSize = 56; // int | 
+var page = 56; // int | 
+
+try { 
+    var result = api_instance.tobaccoGetTobaccoInMixes(id, pageSize, page);
+    print(result);
+} catch (e) {
+    print("Exception when calling TobaccoApi->tobaccoGetTobaccoInMixes: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**|  | [default to null]
+ **pageSize** | **int**|  | [optional] [default to null]
+ **page** | **int**|  | [optional] [default to null]
+
+### Return type
+
+[**List<TobaccoMixSimpleDto>**](TobaccoMixSimpleDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **tobaccoGetTobaccoInfo**
 > TobaccoInformationDto tobaccoGetTobaccoInfo(id)
 
@@ -88,51 +133,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**TobaccoInformationDto**](TobaccoInformationDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **tobaccoGetTobaccoReviews**
-> List<GearTobaccoReviewDto> tobaccoGetTobaccoReviews(id, pageSize, page)
-
-
-
-### Example 
-```dart
-import 'package:openapi/api.dart';
-
-var api_instance = new TobaccoApi();
-var id = 56; // int | 
-var pageSize = 56; // int | 
-var page = 56; // int | 
-
-try { 
-    var result = api_instance.tobaccoGetTobaccoReviews(id, pageSize, page);
-    print(result);
-} catch (e) {
-    print("Exception when calling TobaccoApi->tobaccoGetTobaccoReviews: $e\n");
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**|  | [default to null]
- **pageSize** | **int**|  | [optional] [default to null]
- **page** | **int**|  | [optional] [default to null]
-
-### Return type
-
-[**List<GearTobaccoReviewDto>**](GearTobaccoReviewDto.md)
 
 ### Authorization
 

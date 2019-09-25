@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **overall** | **double** |  | [optional] [default to null]
 **text** | **String** |  | [optional] [default to null]
 **sessionReviewId** | **int** |  | [optional] [default to null]
+**medias** | [**List&lt;MediaDto&gt;**](MediaDto.md) |  | [optional] [default to []]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

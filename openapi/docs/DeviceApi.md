@@ -16,6 +16,7 @@ Method | HTTP request | Description
 [**deviceChangeMode**](DeviceApi.md#deviceChangeMode) | **POST** /api/Device/{id}/ChangeMode | 
 [**deviceChangeName**](DeviceApi.md#deviceChangeName) | **POST** /api/Device/{id}/ChangeName | 
 [**deviceChangeSpeed**](DeviceApi.md#deviceChangeSpeed) | **POST** /api/Device/{id}/ChangeSpeed | 
+[**deviceGetDeviceSessions**](DeviceApi.md#deviceGetDeviceSessions) | **GET** /api/Device/{id}/Sessions | 
 [**deviceGetPictures**](DeviceApi.md#deviceGetPictures) | **GET** /api/Device/Pictures | 
 [**deviceGetSetting**](DeviceApi.md#deviceGetSetting) | **GET** /api/Device/{id}/GetSetting | 
 [**deviceInfo**](DeviceApi.md#deviceInfo) | **GET** /api/Device/{id}/Info | 
@@ -328,6 +329,51 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/xml, text/xml, multipart/form-data, application/x-www-form-urlencoded
+ - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **deviceGetDeviceSessions**
+> List<SmokeSessionSimpleDto> deviceGetDeviceSessions(id, pageSize, page)
+
+
+
+### Example 
+```dart
+import 'package:openapi/api.dart';
+
+var api_instance = new DeviceApi();
+var id = 56; // int | 
+var pageSize = 56; // int | 
+var page = 56; // int | 
+
+try { 
+    var result = api_instance.deviceGetDeviceSessions(id, pageSize, page);
+    print(result);
+} catch (e) {
+    print("Exception when calling DeviceApi->deviceGetDeviceSessions: $e\n");
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**|  | [default to null]
+ **pageSize** | **int**|  | [optional] [default to null]
+ **page** | **int**|  | [optional] [default to null]
+
+### Return type
+
+[**List<SmokeSessionSimpleDto>**](SmokeSessionSimpleDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json, text/json, application/xml, text/xml, multipart/form-data
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

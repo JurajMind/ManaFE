@@ -60,6 +60,62 @@ class TobaccoApi {
   /// 
   ///
   /// 
+  Future<List<TobaccoMixSimpleDto>> tobaccoGetTobaccoInMixes(int id, { int pageSize, int page }) async {
+    Object postBody;
+
+    // verify required params are set
+    if(id == null) {
+     throw new ApiException(400, "Missing required param: id");
+    }
+
+    // create path and map variables
+    String path = "/api/Tobacco/{id}/InMix".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+
+    // query params
+    List<QueryParam> queryParams = [];
+    Map<String, String> headerParams = {};
+    Map<String, String> formParams = {};
+    if(pageSize != null) {
+      queryParams.addAll(_convertParametersForCollectionFormat("", "pageSize", pageSize));
+    }
+    if(page != null) {
+      queryParams.addAll(_convertParametersForCollectionFormat("", "page", page));
+    }
+
+    List<String> contentTypes = [];
+
+    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
+    List<String> authNames = [];
+
+    if(contentType.startsWith("multipart/form-data")) {
+      bool hasFields = false;
+      MultipartRequest mp = new MultipartRequest(null, null);
+      if(hasFields)
+        postBody = mp;
+    }
+    else {
+    }
+
+    var response = await apiClient.invokeAPI(path,
+                                             'GET',
+                                             queryParams,
+                                             postBody,
+                                             headerParams,
+                                             formParams,
+                                             contentType,
+                                             authNames);
+
+    if(response.statusCode >= 400) {
+      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
+    } else if(response.body != null) {
+      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<TobaccoMixSimpleDto>') as List).map((item) => item as TobaccoMixSimpleDto).toList();
+    } else {
+      return null;
+    }
+  }
+  /// 
+  ///
+  /// 
   Future<TobaccoInformationDto> tobaccoGetTobaccoInfo(int id) async {
     Object postBody;
 
@@ -103,62 +159,6 @@ class TobaccoApi {
       throw new ApiException(response.statusCode, _decodeBodyBytes(response));
     } else if(response.body != null) {
       return apiClient.deserialize(_decodeBodyBytes(response), 'TobaccoInformationDto') as TobaccoInformationDto;
-    } else {
-      return null;
-    }
-  }
-  /// 
-  ///
-  /// 
-  Future<List<GearTobaccoReviewDto>> tobaccoGetTobaccoReviews(int id, { int pageSize, int page }) async {
-    Object postBody;
-
-    // verify required params are set
-    if(id == null) {
-     throw new ApiException(400, "Missing required param: id");
-    }
-
-    // create path and map variables
-    String path = "/api/Tobacco/{id}/GetReviews".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
-
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-    if(pageSize != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat("", "pageSize", pageSize));
-    }
-    if(page != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat("", "page", page));
-    }
-
-    List<String> contentTypes = [];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
-      bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'GET',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<GearTobaccoReviewDto>') as List).map((item) => item as GearTobaccoReviewDto).toList();
     } else {
       return null;
     }

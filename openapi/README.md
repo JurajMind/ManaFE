@@ -79,6 +79,7 @@ Class | Method | HTTP request | Description
 *DeviceApi* | [**deviceChangeMode**](docs\/DeviceApi.md#devicechangemode) | **POST** /api/Device/{id}/ChangeMode | 
 *DeviceApi* | [**deviceChangeName**](docs\/DeviceApi.md#devicechangename) | **POST** /api/Device/{id}/ChangeName | 
 *DeviceApi* | [**deviceChangeSpeed**](docs\/DeviceApi.md#devicechangespeed) | **POST** /api/Device/{id}/ChangeSpeed | 
+*DeviceApi* | [**deviceGetDeviceSessions**](docs\/DeviceApi.md#devicegetdevicesessions) | **GET** /api/Device/{id}/Sessions | 
 *DeviceApi* | [**deviceGetPictures**](docs\/DeviceApi.md#devicegetpictures) | **GET** /api/Device/Pictures | 
 *DeviceApi* | [**deviceGetSetting**](docs\/DeviceApi.md#devicegetsetting) | **GET** /api/Device/{id}/GetSetting | 
 *DeviceApi* | [**deviceInfo**](docs\/DeviceApi.md#deviceinfo) | **GET** /api/Device/{id}/Info | 
@@ -112,23 +113,26 @@ Class | Method | HTTP request | Description
 *GearApi* | [**gearGetBrandsPrefix**](docs\/GearApi.md#geargetbrandsprefix) | **GET** /api/Gear/Brands/{prefix} | 
 *GearApi* | [**gearGetDetails**](docs\/GearApi.md#geargetdetails) | **GET** /api/Gear/{id}/Detail | 
 *GearApi* | [**gearInfo**](docs\/GearApi.md#gearinfo) | **GET** /api/Gear/{id}/Info | 
+*GearApi* | [**gearMerge**](docs\/GearApi.md#gearmerge) | **POST** /api/Gear/Merge | 
 *GearApi* | [**gearSearch**](docs\/GearApi.md#gearsearch) | **GET** /api/Gear/Search/{search} | 
 *GearApi* | [**gearSessions**](docs\/GearApi.md#gearsessions) | **GET** /api/Gear/{id}/Sessions | 
 *GearApi* | [**gearVote**](docs\/GearApi.md#gearvote) | **POST** /api/Gear/{id}/Vote | 
 *MediaApi* | [**mediaAddGearPicture**](docs\/MediaApi.md#mediaaddgearpicture) | **POST** /api/Media/Gear/{id}/Add | 
 *MediaApi* | [**mediaAddPlacePicture**](docs\/MediaApi.md#mediaaddplacepicture) | **POST** /api/Media/Place/{id}/Add | 
 *MediaApi* | [**mediaAddPlaceReview**](docs\/MediaApi.md#mediaaddplacereview) | **POST** /api/Media/PlaceReview/{id}/Add | 
-*MediaApi* | [**mediaAddSessionReview**](docs\/MediaApi.md#mediaaddsessionreview) | **POST** /api/Media/SessionReview/{id}/Add | 
+*MediaApi* | [**mediaAddSessionReview**](docs\/MediaApi.md#mediaaddsessionreview) | **POST** /api/Media/TobaccoReview/{id}/Add | 
 *MixologyApi* | [**mixologyAddToMix**](docs\/MixologyApi.md#mixologyaddtomix) | **POST** /api/Mixology/AddToMix | 
-*MixologyApi* | [**mixologyGetFeaturedMixCreators**](docs\/MixologyApi.md#mixologygetfeaturedmixcreators) | **GET** /api/Mixology/GetMixCreators | 
+*MixologyApi* | [**mixologyGetMiFromTobaccos**](docs\/MixologyApi.md#mixologygetmifromtobaccos) | **GET** /api/Mixology/Suggest/Mix | 
 *MixologyApi* | [**mixologyGetMixes**](docs\/MixologyApi.md#mixologygetmixes) | **GET** /api/Mixology/GetMixes | 
 *MixologyApi* | [**mixologyGetTobaccoMix**](docs\/MixologyApi.md#mixologygettobaccomix) | **GET** /api/Mixology/{id}/GetMix | 
 *MixologyApi* | [**mixologyGetTobaccoMixTastes**](docs\/MixologyApi.md#mixologygettobaccomixtastes) | **GET** /api/Mixology/{id}/GetTastes | 
 *MixologyApi* | [**mixologyRemoveMix**](docs\/MixologyApi.md#mixologyremovemix) | **DELETE** /api/Mixology/RemoveMix | 
 *MixologyApi* | [**mixologyRenameMix**](docs\/MixologyApi.md#mixologyrenamemix) | **POST** /api/Mixology/RenameMix/{id} | 
+*MixologyApi* | [**mixologySuggestMixTobacco**](docs\/MixologyApi.md#mixologysuggestmixtobacco) | **GET** /api/Mixology/Suggest/Tobacco | 
 *MixologyApi* | [**mixologyVote**](docs\/MixologyApi.md#mixologyvote) | **POST** /api/Mixology/{id}/Vote | 
-*PersonApi* | [**personAddMyGear**](docs\/PersonApi.md#personaddmygear) | **POST** /api/Person/MyGear/{id}/Add/{count} | 
+*PersonApi* | [**personAddMyGear**](docs\/PersonApi.md#personaddmygear) | **POST** /api/Person/MyGear/{id}/Add | 
 *PersonApi* | [**personAddNotificationToken**](docs\/PersonApi.md#personaddnotificationtoken) | **PUT** /api/Person/NotificationToken | 
+*PersonApi* | [**personAssignSession**](docs\/PersonApi.md#personassignsession) | **POST** /api/Person/AssignSession/{id} | 
 *PersonApi* | [**personDeleteMyGear**](docs\/PersonApi.md#persondeletemygear) | **POST** /api/Person/MyGear/{id}/Delete | 
 *PersonApi* | [**personGetPersonActiveData**](docs\/PersonApi.md#persongetpersonactivedata) | **GET** /api/Person/InitData | 
 *PersonApi* | [**personGetPersonDevices**](docs\/PersonApi.md#persongetpersondevices) | **GET** /api/Person/Devices | 
@@ -137,6 +141,7 @@ Class | Method | HTTP request | Description
 *PersonApi* | [**personGetRecentAccessories**](docs\/PersonApi.md#persongetrecentaccessories) | **GET** /api/Person/MyGear/Used/{sessionCount} | 
 *PersonApi* | [**personMyGear**](docs\/PersonApi.md#personmygear) | **GET** /api/Person/MyGear | 
 *PersonApi* | [**personTestNotification**](docs\/PersonApi.md#persontestnotification) | **POST** /api/Person/TestNotification | 
+*PersonApi* | [**personUnAssignSession**](docs\/PersonApi.md#personunassignsession) | **POST** /api/Person/UnAssignSession/{id} | 
 *PingApi* | [**pingDefaultAction**](docs\/PingApi.md#pingdefaultaction) | **GET** /api/Ping/{id} | 
 *PlaceAdminApi* | [**placeAdminChangeState**](docs\/PlaceAdminApi.md#placeadminchangestate) | **POST** /api/Admin/Places/{id}/ChangeState | 
 *PlaceAdminApi* | [**placeAdminGetWaitingPlaces**](docs\/PlaceAdminApi.md#placeadmingetwaitingplaces) | **GET** /api/Admin/Places/Waiting | 
@@ -181,7 +186,7 @@ Class | Method | HTTP request | Description
 *ReviewApi* | [**reviewRemovePlaceReview**](docs\/ReviewApi.md#reviewremoveplacereview) | **DELETE** /api/Review/Place/{id} | 
 *ReviewApi* | [**reviewRemoveSessionReview**](docs\/ReviewApi.md#reviewremovesessionreview) | **DELETE** /api/Review/Session/{id} | 
 *ReviewApi* | [**reviewRemoveTobaccoReview**](docs\/ReviewApi.md#reviewremovetobaccoreview) | **DELETE** /api/Review/Tobacco/{id} | 
-*ReviewApi* | [**reviewTobaccoReviewDetail**](docs\/ReviewApi.md#reviewtobaccoreviewdetail) | **DELETE** /api/Review/Tobacco/{id}/Detail | 
+*ReviewApi* | [**reviewTobaccoReviewDetail**](docs\/ReviewApi.md#reviewtobaccoreviewdetail) | **GET** /api/Review/Tobacco/{id}/Detail | 
 *SentToDeviceApi* | [**sentToDeviceDefaultAction**](docs\/SentToDeviceApi.md#senttodevicedefaultaction) | **POST** /api/SentToDevice/{id} | 
 *SmokeSessionApi* | [**smokeSessionEndSmokeSession**](docs\/SmokeSessionApi.md#smokesessionendsmokesession) | **POST** /api/SmokeSession/{id}/End | 
 *SmokeSessionApi* | [**smokeSessionGetFinishedData**](docs\/SmokeSessionApi.md#smokesessiongetfinisheddata) | **GET** /api/SmokeSession/GetFinishedData | 
@@ -194,8 +199,8 @@ Class | Method | HTTP request | Description
 *StandPictureApi* | [**standPictureDefaultAction**](docs\/StandPictureApi.md#standpicturedefaultaction) | **GET** /api/StandPicture/{id} | 
 *StatisticsApi* | [**statisticsGetStatistics**](docs\/StatisticsApi.md#statisticsgetstatistics) | **GET** /api/Statistics/GetStatistics | 
 *TobaccoApi* | [**tobaccoGetTobacco**](docs\/TobaccoApi.md#tobaccogettobacco) | **GET** /api/Tobacco/{id}/GetTobacco | 
+*TobaccoApi* | [**tobaccoGetTobaccoInMixes**](docs\/TobaccoApi.md#tobaccogettobaccoinmixes) | **GET** /api/Tobacco/{id}/InMix | 
 *TobaccoApi* | [**tobaccoGetTobaccoInfo**](docs\/TobaccoApi.md#tobaccogettobaccoinfo) | **GET** /api/Tobacco/{id}/GetAllInfo | 
-*TobaccoApi* | [**tobaccoGetTobaccoReviews**](docs\/TobaccoApi.md#tobaccogettobaccoreviews) | **GET** /api/Tobacco/{id}/GetReviews | 
 *TobaccoApi* | [**tobaccoGetTobaccoSatistics**](docs\/TobaccoApi.md#tobaccogettobaccosatistics) | **GET** /api/Tobacco/{id}/GetStatistics | 
 *TobaccoApi* | [**tobaccoGetTobaccoSessions**](docs\/TobaccoApi.md#tobaccogettobaccosessions) | **GET** /api/Tobacco/{id}/GetSessions | 
 *TobaccoApi* | [**tobaccoGetTobaccoTaste**](docs\/TobaccoApi.md#tobaccogettobaccotaste) | **GET** /api/Tobacco/{id}/GetTaste | 
@@ -230,8 +235,6 @@ Class | Method | HTTP request | Description
  - [InitDataDto](docs\/InitDataDto.md)
  - [InlineResponse200](docs\/InlineResponse200.md)
  - [MediaDto](docs\/MediaDto.md)
- - [MixCreator](docs\/MixCreator.md)
- - [MixCreatorsDto](docs\/MixCreatorsDto.md)
  - [NearbyPlacesDto](docs\/NearbyPlacesDto.md)
  - [PersonActiveDataDto](docs\/PersonActiveDataDto.md)
  - [PersonInfoDto](docs\/PersonInfoDto.md)

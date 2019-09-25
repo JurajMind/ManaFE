@@ -180,36 +180,38 @@ class SmokeProgressGraphState extends State<SmokeProgressGraph> {
                         maxY: maxY * 1.2,
                         minY: 0,
                         lineBarsData: [
-                          LineChartBarData(
-                            spots: [...inList],
-                            isCurved: true,
-                            colors: [
-                              AppColors.colors[0],
-                            ],
-                            barWidth: 8,
-                            isStrokeCapRound: true,
-                            dotData: FlDotData(
-                              show: false,
+                          if (inList != null && inList.length > 0)
+                            LineChartBarData(
+                              spots: [...inList],
+                              isCurved: true,
+                              colors: [
+                                AppColors.colors[0],
+                              ],
+                              barWidth: 8,
+                              isStrokeCapRound: true,
+                              dotData: FlDotData(
+                                show: false,
+                              ),
+                              belowBarData: BelowBarData(
+                                show: true,
+                              ),
                             ),
-                            belowBarData: BelowBarData(
-                              show: true,
+                          if (outList != null && outList.length > 0)
+                            LineChartBarData(
+                              spots: [...outList],
+                              isCurved: true,
+                              colors: [
+                                AppColors.colors[1],
+                              ],
+                              barWidth: 8,
+                              isStrokeCapRound: true,
+                              dotData: FlDotData(
+                                show: false,
+                              ),
+                              belowBarData: BelowBarData(
+                                show: true,
+                              ),
                             ),
-                          ),
-                          LineChartBarData(
-                            spots: [...outList],
-                            isCurved: true,
-                            colors: [
-                              AppColors.colors[1],
-                            ],
-                            barWidth: 8,
-                            isStrokeCapRound: true,
-                            dotData: FlDotData(
-                              show: false,
-                            ),
-                            belowBarData: BelowBarData(
-                              show: true,
-                            ),
-                          ),
                         ],
                       ),
                     ),

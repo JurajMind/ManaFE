@@ -148,8 +148,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
 
   Future facebookLogin() async {
     var facebookLogin = new FacebookLogin();
-    var result = await facebookLogin
-        .logInWithReadPermissions(['email', 'user_friends', 'user_posts']);
+    var result = await facebookLogin.logIn(['email']);
     try {
       switch (result.status) {
         case FacebookLoginStatus.loggedIn:

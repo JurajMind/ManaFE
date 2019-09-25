@@ -7,11 +7,13 @@ class FinishedSessionDataDto {
   SmokeSessionMetaDataDto metaData = null;
   
   SmokeSessionStatisticsDto statistics = null;
+  
+  bool assigned = null;
   FinishedSessionDataDto();
 
   @override
   String toString() {
-    return 'FinishedSessionDataDto[data=$data, metaData=$metaData, statistics=$statistics, ]';
+    return 'FinishedSessionDataDto[data=$data, metaData=$metaData, statistics=$statistics, assigned=$assigned, ]';
   }
 
   FinishedSessionDataDto.fromJson(Map<String, dynamic> json) {
@@ -31,6 +33,11 @@ class FinishedSessionDataDto {
     } else {
       statistics = new SmokeSessionStatisticsDto.fromJson(json['Statistics']);
     }
+    if (json['Assigned'] == null) {
+      assigned = null;
+    } else {
+          assigned = json['Assigned'];
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -41,6 +48,8 @@ class FinishedSessionDataDto {
       json['MetaData'] = metaData;
     if (statistics != null)
       json['Statistics'] = statistics;
+    if (assigned != null)
+      json['Assigned'] = assigned;
     return json;
   }
 
