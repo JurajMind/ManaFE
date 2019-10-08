@@ -140,7 +140,6 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
 
   @override
   Widget build(BuildContext context) {
-    
     return SafeArea(
       top: true,
       child: new Scaffold(
@@ -330,8 +329,8 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
 
     var oldPlaces = nearbyPlaces.value;
     var merge = new List<PlaceSimpleDto>();
-    merge.addAll(oldPlaces);
-    merge.addAll(newPlaces);
+    if (oldPlaces != null) merge.addAll(oldPlaces);
+    if (newPlaces != null) merge.addAll(newPlaces);
 
     var comparer = new PalceComparer();
     var a = new Collection(merge).distinct(comparer).toList();
