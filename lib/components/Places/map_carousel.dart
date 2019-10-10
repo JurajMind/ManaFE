@@ -118,6 +118,9 @@ class _CarrousselState extends State<MapCarousel> {
               onPageChanged: (value) async {
                 setState(() {
                   currentpage = value;
+                  if(currentpage == -1){
+                    return;
+                  }
                   this.selectPlaceId =
                       widget.nearbyPlaces.value[currentpage - 1].id;
                 });

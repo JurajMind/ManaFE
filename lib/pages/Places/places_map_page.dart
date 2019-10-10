@@ -10,7 +10,6 @@ import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/pages/Places/places_search_page.dart';
-import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -19,8 +18,8 @@ import 'package:queries/collections.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:math' show cos, sqrt, asin;
 import 'package:flutter/services.dart' show rootBundle;
-
-import 'Reservations/reservations_page.dart';
+import 'Components/reservation_button.dart';
+import 'package:clustering_google_maps/clustering_google_maps.dart';
 
 class PlacesMapPage extends StatefulWidget {
   final Position position;
@@ -34,6 +33,7 @@ class PlacesMapPage extends StatefulWidget {
 
 class _PlacesMapPageState extends State<PlacesMapPage> {
   String _mapStyle;
+  ClusteringHelper clusteringHelper;
   Completer<GoogleMapController> _controller = Completer();
   CameraPosition initView;
   CameraPosition curentView;
@@ -48,11 +48,18 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   bool moving = false;
   bool isDefaultPage = true;
   String searchLabel;
+  List<LatLngAndGeohash> list = new List<LatLngAndGeohash>();
 
   StreamSubscription<Position> positionSub;
   @override
   initState() {
     super.initState();
+    clusteringHelper = ClusteringHelper.forMemory(
+      list: this.list,
+      maxZoomForAggregatePoints: 10,
+      updateMarkers: this.updateMarkers,
+      aggregationSetup: AggregationSetup(markerSize: 180),
+    );
     isDefaultPage = widget.position == null && widget.place == null;
     rootBundle.loadString('assets/map_style.txt').then((string) {
       _mapStyle = string;
@@ -183,6 +190,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                           onMapCreated: (GoogleMapController controller) {
                             controller.setMapStyle(_mapStyle);
                             _controller.complete(controller);
+                            this.clusteringHelper.mapController = controller;
                           },
                         ),
                       ),
@@ -344,7 +352,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
 
   void setMarkers(List<PlaceSimpleDto> places) {
     if (places == null) return;
-    markers = places.map((f) {
+    var newMarkers = places.map((f) {
       var marker = new Marker(
           icon: f.haveMana ? _manaMarker : BitmapDescriptor.defaultMarker,
           onTap: () async {
@@ -376,66 +384,16 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
               LatLng(double.parse(f.address.lat), double.parse(f.address.lng)));
       return marker;
     }).toSet();
+    var newList = newMarkers.map((f) => new LatLngAndGeohash(f.position)).toList();
+    this.clusteringHelper.updateData(newList);
+    this.markers = newMarkers;
   }
-}
 
-class ReservationButton extends StatelessWidget {
-  const ReservationButton({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    var reservationsBloc = DataProvider.getData(context).reservationBloc;
-
-    return Container(
-        child: StreamBuilder<List<PlacesReservationsReservationDto>>(
-            stream: reservationsBloc.reservations,
-            builder: (context, snapshot) {
-              var upcomingCount = 0;
-              if (snapshot.data != null) {
-                var toDate = DateTime.now().add(new Duration(days: 7));
-                var upcomingReservations = new Collection(snapshot.data);
-                upcomingCount = upcomingReservations
-                    .where$1((predicate, _) =>
-                        predicate.time.compareTo(DateTime.now()) > 0 &&
-                        predicate.time.compareTo(toDate) < 0 &&
-                        predicate.status != 1)
-                    .orderBy((p) => p.time)
-                    .count();
-              }
-
-              return OutlineButton.icon(
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0)),
-                borderSide: BorderSide(color: Colors.white),
-                icon: Container(
-                  child: Center(
-                    child: Text(upcomingCount.toString(),
-                        style: Theme.of(context).textTheme.display4),
-                  ),
-                  height: 25,
-                  width: 25,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: AppColors.colors[2]),
-                ),
-                label: upcomingCount == -1
-                    ? Text(
-                        'All reservations',
-                        style: Theme.of(context).textTheme.display3,
-                      )
-                    : Text(
-                        AppTranslations.of(context)
-                                .text("reservations.upcoming_reservations") +
-                            " ",
-                        style: Theme.of(context).textTheme.display3,
-                      ),
-                onPressed: () => Navigator.of(context).push(
-                    new MaterialPageRoute(builder: (BuildContext context) {
-                  return new ReservationsPage();
-                })),
-              );
-            }));
+  updateMarkers(Set<Marker> markers) {
+    
+    setState(() {
+      this.markers = markers;
+    });
   }
 }
 
