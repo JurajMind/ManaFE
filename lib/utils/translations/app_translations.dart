@@ -32,7 +32,7 @@ class AppTranslations {
     return appTranslations;
   }
 
-  get currentLanguage => locale.languageCode;
+  String get currentLanguage => locale.languageCode;
 
   String text(String key) {
     if (_sentence == null) {
@@ -41,9 +41,9 @@ class AppTranslations {
     return this._resolve(key, _sentence);
   }
 
-    String dbText(Map<String,String> texts) {
-      var text = texts[locale.countryCode];
-      return text;
+  String dbText(Map<String, String> texts) {
+    var text = texts[locale.countryCode];
+    return text;
   }
 
   String tr(String key, {List<String> args}) {

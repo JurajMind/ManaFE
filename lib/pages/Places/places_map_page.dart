@@ -39,6 +39,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   CameraPosition curentView;
   CameraPosition lastIdleView;
   Set<Marker> markers;
+  Set<Marker> originMarkers;
   bool loading = false;
   BehaviorSubject<List<PlaceSimpleDto>> nearbyPlaces =
       new BehaviorSubject<List<PlaceSimpleDto>>.seeded(null);
@@ -51,14 +52,16 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   List<LatLngAndGeohash> list = new List<LatLngAndGeohash>();
 
   StreamSubscription<Position> positionSub;
+
+  double minClusterZoom = 10.5;
   @override
   initState() {
+    originMarkers = new Set();
     super.initState();
     clusteringHelper = ClusteringHelper.forMemory(
       list: this.list,
-      maxZoomForAggregatePoints: 10,
       updateMarkers: this.updateMarkers,
-      aggregationSetup: AggregationSetup(markerSize: 180),
+      aggregationSetup: AggregationSetup(markerSize: 150),
     );
     isDefaultPage = widget.position == null && widget.place == null;
     rootBundle.loadString('assets/map_style.txt').then((string) {
@@ -168,6 +171,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                           onCameraIdle: () {
                             var distance = calculateDistance(
                                 lastIdleView.target, curentView.target);
+                            this.clusteringHelper.updateMap();
                             setState(() {
                               moving = false;
                             });
@@ -178,6 +182,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                           },
                           onCameraMove: (cv) {
                             curentView = cv;
+
                             if (!moving)
                               setState(() {
                                 moving = true;
@@ -384,16 +389,47 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
               LatLng(double.parse(f.address.lat), double.parse(f.address.lng)));
       return marker;
     }).toSet();
-    var newList = newMarkers.map((f) => new LatLngAndGeohash(f.position)).toList();
-    this.clusteringHelper.updateData(newList);
+    updateAggregate(newMarkers);
+
     this.markers = newMarkers;
+    this.originMarkers = newMarkers;
+  }
+
+  void updateAggregate(Set<Marker> newMarkers) {
+    var newList =
+        newMarkers.map((f) => new LatLngAndGeohash(f.position)).toList();
+    this.clusteringHelper.updateData(newList);
   }
 
   updateMarkers(Set<Marker> markers) {
-    
-    setState(() {
-      this.markers = markers;
-    });
+    if (curentView.zoom > minClusterZoom) {
+      setState(() {
+        this.markers = this.originMarkers;
+      });
+    } else {
+      setState(() {
+        var updatedMarkers = markers.map((f) {
+          return new Marker(
+              markerId: f.markerId,
+              icon: f.icon,
+              position: f.position,
+              onTap: () async {
+                {
+                  var controller = await _controller.future;
+                  controller.animateCamera(
+                      CameraUpdate.newCameraPosition(CameraPosition(
+                    bearing: 0,
+                    zoom: minClusterZoom + 0.2,
+                    target: f.position,
+                    tilt: 0,
+                  )));
+                }
+              });
+        }).toSet();
+        this.markers = updatedMarkers;
+      });
+      {}
+    }
   }
 }
 

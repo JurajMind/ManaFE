@@ -3,6 +3,7 @@ import 'package:app/components/Places/place_detail.dart';
 import 'package:app/components/Places/place_map.dart';
 import 'package:app/components/Places/taxi_button.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
@@ -17,6 +18,51 @@ class AboutPlaceWidget extends StatelessWidget {
     var placeBloc = DataProvider.getData(context).placeSingleBloc;
     return Column(
       children: <Widget>[
+        StreamBuilder<PlaceDto>(
+            stream: placeBloc.placeInfo,
+            builder: (context, snapshot) {
+              var lang = AppTranslations.of(context).currentLanguage;
+              if (snapshot.data == null) {
+                return Container();
+              }
+              return Column(children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0)),
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: FractionallySizedBox(
+                        widthFactor: 1,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Icon(
+                              Icons.info,
+                              color: Colors.black,
+                            ),
+                            Expanded(
+                              child: Center(
+                                child: Text(
+                                  snapshot.data.shortDescriptions[lang] ??
+                                      'No description',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .display2
+                                      .apply(color: Colors.black),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )),
+                  ),
+                ),
+              ]);
+            }),
+        SizedBox(
+          height: 16,
+        ),
         Container(
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(20.0)),

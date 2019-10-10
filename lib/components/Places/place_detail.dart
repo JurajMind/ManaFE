@@ -2,9 +2,7 @@ import 'package:app/Helpers/place_helper.dart';
 import 'package:app/components/Common/leading_icon.dart';
 import 'package:app/components/Places/open_dropdown.dart';
 import 'package:app/components/Socials/socials_widget.dart';
-import 'package:app/const/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/api.dart';
 import 'package:url_launcher/url_launcher.dart';
 
