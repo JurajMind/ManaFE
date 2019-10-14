@@ -8,16 +8,13 @@ dependencies:
     sdk: flutter
   validator:
     git: https://github.com/jodinathan/validator.dart
-  web_socket_channel: ^1.0.15
+  web_socket_channel: ^1.1.0
   fluro: ^1.4.0
   flutter_secure_storage: ^3.3.1+1
   rxdart: ^0.22.2
   vibrate: '^0.0.4'
   intl: ^0.16.0
-  animated_background:
-    git:
-      url: https://github.com/AndreBaltazar8/flutter_animated_background
-      ref: develop
+  animated_background: ^1.0.5
   tuple: ^1.0.2
   percent_indicator: '^1.0.13'
   dio: ^2.1.9
@@ -49,24 +46,22 @@ dependencies:
   share: ^0.6.1
   achievement_view: ^0.1.2
   avatar_glow: ^0.2.0
-  auto_size_text: ^2.0.1
-  flushbar: ^1.7.0
+  auto_size_text: ^2.1.0
+  flushbar: ^1.9.0
   date_range_picker: ^1.0.5
   fast_qr_reader_view:
     git: https://github.com/facundomedica/fast_qr_reader_view
   flutter_material_color_picker: ^1.0.0
   flutter_form_builder: ^3.2.6
-  image_picker: ^0.6.1+4
-  screenshot_share: ^0.0.2
+  image_picker: ^0.6.1+4 
   shared_preferences: ^0.5.3+4
   flutter_slidable: '^0.5.3'
   smooth_star_rating: ^1.0.3
   fl_chart: ^0.1.5
   firebase_dynamic_links: ^0.5.0+1
   giffy_dialog: ^1.3.0
-  flutter_widget_from_html: ^0.2.3
   pretty_dio_logger: ^1.0.4
-  apple_sign_in: ^0.0.3
+  apple_sign_in: ^0.1.0
   clustering_google_maps: ^0.1.2
 
 dependency_overrides:

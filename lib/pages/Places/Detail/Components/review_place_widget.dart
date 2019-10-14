@@ -32,7 +32,7 @@ class _ReviewPlaceWidgetState extends State<ReviewPlaceWidget> {
       initialData: null,
       builder: (BuildContext context, snapshot) {
         if (snapshot.data == null) {
-          return CircularProgressIndicator();
+          return Center(child: Container(height: 60,width: 60, child: CircularProgressIndicator()));
         }
 
         var itemCount = snapshot?.data?.length;

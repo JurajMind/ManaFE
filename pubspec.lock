@@ -18,11 +18,9 @@ packages:
   animated_background:
     dependency: "direct main"
     description:
-      path: "."
-      ref: develop
-      resolved-ref: ff02ff3409b1e703c7287a1fa34ee599b0de84ee
-      url: "https://github.com/AndreBaltazar8/flutter_animated_background"
-    source: git
+      name: animated_background
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "1.0.5"
   apple_sign_in:
     dependency: "direct main"
@@ -30,7 +28,7 @@ packages:
       name: apple_sign_in
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.3"
+    version: "0.1.0"
   archive:
     dependency: transitive
     description:
@@ -101,13 +99,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.8.1"
-  chewie:
-    dependency: transitive
-    description:
-      name: chewie
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.9.8"
   clustering_google_maps:
     dependency: "direct main"
     description:
@@ -328,20 +319,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.1"
-  flutter_widget_from_html:
-    dependency: "direct main"
-    description:
-      name: flutter_widget_from_html
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.3+2"
-  flutter_widget_from_html_core:
-    dependency: transitive
-    description:
-      name: flutter_widget_from_html_core
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.3+2"
   font_awesome_flutter:
     dependency: "direct main"
     description:
@@ -552,13 +529,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.8"
-  open_iconic_flutter:
-    dependency: transitive
-    description:
-      name: open_iconic_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0"
   openapi:
     dependency: "direct main"
     description:
@@ -671,20 +641,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.22.2"
-  screen:
-    dependency: transitive
-    description:
-      name: screen
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.5"
-  screenshot_share:
-    dependency: "direct main"
-    description:
-      name: screenshot_share
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.2"
   sembast:
     dependency: "direct main"
     description:
@@ -951,13 +907,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.4"
-  video_player:
-    dependency: transitive
-    description:
-      name: video_player
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.10.2+1"
   vm_service_client:
     dependency: transitive
     description:
@@ -985,14 +934,7 @@ packages:
       name: web_socket_channel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.15"
-  webview_flutter:
-    dependency: transitive
-    description:
-      name: webview_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.14+1"
+    version: "1.1.0"
   xml:
     dependency: transitive
     description:
