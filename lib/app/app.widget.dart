@@ -5,7 +5,6 @@ import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/start.page.dart';
 import 'package:app/pages/home.page.dart';
-import 'package:app/services/share.dart';
 import 'package:app/utils/translations/app_translations_delegate.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';

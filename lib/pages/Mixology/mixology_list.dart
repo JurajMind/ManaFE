@@ -176,11 +176,11 @@ class PaggingMixListView extends StatelessWidget {
                   return SizedBox(height: 100);
                 }
 
-                if (snapshot.data != null && snapshot.data[index] != null) {
+                if (false && snapshot.data != null && snapshot.data[index] != null) {
                   return MixCardExpanded(tobaccoMix: snapshot.data[index]);
                 } else {
                   return MixCardExpandedShimmer(
-                    move: false,
+                    move: true,
                   );
                 }
               },

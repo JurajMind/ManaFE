@@ -24,8 +24,6 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:openapi/api.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:screenshot_share/screenshot_share.dart';
-
 import 'Components/session_control_row.dart';
 
 class SmokeSessionPage extends StatefulWidget {
@@ -223,12 +221,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
               slivers: <Widget>[
                 new SliverAppBar(
                   leading: Container(),
-                  actions: <Widget>[
-                    IconButton(
-                        icon: Icon(Icons.share),
-                        onPressed: () =>
-                            ScreenshotShare.takeScreenshotAndShare()),
-                  ],
+                  
                   expandedHeight: 200.0,
                   backgroundColor: Colors.black,
                   pinned: true,
