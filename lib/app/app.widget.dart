@@ -5,10 +5,10 @@ import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/start.page.dart';
 import 'package:app/pages/home.page.dart';
+import 'package:app/services/authorization.dart';
 import 'package:app/utils/translations/app_translations_delegate.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -47,14 +47,15 @@ class _AppWidgetState extends State<AppWidget> {
         }));
   }
 
-    void initDynamicLinks() async {
+  void initDynamicLinks() async {
     final PendingDynamicLinkData data =
         await FirebaseDynamicLinks.instance.getInitialLink();
     final Uri _deepLink = data?.link;
 
     if (_deepLink != null) {
-        deeplink = _deepLink;     
-    };
+      deeplink = _deepLink;
+    }
+    ;
   }
 
   Future restartApp() async {
@@ -73,13 +74,8 @@ class _AppWidgetState extends State<AppWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return _isAuthorized
-        ? new DataProvider(key: key, child: buildMaterialApp())
-        : buildMaterialApp();
-  }
 
-  MaterialApp buildMaterialApp() {
-    return MaterialApp(
+        return MaterialApp(
       key: key,
       localizationsDelegates: [
         _newLocaleDelegate,
@@ -90,10 +86,13 @@ class _AppWidgetState extends State<AppWidget> {
       ],
       supportedLocales: App.supportedLocales(),
       title: 'Manapipes',
-      home: getMainPage(),
+      home: _isAuthorized
+        ? new DataProvider(key: key, child: getMainPage())
+        : getMainPage(),
       // onGenerateRoute: App.router.generator,
       theme: buildDarkTheme(),
     );
+    
   }
 
   Widget getMainPage() {
@@ -107,12 +106,8 @@ class _AppWidgetState extends State<AppWidget> {
   }
 
   Future<bool> isUserAuthorized() async {
-    final storage = new FlutterSecureStorage();
-    String token = await storage.read(key: "accessToken");
-
-    if (token != null) return true;
-
-    return false;
+    var auth = new Authorize();
+    return await auth.isAuthorized();
   }
 }
 

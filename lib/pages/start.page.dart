@@ -98,7 +98,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                               ),
                         margin: new EdgeInsets.only(top: 25.0),
                       ),
-                      if (Platform.isIOS) ...{
+                      if (false) ...{
                         SizedBox(
                           height: 8,
                         ),

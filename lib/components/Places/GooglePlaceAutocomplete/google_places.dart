@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:app/support/m_platform.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_webservice/places.dart';
@@ -159,14 +160,14 @@ class _PlacesAutocompleteOverlayState extends PlacesAutocompleteState {
           Padding(padding: EdgeInsets.only(top: 48.0), child: body),
         ]));
 
-    if (Platform.isIOS) {
+    if (MPlatform.isIOS) {
       return Padding(padding: EdgeInsets.only(top: 8.0), child: container);
     }
     return container;
   }
 
   Icon get _iconBack =>
-      Platform.isIOS ? Icon(Icons.arrow_back_ios) : Icon(Icons.arrow_back);
+      MPlatform.isIOS ? Icon(Icons.arrow_back_ios) : Icon(Icons.arrow_back);
 
   Widget _textField(BuildContext context) => TextField(
         controller: _queryTextController,

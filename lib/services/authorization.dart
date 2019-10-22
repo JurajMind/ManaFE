@@ -1,17 +1,20 @@
+
 import 'dart:async';
 import 'dart:convert';
+import 'dart:core';
 
 import 'package:app/app/app.dart';
 import 'package:app/app/app.widget.dart';
 import 'package:app/pages/home.page.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:openapi/api.dart';
+
+import 'local_storage/m_local_storage.dart';
 
 class Authorize {
   static final Authorize _singleton = new Authorize._internal();
   String url = 'https://${App.baseUri}/token';
-  final _storage = new FlutterSecureStorage();
+
   String _token;
   String _userName;
 
@@ -22,6 +25,9 @@ class Authorize {
   Authorize._internal();
 
   Future<String> authorize(String userName, String password) async {
+
+      
+
     final response = await http.post(
       url,
       body: {
@@ -35,25 +41,27 @@ class Authorize {
     if (response.statusCode != 200) {
       return null;
     }
-
+    MLocalStorage _storage = await MLocalStorage.getInstance();
     final responseJson = json.decode(response.body);
     var sucess = await writeToken(responseJson);
     if (sucess != null) {
-      await _storage.write(key: 'password', value: password);
+      await _storage.setString('password', password);
     }
     return sucess;
   }
 
   Future<String> getToken() async {
     if (_token == null) {
-      _token = await _storage.read(key: 'accessToken');
+      MLocalStorage _storage = await MLocalStorage.getInstance();
+      _token = _storage.getString('accessToken');
     }
     return _token;
   }
 
   Future<String> getUserName() async {
     if (_userName == null) {
-      _userName = await _storage.read(key: 'userName');
+       MLocalStorage _storage = await MLocalStorage.getInstance();
+      _userName = _storage.getString('userName');
     }
     return _userName;
   }
@@ -70,21 +78,24 @@ class Authorize {
   }
 
   Future signOut() async {
-    await _storage.delete(key: 'accessToken');
-    await _storage.delete(key: 'refreshToken');
-    await _storage.delete(key: 'userName');
-    await _storage.delete(key: 'password');
+    MLocalStorage _storage = await MLocalStorage.getInstance();
+    await _storage.remove('accessToken');
+    await _storage.remove('refreshToken');
+    await _storage.remove('userName');
+    await _storage.remove('password');
     navigatorKey.currentState.pushReplacementNamed('auth/home');
     _token = null;
   }
 
   messToken() async {
     _token = "token";
-    await _storage.write(key: 'accessToken', value: 'token');
+        MLocalStorage _storage = await MLocalStorage.getInstance();
+    await _storage.setString('accessToken','token');
   }
 
   Future<String> refreshToken() async {
-    var refreshToken = await _storage.read(key: 'refreshToken');
+      MLocalStorage _storage = await MLocalStorage.getInstance();
+    var refreshToken = await _storage.getString('refreshToken');
     // await _storage.delete(key: 'accessToken');
     // await _storage.delete(key: 'refreshToken');
     _token = null;
@@ -98,13 +109,13 @@ class Authorize {
     );
     final responseJson = json.decode(response.body);
     if (responseJson['error'] != null) {
-      var password = await _storage.read(key: 'password');
-      var userName = await _storage.read(key: 'userName');
+      var password =  _storage.getString('password');
+      var userName =  _storage.getString('userName');
       var reAuthorize = await this.authorize(userName, password);
       if (reAuthorize != null) return reAuthorize;
 
-      await _storage.delete(key: 'refreshToken');
-      await _storage.delete(key: 'accessToken');
+      await _storage.remove('refreshToken');
+      await _storage.remove('accessToken');
       AppWidget.restartApp(scaffoldKey.currentContext);
     }
 
@@ -152,13 +163,14 @@ class Authorize {
   }
 
   Future<String> writeToken(dynamic responseJson) async {
+       MLocalStorage _storage = await MLocalStorage.getInstance();
     var token = TokenResponse.fromJson(responseJson as Map<String, dynamic>);
     if (token.accessToken != null) {
-      await _storage.write(key: 'accessToken', value: token.accessToken);
+      await _storage.setString('accessToken', token.accessToken);
       if (token.refreshToken != null)
-        await _storage.write(key: 'refreshToken', value: token.refreshToken);
+        await _storage.setString('refreshToken',token.refreshToken);
 
-      await _storage.write(key: 'userName', value: token.userName);
+      await _storage.setString('userName', token.userName);
       // OneSignal.shared.sendTag('user_id', token.userName);
 
       return token.accessToken;

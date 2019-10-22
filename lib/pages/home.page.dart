@@ -12,6 +12,7 @@ import 'package:app/pages/Statistic/statistic_page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';
 import 'package:app/services/share.dart';
 import 'package:app/services/signal_r.dart';
+import 'package:app/support/m_platform.dart';
 import 'package:app/support/mana_icons_icons.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
@@ -75,6 +76,7 @@ class _HomePageState extends State<HomePage> {
         .scheduleFrameCallback((_) => firstDeepJump(context));
 
     final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+    if(!MPlatform.isWeb)
     _firebaseMessaging.requestNotificationPermissions();
     try {
       _firebaseMessaging.getToken().then((token) async {
@@ -190,7 +192,7 @@ class _HomePageState extends State<HomePage> {
         .changeActiveTab(index);
 
     if (index == _currentIndex && index == 2) {
-      if (!Platform.isIOS) {
+      if (!MPlatform.isIOS) {
         navigatorKeys[index].currentState.maybePop();
       }
     }

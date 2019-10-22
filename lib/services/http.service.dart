@@ -178,9 +178,7 @@ class ApiClient {
     print('color ${ColorDto(color).toJson()}');
     await _dio.post(uri.toString(),
         data: data,
-        options: Options(
-          contentType: ContentType.json,
-        ));
+       );
   }
 
   Future<bool> changeAnimation(
@@ -193,9 +191,7 @@ class ApiClient {
     };
     var response = await _dio.post(uri.toString(),
         data: data,
-        options: Options(
-          contentType: ContentType.json,
-        ));
+       );
     debugPrint(response.data.toString());
     return true;
   }
@@ -209,9 +205,7 @@ class ApiClient {
     };
     var response = await _dio.post(uri.toString(),
         data: data,
-        options: Options(
-          contentType: ContentType.json,
-        ));
+       );
     debugPrint(response.data.toString());
     return true;
   }
@@ -226,9 +220,7 @@ class ApiClient {
     };
     var response = await _dio.post(uri.toString(),
         data: data,
-        options: Options(
-          contentType: ContentType.json,
-        ));
+       );
     debugPrint(response.data.toString());
     return true;
   }
@@ -312,9 +304,7 @@ class ApiClient {
 
     var response = await _dio.post(url.toString(),
         data: value.toJson(),
-        options: Options(
-          contentType: ContentType.json,
-        ));
+       );
     debugPrint(response.data.toString());
     return SmokeSessionMetaDataDto.fromJson(response.data);
   }
@@ -330,7 +320,7 @@ class ApiClient {
     var url = Uri.https(
         baseUrl, '/api/Device/Preset/${presetId.toString()}/Use/$sessionId');
     await _dio.post(url.toString(),
-        data: null, options: Options(contentType: ContentType.json));
+        data: null, );
 
     return true;
   }
@@ -600,8 +590,8 @@ class ApiClient {
       {ValueChanged<double> progress}) async {
     var url = Uri.https(baseUrl, '/api/Media/Place/$placeId/Add');
 
-    FormData formData = new FormData.from({
-      "file": new UploadFileInfo(file, "picture.jpg"),
+    FormData formData = new FormData.fromMap({
+     "file": MultipartFile.fromBytes(file.readAsBytesSync(), filename: "picture.jpg"),
     });
 
     return await _dio.postUri(
@@ -619,8 +609,8 @@ class ApiClient {
   Future<PipeAccesorySimpleDto> uploadGearPicture(int gearId, File file) async {
     var url = Uri.https(baseUrl, '/api/Media/Gear/$gearId/Add');
 
-    FormData formData = new FormData.from({
-      "file": new UploadFileInfo(file, "picture.jpg"),
+    FormData formData = new FormData.fromMap({
+      "file": MultipartFile.fromBytes(file.readAsBytesSync(), filename: "picture.jpg"),
     });
 
     return await _dio.postUri(
@@ -635,8 +625,8 @@ class ApiClient {
   Future<MediaDto> uploadSessionReviewFile(int reviewId, File file) async {
     var url = Uri.https(baseUrl, '/api/Media/SessionReview/$reviewId/Add');
 
-    FormData formData = new FormData.from({
-      "file": new UploadFileInfo(file, "picture.jpg"),
+    FormData formData = new FormData.fromMap({
+       "file": MultipartFile.fromBytes(file.readAsBytesSync(), filename: "picture.jpg"),
     });
 
     return await _dio.postUri(
@@ -656,8 +646,8 @@ class ApiClient {
   Future<MediaDto> uploadPlaceReviewFile(int reviewId, File file) async {
     var url = Uri.https(baseUrl, '/api/Media/PlaceReview/$reviewId/Add');
 
-    FormData formData = new FormData.from({
-      "file": new UploadFileInfo(file, "picture.jpg"),
+    FormData formData = new FormData.fromMap({
+      "file": MultipartFile.fromBytes(file.readAsBytesSync(), filename: "picture.jpg"),
     });
 
     return await _dio.postUri(
@@ -853,9 +843,7 @@ class ApiClient {
     var data = await _dio
         .postUri(url,
             data: null,
-            options: Options(
-              contentType: ContentType.json,
-            ))
+         )
         .then((data) {
       return true;
     });
