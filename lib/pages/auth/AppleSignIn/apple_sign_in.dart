@@ -1,7 +1,7 @@
 import 'package:app/services/authorization.dart';
+import 'package:app/services/local_storage/m_local_storage.dart';
 import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class MAppleLogin extends StatefulWidget {
   const MAppleLogin({Key key}) : super(key: key);
@@ -52,8 +52,8 @@ class _MAppleLoginState extends State<MAppleLogin> {
       case AuthorizationStatus.authorized:
 
         // Store user ID
-        await FlutterSecureStorage()
-            .write(key: "userId", value: result.credential.user);
+        var storage = await MLocalStorage();
+            storage.setString("userId", result.credential.user);
 
         // Navigate to secret page (shhh!)
 

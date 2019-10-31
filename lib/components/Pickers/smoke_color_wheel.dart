@@ -4,6 +4,7 @@ import 'package:app/utils/color.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 class SmokeColorWheel extends StatefulWidget {
   final HSVColor color;
@@ -79,6 +80,8 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
               child: Transform.rotate(
                 angle: 0.2,
                 child: new Container(
+                  width: math.min(size.height, 400),
+                  height: math.min(size.height, 400),
                   decoration: new BoxDecoration(
                       image: new DecorationImage(
                           image: AssetImage("images/color_wheel.png"),

@@ -139,7 +139,7 @@ class _StateColorPickerState extends State<StateColorPicker> {
         children: <Widget>[
           Center(
             child: Container(
-              height: MediaQuery.of(context).size.width,
+            
               child: StreamBuilder<StandSettings>(
                   stream: smokeSessionBloc.standSettings,
                   builder: (context, snapshot) {

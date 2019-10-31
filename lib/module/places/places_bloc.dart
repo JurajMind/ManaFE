@@ -1,4 +1,5 @@
 import 'package:app/app/app.dart';
+import 'package:app/services/position/m_position.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:openapi/api.dart';
@@ -27,7 +28,7 @@ class PlacesBloc {
   }
 
   Future loadPlaces() async {
-    var geolocator = Geolocator();
+    var geolocator = MPosition();
     GeolocationStatus geolocationStatus =
         await geolocator.checkGeolocationPermissionStatus();
     // if (geolocationStatus == GeolocationStatus.denied) return;
