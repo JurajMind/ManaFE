@@ -90,11 +90,9 @@ class _InMixesLazyListState extends State<InMixesLazyList> {
 
                     var item = snapshot.data[index];
                     if (item == null) {
-                      return Container(
-                          width: 20,
-                          child: MixCardExpandedShimmer(
-                            move: false,
-                          ));
+                      return MixCardExpandedShimmer(
+                        move: false,
+                      );
                     } else {
                       return MixCardExpanded(
                           tobaccoMix: snapshot.data[index],

@@ -24,5 +24,4 @@ ios/.generated/
 packages
 .flutter-plugins
 .dart_tool
-flutter_secure_storage-develop/android/.project
 ios/Flutter/flutter_export_environment.sh

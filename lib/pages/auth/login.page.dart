@@ -60,14 +60,14 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     final Size screenSize = MediaQuery.of(context).size;
 
     return new Scaffold(
-      appBar:   new AppBar(
-            title: new Text(AppTranslations.of(context).text("login.log_in").toUpperCase()),
-            backgroundColor: Colors.transparent,
-          ),
+      appBar: new AppBar(
+        title: new Text(
+            AppTranslations.of(context).text("login.log_in").toUpperCase()),
+        backgroundColor: Colors.transparent,
+      ),
       body: new SingleChildScrollView(
           child: new Column(
         children: <Widget>[
-        
           Builder(builder: (BuildContext context) {
             return new Container(
               padding: new EdgeInsets.fromLTRB(60.0, 60.0, 60.0, 0.0),
@@ -78,6 +78,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                     new TextFormField(
                         autofocus: true,
                         keyboardType: TextInputType.emailAddress,
+                        style: Theme.of(context).textTheme.display2,
                         decoration: new InputDecoration(
                             labelStyle: Theme.of(context).textTheme.display1,
                             enabledBorder: new UnderlineInputBorder(
@@ -88,7 +89,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                     new BorderSide(color: Colors.white)),
                             icon: Icon(Icons.mail, color: Colors.white),
                             hintText: 'your@email.com',
-                            labelText: AppTranslations.of(context).text("login.email")),
+                            labelText: AppTranslations.of(context)
+                                .text("login.email")),
                         validator: (String value) {
                           return validate(value, 'E-mail Address', [
                             new RequiredValidator(),
@@ -106,6 +108,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                     new TextFormField(
                         obscureText: !showPassword,
                         focusNode: passwordFocusNode,
+                        style: Theme.of(context).textTheme.display2,
                         decoration: new InputDecoration(
                             suffixIcon: IconButton(
                               icon: Icon(
@@ -128,7 +131,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                 borderSide:
                                     new BorderSide(color: Colors.white)),
                             icon: Icon(Icons.security, color: Colors.white),
-                            labelText: AppTranslations.of(context).text("login.password")),
+                            labelText: AppTranslations.of(context)
+                                .text("login.password")),
                         validator: (String value) {
                           return validate(value, 'Password', [
                             new RequiredValidator(),
@@ -158,7 +162,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                               ),
                             )
                           : new RoundedButton(
-                              buttonName: AppTranslations.of(context).text("login.log_in").toUpperCase(),
+                              buttonName: AppTranslations.of(context)
+                                  .text("login.log_in")
+                                  .toUpperCase(),
                               onTap: () => this.submit(context),
                               buttonColor: Colors.transparent,
                               borderWidth: 1.0,
@@ -172,7 +178,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                       width: screenSize.width,
                       child: new FlatButton(
                         child: new Text(
-                          AppTranslations.of(context).text("login.forgot_password")+ " ?",
+                          AppTranslations.of(context)
+                                  .text("login.forgot_password") +
+                              " ?",
                           style: Theme.of(context).textTheme.display2,
                         ),
                         onPressed: () {

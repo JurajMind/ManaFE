@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app/app/app.dart';
+import 'package:app/components/Places/WebMap/web_map.dart';
 
 import 'package:app/components/Places/map_carousel.dart';
 import 'package:app/components/Reservations/reservation_item.dart';
@@ -10,6 +11,7 @@ import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/pages/Places/places_search_page.dart';
+import 'package:app/support/m_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -165,39 +167,42 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                   Column(
                     children: <Widget>[
                       Expanded(
-                        child: GoogleMap(
-                          markers: markers,
-                          myLocationEnabled: true,
-                          onCameraIdle: () {
-                            var distance = calculateDistance(
-                                lastIdleView.target, curentView.target);
-                            this.clusteringHelper.updateMap();
-                            setState(() {
-                              moving = false;
-                            });
-                            lastIdleView = curentView;
-                            if (distance > 5) {
-                              loadNearby();
-                            }
-                          },
-                          onCameraMove: (cv) {
-                            curentView = cv;
+                        child: MPlatform.isWeb
+                            ? MapTest()
+                            : GoogleMap(
+                                markers: markers,
+                                myLocationEnabled: true,
+                                onCameraIdle: () {
+                                  var distance = calculateDistance(
+                                      lastIdleView.target, curentView.target);
+                                  this.clusteringHelper.updateMap();
+                                  setState(() {
+                                    moving = false;
+                                  });
+                                  lastIdleView = curentView;
+                                  if (distance > 5) {
+                                    loadNearby();
+                                  }
+                                },
+                                onCameraMove: (cv) {
+                                  curentView = cv;
 
-                            if (!moving)
-                              setState(() {
-                                moving = true;
-                              });
-                          },
-                          mapType: MapType.normal,
-                          compassEnabled: true,
-                          tiltGesturesEnabled: true,
-                          initialCameraPosition: initView,
-                          onMapCreated: (GoogleMapController controller) {
-                            controller.setMapStyle(_mapStyle);
-                            _controller.complete(controller);
-                            this.clusteringHelper.mapController = controller;
-                          },
-                        ),
+                                  if (!moving)
+                                    setState(() {
+                                      moving = true;
+                                    });
+                                },
+                                mapType: MapType.normal,
+                                compassEnabled: true,
+                                tiltGesturesEnabled: true,
+                                initialCameraPosition: initView,
+                                onMapCreated: (GoogleMapController controller) {
+                                  controller.setMapStyle(_mapStyle);
+                                  _controller.complete(controller);
+                                  this.clusteringHelper.mapController =
+                                      controller;
+                                },
+                              ),
                       ),
                       SizedBox(height: 140)
                     ],

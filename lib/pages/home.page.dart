@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:app/app/app.dart';
@@ -76,8 +75,7 @@ class _HomePageState extends State<HomePage> {
         .scheduleFrameCallback((_) => firstDeepJump(context));
 
     final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-    if(!MPlatform.isWeb)
-    _firebaseMessaging.requestNotificationPermissions();
+    if (!MPlatform.isWeb) _firebaseMessaging.requestNotificationPermissions();
     try {
       _firebaseMessaging.getToken().then((token) async {
         await App.http.updateNotificationToken(token);
@@ -224,7 +222,9 @@ class _HomePageState extends State<HomePage> {
                   Expanded(
                     flex: 1,
                     child: IconButtonTitle(
-                      icon: Icon(ManaIcons.leaf),
+                      icon: Icon(
+                        MPlatform.kIsWeb ? Icons.pie_chart : ManaIcons.leaf,
+                      ),
                       text: AppTranslations.of(context).text("tabs.mixology"),
                       color: _currentIndex == 0 ? Colors.white : Colors.grey,
                       tooltip:
@@ -245,7 +245,9 @@ class _HomePageState extends State<HomePage> {
                   Expanded(
                     flex: 1,
                     child: IconButtonTitle(
-                      icon: Icon(ManaIcons.hookah),
+                      icon: Icon(
+                        MPlatform.kIsWeb ? Icons.settings : ManaIcons.hookah,
+                      ),
                       text: AppTranslations.of(context).text("tabs.gear"),
                       color: _currentIndex == 3 ? Colors.white : Colors.grey,
                       onPressed: () => _setActiveTab(3),
@@ -364,8 +366,9 @@ class _HomePageState extends State<HomePage> {
                 _currentIndex == 2
                     ? BoxShadow(
                         color: Colors.grey,
-                        offset: Offset(1.0, 6.0),
-                        blurRadius: 40.0,
+                        offset:
+                            MPlatform.isWeb ? Offset.zero : Offset(1.0, 6.0),
+                        blurRadius: MPlatform.isWeb ? 0 : 40.0,
                       )
                     : BoxShadow(
                         color: Colors.grey,

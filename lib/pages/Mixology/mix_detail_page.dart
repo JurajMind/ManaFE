@@ -172,6 +172,7 @@ class MixDetailPageState extends State<MixDetailPage> {
                       width: 200,
                       child: TextField(
                         autofocus: true,
+                        style: Theme.of(context).textTheme.display2,
                         controller: nameController,
                         decoration: InputDecoration(
                             border: InputBorder.none,
