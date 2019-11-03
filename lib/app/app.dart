@@ -8,7 +8,9 @@ import 'package:app/services/http.service.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(new AppWidget());
+void main() {
+  runApp(new AppWidget());
+}
 
 class App {
   // Application environment.
@@ -62,11 +64,7 @@ class App {
     runApp(new AppWidget());
   }
 
-  static final List<String> supportedLanguagesCodes = [
-    "en",
-    "cs",
-    "de"
-  ];
+  static final List<String> supportedLanguagesCodes = ["en", "cs", "de"];
 
   static Iterable<Locale> supportedLocales() =>
       supportedLanguagesCodes.map<Locale>((language) => Locale(language, ""));

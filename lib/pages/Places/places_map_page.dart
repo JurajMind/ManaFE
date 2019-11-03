@@ -168,7 +168,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                     children: <Widget>[
                       Expanded(
                         child: MPlatform.isWeb
-                            ? MapTest()
+                            ? Container(color: Colors.red, child: Container())
                             : GoogleMap(
                                 markers: markers,
                                 myLocationEnabled: true,

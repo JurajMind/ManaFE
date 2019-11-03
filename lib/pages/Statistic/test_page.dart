@@ -1,7 +1,7 @@
 import 'package:app/app/app.dart';
+import 'package:app/components/Places/WebMap/web_map.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/pages/Places/add_place_page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:flutter/material.dart';
@@ -145,7 +145,7 @@ class _TestPageState extends State<TestPage> {
               child: IconButton(
                   icon: Icon(Icons.add, size: 70),
                   onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => AddPlacePage()))),
+                      MaterialPageRoute(builder: (context) => MapTest()))),
             ),
           ],
         ),

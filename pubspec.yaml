@@ -63,6 +63,7 @@ dependencies:
   apple_sign_in: ^0.1.0
   clustering_google_maps: ^0.1.2
   universal_html: ^1.1.6
+  webview_flutter: ^0.3.15+1
 
 dependency_overrides:
   intl: ^0.16.0
@@ -116,13 +117,14 @@ flutter:
     - images/types/coal.png
     - images/types/heatmanagment.png
     - images/types/hookah.png
-    - images/types/tobacco.pngr
+    - images/types/tobacco.png
 
     - locale/localization_en.json
     - locale/localization_cs.json
     - locale/localization_de.json
 
-    - assets/map.html
+    - assets/
+    - assets/map.txt
     - assets/term_of_ussage.txt
     - assets/sprite.png
     - assets/avatar.png
