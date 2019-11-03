@@ -15,27 +15,39 @@ class MapTest extends StatefulWidget {
 
 class _MapTestState extends State<MapTest> {
   String createdViewId = 'hello-world-html';
+  bool inProgress = true;
   @override
   void initState() {
-    rootBundle.loadString('assets/mat.txt').then((value) {
-      print(value);
+    initWeb();
+    super.initState();
+  }
+
+  void initWeb() {
+    String createdViewUpdate = DateTime.now().toString();
+
+    rootBundle.loadString('map.html').then((value) {
       // ignore:undefined_prefixed_name
       ui.platformViewRegistry.registerViewFactory(
           createdViewId,
           (int viewId) => IFrameElement()
-            ..width = (MediaQuery.of(context).size.width - 400).toString()
-            ..height = MediaQuery.of(context).size.height.toString()
+            ..width = (MediaQuery.of(context).size.width - 1).toString()
+            ..height = (MediaQuery.of(context).size.height - 140).toString()
             ..srcdoc = value
             ..style.border = 'none');
+      setState(() {
+        inProgress = false;
+      });
     });
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (inProgress) {
+      return Center(child: CircularProgressIndicator());
+    }
     return SizedBox(
-      width: 640,
-      height: 360,
+      width: MediaQuery.of(context).size.width - 1,
+      height: MediaQuery.of(context).size.height - 140,
       child: HtmlElementView(viewType: createdViewId),
     );
   }

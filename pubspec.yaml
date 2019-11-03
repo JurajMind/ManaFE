@@ -124,14 +124,7 @@ flutter:
     - locale/localization_de.json
 
     - assets/
-    - assets/map.txt
-    - assets/term_of_ussage.txt
-    - assets/sprite.png
-    - assets/avatar.png
-    - assets/google_black.png
-    - assets/man_pin.png
-    - assets/map_style.txt
-    - assets/bulb.flr
+
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
