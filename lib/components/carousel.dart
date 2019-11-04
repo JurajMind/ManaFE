@@ -5,6 +5,7 @@ import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:app/pages/Places/add_place_page.dart';
+import 'package:app/support/m_platform.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -64,17 +65,8 @@ class _CarrousselState extends State<Carroussel> {
   Widget build(BuildContext context) {
     return new Center(
         child: new Container(
-      child: loadingBuilder(placeBloc),
+      child: buildPlacePages(placeBloc),
     ));
-  }
-
-  StreamBuilder<bool> loadingBuilder(PlacesBloc bloc) {
-    return StreamBuilder<bool>(
-      initialData: true,
-      stream: bloc.loading,
-      builder: (context, snapshot) =>
-          snapshot.data ? CircularProgressIndicator() : buildPlacePages(bloc),
-    );
   }
 
   StreamBuilder<List<PlaceSimpleDto>> buildPlacePages(PlacesBloc bloc) {
@@ -197,7 +189,7 @@ class _CarrousselState extends State<Carroussel> {
                 borderRadius: new BorderRadius.circular(10.0),
                 color: Colors.grey[300],
                 image: DecorationImage(
-                    image: CachedNetworkImageProvider(
+                    image: MPlatform.isWeb ? NetworkImage( Extensions.getPlaceImage(place, MediaSize.Medium)): CachedNetworkImageProvider(
                         Extensions.getPlaceImage(place, MediaSize.Medium)),
                     fit: BoxFit.cover)),
             child: Padding(

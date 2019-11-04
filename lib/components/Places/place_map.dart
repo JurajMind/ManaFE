@@ -2,6 +2,7 @@ import 'package:app/Helpers/place_helper.dart';
 import 'package:app/app/app.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Places/places_map_page.dart';
+import 'package:app/support/m_platform.dart';
 import 'package:app/utils/Map/location.dart';
 import 'package:app/utils/Map/map_view_type.dart';
 import 'package:app/utils/Map/marker.dart';
@@ -25,6 +26,7 @@ class PlaceMap extends StatelessWidget {
     if (place?.address == null) {
       return Container();
     }
+    var mapUrl = mapUri().toString() + '&scale=1';
     var location = DataProvider.getData(context).placeBloc.location;
     return StreamBuilder<Position>(
         stream: location,
@@ -42,8 +44,8 @@ class PlaceMap extends StatelessWidget {
                             longitude: double.parse(place.address.lng))))),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: new CachedNetworkImage(
-                    imageUrl: mapUri().toString() + '&scale=1',
+                  child: MPlatform.isWeb ? Image.network(mapUrl) : new CachedNetworkImage(
+                    imageUrl: mapUrl,
                     placeholder: (context, url) =>
                         new CircularProgressIndicator(),
                     errorWidget: (context, url, error) => new Icon(Icons.error),

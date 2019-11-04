@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:app/support/m_platform.dart';
 
 class PlaceDetailPage extends StatefulWidget {
   final PlaceSimpleDto place;
@@ -145,8 +146,11 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                 Hero(
                   tag: '${place.friendlyUrl}_place',
                   child: new Image(
-                    image: new CachedNetworkImageProvider(
-                        Extensions.getPlaceImage(place, MediaSize.Large)),
+                    image: MPlatform.isWeb
+                        ? NetworkImage(
+                            Extensions.getPlaceImage(place, MediaSize.Large))
+                        : new CachedNetworkImageProvider(
+                            Extensions.getPlaceImage(place, MediaSize.Large)),
                     fit: BoxFit.cover,
                     height: _appBarHeight,
                   ),
@@ -166,7 +170,7 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                     child: new Column(
                       children: <Widget>[
                         Container(
-                            height: 500,
+                            height: MediaQuery.of(context).size.height,
                             child: PlaceExtendedInfo(
                               place: place,
                             ))

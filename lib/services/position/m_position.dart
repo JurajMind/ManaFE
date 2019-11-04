@@ -1,17 +1,16 @@
 import 'package:app/support/m_platform.dart';
 import 'package:geolocator/geolocator.dart';
 
-class MPosition {
-  static MPosition _instance;
+class MPosition {  
   static Geolocator _geo;
 
-  factory MPosition() {
-    if (_instance == null) {
-      _geo = new Geolocator();
-      _instance = new MPosition();
-    }
-    return _instance;
-  }
+  static final MPosition _instance = new MPosition._();
+
+  factory MPosition() => MPosition._instance;
+
+  MPosition._() {
+   _geo = new Geolocator();    
+  }  
 
   Future<GeolocationStatus> checkGeolocationPermissionStatus(
       {GeolocationPermission locationPermission =
@@ -25,7 +24,7 @@ class MPosition {
       {LocationAccuracy desiredAccuracy = LocationAccuracy.best,
       GeolocationPermission locationPermissionLevel =
           GeolocationPermission.location}) async {
-    if (MPlatform.isWeb) return new Position(latitude: 50,longitude: 18);
+    if (MPlatform.isWeb) return new Position(latitude: 50.08861,longitude: 14.42139);
 
     return _geo.getLastKnownPosition(
         desiredAccuracy: desiredAccuracy,
@@ -37,7 +36,7 @@ class MPosition {
       GeolocationPermission locationPermissionLevel =
           GeolocationPermission.location}) async {
 
-             if (MPlatform.isWeb) return new Position(latitude: 50,longitude: 18);
+             if (MPlatform.isWeb)  return new Position(latitude: 50.08861,longitude: 14.42139);
 
     return _geo.getCurrentPosition(
         desiredAccuracy: desiredAccuracy,

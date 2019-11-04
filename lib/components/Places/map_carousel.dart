@@ -13,6 +13,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:app/support/m_platform.dart';
 
 class MapCarousel extends StatefulWidget {
   final PlaceSimpleDto selectedPlace;
@@ -232,7 +233,8 @@ class _CarrousselState extends State<MapCarousel> {
                       width: 2),
                   color: Colors.grey[300],
                   image: DecorationImage(
-                      image: CachedNetworkImageProvider(
+                      image: MPlatform.isWeb ? NetworkImage(Extensions.getPlaceImage(place, MediaSize.Medium)) :
+                       CachedNetworkImageProvider(
                           Extensions.getPlaceImage(place, MediaSize.Medium)),
                       fit: BoxFit.cover)),
               child: Padding(

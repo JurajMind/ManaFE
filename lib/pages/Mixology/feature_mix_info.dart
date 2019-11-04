@@ -1,4 +1,5 @@
 import 'package:app/components/Socials/socials_widget.dart';
+import 'package:app/support/m_platform.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,11 +37,17 @@ class FeatureMixInfo extends StatelessWidget {
                           child: Text(simple.name)),
                       centerTitle: true,
                     ),
-                    new Image(
-                        image: new CachedNetworkImageProvider(
-                            snapshot.data.logoPicture),
-                        fit: BoxFit.cover,
-                        height: 150),
+                    !MPlatform.isWeb
+                        ? new Image(
+                            image: new CachedNetworkImageProvider(
+                                snapshot.data.logoPicture),
+                            fit: BoxFit.cover,
+                            height: 150)
+                        : Image.network(
+                            snapshot.data.logoPicture,
+                            height: 150,
+                            fit: BoxFit.cover,
+                          ),
                     Center(
                       child: Container(
                         child: SocialsList(
