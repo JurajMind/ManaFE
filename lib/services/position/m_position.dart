@@ -1,9 +1,11 @@
+import 'package:app/services/position/position_polyfy.dart' as wgeo;
 import 'package:app/support/m_platform.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:universal_html/prefer_sdk/html.dart' as html;
 
 class MPosition {
   static Geolocator _geo;
+  static wgeo.WGeolocation _wgeo;
 
   static final MPosition _instance = new MPosition._();
 
@@ -11,15 +13,18 @@ class MPosition {
 
   MPosition._() {
     _geo = new Geolocator();
+    _wgeo = new wgeo.WGeolocation();
   }
 
   Future<GeolocationStatus> checkGeolocationPermissionStatus(
       {GeolocationPermission locationPermission =
           GeolocationPermission.location}) async {
-
     if (MPlatform.isWeb) {
-          var position = await html.window.navigator.geolocation.getCurrentPosition();       
-      if (position != null) {
+      var a = await _wgeo.getCurrentPosition(
+          enableHighAccuracy: false,
+          timeout: new Duration(seconds: 1),
+          maximumAge: Duration(hours: 1));
+      if (a != null) {
         return GeolocationStatus.granted;
       } else {
         return GeolocationStatus.unknown;
@@ -33,12 +38,14 @@ class MPosition {
       {LocationAccuracy desiredAccuracy = LocationAccuracy.best,
       GeolocationPermission locationPermissionLevel =
           GeolocationPermission.location}) async {
-    if (MPlatform.isWeb)
-    {
-       var position = await html.window.navigator.geolocation.getCurrentPosition();       
-       return new Position(latitude: position.coords.latitude, longitude: position.coords.longitude);
+    if (MPlatform.isWeb) {
+      var a = await _wgeo.getCurrentPosition(
+          enableHighAccuracy: false,
+          timeout: new Duration(seconds: 1),
+          maximumAge: Duration(days: 1));
+      return new Position(
+          latitude: a.coordinates.latitude, longitude: a.coordinates.longitude);
     }
-     
 
     return _geo.getLastKnownPosition(
         desiredAccuracy: desiredAccuracy,
@@ -49,10 +56,13 @@ class MPosition {
       {LocationAccuracy desiredAccuracy = LocationAccuracy.best,
       GeolocationPermission locationPermissionLevel =
           GeolocationPermission.location}) async {
-    if (MPlatform.isWeb)
-    {
-       var position = await html.window.navigator.geolocation.getCurrentPosition();       
-       return new Position(latitude: position.coords.latitude, longitude: position.coords.longitude);
+    if (MPlatform.isWeb) {
+      var a = await _wgeo.getCurrentPosition(
+          enableHighAccuracy: false,
+          timeout: new Duration(seconds: 1),
+          maximumAge: Duration(hours: 1));
+      return new Position(
+          latitude: a.coordinates.latitude, longitude: a.coordinates.longitude);
     }
 
     return _geo.getCurrentPosition(
