@@ -55,7 +55,6 @@ class _AppWidgetState extends State<AppWidget> {
     if (_deepLink != null) {
       deeplink = _deepLink;
     }
-    ;
   }
 
   Future restartApp() async {

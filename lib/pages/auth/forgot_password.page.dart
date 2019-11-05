@@ -22,7 +22,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppTranslations.of(context).text("login.forgot_password").toUpperCase()),
+        title: Text(AppTranslations.of(context)
+            .text("login.forgot_password")
+            .toUpperCase()),
       ),
       body: new SingleChildScrollView(
           child: new Column(
@@ -36,6 +38,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   children: <Widget>[
                     new TextFormField(
                         autofocus: true,
+                        style: Theme.of(context).textTheme.display2,
                         keyboardType: TextInputType.emailAddress,
                         decoration: new InputDecoration(
                             labelStyle: Theme.of(context).textTheme.display1,
@@ -47,7 +50,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                     new BorderSide(color: Colors.white)),
                             icon: Icon(Icons.mail, color: Colors.white),
                             hintText: 'your@email.com',
-                            labelText: AppTranslations.of(context).text("login.email")),
+                            labelText: AppTranslations.of(context)
+                                .text("login.email")),
                         validator: (String value) {
                           return validate(value, 'E-mail Address', [
                             new RequiredValidator(),
@@ -63,7 +67,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           ? CircularProgressIndicator()
                           : MButton(
                               icon: Icons.refresh,
-                              label: AppTranslations.of(context).text("login.reset_password"),
+                              label: AppTranslations.of(context)
+                                  .text("login.reset_password"),
                               onPressed: () {
                                 submit(context);
                               },
@@ -113,8 +118,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text(AppTranslations.of(context).text("login.forgot_dialog_title") ,style: Theme.of(context).textTheme.body2,),
-          content:new Text(AppTranslations.of(context).text("login.forgot_dialog") ,style: Theme.of(context).textTheme.display2,),
+          title: new Text(
+            AppTranslations.of(context).text("login.forgot_dialog_title"),
+            style: Theme.of(context).textTheme.body2,
+          ),
+          content: new Text(
+            AppTranslations.of(context).text("login.forgot_dialog"),
+            style: Theme.of(context).textTheme.display2,
+          ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new MButton(
