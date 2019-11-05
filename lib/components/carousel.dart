@@ -64,17 +64,8 @@ class _CarrousselState extends State<Carroussel> {
   Widget build(BuildContext context) {
     return new Center(
         child: new Container(
-      child: loadingBuilder(placeBloc),
+      child: buildPlacePages(placeBloc),
     ));
-  }
-
-  StreamBuilder<bool> loadingBuilder(PlacesBloc bloc) {
-    return StreamBuilder<bool>(
-      initialData: true,
-      stream: bloc.loading,
-      builder: (context, snapshot) =>
-          snapshot.data ? CircularProgressIndicator() : buildPlacePages(bloc),
-    );
   }
 
   StreamBuilder<List<PlaceSimpleDto>> buildPlacePages(PlacesBloc bloc) {

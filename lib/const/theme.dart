@@ -11,45 +11,59 @@ ThemeData buildDarkTheme() {
     scaffoldBackgroundColor: const Color(0xFF000d1a),
     backgroundColor: const Color(0xFF000d1a),
     errorColor: const Color(0xFFB00020),
-    buttonTheme: const ButtonThemeData(
-      textTheme: ButtonTextTheme.primary,
-    ),
     appBarTheme: AppBarTheme(color: AppColors.black),
+    colorScheme: ColorScheme.dark(),
     textTheme: TextTheme(
       headline: TextStyle(
+          color: Colors.white,
           fontSize: 42.0,
           fontWeight: FontWeight.w700,
           fontFamily: 'Montserrat'),
       title: TextStyle(
+          color: Colors.white,
           fontSize: 36.0,
           fontWeight: FontWeight.w700,
           fontFamily: 'Montserrat'),
-      body1: TextStyle(fontSize: 14.0, fontFamily: 'Montserrat'),
+      body1: TextStyle(
+        fontSize: 14.0,
+        fontFamily: 'Montserrat',
+        color: Colors.white,
+      ),
       body2: TextStyle(
           fontSize: 30.0,
+          color: Colors.white,
           fontWeight: FontWeight.w700,
           fontFamily: 'Montserrat'),
       subtitle: TextStyle(
           fontSize: 16.0,
+          color: Colors.white,
           fontWeight: FontWeight.w700,
           fontFamily: 'Montserrat'),
       display1: TextStyle(
           fontSize: 21.0,
+          color: Colors.white,
           fontWeight: FontWeight.w700,
           fontFamily: 'Montserrat'),
       display2: TextStyle(
           fontSize: 16.0,
+          color: Colors.white,
           fontWeight: FontWeight.w700,
           fontFamily: 'Montserrat'),
       display3: TextStyle(
           fontSize: 14.0,
+          color: Colors.white,
           fontWeight: FontWeight.w700,
           fontFamily: 'Montserrat'),
       display4: TextStyle(
           fontSize: 12.0,
+          color: Colors.white,
           fontWeight: FontWeight.w700,
           fontFamily: 'Montserrat'),
-      caption: TextStyle(fontSize: 12.0, fontFamily: 'Montserrat'),
+      caption: TextStyle(
+        fontSize: 12.0,
+        fontFamily: 'Montserrat',
+        color: Colors.white,
+      ),
     ),
     primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
     accentTextTheme: _buildTextTheme(base.accentTextTheme),
@@ -58,8 +72,10 @@ ThemeData buildDarkTheme() {
 
 TextTheme _buildTextTheme(TextTheme base) {
   return base.copyWith(
-    title: base.title
-        .copyWith(fontFamily: 'Montserrat', fontWeight: FontWeight.w700),
+    title: base.title.copyWith(
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.w700,
+        color: Colors.white),
   );
 }
 

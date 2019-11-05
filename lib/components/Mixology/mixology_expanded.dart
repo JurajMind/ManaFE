@@ -66,7 +66,7 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                           flex: 1,
                           child: new StarRating(
                             size: 15.0,
-                            rating: 2.0,
+                            rating: 0.0,
                             starCount: 5,
                             color: Colors.white,
                             borderColor: Colors.white,
