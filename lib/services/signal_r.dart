@@ -9,6 +9,7 @@ import 'package:web_socket_channel/html.dart';
 import 'dart:async';
 
 import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class SignalR {
   static final SignalR _singleton = new SignalR._internal();
@@ -19,8 +20,7 @@ class SignalR {
   String lastMsgId = "";
   DateTime lastPing = DateTime.now();
   BehaviorSubject<DateTime> lastPingStream;
-  IOWebSocketChannel _channel;
-  HtmlWebSocketChannel _htmlChannel;
+  WebSocketChannel _channel;
   Completer<dynamic> _completer;
   Timer connectionTimer;
   Map<String, ServerCallParam> serversCall = Map<String, ServerCallParam>();
@@ -84,55 +84,33 @@ class SignalR {
 
   void handleConnection(String url, bool connection) {
     if (!MPlatform.isWeb) {
-      try {
-        _channel = new IOWebSocketChannel.connect(url);
-        _channel.stream.listen((message) async {
-          print('From signal ' + message);
-          if (message == "{}") {
-            lastPing = DateTime.now();
-            lastPingStream.add(DateTime.now());
-          }
-          var serverCall = ClientCall.fromJson(json.decode(message));
-          proceedCall(serverCall);
-        }, onError: (error) {
-          connectionStatus.add(SignalStatus.error);
-          print(error);
-          if (connection) {}
-        });
-
-        new Future.delayed(new Duration(seconds: 5), () {
-          for (var call in serversCall.values) {
-            callServerFunction(call);
-          }
-        });
-      } catch (e) {
-        print(e);
-      }
+      _channel = new HtmlWebSocketChannel.connect(url);
     } else {
-      try {
-        _htmlChannel = new HtmlWebSocketChannel.connect(url);
-        _htmlChannel.stream.listen((message) async {
-          print('From signal ' + message);
-          if (message == "{}") {
-            lastPing = DateTime.now();
-            lastPingStream.add(DateTime.now());
-          }
-          var serverCall = ClientCall.fromJson(json.decode(message));
-          proceedCall(serverCall);
-        }, onError: (error) {
-          connectionStatus.add(SignalStatus.error);
-          print(error);
-          if (connection) {}
-        });
+      _channel = new IOWebSocketChannel.connect(url);
+    }
+    try {
+      _channel = new IOWebSocketChannel.connect(url);
+      _channel.stream.listen((message) async {
+        print('From signal ' + message);
+        if (message == "{}") {
+          lastPing = DateTime.now();
+          lastPingStream.add(DateTime.now());
+        }
+        var serverCall = ClientCall.fromJson(json.decode(message));
+        proceedCall(serverCall);
+      }, onError: (error) {
+        connectionStatus.add(SignalStatus.error);
+        print(error);
+        if (connection) {}
+      });
 
-        new Future.delayed(new Duration(seconds: 5), () {
-          for (var call in serversCall.values) {
-            callServerFunction(call);
-          }
-        });
-      } catch (e) {
-        print(e);
-      }
+      new Future.delayed(new Duration(seconds: 5), () {
+        for (var call in serversCall.values) {
+          callServerFunction(call);
+        }
+      });
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -192,7 +170,6 @@ class SignalR {
     serversCall[param.name] = param;
     var call = new ServerCall(A: param.params, M: param.name);
     if (_channel != null) _channel.sink.add(call.toJson());
-    if (_htmlChannel != null) _htmlChannel.sink.add(call.toJson());
   }
 
   void proceedCall(ClientCall serverCall) {
