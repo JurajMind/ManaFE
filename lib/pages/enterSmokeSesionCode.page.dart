@@ -64,7 +64,6 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
             new Expanded(
               flex: 4,
               child: Container(
-                
                 height: getCircleRadius(context) * 2,
                 width: getCircleRadius(context) * 2,
                 child: Center(
@@ -100,7 +99,8 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                             ? "Session code must have 5 chars"
                                             : null;
                                       },
-                                      style: TextStyle(fontSize: 20.0),
+                                      style: TextStyle(
+                                          fontSize: 20.0, color: Colors.white),
                                       textAlign: TextAlign.center,
                                       autocorrect: false,
                                       decoration: new InputDecoration(
@@ -165,15 +165,15 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                       Expanded(
                                         flex: 1,
                                         child: InkWell(
-                                            onTap: () => Navigator.of(context)
-                                                    .push<String>(
-                                                        new MaterialPageRoute(
-                                                            builder:
-                                                                (BuildContext
-                                                                    context) {
+                                            onTap: () =>
+                                                Navigator.of(context).push<
+                                                        String>(
+                                                    new MaterialPageRoute(
+                                                        builder: (BuildContext
+                                                            context) {
                                                   return new QrCodeReaderPage();
                                                 })).then(
-                                                        (smokeSessionLink) async {
+                                                    (smokeSessionLink) async {
                                                   if (smokeSessionLink !=
                                                           null &&
                                                       smokeSessionLink.contains(
