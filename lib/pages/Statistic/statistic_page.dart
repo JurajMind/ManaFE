@@ -204,7 +204,7 @@ class _StatisticPageState extends State<StatisticPage> {
                         const SizedBox(
                           width: 4,
                         ),
-                        Text('Settings'),
+                        Text('Settings', style: Theme.of(context).textTheme.display2,),
                       ],
                     ),
                   ),
@@ -216,7 +216,7 @@ class _StatisticPageState extends State<StatisticPage> {
                         const SizedBox(
                           width: 4,
                         ),
-                        Text('User profile'),
+                        Text('User profile', style: Theme.of(context).textTheme.display2,),
                       ],
                     ),
                   ),
@@ -228,7 +228,7 @@ class _StatisticPageState extends State<StatisticPage> {
                         const SizedBox(
                           width: 4,
                         ),
-                        Text('Test page'),
+                        Text('Test page', style: Theme.of(context).textTheme.display2,),
                       ],
                     ),
                   ),
@@ -240,7 +240,7 @@ class _StatisticPageState extends State<StatisticPage> {
                         const SizedBox(
                           width: 4,
                         ),
-                        Text('Sign out'),
+                        Text('Sign out', style: Theme.of(context).textTheme.display2,),
                       ],
                     ),
                   ),

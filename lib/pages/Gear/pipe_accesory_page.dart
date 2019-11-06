@@ -86,7 +86,7 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
                 children: <Widget>[
                   Hero(
                       tag: '${pipeAccesory.id}_name',
-                      child: Extensions.accesoryPicture(pipeAccesory)),
+                      child: Container(child: Extensions.accesoryPicture(pipeAccesory))),
                   SizedBox(
                     width: 8,
                   ),
