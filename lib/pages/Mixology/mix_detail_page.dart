@@ -21,8 +21,10 @@ import 'package:share/share.dart';
 class MixDetailPage extends StatefulWidget {
   final TobaccoMixSimpleDto mix;
   final int mixId;
+  final bool noHero;
 
-  const MixDetailPage({Key key, this.mix, this.mixId}) : super(key: key);
+  const MixDetailPage({Key key, this.mix, this.mixId, this.noHero = false})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new MixDetailPageState();
@@ -195,7 +197,9 @@ class MixDetailPageState extends State<MixDetailPage> {
                           child: Align(
                             alignment: Alignment.bottomCenter,
                             child: Hero(
-                              tag: "mix_hero_${mix.id}",
+                              tag: widget.noHero
+                                  ? UniqueKey().toString()
+                                  : "mix_hero_${mix.id}",
                               child: Container(
                                 child: AutoSizeText(
                                   mix.name ??

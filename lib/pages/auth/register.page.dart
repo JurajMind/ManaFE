@@ -56,17 +56,22 @@ class _RegisterPageState extends State<RegisterPage> {
               hueRotation: -1.2,
               startPoint: Offset(
                   screenSize.width * 0.2 + animOffset.dx, 270 + animOffset.dy)),
-          child: Form(
-            key: _formKey,
-            child: PageView(
-              pageSnapping: true,
-              controller: controller,
-              children: <Widget>[
-                namePage(screenSize, context),
-                emailPage(screenSize, context),
-                passwordPage(screenSize, context),
-                lawPage(screenSize, context)
-              ],
+          child: Center(
+            child: Container(
+              constraints: BoxConstraints(maxWidth: 500),
+              child: Form(
+                key: _formKey,
+                child: PageView(
+                  pageSnapping: true,
+                  controller: controller,
+                  children: <Widget>[
+                    namePage(screenSize, context),
+                    emailPage(screenSize, context),
+                    passwordPage(screenSize, context),
+                    lawPage(screenSize, context)
+                  ],
+                ),
+              ),
             ),
           ),
         ),

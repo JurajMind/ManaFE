@@ -163,6 +163,8 @@ class _StatisticPageState extends State<StatisticPage> {
   @override
   Widget build(BuildContext context) {
     var bloc = DataProvider.getData(context).statisticBloc;
+    var shortestSide = MediaQuery.of(context).size.shortestSide;
+    var useTabletLayout = shortestSide > 600;
     return new Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: CustomScrollView(
@@ -375,8 +377,23 @@ class _StatisticPageState extends State<StatisticPage> {
               buildStatRecap(bloc),
               new HealthWidget(bloc: bloc, time: this.selectedTime),
               new GearUsageStat(controller: controller),
-              new TimeStatisticStream(bloc: bloc),
-              new DayStatisticStream(bloc: bloc),
+              if (useTabletLayout) ...{
+                Container(
+                    height: 250,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Expanded(
+                            flex: 1,
+                            child: new TimeStatisticStream(bloc: bloc)),
+                        Expanded(
+                            flex: 1, child: new DayStatisticStream(bloc: bloc)),
+                      ],
+                    ))
+              } else ...{
+                new TimeStatisticStream(bloc: bloc),
+                new DayStatisticStream(bloc: bloc),
+              },
               SizedBox(height: 10),
               new SmokeSessionStat(bloc: bloc),
               SizedBox(

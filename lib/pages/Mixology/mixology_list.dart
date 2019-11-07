@@ -109,7 +109,7 @@ class MixologyListState extends State<MixologyList> {
   }
 }
 
-class PaggingMixListView extends StatelessWidget {
+class PaggingMixListView extends StatefulWidget {
   const PaggingMixListView({
     Key key,
     @required this.mixologyBloc,
@@ -122,9 +122,17 @@ class PaggingMixListView extends StatelessWidget {
   final VoidCallback showTobaccoDialog;
 
   @override
+  _PaggingMixListViewState createState() => _PaggingMixListViewState();
+}
+
+class _PaggingMixListViewState extends State<PaggingMixListView> {
+  Widget righPanel = Container();
+  int selectedMix;
+
+  @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<TobaccoMixSimpleDto>>(
-        stream: mixologyBloc.mixCreatorMixes[mixCreator],
+        stream: widget.mixologyBloc.mixCreatorMixes[widget.mixCreator],
         initialData: null,
         builder: (context, snapshot) {
           if (snapshot.data == null || snapshot.data.length == 0) {
@@ -141,16 +149,16 @@ class PaggingMixListView extends StatelessWidget {
                 SizedBox(
                   height: 8,
                 ),
-                if (mixCreator == "me") ...{
+                if (widget.mixCreator == "me") ...{
                   Text(
                     'Try add new mix',
                     style: Theme.of(context).textTheme.display1,
                   ),
                   IconButton(
                       icon: Icon(Icons.add),
-                      onPressed: () => showTobaccoDialog())
+                      onPressed: () => widget.showTobaccoDialog())
                 },
-                if (mixCreator == "favorite")
+                if (widget.mixCreator == "favorite")
                   Text(
                     'Try add your mix to favorite',
                     style: Theme.of(context).textTheme.display1,
@@ -162,30 +170,69 @@ class PaggingMixListView extends StatelessWidget {
           if (snapshot?.data?.length != null) {
             itemCount = snapshot.data.length + 1;
           }
+
+          var shortestSide = MediaQuery.of(context).size.shortestSide;
+          var useTabletLayout = shortestSide > 600;
+
           return LazyLoadScrollView(
             onRefresh: () => Future.delayed(Duration.zero, () => {}),
             onEndOfPage: () {
               if (!snapshot.data.contains(null))
-                mixologyBloc.loadCreatorMixesNextPage(mixCreator, false);
+                widget.mixologyBloc
+                    .loadCreatorMixesNextPage(widget.mixCreator, false);
             },
-            child: ListView.builder(
-              physics: ClampingScrollPhysics(),
-              itemCount: itemCount ?? 10,
-              itemBuilder: (context, index) {
-                if (index == snapshot.data.length) {
-                  return SizedBox(height: 100);
-                }
-
-                if (snapshot.data != null && snapshot.data[index] != null) {
-                  return MixCardExpanded(tobaccoMix: snapshot.data[index]);
-                } else {
-                  return MixCardExpandedShimmer(
-                    move: false,
-                  );
-                }
-              },
-            ),
+            child: useTabletLayout
+                ? Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 1,
+                        child:
+                            buildListView(itemCount, snapshot, onTap: (value) {
+                          setState(() {
+                            this.selectedMix = value.id;
+                            this.righPanel = new MixDetailPage(
+                              mix: value,
+                              key: UniqueKey(),
+                              noHero: true,
+                            );
+                          });
+                        }, selectedMixId: this.selectedMix),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: righPanel,
+                      )
+                    ],
+                  )
+                : buildListView(itemCount, snapshot),
           );
         });
+  }
+
+  ListView buildListView(
+      int itemCount, AsyncSnapshot<List<TobaccoMixSimpleDto>> snapshot,
+      {ValueChanged<TobaccoMixSimpleDto> onTap, int selectedMixId}) {
+    return ListView.builder(
+      physics: ClampingScrollPhysics(),
+      itemCount: itemCount ?? 10,
+      itemBuilder: (context, index) {
+        if (index == snapshot.data.length) {
+          return SizedBox(height: 100);
+        }
+
+        if (snapshot.data != null && snapshot.data[index] != null) {
+          var selectedMix = snapshot.data[index];
+          return MixCardExpanded(
+            tobaccoMix: selectedMix,
+            onTap: onTap,
+            selected: selectedMix.id == selectedMixId,
+          );
+        } else {
+          return MixCardExpandedShimmer(
+            move: false,
+          );
+        }
+      },
+    );
   }
 }

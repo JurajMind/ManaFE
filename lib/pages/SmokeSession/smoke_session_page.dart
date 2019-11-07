@@ -106,9 +106,59 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
     StreamBuilder<SmokeSessionMetaDataDto> metadataBuilder = new StreamBuilder(
       stream: dataProvider.smokeSessionBloc.smokeSessionMetaData,
       builder: (context, asyncSnapshot) {
+        var shortestSide = MediaQuery.of(context).size.shortestSide;
+        var useTabletLayout = shortestSide > 600;
+
         if (asyncSnapshot.data == null) {
           return CircularProgressIndicator();
         }
+
+        if (useTabletLayout) {
+          return Container(
+            constraints: BoxConstraints(maxHeight: 200),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    children: <Widget>[
+                      PipeAccesoryWidget(
+                        accesory: asyncSnapshot.data.pipe,
+                        type: 'pipe',
+                        dataProvider: dataProvider,
+                      ),
+                      PipeAccesoryWidget(
+                          accesory: asyncSnapshot.data.bowl,
+                          type: 'bowl',
+                          dataProvider: dataProvider),
+                      // emptyPipeAccesoryWidget(asyncSnapshot.data)
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    children: <Widget>[
+                      PipeAccesoryWidget(
+                          accesory: asyncSnapshot.data.heatManagement,
+                          type: 'hmd',
+                          dataProvider: dataProvider),
+                      PipeAccesoryWidget(
+                          accesory: asyncSnapshot.data.coal,
+                          type: 'coal',
+                          dataProvider: dataProvider),
+                      // emptyPipeAccesoryWidget(asyncSnapshot.data)
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+
         return Column(
           children: <Widget>[
             PipeAccesoryWidget(
@@ -221,7 +271,6 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
               slivers: <Widget>[
                 new SliverAppBar(
                   leading: Container(),
-                  
                   expandedHeight: 200.0,
                   backgroundColor: Colors.black,
                   pinned: true,

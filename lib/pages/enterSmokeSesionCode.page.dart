@@ -64,6 +64,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
             new Expanded(
               flex: 4,
               child: Container(
+                constraints: BoxConstraints(maxWidth: 500),
                 height: getCircleRadius(context) * 2,
                 width: getCircleRadius(context) * 2,
                 child: Center(
