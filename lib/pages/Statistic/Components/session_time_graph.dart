@@ -175,7 +175,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                             getTooltipItems: (touchedSpots) {
                               return touchedSpots.map((touchedSpot) {
                                 if (touchedSpot?.spot == null) {
-                                  return "";
+                                  return null;
                                 }
                                 String weekDay =
                                     touchedSpot?.spot?.x?.toInt().toString();

@@ -378,21 +378,29 @@ class _StatisticPageState extends State<StatisticPage> {
               new HealthWidget(bloc: bloc, time: this.selectedTime),
               new GearUsageStat(controller: controller),
               if (useTabletLayout) ...{
-                Container(
-                    height: 250,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Expanded(
-                            flex: 1,
-                            child: new TimeStatisticStream(bloc: bloc)),
-                        Expanded(
-                            flex: 1, child: new DayStatisticStream(bloc: bloc)),
-                      ],
-                    ))
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                        flex: 1,
+                        child: Container(
+                          height: 250,
+                          child: new SessionDayStream(bloc: bloc),
+                        )),
+                    Expanded(
+                        flex: 1,
+                        child: Container(
+                          height: 250,
+                          child: WeekDayGraphStream(
+                            bloc: bloc,
+                          ),
+                        )),
+                  ],
+                )
               } else ...{
-                new TimeStatisticStream(bloc: bloc),
-                new DayStatisticStream(bloc: bloc),
+                new SessionDayStream(bloc: bloc),
+                new WeekDayGraphStream(bloc: bloc),
               },
               SizedBox(height: 10),
               new SmokeSessionStat(bloc: bloc),
@@ -503,8 +511,8 @@ class _StatisticPageState extends State<StatisticPage> {
   }
 }
 
-class DayStatisticStream extends StatelessWidget {
-  const DayStatisticStream({
+class WeekDayGraphStream extends StatelessWidget {
+  const WeekDayGraphStream({
     Key key,
     @required this.bloc,
   }) : super(key: key);
@@ -597,8 +605,8 @@ class HealthWidget extends StatelessWidget {
   }
 }
 
-class TimeStatisticStream extends StatelessWidget {
-  const TimeStatisticStream({
+class SessionDayStream extends StatelessWidget {
+  const SessionDayStream({
     Key key,
     @required this.bloc,
   }) : super(key: key);
