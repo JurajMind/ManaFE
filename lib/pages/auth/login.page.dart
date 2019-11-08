@@ -61,141 +61,149 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
 
     return new Scaffold(
       appBar: new AppBar(
+        centerTitle: true,
         title: new Text(
             AppTranslations.of(context).text("login.log_in").toUpperCase()),
         backgroundColor: Colors.transparent,
       ),
-      body: new SingleChildScrollView(
-          child: new Column(
-        children: <Widget>[
-          Builder(builder: (BuildContext context) {
-            return new Container(
-              padding: new EdgeInsets.fromLTRB(60.0, 60.0, 60.0, 0.0),
-              child: new Form(
-                key: _formKey,
-                child: new Column(
-                  children: <Widget>[
-                    new TextFormField(
-                        autofocus: true,
-                        keyboardType: TextInputType.emailAddress,
-                        style: Theme.of(context).textTheme.display2,
-                        decoration: new InputDecoration(
-                            labelStyle: Theme.of(context).textTheme.display1,
-                            enabledBorder: new UnderlineInputBorder(
-                                borderSide:
-                                    new BorderSide(color: Colors.white)),
-                            focusedBorder: new UnderlineInputBorder(
-                                borderSide:
-                                    new BorderSide(color: Colors.white)),
-                            icon: Icon(Icons.mail, color: Colors.white),
-                            hintText: 'your@email.com',
-                            labelText: AppTranslations.of(context)
-                                .text("login.email")),
-                        validator: (String value) {
-                          return validate(value, 'E-mail Address', [
-                            new RequiredValidator(),
-                            new EmailValidator(),
-                            new MaxValidator(63)
-                          ]);
-                        },
-                        onFieldSubmitted: (String textInput) {
-                          FocusScope.of(context)
-                              .requestFocus(passwordFocusNode);
-                        },
-                        onSaved: (String value) {
-                          data.email = value;
-                        }),
-                    new TextFormField(
-                        obscureText: !showPassword,
-                        focusNode: passwordFocusNode,
-                        style: Theme.of(context).textTheme.display2,
-                        decoration: new InputDecoration(
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                showPassword
-                                    ? FontAwesomeIcons.eyeSlash
-                                    : FontAwesomeIcons.eye,
-                                color: Colors.white,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  showPassword = !showPassword;
-                                });
-                              },
-                            ),
-                            labelStyle: Theme.of(context).textTheme.display1,
-                            enabledBorder: new UnderlineInputBorder(
-                                borderSide:
-                                    new BorderSide(color: Colors.white)),
-                            focusedBorder: new UnderlineInputBorder(
-                                borderSide:
-                                    new BorderSide(color: Colors.white)),
-                            icon: Icon(Icons.security, color: Colors.white),
-                            labelText: AppTranslations.of(context)
-                                .text("login.password")),
-                        validator: (String value) {
-                          return validate(value, 'Password', [
-                            new RequiredValidator(),
-                            new StringValidator(),
-                            new MinValidator(6)
-                          ]);
-                        },
-                        onFieldSubmitted: (String value) {
-                          this.submit(context);
-                        },
-                        onSaved: (String value) {
-                          data.password = value;
-                        }),
-                    new Container(
-                      width: screenSize.width,
-                      child: _loading
-                          ? new RoundedButton(
-                              borderWidth: 1.0,
-                              bottomMargin: 1.0,
-                              height: 50.0,
-                              width: screenSize.width,
-                              child: new Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  CircularProgressIndicator(),
-                                ],
-                              ),
-                            )
-                          : new RoundedButton(
-                              buttonName: AppTranslations.of(context)
-                                  .text("login.log_in")
-                                  .toUpperCase(),
-                              onTap: () => this.submit(context),
-                              buttonColor: Colors.transparent,
-                              borderWidth: 1.0,
-                              bottomMargin: 1.0,
-                              height: 50.0,
-                              width: screenSize.width,
-                            ),
-                      margin: new EdgeInsets.only(top: 20.0),
-                    ),
-                    new Container(
-                      width: screenSize.width,
-                      child: new FlatButton(
-                        child: new Text(
-                          AppTranslations.of(context)
-                                  .text("login.forgot_password") +
-                              " ?",
-                          style: Theme.of(context).textTheme.display2,
+      body: Center(
+        child: Container(
+          constraints: BoxConstraints(maxWidth: 500),
+          child: new SingleChildScrollView(
+              child: new Column(
+            children: <Widget>[
+              Builder(builder: (BuildContext context) {
+                return new Container(
+                  padding: new EdgeInsets.fromLTRB(60.0, 60.0, 60.0, 0.0),
+                  child: new Form(
+                    key: _formKey,
+                    child: new Column(
+                      children: <Widget>[
+                        new TextFormField(
+                            autofocus: true,
+                            keyboardType: TextInputType.emailAddress,
+                            style: Theme.of(context).textTheme.display2,
+                            decoration: new InputDecoration(
+                                labelStyle:
+                                    Theme.of(context).textTheme.display1,
+                                enabledBorder: new UnderlineInputBorder(
+                                    borderSide:
+                                        new BorderSide(color: Colors.white)),
+                                focusedBorder: new UnderlineInputBorder(
+                                    borderSide:
+                                        new BorderSide(color: Colors.white)),
+                                icon: Icon(Icons.mail, color: Colors.white),
+                                hintText: 'your@email.com',
+                                labelText: AppTranslations.of(context)
+                                    .text("login.email")),
+                            validator: (String value) {
+                              return validate(value, 'E-mail Address', [
+                                new RequiredValidator(),
+                                new EmailValidator(),
+                                new MaxValidator(63)
+                              ]);
+                            },
+                            onFieldSubmitted: (String textInput) {
+                              FocusScope.of(context)
+                                  .requestFocus(passwordFocusNode);
+                            },
+                            onSaved: (String value) {
+                              data.email = value;
+                            }),
+                        new TextFormField(
+                            style: Theme.of(context).textTheme.display2,
+                            obscureText: !showPassword,
+                            focusNode: passwordFocusNode,
+                            decoration: new InputDecoration(
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    showPassword
+                                        ? FontAwesomeIcons.eyeSlash
+                                        : FontAwesomeIcons.eye,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      showPassword = !showPassword;
+                                    });
+                                  },
+                                ),
+                                labelStyle:
+                                    Theme.of(context).textTheme.display1,
+                                enabledBorder: new UnderlineInputBorder(
+                                    borderSide:
+                                        new BorderSide(color: Colors.white)),
+                                focusedBorder: new UnderlineInputBorder(
+                                    borderSide:
+                                        new BorderSide(color: Colors.white)),
+                                icon: Icon(Icons.security, color: Colors.white),
+                                labelText: AppTranslations.of(context)
+                                    .text("login.password")),
+                            validator: (String value) {
+                              return validate(value, 'Password', [
+                                new RequiredValidator(),
+                                new StringValidator(),
+                                new MinValidator(6)
+                              ]);
+                            },
+                            onFieldSubmitted: (String value) {
+                              this.submit(context);
+                            },
+                            onSaved: (String value) {
+                              data.password = value;
+                            }),
+                        new Container(
+                          width: screenSize.width,
+                          child: _loading
+                              ? new RoundedButton(
+                                  borderWidth: 1.0,
+                                  bottomMargin: 1.0,
+                                  height: 50.0,
+                                  width: screenSize.width,
+                                  child: new Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      CircularProgressIndicator(),
+                                    ],
+                                  ),
+                                )
+                              : new RoundedButton(
+                                  buttonName: AppTranslations.of(context)
+                                      .text("login.log_in")
+                                      .toUpperCase(),
+                                  onTap: () => this.submit(context),
+                                  buttonColor: Colors.transparent,
+                                  borderWidth: 1.0,
+                                  bottomMargin: 1.0,
+                                  height: 50.0,
+                                  width: screenSize.width,
+                                ),
+                          margin: new EdgeInsets.only(top: 20.0),
                         ),
-                        onPressed: () {
-                          navigate(context, 'auth/forgotpassword');
-                        },
-                      ),
-                      margin: new EdgeInsets.only(top: 20.0),
+                        new Container(
+                          width: screenSize.width,
+                          child: new FlatButton(
+                            child: new Text(
+                              AppTranslations.of(context)
+                                      .text("login.forgot_password") +
+                                  " ?",
+                              style: Theme.of(context).textTheme.display2,
+                            ),
+                            onPressed: () {
+                              navigate(context, 'auth/forgotpassword');
+                            },
+                          ),
+                          margin: new EdgeInsets.only(top: 20.0),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            );
-          })
-        ],
-      )),
+                  ),
+                );
+              })
+            ],
+          )),
+        ),
+      ),
     );
   }
 }

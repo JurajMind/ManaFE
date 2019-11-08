@@ -163,7 +163,7 @@ class WeekDayGraphState extends State<WeekDayGraph> {
                             getTooltipItems: (touchedSpots) {
                               return touchedSpots.map((touchedSpot) {
                                 if (touchedSpot?.spot == null) {
-                                  return "";
+                                  return null;
                                 }
                                 String weekDay;
                                 weekDay = AppTranslations.of(context).text(

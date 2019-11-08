@@ -55,7 +55,6 @@ class _AppWidgetState extends State<AppWidget> {
     if (_deepLink != null) {
       deeplink = _deepLink;
     }
-    
   }
 
   Future restartApp() async {
@@ -74,8 +73,7 @@ class _AppWidgetState extends State<AppWidget> {
 
   @override
   Widget build(BuildContext context) {
-
-        return MaterialApp(
+    return MaterialApp(
       key: key,
       localizationsDelegates: [
         _newLocaleDelegate,
@@ -87,12 +85,11 @@ class _AppWidgetState extends State<AppWidget> {
       supportedLocales: App.supportedLocales(),
       title: 'Manapipes',
       home: _isAuthorized
-        ? new DataProvider(key: key, child: getMainPage())
-        : getMainPage(),
+          ? new DataProvider(key: key, child: getMainPage())
+          : getMainPage(),
       // onGenerateRoute: App.router.generator,
       theme: buildDarkTheme(),
     );
-    
   }
 
   Widget getMainPage() {

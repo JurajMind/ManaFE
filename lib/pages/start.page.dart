@@ -47,6 +47,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Container(
+                  constraints: BoxConstraints(maxWidth: 500),
                   padding: new EdgeInsets.all(40.0),
                   child: new Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

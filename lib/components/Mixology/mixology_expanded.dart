@@ -11,7 +11,14 @@ class MixCardExpanded extends StatefulWidget {
   final TobaccoMixSimpleDto tobaccoMix;
   final int highlightId;
   final bool noTitle;
-  MixCardExpanded({this.tobaccoMix, this.noTitle = false, this.highlightId});
+  final ValueChanged<TobaccoMixSimpleDto> onTap;
+  final bool selected;
+  MixCardExpanded(
+      {this.tobaccoMix,
+      this.noTitle = false,
+      this.highlightId,
+      this.onTap,
+      this.selected = false});
 
   @override
   _MixologyExpandedState createState() => new _MixologyExpandedState();
@@ -27,10 +34,17 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
     //timeDilation = 6;
     return SingleChildScrollView(
       child: GestureDetector(
-        onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => MixDetailPage(mix: widget.tobaccoMix))),
+        onTap: () {
+          if (widget.onTap != null) {
+            widget.onTap(widget.tobaccoMix);
+          } else {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        MixDetailPage(mix: widget.tobaccoMix)));
+          }
+        },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: new Column(
@@ -66,7 +80,7 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                           flex: 1,
                           child: new StarRating(
                             size: 15.0,
-                            rating: 2.0,
+                            rating: 0.0,
                             starCount: 5,
                             color: Colors.white,
                             borderColor: Colors.white,
@@ -77,7 +91,7 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.0),
                 ),
-                color: Colors.white,
+                color: widget.selected ? AppColors.colors[1] : Colors.white,
                 child: Container(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

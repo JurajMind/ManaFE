@@ -176,9 +176,16 @@ class ApiClient {
       'Type': SmokeState.values.indexOf(type)
     };
     print('color ${ColorDto(color).toJson()}');
+<<<<<<< HEAD
     await _dio.post(uri.toString(),
         data: data,
        );
+=======
+    await _dio.post(
+      uri.toString(),
+      data: data,
+    );
+>>>>>>> master
   }
 
   Future<bool> changeAnimation(
@@ -189,9 +196,16 @@ class ApiClient {
       'AnimationId': animationId,
       'Type': SmokeState.values.indexOf(type)
     };
+<<<<<<< HEAD
     var response = await _dio.post(uri.toString(),
         data: data,
        );
+=======
+    var response = await _dio.post(
+      uri.toString(),
+      data: data,
+    );
+>>>>>>> master
     debugPrint(response.data.toString());
     return true;
   }
@@ -203,9 +217,16 @@ class ApiClient {
       'Speed': speed.toString(),
       'Type': SmokeState.values.indexOf(type)
     };
+<<<<<<< HEAD
     var response = await _dio.post(uri.toString(),
         data: data,
        );
+=======
+    var response = await _dio.post(
+      uri.toString(),
+      data: data,
+    );
+>>>>>>> master
     debugPrint(response.data.toString());
     return true;
   }
@@ -218,9 +239,16 @@ class ApiClient {
       'Brightness': brightness.toString(),
       'Type': SmokeState.values.indexOf(type)
     };
+<<<<<<< HEAD
     var response = await _dio.post(uri.toString(),
         data: data,
        );
+=======
+    var response = await _dio.post(
+      uri.toString(),
+      data: data,
+    );
+>>>>>>> master
     debugPrint(response.data.toString());
     return true;
   }
@@ -302,9 +330,16 @@ class ApiClient {
       String sessionCode, SmokeSessionMetaDataDto value) async {
     var url = Uri.https(baseUrl, 'api/SmokeSession/$sessionCode/SaveMetaData');
 
+<<<<<<< HEAD
     var response = await _dio.post(url.toString(),
         data: value.toJson(),
        );
+=======
+    var response = await _dio.post(
+      url.toString(),
+      data: value.toJson(),
+    );
+>>>>>>> master
     debugPrint(response.data.toString());
     return SmokeSessionMetaDataDto.fromJson(response.data);
   }
@@ -319,8 +354,15 @@ class ApiClient {
     print('Set preset on session {$sessionId}:${presetId.toString()}');
     var url = Uri.https(
         baseUrl, '/api/Device/Preset/${presetId.toString()}/Use/$sessionId');
+<<<<<<< HEAD
     await _dio.post(url.toString(),
         data: null, );
+=======
+    await _dio.post(
+      url.toString(),
+      data: null,
+    );
+>>>>>>> master
 
     return true;
   }
@@ -591,7 +633,12 @@ class ApiClient {
     var url = Uri.https(baseUrl, '/api/Media/Place/$placeId/Add');
 
     FormData formData = new FormData.fromMap({
+<<<<<<< HEAD
      "file": MultipartFile.fromBytes(file.readAsBytesSync(), filename: "picture.jpg"),
+=======
+      "file": MultipartFile.fromBytes(file.readAsBytesSync(),
+          filename: "picture.jpg"),
+>>>>>>> master
     });
 
     return await _dio.postUri(
@@ -610,7 +657,12 @@ class ApiClient {
     var url = Uri.https(baseUrl, '/api/Media/Gear/$gearId/Add');
 
     FormData formData = new FormData.fromMap({
+<<<<<<< HEAD
       "file": MultipartFile.fromBytes(file.readAsBytesSync(), filename: "picture.jpg"),
+=======
+      "file": MultipartFile.fromBytes(file.readAsBytesSync(),
+          filename: "picture.jpg"),
+>>>>>>> master
     });
 
     return await _dio.postUri(
@@ -626,7 +678,12 @@ class ApiClient {
     var url = Uri.https(baseUrl, '/api/Media/SessionReview/$reviewId/Add');
 
     FormData formData = new FormData.fromMap({
+<<<<<<< HEAD
        "file": MultipartFile.fromBytes(file.readAsBytesSync(), filename: "picture.jpg"),
+=======
+      "file": MultipartFile.fromBytes(file.readAsBytesSync(),
+          filename: "picture.jpg"),
+>>>>>>> master
     });
 
     return await _dio.postUri(
@@ -647,7 +704,12 @@ class ApiClient {
     var url = Uri.https(baseUrl, '/api/Media/PlaceReview/$reviewId/Add');
 
     FormData formData = new FormData.fromMap({
+<<<<<<< HEAD
       "file": MultipartFile.fromBytes(file.readAsBytesSync(), filename: "picture.jpg"),
+=======
+      "file": MultipartFile.fromBytes(file.readAsBytesSync(),
+          filename: "picture.jpg"),
+>>>>>>> master
     });
 
     return await _dio.postUri(
@@ -841,9 +903,16 @@ class ApiClient {
       '/api/Person/UnAssignSession/$id',
     );
     var data = await _dio
+<<<<<<< HEAD
         .postUri(url,
             data: null,
          )
+=======
+        .postUri(
+      url,
+      data: null,
+    )
+>>>>>>> master
         .then((data) {
       return true;
     });

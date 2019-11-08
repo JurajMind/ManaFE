@@ -163,6 +163,8 @@ class _StatisticPageState extends State<StatisticPage> {
   @override
   Widget build(BuildContext context) {
     var bloc = DataProvider.getData(context).statisticBloc;
+    var shortestSide = MediaQuery.of(context).size.shortestSide;
+    var useTabletLayout = shortestSide > 600;
     return new Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: CustomScrollView(
@@ -375,8 +377,31 @@ class _StatisticPageState extends State<StatisticPage> {
               buildStatRecap(bloc),
               new HealthWidget(bloc: bloc, time: this.selectedTime),
               new GearUsageStat(controller: controller),
-              new TimeStatisticStream(bloc: bloc),
-              new DayStatisticStream(bloc: bloc),
+              if (useTabletLayout) ...{
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                        flex: 1,
+                        child: Container(
+                          height: 250,
+                          child: new SessionDayStream(bloc: bloc),
+                        )),
+                    Expanded(
+                        flex: 1,
+                        child: Container(
+                          height: 250,
+                          child: WeekDayGraphStream(
+                            bloc: bloc,
+                          ),
+                        )),
+                  ],
+                )
+              } else ...{
+                new SessionDayStream(bloc: bloc),
+                new WeekDayGraphStream(bloc: bloc),
+              },
               SizedBox(height: 10),
               new SmokeSessionStat(bloc: bloc),
               SizedBox(
@@ -486,8 +511,8 @@ class _StatisticPageState extends State<StatisticPage> {
   }
 }
 
-class DayStatisticStream extends StatelessWidget {
-  const DayStatisticStream({
+class WeekDayGraphStream extends StatelessWidget {
+  const WeekDayGraphStream({
     Key key,
     @required this.bloc,
   }) : super(key: key);
@@ -580,8 +605,8 @@ class HealthWidget extends StatelessWidget {
   }
 }
 
-class TimeStatisticStream extends StatelessWidget {
-  const TimeStatisticStream({
+class SessionDayStream extends StatelessWidget {
+  const SessionDayStream({
     Key key,
     @required this.bloc,
   }) : super(key: key);
