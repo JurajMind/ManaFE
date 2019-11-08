@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:app/const/theme.dart';
+import 'package:app/module/person/statistic_bloc.dart';
+import 'package:app/support/m_platform.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:openapi/api.dart';
 import 'package:queries/collections.dart';
 import 'dart:math' as math;
 
@@ -94,7 +97,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
         return;
       }
 
-      if (response.spot == null) {
+      if (response?.spot == null) {
         setState(() {
           touchedGroupIndex = -1;
           showingBarGroups = List.of(rawBarGroups);
@@ -169,26 +172,6 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: FlChart(
                     chart: BarChart(BarChartData(
-                      barTouchData: BarTouchData(
-                        touchTooltipData: TouchTooltipData(
-                            tooltipBgColor: Colors.blueGrey,
-                            getTooltipItems: (touchedSpots) {
-                              return touchedSpots.map((touchedSpot) {
-                                if (touchedSpot?.spot == null) {
-                                  return null;
-                                }
-                                String weekDay =
-                                    touchedSpot?.spot?.x?.toInt().toString();
-                                return TooltipItem(
-                                    weekDay +
-                                        '\n' +
-                                        touchedSpot?.spot?.y.toString(),
-                                    TextStyle(color: Colors.yellow));
-                              }).toList();
-                            }),
-                        touchResponseSink:
-                            barTouchedResultStreamController.sink,
-                      ),
                       titlesData: FlTitlesData(
                         show: true,
                         bottomTitles: SideTitles(
@@ -281,5 +264,38 @@ class SessionDayGraphState extends State<SessionDayGraph> {
   void dispose() {
     super.dispose();
     barTouchedResultStreamController.close();
+  }
+}
+
+class SessionDayStream extends StatelessWidget {
+  const SessionDayStream({
+    Key key,
+    @required this.bloc,
+  }) : super(key: key);
+
+  final StatisticBloc bloc;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Container(
+        child: StreamBuilder<PersonStatisticsOverallDto>(
+            stream: bloc.statistic,
+            builder: (context, snapshot) {
+              if (snapshot.data == null) {
+                return Container();
+              }
+
+              var seriesList =
+                  snapshot.data.timeStatistics.sessionStartTimeDistribution;
+              return Container(
+                  height: 250,
+                  child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SessionDayGraph(seriesList)));
+            }),
+      ),
+    );
   }
 }

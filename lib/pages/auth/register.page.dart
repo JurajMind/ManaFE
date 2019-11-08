@@ -254,7 +254,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 style: Theme.of(context).textTheme.display2,
                 controller: nameController,
                 keyboardType: TextInputType.text,
-                style: Theme.of(context).textTheme.display2,
                 decoration: new InputDecoration(
                     hintText:
                         AppTranslations.of(context).text('login.name_hint'),
