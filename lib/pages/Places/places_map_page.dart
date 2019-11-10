@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:app/app/app.dart';
-import 'package:app/components/Places/WebMap/web_map.dart';
-
+import 'package:app/components/Places/WebMap/web_map_placeholder.dart'
+    if (dart.library.js) 'package:app/components/Places/WebMap/web_map_placeholder.dart';
 import 'package:app/components/Places/map_carousel.dart';
 import 'package:app/components/Reservations/reservation_item.dart';
 import 'package:app/const/theme.dart';

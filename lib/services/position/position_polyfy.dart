@@ -4,7 +4,7 @@ library gelocation_dartdevc_polyfill.dart;
 // tracking dart-lang/sdk#32592
 
 import 'dart:async';
-import 'package:universal_html/prefer_sdk/html.dart' as html;
+import 'package:universal_html/prefer_universal/html.dart' as html;
 
 import 'package:js/js.dart';
 

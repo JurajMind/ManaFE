@@ -129,12 +129,9 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var ownedTobacco = DataProvider.getData(context)
-        .personBloc
-        .myGear
-        .value
-        .where((s) => s.type == "Tobacco")
-        .toList();
+    var personBloc = DataProvider.getData(context).personBloc;
+    var ownedTobacco =
+        personBloc.myGear.value.where((s) => s.type == "Tobacco").toList();
 
     var sugestedTobacco = ownedTobacco
         .where((t) => tobaccoList.where((d) => t.id == d.id).length == 0)
@@ -219,6 +216,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                           type: 'Tobacco',
                           searchType: 'Tobacco',
                           ownAccesories: ownedTobacco,
+                          personBloc: personBloc,
                         )),
                   ),
                 )
@@ -322,7 +320,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 child: ListView(
-                  children:[ ...listWidgets,SizedBox(height: 90)],
+                  children: [...listWidgets, SizedBox(height: 90)],
                 ),
               ),
             ),

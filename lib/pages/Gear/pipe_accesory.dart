@@ -82,6 +82,7 @@ class MyGear extends StatelessWidget {
                                     searchType: type,
                                     ownAccesories:
                                         new List<PipeAccesorySimpleDto>(),
+                                    personBloc: bloc,
                                   )),
                             ),
                           ],
@@ -148,9 +149,11 @@ class SearchRow extends StatelessWidget {
                   bloc: bloc,
                   context: context,
                   child: new PipeAccesorySearch(
-                      type: type,
-                      searchType: type,
-                      ownAccesories: typedMyGear))),
+                    type: type,
+                    searchType: type,
+                    ownAccesories: typedMyGear,
+                    personBloc: bloc,
+                  ))),
         ),
         Expanded(
             flex: 2,
@@ -169,7 +172,11 @@ class SearchRow extends StatelessWidget {
                     bloc: bloc,
                     context: context,
                     child: new PipeAccesorySearch(
-                        type: type, searchType: type, ownAccesories: null))
+                      type: type,
+                      searchType: type,
+                      ownAccesories: null,
+                      personBloc: bloc,
+                    ))
                 /*  onPressed: () => showAddDialog(
                   bloc: bloc,
                   context: context,

@@ -413,26 +413,33 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
               children: <Widget>[
                 new ListTile(
                   leading: new Icon(FontAwesomeIcons.vial),
-                  title: new Text(AppTranslations.of(context)
-                      .text("smoke_session.experiments")),
+                  title: new Text(
+                      AppTranslations.of(context)
+                          .text("smoke_session.experiments"),
+                      style: Theme.of(context).textTheme.display2),
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => ExperimentalPage())),
                 ),
                 new ListTile(
                   leading: new Icon(Icons.refresh),
                   title: new Text(
-                      AppTranslations.of(context).text("device.restart")),
+                      AppTranslations.of(context).text("device.restart"),
+                      style: Theme.of(context).textTheme.display2),
                   onTap: () => _restartDialog(code),
                 ),
                 new ListTile(
                     leading: new Icon(FontAwesomeIcons.powerOff),
-                    title: new Text(AppTranslations.of(context)
-                        .text("smoke_session.end_session")),
+                    title: new Text(
+                        AppTranslations.of(context)
+                            .text("smoke_session.end_session"),
+                        style: Theme.of(context).textTheme.display2),
                     onTap: () => _endDialog(context)),
                 new ListTile(
                     leading: new Icon(FontAwesomeIcons.reply),
-                    title: new Text(AppTranslations.of(context)
-                        .text("smoke_session.leave_session")),
+                    title: new Text(
+                        AppTranslations.of(context)
+                            .text("smoke_session.leave_session"),
+                        style: Theme.of(context).textTheme.display2),
                     onTap: () {
                       var bloc = DataProvider.getData(context).smokeSessionBloc;
                       bloc.unAssignSession().then((data) {
