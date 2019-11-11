@@ -554,8 +554,8 @@ class _GearScrollHomeState extends State<GearScrollHome> {
     if (notification.depth == 0 && notification is ScrollUpdateNotification) {
       selectedIndex.value = leader.page;
       if (follower.page != leader.page)
-        follower.position.jumpToWithoutSettling(
-            leader.position.pixels); // ignore: deprecated_member_use
+        follower.position
+            .jumpTo(leader.position.pixels); // ignore: deprecated_member_use
 
       if (leader.position.pixels == 0) {
         // _handleBackButton(200);
