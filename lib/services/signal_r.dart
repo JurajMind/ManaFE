@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'package:app/app/app.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
-import 'package:app/support/m_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
-import 'package:web_socket_channel/html.dart';
 import 'dart:async';
 
 import 'package:web_socket_channel/io.dart';
@@ -83,13 +81,8 @@ class SignalR {
   }
 
   void handleConnection(String url, bool connection) {
-    if (!MPlatform.isWeb) {
-      _channel = new HtmlWebSocketChannel.connect(url);
-    } else {
-      _channel = new IOWebSocketChannel.connect(url);
-    }
     try {
-      _channel = new IOWebSocketChannel.connect(url);
+      _channel = new WebSocketChannel.connect(new Uri(path: url));
       _channel.stream.listen((message) async {
         print('From signal ' + message);
         if (message == "{}") {

@@ -1,7 +1,6 @@
 import 'package:app/services/position/position_polyfy.dart' as wgeo;
 import 'package:app/support/m_platform.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:universal_html/prefer_sdk/html.dart' as html;
 
 class MPosition {
   static Geolocator _geo;

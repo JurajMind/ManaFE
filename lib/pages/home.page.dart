@@ -271,6 +271,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var shortestSide = MediaQuery.of(context).size.shortestSide;
+    var useTabletLayout = shortestSide > 600;
+
     return WillPopScope(
         onWillPop: () async {
           if (!navigatorKeys[_currentIndex].currentState.canPop()) {
@@ -342,11 +345,18 @@ class _HomePageState extends State<HomePage> {
                               new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                         ),
                       ))),
-              Positioned(
-                  bottom: -10,
-                  height: 55,
-                  width: MediaQuery.of(context).size.width,
-                  child: SizedBox(height: 55, child: myBottomBar(context))),
+              useTabletLayout
+                  ? Positioned(
+                      bottom: -10,
+                      height: 55,
+                      left: 200,
+                      width: MediaQuery.of(context).size.width - 400,
+                      child: SizedBox(height: 55, child: myBottomBar(context)))
+                  : Positioned(
+                      bottom: -10,
+                      height: 55,
+                      width: MediaQuery.of(context).size.width,
+                      child: SizedBox(height: 55, child: myBottomBar(context))),
               _buildCenter(),
             ])));
   }

@@ -1,0 +1,113 @@
+Flutter crash report; please file at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter run -d chrome
+
+## exception
+
+FileSystemException: FileSystemException: Deletion failed, path = 'build\flutter_assets' (OS Error: The directory is not empty.
+, errno = 145)
+
+```
+#0      _Directory._deleteSync (dart:io/directory_impl.dart:206:7)
+#1      FileSystemEntity.deleteSync (dart:io/file_system_entity.dart:464:47)
+#2      ForwardingFileSystemEntity.deleteSync (package:file/src/forwarding/forwarding_file_system_entity.dart:72:16)
+#3      writeBundle (package:flutter_tools/src/bundle.dart:175:15)
+<asynchronous suspension>
+#4      WebFs.start (package:flutter_tools/src/build_runner/web_fs.dart:198:11)
+<asynchronous suspension>
+#5      ResidentWebRunner.run.<anonymous closure> (package:flutter_tools/src/build_runner/resident_web_runner.dart:187:36)
+<asynchronous suspension>
+#6      asyncGuard.<anonymous closure> (package:flutter_tools/src/base/async_guard.dart:111:32)
+<asynchronous suspension>
+#7      _rootRun (dart:async/zone.dart:1124:13)
+#8      _CustomZone.run (dart:async/zone.dart:1021:19)
+#9      _runZoned (dart:async/zone.dart:1516:10)
+#10     runZoned (dart:async/zone.dart:1500:12)
+#11     asyncGuard (package:flutter_tools/src/base/async_guard.dart:109:3)
+#12     ResidentWebRunner.run (package:flutter_tools/src/build_runner/resident_web_runner.dart:186:32)
+<asynchronous suspension>
+#13     RunCommand.runCommand (package:flutter_tools/src/commands/run.dart:496:37)
+<asynchronous suspension>
+#14     FlutterCommand.verifyThenRunCommand (package:flutter_tools/src/runner/flutter_command.dart:556:18)
+#15     _asyncThenWrapperHelper.<anonymous closure> (dart:async-patch/async_patch.dart:71:64)
+#16     _rootRunUnary (dart:async/zone.dart:1132:38)
+#17     _CustomZone.runUnary (dart:async/zone.dart:1029:19)
+#18     _FutureListener.handleValue (dart:async/future_impl.dart:137:18)
+#19     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:678:45)
+#20     Future._propagateToListeners (dart:async/future_impl.dart:707:32)
+#21     Future._completeWithValue (dart:async/future_impl.dart:522:5)
+#22     _AsyncAwaitCompleter.complete (dart:async-patch/async_patch.dart:30:15)
+#23     _completeOnAsyncReturn (dart:async-patch/async_patch.dart:288:13)
+#24     RunCommand.usageValues (package:flutter_tools/src/commands/run.dart)
+#25     _asyncThenWrapperHelper.<anonymous closure> (dart:async-patch/async_patch.dart:71:64)
+#26     _rootRunUnary (dart:async/zone.dart:1132:38)
+#27     _CustomZone.runUnary (dart:async/zone.dart:1029:19)
+#28     _FutureListener.handleValue (dart:async/future_impl.dart:137:18)
+#29     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:678:45)
+#30     Future._propagateToListeners (dart:async/future_impl.dart:707:32)
+#31     Future._completeWithValue (dart:async/future_impl.dart:522:5)
+#32     _AsyncAwaitCompleter.complete (dart:async-patch/async_patch.dart:30:15)
+#33     _completeOnAsyncReturn (dart:async-patch/async_patch.dart:288:13)
+#34     IosProject.isSwift (package:flutter_tools/src/project.dart)
+#35     _asyncThenWrapperHelper.<anonymous closure> (dart:async-patch/async_patch.dart:71:64)
+#36     _rootRunUnary (dart:async/zone.dart:1132:38)
+#37     _CustomZone.runUnary (dart:async/zone.dart:1029:19)
+#38     _FutureListener.handleValue (dart:async/future_impl.dart:137:18)
+#39     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:678:45)
+#40     Future._propagateToListeners (dart:async/future_impl.dart:707:32)
+#41     Future._completeWithValue (dart:async/future_impl.dart:522:5)
+#42     Future._asyncComplete.<anonymous closure> (dart:async/future_impl.dart:552:7)
+#43     _rootRun (dart:async/zone.dart:1124:13)
+#44     _CustomZone.run (dart:async/zone.dart:1021:19)
+#45     _CustomZone.runGuarded (dart:async/zone.dart:923:7)
+#46     _CustomZone.bindCallbackGuarded.<anonymous closure> (dart:async/zone.dart:963:23)
+#47     _microtaskLoop (dart:async/schedule_microtask.dart:41:21)
+#48     _startMicrotaskLoop (dart:async/schedule_microtask.dart:50:5)
+#49     _runPendingImmediateCallback (dart:isolate-patch/isolate_patch.dart:116:13)
+#50     _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:173:5)
+```
+
+## flutter doctor
+
+```
+[32m[✓][39m Flutter (Channel master, v1.10.16-pre.67, on Microsoft Windows [Version 10.0.17763.805], locale en-US)
+    [32m•[39m Flutter version 1.10.16-pre.67 at G:\Fluter\flutter
+    [32m•[39m Framework revision e3742b6e41 (29 hours ago), 2019-11-06 23:13:17 -0500
+    [32m•[39m Engine revision c448d39d53
+    [32m•[39m Dart version 2.7.0
+
+[32m[✓][39m Android toolchain - develop for Android devices (Android SDK version 28.0.3)
+    [32m•[39m Android SDK at G:\AndroidSdk
+    [32m•[39m Android NDK location not configured (optional; useful for native profiling support)
+    [32m•[39m Platform android-29, build-tools 28.0.3
+    [32m•[39m ANDROID_HOME = G:\AndroidSdk
+    [32m•[39m ANDROID_SDK_ROOT = G:\AndroidSdk
+    [32m•[39m Java binary at: C:\Program Files\Android\Android Studio\jre\bin\java
+    [32m•[39m Java version OpenJDK Runtime Environment (build 1.8.0_202-release-1483-b03)
+    [32m•[39m All Android licenses accepted.
+
+[32m[✓][39m Chrome - develop for the web
+    [32m•[39m Chrome at C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+
+[32m[✓][39m Android Studio (version 3.5)
+    [32m•[39m Android Studio at C:\Program Files\Android\Android Studio
+    [32m•[39m Flutter plugin version 40.0.2
+    [32m•[39m Dart plugin version 191.8423
+    [32m•[39m Java version OpenJDK Runtime Environment (build 1.8.0_202-release-1483-b03)
+
+[32m[✓][39m VS Code (version 1.39.0)
+    [32m•[39m VS Code at C:\Users\jurko\AppData\Local\Programs\Microsoft VS Code
+    [32m•[39m Flutter extension version 3.6.0
+
+[32m[✓][39m VS Code, 32-bit edition (version 1.39.2)
+    [32m•[39m VS Code at C:\Program Files (x86)\Microsoft VS Code
+    [32m•[39m Flutter extension version 3.6.0
+
+[32m[✓][39m Connected device (2 available)
+    [32m•[39m Chrome     • chrome     • web-javascript • Google Chrome 77.0.3865.120
+    [32m•[39m Web Server • web-server • web-javascript • Flutter Tools
+
+[32m•[39m No issues found!
+```

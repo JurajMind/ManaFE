@@ -1,10 +1,14 @@
 import 'dart:async';
 
 import 'package:app/const/theme.dart';
+import 'package:app/module/person/statistic_bloc.dart';
+import 'package:app/support/m_platform.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+
+import 'package:openapi/api.dart';
 
 class WeekDayGraph extends StatefulWidget {
   final Map<String, int> graphData;
@@ -46,7 +50,7 @@ class WeekDayGraphState extends State<WeekDayGraph> {
         return;
       }
 
-      if (response.spot == null) {
+      if (response?.spot == null) {
         setState(() {
           touchedGroupIndex = -1;
           showingBarGroups = List.of(rawBarGroups);
@@ -55,7 +59,7 @@ class WeekDayGraphState extends State<WeekDayGraph> {
       }
 
       touchedGroupIndex =
-          showingBarGroups.indexOf(response.spot.touchedBarGroup);
+          showingBarGroups.indexOf(response?.spot?.touchedBarGroup);
 
       setState(() {
         if (response.touchInput is FlLongPressEnd) {
@@ -158,23 +162,26 @@ class WeekDayGraphState extends State<WeekDayGraph> {
                   child: FlChart(
                     chart: BarChart(BarChartData(
                       barTouchData: BarTouchData(
-                        touchTooltipData: TouchTooltipData(
-                            tooltipBgColor: Colors.blueGrey,
-                            getTooltipItems: (touchedSpots) {
-                              return touchedSpots.map((touchedSpot) {
-                                if (touchedSpot?.spot == null) {
-                                  return "";
-                                }
-                                String weekDay;
-                                weekDay = AppTranslations.of(context).text(
-                                    "days.long_${touchedSpot.spot.x.toInt() + 1}");
-                                return TooltipItem(
-                                    weekDay +
-                                        '\n' +
-                                        touchedSpot.spot.y.toString(),
-                                    TextStyle(color: Colors.yellow));
-                              }).toList();
-                            }),
+                        touchTooltipData: MPlatform.isWeb
+                            ? TouchTooltipData()
+                            : TouchTooltipData(
+                                tooltipBgColor: Colors.blueGrey,
+                                getTooltipItems: (touchedSpots) {
+                                  return touchedSpots.map((touchedSpot) {
+                                    if (touchedSpot?.spot == null) {
+                                      return TooltipItem(
+                                          "", TextStyle(color: Colors.yellow));
+                                    }
+                                    String weekDay;
+                                    weekDay = AppTranslations.of(context).text(
+                                        "days.long_${(touchedSpot?.spot?.x?.toInt() ?? 0) + 1}");
+                                    return TooltipItem(
+                                        weekDay +
+                                            '\n' +
+                                            touchedSpot.spot.y.toString(),
+                                        TextStyle(color: Colors.yellow));
+                                  }).toList();
+                                }),
                         touchResponseSink:
                             barTouchedResultStreamController.sink,
                       ),
@@ -269,5 +276,39 @@ class WeekDayGraphState extends State<WeekDayGraph> {
   void dispose() {
     super.dispose();
     barTouchedResultStreamController.close();
+  }
+}
+
+class WeekDayGraphStream extends StatelessWidget {
+  const WeekDayGraphStream({
+    Key key,
+    @required this.bloc,
+  }) : super(key: key);
+
+  final StatisticBloc bloc;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: StreamBuilder<PersonStatisticsOverallDto>(
+          stream: bloc.statistic,
+          builder: (context, snapshot) {
+            if (snapshot.data == null) {
+              return Container();
+            }
+            var seriesList = snapshot.data.timeStatistics.dayOfWeekDistribution;
+            return Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Container(
+                  height: 250,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: WeekDayGraph(
+                      graphData: seriesList,
+                    ),
+                  ),
+                ));
+          }),
+    );
   }
 }

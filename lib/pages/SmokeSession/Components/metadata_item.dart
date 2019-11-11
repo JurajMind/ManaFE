@@ -92,8 +92,7 @@ class MetadataItem extends StatelessWidget {
       return a.name.compareTo(b.name);
     });
 
-    if (sorted.indexWhere((a) => a.id == selected?.id) == -1)
-    {
+    if (sorted.indexWhere((a) => a.id == selected?.id) == -1) {
       if (selected?.id != null) sorted.insert(0, selected);
     }
 

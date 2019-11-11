@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:universal_html/prefer_sdk/html.dart' as html;
+import 'package:universal_html/prefer_universal/html.dart' as html;
 
 class BrowserLocalStorage {
   static Future<BrowserLocalStorage> getInstance() =>

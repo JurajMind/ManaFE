@@ -163,228 +163,262 @@ class _StatisticPageState extends State<StatisticPage> {
   @override
   Widget build(BuildContext context) {
     var bloc = DataProvider.getData(context).statisticBloc;
+    var shortestSide = MediaQuery.of(context).size.shortestSide;
+    var useTabletLayout = shortestSide > 600;
     return new Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      body: CustomScrollView(
-        physics: ClampingScrollPhysics(),
-        slivers: <Widget>[
-          SliverAppBar(
-            actions: <Widget>[
-              new PopupMenuButton(
-                onSelected: (String value) {
-                  switch (value) {
-                    case 'settings':
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SettingPage()));
-                      break;
-                    case 'signOut':
-                      auth.signOut();
-                      AppWidget.restartApp(context);
-                      break;
-                    case 'test':
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => UserProfilePage()));
-                      break;
-                    case 'testPage':
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => TestPage()));
-                      break;
-                    case 'testPlaces':
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => TestSearch()));
-                      break;
-                  }
-                },
-                itemBuilder: (BuildContext context) => [
-                  PopupMenuItem(
-                    value: "settings",
-                    child: Row(
-                      children: <Widget>[
-                        const Icon(Icons.settings),
-                        const SizedBox(
-                          width: 4,
+      body: Center(
+        child: Container(
+          constraints: BoxConstraints(maxWidth: 800),
+          child: CustomScrollView(
+            physics: ClampingScrollPhysics(),
+            slivers: <Widget>[
+              SliverAppBar(
+                actions: <Widget>[
+                  new PopupMenuButton(
+                    onSelected: (String value) {
+                      switch (value) {
+                        case 'settings':
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => SettingPage()));
+                          break;
+                        case 'signOut':
+                          auth.signOut();
+                          AppWidget.restartApp(context);
+                          break;
+                        case 'test':
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => UserProfilePage()));
+                          break;
+                        case 'testPage':
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => TestPage()));
+                          break;
+                        case 'testPlaces':
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => TestSearch()));
+                          break;
+                      }
+                    },
+                    itemBuilder: (BuildContext context) => [
+                      PopupMenuItem(
+                        value: "settings",
+                        child: Row(
+                          children: <Widget>[
+                            const Icon(Icons.settings),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            Text('Settings',
+                                style: Theme.of(context).textTheme.display2),
+                          ],
                         ),
-                        Text('Settings', style: Theme.of(context).textTheme.display2,),
-                      ],
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: "test",
-                    child: Row(
-                      children: <Widget>[
-                        const Icon(Icons.person),
-                        const SizedBox(
-                          width: 4,
+                      ),
+                      PopupMenuItem(
+                        value: "test",
+                        child: Row(
+                          children: <Widget>[
+                            const Icon(Icons.person),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            Text('User profile',
+                                style: Theme.of(context).textTheme.display2),
+                          ],
                         ),
-                        Text('User profile', style: Theme.of(context).textTheme.display2,),
-                      ],
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: "testPage",
-                    child: Row(
-                      children: <Widget>[
-                        const Icon(Icons.category),
-                        const SizedBox(
-                          width: 4,
+                      ),
+                      PopupMenuItem(
+                        value: "testPage",
+                        child: Row(
+                          children: <Widget>[
+                            const Icon(Icons.category),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            Text('Test page',
+                                style: Theme.of(context).textTheme.display2),
+                          ],
                         ),
-                        Text('Test page', style: Theme.of(context).textTheme.display2,),
-                      ],
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: "signOut",
-                    child: Row(
-                      children: <Widget>[
-                        const Icon(FontAwesomeIcons.signOutAlt),
-                        const SizedBox(
-                          width: 4,
+                      ),
+                      PopupMenuItem(
+                        value: "signOut",
+                        child: Row(
+                          children: <Widget>[
+                            const Icon(FontAwesomeIcons.signOutAlt),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            Text('Sign out',
+                                style: Theme.of(context).textTheme.display2),
+                          ],
                         ),
-                        Text('Sign out', style: Theme.of(context).textTheme.display2,),
-                      ],
-                    ),
-                  ),
+                      ),
+                    ],
+                  )
                 ],
-              )
-            ],
-            pinned: true,
-            expandedHeight: 300.0,
-            automaticallyImplyLeading: true,
-            primary: true,
-            flexibleSpace: new FlexibleSpaceBar(
-              background: Container(
-                color: Theme.of(context).backgroundColor,
-                child: Stack(
-                  children: <Widget>[
-                    buildPositioned(bloc, 1, (f) => f.pufCount.toDouble()),
-                    buildPositioned(bloc, 0, (f) => f.smokeSessions.toDouble()),
-                    buildPositioned(bloc, 2, (f) => f.activity.toDouble()),
-                  ],
+                pinned: true,
+                expandedHeight: 300.0,
+                automaticallyImplyLeading: true,
+                primary: true,
+                flexibleSpace: new FlexibleSpaceBar(
+                  background: Container(
+                    color: Theme.of(context).backgroundColor,
+                    child: Stack(
+                      children: <Widget>[
+                        buildPositioned(bloc, 1, (f) => f.pufCount.toDouble()),
+                        buildPositioned(
+                            bloc, 0, (f) => f.smokeSessions.toDouble()),
+                        buildPositioned(bloc, 2, (f) => f.activity.toDouble()),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            bottom: PreferredSize(
-              preferredSize: Size(700, 40),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Expanded(
-                      flex: 4,
-                      child: OutlineButton(
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0)),
-                        borderSide: BorderSide(color: Colors.white, width: 1),
-                        onPressed: () =>
-                            _showDialog(context).then((value) async {
-                          if (value == null) {
-                            return;
-                          }
-                          if (value == 4) {
-                            final List<DateTime> picked =
-                                await DateRagePicker.showDatePicker(
-                                    context: context,
-                                    initialFirstDate: selectedTime.from,
-                                    initialLastDate: selectedTime.to,
-                                    firstDate: new DateTime(2017),
-                                    lastDate: new DateTime.now());
-                            if (picked != null && picked.length == 2) {
-                              print(picked);
+                bottom: PreferredSize(
+                  preferredSize: Size(700, 40),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Expanded(
+                          flex: 4,
+                          child: OutlineButton(
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30.0)),
+                            borderSide:
+                                BorderSide(color: Colors.white, width: 1),
+                            onPressed: () =>
+                                _showDialog(context).then((value) async {
+                              if (value == null) {
+                                return;
+                              }
+                              if (value == 4) {
+                                final List<DateTime> picked =
+                                    await DateRagePicker.showDatePicker(
+                                        context: context,
+                                        initialFirstDate: selectedTime.from,
+                                        initialLastDate: selectedTime.to,
+                                        firstDate: new DateTime(2017),
+                                        lastDate: new DateTime.now());
+                                if (picked != null && picked.length == 2) {
+                                  print(picked);
 
+                                  setState(() {
+                                    selectedTime = new TimeModel.fromCustom(
+                                        picked[0], picked[1]);
+                                  });
+                                  loadTime(bloc, selectedTime);
+                                }
+                              }
                               setState(() {
-                                selectedTime = new TimeModel.fromCustom(
-                                    picked[0], picked[1]);
+                                if (value >= 0 && value < 4) {
+                                  selectedTime =
+                                      new TimeModel.fromSelect(value);
+                                }
                               });
                               loadTime(bloc, selectedTime);
-                            }
-                          }
-                          setState(() {
-                            if (value >= 0 && value < 4) {
-                              selectedTime = new TimeModel.fromSelect(value);
-                            }
-                          });
-                          loadTime(bloc, selectedTime);
-                        }),
-                        child: Row(
-                          children: <Widget>[
-                            const Icon(Icons.calendar_today),
-                            const SizedBox(
-                              width: 4,
+                            }),
+                            child: Row(
+                              children: <Widget>[
+                                const Icon(Icons.calendar_today),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                Expanded(
+                                    child: AutoSizeText(
+                                  selectedTime.label,
+                                  maxLines: 1,
+                                )),
+                              ],
                             ),
-                            Expanded(
-                                child: AutoSizeText(
-                              selectedTime.label,
-                              maxLines: 1,
-                            )),
-                          ],
-                        ),
-                      )),
-                  Expanded(
-                      flex: 3,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 14),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            StreamBuilder<StatisticRecap>(
-                                stream: bloc.recap,
-                                builder: (context, snapshot) {
-                                  return snapshot.data?.sessionCount == null
-                                      ? Shimmer.fromColors(
-                                          baseColor: Colors.grey[400],
-                                          highlightColor: Colors.white,
-                                          child: Text(
-                                            "??",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .title,
-                                          ),
-                                        )
-                                      : Text(
-                                          snapshot.data.sessionCount.toString(),
-                                          style:
-                                              Theme.of(context).textTheme.title,
-                                        );
-                                }),
-                            const SizedBox(
-                              width: 4,
+                          )),
+                      Expanded(
+                          flex: 3,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 14),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                                StreamBuilder<StatisticRecap>(
+                                    stream: bloc.recap,
+                                    builder: (context, snapshot) {
+                                      return snapshot.data?.sessionCount == null
+                                          ? Shimmer.fromColors(
+                                              baseColor: Colors.grey[400],
+                                              highlightColor: Colors.white,
+                                              child: Text(
+                                                "??",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .title,
+                                              ),
+                                            )
+                                          : Text(
+                                              snapshot.data.sessionCount
+                                                  .toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .title,
+                                            );
+                                    }),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                Icon(
+                                  ManaIcons.hookah,
+                                  size: 40,
+                                ),
+                              ],
                             ),
-                            Icon(
-                              ManaIcons.hookah,
-                              size: 40,
-                            ),
-                          ],
-                        ),
-                      ))
-                ],
-              ),
-            ),
-            title: Container(
-                child: Row(
-              children: <Widget>[
-                Text(
-                  'STATS',
-                  style: Theme.of(context).textTheme.title,
+                          ))
+                    ],
+                  ),
                 ),
-                this.loading ? CircularProgressIndicator() : Container()
-              ],
-            )),
-          ),
-          new SliverList(
-            delegate: SliverChildListDelegate([
-              buildStatRecap(bloc),
-              new HealthWidget(bloc: bloc, time: this.selectedTime),
-              new GearUsageStat(controller: controller),
-              new TimeStatisticStream(bloc: bloc),
-              new DayStatisticStream(bloc: bloc),
-              SizedBox(height: 10),
-              new SmokeSessionStat(bloc: bloc),
-              SizedBox(
-                height: 70,
+                title: Container(
+                    child: Row(
+                  children: <Widget>[
+                    Text(
+                      'STATS',
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                    this.loading ? CircularProgressIndicator() : Container()
+                  ],
+                )),
+              ),
+              new SliverList(
+                delegate: SliverChildListDelegate([
+                  buildStatRecap(bloc),
+                  new HealthWidget(bloc: bloc, time: this.selectedTime),
+                  new GearUsageStat(controller: controller),
+                  if (useTabletLayout) ...{
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                            flex: 1,
+                            child: Container(height: 250, child: Container())),
+                        Expanded(
+                            flex: 1,
+                            child: Container(
+                              height: 250,
+                              child: new SessionDayStream(bloc: bloc),
+                            )),
+                      ],
+                    )
+                  } else ...{
+                    new SessionDayStream(bloc: bloc),
+                    new WeekDayGraphStream(bloc: bloc),
+                  },
+                  SizedBox(height: 10),
+                  new SmokeSessionStat(bloc: bloc),
+                  SizedBox(
+                    height: 70,
+                  )
+                ]),
               )
-            ]),
-          )
-        ],
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -486,40 +520,6 @@ class _StatisticPageState extends State<StatisticPage> {
   }
 }
 
-class DayStatisticStream extends StatelessWidget {
-  const DayStatisticStream({
-    Key key,
-    @required this.bloc,
-  }) : super(key: key);
-
-  final StatisticBloc bloc;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: StreamBuilder<PersonStatisticsOverallDto>(
-          stream: bloc.statistic,
-          builder: (context, snapshot) {
-            if (snapshot.data == null) {
-              return Container();
-            }
-            var seriesList = snapshot.data.timeStatistics.dayOfWeekDistribution;
-            return Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Container(
-                  height: 250,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: WeekDayGraph(
-                      graphData: seriesList,
-                    ),
-                  ),
-                ));
-          }),
-    );
-  }
-}
-
 class HealthWidget extends StatelessWidget {
   final TimeModel time;
   const HealthWidget({
@@ -576,39 +576,6 @@ class HealthWidget extends StatelessWidget {
               ),
             );
           }),
-    );
-  }
-}
-
-class TimeStatisticStream extends StatelessWidget {
-  const TimeStatisticStream({
-    Key key,
-    @required this.bloc,
-  }) : super(key: key);
-
-  final StatisticBloc bloc;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: Container(
-        child: StreamBuilder<PersonStatisticsOverallDto>(
-            stream: bloc.statistic,
-            builder: (context, snapshot) {
-              if (snapshot.data == null) {
-                return Container();
-              }
-
-              var seriesList =
-                  snapshot.data.timeStatistics.sessionStartTimeDistribution;
-              return Container(
-                  height: 250,
-                  child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SessionDayGraph(seriesList)));
-            }),
-      ),
     );
   }
 }

@@ -476,9 +476,14 @@ class _GearScrollHomeState extends State<GearScrollHome> {
         height: 55,
       ),
       backgroundColor: Theme.of(context).backgroundColor,
-      body: new Builder(
-        // Insert an element so that _buildBody can find the PrimaryScrollController.
-        builder: _buildBody,
+      body: Center(
+        child: Container(
+          constraints: BoxConstraints(maxWidth: 1000),
+          child: new Builder(
+            // Insert an element so that _buildBody can find the PrimaryScrollController.
+            builder: _buildBody,
+          ),
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:app/app/app.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/person/person_bloc.dart';
 import 'package:app/pages/Gear/add_gear_page.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,12 +12,14 @@ class PipeAccesorySearch extends StatefulWidget {
   final List<PipeAccesorySimpleDto> ownAccesories;
   final String type;
   final String searchType;
+  final PersonBloc personBloc;
 
   const PipeAccesorySearch({
     Key key,
     this.ownAccesories,
     this.type,
     this.searchType,
+    this.personBloc,
   }) : super(key: key);
 
   @override
@@ -83,6 +86,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
               ],
               centerTitle: true,
               title: TextField(
+                style: Theme.of(context).textTheme.display2,
                 decoration: new InputDecoration(
                     hintText:
                         '${AppTranslations.of(context).text("common.search")} ${AppTranslations.of(context).text("gear." + widget.type.toLowerCase())}'),
@@ -200,9 +204,10 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
             ));
           }
 
-          var data = DataProvider.getData(context).personBloc;
+          var data =
+              DataProvider.getData(context)?.personBloc ?? widget.personBloc;
           return StreamBuilder<List<PipeAccesorySimpleDto>>(
-              stream: data.myGear,
+              stream: data?.myGear,
               builder: (context, ownSs) {
                 return new ListView.builder(
                     itemCount: snapshot.data.length + 1,
@@ -279,9 +284,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
         onTap: () => Navigator.pop(context, data),
         title: RichText(
             text: TextSpan(
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                ),
+                style: Theme.of(context).textTheme.display2,
                 children: getChunks(text, controller.text))));
   }
 
@@ -297,9 +300,13 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
   }
 
   List<TextSpan> getChunks(String text, String match) {
-    const nonMatchStyle = const TextStyle(fontWeight: FontWeight.normal);
+    const nonMatchStyle = const TextStyle(
+      fontWeight: FontWeight.normal,
+      fontFamily: 'Montserrat',
+    );
     const matchStyle = const TextStyle(
       fontWeight: FontWeight.w700,
+      fontFamily: 'Montserrat',
     );
     var result = new List<TextSpan>();
     if (match == "") {
