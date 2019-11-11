@@ -1,5 +1,6 @@
 import 'package:app/components/SmokeSession/session_review_view.dart';
 import 'package:app/const/theme.dart';
+import 'package:app/module/data_provider.dart';
 import 'package:app/pages/SmokeSession/session_review.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
@@ -124,6 +125,7 @@ class ReviewSmallItem extends StatelessWidget {
 
   openAlertBox(BuildContext context) {  
     var size = MediaQuery.of(context).size; 
+        var bloc = DataProvider.getData(context).personBloc;
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -133,7 +135,7 @@ class ReviewSmallItem extends StatelessWidget {
             contentPadding: EdgeInsets.only(top: 10.0),
             content: Container(
               width: size.width * 0.9,
-              child: SessionReviewView(review: review)),
+              child: SessionReviewView(review: review,bloc: bloc,)),
           );
         });
   }

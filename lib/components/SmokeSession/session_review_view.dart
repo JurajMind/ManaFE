@@ -1,14 +1,16 @@
 import 'package:app/components/Media/media.widget.dart';
 import 'package:app/components/StarRating/m_star_ratting.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/person/person_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
 class SessionReviewView extends StatelessWidget {
   final SmartHookahModelsDbSessionDtoSessionReviewDto review;
   final GearTobaccoReviewDto gearReview;
+  final PersonBloc bloc;
 
-  const SessionReviewView({Key key, this.review, this.gearReview})
+  const SessionReviewView({Key key, this.review, this.gearReview, this.bloc})
       : super(key: key);
 
   @override
@@ -20,7 +22,7 @@ class SessionReviewView extends StatelessWidget {
     var medias = review?.medias ?? gearReview.medias ?? [];
     var text = review?.tobaccoReview?.text ?? gearReview.text ?? '';
 
-    var bloc = DataProvider.getData(context).personBloc;
+
     var id = bloc.info.value.personId;
     var placeSession = review?.placeReview != null;
     return Container(
