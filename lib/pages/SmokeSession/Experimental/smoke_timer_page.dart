@@ -10,7 +10,7 @@ import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:queries/collections.dart';
-import 'package:vibrate/vibrate.dart';
+import 'package:vibration/vibration.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
@@ -109,7 +109,7 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
       App.http
           .addCompetitionEntry(_textFieldController.text, lastPuf)
           .then((onValue) {
-        Vibrate.feedback(FeedbackType.medium);
+        Vibration.vibrate(duration: 1000, amplitude: 128);
         setState(() {
           _textFieldController.text = '';
         });

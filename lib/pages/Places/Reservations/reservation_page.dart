@@ -4,8 +4,6 @@ import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Callendar/flutter_calendar.dart';
 import 'package:app/components/Common/labeled_value.dart';
 import 'package:app/components/Pickers/WheelPicker/wheelPicker.dart';
-import 'package:app/const/theme.dart';
-
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/person/reservations_bloc.dart';
 import 'package:app/pages/Places/Reservations/reservation_detail_page.dart';
@@ -15,8 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:vibrate/vibrate.dart';
 import 'package:date_format/date_format.dart';
+import 'package:vibration/vibration.dart';
 
 class ReservationPage extends StatefulWidget {
   final PlaceSimpleDto place;
@@ -411,7 +409,7 @@ class _ReservationPageState extends State<ReservationPage> {
           maxValue: 10,
           onChanged: (value) {
             print(value);
-            Vibrate.feedback(FeedbackType.light);
+         Vibration.vibrate(duration: 1000, amplitude: 128);
             setState(() {
               selectedPersons = value;
             });
@@ -445,7 +443,7 @@ class _ReservationPageState extends State<ReservationPage> {
                 stringItems: data.map((s) => s.timeSlot.text).toList(),
                 disableItems: disabledTimes.map((d) => d.label).toList(),
                 onChanged: (value) {
-                  Vibrate.feedback(FeedbackType.light);
+                 Vibration.vibrate(duration: 1000, amplitude: 128);
                   print(value);
                   setState(() {
                     selectTime(value, data, disabledTimes);
@@ -469,7 +467,7 @@ class _ReservationPageState extends State<ReservationPage> {
           stringItems: durations.map((s) => slotDurationString(s)).toList(),
           onChanged: (value) {
             print(value);
-            Vibrate.feedback(FeedbackType.light);
+           Vibration.vibrate(duration: 1000, amplitude: 128);
             setState(() {
               selectedDuration = value;
               this._disabledTimes =

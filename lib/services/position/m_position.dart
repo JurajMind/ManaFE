@@ -1,4 +1,4 @@
-import 'package:app/services/position/position_polyfy.dart' as wgeo;
+import 'package:app/services/position/position_polyfy_fake.dart' as wgeo;
 import 'package:app/support/m_platform.dart';
 import 'package:geolocator/geolocator.dart';
 

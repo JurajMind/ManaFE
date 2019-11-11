@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
 import 'dart:async';
 
-import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class SignalR {
@@ -82,7 +81,8 @@ class SignalR {
 
   void handleConnection(String url, bool connection) {
     try {
-      _channel = new WebSocketChannel.connect(new Uri(path: url));
+      var uri = Uri.parse(url);
+      _channel = new WebSocketChannel.connect(uri);
       _channel.stream.listen((message) async {
         print('From signal ' + message);
         if (message == "{}") {
