@@ -69,6 +69,27 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    Future.delayed(Duration.zero, () {
+      smokeSessionBloc = DataProvider.getSmokeSession(context);
+      personBloc = DataProvider.getData(context).personBloc;
+      personBloc.callback = _setActiveAndJumpTab;
+
+      subscription = smokeSessionBloc.notifications.stream.listen((data) {
+        data.show(context).then((data) {
+          if (data == null) return;
+          var sessionId = data['sessionId'] as String;
+          if (sessionId == null) return;
+          navigatorKeys[2].currentState.push(new MaterialPageRoute(
+            builder: (BuildContext context) {
+              return new SmokeSessionPage(
+                sessionId: sessionId,
+                callback: _setActiveTab,
+              );
+            },
+          ));
+        });
+      });
+    });
     this.initDynamicLinks();
 
     WidgetsBinding.instance
@@ -109,27 +130,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-    smokeSessionBloc = DataProvider.getSmokeSession(context);
-    personBloc = DataProvider.getData(context).personBloc;
-    subscription = smokeSessionBloc.notifications.stream.listen((data) {
-      data.show(context).then((data) {
-        if (data == null) return;
-        var sessionId = data['sessionId'] as String;
-        if (sessionId == null) return;
-        navigatorKeys[2].currentState.push(new MaterialPageRoute(
-          builder: (BuildContext context) {
-            return new SmokeSessionPage(
-              sessionId: sessionId,
-              callback: _setActiveTab,
-            );
-          },
-        ));
-      });
-    });
+
     _focusActiveTab();
-    personBloc.loadMyGear(false);
-    personBloc.loadInitData();
-    personBloc.callback = _setActiveAndJumpTab;
 
     activeTabSub =
         DataProvider.getData(context).appBloc.activeTab.listen((index) {

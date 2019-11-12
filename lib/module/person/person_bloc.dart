@@ -20,6 +20,8 @@ class PersonBloc extends SignalBloc {
 
   PersonBloc._() {
     this.connect();
+    loadInitData();
+    loadMyGear(false);
   }
 
   @override
@@ -98,8 +100,7 @@ class PersonBloc extends SignalBloc {
     _loadedInit = true;
     loadInitDataFromCache();
     var init = await App.http.getPersonInitData();
-    var db = await App.cache.getDatabase();
-    var key = await db.put(json.encode(init), 'person');
+
     var infoTask = App.http.getPersonInfo();
     devices.add(init.devices);
     var sessions = new Collection(init.activeSmokeSessions);
@@ -120,6 +121,8 @@ class PersonBloc extends SignalBloc {
       signal.callServerFunction(
           new ServerCallParam(name: 'JoinPerson', params: params));
     } catch (e) {}
+    var db = await App.cache.getDatabase();
+    var key = await db.put(json.encode(init), 'person');
   }
 
   Future loadInitDataFromCache() async {
