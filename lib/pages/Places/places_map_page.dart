@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:app/app/app.dart';
 import 'package:app/components/Places/WebMap/web_map_placeholder.dart'
-    if (dart.library.js) 'package:app/components/Places/WebMap/web_map_placeholder.dart';
+    if (dart.library.js) 'package:app/components/Places/WebMap/web_map.dart';
+import 'package:app/components/Places/horizontal_map_carousel.dart';
 import 'package:app/components/Places/map_carousel.dart';
 import 'package:app/components/Reservations/reservation_item.dart';
 import 'package:app/const/theme.dart';
@@ -10,6 +11,7 @@ import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
+import 'package:app/pages/Places/places_map_page_tablet.dart';
 import 'package:app/pages/Places/places_search_page.dart';
 import 'package:app/support/m_platform.dart';
 import 'package:flutter/material.dart';
@@ -152,6 +154,9 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
 
   @override
   Widget build(BuildContext context) {
+    var shortestSide = MediaQuery.of(context).size.shortestSide;
+    var useTabletLayout = shortestSide > 600;
+
     return SafeArea(
       top: true,
       child: new Scaffold(
@@ -162,48 +167,34 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
         body: StreamBuilder<List<PlaceSimpleDto>>(
             stream: nearbyPlaces,
             builder: (context, snapshot) {
-              return Stack(
+              return useTabletLayout ? Row(children: <Widget>[
+                buildExpandedMap(snapshot),
+                Container(constraints: BoxConstraints(maxWidth: 400),child: Column(
+                  children: <Widget>[
+                    Container(child: Column(
+                      children: <Widget>[
+                        SizedBox(height: 50,),
+                           Row(
+                             mainAxisSize: MainAxisSize.max,
+                             mainAxisAlignment: MainAxisAlignment.spaceAround,
+                             children: <Widget>[
+                               buildFloatingSearchButton(context),
+                               buildFloatingRefreshButton(),
+                             ],
+                           ),
+                             SizedBox(height: 16,),
+                             ReservationButton(),
+                             SizedBox(height: 16,),
+                      ],
+                    ),),
+                    Expanded(child: HorizontalMapCarousel(nearbyPlaces: nearbyPlaces,)),
+                  ],
+                ),)
+              ],): Stack(
                 children: <Widget>[
                   Column(
                     children: <Widget>[
-                      Expanded(
-                        child: MPlatform.isWeb
-                            ? MapTest()
-                            : GoogleMap(
-                                markers: markers,
-                                myLocationEnabled: true,
-                                onCameraIdle: () {
-                                  var distance = calculateDistance(
-                                      lastIdleView.target, curentView.target);
-                                  this.clusteringHelper.updateMap();
-                                  setState(() {
-                                    moving = false;
-                                  });
-                                  lastIdleView = curentView;
-                                  if (distance > 5) {
-                                    loadNearby();
-                                  }
-                                },
-                                onCameraMove: (cv) {
-                                  curentView = cv;
-
-                                  if (!moving)
-                                    setState(() {
-                                      moving = true;
-                                    });
-                                },
-                                mapType: MapType.normal,
-                                compassEnabled: true,
-                                tiltGesturesEnabled: true,
-                                initialCameraPosition: initView,
-                                onMapCreated: (GoogleMapController controller) {
-                                  controller.setMapStyle(_mapStyle);
-                                  _controller.complete(controller);
-                                  this.clusteringHelper.mapController =
-                                      controller;
-                                },
-                              ),
-                      ),
+                      buildExpandedMap(snapshot),
                       SizedBox(height: 140)
                     ],
                   ),
@@ -224,15 +215,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                     child: AnimatedOpacity(
                       opacity: !moving ? 1.0 : 0.0,
                       duration: Duration(milliseconds: 500),
-                      child: FloatingActionButton(
-                        heroTag: 'Search',
-                        backgroundColor: AppColors.scafBg,
-                        child: Icon(
-                          Icons.search,
-                          color: Colors.white,
-                        ),
-                        onPressed: () => searchCity(context),
-                      ),
+                      child: buildFloatingSearchButton(context),
                     ),
                   ),
                   Positioned(
@@ -251,16 +234,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                     child: AnimatedOpacity(
                       opacity: !moving ? 1.0 : 0.0,
                       duration: Duration(milliseconds: 500),
-                      child: FloatingActionButton(
-                          heroTag: "refresh",
-                          backgroundColor: AppColors.scafBg,
-                          child: loading
-                              ? CircularProgressIndicator()
-                              : Icon(
-                                  Icons.refresh,
-                                  color: Colors.white,
-                                ),
-                          onPressed: () => loadNearby()),
+                      child: buildFloatingRefreshButton(),
                     ),
                   ),
                   Positioned(
@@ -275,6 +249,74 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
             }),
       ),
     );
+  }
+
+  FloatingActionButton buildFloatingRefreshButton() {
+    return FloatingActionButton(
+                        heroTag: "refresh",
+                        backgroundColor: AppColors.scafBg,
+                        child: loading
+                            ? CircularProgressIndicator()
+                            : Icon(
+                                Icons.refresh,
+                                color: Colors.white,
+                              ),
+                        onPressed: () => loadNearby());
+  }
+
+  FloatingActionButton buildFloatingSearchButton(BuildContext context) {
+    return FloatingActionButton(
+                      heroTag: 'Search',
+                      backgroundColor: AppColors.scafBg,
+                      child: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      ),
+                      onPressed: () => searchCity(context),
+                    );
+  }
+
+  Expanded buildExpandedMap(AsyncSnapshot<List<PlaceSimpleDto>> snapshot) {
+    return Expanded(
+                      child: MPlatform.isWeb
+                          ? MapTest(
+                              places: snapshot.data,
+                            )
+                          : GoogleMap(
+                              markers: markers,
+                              myLocationEnabled: true,
+                              onCameraIdle: () {
+                                var distance = calculateDistance(
+                                    lastIdleView.target, curentView.target);
+                                this.clusteringHelper.updateMap();
+                                setState(() {
+                                  moving = false;
+                                });
+                                lastIdleView = curentView;
+                                if (distance > 5) {
+                                  loadNearby();
+                                }
+                              },
+                              onCameraMove: (cv) {
+                                curentView = cv;
+
+                                if (!moving)
+                                  setState(() {
+                                    moving = true;
+                                  });
+                              },
+                              mapType: MapType.normal,
+                              compassEnabled: true,
+                              tiltGesturesEnabled: true,
+                              initialCameraPosition: initView,
+                              onMapCreated: (GoogleMapController controller) {
+                                controller.setMapStyle(_mapStyle);
+                                _controller.complete(controller);
+                                this.clusteringHelper.mapController =
+                                    controller;
+                              },
+                            ),
+                    );
   }
 
   StreamBuilder<List<PlacesReservationsReservationDto>> reservationBuilder(

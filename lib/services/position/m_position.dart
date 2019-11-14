@@ -1,4 +1,6 @@
-import 'package:app/services/position/position_polyfy_fake.dart' as wgeo;
+
+import 'package:app/services/position/position_polyfy_fake.dart'
+    if (dart.library.js) 'package:app/services/position/position_polyfy.dart' as wgeo;
 import 'package:app/support/m_platform.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -14,6 +16,17 @@ class MPosition {
     _geo = new Geolocator();
     _wgeo = new wgeo.WGeolocation();
   }
+
+    Stream<Position> getPositionStream(
+      [LocationOptions locationOptions = const LocationOptions(),
+      GeolocationPermission locationPermissionLevel =
+          GeolocationPermission.location]){
+          if (MPlatform.isWeb) {
+            return _wgeo.watchPosition().map((a) { return new Position(
+          latitude: a.coordinates.latitude, longitude: a.coordinates.longitude); });
+          }
+            return _geo.getPositionStream(locationOptions,locationPermissionLevel);
+          }
 
   Future<GeolocationStatus> checkGeolocationPermissionStatus(
       {GeolocationPermission locationPermission =

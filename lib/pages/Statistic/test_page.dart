@@ -4,6 +4,7 @@ import 'package:app/module/data_provider.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 class TestPage extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class _TestPageState extends State<TestPage> {
   @override
   Widget build(BuildContext context) {
     var service = DataProvider.getData(context).personBloc;
+    var place = DataProvider.getData(context).placeBloc;
 
     return Scaffold(
       appBar: AppBar(
@@ -23,6 +25,15 @@ class _TestPageState extends State<TestPage> {
       body: Center(
         child: Column(
           children: <Widget>[
+            StreamBuilder<Position>(
+              stream: place.location,
+               initialData: null,
+              builder: (BuildContext context, snapshot) {
+                return Container(
+                  child: Text(snapshot.data.latitude.toString()),
+                );
+              },
+            ),
             StreamBuilder<DateTime>(
               stream: service.lastPingStream,
               initialData: DateTime.now(),

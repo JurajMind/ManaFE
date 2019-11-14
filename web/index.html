@@ -6,8 +6,7 @@
     <meta name="description" content="Manapipes">
     <meta name="keywords" content="Manapipes, Hookah, Shisha, Iot">
     <meta name="author" content="Juraj Hamornik">
-    <meta name="theme-color" content="#6200EA" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6200EA" />    
     <link rel="apple-touch-icon" sizes="57x57" href="icons/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="icons/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="icons/apple-icon-72x72.png">
@@ -29,5 +28,14 @@
 </head>
 <body>
   <script src="main.dart.js" type="application/javascript"></script>
+  <script>
+      window.test = function(args){
+        var shadow =  window.document.getElementsByTagName("flt-platform-view")[0].shadowRoot.getElementById("mapIframe");
+        window.document.getElementsByTagName("flt-platform-view")[0].shadowRoot.getElementById("mapIframe").contentWindow.myFunction('d')
+        shadow.contentWindow.myFunction(args);
+      }
+    </script>
+    
 </body>
 </html>
+

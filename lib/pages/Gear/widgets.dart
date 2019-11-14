@@ -19,27 +19,43 @@ class SectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Semantics(
-      label: section.title,
-      button: true,
-      child: new DecoratedBox(
-        decoration: new BoxDecoration(
-          gradient: new LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: <Color>[
-              section.leftColor,
-              section.rightColor,
-            ],
-          ),
+    return Hero(
+      tag: section.title,
+          child: new Semantics(
+        label: section.title,
+        button: true,
+        child: Stack(
+          children: <Widget>[
+             
+            new DecoratedBox(
+              decoration: new BoxDecoration(
+                gradient: new LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: <Color>[
+                    section.leftColor,
+                    section.rightColor,
+                  ],
+                ),
+              ),
+              child: Container(
+                height: 150,
+                width: MediaQuery.of(context).size.width,
+                child: RepaintBoundary(child:new Image.asset(
+                  section.backgroundAsset,
+                  color: const Color.fromRGBO(255, 255, 255, 0.545),
+                  colorBlendMode: BlendMode.modulate,
+                  fit: BoxFit.cover,
+                ),
+            ),
+              ),),
+                Positioned(
+                child: Container(height: 150,width: MediaQuery.of(context).size.width, child: Center(child: Text(section.title,style: Theme.of(context).textTheme.title,))),
+                
+              ),
+          ],
         ),
-        child: RepaintBoundary(child:new Image.asset(
-          section.backgroundAsset,
-          color: const Color.fromRGBO(255, 255, 255, 0.545),
-          colorBlendMode: BlendMode.modulate,
-          fit: BoxFit.cover,
-        ),
-      ),),
+      ),
     );
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:openapi/api.dart';
 
 class MapTest extends StatefulWidget {
-  const MapTest({Key key}) : super(key: key);
+    final List<PlaceSimpleDto> places;
+  const MapTest({Key key, this.places}) : super(key: key);
 
   @override
   _MapTestState createState() => _MapTestState();

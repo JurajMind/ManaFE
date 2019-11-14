@@ -22,6 +22,7 @@ import 'package:flutter/services.dart';
 import 'package:openapi/api.dart';
 
 import 'Gear/gear_scroll.dart';
+import 'Gear/gear_scroll_alternative.dart';
 import 'Mixology/mixology_list.dart';
 import 'Places/places_map_page.dart';
 import 'SmokeSession/Components/gradiend_color_wheel_rotate.dart';
@@ -319,7 +320,7 @@ class _HomePageState extends State<HomePage> {
                       tabFocusNodes: tabFocusNodes,
                     ),
                     VisibilityStageNavigator(
-                      new GearScrollHome(),
+                      new GearScrollAlternativeCross(),
                       3,
                       currentIndex: _currentIndex,
                       navigatorKeys: navigatorKeys,
@@ -429,6 +430,9 @@ class _HomePageState extends State<HomePage> {
     activeTabSub.cancel();
     super.dispose();
   }
+}
+
+class _GearScrollAlternativeCrossState {
 }
 
 class VisibilityStageNavigator extends StatelessWidget {

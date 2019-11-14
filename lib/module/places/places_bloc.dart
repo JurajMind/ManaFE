@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app/app/app.dart';
 import 'package:app/services/position/m_position.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -18,6 +20,8 @@ class PlacesBloc {
       new BehaviorSubject<bool>.seeded(false);
 
   BehaviorSubject<Position> location = new BehaviorSubject<Position>();
+
+  StreamSubscription<Position> posSub;
 
   static final PlacesBloc _instance = new PlacesBloc._();
 
@@ -41,13 +45,8 @@ class PlacesBloc {
       }
     });
     loadPlacesFromCache();
-
-    geolocator
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((value) {
-      this.location.add(value);
-      _loadPlaces();
-    });
+    
+    posSub = geolocator.getPositionStream().listen((onData) => this.location.add(onData));
   }
 
   Future _loadPlaces() async {
