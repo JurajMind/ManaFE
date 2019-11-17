@@ -36,7 +36,7 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
             if (pipeAccesory.type == "Tobacco") {
               Route route = MaterialPageRoute(
                   builder: (context) => TobaccoPage(
-                        tobacco:pipeAccesory,
+                        tobacco: pipeAccesory,
                       ));
               Navigator.pushReplacement(context, route);
             }
@@ -86,7 +86,10 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
                 children: <Widget>[
                   Hero(
                       tag: '${pipeAccesory.id}_name',
-                      child: Container(child: Extensions.accesoryPicture(pipeAccesory))),
+                      child: Container(
+                          height: 50,
+                          width: 50,
+                          child: Extensions.accesoryPicture(pipeAccesory))),
                   SizedBox(
                     width: 8,
                   ),

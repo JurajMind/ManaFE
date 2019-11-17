@@ -3,6 +3,7 @@ import 'package:app/components/Places/open_indicator.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
+import 'package:app/support/m_platform.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -32,8 +33,11 @@ class PlaceItem extends StatelessWidget {
           child: Hero(
             tag: '${place.friendlyUrl}_place',
             child: new Image(
-              image: new CachedNetworkImageProvider(
-                  Extensions.getPlaceImage(place, MediaSize.Small)),
+              image: MPlatform.isWeb
+                  ? NetworkImage(
+                      Extensions.getPlaceImage(place, MediaSize.Small))
+                  : new CachedNetworkImageProvider(
+                      Extensions.getPlaceImage(place, MediaSize.Small)),
               fit: BoxFit.cover,
             ),
           )),
@@ -41,7 +45,10 @@ class PlaceItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text(place.name),
+          Text(
+            place.name,
+            style: Theme.of(context).textTheme.display2,
+          ),
           OpenIndicator(
             place: place,
             size: Size.fromRadius(10),

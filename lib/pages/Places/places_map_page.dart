@@ -11,7 +11,6 @@ import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
-import 'package:app/pages/Places/places_map_page_tablet.dart';
 import 'package:app/pages/Places/places_search_page.dart';
 import 'package:app/support/m_platform.dart';
 import 'package:flutter/material.dart';
@@ -167,85 +166,105 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
         body: StreamBuilder<List<PlaceSimpleDto>>(
             stream: nearbyPlaces,
             builder: (context, snapshot) {
-              return useTabletLayout ? Row(children: <Widget>[
-                buildExpandedMap(snapshot),
-                Container(constraints: BoxConstraints(maxWidth: 400),child: Column(
-                  children: <Widget>[
-                    Container(child: Column(
+              return useTabletLayout
+                  ? Row(
                       children: <Widget>[
-                        SizedBox(height: 50,),
-                           Row(
-                             mainAxisSize: MainAxisSize.max,
-                             mainAxisAlignment: MainAxisAlignment.spaceAround,
-                             children: <Widget>[
-                               buildFloatingSearchButton(context),
-                               buildFloatingRefreshButton(),
-                             ],
-                           ),
-                             SizedBox(height: 16,),
-                             ReservationButton(),
-                             SizedBox(height: 16,),
+                        buildExpandedMap(snapshot),
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 400),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                child: Column(
+                                  children: <Widget>[
+                                    SizedBox(
+                                      height: 50,
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        buildFloatingSearchButton(context),
+                                        buildFloatingRefreshButton(),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 16,
+                                    ),
+                                    ReservationButton(),
+                                    SizedBox(
+                                      height: 16,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                  child: HorizontalMapCarousel(
+                                nearbyPlaces: nearbyPlaces,
+                              )),
+                            ],
+                          ),
+                        )
                       ],
-                    ),),
-                    Expanded(child: HorizontalMapCarousel(nearbyPlaces: nearbyPlaces,)),
-                  ],
-                ),)
-              ],): Stack(
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      buildExpandedMap(snapshot),
-                      SizedBox(height: 140)
-                    ],
-                  ),
-                  Positioned(
-                    bottom: 10,
-                    child: Container(
-                      height: 120,
-                      width: MediaQuery.of(context).size.width,
-                      child: MapCarousel(
-                          selectedPlace: _selectedPlace,
-                          nearbyPlaces: nearbyPlaces,
-                          mapController: _controller),
-                    ),
-                  ),
-                  Positioned(
-                    top: 10,
-                    right: MediaQuery.of(context).size.width / 2,
-                    child: AnimatedOpacity(
-                      opacity: !moving ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: 500),
-                      child: buildFloatingSearchButton(context),
-                    ),
-                  ),
-                  Positioned(
-                      top: 0,
-                      left: 0,
-                      child: isDefaultPage
-                          ? Container()
-                          : IconButton(
-                              icon: Icon(Icons.chevron_left,
-                                  color: Colors.black, size: 50),
-                              onPressed: () => Navigator.of(context).pop(),
-                            )),
-                  Positioned(
-                    top: 10,
-                    right: (MediaQuery.of(context).size.width / 2) - 60,
-                    child: AnimatedOpacity(
-                      opacity: !moving ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: 500),
-                      child: buildFloatingRefreshButton(),
-                    ),
-                  ),
-                  Positioned(
-                      bottom: 170,
-                      right: (MediaQuery.of(context).size.width / 2) - 60,
-                      child: AnimatedOpacity(
-                          opacity: !moving ? 1.0 : 0.0,
-                          duration: Duration(milliseconds: 500),
-                          child: new ReservationButton())),
-                ],
-              );
+                    )
+                  : Stack(
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            buildExpandedMap(snapshot),
+                            SizedBox(height: 140)
+                          ],
+                        ),
+                        Positioned(
+                          bottom: 10,
+                          child: Container(
+                            height: 120,
+                            width: MediaQuery.of(context).size.width,
+                            child: MapCarousel(
+                                selectedPlace: _selectedPlace,
+                                nearbyPlaces: nearbyPlaces,
+                                mapController: _controller),
+                          ),
+                        ),
+                        Positioned(
+                          top: 10,
+                          right: MediaQuery.of(context).size.width / 2,
+                          child: AnimatedOpacity(
+                            opacity: !moving ? 1.0 : 0.0,
+                            duration: Duration(milliseconds: 500),
+                            child: buildFloatingSearchButton(context),
+                          ),
+                        ),
+                        Positioned(
+                            top: 0,
+                            left: 0,
+                            child: isDefaultPage
+                                ? Container()
+                                : IconButton(
+                                    icon: Icon(Icons.chevron_left,
+                                        color: Colors.black, size: 50),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                  )),
+                        Positioned(
+                          top: 10,
+                          right: (MediaQuery.of(context).size.width / 2) - 60,
+                          child: AnimatedOpacity(
+                            opacity: !moving ? 1.0 : 0.0,
+                            duration: Duration(milliseconds: 500),
+                            child: buildFloatingRefreshButton(),
+                          ),
+                        ),
+                        Positioned(
+                            bottom: 170,
+                            right: (MediaQuery.of(context).size.width / 2) - 60,
+                            child: AnimatedOpacity(
+                                opacity: !moving ? 1.0 : 0.0,
+                                duration: Duration(milliseconds: 500),
+                                child: new ReservationButton())),
+                      ],
+                    );
             }),
       ),
     );
@@ -253,70 +272,69 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
 
   FloatingActionButton buildFloatingRefreshButton() {
     return FloatingActionButton(
-                        heroTag: "refresh",
-                        backgroundColor: AppColors.scafBg,
-                        child: loading
-                            ? CircularProgressIndicator()
-                            : Icon(
-                                Icons.refresh,
-                                color: Colors.white,
-                              ),
-                        onPressed: () => loadNearby());
+        heroTag: "refresh",
+        backgroundColor: AppColors.scafBg,
+        child: loading
+            ? CircularProgressIndicator()
+            : Icon(
+                Icons.refresh,
+                color: Colors.white,
+              ),
+        onPressed: () => loadNearby());
   }
 
   FloatingActionButton buildFloatingSearchButton(BuildContext context) {
     return FloatingActionButton(
-                      heroTag: 'Search',
-                      backgroundColor: AppColors.scafBg,
-                      child: Icon(
-                        Icons.search,
-                        color: Colors.white,
-                      ),
-                      onPressed: () => searchCity(context),
-                    );
+      heroTag: 'Search',
+      backgroundColor: AppColors.scafBg,
+      child: Icon(
+        Icons.search,
+        color: Colors.white,
+      ),
+      onPressed: () => searchCity(context),
+    );
   }
 
   Expanded buildExpandedMap(AsyncSnapshot<List<PlaceSimpleDto>> snapshot) {
     return Expanded(
-                      child: MPlatform.isWeb
-                          ? MapTest(
-                              places: snapshot.data,
-                            )
-                          : GoogleMap(
-                              markers: markers,
-                              myLocationEnabled: true,
-                              onCameraIdle: () {
-                                var distance = calculateDistance(
-                                    lastIdleView.target, curentView.target);
-                                this.clusteringHelper.updateMap();
-                                setState(() {
-                                  moving = false;
-                                });
-                                lastIdleView = curentView;
-                                if (distance > 5) {
-                                  loadNearby();
-                                }
-                              },
-                              onCameraMove: (cv) {
-                                curentView = cv;
+      child: MPlatform.isWeb
+          ? MapTest(
+              places: snapshot.data,
+            )
+          : GoogleMap(
+              markers: markers,
+              myLocationEnabled: true,
+              onCameraIdle: () {
+                var distance =
+                    calculateDistance(lastIdleView.target, curentView.target);
+                this.clusteringHelper.updateMap();
+                setState(() {
+                  moving = false;
+                });
+                lastIdleView = curentView;
+                if (distance > 5) {
+                  loadNearby();
+                }
+              },
+              onCameraMove: (cv) {
+                curentView = cv;
 
-                                if (!moving)
-                                  setState(() {
-                                    moving = true;
-                                  });
-                              },
-                              mapType: MapType.normal,
-                              compassEnabled: true,
-                              tiltGesturesEnabled: true,
-                              initialCameraPosition: initView,
-                              onMapCreated: (GoogleMapController controller) {
-                                controller.setMapStyle(_mapStyle);
-                                _controller.complete(controller);
-                                this.clusteringHelper.mapController =
-                                    controller;
-                              },
-                            ),
-                    );
+                if (!moving)
+                  setState(() {
+                    moving = true;
+                  });
+              },
+              mapType: MapType.normal,
+              compassEnabled: true,
+              tiltGesturesEnabled: true,
+              initialCameraPosition: initView,
+              onMapCreated: (GoogleMapController controller) {
+                controller.setMapStyle(_mapStyle);
+                _controller.complete(controller);
+                this.clusteringHelper.mapController = controller;
+              },
+            ),
+    );
   }
 
   StreamBuilder<List<PlacesReservationsReservationDto>> reservationBuilder(

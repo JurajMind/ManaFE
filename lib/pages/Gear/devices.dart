@@ -1,5 +1,3 @@
-import 'dart:ui' as prefix0;
-
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Device/add_device_page.dart';
@@ -20,11 +18,63 @@ class Devices extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var personBloc = DataProvider.getData(context).personBloc;
+
+    var shortestSide = MediaQuery.of(context).size.shortestSide;
+    var useTabletLayout = shortestSide > 600;
+
     return Container(
       child: StreamBuilder<List<DeviceSimpleDto>>(
         stream: personBloc.devices,
         initialData: null,
         builder: (context, snapshot) {
+          if (useTabletLayout) {
+            return ListView.builder(
+              itemCount: (snapshot.data?.length ?? 0) + 1,
+              itemBuilder: (context, index) {
+                if (snapshot.data.length == index) {
+                  return Container(
+                    margin: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                        color: Colors.black45,
+                        borderRadius: BorderRadius.circular(20.0)),
+                    child: ListTile(
+                        onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                                settings: RouteSettings(),
+                                builder: (context) => AddDevicePage())),
+                        leading: Icon(Icons.add),
+                        title: Text(
+                          AppTranslations.of(context).text("device.add_device"),
+                          style: Theme.of(context).textTheme.display1,
+                        )),
+                  );
+                }
+                var device = snapshot.data[index];
+                return Container(
+                  margin: EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                      color: Colors.black45,
+                      borderRadius: BorderRadius.circular(20.0)),
+                  child: ListTile(
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        settings: RouteSettings(),
+                        builder: (context) =>
+                            DeviceDetailPage(device: device))),
+                    leading: Hero(
+                      tag: "${device.code}_hero",
+                      child: Image.asset(Extensions.devicePicture(device.type)),
+                    ),
+                    trailing: DeviceOnlineDot(device.isOnline),
+                    title: Text(
+                      device.name,
+                      style: Theme.of(context).textTheme.display1,
+                    ),
+                  ),
+                );
+              },
+            );
+          }
+
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: GridView.builder(

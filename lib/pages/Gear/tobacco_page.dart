@@ -77,7 +77,10 @@ class _TobaccoPageState extends State<TobaccoPage> {
                 children: <Widget>[
                   Hero(
                       tag: '${pipeAccesory.id}_name',
-                      child: Extensions.accesoryPicture(pipeAccesory)),
+                      child: Container(
+                          width: 50,
+                          height: 50,
+                          child: Extensions.accesoryPicture(pipeAccesory))),
                   SizedBox(
                     width: 8,
                   ),

@@ -169,7 +169,7 @@ class _StatisticPageState extends State<StatisticPage> {
       backgroundColor: Theme.of(context).backgroundColor,
       body: Center(
         child: Container(
-          constraints: BoxConstraints(maxWidth: 800),
+          constraints: BoxConstraints(maxWidth: 1200),
           child: CustomScrollView(
             physics: ClampingScrollPhysics(),
             slivers: <Widget>[
@@ -180,7 +180,7 @@ class _StatisticPageState extends State<StatisticPage> {
                       switch (value) {
                         case 'settings':
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => SettingPage()));
+                              builder: (context) => SettingPage()fa));
                           break;
                         case 'signOut':
                           auth.signOut();

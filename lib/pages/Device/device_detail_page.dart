@@ -76,20 +76,7 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                       ),
-                      SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: !widget.device.isOnline
-                                    ? Colors.redAccent
-                                    : Colors.lightGreen),
-                          ),
-                        ),
-                      )
+                      DeviceOnlineDot(widget.device.isOnline)
                     ],
                   ),
                 ),
@@ -429,5 +416,30 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
     widget.device.name = nameController.value.text;
     await App.http
         .changeDeviceName(widget.device.code, nameController.value.text);
+  }
+}
+
+class DeviceOnlineDot extends StatelessWidget {
+  const DeviceOnlineDot(
+    this.isOnline, {
+    Key key,
+  }) : super(key: key);
+
+  final bool isOnline;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 40,
+      height: 40,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: !isOnline ? Colors.redAccent : Colors.lightGreen),
+        ),
+      ),
+    );
   }
 }
