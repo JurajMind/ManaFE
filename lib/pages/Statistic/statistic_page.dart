@@ -180,7 +180,7 @@ class _StatisticPageState extends State<StatisticPage> {
                       switch (value) {
                         case 'settings':
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => SettingPage()fa));
+                              builder: (context) => SettingPage()));
                           break;
                         case 'signOut':
                           auth.signOut();

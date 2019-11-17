@@ -174,7 +174,7 @@ class _FatSliderState extends State<FatSlider>
   }
 
   void _onHorizontalDragCancel() {
-     if (_isInteractive) {
+    if (_isInteractive) {
       _animationController.reverse();
     }
   }
@@ -249,14 +249,6 @@ class _FatSliderState extends State<FatSlider>
       return widget.sliderColor ?? Theme.of(context).primaryColor;
     } else {
       return Colors.grey;
-    }
-  }
-
-  Color get _thumbColor {
-    if (_isInteractive) {
-      return widget.thumbColor ?? Colors.white;
-    } else {
-      return Colors.grey[300];
     }
   }
 

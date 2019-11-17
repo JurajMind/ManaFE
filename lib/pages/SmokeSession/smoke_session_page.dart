@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:app/Helpers/date_utils.dart';
 import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
-import 'package:app/components/Common/bg_painter.dart';
 import 'package:app/components/Common/since_timer.dart';
 import 'package:app/components/ProgressDialog/progress_dialog.dart';
 import 'package:app/components/SmokeSession/reviews_small.dart';
@@ -24,7 +23,9 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:openapi/api.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'Components/color_gimick.dart';
 import 'Components/session_control_row.dart';
+import 'Components/stop_watches.dart';
 
 class SmokeSessionPage extends StatefulWidget {
   final String sessionId;
@@ -35,13 +36,6 @@ class SmokeSessionPage extends StatefulWidget {
   State<StatefulWidget> createState() {
     return new _SmokeSessionPage();
   }
-}
-
-class StopWatches {
-  StopWatches(this.pufStopwatch, this.sessionStopwatch);
-
-  final Stopwatch pufStopwatch;
-  final Stopwatch sessionStopwatch;
 }
 
 class _SmokeSessionPage extends State<SmokeSessionPage> {
@@ -261,113 +255,125 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
     );
     final Size screenSize = MediaQuery.of(context).size;
 
-    return Container(
-      constraints: BoxConstraints(maxWidth: 200, maxHeight: 200),
-      color: Theme.of(context).backgroundColor,
-      child: CustomScrollView(
-        controller: scrollController,
-        shrinkWrap: false,
-        slivers: <Widget>[
-          new SliverAppBar(
-            leading: Container(),
-            expandedHeight: 200.0,
-            backgroundColor: Colors.black,
-            pinned: true,
-            bottom: PreferredSize(
-              preferredSize: Size(700.0, 40.0),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Hero(
-                        tag: "${widget.sessionId}_session",
-                        child: statisticBuilder),
-                    Container(
-                        height: 18,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment
-                                .bottomCenter, // 10% of the width, so there are ten blinds.
-                            colors: [
-                              Theme.of(context).backgroundColor.withAlpha(160),
-                              Theme.of(context).backgroundColor
-                            ], // whitish to gray
-                            tileMode: TileMode
-                                .repeated, // repeats the gradient over the canvas
-                          ),
-                        ))
-                  ],
+    return Center(
+      child: Container(
+        constraints: BoxConstraints(maxWidth: 1200),
+        color: Theme.of(context).backgroundColor,
+        child: CustomScrollView(
+          controller: scrollController,
+          shrinkWrap: false,
+          slivers: <Widget>[
+            new SliverAppBar(
+              leading: Container(),
+              expandedHeight: 200.0,
+              backgroundColor: Colors.black,
+              pinned: true,
+              bottom: PreferredSize(
+                preferredSize: Size(700.0, 40.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Hero(
+                          tag: "${widget.sessionId}_session",
+                          child: statisticBuilder),
+                      Container(
+                          height: 18,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment
+                                  .bottomCenter, // 10% of the width, so there are ten blinds.
+                              colors: [
+                                Theme.of(context)
+                                    .backgroundColor
+                                    .withAlpha(160),
+                                Theme.of(context).backgroundColor
+                              ], // whitish to gray
+                              tileMode: TileMode
+                                  .repeated, // repeats the gradient over the canvas
+                            ),
+                          ))
+                    ],
+                  ),
                 ),
               ),
+              flexibleSpace: new FlexibleSpaceBar(
+                  collapseMode: CollapseMode.parallax,
+                  background: Container(
+                    color: Colors.red,
+                    constraints: BoxConstraints(maxWidth: 1200),
+                    child: Center(
+                        child: new ColorSessionGimick(screenSize: screenSize)),
+                  )),
             ),
-            flexibleSpace: new FlexibleSpaceBar(
-                collapseMode: CollapseMode.parallax,
-                background: new ColorSessionGimick(screenSize: screenSize)),
-          ),
-          new SliverList(
-            delegate: new SliverChildListDelegate(<Widget>[
-              Container(
-                child: Column(
-                  children: <Widget>[
-                    const SessionControllRow(),
-                    tobaccoMetaDataBuilder,
-                    metadataBuilder,
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: StreamBuilder<
-                              List<
-                                  SmartHookahModelsDbSessionDtoSessionReviewDto>>(
-                          stream: dataProvider.smokeSessionBloc.sessionReviews,
-                          builder: (context, snapshot) {
-                            if (snapshot.data == null ||
-                                snapshot.data.length == 0)
-                              return new RoundedButton(
-                                child: Text(AppTranslations.of(context)
-                                    .text('smoke_session.review')
-                                    .toUpperCase()),
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      fullscreenDialog: true,
-                                      builder: (context) => SessionReview()));
-                                },
-                                buttonColor: Colors.transparent,
-                                borderWidth: 1.0,
-                                bottomMargin: 1.0,
-                                height: 40.0,
-                                width:
-                                    (MediaQuery.of(context).size.width) * 0.8,
-                              );
+            new SliverList(
+              delegate: new SliverChildListDelegate(<Widget>[
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      const SessionControllRow(),
+                      tobaccoMetaDataBuilder,
+                      metadataBuilder,
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: StreamBuilder<
+                                List<
+                                    SmartHookahModelsDbSessionDtoSessionReviewDto>>(
+                            stream:
+                                dataProvider.smokeSessionBloc.sessionReviews,
+                            builder: (context, snapshot) {
+                              if (snapshot.data == null ||
+                                  snapshot.data.length == 0)
+                                return new RoundedButton(
+                                  child: Text(AppTranslations.of(context)
+                                      .text('smoke_session.review')
+                                      .toUpperCase()),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            fullscreenDialog: true,
+                                            builder: (context) =>
+                                                SessionReview()));
+                                  },
+                                  buttonColor: Colors.transparent,
+                                  borderWidth: 1.0,
+                                  bottomMargin: 1.0,
+                                  height: 40.0,
+                                  width:
+                                      (MediaQuery.of(context).size.width) * 0.8,
+                                );
 
-                            return ReviewsSmall(
-                              reviews: snapshot.data,
-                            );
-                          }),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: new RoundedButton(
-                        child: Text(AppTranslations.of(context)
-                            .text('smoke_session.more')
-                            .toUpperCase()),
-                        onTap: () => showMoreModal(),
-                        buttonColor: Colors.transparent,
-                        borderWidth: 1.0,
-                        bottomMargin: 1.0,
-                        height: 40.0,
-                        width: (MediaQuery.of(context).size.width) * 0.8,
+                              return ReviewsSmall(
+                                reviews: snapshot.data,
+                              );
+                            }),
                       ),
-                    )
-                  ],
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: new RoundedButton(
+                          child: Text(AppTranslations.of(context)
+                              .text('smoke_session.more')
+                              .toUpperCase()),
+                          onTap: () => showMoreModal(),
+                          buttonColor: Colors.transparent,
+                          borderWidth: 1.0,
+                          bottomMargin: 1.0,
+                          height: 40.0,
+                          width: (MediaQuery.of(context).size.width) * 0.8,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 100,
-              )
-            ]),
-          )
-        ],
+                SizedBox(
+                  height: 100,
+                )
+              ]),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -552,121 +558,6 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         App.http.restartDevice(code);
       }
     });
-  }
-}
-
-class ColorSessionGimick extends StatefulWidget {
-  const ColorSessionGimick({
-    Key key,
-    @required this.screenSize,
-  }) : super(key: key);
-
-  final Size screenSize;
-
-  @override
-  _ColorSessionGimickState createState() => _ColorSessionGimickState();
-}
-
-class _ColorSessionGimickState extends State<ColorSessionGimick>
-    with SingleTickerProviderStateMixin {
-  @override
-  dispose() {
-    _controller.dispose();
-    subscription.cancel();
-    super.dispose();
-  }
-
-  AnimationController _controller;
-  StreamSubscription<int> subscription;
-  Animatable<Color> background = TweenSequence<Color>(
-    [
-      TweenSequenceItem(
-        weight: 1.0,
-        tween: ColorTween(
-          begin: Colors.red,
-          end: Colors.green,
-        ),
-      ),
-      TweenSequenceItem(
-        weight: 1.0,
-        tween: ColorTween(
-          begin: Colors.green,
-          end: Colors.blue,
-        ),
-      ),
-      TweenSequenceItem(
-        weight: 1.0,
-        tween: ColorTween(
-          begin: Colors.blue,
-          end: Colors.pink,
-        ),
-      ),
-      TweenSequenceItem(
-        weight: 1.0,
-        tween: ColorTween(
-          begin: Colors.pink,
-          end: Colors.blue,
-        ),
-      ),
-      TweenSequenceItem(
-        weight: 1.0,
-        tween: ColorTween(
-          begin: Colors.blue,
-          end: Colors.green,
-        ),
-      ),
-      TweenSequenceItem(
-        weight: 1.0,
-        tween: ColorTween(
-          begin: Colors.green,
-          end: Colors.red,
-        ),
-      ),
-    ],
-  );
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: Duration(seconds: 50),
-      vsync: this,
-    )..repeat();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    var dataProvider = DataProvider.getData(context);
-
-    subscription =
-        dataProvider.smokeSessionBloc.smokeStateBroadcast.listen((data) {
-      if (data == 1) {
-        _controller.duration = Duration(seconds: 10);
-        _controller.repeat();
-      }
-      if (data == 0) {
-        _controller.duration = Duration(seconds: 50);
-        _controller.repeat();
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) {
-          return CustomPaint(
-            painter: BgPainter(
-              color: background
-                  .evaluate(AlwaysStoppedAnimation(_controller.value)),
-              logoSize: 0.5,
-              startPoint: Offset(widget.screenSize.width * 0.5, -50),
-              hueRotation: -4,
-            ),
-          );
-        });
   }
 }
 

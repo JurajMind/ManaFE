@@ -9,17 +9,17 @@ class TobaccoReviewList extends StatelessWidget {
   final bool label;
   final TobaccoInformationDto info;
 
-  const TobaccoReviewList({Key key, this.reviews, this.label = false, this.info})
+  const TobaccoReviewList(
+      {Key key, this.reviews, this.label = false, this.info})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<GearTobaccoReviewDto> data = null;
+    List<GearTobaccoReviewDto> data;
     if (info != null) {
       if (info.reviews == null) {
         data = new List<GearTobaccoReviewDto>();
-      }
-      else{
+      } else {
         data = info.reviews;
       }
     } else {

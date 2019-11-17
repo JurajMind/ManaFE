@@ -6,7 +6,7 @@ import 'package:app/const/theme.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/SmokeSession/Components/puff_timer.dart';
-import 'package:app/pages/SmokeSession/smoke_session_page.dart';
+import 'package:app/pages/SmokeSession/Components/stop_watches.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:queries/collections.dart';
