@@ -374,6 +374,17 @@ class ApiClient {
     });
   }
 
+  Future<PlacesReservationsReservationManageDto> manageReservation(
+      int id, DateTime date) async {
+    var url = Uri.https(baseUrl, '/api/Reservations/$id/Manage');
+    var formatter = new DateFormat('yyyy-MM-dd');
+    String formatted = formatter.format(date ?? DateTime.now());
+    return await _dio
+        .get(url.toString(), queryParameters: {'date': formatted}).then((data) {
+      return PlacesReservationsReservationManageDto.fromJson(data.data);
+    });
+  }
+
   Future<PlacesReservationsReservationDto> addLateReservation(
       int id, int time) async {
     var url = Uri.https(baseUrl, '/api/Reservations/$id/AddLateTime');

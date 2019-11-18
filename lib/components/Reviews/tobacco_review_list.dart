@@ -46,30 +46,34 @@ class TobaccoReviewList extends StatelessWidget {
       );
     }
 
-    return Container(
-        child: Column(
-      children: <Widget>[
-        if (label) ...{
-          Text(
-            AppTranslations.of(context).text('review.session_title'),
-            style: Theme.of(context).textTheme.display1,
-          )
-        },
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Text("Reviews :", style: Theme.of(context).textTheme.display2),
-            IconButton(
-              icon: Icon(Icons.add, size: 40),
-              onPressed: () {},
-            )
-          ],
-        ),
-        ...data.map((f) => TobaccoReviewItem(
-              review: f,
-            ))
-      ],
-    ));
+    return Center(
+      child: Container(
+          constraints: BoxConstraints(maxWidth: 800),
+          child: Column(
+            children: <Widget>[
+              if (label) ...{
+                Text(
+                  AppTranslations.of(context).text('review.session_title'),
+                  style: Theme.of(context).textTheme.display1,
+                )
+              },
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text("Reviews :",
+                      style: Theme.of(context).textTheme.display2),
+                  IconButton(
+                    icon: Icon(Icons.add, size: 40),
+                    onPressed: () {},
+                  )
+                ],
+              ),
+              ...data.map((f) => TobaccoReviewItem(
+                    review: f,
+                  ))
+            ],
+          )),
+    );
   }
 }

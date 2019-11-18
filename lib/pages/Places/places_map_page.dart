@@ -24,6 +24,8 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'Components/reservation_button.dart';
 import 'package:clustering_google_maps/clustering_google_maps.dart';
 
+import 'Manage/Components/manage_place_btn.dart';
+
 class PlacesMapPage extends StatefulWidget {
   final Position position;
   final PlaceDto place;
@@ -187,6 +189,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                                       children: <Widget>[
                                         buildFloatingSearchButton(context),
                                         buildFloatingRefreshButton(),
+                                        ManagePlaceBtn()
                                       ],
                                     ),
                                     SizedBox(

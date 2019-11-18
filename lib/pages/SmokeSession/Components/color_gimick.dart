@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:app/components/Common/bg_painter.dart';
@@ -104,6 +103,23 @@ class _ColorSessionGimickState extends State<ColorSessionGimick>
 
   @override
   Widget build(BuildContext context) {
+    var shortestSide = MediaQuery.of(context).size.shortestSide;
+    var useTabletLayout = shortestSide > 600;
+    if (useTabletLayout)
+      return AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            return CustomPaint(
+              painter: BgPainter(
+                color: background
+                    .evaluate(AlwaysStoppedAnimation(_controller.value)),
+                logoSize: 1.0,
+                startPoint: Offset(0, -50),
+                hueRotation: -4,
+              ),
+            );
+          });
+
     return AnimatedBuilder(
         animation: _controller,
         builder: (context, child) {

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app/Helpers/date_utils.dart';
 import 'package:app/app/app.dart';
+import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Common/since_timer.dart';
 import 'package:app/components/ProgressDialog/progress_dialog.dart';
@@ -196,6 +197,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
 
         var start = asyncSnapshot.data.start;
         return Container(
+          constraints: BoxConstraints(maxWidth: 800),
           decoration: BoxDecoration(
             borderRadius: new BorderRadius.circular(10.0),
             color: Theme.of(context).backgroundColor.withAlpha(160),
@@ -302,7 +304,6 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
               flexibleSpace: new FlexibleSpaceBar(
                   collapseMode: CollapseMode.parallax,
                   background: Container(
-                    color: Colors.red,
                     constraints: BoxConstraints(maxWidth: 1200),
                     child: Center(
                         child: new ColorSessionGimick(screenSize: screenSize)),
@@ -311,6 +312,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
             new SliverList(
               delegate: new SliverChildListDelegate(<Widget>[
                 Container(
+                  constraints: BoxConstraints(maxWidth: 600),
                   child: Column(
                     children: <Widget>[
                       const SessionControllRow(),
@@ -326,23 +328,18 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                             builder: (context, snapshot) {
                               if (snapshot.data == null ||
                                   snapshot.data.length == 0)
-                                return new RoundedButton(
-                                  child: Text(AppTranslations.of(context)
+                                return new MButton(
+                                  width: 200,
+                                  label: AppTranslations.of(context)
                                       .text('smoke_session.review')
-                                      .toUpperCase()),
-                                  onTap: () {
+                                      .toUpperCase(),
+                                  onPressed: () {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             fullscreenDialog: true,
                                             builder: (context) =>
                                                 SessionReview()));
                                   },
-                                  buttonColor: Colors.transparent,
-                                  borderWidth: 1.0,
-                                  bottomMargin: 1.0,
-                                  height: 40.0,
-                                  width:
-                                      (MediaQuery.of(context).size.width) * 0.8,
                                 );
 
                               return ReviewsSmall(
@@ -352,16 +349,12 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                       ),
                       Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: new RoundedButton(
-                          child: Text(AppTranslations.of(context)
+                        child: new MButton(
+                          width: 200,
+                          label: AppTranslations.of(context)
                               .text('smoke_session.more')
-                              .toUpperCase()),
-                          onTap: () => showMoreModal(),
-                          buttonColor: Colors.transparent,
-                          borderWidth: 1.0,
-                          bottomMargin: 1.0,
-                          height: 40.0,
-                          width: (MediaQuery.of(context).size.width) * 0.8,
+                              .toUpperCase(),
+                          onPressed: () => showMoreModal(),
                         ),
                       )
                     ],

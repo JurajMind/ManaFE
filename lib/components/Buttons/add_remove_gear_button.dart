@@ -17,6 +17,7 @@ class AddRemoveGearButton extends StatelessWidget {
         builder: (context, snapshot) {
           if (matchAccessory(snapshot)) {
             return MButton(
+              maxWidth: 500,
               icon: Icons.delete,
               iconColor: Colors.red,
               label: "gear.remove_from_my_gear",

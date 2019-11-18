@@ -26,84 +26,91 @@ class MetadataBottomSheet extends StatelessWidget {
         backgroundColor: AppColors.black,
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: new ListView(
-          children: <Widget>[
-            new StreamMetadataItem(
-                bloc: smokeSessionBloc,
-                type: "Pipe",
-                searchType: 'Hookah',
-                ownedAccesory: personBloc.myGear.value != null
-                    ? personBloc.myGear.value
-                        .where((a) => a.type == 'Hookah')
-                        .toList()
-                    : new List<PipeAccesorySimpleDto>(),
-                selectFunction: (a) => a.pipe),
-            Divider(),
-            new StreamMetadataItem(
-                bloc: smokeSessionBloc,
-                type: "Bowl",
-                searchType: 'Bowl',
-                ownedAccesory: personBloc.myGear.value != null
-                    ? personBloc.myGear.value
-                        .where((a) => a.type == 'Bowl')
-                        .toList()
-                    : new List<PipeAccesorySimpleDto>(),
-                selectFunction: (a) => a.bowl),
-            Divider(),
-            new StreamMetadataItem(
-                bloc: smokeSessionBloc,
-                type: "hmd",
-                searchType: 'heatmanagement',
-                ownedAccesory: personBloc.myGear.value != null
-                    ? personBloc.myGear.value
-                        .where((a) => a.type == 'HeatManagement')
-                        .toList()
-                    : new List<PipeAccesorySimpleDto>(),
-                selectFunction: (a) => a.heatManagement),
-            Divider(),
-            new StreamMetadataItem(
-                bloc: smokeSessionBloc,
-                type: "Coals",
-                searchType: 'coal',
-                ownedAccesory: personBloc.myGear.value != null
-                    ? personBloc.myGear.value
-                        .where((a) => a.type == 'Coal')
-                        .toList()
-                    : new List<PipeAccesorySimpleDto>(),
-                selectFunction: (a) => a.coal),
-            Divider(),
-            /* buildCoalsCountItem(smokeSessionBloc),
-            SizedBox(
-              height: 20,
-            ),
-            Center(
-              child: OutlineButton.icon(
-                borderSide: BorderSide(color: Colors.white),
-                icon: Icon(
-                  Icons.save,
-                  color: AppColors.colors[0],
+      body: Center(
+        child: Container(
+          constraints: BoxConstraints(maxWidth: 1200),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: new ListView(
+              children: <Widget>[
+                new StreamMetadataItem(
+                    bloc: smokeSessionBloc,
+                    type: "Pipe",
+                    searchType: 'Hookah',
+                    ownedAccesory: personBloc.myGear.value != null
+                        ? personBloc.myGear.value
+                            .where((a) => a.type == 'Hookah')
+                            .toList()
+                        : new List<PipeAccesorySimpleDto>(),
+                    selectFunction: (a) => a.pipe),
+                Divider(),
+                new StreamMetadataItem(
+                    bloc: smokeSessionBloc,
+                    type: "Bowl",
+                    searchType: 'Bowl',
+                    ownedAccesory: personBloc.myGear.value != null
+                        ? personBloc.myGear.value
+                            .where((a) => a.type == 'Bowl')
+                            .toList()
+                        : new List<PipeAccesorySimpleDto>(),
+                    selectFunction: (a) => a.bowl),
+                Divider(),
+                new StreamMetadataItem(
+                    bloc: smokeSessionBloc,
+                    type: "hmd",
+                    searchType: 'heatmanagement',
+                    ownedAccesory: personBloc.myGear.value != null
+                        ? personBloc.myGear.value
+                            .where((a) => a.type == 'HeatManagement')
+                            .toList()
+                        : new List<PipeAccesorySimpleDto>(),
+                    selectFunction: (a) => a.heatManagement),
+                Divider(),
+                new StreamMetadataItem(
+                    bloc: smokeSessionBloc,
+                    type: "Coals",
+                    searchType: 'coal',
+                    ownedAccesory: personBloc.myGear.value != null
+                        ? personBloc.myGear.value
+                            .where((a) => a.type == 'Coal')
+                            .toList()
+                        : new List<PipeAccesorySimpleDto>(),
+                    selectFunction: (a) => a.coal),
+                Divider(),
+                /* buildCoalsCountItem(smokeSessionBloc),
+                SizedBox(
+                  height: 20,
                 ),
-                label: Text('Save preset'),
-                onPressed: () async {},
-              ),
-            ),*/
-            const SizedBox(
-              height: 8,
+                Center(
+                  child: OutlineButton.icon(
+                    borderSide: BorderSide(color: Colors.white),
+                    icon: Icon(
+                      Icons.save,
+                      color: AppColors.colors[0],
+                    ),
+                    label: Text('Save preset'),
+                    onPressed: () async {},
+                  ),
+                ),*/
+                const SizedBox(
+                  height: 8,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: MButton(
+                    icon: Icons.save,
+                    width: 200,
+                    maxWidth: 400,
+                    label: "common.save",
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ),
+                const SizedBox(
+                  height: 100,
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: MButton(
-                icon: Icons.save,
-                label: "common.save",
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ),
-            const SizedBox(
-              height: 100,
-            ),
-          ],
+          ),
         ),
       ),
     );

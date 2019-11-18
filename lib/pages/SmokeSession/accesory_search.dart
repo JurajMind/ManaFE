@@ -85,20 +85,30 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                 )
               ],
               centerTitle: true,
-              title: TextField(
-                style: Theme.of(context).textTheme.display2,
-                decoration: new InputDecoration(
-                    hintText:
-                        '${AppTranslations.of(context).text("common.search")} ${AppTranslations.of(context).text("gear." + widget.type.toLowerCase())}'),
-                controller: controller,
-                onSubmitted: submitSearch,
-                onChanged: _search,
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.search,
+              title: Center(
+                child: Container(
+                  constraints: BoxConstraints(maxWidth: 800),
+                  child: TextField(
+                    style: Theme.of(context).textTheme.display2,
+                    decoration: new InputDecoration(
+                        hintText:
+                            '${AppTranslations.of(context).text("common.search")} ${AppTranslations.of(context).text("gear." + widget.type.toLowerCase())}'),
+                    controller: controller,
+                    onSubmitted: submitSearch,
+                    onChanged: _search,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.search,
+                  ),
+                ),
               ),
             ),
             Expanded(
-                child: controller.text == "" ? buildDefault() : buildResult())
+                child: Center(
+                    child: Container(
+                        constraints: BoxConstraints(maxWidth: 800),
+                        child: controller.text == ""
+                            ? buildDefault()
+                            : buildResult())))
           ],
         ),
       ),

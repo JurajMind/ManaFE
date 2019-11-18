@@ -58,108 +58,110 @@ class _TobaccoPageState extends State<TobaccoPage> {
     }
     return new Container(
         color: Theme.of(context).backgroundColor,
-        child: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              backgroundColor: Colors.black,
-              pinned: true,
-              flexibleSpace: Container(),
-              actions: <Widget>[
-                IconButton(
-                    icon: Icon(Icons.share),
-                    onPressed: () async {
-                      var url =
-                          await ShareService.gearShareLink(this.pipeAccesory);
-                      Share.share(url.toString());
-                    }),
-              ],
-              title: Row(
-                children: <Widget>[
-                  Hero(
-                      tag: '${pipeAccesory.id}_name',
-                      child: Container(
-                          width: 50,
-                          height: 50,
-                          child: Extensions.accesoryPicture(pipeAccesory))),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Container(
-                      width: MediaQuery.of(context).size.width - 200,
-                      child: AutoSizeText(
-                        "${pipeAccesory.brand} ${pipeAccesory.name}",
-                        maxLines: 1,
-                        minFontSize: 8,
-                      ))
+        child: Center(
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                backgroundColor: Colors.black,
+                pinned: true,
+                flexibleSpace: Container(),
+                actions: <Widget>[
+                  IconButton(
+                      icon: Icon(Icons.share),
+                      onPressed: () async {
+                        var url =
+                            await ShareService.gearShareLink(this.pipeAccesory);
+                        Share.share(url.toString());
+                      }),
                 ],
-              ),
-              centerTitle: true,
-            ),
-            SliverList(
-              delegate: new SliverChildListDelegate(<Widget>[
-                const SizedBox(
-                  height: 16,
+                title: Row(
+                  children: <Widget>[
+                    Hero(
+                        tag: '${pipeAccesory.id}_name',
+                        child: Container(
+                            width: 50,
+                            height: 50,
+                            child: Extensions.accesoryPicture(pipeAccesory))),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Container(
+                        width: MediaQuery.of(context).size.width - 200,
+                        child: AutoSizeText(
+                          "${pipeAccesory.brand} ${pipeAccesory.name}",
+                          maxLines: 1,
+                          minFontSize: 8,
+                        ))
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: FractionallySizedBox(
-                    widthFactor: 0.7,
-                    child: AddRemoveGearButton(
-                      gear: pipeAccesory,
+                centerTitle: true,
+              ),
+              SliverList(
+                delegate: new SliverChildListDelegate(<Widget>[
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: FractionallySizedBox(
+                      widthFactor: 0.7,
+                      child: AddRemoveGearButton(
+                        gear: pipeAccesory,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                StreamBuilder<TobaccoInformationDto>(
-                    stream: this.information,
-                    builder: (context, snapshot) {
-                      return TobaccoReviewList(
-                        info: snapshot.data,
-                        label: true,
-                      );
-                    }),
-                SizedBox(
-                  height: 8,
-                ),
-                Divider(),
-                SizedBox(
-                  height: 8,
-                ),
-                StreamBuilder<TobaccoInformationDto>(
-                    stream: this.information,
-                    builder: (context, snapshot) {
-                      return SessionList(
-                        info: snapshot.data,
-                        sessionCount: 5,
-                      );
-                    }),
-                Divider(color: Colors.white),
-                SizedBox(
-                  height: 8,
-                ),
-                StreamBuilder<List<TobaccoMixSimpleDto>>(
-                    stream: this.inMix,
-                    builder: (context, snapshot) {
-                      return InMixList(
-                          sourceTobacco: pipeAccesory.id,
-                          mixes: snapshot.data,
-                          mixCount: 5,
-                          onPressed: () =>
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => InMixesLazyList(
-                                  initInMixes: snapshot.data,
-                                  tobacco: pipeAccesory,
-                                ),
-                              )));
-                    }),
-                SizedBox(
-                  height: 100,
-                ),
-              ]),
-            )
-          ],
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  StreamBuilder<TobaccoInformationDto>(
+                      stream: this.information,
+                      builder: (context, snapshot) {
+                        return TobaccoReviewList(
+                          info: snapshot.data,
+                          label: true,
+                        );
+                      }),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Divider(),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  StreamBuilder<TobaccoInformationDto>(
+                      stream: this.information,
+                      builder: (context, snapshot) {
+                        return SessionList(
+                          info: snapshot.data,
+                          sessionCount: 5,
+                        );
+                      }),
+                  Divider(color: Colors.white),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  StreamBuilder<List<TobaccoMixSimpleDto>>(
+                      stream: this.inMix,
+                      builder: (context, snapshot) {
+                        return InMixList(
+                            sourceTobacco: pipeAccesory.id,
+                            mixes: snapshot.data,
+                            mixCount: 5,
+                            onPressed: () =>
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => InMixesLazyList(
+                                    initInMixes: snapshot.data,
+                                    tobacco: pipeAccesory,
+                                  ),
+                                )));
+                      }),
+                  SizedBox(
+                    height: 100,
+                  ),
+                ]),
+              )
+            ],
+          ),
         ));
   }
 }

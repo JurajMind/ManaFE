@@ -29,42 +29,48 @@ class InMixList extends StatelessWidget {
 
     var sc = math.min(mixes.length, mixCount);
 
-    return Column(children: [
-      Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new Text(
-                AppTranslations.of(context).text("mix.used_in_mixes"),
-                style: Theme.of(context).textTheme.display1,
+    return Center(
+      child: Container(
+        constraints: BoxConstraints(maxWidth: 800),
+        child: Column(children: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new Text(
+                    AppTranslations.of(context).text("mix.used_in_mixes"),
+                    style: Theme.of(context).textTheme.display1,
+                  ),
+                  const SizedBox(
+                    width: 4,
+                  ),
+                  Icon(Icons.pie_chart)
+                ],
               ),
-              const SizedBox(
-                width: 4,
-              ),
-              Icon(Icons.pie_chart)
-            ],
+            ),
           ),
-        ),
+          if (mixes.length == 0)
+            Text(
+              'smoke_session.no_smoke_session',
+              style: Theme.of(context).textTheme.display2,
+            ),
+          if (mixes.length > 0) ...{
+            ...mixes.take(sc).map((s) => MixCardExpanded(
+                  tobaccoMix: s,
+                  highlightId: sourceTobacco,
+                )),
+          },
+          if (mixes.length > 0 && mixes.length >= sc)
+            MButton(
+                iconColor: Colors.red,
+                icon: Icons.clear_all,
+                label:
+                    AppTranslations.of(context).text("mix.all_ussage_in_mix"),
+                onPressed: onPressed),
+        ]),
       ),
-      if (mixes.length == 0)
-        Text(
-          'smoke_session.no_smoke_session',
-          style: Theme.of(context).textTheme.display2,
-        ),
-      if (mixes.length > 0) ...{
-        ...mixes.take(sc).map((s) => MixCardExpanded(
-              tobaccoMix: s,
-              highlightId: sourceTobacco,
-            )),
-      },
-      if (mixes.length > 0 && mixes.length >= sc)
-        MButton(
-            iconColor: Colors.red,
-            icon: Icons.clear_all,
-            label: AppTranslations.of(context).text("mix.all_ussage_in_mix"),
-            onPressed: onPressed),
-    ]);
+    );
   }
 }

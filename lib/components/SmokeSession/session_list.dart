@@ -40,40 +40,46 @@ class SessionList extends StatelessWidget {
 
     var sc = math.min(data.length, sessionCount);
 
-    return Column(children: [
-      Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new Text(
-                'Sessions',
-                style: Theme.of(context).textTheme.display1,
+    return Center(
+      child: Container(
+        constraints: BoxConstraints(maxWidth: 800),
+        child: Column(children: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new Text(
+                    'Sessions',
+                    style: Theme.of(context).textTheme.display1,
+                  ),
+                  const SizedBox(
+                    width: 4,
+                  ),
+                  Icon(Icons.list)
+                ],
               ),
-              const SizedBox(
-                width: 4,
-              ),
-              Icon(Icons.list)
-            ],
+            ),
           ),
-        ),
+          if (data.length == 0)
+            Text(
+              AppTranslations.of(context)
+                  .text('smoke_session.no_smoke_session'),
+              style: Theme.of(context).textTheme.display2,
+            ),
+          if (data.length > 0) ...{
+            ...data.take(sc).map((s) => SmokeSessionListItem(session: s)),
+          },
+          if (data.length > 0 && data.length > sc)
+            MButton(
+                iconColor: Colors.red,
+                icon: Icons.clear_all,
+                label: AppTranslations.of(context)
+                    .text('smoke_session.all_session'),
+                onPressed: onPressed),
+        ]),
       ),
-      if (data.length == 0)
-        Text(
-          AppTranslations.of(context).text('smoke_session.no_smoke_session'),
-          style: Theme.of(context).textTheme.display2,
-        ),
-      if (data.length > 0) ...{
-        ...data.take(sc).map((s) => SmokeSessionListItem(session: s)),
-      },
-      if (data.length > 0 && data.length > sc)
-        MButton(
-            iconColor: Colors.red,
-            icon: Icons.clear_all,
-            label:
-                AppTranslations.of(context).text('smoke_session.all_session'),
-            onPressed: onPressed),
-    ]);
+    );
   }
 }

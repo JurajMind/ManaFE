@@ -105,118 +105,123 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage>
           ],
           title: Text(
               "${DateUtils.toStringDate(start)} - ${DateUtils.toStringShortTime(start)} ${session.sessionId}")),
-      body: ListView(
-        children: <Widget>[
-          AnimatedBuilder(
-              animation: animationController,
-              builder: (BuildContext context, Widget child) {
-                return FadeTransition(
-                  opacity: animationController,
-                  child: Transform(
-                    transform: new Matrix4.translationValues(
-                        0.0, 30 * (1.0 - animationController.value), 0.0),
-                    child: StreamBuilder<FinishedSessionDataDto>(
-                      stream: this.data,
-                      initialData: null,
-                      builder: (BuildContext context, snapshot) {
-                        return Padding(
+      body: Center(
+        child: Container(
+          constraints: BoxConstraints(maxWidth: 800),
+          child: ListView(
+            children: <Widget>[
+              AnimatedBuilder(
+                  animation: animationController,
+                  builder: (BuildContext context, Widget child) {
+                    return FadeTransition(
+                      opacity: animationController,
+                      child: Transform(
+                        transform: new Matrix4.translationValues(
+                            0.0, 30 * (1.0 - animationController.value), 0.0),
+                        child: StreamBuilder<FinishedSessionDataDto>(
+                          stream: this.data,
+                          initialData: null,
+                          builder: (BuildContext context, snapshot) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Card(
+                                  elevation: 7,
+                                  color: Colors.black.withOpacity(0.2),
+                                  margin: EdgeInsets.all(4),
+                                  child: new SessionMetadataDetail(
+                                      snapshot?.data?.metaData)),
+                            );
+                          },
+                        ),
+                      ),
+                    );
+                  }),
+              SizedBox(
+                height: 16,
+              ),
+              AnimatedBuilder(
+                  animation: animationController,
+                  builder: (BuildContext context, Widget child) {
+                    return FadeTransition(
+                      opacity: animationController,
+                      child: Transform(
+                        transform: new Matrix4.translationValues(
+                            0.0, 30 * (1.0 - animationController.value), 0.0),
+                        child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Card(
-                              elevation: 7,
-                              color: Colors.black.withOpacity(0.2),
-                              margin: EdgeInsets.all(4),
-                              child: new SessionMetadataDetail(
-                                  snapshot?.data?.metaData)),
-                        );
-                      },
-                    ),
-                  ),
-                );
-              }),
-          SizedBox(
-            height: 16,
-          ),
-          AnimatedBuilder(
-              animation: animationController,
-              builder: (BuildContext context, Widget child) {
-                return FadeTransition(
-                  opacity: animationController,
-                  child: Transform(
-                    transform: new Matrix4.translationValues(
-                        0.0, 30 * (1.0 - animationController.value), 0.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        elevation: 7,
-                        color: Colors.black.withOpacity(0.2),
-                        child: StreamBuilder<List<SmartHookahModelsDbPuf>>(
-                          stream: this.pufs,
-                          initialData: null,
-                          builder: (BuildContext context, snapshot) {
-                            if (snapshot.data == null) {
-                              return SessionStatisticShimer();
-                            }
-                            return new SessionStatisticDetail(
-                                new Collection(inDurations),
-                                new Collection(outDurations),
-                                new Collection(idleDurations),
-                                this.data);
-                          },
+                            elevation: 7,
+                            color: Colors.black.withOpacity(0.2),
+                            child: StreamBuilder<List<SmartHookahModelsDbPuf>>(
+                              stream: this.pufs,
+                              initialData: null,
+                              builder: (BuildContext context, snapshot) {
+                                if (snapshot.data == null) {
+                                  return SessionStatisticShimer();
+                                }
+                                return new SessionStatisticDetail(
+                                    new Collection(inDurations),
+                                    new Collection(outDurations),
+                                    new Collection(idleDurations),
+                                    this.data);
+                              },
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                );
-              }),
-          AnimatedBuilder(
-              animation: animationController,
-              builder: (BuildContext context, Widget child) {
-                return FadeTransition(
-                  opacity: animationController,
-                  child: Transform(
-                    transform: new Matrix4.translationValues(
-                        0.0, 30 * (1.0 - animationController.value), 0.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        elevation: 7,
-                        color: Colors.black.withOpacity(0.2),
-                        child: StreamBuilder<List<SmartHookahModelsDbPuf>>(
-                          stream: this.pufs,
-                          initialData: null,
-                          builder: (BuildContext context, snapshot) {
-                            if (snapshot.data == null)
-                              return SmokeProgressGraphShimer();
-                            return SmokeProgressGraph(snapshot.data);
-                          },
+                    );
+                  }),
+              AnimatedBuilder(
+                  animation: animationController,
+                  builder: (BuildContext context, Widget child) {
+                    return FadeTransition(
+                      opacity: animationController,
+                      child: Transform(
+                        transform: new Matrix4.translationValues(
+                            0.0, 30 * (1.0 - animationController.value), 0.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            elevation: 7,
+                            color: Colors.black.withOpacity(0.2),
+                            child: StreamBuilder<List<SmartHookahModelsDbPuf>>(
+                              stream: this.pufs,
+                              initialData: null,
+                              builder: (BuildContext context, snapshot) {
+                                if (snapshot.data == null)
+                                  return SmokeProgressGraphShimer();
+                                return SmokeProgressGraph(snapshot.data);
+                              },
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                );
-              }),
-          const SizedBox(
-            height: 16,
-          ),
-          StreamBuilder<FinishedSessionDataDto>(
-              stream: this.data,
-              builder: (context, snapshot) {
-                if (snapshot.data == null) return Container();
+                    );
+                  }),
+              const SizedBox(
+                height: 16,
+              ),
+              StreamBuilder<FinishedSessionDataDto>(
+                  stream: this.data,
+                  builder: (context, snapshot) {
+                    if (snapshot.data == null) return Container();
 
-                return FractionallySizedBox(
-                    widthFactor: 0.7,
-                    child: LeaveSessionButton(
-                      sessionId: widget.session.id,
-                      assigned: snapshot.data.assigned,
-                      callback: (value) {
-                        var old = this.data.value;
-                        old.assigned = value;
-                        this.data.add(old);
-                      },
-                    ));
-              }),
-          const SizedBox(height: 100)
-        ],
+                    return FractionallySizedBox(
+                        widthFactor: 0.7,
+                        child: LeaveSessionButton(
+                          sessionId: widget.session.id,
+                          assigned: snapshot.data.assigned,
+                          callback: (value) {
+                            var old = this.data.value;
+                            old.assigned = value;
+                            this.data.add(old);
+                          },
+                        ));
+                  }),
+              const SizedBox(height: 100)
+            ],
+          ),
+        ),
       ),
     );
   }

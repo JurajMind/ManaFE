@@ -110,6 +110,9 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
 
   @override
   Widget build(BuildContext context) {
+    var shortestSide = MediaQuery.of(context).size.shortestSide;
+    var useTabletLayout = shortestSide > 600;
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: AspectRatio(
@@ -158,7 +161,7 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
                                     show: false,
                                   ),
                                   sectionsSpace: 0,
-                                  centerSpaceRadius: 40,
+                                  centerSpaceRadius: useTabletLayout ? 160 : 40,
                                   sections: showingSections),
                             ),
                           ),

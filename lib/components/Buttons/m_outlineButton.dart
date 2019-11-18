@@ -7,6 +7,8 @@ class MButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
   final bool uploading;
+  final double width;
+  final double maxWidth;
   const MButton({
     Key key,
     this.icon,
@@ -14,6 +16,8 @@ class MButton extends StatelessWidget {
     this.onPressed,
     this.iconColor = Colors.white,
     this.uploading,
+    this.width,
+    this.maxWidth,
   }) : super(key: key);
 
   @override
@@ -39,27 +43,39 @@ class MButton extends StatelessWidget {
           onPressed: onPressed,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              AppTranslations.of(context).text(label),
-              style: Theme.of(context).textTheme.display2,
+            child: Container(
+              constraints: BoxConstraints(
+                  minWidth: width ?? 0, maxWidth: maxWidth ?? double.infinity),
+              child: Text(
+                AppTranslations.of(context).text(label),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.display2,
+              ),
             ),
           ));
 
-    return OutlineButton.icon(
-      shape: shape,
-      borderSide: side,
-      icon: Icon(
-        icon,
-        color: iconColor,
-      ),
-      label: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(
-          AppTranslations.of(context).text(label),
-          style: Theme.of(context).textTheme.display2,
+    return Container(
+      child: OutlineButton.icon(
+        shape: shape,
+        borderSide: side,
+        icon: Icon(
+          icon,
+          color: iconColor,
         ),
+        label: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            constraints: BoxConstraints(
+                minWidth: width ?? 0, maxWidth: maxWidth ?? double.infinity),
+            child: Text(
+              AppTranslations.of(context).text(label),
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.display2,
+            ),
+          ),
+        ),
+        onPressed: onPressed,
       ),
-      onPressed: onPressed,
     );
   }
 }
