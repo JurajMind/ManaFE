@@ -47,7 +47,9 @@ class _ManageReservationPageState extends State<ManageReservationPage>
             itemBuilder: (context, index) {
               if (index == 0) {
                 return new ReservationRowHeader(
-                    slots: slots, startTime: startTime);
+                  slots: slots,
+                  startTime: startTime,
+                );
               }
 
               var seat = widget.place.seats[index - 1];
@@ -58,6 +60,7 @@ class _ManageReservationPageState extends State<ManageReservationPage>
                 reservation: snapshot.data.reservations
                     .where((test) => test.seats.contains(seat.id))
                     .toList(),
+                slotSize: snapshot.data.timeSlotSize,
               );
             },
           ));
@@ -97,8 +100,8 @@ class ReservationRowHeader extends StatelessWidget {
                 ),
               ),
               child: Text(
-                DateUtils.toStringShortTime(startTime.add(
-                    new Duration(minutes: index * snapshot.data.timeSlotSize))),
+                DateUtils.toStringShortTime(
+                    startTime.add(new Duration(minutes: index * 30))),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.display3,
               ),
@@ -115,9 +118,9 @@ class ReservationRow extends StatelessWidget {
     Key key,
     @required this.seat,
     @required this.slots,
-    this.reservation,
-    this.start,
-    this.slotSize,
+    @required this.reservation,
+    @required this.start,
+    @required this.slotSize,
   }) : super(key: key);
 
   final SeatDto seat;
@@ -156,24 +159,27 @@ class ReservationRow extends StatelessWidget {
             child: Container(
                 decoration: BoxDecoration(
                   border: Border(
+                      bottom: BorderSide(color: Colors.white, width: 2.0),
                       right: BorderSide(
-                    //                   <--- left side
-                    color: Colors.white,
-                    width: 2.0,
-                  )),
+                        //                   <--- left side
+                        color: Colors.white,
+                        width: 2.0,
+                      )),
                 ),
                 constraints: BoxConstraints(maxHeight: 100, minHeight: 40),
                 child: Column(
                   children: <Widget>[
                     Text(seat.name),
                     Text(seat.capacity.toString()),
-                    Text(reservation.length.toString())
                   ],
                 ))),
         ...List.generate(slots.toInt(), (index) {
           return Expanded(
             flex: 1,
-            child: Container(),
+            child: Container(
+              height: 40,
+              color: Colors.white,
+            ),
           );
         })
       ],

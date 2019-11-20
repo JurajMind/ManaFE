@@ -1,29 +1,29 @@
 PODS:
   - apple_sign_in (0.0.1):
     - Flutter
-  - Bolts (1.9.0):
-    - Bolts/AppLinks (= 1.9.0)
-    - Bolts/Tasks (= 1.9.0)
-  - Bolts/AppLinks (1.9.0):
-    - Bolts/Tasks
-  - Bolts/Tasks (1.9.0)
   - fast_qr_reader_view (0.0.1):
     - Flutter
-  - FBSDKCoreKit (4.39.1):
-    - Bolts (~> 1.9)
-  - FBSDKLoginKit (4.39.1):
-    - FBSDKCoreKit
-  - Firebase/Core (5.16.0):
+  - FBSDKCoreKit (5.11.0):
+    - FBSDKCoreKit/Basics (= 5.11.0)
+    - FBSDKCoreKit/Core (= 5.11.0)
+  - FBSDKCoreKit/Basics (5.11.0)
+  - FBSDKCoreKit/Core (5.11.0):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (5.11.0):
+    - FBSDKLoginKit/Login (= 5.11.0)
+  - FBSDKLoginKit/Login (5.11.0):
+    - FBSDKCoreKit (~> 5.0)
+  - Firebase/Core (6.13.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (= 5.5.0)
-  - Firebase/CoreOnly (5.16.0):
-    - FirebaseCore (= 5.2.0)
-  - Firebase/DynamicLinks (5.16.0):
+    - FirebaseAnalytics (= 6.1.6)
+  - Firebase/CoreOnly (6.13.0):
+    - FirebaseCore (= 6.4.0)
+  - Firebase/DynamicLinks (6.13.0):
     - Firebase/CoreOnly
-    - FirebaseDynamicLinks (= 3.4.0)
-  - Firebase/Messaging (5.16.0):
+    - FirebaseDynamicLinks (~> 4.0.5)
+  - Firebase/Messaging (6.13.0):
     - Firebase/CoreOnly
-    - FirebaseMessaging (= 3.3.0)
+    - FirebaseMessaging (~> 4.1.9)
   - firebase_dynamic_links (0.1.0):
     - Firebase/DynamicLinks
     - Flutter
@@ -31,99 +31,106 @@ PODS:
     - Firebase/Core
     - Firebase/Messaging
     - Flutter
-  - FirebaseAnalytics (5.5.0):
-    - FirebaseCore (~> 5.2)
-    - FirebaseInstanceID (~> 3.4)
-    - GoogleAppMeasurement (= 5.5.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
-    - GoogleUtilities/MethodSwizzler (~> 5.2)
-    - GoogleUtilities/Network (~> 5.2)
-    - "GoogleUtilities/NSData+zlib (~> 5.2)"
-    - nanopb (~> 0.3)
-  - FirebaseAnalyticsInterop (1.1.0)
-  - FirebaseCore (5.2.0):
-    - GoogleUtilities/Logger (~> 5.2)
-  - FirebaseDynamicLinks (3.4.0):
-    - FirebaseAnalytics (~> 5.1)
-    - FirebaseAnalyticsInterop (~> 1.0)
-    - FirebaseCore (~> 5.2)
-  - FirebaseInstanceID (3.4.0):
-    - FirebaseCore (~> 5.2)
-    - GoogleUtilities/Environment (~> 5.3)
-    - GoogleUtilities/UserDefaults (~> 5.3)
-  - FirebaseMessaging (3.3.0):
-    - FirebaseAnalyticsInterop (~> 1.1)
-    - FirebaseCore (~> 5.2)
-    - FirebaseInstanceID (~> 3.4)
-    - GoogleUtilities/Environment (~> 5.2)
-    - GoogleUtilities/Reachability (~> 5.2)
-    - Protobuf (~> 3.1)
+  - FirebaseAnalytics (6.1.6):
+    - FirebaseCore (~> 6.4)
+    - FirebaseInstanceID (~> 4.2)
+    - GoogleAppMeasurement (= 6.1.6)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
+    - GoogleUtilities/MethodSwizzler (~> 6.0)
+    - GoogleUtilities/Network (~> 6.0)
+    - "GoogleUtilities/NSData+zlib (~> 6.0)"
+    - nanopb (= 0.3.9011)
+  - FirebaseAnalyticsInterop (1.4.0)
+  - FirebaseCore (6.4.0):
+    - FirebaseCoreDiagnostics (~> 1.0)
+    - FirebaseCoreDiagnosticsInterop (~> 1.0)
+    - GoogleUtilities/Environment (~> 6.2)
+    - GoogleUtilities/Logger (~> 6.2)
+  - FirebaseCoreDiagnostics (1.1.1):
+    - FirebaseCoreDiagnosticsInterop (~> 1.0)
+    - GoogleDataTransportCCTSupport (~> 1.0)
+    - GoogleUtilities/Environment (~> 6.2)
+    - GoogleUtilities/Logger (~> 6.2)
+    - nanopb (~> 0.3.901)
+  - FirebaseCoreDiagnosticsInterop (1.1.0)
+  - FirebaseDynamicLinks (4.0.5):
+    - FirebaseAnalyticsInterop (~> 1.3)
+    - FirebaseCore (~> 6.2)
+  - FirebaseInstanceID (4.2.7):
+    - FirebaseCore (~> 6.0)
+    - GoogleUtilities/Environment (~> 6.0)
+    - GoogleUtilities/UserDefaults (~> 6.0)
+  - FirebaseMessaging (4.1.9):
+    - FirebaseAnalyticsInterop (~> 1.3)
+    - FirebaseCore (~> 6.2)
+    - FirebaseInstanceID (~> 4.1)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.2)
+    - GoogleUtilities/Environment (~> 6.2)
+    - GoogleUtilities/Reachability (~> 6.2)
+    - GoogleUtilities/UserDefaults (~> 6.2)
+    - Protobuf (>= 3.9.2, ~> 3.9)
   - Flutter (1.0.0)
   - flutter_facebook_login (0.0.1):
-    - FBSDKCoreKit (= 4.39.1)
-    - FBSDKLoginKit (= 4.39.1)
+    - FBSDKCoreKit (~> 5.5)
+    - FBSDKLoginKit (~> 5.5)
     - Flutter
-  - flutter_secure_storage (3.3.1):
+  - flutter_keyboard_visibility (0.7.0):
     - Flutter
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - geolocator (5.1.3):
+  - geolocator (5.1.4):
     - Flutter
   - google_api_availability (2.0.1):
     - Flutter
   - google_maps_flutter (0.0.1):
     - Flutter
     - GoogleMaps
-  - GoogleAppMeasurement (5.5.0):
-    - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
-    - GoogleUtilities/MethodSwizzler (~> 5.2)
-    - GoogleUtilities/Network (~> 5.2)
-    - "GoogleUtilities/NSData+zlib (~> 5.2)"
-    - nanopb (~> 0.3)
-  - GoogleMaps (2.7.0):
-    - GoogleMaps/Maps (= 2.7.0)
-  - GoogleMaps/Base (2.7.0)
-  - GoogleMaps/Maps (2.7.0):
+  - GoogleAppMeasurement (6.1.6):
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
+    - GoogleUtilities/MethodSwizzler (~> 6.0)
+    - GoogleUtilities/Network (~> 6.0)
+    - "GoogleUtilities/NSData+zlib (~> 6.0)"
+    - nanopb (= 0.3.9011)
+  - GoogleDataTransport (3.1.0)
+  - GoogleDataTransportCCTSupport (1.2.1):
+    - GoogleDataTransport (~> 3.0)
+    - nanopb (~> 0.3.901)
+  - GoogleMaps (3.6.0):
+    - GoogleMaps/Maps (= 3.6.0)
+  - GoogleMaps/Base (3.6.0)
+  - GoogleMaps/Maps (3.6.0):
     - GoogleMaps/Base
-  - GoogleUtilities/AppDelegateSwizzler (5.3.7):
+  - GoogleUtilities/AppDelegateSwizzler (6.3.2):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (5.3.7)
-  - GoogleUtilities/Logger (5.3.7):
+  - GoogleUtilities/Environment (6.3.2)
+  - GoogleUtilities/Logger (6.3.2):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (5.3.7):
+  - GoogleUtilities/MethodSwizzler (6.3.2):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (5.3.7):
+  - GoogleUtilities/Network (6.3.2):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (5.3.7)"
-  - GoogleUtilities/Reachability (5.3.7):
+  - "GoogleUtilities/NSData+zlib (6.3.2)"
+  - GoogleUtilities/Reachability (6.3.2):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (5.3.7):
+  - GoogleUtilities/UserDefaults (6.3.2):
     - GoogleUtilities/Logger
   - image_picker (0.0.1):
     - Flutter
-  - keyboard_visibility (0.5.0):
+  - location_permissions (2.0.3):
     - Flutter
-    - Reachability
-  - location_permissions (2.0.2):
-    - Flutter
-  - nanopb (0.3.901):
-    - nanopb/decode (= 0.3.901)
-    - nanopb/encode (= 0.3.901)
-  - nanopb/decode (0.3.901)
-  - nanopb/encode (0.3.901)
+  - nanopb (0.3.9011):
+    - nanopb/decode (= 0.3.9011)
+    - nanopb/encode (= 0.3.9011)
+  - nanopb/decode (0.3.9011)
+  - nanopb/encode (0.3.9011)
   - path_provider (0.0.1):
     - Flutter
-  - Protobuf (3.6.1)
-  - Reachability (3.2)
-  - screen (0.0.1):
-    - Flutter
-  - screenshot_share (0.0.1):
-    - Flutter
+  - Protobuf (3.10.0)
   - sensors (0.0.1):
     - Flutter
   - share (0.5.2):
@@ -135,9 +142,7 @@ PODS:
     - FMDB (~> 2.7.2)
   - url_launcher (0.0.1):
     - Flutter
-  - vibrate (0.0.1):
-    - Flutter
-  - video_player (0.0.1):
+  - vibration (1.2.2):
     - Flutter
   - webview_flutter (0.0.1):
     - Flutter
@@ -147,46 +152,44 @@ DEPENDENCIES:
   - fast_qr_reader_view (from `.symlinks/plugins/fast_qr_reader_view/ios`)
   - firebase_dynamic_links (from `.symlinks/plugins/firebase_dynamic_links/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
-  - Flutter (from `.symlinks/flutter/ios-release`)
+  - Flutter (from `.symlinks/flutter/ios`)
   - flutter_facebook_login (from `.symlinks/plugins/flutter_facebook_login/ios`)
-  - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
+  - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - geolocator (from `.symlinks/plugins/geolocator/ios`)
   - google_api_availability (from `.symlinks/plugins/google_api_availability/ios`)
   - google_maps_flutter (from `.symlinks/plugins/google_maps_flutter/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
-  - keyboard_visibility (from `.symlinks/plugins/keyboard_visibility/ios`)
   - location_permissions (from `.symlinks/plugins/location_permissions/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
-  - screen (from `.symlinks/plugins/screen/ios`)
-  - screenshot_share (from `.symlinks/plugins/screenshot_share/ios`)
   - sensors (from `.symlinks/plugins/sensors/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
-  - vibrate (from `.symlinks/plugins/vibrate/ios`)
-  - video_player (from `.symlinks/plugins/video_player/ios`)
+  - vibration (from `.symlinks/plugins/vibration/ios`)
   - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - Bolts
+  trunk:
     - FBSDKCoreKit
     - FBSDKLoginKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
     - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseCoreDiagnosticsInterop
     - FirebaseDynamicLinks
     - FirebaseInstanceID
     - FirebaseMessaging
     - FMDB
     - GoogleAppMeasurement
+    - GoogleDataTransport
+    - GoogleDataTransportCCTSupport
     - GoogleMaps
     - GoogleUtilities
     - nanopb
     - Protobuf
-    - Reachability
 
 EXTERNAL SOURCES:
   apple_sign_in:
@@ -198,11 +201,11 @@ EXTERNAL SOURCES:
   firebase_messaging:
     :path: ".symlinks/plugins/firebase_messaging/ios"
   Flutter:
-    :path: ".symlinks/flutter/ios-release"
+    :path: ".symlinks/flutter/ios"
   flutter_facebook_login:
     :path: ".symlinks/plugins/flutter_facebook_login/ios"
-  flutter_secure_storage:
-    :path: ".symlinks/plugins/flutter_secure_storage/ios"
+  flutter_keyboard_visibility:
+    :path: ".symlinks/plugins/flutter_keyboard_visibility/ios"
   geolocator:
     :path: ".symlinks/plugins/geolocator/ios"
   google_api_availability:
@@ -211,16 +214,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_maps_flutter/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
-  keyboard_visibility:
-    :path: ".symlinks/plugins/keyboard_visibility/ios"
   location_permissions:
     :path: ".symlinks/plugins/location_permissions/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
-  screen:
-    :path: ".symlinks/plugins/screen/ios"
-  screenshot_share:
-    :path: ".symlinks/plugins/screenshot_share/ios"
   sensors:
     :path: ".symlinks/plugins/sensors/ios"
   share:
@@ -231,56 +228,52 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
-  vibrate:
-    :path: ".symlinks/plugins/vibrate/ios"
-  video_player:
-    :path: ".symlinks/plugins/video_player/ios"
+  vibration:
+    :path: ".symlinks/plugins/vibration/ios"
   webview_flutter:
     :path: ".symlinks/plugins/webview_flutter/ios"
 
 SPEC CHECKSUMS:
   apple_sign_in: 7716c7ddfa195aeab7dec0dc374ef4ff45d1adb4
-  Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   fast_qr_reader_view: 53b38a544886e650381ca579e0cdd5ae142fffa6
-  FBSDKCoreKit: f442aa96179cc9b382bb4abeb7e340a47cca8f91
-  FBSDKLoginKit: c3079d9a4db27c492287b1eed7a4272b28cf8a59
-  Firebase: 749a8ff4962f9d8c79dda1966de20f6f77583d67
+  FBSDKCoreKit: 9fbfb5b0022d34861bfa6b79f56f8e2ddcd8170b
+  FBSDKLoginKit: 0e976e0c91ee69dd5dc69062c095205146f1dd9f
+  Firebase: 458d109512200d1aca2e1b9b6cf7d68a869a4a46
   firebase_dynamic_links: 8d74d4ad9b2ee776887354d2e72734b281869f53
-  firebase_messaging: b25b2fa94e685146bcf9d706ed87b4e95cd2a17d
-  FirebaseAnalytics: d35d47c03c50c73c14a7fd31463c5775843e78a9
-  FirebaseAnalyticsInterop: e5f21be9af6548372e2f0815834ff909bff395a2
-  FirebaseCore: ea2d1816723ef21492b8e9113303e1350db5e08c
-  FirebaseDynamicLinks: 83a0071c95ad715bc324fcb8f51028d5b6a58af0
-  FirebaseInstanceID: 97ea7a5dca9afd72c79bfcdddb7a44aa1cbb42a1
-  FirebaseMessaging: acbd51fe1a172bf29abaaa6e93a60f98bbf8e4f9
+  firebase_messaging: 0d5c04cc40f58bd4bf7f2992c91050f9bc01bec3
+  FirebaseAnalytics: 45f36d9c429fc91d206283900ab75390cd05ee8a
+  FirebaseAnalyticsInterop: d48b6ab67bcf016a05e55b71fc39c61c0cb6b7f3
+  FirebaseCore: 307ea2508df730c5865334e41965bd9ea344b0e5
+  FirebaseCoreDiagnostics: af29e43048607588c050889d19204f4d7b758c9f
+  FirebaseCoreDiagnosticsInterop: e9b1b023157e3a2fc6418b5cb601e79b9af7b3a0
+  FirebaseDynamicLinks: db62e9da4788f9c5ebce2028dab933a0c158cfe2
+  FirebaseInstanceID: ebd2ea79ee38db0cb5f5167b17a0d387e1cc7b6e
+  FirebaseMessaging: e8d71368a5c579083da02203146c953f3386d503
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_facebook_login: be61e24a4b7d621515353c6b4583d1981bdaa3d6
-  flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
+  flutter_facebook_login: cfb5659f686b1c575ef205c6b6fd20db9679d3c4
+  flutter_keyboard_visibility: 6195387fb6d8f46e5cd6dda4a4154e41f800f545
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  geolocator: 2d5da6891d865c0f1b4f851683eed890dd9c8bc1
+  geolocator: c98cc4a1f2558c11fa5db0fccad80883cde6eb4f
   google_api_availability: 163b30f802e6148c67f092aa4501c90ddd8eec8d
   google_maps_flutter: 78a52114c898b42ea647919679a4c58b70abe876
-  GoogleAppMeasurement: 621f3bc6211d5ba548debe01fafad30cf5ab6859
-  GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
-  GoogleUtilities: 111a012f4c3a29c9e7c954c082fafd6ee3c999c0
-  image_picker: 16e5fec1fbc87fd3b297c53e4048521eaf17cd06
-  keyboard_visibility: 96a24de806fe6823c3ad956c01ba2ec6d056616f
-  location_permissions: 67cfaff583afbb027a9f9248196f4b79c40f3cdc
-  nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
-  path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259
-  Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
-  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  screen: abd91ca7bf3426e1cc3646d27e9b2358d6bf07b0
-  screenshot_share: 60f8cd3f052825c80d339cd20dc6972ae7565985
-  sensors: b5c565b45237fd2df1c347c14bf5ceeffdb7a2be
-  share: 7d22fe8baedfe93aefd864bf0b73f29711fbb0a3
-  shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
+  GoogleAppMeasurement: dfe55efa543e899d906309eaaac6ca26d249862f
+  GoogleDataTransport: 67cc56f6280d1bc9d470285e851ec49ee9013dba
+  GoogleDataTransportCCTSupport: f6ab1962e9dc05ab1fb938b795e5b310209edeec
+  GoogleMaps: 82f8fe307193bb4de6ef6bf9e88f1d624b718f9d
+  GoogleUtilities: 547a86735c6f0ee30ad17e94df4fc21f616b71cb
+  image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
+  location_permissions: 195ff2a1182fa9029ef3f2653156961ee5a1e40b
+  nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
+  Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
+  sensors: 4bd31219c4bf9d7d4401b392a1701ee3adc1a296
+  share: bae0a282aab4483288913fc4dc0b935d4b491f2e
+  shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
   sqflite: ff1d9da63c06588cc8d1faf7256d741f16989d5a
-  url_launcher: 0067ddb8f10d36786672aa0722a21717dba3a298
-  vibrate: 967ba16b8bd87d2fa3646472bb10429f1927c32f
-  video_player: 3964090a33353060ed7f58aa6427c7b4b208ec21
-  webview_flutter: 1aa7604e6cdb451a9b7ed2c37d5454c0b440246b
+  url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
+  vibration: 2f659072a9e03ae160974238b728c96e98bce2b5
+  webview_flutter: db3aba222b23e4dc432e0c5882834123dc50ff9f
 
-PODFILE CHECKSUM: 284201c400393a333b72d937a5838f3f536ffb7f
+PODFILE CHECKSUM: 1db8a90d256f584d8954a8ee87c8a2383c354302
 
-COCOAPODS: 1.7.2
+COCOAPODS: 1.8.4

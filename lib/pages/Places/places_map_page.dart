@@ -232,11 +232,23 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                         ),
                         Positioned(
                           top: 10,
-                          right: MediaQuery.of(context).size.width / 2,
+                          left: MediaQuery.of(context).size.width * 0.2,
                           child: AnimatedOpacity(
                             opacity: !moving ? 1.0 : 0.0,
                             duration: Duration(milliseconds: 500),
-                            child: buildFloatingSearchButton(context),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.6,
+
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    buildFloatingSearchButton(context),
+                                    buildFloatingRefreshButton(),
+                                     ManagePlaceBtn()
+                                  ],
+                                ),
+                            ),
                           ),
                         ),
                         Positioned(
@@ -250,15 +262,6 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                                     onPressed: () =>
                                         Navigator.of(context).pop(),
                                   )),
-                        Positioned(
-                          top: 10,
-                          right: (MediaQuery.of(context).size.width / 2) - 60,
-                          child: AnimatedOpacity(
-                            opacity: !moving ? 1.0 : 0.0,
-                            duration: Duration(milliseconds: 500),
-                            child: buildFloatingRefreshButton(),
-                          ),
-                        ),
                         Positioned(
                             bottom: 170,
                             right: (MediaQuery.of(context).size.width / 2) - 60,
