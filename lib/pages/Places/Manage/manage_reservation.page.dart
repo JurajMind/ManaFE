@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
+import 'Components/reservation_cell.dart';
+
 class ManageReservationPage extends StatefulWidget {
   final PlaceDto place;
   ManageReservationPage({Key key, this.place}) : super(key: key);
@@ -38,6 +40,8 @@ class _ManageReservationPageState extends State<ManageReservationPage>
                   .difference(snapshot.data.startTime)
                   .inMinutes /
               snapshot.data.timeSlotSize;
+
+              slots ++;
 
           var startTime = snapshot.data.startTime;
 
@@ -103,7 +107,7 @@ class ReservationRowHeader extends StatelessWidget {
                 DateUtils.toStringShortTime(
                     startTime.add(new Duration(minutes: index * 30))),
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.display3,
+                style: Theme.of(context).textTheme.display4,
               ),
             ),
           );
@@ -131,10 +135,12 @@ class ReservationRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var cellWidth = size.width / (slots + 1);
     List<ColumnData> slotData = new List<ColumnData>();
 
     for (int i = 0; i < slots.toInt(); i++) {
-      var time = start.add(new Duration(minutes: slotSize));
+      var time = start.add(new Duration(minutes: slotSize * i));
       var timeReservation = reservation.where((r) {
         return r.time.compareTo(time) == 0;
       });
@@ -144,42 +150,43 @@ class ReservationRow extends StatelessWidget {
           ..index = i
           ..size = 1);
       } else {
+       var sSize = DateUtils.parseDuration(timeReservation.first.duration)
+                  .inMinutes ~/ slotSize;
         slotData.add(new ColumnData()
           ..index = i
-          ..size = DateUtils.parseDuration(timeReservation.first.duration)
-                  .inMinutes ~/
-              slotSize);
+          ..reservation = timeReservation.first
+          ..size = sSize);
+              i = i + sSize -1 ; 
       }
     }
 
     return Row(
       children: <Widget>[
-        Expanded(
-            flex: 1,
-            child: Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(color: Colors.white, width: 2.0),
-                      right: BorderSide(
-                        //                   <--- left side
-                        color: Colors.white,
-                        width: 2.0,
-                      )),
-                ),
-                constraints: BoxConstraints(maxHeight: 100, minHeight: 40),
-                child: Column(
-                  children: <Widget>[
-                    Text(seat.name),
-                    Text(seat.capacity.toString()),
-                  ],
-                ))),
-        ...List.generate(slots.toInt(), (index) {
-          return Expanded(
-            flex: 1,
-            child: Container(
-              height: 40,
-              color: Colors.white,
+        Container(
+          width: cellWidth,
+            decoration: BoxDecoration(
+              border: Border(
+                  bottom: BorderSide(color: Colors.white, width: 2.0),
+                  right: BorderSide(
+                    color: Colors.white,
+                    width: 2.0,
+                  )),
             ),
+            constraints: BoxConstraints(maxHeight: 100, minHeight: 40),
+            child: Column(
+              children: <Widget>[
+                Text(seat.name),
+                Text(seat.capacity.toString()),
+                Text(slotData.length.toString())
+              ],
+            )),
+        ...slotData.map((d) {
+          return ReservationCell(
+            cellWidth: cellWidth,
+            data: d,
+            onAccept: (data) {
+              print(data.index);
+            },
           );
         })
       ],
