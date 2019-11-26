@@ -127,8 +127,8 @@ class _ColorSessionGimickState extends State<ColorSessionGimick>
             painter: BgPainter(
               color: background
                   .evaluate(AlwaysStoppedAnimation(_controller.value)),
-              logoSize: 0.5,
-              startPoint: Offset(widget.screenSize.width * 0.5, -50),
+              logoSize: 0.45,
+              startPoint: Offset(0, -50),
               hueRotation: -4,
             ),
           );

@@ -9,8 +9,8 @@ import 'package:app/pages/SmokeSession/Components/puff_timer.dart';
 import 'package:app/pages/SmokeSession/Components/stop_watches.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:queries/collections.dart';
-import 'package:vibration/vibration.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
@@ -109,7 +109,7 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
       App.http
           .addCompetitionEntry(_textFieldController.text, lastPuf)
           .then((onValue) {
-        Vibration.vibrate(duration: 1000, amplitude: 128);
+                   HapticFeedback.selectionClick();
         setState(() {
           _textFieldController.text = '';
         });

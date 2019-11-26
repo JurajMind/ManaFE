@@ -56,41 +56,47 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double width = MediaQuery.of(context).size.width;
+    double circleSize = math.min(math.min(size.height,size.width), 400);
     return Stack(
       children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(10.0),
-          child: GestureDetector(
-            onTapDown: (TapDownDetails details) {
-              RenderBox getBox = context.findRenderObject();
-              Offset localOffset = getBox.globalToLocal(details.globalPosition);
-              colorUpdate(localOffset, size);
+        Container(
+                    height: circleSize,
+                    width: circleSize,
 
-              widget.onColorChanged(selectedColor);
-            },
-            onPanUpdate: (DragUpdateDetails details) {
-              RenderBox getBox = context.findRenderObject();
-              Offset localOffset = getBox.globalToLocal(details.globalPosition);
-              colorUpdate(localOffset, size);
-            },
-            onPanEnd: (DragEndDetails details) {
-              widget.onColorChanged(selectedColor);
-            },
-            child: RepaintBoundary(
-              child: Transform.rotate(
-                angle: 0.2,
-                child: new Container(
-                  width: math.min(size.height, 400),
-                  height: math.min(size.height, 400),
-                  decoration: new BoxDecoration(
-                      image: new DecorationImage(
-                          image: AssetImage("images/color_wheel.png"),
-                          fit: BoxFit.fill),
-                      borderRadius:
-                          new BorderRadius.all(Radius.circular(width / 2)),
-                      border: new Border.all(
-                          color: const Color.fromRGBO(221, 221, 221, 1.0),
-                          width: 2.5)),
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: GestureDetector(
+              onTapDown: (TapDownDetails details) {
+                RenderBox getBox = context.findRenderObject();
+                Offset localOffset = getBox.globalToLocal(details.globalPosition);
+                colorUpdate(localOffset, size);
+
+                widget.onColorChanged(selectedColor);
+              },
+              onPanUpdate: (DragUpdateDetails details) {
+                RenderBox getBox = context.findRenderObject();
+                Offset localOffset = getBox.globalToLocal(details.globalPosition);
+                colorUpdate(localOffset, size);
+              },
+              onPanEnd: (DragEndDetails details) {
+                widget.onColorChanged(selectedColor);
+              },
+              child: RepaintBoundary(
+                child: Transform.rotate(
+                  angle: 0.2,
+                  child: new Container(
+                    width: circleSize - 20,
+                    height: circleSize - 20,
+                    decoration: new BoxDecoration(
+                        image: new DecorationImage(
+                            image: AssetImage("images/color_wheel.png"),
+                            fit: BoxFit.fill),
+                        borderRadius:
+                            new BorderRadius.all(Radius.circular(width / 2)),
+                        border: new Border.all(
+                            color: const Color.fromRGBO(221, 221, 221, 1.0),
+                            width: 2.5)),
+                  ),
                 ),
               ),
             ),

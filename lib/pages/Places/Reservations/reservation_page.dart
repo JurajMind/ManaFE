@@ -10,11 +10,11 @@ import 'package:app/pages/Places/Reservations/reservation_detail_page.dart';
 import 'package:app/utils/date_helper.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:date_format/date_format.dart';
-import 'package:vibration/vibration.dart';
 
 class ReservationPage extends StatefulWidget {
   final PlaceSimpleDto place;
@@ -409,7 +409,7 @@ class _ReservationPageState extends State<ReservationPage> {
           maxValue: 10,
           onChanged: (value) {
             print(value);
-         Vibration.vibrate(duration: 1000, amplitude: 128);
+                   HapticFeedback.selectionClick();
             setState(() {
               selectedPersons = value;
             });
@@ -443,7 +443,7 @@ class _ReservationPageState extends State<ReservationPage> {
                 stringItems: data.map((s) => s.timeSlot.text).toList(),
                 disableItems: disabledTimes.map((d) => d.label).toList(),
                 onChanged: (value) {
-                 Vibration.vibrate(duration: 1000, amplitude: 128);
+                   HapticFeedback.selectionClick();
                   print(value);
                   setState(() {
                     selectTime(value, data, disabledTimes);
@@ -467,7 +467,7 @@ class _ReservationPageState extends State<ReservationPage> {
           stringItems: durations.map((s) => slotDurationString(s)).toList(),
           onChanged: (value) {
             print(value);
-           Vibration.vibrate(duration: 1000, amplitude: 128);
+                   HapticFeedback.selectionClick();
             setState(() {
               selectedDuration = value;
               this._disabledTimes =

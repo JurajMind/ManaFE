@@ -12,7 +12,6 @@ dependencies:
   web_socket_channel: ^1.1.0
   fluro: ^1.4.0
   rxdart: ^0.22.2
-  vibration: ^1.2.2
   intl: ^0.16.0
   animated_background: ^1.0.5
   tuple: ^1.0.2

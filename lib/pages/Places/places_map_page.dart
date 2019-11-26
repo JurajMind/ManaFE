@@ -156,6 +156,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   @override
   Widget build(BuildContext context) {
     var shortestSide = MediaQuery.of(context).size.shortestSide;
+    var isLansdscape = MediaQuery.of(context).orientation == Orientation.landscape;
     var useTabletLayout = shortestSide > 600;
 
     return SafeArea(
@@ -168,12 +169,12 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
         body: StreamBuilder<List<PlaceSimpleDto>>(
             stream: nearbyPlaces,
             builder: (context, snapshot) {
-              return useTabletLayout
+              return useTabletLayout || isLansdscape
                   ? Row(
                       children: <Widget>[
                         buildExpandedMap(snapshot),
                         Container(
-                          constraints: BoxConstraints(maxWidth: 400),
+                          constraints: BoxConstraints(maxWidth: useTabletLayout ? 400: 200),
                           child: Column(
                             children: <Widget>[
                               Container(
@@ -203,9 +204,13 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                                 ),
                               ),
                               Expanded(
-                                  child: HorizontalMapCarousel(
+                                  child: MPlatform.isWeb ? HorizontalMapCarousel(
                                 nearbyPlaces: nearbyPlaces,
-                              )),
+                              ): MapCarousel(
+                                direction: Axis.horizontal,
+                                selectedPlace: _selectedPlace,
+                                nearbyPlaces: nearbyPlaces,
+                                mapController: _controller),),
                             ],
                           ),
                         )

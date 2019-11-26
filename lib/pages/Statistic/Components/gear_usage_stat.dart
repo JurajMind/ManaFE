@@ -28,8 +28,7 @@ class GearUsageStat extends StatelessWidget {
               width: 200,
               child: Padding(
                 padding: EdgeInsets.all(8.0),
-                child: PageView(
-                  controller: controller,
+                child: PageView( 
                   children: <Widget>[
                     GearUsageItem(
                       label: "Tobacco",

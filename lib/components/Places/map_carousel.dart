@@ -18,9 +18,10 @@ import 'package:app/support/m_platform.dart';
 class MapCarousel extends StatefulWidget {
   final PlaceSimpleDto selectedPlace;
 
-  MapCarousel({this.nearbyPlaces, this.mapController, this.selectedPlace});
+  MapCarousel({this.nearbyPlaces, this.mapController, this.selectedPlace, this.direction = Axis.horizontal});
   final Completer<GoogleMapController> mapController;
   final BehaviorSubject<List<PlaceSimpleDto>> nearbyPlaces;
+  final Axis direction; 
   @override
   _CarrousselState createState() => new _CarrousselState();
 }

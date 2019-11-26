@@ -21,7 +21,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:openapi/api.dart';
 
-import 'Gear/gear_scroll.dart';
 import 'Gear/gear_scroll_alternative.dart';
 import 'Mixology/mixology_list.dart';
 import 'Places/places_map_page.dart';
@@ -432,8 +431,6 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class _GearScrollAlternativeCrossState {
-}
 
 class VisibilityStageNavigator extends StatelessWidget {
   const VisibilityStageNavigator(

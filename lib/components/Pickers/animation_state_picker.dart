@@ -3,7 +3,7 @@ import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
-import 'package:vibration/vibration.dart';
+import 'package:flutter/services.dart';
 
 import 'bottom_controll_bar.dart';
 
@@ -111,7 +111,8 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
                     widget.onChanged(index);
                     setState(() {
                       _focusIndex = index;
-                   Vibration.vibrate(duration: 1000, amplitude: 128);
+                   //Vibration.vibrate(duration: 2);
+                   HapticFeedback.selectionClick();
                     });
                   },
                   children: List.generate(

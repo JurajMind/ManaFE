@@ -15,10 +15,10 @@ import 'package:app/services/signal_r.dart';
 import 'package:app/utils/color.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:tuple/tuple.dart';
-import 'package:vibration/vibration.dart';
 
 class SmokeSessionBloc {
   String hookahCode;
@@ -99,7 +99,7 @@ class SmokeSessionBloc {
     sessionColor.add([color, ColorHelper.getOpositeColor(color)]);
     await App.http.changeColor(
         this.hookahCode, new HSVColor.fromColor(color), smokeState);
-    Vibration.vibrate(duration: 1000, amplitude: 128);
+                   HapticFeedback.selectionClick();
   }
 
   setAnimation(int animationIndex, SmokeState smokeState) {
@@ -122,7 +122,7 @@ class SmokeSessionBloc {
     editSetting.brightness = brigtness;
     curentSetting.setStateSetting(smokeState, editSetting);
 
-    Vibration.vibrate(duration: 1000, amplitude: 128);
+                   HapticFeedback.selectionClick();
   }
 
   setSpeed(int speed, SmokeState smokeState) async {
@@ -135,7 +135,7 @@ class SmokeSessionBloc {
     editSetting.speed = speed;
     curentSetting.setStateSetting(smokeState, editSetting);
 
-    Vibration.vibrate(duration: 1000, amplitude: 128);
+                   HapticFeedback.selectionClick();
   }
 
   _futureSetAnimation(Tuple2<StandSettings, SmokeState> data) async {
@@ -143,7 +143,7 @@ class SmokeSessionBloc {
     await App.http.changeAnimation(animationId, data.item2, hookahCode);
     standSettings.add(data.item1);
 
-    Vibration.vibrate(duration: 1000, amplitude: 128);
+                   HapticFeedback.selectionClick();
   }
 
   Future joinSession(String sessionCode) async {
@@ -406,7 +406,7 @@ class SmokeSessionBloc {
     if (newPreset.id != -1)
       await App.http.setDevicePreset(this.hookahCode, newPreset.id);
     selectedPreset.add(newPreset);
-    Vibration.vibrate(duration: 1000, amplitude: 128);
+    HapticFeedback.selectionClick();
   }
 
   _leaveOldSession(String activeSessionId) {

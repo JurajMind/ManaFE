@@ -142,8 +142,6 @@ PODS:
     - FMDB (~> 2.7.2)
   - url_launcher (0.0.1):
     - Flutter
-  - vibration (1.2.2):
-    - Flutter
   - webview_flutter (0.0.1):
     - Flutter
 
@@ -166,7 +164,6 @@ DEPENDENCIES:
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
-  - vibration (from `.symlinks/plugins/vibration/ios`)
   - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
 
 SPEC REPOS:
@@ -228,8 +225,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
-  vibration:
-    :path: ".symlinks/plugins/vibration/ios"
   webview_flutter:
     :path: ".symlinks/plugins/webview_flutter/ios"
 
@@ -271,7 +266,6 @@ SPEC CHECKSUMS:
   shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
   sqflite: ff1d9da63c06588cc8d1faf7256d741f16989d5a
   url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
-  vibration: 2f659072a9e03ae160974238b728c96e98bce2b5
   webview_flutter: db3aba222b23e4dc432e0c5882834123dc50ff9f
 
 PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
