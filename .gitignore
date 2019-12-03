@@ -72,3 +72,4 @@
 ios/Flutter/flutter_export_environment.sh
 .flutter-plugins-dependencies
 ios/Flutter/flutter_export_environment.sh
+openapi/.dart_tool/pub/bin/test/test.dart.snapshot.dart2
