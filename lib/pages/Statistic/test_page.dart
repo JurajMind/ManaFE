@@ -1,6 +1,7 @@
 import 'package:app/app/app.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/pages/Places/map_test.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class _TestPageState extends State<TestPage> {
           children: <Widget>[
             StreamBuilder<Position>(
               stream: place.location,
-               initialData: null,
+              initialData: null,
               builder: (BuildContext context, snapshot) {
                 return Container(
                   child: Text(snapshot.data.latitude.toString()),
@@ -155,7 +156,7 @@ class _TestPageState extends State<TestPage> {
               child: IconButton(
                   icon: Icon(Icons.add, size: 70),
                   onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => Container()))),
+                      MaterialPageRoute(builder: (context) => MapUiPage()))),
             ),
           ],
         ),

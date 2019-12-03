@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:animated_background/animated_background.dart';
 import 'package:app/Helpers/helpers.dart';
+import 'package:app/app/app.widget.dart';
+import 'package:app/services/authorization.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
-//import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 import 'auth/AppleSignIn/apple_sign_in.dart';
 
@@ -145,7 +147,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
   }
 
   Future facebookLogin() async {
-    /* var facebookLogin = new FacebookLogin();
+    var facebookLogin = new FacebookLogin();
     var result = await facebookLogin.logIn(['email']);
     try {
       switch (result.status) {
@@ -178,5 +180,5 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
         content: new Text("Facebook login error :("),
       ));
     }
-  */}
+  }
 }
