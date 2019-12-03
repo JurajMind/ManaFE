@@ -12,7 +12,7 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'SmokeSession/qr_code_reader_page.dart';
+//import 'SmokeSession/qr_code_reader_page.dart';
 
 class EnterSmokeSessionCode extends StatefulWidget {
   final GlobalKey<NavigatorState> Function(int) callback;
@@ -172,7 +172,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                                     new MaterialPageRoute(
                                                         builder: (BuildContext
                                                             context) {
-                                                  return new QrCodeReaderPage();
+                                                  return new Container();
                                                 })).then(
                                                     (smokeSessionLink) async {
                                                   if (smokeSessionLink !=
