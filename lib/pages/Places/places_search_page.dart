@@ -23,7 +23,8 @@ class PlacesSearchPage extends StatefulWidget {
   final List<PlaceSimpleDto> places;
   final bool returnToMap;
   final String searchLabel;
-  PlacesSearchPage({Key key, this.places, this.returnToMap = false, this.searchLabel})
+  PlacesSearchPage(
+      {Key key, this.places, this.returnToMap = false, this.searchLabel})
       : super(key: key);
 
   _PlacesSearchPageState createState() => _PlacesSearchPageState();
@@ -34,8 +35,8 @@ class PlacesSearchPage extends StatefulWidget {
 class _PlacesSearchPageState extends State<PlacesSearchPage> {
   BehaviorSubject<List<PlaceSimpleDto>> places;
   PlacesBloc placesBloc;
-  static const kGoogleApiKey = "AIzaSyDv2o2BsQ1IJjdPS3eSjkf7f-_Jt7Fu-MU";
-  GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
+  GoogleMapsPlaces _places = GoogleMapsPlaces(
+      baseUrl: "https://${App.baseUri}/api/Places/GoogleProxy");
   Mode _mode = Mode.overlay;
   String currentLocation;
   LatLng currentCitiLocation;
@@ -59,7 +60,8 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
     Prediction p = await PlacesAutocomplete.show(
         sessionToken: session,
         context: context,
-        apiKey: kGoogleApiKey,
+        apiKey: '',
+        proxyBaseUrl: "https://${App.baseUri}/api/Places/GoogleProxy",
         onError: onError,
         mode: _mode,
         types: ['(cities)']);

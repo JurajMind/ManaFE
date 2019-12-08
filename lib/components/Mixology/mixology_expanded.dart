@@ -10,6 +10,7 @@ import 'package:openapi/api.dart';
 class MixCardExpanded extends StatefulWidget {
   final TobaccoMixSimpleDto tobaccoMix;
   final int highlightId;
+  final Map<int, Color> multiHighlight;
   final bool noTitle;
   final ValueChanged<TobaccoMixSimpleDto> onTap;
   final bool selected;
@@ -18,7 +19,8 @@ class MixCardExpanded extends StatefulWidget {
       this.noTitle = false,
       this.highlightId,
       this.onTap,
-      this.selected = false});
+      this.selected = false,
+      this.multiHighlight});
 
   @override
   _MixologyExpandedState createState() => new _MixologyExpandedState();
@@ -119,15 +121,10 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
           padding: const EdgeInsets.only(left: 4.0, right: 4.0),
           child: new Column(
             children: <Widget>[
-              AutoSizeText(
-                item.tobacco?.name ?? 'd',
-                overflow: TextOverflow.ellipsis,
-                style: new TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: widget.highlightId == item.tobacco.id
-                        ? AppColors.colors[1]
-                        : Colors.black),
-              ),
+              AutoSizeText(item.tobacco?.name ?? 'd',
+                  overflow: TextOverflow.ellipsis,
+                  style: new TextStyle(
+                      fontWeight: FontWeight.bold, color: getColor(item))),
               AutoSizeText(
                 item.tobacco?.brand ?? 'b',
                 overflow: TextOverflow.ellipsis,
@@ -140,5 +137,16 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
         ),
       );
     }).toList();
+  }
+
+  Color getColor(TobaccoInMix item) {
+    if (widget.highlightId == item.tobacco.id) return AppColors.colors[1];
+
+    if (widget.multiHighlight != null) {
+      var color = widget.multiHighlight[item.tobacco.id];
+      if (color != null) return color;
+    }
+
+    return Colors.black;
   }
 }

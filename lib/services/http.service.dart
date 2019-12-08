@@ -120,6 +120,31 @@ class ApiClient {
         .then((json) => TobaccoMixSimpleDto.listFromJson(json).toList());
   }
 
+  Future<List<TobaccoMixSimpleDto>> suggestMix(List<int> ids,
+      {int page: 0,
+      bool featured: false,
+      int pageSize: 10,
+      String author}) async {
+    var mixUrl = '/api/Mixology/Suggest/Mix';
+    var params = Map<String, String>();
+    params['pageSize'] = pageSize.toString();
+    params['page'] = page.toString();
+
+    var url = Uri.https(baseUrl, mixUrl, params);
+    var paramUrl = addParamList(url.toString(), "ids", ids);
+    return _dio
+        .get(paramUrl)
+        .then((json) => TobaccoMixSimpleDto.listFromJson(json.data).toList());
+  }
+
+  String addParamList(String url, String key, List<dynamic> value) {
+    var result = url.toString();
+    value.forEach((f) {
+      result += '&${key}=${f.toString()}';
+    });
+    return result;
+  }
+
   Future<List<FeatureMixCreatorSimpleDto>> getMixCreator() async {
     var url = Uri.https(baseUrl, '/api/FeatureMix/FeatureCreators');
     return _getJson(url)

@@ -5,6 +5,7 @@ import 'package:app/const/theme.dart';
 import 'package:app/models/SmokeSession/pipe_accesory_from_tobacco.dart';
 import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/pages/Mixology/mix_search.page.dart';
 import 'package:app/pages/SmokeSession/accesory_search.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/cupertino.dart';
@@ -241,8 +242,11 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                     label:
                         Text(AppTranslations.of(context).text('gear.find_mix')),
                     onPressed: () {
-                      Navigator.of(context).pop();
-                      widget.callback(0);
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => MixSearchPage(
+                          selectedTobacco: tobaccoList,
+                        ),
+                      ));
                     },
                     icon: Icon(Icons.search),
                     shape: new RoundedRectangleBorder(

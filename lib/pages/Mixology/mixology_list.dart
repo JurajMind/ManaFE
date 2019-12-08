@@ -12,6 +12,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
+import 'mix_search.page.dart';
+
 class MixologyList extends StatefulWidget {
   @override
   MixologyListState createState() {
@@ -60,6 +62,12 @@ class MixologyListState extends State<MixologyList> {
             SizedBox(
               height: 55,
               child: AppBar(
+                leading: IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () =>
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => MixSearchPage(),
+                        ))),
                 actions: <Widget>[
                   curentView == 0
                       ? IconButton(
