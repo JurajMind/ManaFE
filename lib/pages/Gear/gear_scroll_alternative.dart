@@ -23,9 +23,20 @@ class _GearScrollAlternativeState extends State<GearScrollAlternative> {
   PageController controller;
   final _currentPageNotifier = ValueNotifier<int>(0);
   int pageIndex;
+  List<Section> allSections;
+
+  @override
+  void didUpdateWidget(GearScrollAlternative oldWidget) {
+    setState(() {
+      allSections = widget.allSections;
+    });
+
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   void initState() {
+    allSections = widget.allSections;
     controller = new PageController(initialPage: widget.sectionIndex ?? 0);
     pageIndex = widget.sectionIndex ?? 0;
     _currentPageNotifier.value = pageIndex;
@@ -47,7 +58,7 @@ class _GearScrollAlternativeState extends State<GearScrollAlternative> {
                   pageIndex = value;
                 });
               },
-              children: widget.allSections.map((Section section) {
+              children: allSections.map((Section section) {
                 return Column(children: <Widget>[
                   Container(child: new SectionCard(section: section)),
                   Expanded(
@@ -65,7 +76,7 @@ class _GearScrollAlternativeState extends State<GearScrollAlternative> {
                 child: ArrowPageIndicator(
                     width: MediaQuery.of(context).size.width - 100,
                     pageController: controller,
-                    itemCount: widget.allSections.length,
+                    itemCount: allSections.length,
                     index: pageIndex)),
             pageIndex != 0
                 ? Container()
