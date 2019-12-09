@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 
 class ReleaseNotes extends StatefulWidget {
-  static const String _key = "26.9.2019_4";
+  static const String _key = "9.12.2019_4";
   @override
   _ReleaseNotesState createState() => _ReleaseNotesState();
 }
@@ -43,7 +43,7 @@ class _ReleaseNotesState extends State<ReleaseNotes> {
               ),
               description: Text(
                   //  AppTranslations.of(context).text("release_note.text"),
-                  'User settings \n \n Leave session button \n \n reworked middle button',
+                  'Place web search \n \n Tobacco mix search \n',
                   style:
                       TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600)),
               onOkButtonPressed: () {
