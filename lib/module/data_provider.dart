@@ -42,17 +42,15 @@ class DataProvider extends InheritedWidget {
   bool updateShouldNotify(InheritedWidget oldWidget) => true;
 
   static MixologyBloc getMixology(BuildContext context) =>
-      (context.inheritFromWidgetOfExactType(DataProvider) as DataProvider)
-          .mixologyBloc;
+      context.dependOnInheritedWidgetOfExactType<DataProvider>().mixologyBloc;
 
-  static SmokeSessionBloc getSmokeSession(BuildContext context) =>
-      (context.inheritFromWidgetOfExactType(DataProvider) as DataProvider)
-          .smokeSessionBloc;
+  static SmokeSessionBloc getSmokeSession(BuildContext context) => context
+      .dependOnInheritedWidgetOfExactType<DataProvider>()
+      .smokeSessionBloc;
 
   static PlacesBloc getPlaces(BuildContext context) =>
-      (context.inheritFromWidgetOfExactType(DataProvider) as DataProvider)
-          .placeBloc;
+      context.dependOnInheritedWidgetOfExactType<DataProvider>().placeBloc;
 
   static DataProvider getData(BuildContext context) =>
-      context.inheritFromWidgetOfExactType(DataProvider);
+      context.dependOnInheritedWidgetOfExactType<DataProvider>();
 }

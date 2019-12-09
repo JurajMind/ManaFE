@@ -28,7 +28,8 @@ class _MixSearchPageState extends State<MixSearchPage> {
       new BehaviorSubject<List<TobaccoMixSimpleDto>>();
 
   var loading = false;
-
+  String searchString;
+  var textController = new TextEditingController();
   @override
   void initState() {
     if (widget.selectedTobacco != null && widget.selectedTobacco.length > 0) {
@@ -45,23 +46,11 @@ class _MixSearchPageState extends State<MixSearchPage> {
   @override
   Widget build(BuildContext context) {
     var personBloc = DataProvider.getData(context).personBloc;
+    var gearBloc = DataProvider.getData(context).gearBloc;
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Icon(Icons.search),
-                SizedBox(
-                  width: 10,
-                ),
-                Text('Search mix'.toUpperCase()),
-                SizedBox(
-                  width: 40,
-                ),
-              ],
-            ),
+            title: Text('Search mix'.toUpperCase()),
             centerTitle: true,
             leading: BackButton(),
           ),
@@ -70,6 +59,32 @@ class _MixSearchPageState extends State<MixSearchPage> {
               builder: (context, snapshot) {
                 return ListView(
                   children: <Widget>[
+                    ListTile(
+                      leading: Icon(Icons.search),
+                      title: TextField(
+                        autofocus: true,
+                        controller: textController,
+                        onSubmitted: (text) {
+                          searchMixes();
+                        },
+                        onChanged: (data) {
+                          setState(() {
+                            this.searchString = data;
+                          });
+                        },
+                        decoration: InputDecoration(
+                            hintText: 'Search by mix name',
+                            border: InputBorder.none,
+                            labelStyle: Theme.of(context).textTheme.body2),
+                      ),
+                      trailing: IconButton(
+                        icon: Icon(Icons.cancel),
+                        onPressed: () => setState(() {
+                          this.searchString = "";
+                          textController.text = "";
+                        }),
+                      ),
+                    ),
                     ...selectedTobacco.map((t) => TobaccoSearchItem(
                           t,
                           color: indexColor[t],
@@ -85,6 +100,7 @@ class _MixSearchPageState extends State<MixSearchPage> {
                                   type: 'Tobacco',
                                   searchType: 'Tobacco',
                                   personBloc: personBloc,
+                                  gearBloc: gearBloc,
                                   ownAccesories: personBloc.myGear.value
                                       .where((s) => s.type == "Tobacco")
                                       .toList(),
@@ -176,7 +192,8 @@ class _MixSearchPageState extends State<MixSearchPage> {
       loading = true;
     });
     App.http
-        .suggestMix(this.selectedTobacco.map((f) => f.id).toList())
+        .suggestMix(this.selectedTobacco.map((f) => f.id).toList(),
+            name: searchString)
         .then((onValue) {
       this.tobaccoMix.add(onValue);
       setState(() {

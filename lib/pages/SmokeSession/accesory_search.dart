@@ -1,5 +1,6 @@
 import 'package:app/app/app.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/general/gear_bloc.dart';
 import 'package:app/module/person/person_bloc.dart';
 import 'package:app/pages/Gear/add_gear_page.dart';
 import 'package:app/utils/translations/app_translations.dart';
@@ -13,6 +14,7 @@ class PipeAccesorySearch extends StatefulWidget {
   final String type;
   final String searchType;
   final PersonBloc personBloc;
+  final GearBloc gearBloc;
 
   const PipeAccesorySearch({
     Key key,
@@ -20,6 +22,7 @@ class PipeAccesorySearch extends StatefulWidget {
     this.type,
     this.searchType,
     this.personBloc,
+    this.gearBloc,
   }) : super(key: key);
 
   @override
@@ -173,9 +176,9 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                     Navigator.of(context)
                         .push<PipeAccesorySimpleDto>(MaterialPageRoute(
                             builder: (context) => AddGearPage(
-                                  selectedType: widget.searchType,
-                                  pretypedName: controller.text,
-                                ),
+                                selectedType: widget.searchType,
+                                pretypedName: controller.text,
+                                bloc: widget.gearBloc),
                             fullscreenDialog: true))
                         .then((newGear) {
                       Navigator.of(context).pop(newGear);
@@ -228,9 +231,9 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                           onTap: () => Navigator.of(context)
                               .push<PipeAccesorySimpleDto>(MaterialPageRoute(
                                   builder: (context) => AddGearPage(
-                                        selectedType: widget.searchType,
-                                        pretypedName: controller.text,
-                                      ),
+                                      selectedType: widget.searchType,
+                                      pretypedName: controller.text,
+                                      bloc: widget.gearBloc),
                                   fullscreenDialog: true))
                               .then((newGear) {
                             Navigator.of(context).pop(newGear);

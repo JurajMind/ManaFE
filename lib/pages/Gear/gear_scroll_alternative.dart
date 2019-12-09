@@ -10,8 +10,10 @@ import 'package:flutter/material.dart';
 class GearScrollAlternative extends StatefulWidget {
   final List<Section> allSections;
   final int sectionIndex;
+  final int curentView;
 
-  const GearScrollAlternative({Key key, this.allSections, this.sectionIndex})
+  const GearScrollAlternative(
+      {Key key, this.allSections, this.sectionIndex, this.curentView})
       : super(key: key);
   @override
   _GearScrollAlternativeState createState() => _GearScrollAlternativeState();
@@ -178,6 +180,7 @@ class _GearScrollAlternativeCrossState
                         builder: (context) => GearScrollAlternative(
                           allSections: allSections,
                           sectionIndex: index,
+                          curentView: curentView,
                         ),
                       )),
                       child: Container(
@@ -215,6 +218,7 @@ class _GearScrollAlternativeCrossState
                           builder: (context) => GearScrollAlternative(
                             allSections: allSections,
                             sectionIndex: index,
+                            curentView: curentView,
                           ),
                         )),
                         child:

@@ -121,14 +121,18 @@ class ApiClient {
   }
 
   Future<List<TobaccoMixSimpleDto>> suggestMix(List<int> ids,
-      {int page: 0,
+      {String name,
+      int page: 0,
       bool featured: false,
       int pageSize: 10,
       String author}) async {
-    var mixUrl = '/api/Mixology/Suggest/Mix';
+    var mixUrl = '/api/Mixology/Search/Mix';
     var params = Map<String, String>();
     params['pageSize'] = pageSize.toString();
     params['page'] = page.toString();
+    if (name != null) {
+      params['name'] = name;
+    }
 
     var url = Uri.https(baseUrl, mixUrl, params);
     var paramUrl = addParamList(url.toString(), "ids", ids);

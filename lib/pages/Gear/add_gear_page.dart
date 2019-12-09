@@ -1,7 +1,6 @@
-import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/models/App/Gear/gear_model.dart';
-import 'package:app/module/data_provider.dart';
+import 'package:app/module/general/gear_bloc.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -11,7 +10,8 @@ import 'brand_select_page.dart';
 class AddGearPage extends StatefulWidget {
   final String selectedType;
   final String pretypedName;
-  AddGearPage({Key key, this.selectedType, this.pretypedName})
+  final GearBloc bloc;
+  AddGearPage({Key key, this.selectedType, this.pretypedName, this.bloc})
       : super(key: key);
 
   _AddGearPageState createState() => _AddGearPageState();
@@ -153,8 +153,7 @@ class _AddGearPageState extends State<AddGearPage> {
                 newGear.brand = selectedBrand.name;
                 newGear.brandId = selectedBrand.id;
 
-                var bloc = DataProvider.getData(context).gearBloc;
-                bloc.addGear(newGear).then((createdGear) {
+                widget.bloc.addGear(newGear).then((createdGear) {
                   Navigator.of(context).pop(createdGear);
                 });
               },
@@ -168,7 +167,8 @@ class _AddGearPageState extends State<AddGearPage> {
   void selectBrand(BuildContext context) {
     Navigator.of(context)
         .push<BrandGroup>(MaterialPageRoute(
-            builder: (context) => BrandSelectPage(), fullscreenDialog: true))
+            builder: (context) => BrandSelectPage(widget.bloc),
+            fullscreenDialog: true))
         .then((selectedBrand) {
       setState(() {
         this.selectedBrand = selectedBrand;

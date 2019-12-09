@@ -218,6 +218,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                           searchType: 'Tobacco',
                           ownAccesories: ownedTobacco,
                           personBloc: personBloc,
+                          gearBloc: DataProvider.getData(context).gearBloc,
                         )),
                   ),
                 )

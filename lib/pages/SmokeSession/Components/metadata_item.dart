@@ -1,5 +1,6 @@
 import 'package:app/const/theme.dart';
 import 'package:app/models/extensions.dart';
+import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/accesory_search.dart';
 import 'package:app/utils/translations/app_translations.dart';
@@ -66,6 +67,7 @@ class MetadataItem extends StatelessWidget {
                               type: type,
                               searchType: searchType,
                               ownAccesories: pipeAccesories,
+                              gearBloc: DataProvider.getData(context).gearBloc,
                             )),
                       ),
                     ),

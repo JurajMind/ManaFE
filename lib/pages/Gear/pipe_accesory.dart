@@ -83,6 +83,8 @@ class MyGear extends StatelessWidget {
                                     ownAccesories:
                                         new List<PipeAccesorySimpleDto>(),
                                     personBloc: bloc,
+                                    gearBloc:
+                                        DataProvider.getData(context).gearBloc,
                                   )),
                             ),
                           ],
@@ -130,7 +132,7 @@ class SearchRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var bloc = DataProvider.getData(context).personBloc;
-
+    var gearBloc = DataProvider.getData(context).gearBloc;
     var typedMyGear = DataProvider.getData(context)
         .personBloc
         .myGear
@@ -153,6 +155,7 @@ class SearchRow extends StatelessWidget {
                     searchType: type,
                     ownAccesories: typedMyGear,
                     personBloc: bloc,
+                    gearBloc: gearBloc,
                   ))),
         ),
         Expanded(
@@ -176,6 +179,7 @@ class SearchRow extends StatelessWidget {
                       searchType: type,
                       ownAccesories: null,
                       personBloc: bloc,
+                      gearBloc: gearBloc,
                     ))
                 /*  onPressed: () => showAddDialog(
                   bloc: bloc,

@@ -2,12 +2,14 @@ import 'package:app/components/Brands/brand_list_item.dart';
 import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/general/gear_bloc.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:queries/collections.dart';
 
 class BrandSelectPage extends StatefulWidget {
-  BrandSelectPage({Key key}) : super(key: key);
+  final GearBloc bloc;
+  BrandSelectPage(this.bloc, {Key key}) : super(key: key);
 
   _BrandSelectPageState createState() => _BrandSelectPageState();
 }
@@ -27,26 +29,31 @@ class _BrandSelectPageState extends State<BrandSelectPage> {
           BrandTypeSelect(
             "Tobacco",
             right: true,
+            bloc: widget.bloc,
           ),
           BrandTypeSelect(
             "Hookah",
             right: true,
             left: true,
+            bloc: widget.bloc,
           ),
           BrandTypeSelect(
             "Bowl",
             right: true,
             left: true,
+            bloc: widget.bloc,
           ),
           BrandTypeSelect(
             "HeatManagement",
             displayType: "hmd",
             right: true,
             left: true,
+            bloc: widget.bloc,
           ),
           BrandTypeSelect(
             "Coal",
             left: true,
+            bloc: widget.bloc,
           ),
           // NewBrandTypeSelect()
         ],
@@ -140,12 +147,14 @@ class BrandTypeSelect extends StatefulWidget {
   final bool right;
   final String type;
   final String displayType;
+  final dynamic bloc;
   const BrandTypeSelect(
     this.type, {
     Key key,
     this.left,
     this.right,
     this.displayType,
+    this.bloc,
   }) : super(key: key);
 
   @override
@@ -170,7 +179,6 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
 
   @override
   Widget build(BuildContext context) {
-    var bloc = DataProvider.getData(context).gearBloc;
     return Column(
       children: <Widget>[
         !searchMode
@@ -247,7 +255,7 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
               ),
         Expanded(
           child: StreamBuilder<List<BrandGroup>>(
-              stream: bloc.getBrandsByType(widget.type),
+              stream: widget.bloc.getBrandsByType(widget.type),
               initialData: null,
               builder: (context, snapshot) {
                 if (snapshot?.data == null) return Container();
