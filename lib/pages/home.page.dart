@@ -230,7 +230,7 @@ class _HomePageState extends State<HomePage> {
                       text: AppTranslations.of(context).text("tabs.mixology"),
                       color: _currentIndex == 0 ? Colors.white : Colors.grey,
                       tooltip:
-                          'AppTranslations.of(context).text("tabs.mixology")',
+                          AppTranslations.of(context).text("tabs.mixology"),
                       onPressed: () => _setActiveTab(0),
                     ),
                   ),

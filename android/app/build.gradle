@@ -25,6 +25,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
+
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+def devPropertiesFile = rootProject.file("key.properties")
+def devProperties = new Properties()
+devProperties.load(new FileInputStream(devPropertiesFile))
+
+
 android {
     compileSdkVersion 28
 
@@ -46,13 +56,36 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
-        }
+    signingConfigs {
+    release {
+        keyAlias keystoreProperties['keyAlias']
+        keyPassword keystoreProperties['keyPassword']
+        storeFile file(keystoreProperties['storeFile'])
+        storePassword keystoreProperties['storePassword']
     }
+        debug {
+        keyAlias devProperties['keyAlias']
+        keyPassword devProperties['keyPassword']
+        storeFile file(devProperties['storeFile'])
+        storePassword devProperties['storePassword']
+    }
+}
+
+buildTypes {
+    release {
+            signingConfig signingConfigs.debug
+            minifyEnabled true
+            shrinkResources true
+            useProguard true 
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    debug {
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+}
 }
 
 flutter {
@@ -65,3 +98,5 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
+
+apply plugin: 'com.google.gms.google-services'

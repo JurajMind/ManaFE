@@ -27,7 +27,7 @@ dependencies:
     path: ./openapi
   sticky_headers: '^0.1.8'
   sembast: ^1.13.0
-  url_launcher: ^5.1.3
+  url_launcher: '5.1.3'
   google_maps_flutter: ^0.5.21+12
   tinycolor: ^1.0.2
   shimmer: ^1.0.1
@@ -49,8 +49,7 @@ dependencies:
   auto_size_text: ^2.1.0
   flushbar: ^1.9.0
   date_range_picker: ^1.0.5
-  #fast_qr_reader_view:
-  #  git: https://github.com/facundomedica/fast_qr_reader_view
+  #flutter_qr_scanner: ^0.1.5
   flutter_material_color_picker: ^1.0.0
   flutter_form_builder: ^3.6.1
   image_picker: ^0.6.1+4
@@ -86,8 +85,6 @@ flutter_icons:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^1.6.2
-  build_web_compilers: ^2.0.0
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
 

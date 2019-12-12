@@ -1,8 +1,6 @@
 PODS:
   - apple_sign_in (0.0.1):
     - Flutter
-  - fast_qr_reader_view (0.0.1):
-    - Flutter
   - FBSDKCoreKit (5.11.0):
     - FBSDKCoreKit/Basics (= 5.11.0)
     - FBSDKCoreKit/Core (= 5.11.0)
@@ -142,12 +140,9 @@ PODS:
     - FMDB (~> 2.7.2)
   - url_launcher (0.0.1):
     - Flutter
-  - webview_flutter (0.0.1):
-    - Flutter
 
 DEPENDENCIES:
   - apple_sign_in (from `.symlinks/plugins/apple_sign_in/ios`)
-  - fast_qr_reader_view (from `.symlinks/plugins/fast_qr_reader_view/ios`)
   - firebase_dynamic_links (from `.symlinks/plugins/firebase_dynamic_links/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
@@ -164,7 +159,6 @@ DEPENDENCIES:
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
-  - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
 
 SPEC REPOS:
   trunk:
@@ -191,8 +185,6 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   apple_sign_in:
     :path: ".symlinks/plugins/apple_sign_in/ios"
-  fast_qr_reader_view:
-    :path: ".symlinks/plugins/fast_qr_reader_view/ios"
   firebase_dynamic_links:
     :path: ".symlinks/plugins/firebase_dynamic_links/ios"
   firebase_messaging:
@@ -225,12 +217,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
-  webview_flutter:
-    :path: ".symlinks/plugins/webview_flutter/ios"
 
 SPEC CHECKSUMS:
   apple_sign_in: 7716c7ddfa195aeab7dec0dc374ef4ff45d1adb4
-  fast_qr_reader_view: 53b38a544886e650381ca579e0cdd5ae142fffa6
   FBSDKCoreKit: 9fbfb5b0022d34861bfa6b79f56f8e2ddcd8170b
   FBSDKLoginKit: 0e976e0c91ee69dd5dc69062c095205146f1dd9f
   Firebase: 458d109512200d1aca2e1b9b6cf7d68a869a4a46
@@ -250,7 +239,7 @@ SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   geolocator: c98cc4a1f2558c11fa5db0fccad80883cde6eb4f
   google_api_availability: 163b30f802e6148c67f092aa4501c90ddd8eec8d
-  google_maps_flutter: 78a52114c898b42ea647919679a4c58b70abe876
+  google_maps_flutter: d0dd62f5a7d39bae61057eb9f52dd778d99c7c6c
   GoogleAppMeasurement: dfe55efa543e899d906309eaaac6ca26d249862f
   GoogleDataTransport: 67cc56f6280d1bc9d470285e851ec49ee9013dba
   GoogleDataTransportCCTSupport: f6ab1962e9dc05ab1fb938b795e5b310209edeec
@@ -266,7 +255,6 @@ SPEC CHECKSUMS:
   shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
   sqflite: ff1d9da63c06588cc8d1faf7256d741f16989d5a
   url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
-  webview_flutter: db3aba222b23e4dc432e0c5882834123dc50ff9f
 
 PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
 
