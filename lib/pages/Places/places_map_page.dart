@@ -21,6 +21,7 @@ import 'package:queries/collections.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:math' show cos, sqrt, asin;
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:easy_google_maps/easy_google_maps.dart';
 import 'Components/reservation_button.dart';
 import 'package:clustering_google_maps/clustering_google_maps.dart';
 
@@ -309,9 +310,11 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   Expanded buildExpandedMap(AsyncSnapshot<List<PlaceSimpleDto>> snapshot) {
     return Expanded(
       child: MPlatform.isWeb
-          ? MapTest(
-              places: snapshot.data,
-            )
+          ? EasyGoogleMaps(
+          apiKey: App.googleApiKeys,
+          address: 'Infinite Loop, Cupertino, CA 95014',
+          title: 'Apple Campus',
+        )
           : GoogleMap(
               markers: markers,
               myLocationEnabled: true,

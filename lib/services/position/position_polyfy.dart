@@ -195,7 +195,7 @@ class Coordinates {
 
   double get speed => _isNativeInstance ? _asNative.speed : _asInterop.speed;
 
-  html.Coordinates get _asNative => _instance;
+  dynamic get _asNative => _instance;
 
   _JsCoordinates get _asInterop => _instance;
 }

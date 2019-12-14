@@ -7,6 +7,8 @@ import 'package:app/services/signal_r.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
+import '../Tests/map_test.dart';
+
 class TestPage extends StatefulWidget {
   @override
   State<TestPage> createState() => new _TestPageState();
@@ -31,7 +33,7 @@ class _TestPageState extends State<TestPage> {
               initialData: null,
               builder: (BuildContext context, snapshot) {
                 return Container(
-                  child: Text(snapshot.data.latitude.toString()),
+                  child: Text(snapshot.data?.latitude?.toString() ?? 'NO LOCATION'),
                 );
               },
             ),
@@ -156,7 +158,7 @@ class _TestPageState extends State<TestPage> {
               child: IconButton(
                   icon: Icon(Icons.add, size: 70),
                   onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => MapUiPage()))),
+                      MaterialPageRoute(builder: (context) => MapTest()))),
             ),
           ],
         ),

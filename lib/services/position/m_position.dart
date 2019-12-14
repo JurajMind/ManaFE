@@ -34,7 +34,7 @@ class MPosition {
     if (MPlatform.isWeb) {
       var a = await _wgeo.getCurrentPosition(
           enableHighAccuracy: false,
-          timeout: new Duration(seconds: 1),
+          timeout: new Duration(seconds: 10),
           maximumAge: Duration(hours: 1));
       if (a != null) {
         return GeolocationStatus.granted;
