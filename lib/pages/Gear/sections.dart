@@ -30,19 +30,19 @@ class SectionDetail {
 }
 
 class Section {
-  const Section(
-      {this.title,
-      this.backgroundAsset,
-      this.leftColor,
-      this.rightColor,
-      this.child,
-      this.children});
+  const Section({
+    this.title,
+    this.backgroundAsset,
+    this.leftColor,
+    this.rightColor,
+    this.type,
+  });
   final String title;
   final String backgroundAsset;
   final Color leftColor;
   final Color rightColor;
-  final Widget child;
-  final List<Widget> children;
+
+  final String type;
 
   @override
   bool operator ==(Object other) {
@@ -55,72 +55,50 @@ class Section {
   int get hashCode => title.hashCode;
 }
 
-List<Section> getAllSections(GearBloc bloc, ScrollPhysics physics,
+List<Section> getAllSections(
     int currentView, ValueChanged<int> onViewChanged, BuildContext context) {
   return <Section>[
     Section(
-        title: AppTranslations.of(context).text('gear.devices').toUpperCase(),
-        leftColor: _mediumPurple,
-        rightColor: _mariner,
-        backgroundAsset: 'images/gear/mygear.jpg',
-        child: Devices(
-          scrollPhysics: physics,
-        )),
+      title: AppTranslations.of(context).text('gear.devices').toUpperCase(),
+      leftColor: _mediumPurple,
+      rightColor: _mariner,
+      backgroundAsset: 'images/gear/mygear.jpg',
+      type: "Device",
+    ),
     Section(
-        title: AppTranslations.of(context).text('gear.tobacco').toUpperCase(),
-        leftColor: _tomato,
-        rightColor: _mediumPurple,
-        backgroundAsset: 'images/gear/tobacco.jpg',
-        child: PipeAccesoryList(
-          currentView: currentView,
-          onViewChanged: onViewChanged,
-          scrollPhysics: physics,
-          type: "Tobacco",
-        )),
+      title: AppTranslations.of(context).text('gear.tobacco').toUpperCase(),
+      leftColor: _tomato,
+      rightColor: _mediumPurple,
+      backgroundAsset: 'images/gear/tobacco.jpg',
+      type: "Tobacco",
+    ),
     Section(
       title: AppTranslations.of(context).text('gear.pipes').toUpperCase(),
       leftColor: _mySin,
       rightColor: _tomato,
       backgroundAsset: 'images/gear/hookah.jpg',
-      child: PipeAccesoryList(
-        currentView: currentView,
-        onViewChanged: onViewChanged,
-        scrollPhysics: physics,
-        type: "Hookah",
-      ),
+      type: "Hookah",
     ),
     Section(
-        title: AppTranslations.of(context).text('gear.bowls').toUpperCase(),
-        leftColor: Colors.white,
-        rightColor: _tomato,
-        backgroundAsset: 'images/gear/bowls.jpg',
-        child: PipeAccesoryList(
-          currentView: currentView,
-          onViewChanged: onViewChanged,
-          scrollPhysics: physics,
-          type: "Bowl",
-        )),
+      title: AppTranslations.of(context).text('gear.bowls').toUpperCase(),
+      leftColor: Colors.white,
+      rightColor: _tomato,
+      backgroundAsset: 'images/gear/bowls.jpg',
+      type: "Bowl",
+    ),
     Section(
-        title: AppTranslations.of(context).text('gear.hmd').toUpperCase(),
-        leftColor: Colors.blueAccent,
-        rightColor: Colors.blue,
-        backgroundAsset: 'images/gear/hms.jpg',
-        child: PipeAccesoryList(
-          currentView: currentView,
-          onViewChanged: onViewChanged,
-          scrollPhysics: physics,
-          type: "HeatManagement",
-        )),
+      title: AppTranslations.of(context).text('gear.hmd').toUpperCase(),
+      leftColor: Colors.blueAccent,
+      rightColor: Colors.blue,
+      backgroundAsset: 'images/gear/hms.jpg',
+      type: "HeatManagement",
+    ),
     Section(
-        title: AppTranslations.of(context).text('gear.coals').toUpperCase(),
-        leftColor: Colors.black,
-        rightColor: Colors.red,
-        backgroundAsset: 'images/gear/coals.jpg',
-        child: PipeAccesoryList(
-          currentView: currentView,
-          onViewChanged: onViewChanged,
-          scrollPhysics: physics,
-          type: "Coal",
-        )),
+      title: AppTranslations.of(context).text('gear.coals').toUpperCase(),
+      leftColor: Colors.black,
+      rightColor: Colors.red,
+      backgroundAsset: 'images/gear/coals.jpg',
+      type: "Coal",
+    ),
   ];
 }

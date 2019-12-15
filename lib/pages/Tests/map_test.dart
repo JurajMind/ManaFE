@@ -1,8 +1,6 @@
+import 'package:app/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_google_maps/easy_google_maps.dart';
-
-import '../../app/app.dart';
-
 
 class MapTest extends StatelessWidget {
   @override

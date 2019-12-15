@@ -157,7 +157,8 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   @override
   Widget build(BuildContext context) {
     var shortestSide = MediaQuery.of(context).size.shortestSide;
-    var isLansdscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    var isLansdscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     var useTabletLayout = shortestSide > 600;
 
     return SafeArea(
@@ -175,7 +176,8 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                       children: <Widget>[
                         buildExpandedMap(snapshot),
                         Container(
-                          constraints: BoxConstraints(maxWidth: useTabletLayout ? 400: 200),
+                          constraints: BoxConstraints(
+                              maxWidth: useTabletLayout ? 400 : 200),
                           child: Column(
                             children: <Widget>[
                               Container(
@@ -205,13 +207,16 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                                 ),
                               ),
                               Expanded(
-                                  child: MPlatform.isWeb ? HorizontalMapCarousel(
-                                nearbyPlaces: nearbyPlaces,
-                              ): MapCarousel(
-                                direction: Axis.horizontal,
-                                selectedPlace: _selectedPlace,
-                                nearbyPlaces: nearbyPlaces,
-                                mapController: _controller),),
+                                child: MPlatform.isWeb
+                                    ? HorizontalMapCarousel(
+                                        nearbyPlaces: nearbyPlaces,
+                                      )
+                                    : MapCarousel(
+                                        direction: Axis.horizontal,
+                                        selectedPlace: _selectedPlace,
+                                        nearbyPlaces: nearbyPlaces,
+                                        mapController: _controller),
+                              ),
                             ],
                           ),
                         )
@@ -244,16 +249,16 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                             duration: Duration(milliseconds: 500),
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.6,
-
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: <Widget>[
-                                    buildFloatingSearchButton(context),
-                                    buildFloatingRefreshButton(),
-                                     ManagePlaceBtn()
-                                  ],
-                                ),
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  buildFloatingSearchButton(context),
+                                  buildFloatingRefreshButton(),
+                                  ManagePlaceBtn()
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -310,11 +315,10 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   Expanded buildExpandedMap(AsyncSnapshot<List<PlaceSimpleDto>> snapshot) {
     return Expanded(
       child: MPlatform.isWeb
-          ? EasyGoogleMaps(
-          apiKey: App.googleApiKeys,
-          address: 'Infinite Loop, Cupertino, CA 95014',
-          title: 'Apple Campus',
-        )
+          ? RepaintBoundary(
+              child: MapTest(
+              places: snapshot.data,
+            ))
           : GoogleMap(
               markers: markers,
               myLocationEnabled: true,

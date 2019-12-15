@@ -35,115 +35,113 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
 
-    return SafeArea(
-      child: new Scaffold(
-          body: AnimatedBackground(
-        vsync: this,
-        behaviour: RandomParticleBehaviour(
-            options: ParticleOptions(baseColor: Colors.blue)),
-        child: new Center(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new Container(
-                  constraints: BoxConstraints(maxWidth: 500),
-                  padding: new EdgeInsets.all(40.0),
-                  child: new Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      new Container(
-                        child: Image.asset(
-                          'images/logo.png',
-                          fit: BoxFit.scaleDown,
-                          height: 200.0,
-                        ),
+    return new Scaffold(
+        body: AnimatedBackground(
+      vsync: this,
+      behaviour: RandomParticleBehaviour(
+          options: ParticleOptions(baseColor: Colors.blue)),
+      child: new Center(
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            new Container(
+                constraints: BoxConstraints(maxWidth: 500),
+                padding: new EdgeInsets.all(40.0),
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    new Container(
+                      child: Image.asset(
+                        'images/logo.png',
+                        fit: BoxFit.scaleDown,
+                        height: 200.0,
+                      ),
+                    ),
+                    new Container(
+                      width: screenSize.width,
+                      child: new RoundedButton(
+                        buttonName: AppTranslations.of(context)
+                            .text("login.sign_up")
+                            .toUpperCase(),
+                        onTap: () {
+                          navigate(context, 'auth/register');
+                        },
+                        buttonColor: Colors.transparent,
+                        borderWidth: 1.0,
+                        bottomMargin: 1.0,
+                        height: 50.0,
+                        width: screenSize.width,
+                      ),
+                      margin: new EdgeInsets.only(top: 20.0),
+                    ),
+                    new Container(
+                      width: screenSize.width,
+                      child: facebookLoginLoading
+                          ? Container(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator())
+                          : RoundedButton(
+                              buttonName: AppTranslations.of(context)
+                                  .text("login.facebook_login")
+                                  .toUpperCase(),
+                              onTap: () {
+                                facebookLogin();
+                              },
+                              buttonColor: Colors.white,
+                              borderWidth: 1.0,
+                              bottomMargin: 1.0,
+                              height: 50.0,
+                              width: screenSize.width,
+                              textColor: Colors.black,
+                            ),
+                      margin: new EdgeInsets.only(top: 25.0),
+                    ),
+                    if (false) ...{
+                      SizedBox(
+                        height: 8,
                       ),
                       new Container(
-                        width: screenSize.width,
-                        child: new RoundedButton(
-                          buttonName: AppTranslations.of(context)
-                              .text("login.sign_up")
+                        child: MAppleLogin(),
+                      ),
+                    },
+                    new Container(
+                      width: screenSize.width,
+                      child: new FlatButton(
+                        child: new Text(
+                          AppTranslations.of(context)
+                              .text("login.log_in")
                               .toUpperCase(),
-                          onTap: () {
-                            navigate(context, 'auth/register');
-                          },
-                          buttonColor: Colors.transparent,
-                          borderWidth: 1.0,
-                          bottomMargin: 1.0,
-                          height: 50.0,
-                          width: screenSize.width,
+                          style: Theme.of(context).textTheme.display2,
                         ),
-                        margin: new EdgeInsets.only(top: 20.0),
+                        onPressed: () {
+                          navigate(context, 'auth/login');
+                        },
                       ),
-                      new Container(
-                        width: screenSize.width,
-                        child: facebookLoginLoading
-                            ? Container(
-                                height: 20,
-                                width: 20,
-                                child: CircularProgressIndicator())
-                            : RoundedButton(
-                                buttonName: AppTranslations.of(context)
-                                    .text("login.facebook_login")
-                                    .toUpperCase(),
-                                onTap: () {
-                                  facebookLogin();
-                                },
-                                buttonColor: Colors.white,
-                                borderWidth: 1.0,
-                                bottomMargin: 1.0,
-                                height: 50.0,
-                                width: screenSize.width,
-                                textColor: Colors.black,
-                              ),
-                        margin: new EdgeInsets.only(top: 25.0),
+                      margin: new EdgeInsets.only(top: 20.0),
+                    ),
+                    Align(
+                      heightFactor: 2,
+                      alignment: Alignment.bottomCenter,
+                      child: new FlatButton(
+                        child: new Text(
+                          AppTranslations.of(context)
+                              .currentLanguage
+                              .toString()
+                              .toUpperCase(),
+                          style: Theme.of(context).textTheme.display2,
+                        ),
+                        onPressed: () {
+                          navigate(context, 'auth/lang');
+                        },
                       ),
-                      if (false) ...{
-                        SizedBox(
-                          height: 8,
-                        ),
-                        new Container(
-                          child: MAppleLogin(),
-                        ),
-                      },
-                      new Container(
-                        width: screenSize.width,
-                        child: new FlatButton(
-                          child: new Text(
-                            AppTranslations.of(context)
-                                .text("login.log_in")
-                                .toUpperCase(),
-                            style: Theme.of(context).textTheme.display2,
-                          ),
-                          onPressed: () {
-                            navigate(context, 'auth/login');
-                          },
-                        ),
-                        margin: new EdgeInsets.only(top: 20.0),
-                      ),
-                      Align(
-                        heightFactor: 2,
-                        alignment: Alignment.bottomCenter,
-                        child: new FlatButton(
-                          child: new Text(
-                            AppTranslations.of(context)
-                                .currentLanguage
-                                .toString()
-                                .toUpperCase(),
-                            style: Theme.of(context).textTheme.display2,
-                          ),
-                          onPressed: () {
-                            navigate(context, 'auth/lang');
-                          },
-                        ),
-                      )
-                    ],
-                  ))
-            ],
-          ),
+                    )
+                  ],
+                ))
+          ],
         ),
-      )),
-    );
+      ),
+    ));
   }
 
   Future facebookLogin() async {
