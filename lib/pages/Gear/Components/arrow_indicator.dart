@@ -12,6 +12,7 @@ class ArrowPageIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints: BoxConstraints(maxWidth: 800),
       height: 50,
       child: Row(
         mainAxisSize: MainAxisSize.max,

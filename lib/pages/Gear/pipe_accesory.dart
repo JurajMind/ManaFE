@@ -77,6 +77,7 @@ class MyGear extends StatelessWidget {
           automaticallyImplyLeading: false,
           expandedHeight: 200.0,
           flexibleSpace: new FlexibleSpaceBar(
+              centerTitle: true,
               title: ArrowPageIndicator(
                 title: section.title,
                 index: position,

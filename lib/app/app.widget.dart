@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:app/app/app.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/pages/start.page.dart';
+import 'package:app/pages/Start/start.page.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/utils/translations/app_translations_delegate.dart';
@@ -21,8 +21,7 @@ class AppWidget extends StatefulWidget {
   }
 
   static restartApp(BuildContext context) async {
-    final _AppWidgetState state =
-        context.ancestorStateOfType(const TypeMatcher<_AppWidgetState>());
+    final _AppWidgetState state = context.ancestorStateOfType(const TypeMatcher<_AppWidgetState>());
     state.restartApp();
   }
 }
@@ -48,8 +47,7 @@ class _AppWidgetState extends State<AppWidget> {
   }
 
   void initDynamicLinks() async {
-    final PendingDynamicLinkData data =
-        await FirebaseDynamicLinks.instance.getInitialLink();
+    final PendingDynamicLinkData data = await FirebaseDynamicLinks.instance.getInitialLink();
     final Uri _deepLink = data?.link;
 
     if (_deepLink != null) {
@@ -84,9 +82,7 @@ class _AppWidgetState extends State<AppWidget> {
       ],
       supportedLocales: App.supportedLocales(),
       title: 'Manapipes',
-      home: _isAuthorized
-          ? new DataProvider(key: key, child: getMainPage())
-          : getMainPage(),
+      home: _isAuthorized ? new DataProvider(key: key, child: getMainPage()) : getMainPage(),
       // onGenerateRoute: App.router.generator,
       theme: buildDarkTheme(),
     );

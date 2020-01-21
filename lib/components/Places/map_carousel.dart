@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app/Helpers/place_helper.dart';
 import 'package:app/components/Media/media.widget.dart';
+import 'package:app/components/Places/WebMap/web_map_placeholder.dart' if (dart.library.js) 'package:app/components/Places/WebMap/web_map.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/pages/Places/add_place_page.dart';
@@ -18,10 +19,11 @@ import 'package:app/support/m_platform.dart';
 class MapCarousel extends StatefulWidget {
   final PlaceSimpleDto selectedPlace;
 
-  MapCarousel({this.nearbyPlaces, this.mapController, this.selectedPlace, this.direction = Axis.horizontal});
+  MapCarousel({this.nearbyPlaces, this.mapController, this.selectedPlace, this.direction = Axis.horizontal, this.webMapController});
   final Completer<GoogleMapController> mapController;
+  final GoogleWebMapController webMapController;
   final BehaviorSubject<List<PlaceSimpleDto>> nearbyPlaces;
-  final Axis direction; 
+  final Axis direction;
   @override
   _CarrousselState createState() => new _CarrousselState();
 }
@@ -72,8 +74,7 @@ class _CarrousselState extends State<MapCarousel> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget?.selectedPlace?.id != this.widget?.selectedPlace?.id) {
       selectPlaceId = widget?.selectedPlace?.id;
-      var pageIndex =
-          this.widget.nearbyPlaces.value.indexOf(this.widget.selectedPlace);
+      var pageIndex = this.widget.nearbyPlaces.value.indexOf(this.widget.selectedPlace);
       controller.jumpToPage(pageIndex + 1);
       // controller.animateToPage(pageIndex + 1,
       //     curve: Curves.easeIn, duration: const Duration(milliseconds: 500));
@@ -81,11 +82,7 @@ class _CarrousselState extends State<MapCarousel> {
     }
     if (oldWidget.selectedPlace == null && this.widget.selectedPlace == null) {
       if (widget.nearbyPlaces.value == null) return;
-      var newPageIndex = this
-          .widget
-          .nearbyPlaces
-          .value
-          .indexWhere((s) => s.id == this.selectPlaceId);
+      var newPageIndex = this.widget.nearbyPlaces.value.indexWhere((s) => s.id == this.selectPlaceId);
       if (newPageIndex == -1) return;
       if (currentpage != newPageIndex) {
         controller.jumpToPage(newPageIndex + 1);
@@ -101,8 +98,7 @@ class _CarrousselState extends State<MapCarousel> {
     ));
   }
 
-  StreamBuilder<List<PlaceSimpleDto>> buildPlacePages(
-      BehaviorSubject<List<PlaceSimpleDto>> bloc) {
+  StreamBuilder<List<PlaceSimpleDto>> buildPlacePages(BehaviorSubject<List<PlaceSimpleDto>> bloc) {
     return StreamBuilder<List<PlaceSimpleDto>>(
         initialData: null,
         stream: bloc,
@@ -120,23 +116,19 @@ class _CarrousselState extends State<MapCarousel> {
               onPageChanged: (value) async {
                 setState(() {
                   currentpage = value;
-                  if(currentpage == -1){
+                  if (currentpage == -1) {
                     return;
                   }
-                  this.selectPlaceId =
-                      widget.nearbyPlaces.value[currentpage - 1].id;
+                  this.selectPlaceId = widget.nearbyPlaces.value[currentpage - 1].id;
                 });
                 var place = snapshot.data[value - 1];
-
-                final GoogleMapController controller =
-                    await widget.mapController.future;
-                await controller.animateCamera(CameraUpdate.newCameraPosition(
-                    CameraPosition(
-                        bearing: 0,
-                        target: LatLng(double.parse(place.address.lat),
-                            double.parse(place.address.lng)),
-                        tilt: 0,
-                        zoom: 15.151926040649414)));
+                var loc = LatLng(double.parse(place.address.lat), double.parse(place.address.lng));
+                if (!MPlatform.isWeb) {
+                  final GoogleMapController controller = await widget.mapController.future;
+                  await controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(bearing: 0, target: loc, tilt: 0, zoom: 15.151926040649414)));
+                } else {
+                  widget.webMapController.moveToLocation(loc);
+                }
               },
               itemCount: snapshot.data != null ? snapshot.data.length + 1 : 0,
               itemBuilder: (context, index) {
@@ -151,17 +143,14 @@ class _CarrousselState extends State<MapCarousel> {
   Widget buildAdd() {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => AddPlacePage(), fullscreenDialog: true));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddPlacePage(), fullscreenDialog: true));
       },
       child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Container(
               width: MediaQuery.of(context).size.width * 0.4,
               decoration: BoxDecoration(
-                  borderRadius: new BorderRadius.circular(10.0),
-                  border: new Border.all(color: Colors.white, width: 2),
-                  color: Colors.transparent),
+                  borderRadius: new BorderRadius.circular(10.0), border: new Border.all(color: Colors.white, width: 2), color: Colors.transparent),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -170,8 +159,7 @@ class _CarrousselState extends State<MapCarousel> {
                     tag: 'add_new_place_label',
                     child: Center(
                       child: Text(
-                        AppTranslations.of(context)
-                            .text("reservations.add_new_place"),
+                        AppTranslations.of(context).text("reservations.add_new_place"),
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.display2,
                       ),
@@ -193,30 +181,21 @@ class _CarrousselState extends State<MapCarousel> {
     return new InkWell(
       onTap: () async {
         if (currentpage > index) {
-          controller.previousPage(
-              duration: Duration(milliseconds: 500), curve: Curves.ease);
+          controller.previousPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
         }
 
         if (currentpage < index) {
-          controller.nextPage(
-              duration: Duration(milliseconds: 500), curve: Curves.ease);
+          controller.nextPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
         }
 
         if (currentpage == index) {
           if (true) {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => PlaceDetailPage(place: place)));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => PlaceDetailPage(place: place)));
           }
           clickedIndex = index;
-          final GoogleMapController controller =
-              await widget.mapController.future;
+          final GoogleMapController controller = await widget.mapController.future;
           await controller.animateCamera(CameraUpdate.newCameraPosition(
-              CameraPosition(
-                  bearing: 0,
-                  target: LatLng(double.parse(place.address.lat),
-                      double.parse(place.address.lng)),
-                  tilt: 0,
-                  zoom: 15.151926040649414)));
+              CameraPosition(bearing: 0, target: LatLng(double.parse(place.address.lat), double.parse(place.address.lng)), tilt: 0, zoom: 15.151926040649414)));
         }
       },
       child: Hero(
@@ -227,16 +206,12 @@ class _CarrousselState extends State<MapCarousel> {
               width: MediaQuery.of(context).size.width * 0.4,
               decoration: BoxDecoration(
                   borderRadius: new BorderRadius.circular(10.0),
-                  border: new Border.all(
-                      color: currentpage == index
-                          ? AppColors.colors[1]
-                          : Colors.transparent,
-                      width: 2),
+                  border: new Border.all(color: currentpage == index ? AppColors.colors[1] : Colors.transparent, width: 2),
                   color: Colors.grey[300],
                   image: DecorationImage(
-                      image: MPlatform.isWeb ? NetworkImage(Extensions.getPlaceImage(place, MediaSize.Medium)) :
-                       CachedNetworkImageProvider(
-                          Extensions.getPlaceImage(place, MediaSize.Medium)),
+                      image: MPlatform.isWeb
+                          ? NetworkImage(Extensions.getPlaceImage(place, MediaSize.Medium))
+                          : CachedNetworkImageProvider(Extensions.getPlaceImage(place, MediaSize.Medium)),
                       fit: BoxFit.cover)),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -255,10 +230,7 @@ class _CarrousselState extends State<MapCarousel> {
                               maxLines: 3,
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .display1
-                                  .merge(TextStyle(
+                              style: Theme.of(context).textTheme.display1.merge(TextStyle(
                                     color: textColor,
                                     shadows: [
                                       Shadow(

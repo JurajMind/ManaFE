@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:app/app/app.dart';
-import 'package:app/components/Places/WebMap/web_map_placeholder.dart'
-    if (dart.library.js) 'package:app/components/Places/WebMap/web_map.dart';
-import 'package:app/components/Places/horizontal_map_carousel.dart';
+//import 'package:app/components/Places/WebMap/web_map_placeholder.dart' if (dart.library.js) 'package:app/components/Places/WebMap/web_map.dart';
+
+import 'package:app/components/Places/WebMap/web_map_placeholder.dart' if (dart.library.js) 'package:app/components/Places/WebMap/web_map.dart';
 import 'package:app/components/Places/map_carousel.dart';
 import 'package:app/components/Reservations/reservation_item.dart';
 import 'package:app/const/theme.dart';
@@ -21,7 +21,6 @@ import 'package:queries/collections.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:math' show cos, sqrt, asin;
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:easy_google_maps/easy_google_maps.dart';
 import 'Components/reservation_button.dart';
 import 'package:clustering_google_maps/clustering_google_maps.dart';
 
@@ -41,14 +40,14 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   String _mapStyle;
   ClusteringHelper clusteringHelper;
   Completer<GoogleMapController> _controller = Completer();
+  GoogleWebMapController webMapController = new GoogleWebMapController();
   CameraPosition initView;
   CameraPosition curentView;
   CameraPosition lastIdleView;
   Set<Marker> markers;
   Set<Marker> originMarkers;
   bool loading = false;
-  BehaviorSubject<List<PlaceSimpleDto>> nearbyPlaces =
-      new BehaviorSubject<List<PlaceSimpleDto>>.seeded(null);
+  BehaviorSubject<List<PlaceSimpleDto>> nearbyPlaces = new BehaviorSubject<List<PlaceSimpleDto>>.seeded(null);
   PlacesBloc bloc;
   BitmapDescriptor _manaMarker;
   PlaceSimpleDto _selectedPlace;
@@ -129,10 +128,8 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
 
   Future<void> _createMarkerImageFromAsset(BuildContext context) async {
     if (_manaMarker == null) {
-      final ImageConfiguration imageConfiguration =
-          createLocalImageConfiguration(context);
-      BitmapDescriptor.fromAssetImage(imageConfiguration, 'assets/man_pin.png')
-          .then(_updateBitmap);
+      final ImageConfiguration imageConfiguration = createLocalImageConfiguration(context);
+      BitmapDescriptor.fromAssetImage(imageConfiguration, 'assets/man_pin.png').then(_updateBitmap);
     }
   }
 
@@ -145,20 +142,14 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   double calculateDistance(LatLng pos1, LatLng pos2) {
     var p = 0.017453292519943295;
     var c = cos;
-    var a = 0.5 -
-        c((pos2.latitude - pos1.latitude) * p) / 2 +
-        c(pos1.latitude * p) *
-            c(pos2.latitude * p) *
-            (1 - c((pos2.longitude - pos1.longitude) * p)) /
-            2;
+    var a = 0.5 - c((pos2.latitude - pos1.latitude) * p) / 2 + c(pos1.latitude * p) * c(pos2.latitude * p) * (1 - c((pos2.longitude - pos1.longitude) * p)) / 2;
     return 12742 * asin(sqrt(a));
   }
 
   @override
   Widget build(BuildContext context) {
     var shortestSide = MediaQuery.of(context).size.shortestSide;
-    var isLansdscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    var isLansdscape = MediaQuery.of(context).orientation == Orientation.landscape;
     var useTabletLayout = shortestSide > 600;
 
     return SafeArea(
@@ -176,8 +167,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                       children: <Widget>[
                         buildExpandedMap(snapshot),
                         Container(
-                          constraints: BoxConstraints(
-                              maxWidth: useTabletLayout ? 400 : 200),
+                          constraints: BoxConstraints(maxWidth: useTabletLayout ? 400 : 200),
                           child: Column(
                             children: <Widget>[
                               Container(
@@ -188,13 +178,8 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                                     ),
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        buildFloatingSearchButton(context),
-                                        buildFloatingRefreshButton(),
-                                        ManagePlaceBtn()
-                                      ],
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      children: <Widget>[buildFloatingSearchButton(context), buildFloatingRefreshButton(), ManagePlaceBtn()],
                                     ),
                                     SizedBox(
                                       height: 16,
@@ -207,15 +192,13 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                                 ),
                               ),
                               Expanded(
-                                child: MPlatform.isWeb
-                                    ? HorizontalMapCarousel(
-                                        nearbyPlaces: nearbyPlaces,
-                                      )
-                                    : MapCarousel(
-                                        direction: Axis.horizontal,
-                                        selectedPlace: _selectedPlace,
-                                        nearbyPlaces: nearbyPlaces,
-                                        mapController: _controller),
+                                child: MapCarousel(
+                                  direction: Axis.horizontal,
+                                  selectedPlace: _selectedPlace,
+                                  nearbyPlaces: nearbyPlaces,
+                                  mapController: _controller,
+                                  webMapController: webMapController,
+                                ),
                               ),
                             ],
                           ),
@@ -225,10 +208,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                   : Stack(
                       children: <Widget>[
                         Column(
-                          children: <Widget>[
-                            buildExpandedMap(snapshot),
-                            SizedBox(height: 140)
-                          ],
+                          children: <Widget>[buildExpandedMap(snapshot), SizedBox(height: 140)],
                         ),
                         Positioned(
                           bottom: 10,
@@ -236,9 +216,11 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                             height: 120,
                             width: MediaQuery.of(context).size.width,
                             child: MapCarousel(
-                                selectedPlace: _selectedPlace,
-                                nearbyPlaces: nearbyPlaces,
-                                mapController: _controller),
+                              selectedPlace: _selectedPlace,
+                              nearbyPlaces: nearbyPlaces,
+                              mapController: _controller,
+                              webMapController: webMapController,
+                            ),
                           ),
                         ),
                         Positioned(
@@ -251,13 +233,8 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                               width: MediaQuery.of(context).size.width * 0.6,
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: <Widget>[
-                                  buildFloatingSearchButton(context),
-                                  buildFloatingRefreshButton(),
-                                  ManagePlaceBtn()
-                                ],
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: <Widget>[buildFloatingSearchButton(context), buildFloatingRefreshButton(), ManagePlaceBtn()],
                               ),
                             ),
                           ),
@@ -268,18 +245,13 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                             child: isDefaultPage
                                 ? Container()
                                 : IconButton(
-                                    icon: Icon(Icons.chevron_left,
-                                        color: Colors.black, size: 50),
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
+                                    icon: Icon(Icons.chevron_left, color: Colors.black, size: 50),
+                                    onPressed: () => Navigator.of(context).pop(),
                                   )),
                         Positioned(
                             bottom: 170,
                             right: (MediaQuery.of(context).size.width / 2) - 60,
-                            child: AnimatedOpacity(
-                                opacity: !moving ? 1.0 : 0.0,
-                                duration: Duration(milliseconds: 500),
-                                child: new ReservationButton())),
+                            child: AnimatedOpacity(opacity: !moving ? 1.0 : 0.0, duration: Duration(milliseconds: 500), child: new ReservationButton())),
                       ],
                     );
             }),
@@ -316,15 +288,15 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
     return Expanded(
       child: MPlatform.isWeb
           ? RepaintBoundary(
-              child: MapTest(
-              places: snapshot.data,
+              child: MapWeb(
+              controller: webMapController,
+              markers: markers,
             ))
           : GoogleMap(
               markers: markers,
               myLocationEnabled: true,
               onCameraIdle: () {
-                var distance =
-                    calculateDistance(lastIdleView.target, curentView.target);
+                var distance = calculateDistance(lastIdleView.target, curentView.target);
                 this.clusteringHelper.updateMap();
                 setState(() {
                   moving = false;
@@ -355,8 +327,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
     );
   }
 
-  StreamBuilder<List<PlacesReservationsReservationDto>> reservationBuilder(
-      BehaviorSubject<List<PlacesReservationsReservationDto>> reservations) {
+  StreamBuilder<List<PlacesReservationsReservationDto>> reservationBuilder(BehaviorSubject<List<PlacesReservationsReservationDto>> reservations) {
     return StreamBuilder(
         stream: reservations,
         initialData: null,
@@ -365,9 +336,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
           if (snapshot.data != null) {
             var upcomingReservations = new Collection(snapshot.data);
             reservation = upcomingReservations
-                .where$1((predicate, _) =>
-                    predicate.time.compareTo(DateTime.now()) > 0 &&
-                    predicate.status != 1)
+                .where$1((predicate, _) => predicate.time.compareTo(DateTime.now()) > 0 && predicate.status != 1)
                 .orderBy((p) => p.time)
                 .firstOrDefault();
           }
@@ -379,16 +348,14 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                 }
                 return ReservationItem(reservation: reservation ?? null);
               },
-              childCount:
-                  snapshot.data == null ? 0 : snapshot.data.length == 0 ? 0 : 1,
+              childCount: snapshot.data == null ? 0 : snapshot.data.length == 0 ? 0 : 1,
             ),
           );
         });
   }
 
   void searchCity(BuildContext context) async {
-    var result = await Navigator.of(context)
-        .push(new MaterialPageRoute(builder: (BuildContext context) {
+    var result = await Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
       return new PlacesSearchPage(
         places: nearbyPlaces.value,
         returnToMap: true,
@@ -402,11 +369,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
       nearbyPlaces.add(location.places);
       this.searchLabel = location.label;
       controller
-          .animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-              bearing: 0,
-              target: location.position,
-              tilt: 0,
-              zoom: 15.151926040649414)))
+          .animateCamera(CameraUpdate.newCameraPosition(CameraPosition(bearing: 0, target: location.position, tilt: 0, zoom: 15.151926040649414)))
           .then((_) {
         setState(() {
           this._selectedPlace = location.places.first;
@@ -420,8 +383,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
       loading = true;
     });
     var position = imPosition ?? curentView.target;
-    var newPlaces = await App.http
-        .getNearbyPlaces(lat: position.latitude, lng: position.longitude);
+    var newPlaces = await App.http.getNearbyPlaces(lat: position.latitude, lng: position.longitude);
 
     var oldPlaces = nearbyPlaces.value;
     var merge = new List<PlaceSimpleDto>();
@@ -444,32 +406,28 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
       var marker = new Marker(
           icon: f.haveMana ? _manaMarker : BitmapDescriptor.defaultMarker,
           onTap: () async {
-            var controller = await _controller.future;
             if (_selectedPlace == f) {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => PlaceDetailPage(place: f)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => PlaceDetailPage(place: f)));
             }
             setState(() {
               _selectedPlace = f;
             });
+            if (MPlatform.isWeb) {
+              webMapController.moveToLocation(LatLng(double.parse(f.address.lat), double.parse(f.address.lng)));
+              return;
+            }
+            var controller = await _controller.future;
             controller.animateCamera(CameraUpdate.newCameraPosition(
-                CameraPosition(
-                    bearing: 0,
-                    target: new LatLng(double.parse(f.address.lat),
-                        double.parse(f.address.lng)),
-                    tilt: 0,
-                    zoom: 15.151926040649414)));
+                CameraPosition(bearing: 0, target: new LatLng(double.parse(f.address.lat), double.parse(f.address.lng)), tilt: 0, zoom: 15.151926040649414)));
           },
           markerId: MarkerId(f.id.toString()),
           infoWindow: InfoWindow(
               title: f.name,
               snippet: Extensions.adress(f.address),
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => PlaceDetailPage(place: f)));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => PlaceDetailPage(place: f)));
               }),
-          position:
-              LatLng(double.parse(f.address.lat), double.parse(f.address.lng)));
+          position: LatLng(double.parse(f.address.lat), double.parse(f.address.lng)));
       return marker;
     }).toSet();
     updateAggregate(newMarkers);
@@ -479,8 +437,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   }
 
   void updateAggregate(Set<Marker> newMarkers) {
-    var newList =
-        newMarkers.map((f) => new LatLngAndGeohash(f.position)).toList();
+    var newList = newMarkers.map((f) => new LatLngAndGeohash(f.position)).toList();
     this.clusteringHelper.updateData(newList);
   }
 
@@ -499,8 +456,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
               onTap: () async {
                 {
                   var controller = await _controller.future;
-                  controller.animateCamera(
-                      CameraUpdate.newCameraPosition(CameraPosition(
+                  controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
                     bearing: 0,
                     zoom: minClusterZoom + 0.2,
                     target: f.position,

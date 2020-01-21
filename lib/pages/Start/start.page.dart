@@ -3,13 +3,14 @@ import 'dart:async';
 import 'package:animated_background/animated_background.dart';
 import 'package:app/Helpers/helpers.dart';
 import 'package:app/app/app.widget.dart';
+import 'package:app/const/theme.dart';
+import 'package:app/pages/Start/sign_in.page.dart';
+import 'package:app/pages/auth/AppleSignIn/apple_sign_in.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-
-import 'auth/AppleSignIn/apple_sign_in.dart';
 
 class StartPage extends StatefulWidget {
   @override
@@ -38,8 +39,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
     return new Scaffold(
         body: AnimatedBackground(
       vsync: this,
-      behaviour: RandomParticleBehaviour(
-          options: ParticleOptions(baseColor: Colors.blue)),
+      behaviour: RandomParticleBehaviour(options: ParticleOptions(baseColor: Colors.blue)),
       child: new Center(
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -48,8 +48,17 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                 constraints: BoxConstraints(maxWidth: 500),
                 padding: new EdgeInsets.all(40.0),
                 child: new Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
+                    Text(
+                      'Welcome to Manapipes',
+                      style: Theme.of(context).textTheme.headline,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
                     new Container(
                       child: Image.asset(
                         'images/logo.png',
@@ -59,76 +68,52 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                     ),
                     new Container(
                       width: screenSize.width,
-                      child: new RoundedButton(
-                        buttonName: AppTranslations.of(context)
-                            .text("login.sign_up")
-                            .toUpperCase(),
-                        onTap: () {
-                          navigate(context, 'auth/register');
-                        },
-                        buttonColor: Colors.transparent,
-                        borderWidth: 1.0,
-                        bottomMargin: 1.0,
-                        height: 50.0,
-                        width: screenSize.width,
-                      ),
-                      margin: new EdgeInsets.only(top: 20.0),
-                    ),
-                    new Container(
-                      width: screenSize.width,
                       child: facebookLoginLoading
-                          ? Container(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator())
-                          : RoundedButton(
-                              buttonName: AppTranslations.of(context)
-                                  .text("login.facebook_login")
-                                  .toUpperCase(),
-                              onTap: () {
-                                facebookLogin();
-                              },
-                              buttonColor: Colors.white,
-                              borderWidth: 1.0,
-                              bottomMargin: 1.0,
-                              height: 50.0,
-                              width: screenSize.width,
+                          ? Container(height: 20, width: 20, child: CircularProgressIndicator())
+                          : MaterialButton(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  AppTranslations.of(context).text("Start").toUpperCase(),
+                                  style: Theme.of(context).textTheme.body2.apply(color: Colors.black),
+                                ),
+                              ),
+                              onPressed: () {},
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(24.0)),
                               textColor: Colors.black,
                             ),
                       margin: new EdgeInsets.only(top: 25.0),
                     ),
-                    if (false) ...{
-                      SizedBox(
-                        height: 8,
-                      ),
-                      new Container(
-                        child: MAppleLogin(),
-                      ),
-                    },
-                    new Container(
-                      width: screenSize.width,
-                      child: new FlatButton(
-                        child: new Text(
-                          AppTranslations.of(context)
-                              .text("login.log_in")
-                              .toUpperCase(),
-                          style: Theme.of(context).textTheme.display2,
+                    const SizedBox(height: 25),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text(
+                          'Already have an account? ',
+                          style: Theme.of(context).textTheme.display2.apply(fontWeightDelta: 0),
                         ),
-                        onPressed: () {
-                          navigate(context, 'auth/login');
-                        },
-                      ),
-                      margin: new EdgeInsets.only(top: 20.0),
+                        InkWell(
+                          onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
+                            return SignInPage();
+                          })),
+                          child: Text(
+                            'SIGN IN',
+                            style: Theme.of(context)
+                                .textTheme
+                                .display2
+                                .apply(fontWeightDelta: 10, color: AppColors.colors[3], decoration: TextDecoration.underline),
+                          ),
+                        )
+                      ],
                     ),
                     Align(
-                      heightFactor: 2,
+                      heightFactor: 1,
                       alignment: Alignment.bottomCenter,
                       child: new FlatButton(
                         child: new Text(
-                          AppTranslations.of(context)
-                              .currentLanguage
-                              .toString()
-                              .toUpperCase(),
+                          AppTranslations.of(context).currentLanguage.toString().toUpperCase(),
                           style: Theme.of(context).textTheme.display2,
                         ),
                         onPressed: () {
@@ -155,8 +140,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
             setState(() {
               facebookLoginLoading = true;
             });
-            var tokenResult =
-                await auth.getLocalToken("Facebook", result.accessToken.token);
+            var tokenResult = await auth.getLocalToken("Facebook", result.accessToken.token);
             if (tokenResult) {
               AppWidget.restartApp(context);
             } else {

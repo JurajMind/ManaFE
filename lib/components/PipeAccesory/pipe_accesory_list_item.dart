@@ -15,28 +15,31 @@ class PipeAccesoryListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 200,
       margin: EdgeInsets.all(8.0),
       decoration: BoxDecoration(
           color: Colors.black45, borderRadius: BorderRadius.circular(20.0)),
-      child: ListTile(
-        onTap: () => Navigator.of(context)
-            .push(new MaterialPageRoute(builder: (BuildContext context) {
-          return pipeAccesory.type == "Tobacco"
-              ? TobaccoPage(tobacco: pipeAccesory)
-              : PipeAccesoryPage(pipeAccesory: pipeAccesory);
-        })),
-        trailing: Icon(Icons.chevron_right),
-        leading: Hero(
-          tag: '${pipeAccesory.id}_name',
-          child: SizedBox(
-              height: 60.0,
-              width: 60.0,
-              child: Extensions.accesoryPicture(pipeAccesory)),
+      child: Container(
+        child: ListTile(
+          onTap: () => Navigator.of(context)
+              .push(new MaterialPageRoute(builder: (BuildContext context) {
+            return pipeAccesory.type == "Tobacco"
+                ? TobaccoPage(tobacco: pipeAccesory)
+                : PipeAccesoryPage(pipeAccesory: pipeAccesory);
+          })),
+          trailing: Icon(Icons.chevron_right),
+          leading: Hero(
+            tag: '${pipeAccesory.id}_name',
+            child: SizedBox(
+                height: 60.0,
+                width: 60.0,
+                child: Extensions.accesoryPicture(pipeAccesory)),
+          ),
+          title: Text(this.pipeAccesory.name,
+              style: Theme.of(context).textTheme.display2),
+          subtitle: Text(pipeAccesory.brand,
+              style: Theme.of(context).textTheme.display3),
         ),
-        title: Text(this.pipeAccesory.name,
-            style: Theme.of(context).textTheme.display2),
-        subtitle: Text(pipeAccesory.brand,
-            style: Theme.of(context).textTheme.display3),
       ),
     );
   }

@@ -1,63 +1,95 @@
-import 'package:app/app/app.dart';
-import 'package:app/utils/Map/location.dart';
-import 'package:app/utils/Map/map_view_type.dart';
-import 'package:app/utils/Map/marker.dart';
-import 'package:app/utils/Map/static_map_provider.dart';
+import 'dart:html';
+
+import 'package:app/module/data_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:google_maps/google_maps.dart' hide Icon;
+import 'package:google_maps_flutter/google_maps_flutter.dart' as googleFlutter;
+import 'package:geolocator/geolocator.dart' as geo;
+import 'dart:ui' as ui;
 
-class MapTest extends StatefulWidget {
-  final List<PlaceSimpleDto> places;
+class MapWeb extends StatefulWidget {
+  final Set<googleFlutter.Marker> markers;
+  final GoogleWebMapController controller;
 
-  const MapTest({Key key, this.places}) : super(key: key);
+  const MapWeb({Key key, this.markers, this.controller}) : super(key: key);
 
   @override
-  _MapTestState createState() => _MapTestState();
+  _MapWebState createState() => _MapWebState();
 }
 
-class _MapTestState extends State<MapTest> {
-  String createdViewId = 'hello-world-html';
-  bool inProgress = true;
-
+class _MapWebState extends State<MapWeb> {
+  int htmlIdCount = 0;
+  GMap map;
   @override
   void initState() {
+    widget.controller.map = map;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.places == null) {
-      return Center(child: Container());
-    }
+    htmlIdCount = widget?.markers?.length ?? -1;
+    String htmlId = htmlIdCount.toString();
+    print("map_rebuild ${widget.markers.length}");
 
-    var iStyle =
-        '&style=element:geometry|color:0x1d2c4d&style=element:labels.text.fill|color:0x8ec3b9&style=element:labels.text.stroke|color:0x1a3646&style=feature:administrative.country|element:geometry.stroke|color:0x4b6878&style=feature:administrative.land_parcel|element:labels.text.fill|color:0x64779e&style=feature:administrative.province|element:geometry.stroke|color:0x4b6878&style=feature:landscape.man_made|element:geometry.stroke|color:0x334e87&style=feature:landscape.natural|element:geometry|color:0x023e58&style=feature:poi|element:geometry|color:0x283d6a&style=feature:poi|element:labels.text.fill|color:0x6f9ba5&style=feature:poi|element:labels.text.stroke|color:0x1d2c4d&style=feature:poi.park|element:geometry.fill|color:0x023e58&style=feature:poi.park|element:labels.text.fill|color:0x3C7680&style=feature:road|element:geometry|color:0x304a7d&style=feature:road|element:labels.text.fill|color:0x98a5be&style=feature:road|element:labels.text.stroke|color:0x1d2c4d&style=feature:road.highway|element:geometry|color:0x2c6675&style=feature:road.highway|element:geometry.stroke|color:0x255763&style=feature:road.highway|element:labels.text.fill|color:0xb0d5ce&style=feature:road.highway|element:labels.text.stroke|color:0x023e58&style=feature:transit|element:labels.text.fill|color:0x98a5be&style=feature:transit|element:labels.text.stroke|color:0x1d2c4d&style=feature:transit.line|element:geometry.fill|color:0x283d6a&style=feature:transit.station|element:geometry|color:0x3a4762&style=feature:water|element:geometry|color:0x0e1626&style=feature:water|element:labels.text.fill|color:0x4e6d70';
-    var mapUrl = mapUri().toString() + '&scale=1' + iStyle;
+    // ignore: undefined_prefixed_name
+    ui.platformViewRegistry.registerViewFactory(htmlId, (int viewId) {
+      var location = DataProvider.getData(context).placeBloc.location.value;
+      LatLng myLatLng;
+      if (location != null) {
+        myLatLng = new LatLng(location.latitude, location.longitude);
+      } else {
+        return DivElement();
+      }
 
-    return Image.network(
-      mapUrl,
-      fit: BoxFit.cover,
-    );
-  }
+      final mapOptions = new MapOptions()
+        ..zoom = 12
+        ..center = myLatLng;
 
-  Uri mapUri() {
-    var staticMapProvider = new StaticMapProvider(App.googleApiKeys);
-    var markers = widget.places.map((place) {
-      return Marker(place.id.toString(), place.name,
-          double.parse(place.address.lat), double.parse(place.address.lng));
-    }).toList();
-    var mapUri = staticMapProvider.getStaticUriWithMarkersAndZoom(
-        markers ?? new List<Marker>(),
-        center: new Location(double.parse(widget.places.first.address.lat),
-            double.parse(widget.places.first.address.lng)),
-        zoomLevel: 13,
-        width: 650,
-        height: 650,
-        maptype: StaticMapViewType.roadmap);
+      final elem = DivElement()
+        ..id = htmlId
+        ..style.width = "100%"
+        ..style.height = "100%"
+        ..style.border = 'none';
 
-    setState(() {
-      inProgress = false;
+      final map = new GMap(elem, mapOptions);
+      if (widget.markers != null) {
+        widget.markers.forEach((f) {
+          var marker = Marker(
+            MarkerOptions()
+              ..position = LatLng(f.position.latitude, f.position.longitude)
+              ..map = map
+              ..clickable = true
+              ..title = f.infoWindow.title,
+          );
+
+          marker.onClick.listen((onData) {
+            print(f.markerId);
+            f.onTap();
+          });
+        });
+        widget.controller.map = map;
+      }
+
+      return elem;
     });
-    return mapUri;
+
+    var bloc = DataProvider.getData(context).placeBloc;
+    return StreamBuilder<geo.Position>(
+        stream: bloc.location,
+        builder: (context, snapshot) {
+          if (snapshot.data == null) return Container();
+          return HtmlElementView(viewType: htmlId);
+        });
+  }
+}
+
+class GoogleWebMapController {
+  GMap map;
+
+  GoogleWebMapController();
+
+  Future<void> moveToLocation(googleFlutter.LatLng position) {
+    map.center = new LatLng(position.latitude, position.longitude);
   }
 }

@@ -53,8 +53,7 @@ class TimeModel {
         {
           from = now.subtract(new Duration(days: 30));
           to = now;
-          label =
-              '${DateUtils.toStringDate(from)} - ${DateUtils.toStringDate(to)}';
+          label = '${DateUtils.toStringDate(from)} - ${DateUtils.toStringDate(to)}';
           break;
         }
 
@@ -62,8 +61,7 @@ class TimeModel {
         {
           from = now.subtract(new Duration(days: 7));
           to = now;
-          label =
-              '${DateUtils.toStringDate(from)} - ${DateUtils.toStringDate(to)}';
+          label = '${DateUtils.toStringDate(from)} - ${DateUtils.toStringDate(to)}';
           break;
         }
 
@@ -135,8 +133,7 @@ class _StatisticPageState extends State<StatisticPage> {
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 20.0),
-        child: Text(label.toUpperCase(),
-            style: Theme.of(context).textTheme.display1),
+        child: Text(label.toUpperCase(), style: Theme.of(context).textTheme.display1),
       ),
     );
   }
@@ -149,8 +146,7 @@ class _StatisticPageState extends State<StatisticPage> {
       print('response: ${response.touchInput}');
     });
     selectedTime = new TimeModel.fromSelect(1);
-    controller = new PageController(
-        initialPage: 0, keepPage: true, viewportFraction: 0.9);
+    controller = new PageController(initialPage: 0, keepPage: true, viewportFraction: 0.9);
   }
 
   @override
@@ -179,24 +175,20 @@ class _StatisticPageState extends State<StatisticPage> {
                     onSelected: (String value) {
                       switch (value) {
                         case 'settings':
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => SettingPage()));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => SettingPage()));
                           break;
                         case 'signOut':
                           auth.signOut();
                           AppWidget.restartApp(context);
                           break;
                         case 'test':
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => UserProfilePage()));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserProfilePage()));
                           break;
                         case 'testPage':
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => TestPage()));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => TestPage()));
                           break;
                         case 'testPlaces':
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => TestSearch()));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => TestSearch()));
                           break;
                       }
                     },
@@ -209,8 +201,7 @@ class _StatisticPageState extends State<StatisticPage> {
                             const SizedBox(
                               width: 4,
                             ),
-                            Text('Settings',
-                                style: Theme.of(context).textTheme.display2),
+                            Text('Settings', style: Theme.of(context).textTheme.display2),
                           ],
                         ),
                       ),
@@ -222,8 +213,7 @@ class _StatisticPageState extends State<StatisticPage> {
                             const SizedBox(
                               width: 4,
                             ),
-                            Text('User profile',
-                                style: Theme.of(context).textTheme.display2),
+                            Text('User profile', style: Theme.of(context).textTheme.display2),
                           ],
                         ),
                       ),
@@ -235,8 +225,7 @@ class _StatisticPageState extends State<StatisticPage> {
                             const SizedBox(
                               width: 4,
                             ),
-                            Text('Test page',
-                                style: Theme.of(context).textTheme.display2),
+                            Text('Test page', style: Theme.of(context).textTheme.display2),
                           ],
                         ),
                       ),
@@ -248,8 +237,7 @@ class _StatisticPageState extends State<StatisticPage> {
                             const SizedBox(
                               width: 4,
                             ),
-                            Text('Sign out',
-                                style: Theme.of(context).textTheme.display2),
+                            Text('Sign out', style: Theme.of(context).textTheme.display2),
                           ],
                         ),
                       ),
@@ -266,8 +254,7 @@ class _StatisticPageState extends State<StatisticPage> {
                     child: Stack(
                       children: <Widget>[
                         buildPositioned(bloc, 1, (f) => f.pufCount.toDouble()),
-                        buildPositioned(
-                            bloc, 0, (f) => f.smokeSessions.toDouble()),
+                        buildPositioned(bloc, 0, (f) => f.smokeSessions.toDouble()),
                         buildPositioned(bloc, 2, (f) => f.activity.toDouble()),
                       ],
                     ),
@@ -282,37 +269,31 @@ class _StatisticPageState extends State<StatisticPage> {
                       Expanded(
                           flex: 4,
                           child: OutlineButton(
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(30.0)),
-                            borderSide:
-                                BorderSide(color: Colors.white, width: 1),
-                            onPressed: () =>
-                                _showDialog(context).then((value) async {
+                            shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                            borderSide: BorderSide(color: Colors.white, width: 1),
+                            onPressed: () => _showDialog(context).then((value) async {
                               if (value == null) {
                                 return;
                               }
                               if (value == 4) {
-                                final List<DateTime> picked =
-                                    await DateRagePicker.showDatePicker(
-                                        context: context,
-                                        initialFirstDate: selectedTime.from,
-                                        initialLastDate: selectedTime.to,
-                                        firstDate: new DateTime(2017),
-                                        lastDate: new DateTime.now());
+                                final List<DateTime> picked = await DateRagePicker.showDatePicker(
+                                    context: context,
+                                    initialFirstDate: selectedTime.from,
+                                    initialLastDate: selectedTime.to,
+                                    firstDate: new DateTime(2017),
+                                    lastDate: new DateTime.now());
                                 if (picked != null && picked.length == 2) {
                                   print(picked);
 
                                   setState(() {
-                                    selectedTime = new TimeModel.fromCustom(
-                                        picked[0], picked[1]);
+                                    selectedTime = new TimeModel.fromCustom(picked[0], picked[1]);
                                   });
                                   loadTime(bloc, selectedTime);
                                 }
                               }
                               setState(() {
                                 if (value >= 0 && value < 4) {
-                                  selectedTime =
-                                      new TimeModel.fromSelect(value);
+                                  selectedTime = new TimeModel.fromSelect(value);
                                 }
                               });
                               loadTime(bloc, selectedTime);
@@ -347,17 +328,12 @@ class _StatisticPageState extends State<StatisticPage> {
                                               highlightColor: Colors.white,
                                               child: Text(
                                                 "??",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .title,
+                                                style: Theme.of(context).textTheme.title,
                                               ),
                                             )
                                           : Text(
-                                              snapshot.data.sessionCount
-                                                  .toString(),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .title,
+                                              snapshot.data.sessionCount.toString(),
+                                              style: Theme.of(context).textTheme.title,
                                             );
                                     }),
                                 const SizedBox(
@@ -394,9 +370,7 @@ class _StatisticPageState extends State<StatisticPage> {
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Expanded(
-                            flex: 1,
-                            child: Container(height: 250, child: Container())),
+                        Expanded(flex: 1, child: Container(height: 250, child: Container())),
                         Expanded(
                             flex: 1,
                             child: Container(
@@ -440,8 +414,7 @@ class _StatisticPageState extends State<StatisticPage> {
       child: StreamBuilder<StatisticRecap>(
         stream: bloc.recap,
         initialData: null,
-        builder:
-            (BuildContext context, AsyncSnapshot<StatisticRecap> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<StatisticRecap> snapshot) {
           return Container(
               child: Center(
             child: Row(
@@ -489,8 +462,7 @@ class _StatisticPageState extends State<StatisticPage> {
     return duration.toString();
   }
 
-  Positioned buildPositioned(
-      StatisticBloc bloc, int color, double funct(StatisticItem s)) {
+  Positioned buildPositioned(StatisticBloc bloc, int color, double funct(StatisticItem s)) {
     return Positioned(
       top: 40,
       child: StreamBuilder<List<StatisticItem>>(
@@ -533,17 +505,14 @@ class HealthWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.white),
-          borderRadius: BorderRadius.circular(16.0)),
+      decoration: BoxDecoration(border: Border.all(color: Colors.white), borderRadius: BorderRadius.circular(16.0)),
       child: StreamBuilder<StatisticRecap>(
           stream: bloc.recap,
           builder: (context, snapshot) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
-                onTap: () => Navigator.of(context).push(
-                    new MaterialPageRoute(builder: (BuildContext context) {
+                onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
                   return HealthPage(
                     from: this.time.from,
                     to: this.time.to,
@@ -559,8 +528,7 @@ class HealthWidget extends StatelessWidget {
                       flex: 4,
                       child: Column(
                         children: <Widget>[
-                          Text(AppTranslations.of(context).text('health.title'),
-                              style: Theme.of(context).textTheme.display2),
+                          Text(AppTranslations.of(context).text('health.title'), style: Theme.of(context).textTheme.display2),
                         ],
                       ),
                     ),
@@ -593,14 +561,12 @@ class SmokeSessionStat extends StatelessWidget {
     return StreamBuilder<List<SmokeSessionSimpleDto>>(
         stream: bloc.smokeSessions,
         initialData: null,
-        builder: (BuildContext context,
-            AsyncSnapshot<List<SmokeSessionSimpleDto>> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List<SmokeSessionSimpleDto>> snapshot) {
           return SessionList(
             sessions: snapshot.data,
             sessionCount: 5,
             onPressed: () async {
-              Navigator.of(context).push(new MaterialPageRoute(
-                  builder: (context) => AllStatisticPage(seed: snapshot.data)));
+              Navigator.of(context).push(new MaterialPageRoute(builder: (context) => AllStatisticPage(seed: snapshot.data)));
             },
           );
         });
@@ -675,11 +641,7 @@ class TimeSelect extends StatelessWidget {
           borderWidth: 1,
           bottomMargin: 1,
           buttonColor: Colors.white,
-          child: Text(label,
-              style: Theme.of(context)
-                  .textTheme
-                  .display3
-                  .apply(color: Colors.black)),
+          child: Text(label, style: Theme.of(context).textTheme.display3.apply(color: Colors.black)),
           height: 40,
           width: 30,
           onTap: () {});
