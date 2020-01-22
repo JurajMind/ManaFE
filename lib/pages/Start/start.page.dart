@@ -128,39 +128,4 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
       ),
     ));
   }
-
-  Future facebookLogin() async {
-    var facebookLogin = new FacebookLogin();
-    var result = await facebookLogin.logIn(['email']);
-    try {
-      switch (result.status) {
-        case FacebookLoginStatus.loggedIn:
-          {
-            var auth = new Authorize();
-            setState(() {
-              facebookLoginLoading = true;
-            });
-            var tokenResult = await auth.getLocalToken("Facebook", result.accessToken.token);
-            if (tokenResult) {
-              AppWidget.restartApp(context);
-            } else {
-              setState(() {
-                facebookLoginLoading = false;
-              });
-            }
-            break;
-          }
-
-        case FacebookLoginStatus.cancelledByUser:
-          break;
-        case FacebookLoginStatus.error:
-          break;
-      }
-    } catch (e) {
-      AppWidget.restartApp(context);
-      Scaffold.of(context).showSnackBar(new SnackBar(
-        content: new Text("Facebook login error :("),
-      ));
-    }
-  }
 }
