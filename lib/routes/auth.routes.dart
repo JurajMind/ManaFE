@@ -1,4 +1,5 @@
 import 'package:app/pages/Settings/language_selector_page.dart';
+import 'package:app/pages/Start/intro.page.dart';
 import 'package:app/pages/Start/start.page.dart';
 import 'package:app/pages/auth/forgot_password.page.dart';
 import 'package:app/pages/auth/login.page.dart';
@@ -26,6 +27,10 @@ class AuthRoutes {
 
     router.define('auth/home', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
       return new StartPage();
+    }));
+
+    router.define('auth/intro', handler: new Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+      return new IntroPage();
     }));
   }
 }

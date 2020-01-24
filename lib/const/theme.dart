@@ -14,51 +14,19 @@ ThemeData buildDarkTheme() {
     appBarTheme: AppBarTheme(color: AppColors.black),
     colorScheme: ColorScheme.dark(),
     textTheme: TextTheme(
-      headline: TextStyle(
-          color: Colors.white,
-          fontSize: 42.0,
-          fontWeight: FontWeight.w700,
-          fontFamily: 'Montserrat'),
-      title: TextStyle(
-          color: Colors.white,
-          fontSize: 36.0,
-          fontWeight: FontWeight.w700,
-          fontFamily: 'Montserrat'),
+      headline: TextStyle(color: Colors.white, fontSize: 42.0, fontWeight: FontWeight.w700, fontFamily: 'Montserrat'),
+      title: TextStyle(color: Colors.white, fontSize: 36.0, fontWeight: FontWeight.w700, fontFamily: 'Montserrat'),
       body1: TextStyle(
         fontSize: 14.0,
         fontFamily: 'Montserrat',
         color: Colors.white,
       ),
-      body2: TextStyle(
-          fontSize: 30.0,
-          color: Colors.white,
-          fontWeight: FontWeight.w700,
-          fontFamily: 'Montserrat'),
-      subtitle: TextStyle(
-          fontSize: 16.0,
-          color: Colors.white,
-          fontWeight: FontWeight.w700,
-          fontFamily: 'Montserrat'),
-      display1: TextStyle(
-          fontSize: 21.0,
-          color: Colors.white,
-          fontWeight: FontWeight.w700,
-          fontFamily: 'Montserrat'),
-      display2: TextStyle(
-          fontSize: 16.0,
-          color: Colors.white,
-          fontWeight: FontWeight.w700,
-          fontFamily: 'Montserrat'),
-      display3: TextStyle(
-          fontSize: 14.0,
-          color: Colors.white,
-          fontWeight: FontWeight.w700,
-          fontFamily: 'Montserrat'),
-      display4: TextStyle(
-          fontSize: 12.0,
-          color: Colors.white,
-          fontWeight: FontWeight.w700,
-          fontFamily: 'Montserrat'),
+      body2: TextStyle(fontSize: 30.0, color: Colors.white, fontWeight: FontWeight.w700, fontFamily: 'Montserrat'),
+      subtitle: TextStyle(fontSize: 16.0, color: Colors.white, fontWeight: FontWeight.w700, fontFamily: 'Montserrat'),
+      display1: TextStyle(fontSize: 21.0, color: Colors.white, fontWeight: FontWeight.w700, fontFamily: 'Montserrat'),
+      display2: TextStyle(fontSize: 16.0, color: Colors.white, fontWeight: FontWeight.w700, fontFamily: 'Montserrat'),
+      display3: TextStyle(fontSize: 14.0, color: Colors.white, fontWeight: FontWeight.w700, fontFamily: 'Montserrat'),
+      display4: TextStyle(fontSize: 12.0, color: Colors.white, fontWeight: FontWeight.w700, fontFamily: 'Montserrat'),
       caption: TextStyle(
         fontSize: 12.0,
         fontFamily: 'Montserrat',
@@ -72,19 +40,16 @@ ThemeData buildDarkTheme() {
 
 TextTheme _buildTextTheme(TextTheme base) {
   return base.copyWith(
-    title: base.title.copyWith(
-        fontFamily: 'Montserrat',
-        fontWeight: FontWeight.w700,
-        color: Colors.white),
+    title: base.title.copyWith(fontFamily: 'Montserrat', fontWeight: FontWeight.w700, color: Colors.white),
   );
 }
 
 class AppColors {
-  static const Color scafBg = Colors.black;
+  static const Color scafBg = const Color(0xff05233F);
   static const Color blue = const Color.fromARGB(0, 31, 3, 255);
   static const Color blueLight = Colors.lightBlue;
   static const Color black = Colors.black;
-  static const Color bgBlack = const Color(0xFF15122E);
+  static const Color bgBlack = const Color(0xff05233F);
   static const Color white = Colors.white;
   static const Color gray = Colors.grey;
   static const Color green = Colors.green;

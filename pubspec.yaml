@@ -66,12 +66,15 @@ dependencies:
   universal_html: ^1.1.8
   #webview_flutter: ^0.3.15+1
   easy_google_maps: ^1.0.0+2
+  intro_slider: 
+    path: ./modules/flutter-intro-slider
+  flare_flutter: ^2.0.1
 
 dependency_overrides:
   intl: ^0.16.0
   google_maps_flutter: ^0.5.21+15
   flutter_chips_input:
-    path: ./flutter_chips
+    path: ./modules/flutter_chips
 
 flutter_icons:
   android: true

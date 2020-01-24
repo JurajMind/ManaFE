@@ -83,7 +83,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       new TextFormField(
-                          autofocus: true,
+                          autofocus: false,
                           keyboardType: TextInputType.emailAddress,
                           style: Theme.of(context).textTheme.display2,
                           decoration: new InputDecoration(

@@ -233,7 +233,7 @@ packages:
     source: hosted
     version: "2.3.3"
   flare_flutter:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flare_flutter
       url: "https://pub.dartlang.org"
@@ -268,7 +268,7 @@ packages:
   flutter_chips_input:
     dependency: "direct overridden"
     description:
-      path: flutter_chips
+      path: "modules/flutter_chips"
       relative: true
     source: path
     version: "1.6.0"
@@ -464,6 +464,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.16.1"
+  intro_slider:
+    dependency: "direct main"
+    description:
+      path: "modules/flutter-intro-slider"
+      relative: true
+    source: path
+    version: "2.2.8"
   io:
     dependency: transitive
     description:

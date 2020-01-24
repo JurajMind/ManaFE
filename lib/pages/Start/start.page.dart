@@ -52,12 +52,12 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                   children: <Widget>[
                     Text(
                       'Welcome to Manapipes',
-                      style: Theme.of(context).textTheme.headline,
+                      style: Theme.of(context).textTheme.headline.apply(fontSizeDelta: -7),
                       textAlign: TextAlign.center,
                       maxLines: 2,
                     ),
                     const SizedBox(
-                      height: 25,
+                      height: 45,
                     ),
                     new Container(
                       child: Image.asset(
@@ -65,6 +65,9 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                         fit: BoxFit.scaleDown,
                         height: 200.0,
                       ),
+                    ),
+                    const SizedBox(
+                      height: 45,
                     ),
                     new Container(
                       width: screenSize.width,
@@ -75,38 +78,41 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   AppTranslations.of(context).text("Start").toUpperCase(),
-                                  style: Theme.of(context).textTheme.body2.apply(color: Colors.black),
+                                  style: Theme.of(context).textTheme.body2.apply(color: Colors.black, fontSizeDelta: -7),
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () => navigate(context, 'auth/intro'),
                               color: Colors.white,
                               shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(24.0)),
                               textColor: Colors.black,
                             ),
                       margin: new EdgeInsets.only(top: 25.0),
                     ),
-                    const SizedBox(height: 25),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text(
-                          'Already have an account? ',
-                          style: Theme.of(context).textTheme.display2.apply(fontWeightDelta: 0),
+                    const SizedBox(height: 16),
+                    InkWell(
+                      onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
+                        return SignInPage();
+                      })),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              'Already have an account? ',
+                              style: Theme.of(context).textTheme.display2.apply(fontWeightDelta: 0),
+                            ),
+                            Text(
+                              'SIGN IN',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .display2
+                                  .apply(fontWeightDelta: 10, color: AppColors.colors[3], decoration: TextDecoration.underline),
+                            ),
+                          ],
                         ),
-                        InkWell(
-                          onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
-                            return SignInPage();
-                          })),
-                          child: Text(
-                            'SIGN IN',
-                            style: Theme.of(context)
-                                .textTheme
-                                .display2
-                                .apply(fontWeightDelta: 10, color: AppColors.colors[3], decoration: TextDecoration.underline),
-                          ),
-                        )
-                      ],
+                      ),
                     ),
                     Align(
                       heightFactor: 1,
