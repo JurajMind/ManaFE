@@ -1,5 +1,5 @@
 import 'package:app/const/theme.dart';
-import 'package:flare_flutter/flare_actor.dart';
+import 'package:app/Helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
@@ -18,13 +18,14 @@ class _IntroPageState extends State<IntroPage> {
   }
 
   void onDonePress() {
-    // Do what you want
+    redirect(context, 'auth/cross');
   }
 
   @override
   Widget build(BuildContext context) {
     return new IntroSlider(
       colorActiveDot: Colors.white,
+      nameDoneBtn: "GOT IT!",
       slides: [
         new Slide(
           widgetTitle: Text(
@@ -32,7 +33,7 @@ class _IntroPageState extends State<IntroPage> {
             style: Theme.of(context).textTheme.title,
             textAlign: TextAlign.center,
           ),
-          centerWidget: Container(height: 300, width: 300, child: FlareActor("assets/Intro_1.flr", alignment: Alignment.center, fit: BoxFit.contain)),
+          centerWidget: Container(height: 300, width: 300, child: Image.asset("assets/intro_1.png", alignment: Alignment.center, fit: BoxFit.contain)),
           description:
               "Light your hookah up with vibrant colors and playful animations that react to your activity and set the perfect mood for every occasion.… ",
           backgroundColor: AppColors.bgBlack,
@@ -43,7 +44,7 @@ class _IntroPageState extends State<IntroPage> {
             style: Theme.of(context).textTheme.title,
             textAlign: TextAlign.center,
           ),
-          centerWidget: Container(height: 300, width: 300, child: FlareActor("assets/Intro_2.flr", alignment: Alignment.center, fit: BoxFit.fill)),
+          centerWidget: Container(height: 300, width: 300, child: Image.asset("assets/intro_2.png", alignment: Alignment.center, fit: BoxFit.contain)),
           description:
               "How long is your average session, or how many puffs did you take? Keep track of your gear and stats, create and share your custom tobacco mixes!",
           backgroundColor: AppColors.bgBlack,
@@ -54,7 +55,7 @@ class _IntroPageState extends State<IntroPage> {
             style: Theme.of(context).textTheme.title,
             textAlign: TextAlign.center,
           ),
-          centerWidget: Container(height: 300, width: 300, child: FlareActor("assets/Intro_3.flr", alignment: Alignment.center, fit: BoxFit.fill)),
+          centerWidget: Container(height: 300, width: 300, child: Image.asset("assets/intro_3.png", alignment: Alignment.center, fit: BoxFit.contain)),
           description: "Challenge your friends to a longest inhale competition to see whose lungs are the mightiest and share your activity on social media!",
           backgroundColor: AppColors.bgBlack,
         ),

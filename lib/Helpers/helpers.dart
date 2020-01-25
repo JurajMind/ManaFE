@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 // Let's validate!
-String validate(
-    Object value, String attribute, List<BaseValidator> validators) {
+String validate(Object value, String attribute, List<BaseValidator> validators) {
   String result;
 
   // Continue test while if result is null.
@@ -21,14 +20,13 @@ String validate(
 }
 
 // Navigate
-void navigate(BuildContext context, String routePath,
-    {Map<String, dynamic> params}) {
+void navigate(BuildContext context, String routePath, {Map<String, dynamic> params}) {
   App.router.navigateTo(context, routePath);
 }
 
 // Redirect
 void redirect(BuildContext context, String routePath) {
-  Navigator.pushReplacementNamed(context, routePath);
+  App.router.navigateTo(context, routePath, replace: true);
 }
 
 //CircleRadius
@@ -44,10 +42,8 @@ String slotDurationString(int slots) {
 }
 
 int compareTime(DateTime a, DateTime b) {
-  var d1 = DateTime.utc(
-      a.year, a.month, a.day, a.hour, a.minute, a.second, a.millisecond);
-  var d2 = DateTime.utc(
-      a.year, a.month, a.day, b.hour, b.minute, b.second, b.millisecond);
+  var d1 = DateTime.utc(a.year, a.month, a.day, a.hour, a.minute, a.second, a.millisecond);
+  var d2 = DateTime.utc(a.year, a.month, a.day, b.hour, b.minute, b.second, b.millisecond);
   return d1.compareTo(d2);
 }
 

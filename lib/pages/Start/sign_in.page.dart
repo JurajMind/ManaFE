@@ -9,8 +9,9 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/services/authorization.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'external_auth_widget.dart';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -76,7 +77,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
             ),
             Builder(builder: (BuildContext context) {
               return new Container(
-                padding: new EdgeInsets.fromLTRB(60.0, 60.0, 60.0, 0.0),
+                padding: new EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: new Form(
                   key: _formKey,
                   child: new Column(
@@ -89,11 +90,11 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                           decoration: new InputDecoration(
                               labelStyle: Theme.of(context).textTheme.display2,
                               enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                                borderRadius: BorderRadius.all(Radius.circular(40.0)),
                                 borderSide: BorderSide(color: Colors.white, width: 2),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                                borderRadius: BorderRadius.all(Radius.circular(40.0)),
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                               hintText: 'your@email.com',
@@ -102,7 +103,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                             return validate(value, 'E-mail Address', [new RequiredValidator(), new EmailValidator(), new MaxValidator(63)]);
                           },
                           onFieldSubmitted: (String textInput) {
-                            FocusScope.of(context).requestFocus(passwordFocusNode);
+                            // FocusScope.of(context).requestFocus(passwordFocusNode);
                           },
                           onSaved: (String value) {
                             data.email = value;
@@ -111,9 +112,10 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                         height: 10,
                       ),
                       new TextFormField(
+                          autocorrect: false,
                           style: Theme.of(context).textTheme.display2,
                           obscureText: !showPassword,
-                          focusNode: passwordFocusNode,
+                          //focusNode: passwordFocusNode,
                           decoration: new InputDecoration(
                               suffixIcon: IconButton(
                                 icon: Icon(
@@ -128,11 +130,11 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                               ),
                               labelStyle: Theme.of(context).textTheme.display1,
                               enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                                borderRadius: BorderRadius.all(Radius.circular(40.0)),
                                 borderSide: BorderSide(color: Colors.white, width: 2),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                borderRadius: BorderRadius.all(Radius.circular(40.0)),
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                               labelText: AppTranslations.of(context).text("login.password")),
@@ -183,47 +185,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                               ),
                         margin: new EdgeInsets.only(top: 20.0, bottom: 20),
                       ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            height: 2,
-                            width: 50,
-                            color: Colors.white,
-                          ),
-                          Text('  Or connect using  '),
-                          Container(
-                            height: 2,
-                            width: 50,
-                            color: Colors.white,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: <Widget>[
-                        IconButton(
-                          onPressed: () => facebookLogin(),
-                          icon: Icon(
-                            FontAwesomeIcons.facebook,
-                            size: 40,
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            FontAwesomeIcons.google,
-                            size: 40,
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            FontAwesomeIcons.apple,
-                            size: 40,
-                          ),
-                        )
-                      ])
+                      ExternalAuthWidget()
                     ],
                   ),
                 ),
@@ -233,40 +195,5 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
         )),
       ),
     );
-  }
-
-  Future facebookLogin() async {
-    var facebookLogin = new FacebookLogin();
-    var result = await facebookLogin.logIn(['email']);
-    try {
-      switch (result.status) {
-        case FacebookLoginStatus.loggedIn:
-          {
-            var auth = new Authorize();
-            setState(() {
-              facebookLoginLoading = true;
-            });
-            var tokenResult = await auth.getLocalToken("Facebook", result.accessToken.token);
-            if (tokenResult) {
-              AppWidget.restartApp(context);
-            } else {
-              setState(() {
-                facebookLoginLoading = false;
-              });
-            }
-            break;
-          }
-
-        case FacebookLoginStatus.cancelledByUser:
-          break;
-        case FacebookLoginStatus.error:
-          break;
-      }
-    } catch (e) {
-      AppWidget.restartApp(context);
-      Scaffold.of(context).showSnackBar(new SnackBar(
-        content: new Text("Facebook login error :("),
-      ));
-    }
   }
 }

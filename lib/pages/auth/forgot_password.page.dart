@@ -22,16 +22,17 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppTranslations.of(context)
-            .text("login.forgot_password")
-            .toUpperCase()),
+        title: Text(AppTranslations.of(context).text("login.forgot_password").toUpperCase()),
       ),
       body: new SingleChildScrollView(
           child: new Column(
         children: <Widget>[
+          SizedBox(
+            height: 50,
+          ),
           Builder(builder: (BuildContext context) {
             return new Container(
-              padding: new EdgeInsets.fromLTRB(60.0, 60.0, 60.0, 0.0),
+              padding: new EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: new Form(
                 key: _formKey,
                 child: new Column(
@@ -42,22 +43,26 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         keyboardType: TextInputType.emailAddress,
                         decoration: new InputDecoration(
                             labelStyle: Theme.of(context).textTheme.display1,
-                            enabledBorder: new UnderlineInputBorder(
-                                borderSide:
-                                    new BorderSide(color: Colors.white)),
-                            focusedBorder: new UnderlineInputBorder(
-                                borderSide:
-                                    new BorderSide(color: Colors.white)),
-                            icon: Icon(Icons.mail, color: Colors.white),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                              borderSide: BorderSide(color: Colors.white, width: 2),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                              borderSide: BorderSide(color: Colors.white, width: 2),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                              borderSide: BorderSide(color: Colors.red, width: 2),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                              borderSide: BorderSide(color: Colors.red, width: 2),
+                            ),
                             hintText: 'your@email.com',
-                            labelText: AppTranslations.of(context)
-                                .text("login.email")),
+                            labelText: AppTranslations.of(context).text("login.email")),
                         validator: (String value) {
-                          return validate(value, 'E-mail Address', [
-                            new RequiredValidator(),
-                            new EmailValidator(),
-                            new MaxValidator(63)
-                          ]);
+                          return validate(value, 'E-mail Address', [new RequiredValidator(), new EmailValidator(), new MaxValidator(63)]);
                         },
                         onSaved: (String value) {
                           email = value;
@@ -65,10 +70,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     new Container(
                       child: _loading
                           ? CircularProgressIndicator()
-                          : MButton(
-                              icon: Icons.refresh,
-                              label: AppTranslations.of(context)
-                                  .text("login.reset_password"),
+                          : OutlineButton.icon(
+                              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                              borderSide: BorderSide(color: Colors.white, width: 2),
+                              icon: Icon(Icons.refresh),
+                              label: Text(AppTranslations.of(context).text("login.reset_password")),
                               onPressed: () {
                                 submit(context);
                               },
