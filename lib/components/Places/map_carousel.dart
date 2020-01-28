@@ -161,7 +161,7 @@ class _CarrousselState extends State<MapCarousel> {
                       child: Text(
                         AppTranslations.of(context).text("reservations.add_new_place"),
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline5,
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
                   )

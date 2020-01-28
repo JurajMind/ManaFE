@@ -44,7 +44,7 @@ class _BrandListState extends State<BrandList> {
         ),
         Text(
           widget.section.title,
-          style: Theme.of(context).textTheme.subtitle1,
+          style: Theme.of(context).textTheme.headline3,
         ),
         !searchMode
             ? Row(

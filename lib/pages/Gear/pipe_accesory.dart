@@ -22,12 +22,10 @@ class RowSearchStickyDelegate extends SliverPersistentHeaderDelegate {
   RowSearchStickyDelegate(this.type, this.currentView, this.onViewChanged);
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       color: AppColors.scafBg,
-      child: SearchRow(
-          currentView: currentView, onViewChanged: onViewChanged, type: type),
+      child: SearchRow(currentView: currentView, onViewChanged: onViewChanged, type: type),
     );
   }
 
@@ -56,15 +54,7 @@ class MyGear extends StatelessWidget {
   final int position;
 
   const MyGear(
-      {Key key,
-      this.type,
-      this.scrollController,
-      this.scrollPhysics,
-      this.currentView,
-      this.onViewChanged,
-      this.section,
-      this.pageController,
-      this.position})
+      {Key key, this.type, this.scrollController, this.scrollPhysics, this.currentView, this.onViewChanged, this.section, this.pageController, this.position})
       : super(key: key);
 
   @override
@@ -88,9 +78,7 @@ class MyGear extends StatelessWidget {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage(section.backgroundAsset),
-                        colorFilter: ColorFilter.mode(
-                            const Color.fromRGBO(255, 255, 255, 0.545),
-                            BlendMode.modulate),
+                        colorFilter: ColorFilter.mode(const Color.fromRGBO(255, 255, 255, 0.545), BlendMode.modulate),
                         fit: BoxFit.cover)),
               )),
         ),
@@ -122,35 +110,29 @@ class MyGear extends StatelessWidget {
             );
           },
         ),
+        SliverToBoxAdapter(
+            child: Container(
+          height: 55,
+        )),
       ],
     );
   }
 }
 
 class SearchRow extends StatelessWidget {
-  static const Map<int, String> labels = {
-    0: 'gear.my_gear',
-    1: 'gear.by_brand',
-    2: 'TOP'
-  };
+  static const Map<int, String> labels = {0: 'gear.my_gear', 1: 'gear.by_brand', 2: 'TOP'};
 
   final String type;
   final int currentView;
   final ValueChanged<int> onViewChanged;
 
-  const SearchRow({Key key, this.type, this.currentView, this.onViewChanged})
-      : super(key: key);
+  const SearchRow({Key key, this.type, this.currentView, this.onViewChanged}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var bloc = DataProvider.getData(context).personBloc;
     var gearBloc = DataProvider.getData(context).gearBloc;
-    var typedMyGear = DataProvider.getData(context)
-        .personBloc
-        .myGear
-        .value
-        .where((s) => s.type == type)
-        .toList();
+    var typedMyGear = DataProvider.getData(context).personBloc.myGear.value.where((s) => s.type == type).toList();
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
@@ -224,20 +206,13 @@ class SearchRow extends StatelessWidget {
       builder: (BuildContext context) => child,
     ).then<void>((PipeAccesorySimpleDto value) {
       if (value == null) return;
-      Navigator.of(context)
-          .push(new MaterialPageRoute(builder: (BuildContext context) {
-        return value.type == "Tobacco"
-            ? TobaccoPage(tobacco: value)
-            : PipeAccesoryPage(pipeAccesory: value);
+      Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
+        return value.type == "Tobacco" ? TobaccoPage(tobacco: value) : PipeAccesoryPage(pipeAccesory: value);
       }));
     });
   }
 
-  static showNumberDialog(
-      {BuildContext context,
-      PipeAccesorySimpleDto accesory,
-      PersonBloc bloc,
-      String type}) {
+  static showNumberDialog({BuildContext context, PipeAccesorySimpleDto accesory, PersonBloc bloc, String type}) {
     var isTobacco = type == 'Tobacco';
     showDialog<int>(
       context: context,
@@ -262,34 +237,17 @@ class PipeAccesoryList extends StatelessWidget {
   final String brandFilter;
   final Section section;
   final PageController pageController;
-  PipeAccesoryList(
-      {Key key,
-      this.currentView,
-      this.onViewChanged,
-      this.brandFilter,
-      this.section,
-      this.pageController,
-      this.position});
+  PipeAccesoryList({Key key, this.currentView, this.onViewChanged, this.brandFilter, this.section, this.pageController, this.position});
 
   @override
   Widget build(BuildContext context) {
     switch (currentView) {
       case 0:
         return MyGear(
-            currentView: currentView,
-            onViewChanged: onViewChanged,
-            type: section.type,
-            section: section,
-            pageController: pageController,
-            position: position);
+            currentView: currentView, onViewChanged: onViewChanged, type: section.type, section: section, pageController: pageController, position: position);
         break;
       case 1:
-        return new BrandList(
-            section: section,
-            type: section.type,
-            brandFilter: brandFilter,
-            currentView: currentView,
-            onViewChanged: onViewChanged);
+        return new BrandList(section: section, type: section.type, brandFilter: brandFilter, currentView: currentView, onViewChanged: onViewChanged);
       default:
         return MyGear(
           currentView: currentView,

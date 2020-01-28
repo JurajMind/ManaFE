@@ -328,12 +328,12 @@ class _StatisticPageState extends State<StatisticPage> {
                                               highlightColor: Colors.white,
                                               child: Text(
                                                 "??",
-                                                style: Theme.of(context).textTheme.subtitle1,
+                                                style: Theme.of(context).textTheme.headline4,
                                               ),
                                             )
                                           : Text(
                                               snapshot.data.sessionCount.toString(),
-                                              style: Theme.of(context).textTheme.subtitle1,
+                                              style: Theme.of(context).textTheme.headline4,
                                             );
                                     }),
                                 const SizedBox(
@@ -354,7 +354,7 @@ class _StatisticPageState extends State<StatisticPage> {
                   children: <Widget>[
                     Text(
                       'STATS',
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.headline3,
                     ),
                     this.loading ? CircularProgressIndicator() : Container()
                   ],

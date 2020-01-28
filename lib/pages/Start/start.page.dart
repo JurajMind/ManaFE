@@ -41,7 +41,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
               padding: const EdgeInsets.only(top: 40),
               child: Text(
                 'Welcome to Manapipes',
-                style: Theme.of(context).textTheme.headline4,
+                style: Theme.of(context).textTheme.headline3,
                 textAlign: TextAlign.center,
                 maxLines: 2,
               ),
@@ -76,9 +76,8 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
               })),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  mainAxisSize: MainAxisSize.min,
+                child: Wrap(
+                  alignment: WrapAlignment.center,
                   children: <Widget>[
                     Text(
                       'Already have an account? ',

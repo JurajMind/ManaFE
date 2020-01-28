@@ -143,7 +143,8 @@ class _CarrousselState extends State<Carroussel> {
                     tag: 'add_new_place_label',
                     child: Text(
                       AppTranslations.of(context).text("reservations.add_new_place"),
-                      style: Theme.of(context).textTheme.headline5,
+                      style: Theme.of(context).textTheme.headline6,
+                      textAlign: TextAlign.center,
                     ),
                   )
                 ],

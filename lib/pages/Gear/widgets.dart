@@ -57,7 +57,7 @@ class SectionCard extends StatelessWidget {
                   child: Center(
                       child: Text(
                     section.title,
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context).textTheme.headline4,
                   ))),
             ),
           ],

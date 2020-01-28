@@ -31,7 +31,7 @@ class CrossPage extends StatelessWidget {
               margin: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: Text(
                 "Bring a little magic into your smoking session",
-                style: Theme.of(context).textTheme.subtitle1.apply(fontSizeDelta: -10),
+                style: Theme.of(context).textTheme.headline5,
                 textAlign: TextAlign.center,
                 maxLines: 3,
               ),
