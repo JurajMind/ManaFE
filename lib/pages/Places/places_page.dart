@@ -68,8 +68,7 @@ class _PlacesPageState extends State<PlacesPage> {
               actions: <Widget>[
                 IconButton(
                   icon: Icon(Icons.search),
-                  onPressed: () => Navigator.of(context).push(
-                      new MaterialPageRoute(builder: (BuildContext context) {
+                  onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
                     return new PlacesSearchPage(
                       places: placesBloc.places.value,
                     );
@@ -82,8 +81,7 @@ class _PlacesPageState extends State<PlacesPage> {
                   background: StreamBuilder<Position>(
                       stream: placesBloc.location,
                       builder: (context, snapshot) {
-                        return Container(
-                            height: height, child: mapBuilder(height));
+                        return Container(height: height, child: mapBuilder(height));
                       }),
                 ),
               ),
@@ -100,22 +98,17 @@ class _PlacesPageState extends State<PlacesPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
                                 Text(
-                                  AppTranslations.of(context).text(
-                                      "reservations.upcoming_reservations"),
-                                  style: Theme.of(context).textTheme.display2,
+                                  AppTranslations.of(context).text("reservations.upcoming_reservations"),
+                                  style: Theme.of(context).textTheme.headline5,
                                 ),
                                 OutlineButton(
-                                  shape: new RoundedRectangleBorder(
-                                      borderRadius:
-                                          new BorderRadius.circular(30.0)),
+                                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
                                   borderSide: BorderSide(color: Colors.white),
                                   child: Text(
                                     'All reservations',
-                                    style: Theme.of(context).textTheme.display3,
+                                    style: Theme.of(context).textTheme.bodyText2,
                                   ),
-                                  onPressed: () => Navigator.of(context).push(
-                                      new MaterialPageRoute(
-                                          builder: (BuildContext context) {
+                                  onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
                                     return new ReservationsPage();
                                   })),
                                 ),
@@ -132,8 +125,7 @@ class _PlacesPageState extends State<PlacesPage> {
     );
   }
 
-  StreamBuilder<List<PlaceSimpleDto>> placeBuilder(
-      BehaviorSubject<List<PlaceSimpleDto>> places) {
+  StreamBuilder<List<PlaceSimpleDto>> placeBuilder(BehaviorSubject<List<PlaceSimpleDto>> places) {
     return StreamBuilder(
         stream: places,
         initialData: null,
@@ -160,8 +152,7 @@ class _PlacesPageState extends State<PlacesPage> {
         });
   }
 
-  StreamBuilder<List<PlacesReservationsReservationDto>> reservationBuilder(
-      BehaviorSubject<List<PlacesReservationsReservationDto>> reservations) {
+  StreamBuilder<List<PlacesReservationsReservationDto>> reservationBuilder(BehaviorSubject<List<PlacesReservationsReservationDto>> reservations) {
     return StreamBuilder(
         stream: reservations,
         initialData: null,
@@ -170,9 +161,7 @@ class _PlacesPageState extends State<PlacesPage> {
           if (snapshot.data != null) {
             var upcomingReservations = new Collection(snapshot.data);
             reservation = upcomingReservations
-                .where$1((predicate, _) =>
-                    predicate.time.compareTo(DateTime.now()) > 0 &&
-                    predicate.status != 1)
+                .where$1((predicate, _) => predicate.time.compareTo(DateTime.now()) > 0 && predicate.status != 1)
                 .orderBy((p) => p.time)
                 .firstOrDefault();
           }
@@ -184,8 +173,7 @@ class _PlacesPageState extends State<PlacesPage> {
                 }
                 return ReservationItem(reservation: reservation ?? null);
               },
-              childCount:
-                  snapshot.data == null ? 0 : snapshot.data.length == 0 ? 0 : 1,
+              childCount: snapshot.data == null ? 0 : snapshot.data.length == 0 ? 0 : 1,
             ),
           );
         });
@@ -197,10 +185,7 @@ class _PlacesPageState extends State<PlacesPage> {
         builder: (context, snapshot) {
           var markers = new List<Marker>();
           if (snapshot.data != null) {
-            markers = snapshot.data
-                .map((f) => Marker(f.id.toString(), f.name,
-                    double.parse(f.address.lat), double.parse(f.address.lng)))
-                .toList();
+            markers = snapshot.data.map((f) => Marker(f.id.toString(), f.name, double.parse(f.address.lat), double.parse(f.address.lng))).toList();
           }
 
           return StreamBuilder<Position>(
@@ -210,11 +195,9 @@ class _PlacesPageState extends State<PlacesPage> {
                 if (snapshot.data == null) {
                   return CircularProgressIndicator();
                 }
-                var staticMapUri = staticMapProvider.getStaticUriWithMarkers(
-                    markers,
+                var staticMapUri = staticMapProvider.getStaticUriWithMarkers(markers,
                     zoomLevel: 14,
-                    center: new Location(
-                        snapshot.data.latitude, snapshot.data.longitude),
+                    center: new Location(snapshot.data.latitude, snapshot.data.longitude),
                     width: MediaQuery.of(context).size.width.round(),
                     height: height.round(),
                     maptype: StaticMapViewType.roadmap);
@@ -230,11 +213,7 @@ class _PlacesPageState extends State<PlacesPage> {
                             height: MediaQuery.of(context).size.height / 2,
                           ),
                         ),
-                        onTap: () => {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  PlacesMapPage(position: snapshot.data)))
-                        },
+                        onTap: () => {Navigator.of(context).push(MaterialPageRoute(builder: (context) => PlacesMapPage(position: snapshot.data)))},
                       );
               });
         });

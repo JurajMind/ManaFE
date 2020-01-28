@@ -31,7 +31,7 @@ class SessionStatisticDetail extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text('Statistic', style: Theme.of(context).textTheme.display1),
+              Text('Statistic', style: Theme.of(context).textTheme.headline6),
               SizedBox(width: 8),
               Icon(FontAwesomeIcons.chartBar),
             ],
@@ -48,17 +48,14 @@ class SessionStatisticDetail extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
-                        Expanded(
-                            flex: 1,
-                            child: Text('Start :',
-                                style: Theme.of(context).textTheme.display1)),
+                        Expanded(flex: 1, child: Text('Start :', style: Theme.of(context).textTheme.headline6)),
                         Expanded(
                           flex: 1,
                           child: Text(
                               snapshot.data != null
                                   ? '${DateUtils.toStringDate(snapshot.data.statistics.start)} ${DateUtils.toStringShortTime(snapshot.data.statistics.start)}'
                                   : '...',
-                              style: Theme.of(context).textTheme.display1),
+                              style: Theme.of(context).textTheme.headline6),
                         ),
                       ],
                     ),
@@ -66,17 +63,14 @@ class SessionStatisticDetail extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
-                        Expanded(
-                            flex: 1,
-                            child: Text('Duration :',
-                                style: Theme.of(context).textTheme.display1)),
+                        Expanded(flex: 1, child: Text('Duration :', style: Theme.of(context).textTheme.headline6)),
                         Expanded(
                           flex: 1,
                           child: Text(
                               snapshot.data != null
                                   ? '${DateUtils.toStringDuration(DateUtils.parseDuration(snapshot.data.statistics.sessionDuration))}'
                                   : '...',
-                              style: Theme.of(context).textTheme.display1),
+                              style: Theme.of(context).textTheme.headline6),
                         ),
                       ],
                     ),
@@ -87,10 +81,7 @@ class SessionStatisticDetail extends StatelessWidget {
         SizedBox(
           height: 16,
         ),
-        new SmokeDurationGraph(
-            idleDurations: this.idleDurations,
-            inDurations: this.inDurations,
-            outDurations: this.outDurations),
+        new SmokeDurationGraph(idleDurations: this.idleDurations, inDurations: this.inDurations, outDurations: this.outDurations),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Table(children: [
@@ -98,15 +89,15 @@ class SessionStatisticDetail extends StatelessWidget {
               Container(),
               Text(
                 "Pufs",
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.headline5,
               ),
               Text(
                 "Blow",
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.headline5,
               ),
               Text(
                 "Idle",
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.headline5,
               ),
             ]),
             TableRow(
@@ -116,7 +107,7 @@ class SessionStatisticDetail extends StatelessWidget {
                 children: [
                   Text(
                     "Count",
-                    style: Theme.of(context).textTheme.display2,
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                   Text(this.inDurations.length.toString()),
                   Text(this.outDurations.length.toString()),
@@ -125,26 +116,11 @@ class SessionStatisticDetail extends StatelessWidget {
             TableRow(children: [
               Text(
                 "Duration",
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.headline5,
               ),
-              Text(DateUtils.toStringDuration(new Duration(
-                  milliseconds: this
-                          .inDurations
-                          .sum$1((s) => s.inMilliseconds)
-                          ?.toInt() ??
-                      0))),
-              Text(DateUtils.toStringDuration(new Duration(
-                  milliseconds: this
-                          .outDurations
-                          .sum$1((s) => s.inMilliseconds)
-                          ?.toInt() ??
-                      0))),
-              Text(DateUtils.toStringDuration(new Duration(
-                  milliseconds: this
-                          .idleDurations
-                          .sum$1((s) => s.inMilliseconds)
-                          ?.toInt() ??
-                      0))),
+              Text(DateUtils.toStringDuration(new Duration(milliseconds: this.inDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
+              Text(DateUtils.toStringDuration(new Duration(milliseconds: this.outDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
+              Text(DateUtils.toStringDuration(new Duration(milliseconds: this.idleDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
             ]),
             TableRow(
                 decoration: BoxDecoration(
@@ -153,50 +129,20 @@ class SessionStatisticDetail extends StatelessWidget {
                 children: [
                   Text(
                     "Longest",
-                    style: Theme.of(context).textTheme.display2,
+                    style: Theme.of(context).textTheme.headline5,
                   ),
-                  Text(DateUtils.toSecondDuration(new Duration(
-                      milliseconds: this
-                              .inDurations
-                              .max$1((s) => s.inMilliseconds)
-                              ?.toInt() ??
-                          0))),
-                  Text(DateUtils.toSecondDuration(new Duration(
-                      milliseconds: this
-                              .outDurations
-                              .max$1((s) => s.inMilliseconds)
-                              ?.toInt() ??
-                          0))),
-                  Text(DateUtils.toSecondDuration(new Duration(
-                      milliseconds: this
-                              .idleDurations
-                              .max$1((s) => s.inMilliseconds)
-                              ?.toInt() ??
-                          0))),
+                  Text(DateUtils.toSecondDuration(new Duration(milliseconds: this.inDurations.max$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
+                  Text(DateUtils.toSecondDuration(new Duration(milliseconds: this.outDurations.max$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
+                  Text(DateUtils.toSecondDuration(new Duration(milliseconds: this.idleDurations.max$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
                 ]),
             TableRow(children: [
               Text(
                 "Average",
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.headline5,
               ),
-              Text(DateUtils.toSecondDuration(new Duration(
-                  milliseconds: this
-                          .inDurations
-                          .average((s) => s.inMilliseconds)
-                          ?.toInt() ??
-                      0))),
-              Text(DateUtils.toSecondDuration(new Duration(
-                  milliseconds: this
-                          .outDurations
-                          .average((s) => s.inMilliseconds)
-                          ?.toInt() ??
-                      0))),
-              Text(DateUtils.toSecondDuration(new Duration(
-                  milliseconds: this
-                          .idleDurations
-                          .average((s) => s.inMilliseconds)
-                          ?.toInt() ??
-                      0))),
+              Text(DateUtils.toSecondDuration(new Duration(milliseconds: this.inDurations.average((s) => s.inMilliseconds)?.toInt() ?? 0))),
+              Text(DateUtils.toSecondDuration(new Duration(milliseconds: this.outDurations.average((s) => s.inMilliseconds)?.toInt() ?? 0))),
+              Text(DateUtils.toSecondDuration(new Duration(milliseconds: this.idleDurations.average((s) => s.inMilliseconds)?.toInt() ?? 0))),
             ]),
             TableRow(
                 decoration: BoxDecoration(
@@ -205,26 +151,17 @@ class SessionStatisticDetail extends StatelessWidget {
                 children: [
                   Text(
                     "Median",
-                    style: Theme.of(context).textTheme.display2,
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                   Text(DateUtils.toSecondDuration(this.outDurations.length == 0
                       ? new Duration()
-                      : this
-                          .inDurations
-                          .orderBy((s) => s.inMilliseconds)
-                          .elementAt(this.inDurations.length ~/ 2))),
+                      : this.inDurations.orderBy((s) => s.inMilliseconds).elementAt(this.inDurations.length ~/ 2))),
                   Text(DateUtils.toSecondDuration(this.outDurations.length == 0
                       ? new Duration()
-                      : this
-                          .outDurations
-                          .orderBy((s) => s.inMilliseconds)
-                          .elementAt(this.outDurations.length ~/ 2))),
+                      : this.outDurations.orderBy((s) => s.inMilliseconds).elementAt(this.outDurations.length ~/ 2))),
                   Text(DateUtils.toSecondDuration(this.outDurations.length == 0
                       ? new Duration()
-                      : this
-                          .idleDurations
-                          .orderBy((s) => s.inMilliseconds)
-                          .elementAt(this.idleDurations.length ~/ 2))),
+                      : this.idleDurations.orderBy((s) => s.inMilliseconds).elementAt(this.idleDurations.length ~/ 2))),
                 ]),
           ]),
         ),
@@ -246,7 +183,7 @@ class SessionStatisticShimer extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text('Statistic', style: Theme.of(context).textTheme.display1),
+              Text('Statistic', style: Theme.of(context).textTheme.headline6),
               SizedBox(width: 8),
               Icon(FontAwesomeIcons.chartBar),
             ],
@@ -260,14 +197,10 @@ class SessionStatisticShimer extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Expanded(
-                      flex: 1,
-                      child: Text('Start :',
-                          style: Theme.of(context).textTheme.display1)),
+                  Expanded(flex: 1, child: Text('Start :', style: Theme.of(context).textTheme.headline6)),
                   Expanded(
                     flex: 1,
-                    child: Text('...',
-                        style: Theme.of(context).textTheme.display1),
+                    child: Text('...', style: Theme.of(context).textTheme.headline6),
                   ),
                 ],
               ),
@@ -275,14 +208,10 @@ class SessionStatisticShimer extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Expanded(
-                      flex: 1,
-                      child: Text('Duration :',
-                          style: Theme.of(context).textTheme.display1)),
+                  Expanded(flex: 1, child: Text('Duration :', style: Theme.of(context).textTheme.headline6)),
                   Expanded(
                     flex: 1,
-                    child: Text('...',
-                        style: Theme.of(context).textTheme.display1),
+                    child: Text('...', style: Theme.of(context).textTheme.headline6),
                   ),
                 ],
               ),
@@ -300,15 +229,15 @@ class SessionStatisticShimer extends StatelessWidget {
               Container(),
               Text(
                 "Pufs",
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.headline5,
               ),
               Text(
                 "Blow",
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.headline5,
               ),
               Text(
                 "Idle",
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.headline5,
               ),
             ]),
             TableRow(
@@ -318,7 +247,7 @@ class SessionStatisticShimer extends StatelessWidget {
                 children: [
                   Text(
                     "Count",
-                    style: Theme.of(context).textTheme.display2,
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                   Text('...'),
                   Text('...'),
@@ -327,7 +256,7 @@ class SessionStatisticShimer extends StatelessWidget {
             TableRow(children: [
               Text(
                 "Duration",
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.headline5,
               ),
               Text('...'),
               Text('...'),
@@ -340,7 +269,7 @@ class SessionStatisticShimer extends StatelessWidget {
                 children: [
                   Text(
                     "Longest",
-                    style: Theme.of(context).textTheme.display2,
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                   Text('...'),
                   Text('...'),
@@ -349,7 +278,7 @@ class SessionStatisticShimer extends StatelessWidget {
             TableRow(children: [
               Text(
                 "Average",
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.headline5,
               ),
               Text('...'),
               Text('...'),
@@ -362,7 +291,7 @@ class SessionStatisticShimer extends StatelessWidget {
                 children: [
                   Text(
                     "Median",
-                    style: Theme.of(context).textTheme.display2,
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                   Text('...'),
                   Text('...'),

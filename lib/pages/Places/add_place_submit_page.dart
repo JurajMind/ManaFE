@@ -38,11 +38,11 @@ class _AddPlaceSubmitPageState extends State<AddPlaceSubmitPage> {
           children: <Widget>[
             Text(
               'Thank you!',
-              style: Theme.of(context).textTheme.title,
+              style: Theme.of(context).textTheme.subtitle1,
             ),
             Text(
               '${widget.createdPlace.name} will be added to database after our review',
-              style: Theme.of(context).textTheme.body1,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
             SizedBox(
               height: 50,
@@ -56,16 +56,8 @@ class _AddPlaceSubmitPageState extends State<AddPlaceSubmitPage> {
                 padding: EdgeInsets.all(8.0),
                 child: Column(
                   children: <Widget>[
-                    Text(simplePlace.name,
-                        style: Theme.of(context)
-                            .textTheme
-                            .display1
-                            .merge(TextStyle(color: Colors.black))),
-                    Text(Extensions.adress(simplePlace.address),
-                        style: Theme.of(context)
-                            .textTheme
-                            .display2
-                            .merge(TextStyle(color: Colors.black))),
+                    Text(simplePlace.name, style: Theme.of(context).textTheme.headline6.merge(TextStyle(color: Colors.black))),
+                    Text(Extensions.adress(simplePlace.address), style: Theme.of(context).textTheme.headline5.merge(TextStyle(color: Colors.black))),
                     new Row(
                       children: <Widget>[
                         Expanded(

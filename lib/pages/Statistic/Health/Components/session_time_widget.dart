@@ -20,7 +20,7 @@ class SessionTimeWidget extends StatelessWidget {
           children: <Widget>[
             Text(
               AppTranslations.of(context).text('health.time'),
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headline6,
             ),
             SizedBox(
               height: 10,
@@ -35,10 +35,7 @@ class SessionTimeWidget extends StatelessWidget {
                   if (snapshot.data == null) {
                     return Container();
                   }
-                  return Text(
-                      DateUtils.toStrungLongDuration(
-                          context, snapshot.data.smokingTime),
-                      style: Theme.of(context).textTheme.display1);
+                  return Text(DateUtils.toStrungLongDuration(context, snapshot.data.smokingTime), style: Theme.of(context).textTheme.headline6);
                 })
           ],
         ),

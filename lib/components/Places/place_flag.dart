@@ -13,17 +13,23 @@ class PlaceFlag extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Tooltip(
-        child: Container
-        (padding: EdgeInsets.all(8),
-        width: 100,
-        decoration: BoxDecoration(  border: new Border.all(color: Colors.white, width: 2),  borderRadius: new BorderRadius.circular(10.0), ),
+        child: Container(
+          padding: EdgeInsets.all(8),
+          width: 100,
+          decoration: BoxDecoration(
+            border: new Border.all(color: Colors.white, width: 2),
+            borderRadius: new BorderRadius.circular(10.0),
+          ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-             flagToIcon(context),
-             SizedBox(width: 8,),
-             Text(flag)
-          ],),
+              flagToIcon(context),
+              SizedBox(
+                width: 8,
+              ),
+              Text(flag)
+            ],
+          ),
         ),
         message: "Place have ${flag.toLowerCase()}",
       ),
@@ -41,7 +47,7 @@ class PlaceFlag extends StatelessWidget {
       case "OUTDOOR":
         return Icon(FontAwesomeIcons.tree);
         break;
-        case "CASH":
+      case "CASH":
         return Icon(FontAwesomeIcons.moneyBill);
         break;
       case "PET":
@@ -53,7 +59,7 @@ class PlaceFlag extends StatelessWidget {
       default:
         return Text(
           flag,
-          style: Theme.of(context).textTheme.body1.apply(color: Colors.white),
+          style: Theme.of(context).textTheme.bodyText2.apply(color: Colors.white),
         );
     }
   }

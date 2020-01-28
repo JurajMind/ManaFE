@@ -13,8 +13,7 @@ class GaugeChart extends StatelessWidget {
   final int minValue;
   final Color handColor;
 
-  GaugeChart(this.seriesList,
-      {this.animate, this.value, this.maxValue, this.minValue, this.handColor});
+  GaugeChart(this.seriesList, {this.animate, this.value, this.maxValue, this.minValue, this.handColor});
 
   /// Creates a [PieChart] with sample data and no transition.
   factory GaugeChart.withSampleData() {
@@ -38,18 +37,13 @@ class GaugeChart extends StatelessWidget {
             // Configure the width of the pie slices to 30px. The remaining space in
             // the chart will be left as a hole in the center. Adjust the start
             // angle and the arc length of the pie so it resembles a gauge.
-            defaultRenderer: new charts.ArcRendererConfig(
-                arcWidth: 30, startAngle: 4 / 5 * pi, arcLength: 7 / 5 * pi)),
+            defaultRenderer: new charts.ArcRendererConfig(arcWidth: 30, startAngle: 4 / 5 * pi, arcLength: 7 / 5 * pi)),
         Positioned.fill(
           child: Align(
               alignment: Alignment.center,
               child: new CustomPaint(
                 size: new Size(200, 200),
-                foregroundPainter: new HandPainter(
-                    min: minValue,
-                    max: maxValue,
-                    value: value,
-                    hourHandPaint: paint),
+                foregroundPainter: new HandPainter(min: minValue, max: maxValue, value: value, hourHandPaint: paint),
               )),
         ),
         Positioned.fill(
@@ -57,7 +51,7 @@ class GaugeChart extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 "$value/$maxValue",
-                style: Theme.of(context).textTheme.body2,
+                style: Theme.of(context).textTheme.headline4,
               )),
         ),
       ],

@@ -11,8 +11,7 @@ class AddGearPage extends StatefulWidget {
   final String selectedType;
   final String pretypedName;
   final GearBloc bloc;
-  AddGearPage({Key key, this.selectedType, this.pretypedName, this.bloc})
-      : super(key: key);
+  AddGearPage({Key key, this.selectedType, this.pretypedName, this.bloc}) : super(key: key);
 
   _AddGearPageState createState() => _AddGearPageState();
 }
@@ -41,8 +40,7 @@ class _AddGearPageState extends State<AddGearPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text(AppTranslations.of(context).text("gear.add_new_gear"))),
+      appBar: AppBar(title: Text(AppTranslations.of(context).text("gear.add_new_gear"))),
       body: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,17 +51,15 @@ class _AddGearPageState extends State<AddGearPage> {
                 children: <Widget>[
                   Text(
                     AppTranslations.of(context).text("gear.brand") + " :",
-                    style: Theme.of(context).textTheme.display2,
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                   SizedBox(
                     width: 20,
                   ),
                   InkWell(
                     child: Text(
-                      selectedBrand == null
-                          ? 'select brand'
-                          : selectedBrand.name,
-                      style: Theme.of(context).textTheme.display2,
+                      selectedBrand == null ? 'select brand' : selectedBrand.name,
+                      style: Theme.of(context).textTheme.headline5,
                     ),
                     onTap: () {
                       selectBrand(context);
@@ -81,7 +77,7 @@ class _AddGearPageState extends State<AddGearPage> {
               children: <Widget>[
                 Text(
                   AppTranslations.of(context).text("gear.type") + " :",
-                  style: Theme.of(context).textTheme.display2,
+                  style: Theme.of(context).textTheme.headline5,
                 ),
                 SizedBox(
                   width: 20,
@@ -110,7 +106,7 @@ class _AddGearPageState extends State<AddGearPage> {
               children: <Widget>[
                 Text(
                   AppTranslations.of(context).text("gear.name") + " :",
-                  style: Theme.of(context).textTheme.display2,
+                  style: Theme.of(context).textTheme.headline5,
                 ),
                 SizedBox(
                   width: 20,
@@ -124,10 +120,7 @@ class _AddGearPageState extends State<AddGearPage> {
                         this.newName = name;
                       });
                     },
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: AppTranslations.of(context)
-                            .text("gear.enter_new_gear_name")),
+                    decoration: InputDecoration(border: InputBorder.none, hintText: AppTranslations.of(context).text("gear.enter_new_gear_name")),
                   ),
                 ),
               ],
@@ -135,12 +128,9 @@ class _AddGearPageState extends State<AddGearPage> {
             MButton(
               icon: Icons.save,
               uploading: uploading,
-              label: AppTranslations.of(context)
-                  .text('gear.save_and_use_new_gear'),
+              label: AppTranslations.of(context).text('gear.save_and_use_new_gear'),
               onPressed: () {
-                if (selectedBrand == null ||
-                    selectedType == "None" ||
-                    newName == null) {
+                if (selectedBrand == null || selectedType == "None" || newName == null) {
                   return;
                 }
 
@@ -165,11 +155,7 @@ class _AddGearPageState extends State<AddGearPage> {
   }
 
   void selectBrand(BuildContext context) {
-    Navigator.of(context)
-        .push<BrandGroup>(MaterialPageRoute(
-            builder: (context) => BrandSelectPage(widget.bloc),
-            fullscreenDialog: true))
-        .then((selectedBrand) {
+    Navigator.of(context).push<BrandGroup>(MaterialPageRoute(builder: (context) => BrandSelectPage(widget.bloc), fullscreenDialog: true)).then((selectedBrand) {
       setState(() {
         this.selectedBrand = selectedBrand;
       });

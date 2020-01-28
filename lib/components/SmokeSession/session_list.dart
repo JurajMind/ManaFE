@@ -11,13 +11,7 @@ class SessionList extends StatelessWidget {
   final int sessionCount;
   final TobaccoInformationDto info;
 
-  const SessionList(
-      {Key key,
-      this.sessions,
-      this.onPressed,
-      this.sessionCount = 5,
-      this.info})
-      : super(key: key);
+  const SessionList({Key key, this.sessions, this.onPressed, this.sessionCount = 5, this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +46,7 @@ class SessionList extends StatelessWidget {
                 children: <Widget>[
                   new Text(
                     'Sessions',
-                    style: Theme.of(context).textTheme.display1,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   const SizedBox(
                     width: 4,
@@ -64,20 +58,14 @@ class SessionList extends StatelessWidget {
           ),
           if (data.length == 0)
             Text(
-              AppTranslations.of(context)
-                  .text('smoke_session.no_smoke_session'),
-              style: Theme.of(context).textTheme.display2,
+              AppTranslations.of(context).text('smoke_session.no_smoke_session'),
+              style: Theme.of(context).textTheme.headline5,
             ),
           if (data.length > 0) ...{
             ...data.take(sc).map((s) => SmokeSessionListItem(session: s)),
           },
           if (data.length > 0 && data.length > sc)
-            MButton(
-                iconColor: Colors.red,
-                icon: Icons.clear_all,
-                label: AppTranslations.of(context)
-                    .text('smoke_session.all_session'),
-                onPressed: onPressed),
+            MButton(iconColor: Colors.red, icon: Icons.clear_all, label: AppTranslations.of(context).text('smoke_session.all_session'), onPressed: onPressed),
         ]),
       ),
     );

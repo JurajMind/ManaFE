@@ -10,15 +10,11 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends State<ResultPage> {
-  BehaviorSubject<List<SmartHookahModelsRedisCompetitionEntry>> result =
-      new BehaviorSubject<List<SmartHookahModelsRedisCompetitionEntry>>();
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
+  BehaviorSubject<List<SmartHookahModelsRedisCompetitionEntry>> result = new BehaviorSubject<List<SmartHookahModelsRedisCompetitionEntry>>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
 
   Future<dynamic> loadResult() {
-    return App.http
-        .getCompetitionResult()
-        .then((onValue) => result.add(onValue));
+    return App.http.getCompetitionResult().then((onValue) => result.add(onValue));
   }
 
   @override
@@ -53,21 +49,20 @@ class _ResultPageState extends State<ResultPage> {
                 itemBuilder: (context, index) {
                   var data = snapshot.data[index];
                   return ListTile(
-                      leading: Text((index + 1).toString(),
-                          style: Theme.of(context).textTheme.display1),
+                      leading: Text((index + 1).toString(), style: Theme.of(context).textTheme.headline6),
                       title: Row(
                         children: <Widget>[
                           Expanded(
                               flex: 1,
                               child: Text(
                                 data.name,
-                                style: Theme.of(context).textTheme.display2,
+                                style: Theme.of(context).textTheme.headline5,
                               )),
                           Expanded(
                               flex: 1,
                               child: Text(
                                 'Time:' + data.time.toStringAsFixed(3),
-                                style: Theme.of(context).textTheme.display2,
+                                style: Theme.of(context).textTheme.headline5,
                               ))
                         ],
                       ));

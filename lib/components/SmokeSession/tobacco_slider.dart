@@ -135,8 +135,7 @@ class FatSlider extends StatefulWidget {
   _FatSliderState createState() => _FatSliderState();
 }
 
-class _FatSliderState extends State<FatSlider>
-    with SingleTickerProviderStateMixin {
+class _FatSliderState extends State<FatSlider> with SingleTickerProviderStateMixin {
   double _sliderWidth;
   double _currX = 0.0;
   AnimationController _animationController;
@@ -239,9 +238,7 @@ class _FatSliderState extends State<FatSlider>
   double _unlerp(double value) {
     assert(value <= widget.max);
     assert(value >= widget.min);
-    return widget.max > widget.min
-        ? (value - widget.min) / (widget.max - widget.min)
-        : 0.0;
+    return widget.max > widget.min ? (value - widget.min) / (widget.max - widget.min) : 0.0;
   }
 
   Color get _sliderColor {
@@ -254,11 +251,7 @@ class _FatSliderState extends State<FatSlider>
 
   bool get _isInteractive => widget.onChanged != null;
 
-  Widget _buildBackgraund(BuildContext context,
-      {double value, Alignment alignment, EdgeInsets padding}) {
-    final TextStyle textStyle =
-        widget.labelsTextStyle ?? Theme.of(context).accentTextTheme.title;
-
+  Widget _buildBackgraund(BuildContext context, {double value, Alignment alignment, EdgeInsets padding}) {
     return Padding(
       padding: padding,
       child: Container(),
@@ -266,9 +259,7 @@ class _FatSliderState extends State<FatSlider>
   }
 
   TextStyle _currentValTextStyle(BuildContext context) {
-    return widget.valueTextStyle ??
-        Theme.of(context).textTheme.title.copyWith(
-            fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10.0);
+    return widget.valueTextStyle ?? Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10.0);
   }
 
   @override
@@ -286,27 +277,22 @@ class _FatSliderState extends State<FatSlider>
         //Setting the slider width to its parent's max width if constraint width is present else set to 200.0
         //This is used to compute the thumb position and also
         //calculate the delta drag value in the horizontal drag handlers.
-        _sliderWidth =
-            constraints.hasBoundedWidth ? constraints.maxWidth : 200.0;
+        _sliderWidth = constraints.hasBoundedWidth ? constraints.maxWidth : 200.0;
 
         //The width remaining for the thumb to be dragged upto.
         remainingWidth = _sliderWidth - thumbDiameter - 2 * thumbPadding;
 
         //The position of the thumb control of the slider from max value.
-        final double thumbPositionLeft =
-            lerpDouble(thumbPadding, remainingWidth, thumbPosFactor);
+        final double thumbPositionLeft = lerpDouble(thumbPadding, remainingWidth, thumbPosFactor);
 
         //The position of the thumb control of the slider from min value.
-        final double thumbPositionRight =
-            lerpDouble(remainingWidth, thumbPadding, thumbPosFactor);
+        final double thumbPositionRight = lerpDouble(remainingWidth, thumbPadding, thumbPosFactor);
 
         //Start position of slider thumb.
-        final RelativeRect beginRect = RelativeRect.fromLTRB(
-            thumbPositionLeft, 0.00, thumbPositionRight, 0.0);
+        final RelativeRect beginRect = RelativeRect.fromLTRB(thumbPositionLeft, 0.00, thumbPositionRight, 0.0);
 
         //Popped up position of slider thumb.
-        final RelativeRect endRect = RelativeRect.fromLTRB(
-            thumbPositionLeft, -50.0, thumbPositionRight, 50.0);
+        final RelativeRect endRect = RelativeRect.fromLTRB(thumbPositionLeft, -50.0, thumbPositionRight, 50.0);
 
         //Describes the position of the thumb slider.
         //Mainly useful to animate the thumb popping up.
@@ -333,11 +319,7 @@ class _FatSliderState extends State<FatSlider>
             children: <Widget>[
               CustomPaint(
                 painter: SliderPainter(
-                    thumbDiameter: thumbDiameter,
-                    splashColor: widget.sliderColor,
-                    width: lerpDouble(
-                            thumbPadding, remainingWidth, thumbPosFactor) +
-                        45),
+                    thumbDiameter: thumbDiameter, splashColor: widget.sliderColor, width: lerpDouble(thumbPadding, remainingWidth, thumbPosFactor) + 45),
               ),
               PositionedTransition(
                 rect: thumbPosition,
@@ -357,13 +339,7 @@ class _FatSliderState extends State<FatSlider>
                       width: thumbDiameter,
                       height: thumbDiameter,
                       decoration: BoxDecoration(
-                        boxShadow: [
-                          new BoxShadow(
-                              color: Colors.black,
-                              offset: Offset.zero,
-                              blurRadius: 2.0,
-                              spreadRadius: 1.0)
-                        ],
+                        boxShadow: [new BoxShadow(color: Colors.black, offset: Offset.zero, blurRadius: 2.0, spreadRadius: 1.0)],
                         shape: BoxShape.circle,
                         color: _sliderColor,
                       ),
@@ -431,16 +407,11 @@ class SliderPainter extends CustomPainter {
   SliderPainter({this.splashColor, this.width, this.thumbDiameter});
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawCircle(Offset(thumbDiameter / 2, thumbDiameter / 2),
-        thumbDiameter / 2, Paint()..color = splashColor);
+    canvas.drawCircle(Offset(thumbDiameter / 2, thumbDiameter / 2), thumbDiameter / 2, Paint()..color = splashColor);
 
-    canvas.drawRect(
-        Rect.fromLTWH(thumbDiameter / 2, 0, width - (thumbDiameter / 2) - 10,
-            thumbDiameter),
-        Paint()..color = splashColor);
+    canvas.drawRect(Rect.fromLTWH(thumbDiameter / 2, 0, width - (thumbDiameter / 2) - 10, thumbDiameter), Paint()..color = splashColor);
 
-    canvas.drawCircle(Offset(width - 6, thumbDiameter / 2), thumbDiameter / 2,
-        Paint()..color = splashColor);
+    canvas.drawCircle(Offset(width - 6, thumbDiameter / 2), thumbDiameter / 2, Paint()..color = splashColor);
   }
 
   @override

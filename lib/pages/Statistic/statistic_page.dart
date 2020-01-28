@@ -133,7 +133,7 @@ class _StatisticPageState extends State<StatisticPage> {
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 20.0),
-        child: Text(label.toUpperCase(), style: Theme.of(context).textTheme.display1),
+        child: Text(label.toUpperCase(), style: Theme.of(context).textTheme.headline6),
       ),
     );
   }
@@ -201,7 +201,7 @@ class _StatisticPageState extends State<StatisticPage> {
                             const SizedBox(
                               width: 4,
                             ),
-                            Text('Settings', style: Theme.of(context).textTheme.display2),
+                            Text('Settings', style: Theme.of(context).textTheme.headline5),
                           ],
                         ),
                       ),
@@ -213,7 +213,7 @@ class _StatisticPageState extends State<StatisticPage> {
                             const SizedBox(
                               width: 4,
                             ),
-                            Text('User profile', style: Theme.of(context).textTheme.display2),
+                            Text('User profile', style: Theme.of(context).textTheme.headline5),
                           ],
                         ),
                       ),
@@ -225,7 +225,7 @@ class _StatisticPageState extends State<StatisticPage> {
                             const SizedBox(
                               width: 4,
                             ),
-                            Text('Test page', style: Theme.of(context).textTheme.display2),
+                            Text('Test page', style: Theme.of(context).textTheme.headline5),
                           ],
                         ),
                       ),
@@ -237,7 +237,7 @@ class _StatisticPageState extends State<StatisticPage> {
                             const SizedBox(
                               width: 4,
                             ),
-                            Text('Sign out', style: Theme.of(context).textTheme.display2),
+                            Text('Sign out', style: Theme.of(context).textTheme.headline5),
                           ],
                         ),
                       ),
@@ -328,12 +328,12 @@ class _StatisticPageState extends State<StatisticPage> {
                                               highlightColor: Colors.white,
                                               child: Text(
                                                 "??",
-                                                style: Theme.of(context).textTheme.title,
+                                                style: Theme.of(context).textTheme.subtitle1,
                                               ),
                                             )
                                           : Text(
                                               snapshot.data.sessionCount.toString(),
-                                              style: Theme.of(context).textTheme.title,
+                                              style: Theme.of(context).textTheme.subtitle1,
                                             );
                                     }),
                                 const SizedBox(
@@ -354,7 +354,7 @@ class _StatisticPageState extends State<StatisticPage> {
                   children: <Widget>[
                     Text(
                       'STATS',
-                      style: Theme.of(context).textTheme.title,
+                      style: Theme.of(context).textTheme.subtitle1,
                     ),
                     this.loading ? CircularProgressIndicator() : Container()
                   ],
@@ -528,7 +528,7 @@ class HealthWidget extends StatelessWidget {
                       flex: 4,
                       child: Column(
                         children: <Widget>[
-                          Text(AppTranslations.of(context).text('health.title'), style: Theme.of(context).textTheme.display2),
+                          Text(AppTranslations.of(context).text('health.title'), style: Theme.of(context).textTheme.headline5),
                         ],
                       ),
                     ),
@@ -641,7 +641,7 @@ class TimeSelect extends StatelessWidget {
           borderWidth: 1,
           bottomMargin: 1,
           buttonColor: Colors.white,
-          child: Text(label, style: Theme.of(context).textTheme.display3.apply(color: Colors.black)),
+          child: Text(label, style: Theme.of(context).textTheme.bodyText2.apply(color: Colors.black)),
           height: 40,
           width: 30,
           onTap: () {});
@@ -652,7 +652,7 @@ class TimeSelect extends StatelessWidget {
       buttonColor: Colors.black,
       child: Text(
         label,
-        style: Theme.of(context).textTheme.display3,
+        style: Theme.of(context).textTheme.bodyText2,
       ),
       height: 40,
       width: 30,

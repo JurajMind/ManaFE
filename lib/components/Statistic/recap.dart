@@ -25,19 +25,14 @@ class StatisticRecapWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         direction: Axis.vertical,
         children: <Widget>[
-          Flex(
-              direction: Axis.horizontal,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 15,
-                  width: 15,
-                  decoration:
-                      BoxDecoration(shape: BoxShape.circle, color: ballColor),
-                ),
-                Text(' ${label?.toUpperCase()}',
-                    style: Theme.of(context).textTheme.display2)
-              ]),
+          Flex(direction: Axis.horizontal, mainAxisAlignment: MainAxisAlignment.center, children: [
+            Container(
+              height: 15,
+              width: 15,
+              decoration: BoxDecoration(shape: BoxShape.circle, color: ballColor),
+            ),
+            Text(' ${label?.toUpperCase()}', style: Theme.of(context).textTheme.headline5)
+          ]),
           buildSecondLine(lines, context),
           buildThirdLine(lines, context)
         ],
@@ -50,13 +45,12 @@ class StatisticRecapWidget extends StatelessWidget {
       return Shimmer.fromColors(
         baseColor: Colors.grey[400],
         highlightColor: Colors.white,
-        child: Text(' Loading', style: Theme.of(context).textTheme.display1),
+        child: Text(' Loading', style: Theme.of(context).textTheme.headline6),
       );
 
-    if (duration == null)
-      return Text(' $value', style: Theme.of(context).textTheme.display1);
+    if (duration == null) return Text(' $value', style: Theme.of(context).textTheme.headline6);
 
-    return Text(lines.item1, style: Theme.of(context).textTheme.display1);
+    return Text(lines.item1, style: Theme.of(context).textTheme.headline6);
   }
 
   Widget buildThirdLine(Tuple2<String, String> lines, BuildContext context) {
@@ -64,7 +58,7 @@ class StatisticRecapWidget extends StatelessWidget {
 
     if (duration == null) return Container(height: 16);
 
-    return Text(lines.item2, style: Theme.of(context).textTheme.display2);
+    return Text(lines.item2, style: Theme.of(context).textTheme.headline5);
   }
 
   Tuple2<String, String> timeDuration() {

@@ -11,7 +11,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 import 'package:openapi/api.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class ApiClient {
   final Dio _dio;
@@ -34,8 +33,7 @@ class ApiClient {
 
   void init() {
     _dio.interceptors.add(InterceptorsWrapper(onError: (DioError error) async {
-      if (error.response?.statusCode == 401 ||
-          error.response?.statusCode == 403) {
+      if (error.response?.statusCode == 401 || error.response?.statusCode == 403) {
         var token = await _authorize.getToken();
         var tokenHeader = 'Bearer $token';
         RequestOptions options = error?.response?.request;
@@ -53,8 +51,7 @@ class ApiClient {
       return error;
     }));
 
-    _dio.interceptors
-        .add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
+    _dio.interceptors.add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
       var token = await _authorize.getToken();
       options.headers['Authorization'] = 'Bearer $token';
       options.headers["Accept"] = "application/json";
@@ -73,8 +70,7 @@ class ApiClient {
         maxWidth: 90)); */
   }
 
-  _handleAuthError(
-      String tokenHeader, RequestOptions options, String token) async {
+  _handleAuthError(String tokenHeader, RequestOptions options, String token) async {
     log('error handling');
     if (tokenHeader != options.headers["Authorization"]) {
       options.headers["Authorization"] = tokenHeader;
@@ -93,11 +89,7 @@ class ApiClient {
     });
   }
 
-  Future<List<TobaccoMixSimpleDto>> fetchtobacoMix(
-      {int page: 0,
-      bool featured: false,
-      int pageSize: 10,
-      String author}) async {
+  Future<List<TobaccoMixSimpleDto>> fetchtobacoMix({int page: 0, bool featured: false, int pageSize: 10, String author}) async {
     var mixUrl = '/api/Mixology/GetMixes';
     var featureUrl = 'api/FeatureMix/Mixes/$author';
     var params = Map<String, String>();
@@ -116,16 +108,10 @@ class ApiClient {
     {}
     var url = Uri.https(baseUrl, mixUrl, params);
 
-    return _getJson(url)
-        .then((json) => TobaccoMixSimpleDto.listFromJson(json).toList());
+    return _getJson(url).then((json) => TobaccoMixSimpleDto.listFromJson(json).toList());
   }
 
-  Future<List<TobaccoMixSimpleDto>> suggestMix(List<int> ids,
-      {String name,
-      int page: 0,
-      bool featured: false,
-      int pageSize: 10,
-      String author}) async {
+  Future<List<TobaccoMixSimpleDto>> suggestMix(List<int> ids, {String name, int page: 0, bool featured: false, int pageSize: 10, String author}) async {
     var mixUrl = '/api/Mixology/Search/Mix';
     var params = Map<String, String>();
     params['pageSize'] = pageSize.toString();
@@ -136,9 +122,7 @@ class ApiClient {
 
     var url = Uri.https(baseUrl, mixUrl, params);
     var paramUrl = addParamList(url.toString(), "ids", ids);
-    return _dio
-        .get(paramUrl)
-        .then((json) => TobaccoMixSimpleDto.listFromJson(json.data).toList());
+    return _dio.get(paramUrl).then((json) => TobaccoMixSimpleDto.listFromJson(json.data).toList());
   }
 
   String addParamList(String url, String key, List<dynamic> value) {
@@ -151,26 +135,21 @@ class ApiClient {
 
   Future<List<FeatureMixCreatorSimpleDto>> getMixCreator() async {
     var url = Uri.https(baseUrl, '/api/FeatureMix/FeatureCreators');
-    return _getJson(url)
-        .then((json) => FeatureMixCreatorSimpleDto.listFromJson(json));
+    return _getJson(url).then((json) => FeatureMixCreatorSimpleDto.listFromJson(json));
   }
 
   Future<SessionIdValidation> validateSessionId(String sessionId) {
-    var url =
-        Uri.https(baseUrl, 'api/SmokeSession/Validate', {"id": sessionId});
+    var url = Uri.https(baseUrl, 'api/SmokeSession/Validate', {"id": sessionId});
 
     return _getJson(url).then((json) => SessionIdValidation.fromJson(json));
   }
 
   Future<SmokeSessionWrapper> getInitData(String sessionId) {
-    var url =
-        Uri.https(baseUrl, 'api/SmokeSession/InitData', {"id": sessionId});
+    var url = Uri.https(baseUrl, 'api/SmokeSession/InitData', {"id": sessionId});
     return _getJson(url).then((json) {
       var result = SmokeSessionWrapper();
-      result.setting = StandSettings.fromJson(
-          json['DeviceSettings'] as Map<String, dynamic>);
-      result.session =
-          SmokeSession.fromJson(json['SmokeSession'] as Map<String, dynamic>);
+      result.setting = StandSettings.fromJson(json['DeviceSettings'] as Map<String, dynamic>);
+      result.session = SmokeSession.fromJson(json['SmokeSession'] as Map<String, dynamic>);
       var i = InitDataDto.fromJson(json);
       result.dtoSession = i.smokeSession;
       return result;
@@ -200,10 +179,7 @@ class ApiClient {
   Future changeColor(String deviceId, HSVColor color, SmokeState type) async {
     var uri = Uri.https(baseUrl, 'api/Device/$deviceId/ChangeColor');
 
-    var data = {
-      'Color': ColorDto(color),
-      'Type': SmokeState.values.indexOf(type)
-    };
+    var data = {'Color': ColorDto(color), 'Type': SmokeState.values.indexOf(type)};
     print('color ${ColorDto(color).toJson()}');
     await _dio.post(
       uri.toString(),
@@ -211,14 +187,10 @@ class ApiClient {
     );
   }
 
-  Future<bool> changeAnimation(
-      int animationId, SmokeState type, String deviceId) async {
+  Future<bool> changeAnimation(int animationId, SmokeState type, String deviceId) async {
     print('ChangeAnimation{$animationId} $type');
     var uri = Uri.https(baseUrl, 'api/Device/$deviceId/ChangeAnimation');
-    var data = {
-      'AnimationId': animationId,
-      'Type': SmokeState.values.indexOf(type)
-    };
+    var data = {'AnimationId': animationId, 'Type': SmokeState.values.indexOf(type)};
     var response = await _dio.post(
       uri.toString(),
       data: data,
@@ -230,10 +202,7 @@ class ApiClient {
   Future<bool> changeSpeed(int speed, SmokeState type, String deviceId) async {
     debugPrint('Change speed $speed $type');
     var uri = Uri.https(baseUrl, 'api/Device/$deviceId/ChangeSpeed');
-    var data = {
-      'Speed': speed.toString(),
-      'Type': SmokeState.values.indexOf(type)
-    };
+    var data = {'Speed': speed.toString(), 'Type': SmokeState.values.indexOf(type)};
     var response = await _dio.post(
       uri.toString(),
       data: data,
@@ -242,14 +211,10 @@ class ApiClient {
     return true;
   }
 
-  Future<bool> changeBrightness(
-      int brightness, SmokeState type, String deviceId) async {
+  Future<bool> changeBrightness(int brightness, SmokeState type, String deviceId) async {
     debugPrint('Change brghtness $brightness $type');
     var uri = Uri.https(baseUrl, 'api/Device/$deviceId/ChangeBrightness');
-    var data = {
-      'Brightness': brightness.toString(),
-      'Type': SmokeState.values.indexOf(type)
-    };
+    var data = {'Brightness': brightness.toString(), 'Type': SmokeState.values.indexOf(type)};
     var response = await _dio.post(
       uri.toString(),
       data: data,
@@ -261,25 +226,15 @@ class ApiClient {
   Future<List<SmartHookahHelpersAnimation>> getAnimations(String code) {
     var url = Uri.https(baseUrl, 'api/Animations/GetAnimations', {"id": code});
 
-    return _getJson(url).then((json) => json['Animations']).then(
-        (data) => SmartHookahHelpersAnimation.listFromJson(data).toList());
+    return _getJson(url).then((json) => json['Animations']).then((data) => SmartHookahHelpersAnimation.listFromJson(data).toList());
   }
 
-  Future<List<PipeAccesorySimpleDto>> searchGear(
-      String search, String type, int page, int pageSize,
-      {String searchType = "All"}) {
-    var url = Uri.https(baseUrl, 'api/Gear/Search/$search', {
-      "page": page.toString(),
-      "pageSize": pageSize.toString(),
-      "searchType": searchType,
-      "type": fixType(type)
-    });
+  Future<List<PipeAccesorySimpleDto>> searchGear(String search, String type, int page, int pageSize, {String searchType = "All"}) {
+    var url = Uri.https(
+        baseUrl, 'api/Gear/Search/$search', {"page": page.toString(), "pageSize": pageSize.toString(), "searchType": searchType, "type": fixType(type)});
 
     return _getJson(url).then((json) {
-      return json
-          .map<PipeAccesorySimpleDto>(
-              (data) => PipeAccesorySimpleDto.fromJson(data))
-          .toList();
+      return json.map<PipeAccesorySimpleDto>((data) => PipeAccesorySimpleDto.fromJson(data)).toList();
     });
   }
 
@@ -316,8 +271,7 @@ class ApiClient {
 
   Future<List<PipeAccesorySimpleDto>> getMyGear() async {
     var url = Uri.https(baseUrl, 'api/Person/MyGear');
-    return _getJson(url)
-        .then((data) => PipeAccesorySimpleDto.listFromJson(data));
+    return _getJson(url).then((data) => PipeAccesorySimpleDto.listFromJson(data));
   }
 
   Future<PersonActiveDataDto> getPersonInitData() async {
@@ -327,12 +281,10 @@ class ApiClient {
 
   Future<List<SmokeSessionSimpleDto>> getPersonSessions() async {
     var url = Uri.https(baseUrl, 'api/Person/Sessions');
-    return _getJson(url)
-        .then((data) => SmokeSessionSimpleDto.listFromJson(data));
+    return _getJson(url).then((data) => SmokeSessionSimpleDto.listFromJson(data));
   }
 
-  Future<SmokeSessionMetaDataDto> postMetadata(
-      String sessionCode, SmokeSessionMetaDataDto value) async {
+  Future<SmokeSessionMetaDataDto> postMetadata(String sessionCode, SmokeSessionMetaDataDto value) async {
     var url = Uri.https(baseUrl, 'api/SmokeSession/$sessionCode/SaveMetaData');
 
     var response = await _dio.post(
@@ -345,14 +297,12 @@ class ApiClient {
 
   Future<List<DevicePreset>> getDevicePresets() async {
     var url = Uri.https(baseUrl, 'api/Device/Preset/GetUserPresets');
-    return _getJson(url).then((data) =>
-        data.map<DevicePreset>((p) => DevicePreset.fromJson(p)).toList());
+    return _getJson(url).then((data) => data.map<DevicePreset>((p) => DevicePreset.fromJson(p)).toList());
   }
 
   Future<bool> setDevicePreset(String sessionId, int presetId) async {
     print('Set preset on session {$sessionId}:${presetId.toString()}');
-    var url = Uri.https(
-        baseUrl, '/api/Device/Preset/${presetId.toString()}/Use/$sessionId');
+    var url = Uri.https(baseUrl, '/api/Device/Preset/${presetId.toString()}/Use/$sessionId');
     await _dio.post(
       url.toString(),
       data: null,
@@ -392,30 +342,25 @@ class ApiClient {
     });
   }
 
-  Future<SmartHookahServicesPlaceReservationUsageDto> getPlaceReservationInfo(
-      int id, DateTime date) async {
+  Future<SmartHookahServicesPlaceReservationUsageDto> getPlaceReservationInfo(int id, DateTime date) async {
     var url = Uri.https(baseUrl, '/api/Reservations/$id/Usage');
     var formatter = new DateFormat('yyyy-MM-dd');
     String formatted = formatter.format(date ?? DateTime.now());
-    return await _dio
-        .get(url.toString(), queryParameters: {'date': formatted}).then((data) {
+    return await _dio.get(url.toString(), queryParameters: {'date': formatted}).then((data) {
       return SmartHookahServicesPlaceReservationUsageDto.fromJson(data.data);
     });
   }
 
-  Future<PlacesReservationsReservationManageDto> manageReservation(
-      int id, DateTime date) async {
+  Future<PlacesReservationsReservationManageDto> manageReservation(int id, DateTime date) async {
     var url = Uri.https(baseUrl, '/api/Reservations/$id/Manage');
     var formatter = new DateFormat('yyyy-MM-dd');
     String formatted = formatter.format(date ?? DateTime.now());
-    return await _dio
-        .get(url.toString(), queryParameters: {'date': formatted}).then((data) {
+    return await _dio.get(url.toString(), queryParameters: {'date': formatted}).then((data) {
       return PlacesReservationsReservationManageDto.fromJson(data.data);
     });
   }
 
-  Future<PlacesReservationsReservationDto> addLateReservation(
-      int id, int time) async {
+  Future<PlacesReservationsReservationDto> addLateReservation(int id, int time) async {
     var url = Uri.https(baseUrl, '/api/Reservations/$id/AddLateTime');
     return await _dio.post(url.toString(), data: time).then((data) {
       return PlacesReservationsReservationDto.fromJson(data.data);
@@ -423,11 +368,8 @@ class ApiClient {
   }
 
   Future<PlaceDto> getPlaceInfo(int id) async {
-    var url =
-        Uri.https(baseUrl, '/api/Places/GetPlaceInfo/', {"id": id.toString()});
-    return await _dio
-        .get(url.toString())
-        .then((data) => PlaceDto.fromJson(data.data));
+    var url = Uri.https(baseUrl, '/api/Places/GetPlaceInfo/', {"id": id.toString()});
+    return await _dio.get(url.toString()).then((data) => PlaceDto.fromJson(data.data));
   }
 
   Future restartDevice(String id) async {
@@ -452,42 +394,32 @@ class ApiClient {
   }
 
   Future deleteMix(TobaccoMixSimpleDto mix) async {
-    var url = Uri.https(
-        baseUrl, '/api/Mixology/RemoveMix', {'mixId': mix.id.toString()});
+    var url = Uri.https(baseUrl, '/api/Mixology/RemoveMix', {'mixId': mix.id.toString()});
     await _dio.deleteUri(url);
   }
 
-  Future<PersonStatisticsOverallDto> getStatistic(
-      DateTime from, DateTime to) async {
+  Future<PersonStatisticsOverallDto> getStatistic(DateTime from, DateTime to) async {
     final f = new DateFormat('yyyy-MM-dd');
-    var url = Uri.https(baseUrl, '/api/Statistics/GetStatistics',
-        {'from': f.format(from), 'to': f.format(to)});
+    var url = Uri.https(baseUrl, '/api/Statistics/GetStatistics', {'from': f.format(from), 'to': f.format(to)});
 
-    return await _dio
-        .getUri(url)
-        .then((data) => PersonStatisticsOverallDto.fromJson(data.data));
+    return await _dio.getUri(url).then((data) => PersonStatisticsOverallDto.fromJson(data.data));
   }
 
-  Future<List<PlacesReservationsReservationDto>> getReservations(
-      DateTime from, DateTime to) async {
+  Future<List<PlacesReservationsReservationDto>> getReservations(DateTime from, DateTime to) async {
     final f = new DateFormat('yyyy-MM-dd');
-    var url = Uri.https(baseUrl, '/api/Reservations/Reservations',
-        {'from': f.format(from), 'to': f.format(to)});
+    var url = Uri.https(baseUrl, '/api/Reservations/Reservations', {'from': f.format(from), 'to': f.format(to)});
 
-    return await _dio.getUri(url).then(
-        (data) => PlacesReservationsReservationDto.listFromJson(data.data));
+    return await _dio.getUri(url).then((data) => PlacesReservationsReservationDto.listFromJson(data.data));
   }
 
-  Future<PlacesReservationsReservationDto> createReservation(
-      PlacesReservationsReservationDto newReservation) async {
+  Future<PlacesReservationsReservationDto> createReservation(PlacesReservationsReservationDto newReservation) async {
     var url = Uri.https(baseUrl, '/api/Reservations/Create');
     var data = await _dio.post(url.toString(), data: newReservation);
     data.data['Created'] = null;
     return PlacesReservationsReservationDto.fromJson(data.data);
   }
 
-  Future<PlacesReservationsReservationDetailDto> detailReservation(
-      int id) async {
+  Future<PlacesReservationsReservationDetailDto> detailReservation(int id) async {
     var url = Uri.https(baseUrl, '/api/Reservations/$id/Detail');
     var data = await _dio.get(url.toString());
     return PlacesReservationsReservationDetailDto.fromJson(data.data);
@@ -497,9 +429,7 @@ class ApiClient {
     Map<String, String> params = new Map<String, String>();
     //params['count'] = count.toString();
     var url = Uri.https(baseUrl, '/api/Person/MyGear/$id/Add', params);
-    return await _dio
-        .postUri(url)
-        .then((data) => PipeAccesorySimpleDto.fromJson(data.data));
+    return await _dio.postUri(url).then((data) => PipeAccesorySimpleDto.fromJson(data.data));
   }
 
   Future<bool> removeMyGear(int id) async {
@@ -511,14 +441,11 @@ class ApiClient {
 
   Future<PersonInfoDto> getPersonInfo() async {
     var url = Uri.https(baseUrl, '/api/Person/Info');
-    return await _dio
-        .getUri(url)
-        .then((data) => PersonInfoDto.fromJson(data.data));
+    return await _dio.getUri(url).then((data) => PersonInfoDto.fromJson(data.data));
   }
 
   Future updateNotificationToken(String token) async {
-    var url =
-        Uri.https(baseUrl, '/api/Person/NotificationToken', {'token': token});
+    var url = Uri.https(baseUrl, '/api/Person/NotificationToken', {'token': token});
     await _dio.putUri(url);
   }
 
@@ -527,11 +454,9 @@ class ApiClient {
     await _dio.post(url.toString());
   }
 
-  Future<PlacesReservationsReservationDetailDto> reservationDetail(
-      int id) async {
+  Future<PlacesReservationsReservationDetailDto> reservationDetail(int id) async {
     var url = Uri.https(baseUrl, '/api/Reservations/$id/Detail');
-    return await _dio.getUri(url).then(
-        (data) => PlacesReservationsReservationDetailDto.fromJson(data.data));
+    return await _dio.getUri(url).then((data) => PlacesReservationsReservationDetailDto.fromJson(data.data));
   }
 
   Future cancelReservation(int id) async {
@@ -540,78 +465,53 @@ class ApiClient {
   }
 
   Future<List<SmartHookahModelsDbPuf>> getPufs(int id) async {
-    var url =
-        Uri.https(baseUrl, '/api/SmokeSession/GetPufs', {'id': id.toString()});
-    return await _dio.getUri(url).then(
-        (data) => SmartHookahModelsDbPuf.listFromJson(data.data).toList());
+    var url = Uri.https(baseUrl, '/api/SmokeSession/GetPufs', {'id': id.toString()});
+    return await _dio.getUri(url).then((data) => SmartHookahModelsDbPuf.listFromJson(data.data).toList());
   }
 
   Future<FinishedSessionDataDto> getFinishedData(int id) async {
-    var url = Uri.https(
-        baseUrl, '/api/SmokeSession/GetFinishedData', {'id': id.toString()});
-    return await _dio
-        .getUri(url)
-        .then((data) => FinishedSessionDataDto.fromJson(data.data));
+    var url = Uri.https(baseUrl, '/api/SmokeSession/GetFinishedData', {'id': id.toString()});
+    return await _dio.getUri(url).then((data) => FinishedSessionDataDto.fromJson(data.data));
   }
 
   Future<SmokeSessionSimpleDto> endSession(String id) async {
     var url = Uri.https(baseUrl, '/api/SmokeSession/$id/End');
-    return await _dio
-        .postUri(url)
-        .then((data) => SmokeSessionSimpleDto.fromJson(data.data));
+    return await _dio.postUri(url).then((data) => SmokeSessionSimpleDto.fromJson(data.data));
   }
 
   Future<bool> changeMixName(int id, String name) async {
-    var url =
-        Uri.https(baseUrl, '/api/Mixology/RenameMix/$id', {'newName': name});
-    return await _dio
-        .postUri(url)
-        .then((onValue) => true)
-        .catchError((_) => false);
+    var url = Uri.https(baseUrl, '/api/Mixology/RenameMix/$id', {'newName': name});
+    return await _dio.postUri(url).then((onValue) => true).catchError((_) => false);
   }
 
   Future<bool> addCompetitionEntry(String name, double time) async {
-    var url = Uri.https(baseUrl, '/api/Competition/Add',
-        {'name': name, 'time': time.toString()});
-    return await _dio
-        .postUri(url)
-        .then((onValue) => true)
-        .catchError((_) => false);
+    var url = Uri.https(baseUrl, '/api/Competition/Add', {'name': name, 'time': time.toString()});
+    return await _dio.postUri(url).then((onValue) => true).catchError((_) => false);
   }
 
-  Future<List<SmartHookahModelsRedisCompetitionEntry>>
-      getCompetitionResult() async {
+  Future<List<SmartHookahModelsRedisCompetitionEntry>> getCompetitionResult() async {
     var url = Uri.https(baseUrl, '/api/Competition/Results');
-    return await _dio.getUri(url).then((data) =>
-        SmartHookahModelsRedisCompetitionEntry.listFromJson(data.data));
+    return await _dio.getUri(url).then((data) => SmartHookahModelsRedisCompetitionEntry.listFromJson(data.data));
   }
 
-  Future<SmartHookahControllersApiDeviceInfoResponse> getDeviceInfo(
-      int id) async {
+  Future<SmartHookahControllersApiDeviceInfoResponse> getDeviceInfo(int id) async {
     var url = Uri.https(baseUrl, '/api/Device/$id/Info');
-    return await _dio.getUri(url).then((data) =>
-        SmartHookahControllersApiDeviceInfoResponse.fromJson(data.data));
+    return await _dio.getUri(url).then((data) => SmartHookahControllersApiDeviceInfoResponse.fromJson(data.data));
   }
 
   Future<List<DeviceDevicePictureDto>> getDevicePicutres() async {
     var url = Uri.https(baseUrl, '/api/Device/Pictures');
-    return await _dio
-        .getUri(url)
-        .then((data) => DeviceDevicePictureDto.listFromJson(data.data));
+    return await _dio.getUri(url).then((data) => DeviceDevicePictureDto.listFromJson(data.data));
   }
 
   Future<bool> changeDevicePicture(int deviceId, int pictureId) async {
     var url = Uri.https(baseUrl, '/api/Device/$deviceId/SetPicture');
-    return await _dio
-        .post(url.toString(), data: pictureId)
-        .then((data) => data.data);
+    return await _dio.post(url.toString(), data: pictureId).then((data) => data.data);
   }
 
   Future<List<DeviceUpdateDto>> getUpdates() async {
     var url = Uri.https(baseUrl, '/api/Device/Updates');
-    return await _dio
-        .getUri(url)
-        .then((data) => DeviceUpdateDto.listFromJson(data.data));
+    return await _dio.getUri(url).then((data) => DeviceUpdateDto.listFromJson(data.data));
   }
 
   Future<bool> pushUpdate(int deviceId, int updateId) async {
@@ -621,25 +521,19 @@ class ApiClient {
 
   Future<PlaceDto> addPlace(PlaceDto newPlace) async {
     var url = Uri.https(baseUrl, '/api/Places/Add');
-    return await _dio
-        .postUri(url, data: newPlace)
-        .then((data) => PlaceDto.fromJson(data.data));
+    return await _dio.postUri(url, data: newPlace).then((data) => PlaceDto.fromJson(data.data));
   }
 
   Future<PipeAccesorySimpleDto> addGear(PipeAccesorySimpleDto newGear) async {
     var url = Uri.https(baseUrl, '/api/Gear/Add');
-    return await _dio
-        .postUri(url, data: newGear)
-        .then((data) => PipeAccesorySimpleDto.fromJson(data.data));
+    return await _dio.postUri(url, data: newGear).then((data) => PipeAccesorySimpleDto.fromJson(data.data));
   }
 
-  Future<PlaceDto> uploadPlacePicture(int placeId, File file,
-      {ValueChanged<double> progress}) async {
+  Future<PlaceDto> uploadPlacePicture(int placeId, File file, {ValueChanged<double> progress}) async {
     var url = Uri.https(baseUrl, '/api/Media/Place/$placeId/Add');
 
     FormData formData = new FormData.fromMap({
-      "file": MultipartFile.fromBytes(file.readAsBytesSync(),
-          filename: "picture.jpg"),
+      "file": MultipartFile.fromBytes(file.readAsBytesSync(), filename: "picture.jpg"),
     });
 
     return await _dio.postUri(
@@ -658,8 +552,7 @@ class ApiClient {
     var url = Uri.https(baseUrl, '/api/Media/Gear/$gearId/Add');
 
     FormData formData = new FormData.fromMap({
-      "file": MultipartFile.fromBytes(file.readAsBytesSync(),
-          filename: "picture.jpg"),
+      "file": MultipartFile.fromBytes(file.readAsBytesSync(), filename: "picture.jpg"),
     });
 
     return await _dio.postUri(
@@ -675,8 +568,7 @@ class ApiClient {
     var url = Uri.https(baseUrl, '/api/Media/SessionReview/$reviewId/Add');
 
     FormData formData = new FormData.fromMap({
-      "file": MultipartFile.fromBytes(file.readAsBytesSync(),
-          filename: "picture.jpg"),
+      "file": MultipartFile.fromBytes(file.readAsBytesSync(), filename: "picture.jpg"),
     });
 
     return await _dio.postUri(
@@ -697,8 +589,7 @@ class ApiClient {
     var url = Uri.https(baseUrl, '/api/Media/PlaceReview/$reviewId/Add');
 
     FormData formData = new FormData.fromMap({
-      "file": MultipartFile.fromBytes(file.readAsBytesSync(),
-          filename: "picture.jpg"),
+      "file": MultipartFile.fromBytes(file.readAsBytesSync(), filename: "picture.jpg"),
     });
 
     return await _dio.postUri(
@@ -715,27 +606,21 @@ class ApiClient {
     params['code'] = code;
     params['newName'] = name;
     var url = Uri.https(baseUrl, '/api/Device/$id/Add', params);
-    return await _dio
-        .postUri(url)
-        .then((data) => DeviceSimpleDto.fromJson(data.data));
+    return await _dio.postUri(url).then((data) => DeviceSimpleDto.fromJson(data.data));
   }
 
   Future<DeviceSimpleDto> removeDevice(
     String id,
   ) async {
     var url = Uri.https(baseUrl, '/api/Device/$id/Remove');
-    return await _dio
-        .deleteUri(url)
-        .then((data) => DeviceSimpleDto.fromJson(data.data));
+    return await _dio.deleteUri(url).then((data) => DeviceSimpleDto.fromJson(data.data));
   }
 
   Future<DeviceSimpleDto> changeDeviceName(String id, String name) async {
     Map<String, String> params = new Map<String, String>();
     params['newName'] = name;
     var url = Uri.https(baseUrl, '/api/Device/$id/ChangeName');
-    return await _dio
-        .postUri(url)
-        .then((data) => DeviceSimpleDto.fromJson(data.data));
+    return await _dio.postUri(url).then((data) => DeviceSimpleDto.fromJson(data.data));
   }
 
   Future<bool> voteMix(int id, int value) async {
@@ -752,17 +637,12 @@ class ApiClient {
         .then((data) => FeatureMixCreatorDto.fromJson(data.data));
   }
 
-  Future<List<PlacesPlaceReviewDto>> getPlaceReview(int id,
-      {int pageSize = 10, page = 0}) async {
+  Future<List<PlacesPlaceReviewDto>> getPlaceReview(int id, {int pageSize = 10, page = 0}) async {
     var url = Uri.https(baseUrl, '/api/Review/Place/$id');
-    return await _dio.get(url.toString(), queryParameters: {
-      "pageSize": pageSize,
-      "page": page
-    }).then((data) => PlacesPlaceReviewDto.listFromJson(data.data));
+    return await _dio.get(url.toString(), queryParameters: {"pageSize": pageSize, "page": page}).then((data) => PlacesPlaceReviewDto.listFromJson(data.data));
   }
 
-  Future<PlacesPlaceReviewDto> addPlaceReview(
-      int id, PlacesPlaceReviewDto review) async {
+  Future<PlacesPlaceReviewDto> addPlaceReview(int id, PlacesPlaceReviewDto review) async {
     var url = Uri.https(baseUrl, '/api/Review/Place/$id');
     return await _dio.post(url.toString(), data: review).then((data) {
       if (data.data['publishDate'] != null) {
@@ -772,10 +652,8 @@ class ApiClient {
     });
   }
 
-  Future<SmartHookahModelsDbSessionDtoSessionReviewDto> addSessionReview(
-      SmartHookahModelsDbSessionDtoSessionReviewDto review) async {
-    var url =
-        Uri.https(baseUrl, '/api/Review/Session/${review.smokeSessionId}');
+  Future<SmartHookahModelsDbSessionDtoSessionReviewDto> addSessionReview(SmartHookahModelsDbSessionDtoSessionReviewDto review) async {
+    var url = Uri.https(baseUrl, '/api/Review/Session/${review.smokeSessionId}');
     return await _dio.post(url.toString(), data: review).then((data) {
       if (data.data['publishDate'] != null) {
         data.data['publishDate'] = DateTime.now().toString();
@@ -784,96 +662,65 @@ class ApiClient {
         }
         if (data.data['placeReview'] != null) {
           data.data['placeReview']['publishDate'] = DateTime.now().toString();
-          if (data.data['placeReview']['sessionReview'] != null)
-            data.data['placeReview']['sessionReview']['publishDate'] =
-                DateTime.now().toString();
+          if (data.data['placeReview']['sessionReview'] != null) data.data['placeReview']['sessionReview']['publishDate'] = DateTime.now().toString();
         }
       }
       return SmartHookahModelsDbSessionDtoSessionReviewDto.fromJson(data.data);
     });
   }
 
-  Future<List<SmartHookahModelsDbSessionDtoSessionReviewDto>> getSessionReview(
-      int id,
-      {int pageSize = 10,
-      page = 0}) async {
+  Future<List<SmartHookahModelsDbSessionDtoSessionReviewDto>> getSessionReview(int id, {int pageSize = 10, page = 0}) async {
     var url = Uri.https(baseUrl, '/api/Review/Session/$id');
-    return await _dio.get(url.toString(), queryParameters: {
-      "pageSize": pageSize,
-      "page": page
-    }).then((data) =>
-        SmartHookahModelsDbSessionDtoSessionReviewDto.listFromJson(data.data));
+    return await _dio.get(url.toString(),
+        queryParameters: {"pageSize": pageSize, "page": page}).then((data) => SmartHookahModelsDbSessionDtoSessionReviewDto.listFromJson(data.data));
   }
 
-  Future<bool> removeSessionReview(int id,
-      {int pageSize = 10, page = 0}) async {
+  Future<bool> removeSessionReview(int id, {int pageSize = 10, page = 0}) async {
     var url = Uri.https(baseUrl, '/api/Review/Session/$id');
-    return await _dio
-        .delete(url.toString())
-        .then((data) => data.statusCode == 200);
+    return await _dio.delete(url.toString()).then((data) => data.statusCode == 200);
   }
 
-  Future<List<GearTobaccoReviewDto>> getTobaccoReview(int id,
-      {int pageSize = 10, page = 0}) async {
+  Future<List<GearTobaccoReviewDto>> getTobaccoReview(int id, {int pageSize = 10, page = 0}) async {
     var url = Uri.https(baseUrl, '/api/Review/Tobacco/$id');
-    return await _dio.get(url.toString(), queryParameters: {
-      "pageSize": pageSize,
-      "page": page
-    }).then((data) => GearTobaccoReviewDto.listFromJson(data.data));
+    return await _dio.get(url.toString(), queryParameters: {"pageSize": pageSize, "page": page}).then((data) => GearTobaccoReviewDto.listFromJson(data.data));
   }
 
   Future<TobaccoInformationDto> getTobaccoInfo(
     int id,
   ) async {
     var url = Uri.https(baseUrl, '/api/Tobacco/$id/GetAllInfo');
-    return await _dio
-        .get(url.toString())
-        .then((data) => TobaccoInformationDto.fromJson(data.data));
+    return await _dio.get(url.toString()).then((data) => TobaccoInformationDto.fromJson(data.data));
   }
 
   Future<TobaccoMixSimpleDto> getTobaccoMix(
     int id,
   ) async {
     var url = Uri.https(baseUrl, '/api/Mixology/$id/GetMix');
-    return await _dio
-        .get(url.toString())
-        .then((data) => TobaccoMixSimpleDto.fromJson(data.data));
+    return await _dio.get(url.toString()).then((data) => TobaccoMixSimpleDto.fromJson(data.data));
   }
 
-  Future<List<TobaccoMixSimpleDto>> getTobaccoInMix(int id,
-      {int pageSize = 10, page = 0}) async {
+  Future<List<TobaccoMixSimpleDto>> getTobaccoInMix(int id, {int pageSize = 10, page = 0}) async {
     var url = Uri.https(
       baseUrl,
       '/api/Tobacco/$id/InMix',
     );
-    return await _dio.get(url.toString(), queryParameters: {
-      "pageSize": pageSize,
-      "page": page
-    }).then((data) => TobaccoMixSimpleDto.listFromJson(data.data));
+    return await _dio.get(url.toString(), queryParameters: {"pageSize": pageSize, "page": page}).then((data) => TobaccoMixSimpleDto.listFromJson(data.data));
   }
 
-  Future<List<SmokeSessionSimpleDto>> getGearSession(int id,
-      {int pageSize = 10, page = 0}) async {
+  Future<List<SmokeSessionSimpleDto>> getGearSession(int id, {int pageSize = 10, page = 0}) async {
     var url = Uri.https(
       baseUrl,
       '/api/Gear/$id/Sessions',
     );
-    return await _dio.get(url.toString(), queryParameters: {
-      "pageSize": pageSize,
-      "page": page
-    }).then((data) => SmokeSessionSimpleDto.listFromJson(data.data));
+    return await _dio.get(url.toString(), queryParameters: {"pageSize": pageSize, "page": page}).then((data) => SmokeSessionSimpleDto.listFromJson(data.data));
   }
 
-  Future<List<SmokeSessionSimpleDto>> getDeviceSessions(int id,
-      {int page = 0, int pageSize = 10}) async {
+  Future<List<SmokeSessionSimpleDto>> getDeviceSessions(int id, {int page = 0, int pageSize = 10}) async {
     var url = Uri.https(
       baseUrl,
       '/api/Device/$id/Sessions',
     );
-    return await _dio.get(url.toString(), queryParameters: {
-      "pageSize": pageSize,
-      "page": page
-    }).then((data) => SmokeSessionSimpleDto.listFromJson(data.data));
+    return await _dio.get(url.toString(), queryParameters: {"pageSize": pageSize, "page": page}).then((data) => SmokeSessionSimpleDto.listFromJson(data.data));
   }
 
   Future<SmokeSessionSimpleDto> assignSession(int id) async {
@@ -881,9 +728,7 @@ class ApiClient {
       baseUrl,
       '/api/Person/AssignSession/$id',
     );
-    return await _dio
-        .post(url.toString())
-        .then((data) => SmokeSessionSimpleDto.fromJson(data.data));
+    return await _dio.post(url.toString()).then((data) => SmokeSessionSimpleDto.fromJson(data.data));
   }
 
   Future<bool> unAssignSession(int id) async {
@@ -908,11 +753,7 @@ class ColorDto {
 
   ColorDto(this.color);
 
-  Map<String, dynamic> toJson() => {
-        'Hue': ((color.hue / 360) * 255).round(),
-        'Saturation': (color.saturation * 255).round(),
-        'Value': 255
-      };
+  Map<String, dynamic> toJson() => {'Hue': ((color.hue / 360) * 255).round(), 'Saturation': (color.saturation * 255).round(), 'Value': 255};
 }
 
 class SessionIdValidation extends Dto {

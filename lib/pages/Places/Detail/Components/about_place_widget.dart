@@ -49,7 +49,7 @@ class AboutPlaceWidget extends StatelessWidget {
                                       'No description',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .display2
+                                      .headline5
                                       .apply(color: Colors.black),
                                 ),
                               ),

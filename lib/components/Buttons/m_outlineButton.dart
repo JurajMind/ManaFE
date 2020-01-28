@@ -22,19 +22,12 @@ class MButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var shape = new RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(30.0));
-    var side = BorderSide(
-        color: onPressed != null ? Colors.white : Colors.grey, width: 2);
+    var shape = new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0));
+    var side = BorderSide(color: onPressed != null ? Colors.white : Colors.grey, width: 2);
 
     if (uploading ?? false)
       return OutlineButton(
-          shape: shape,
-          borderSide: side,
-          onPressed: onPressed,
-          child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CircularProgressIndicator()));
+          shape: shape, borderSide: side, onPressed: onPressed, child: Padding(padding: const EdgeInsets.all(8.0), child: CircularProgressIndicator()));
 
     if (icon == null)
       return OutlineButton(
@@ -44,12 +37,11 @@ class MButton extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              constraints: BoxConstraints(
-                  minWidth: width ?? 0, maxWidth: maxWidth ?? double.infinity),
+              constraints: BoxConstraints(minWidth: width ?? 0, maxWidth: maxWidth ?? double.infinity),
               child: Text(
                 AppTranslations.of(context).text(label),
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.headline5,
               ),
             ),
           ));
@@ -65,12 +57,11 @@ class MButton extends StatelessWidget {
         label: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            constraints: BoxConstraints(
-                minWidth: width ?? 0, maxWidth: maxWidth ?? double.infinity),
+            constraints: BoxConstraints(minWidth: width ?? 0, maxWidth: maxWidth ?? double.infinity),
             child: Text(
               AppTranslations.of(context).text(label),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline5,
             ),
           ),
         ),

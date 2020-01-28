@@ -41,7 +41,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
               padding: const EdgeInsets.only(top: 40),
               child: Text(
                 'Welcome to Manapipes',
-                style: Theme.of(context).textTheme.headline.apply(fontSizeDelta: -7),
+                style: Theme.of(context).textTheme.headline4,
                 textAlign: TextAlign.center,
                 maxLines: 2,
               ),
@@ -59,7 +59,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                   padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
                   child: Text(
                     AppTranslations.of(context).text("Start").toUpperCase(),
-                    style: Theme.of(context).textTheme.body2.apply(color: Colors.black, fontSizeDelta: -7),
+                    style: Theme.of(context).textTheme.headline4.apply(color: Colors.black, fontSizeDelta: -7),
                   ),
                 ),
                 onPressed: () => navigate(context, 'auth/intro'),
@@ -82,11 +82,11 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                   children: <Widget>[
                     Text(
                       'Already have an account? ',
-                      style: Theme.of(context).textTheme.display2.apply(fontWeightDelta: 0),
+                      style: Theme.of(context).textTheme.headline5.apply(fontWeightDelta: 0),
                     ),
                     Text(
                       'SIGN IN',
-                      style: Theme.of(context).textTheme.display2.apply(fontWeightDelta: 10, color: AppColors.colors[3], decoration: TextDecoration.underline),
+                      style: Theme.of(context).textTheme.headline5.apply(fontWeightDelta: 10, color: AppColors.colors[3], decoration: TextDecoration.underline),
                     ),
                   ],
                 ),
@@ -98,7 +98,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
               child: new FlatButton(
                 child: new Text(
                   AppTranslations.of(context).currentLanguage.toString().toUpperCase(),
-                  style: Theme.of(context).textTheme.display2,
+                  style: Theme.of(context).textTheme.headline5,
                 ),
                 onPressed: () {
                   navigate(context, 'auth/lang');

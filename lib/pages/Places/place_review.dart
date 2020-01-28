@@ -20,7 +20,7 @@ class _PlaceReviewState extends State<PlaceReview> {
   TextEditingController controller;
 
   @override
-  initState(){
+  initState() {
     controller = new TextEditingController();
     super.initState();
   }
@@ -68,11 +68,9 @@ class _PlaceReviewState extends State<PlaceReview> {
                 decoration: new InputDecoration(
                     hintText: 'Place note',
                     labelText: 'Place note',
-                    labelStyle: Theme.of(context).textTheme.display2,
-                    enabledBorder: new UnderlineInputBorder(
-                        borderSide: new BorderSide(color: Colors.white)),
-                    focusedBorder: new UnderlineInputBorder(
-                        borderSide: new BorderSide(color: Colors.white)),
+                    labelStyle: Theme.of(context).textTheme.headline5,
+                    enabledBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
+                    focusedBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
                     icon: Icon(Icons.edit, color: Colors.white)),
               ),
             ),
@@ -96,9 +94,9 @@ class _PlaceReviewState extends State<PlaceReview> {
                       setState(() {
                         posting = true;
                       });
-                      await bloc
-                          .addReview(widget.place.id, review)
-                          .then((_) { Navigator.of(context).pop();});
+                      await bloc.addReview(widget.place.id, review).then((_) {
+                        Navigator.of(context).pop();
+                      });
                     },
                   ),
             SizedBox(

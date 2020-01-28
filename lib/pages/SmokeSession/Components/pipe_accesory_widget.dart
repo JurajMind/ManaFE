@@ -11,9 +11,7 @@ class PipeAccesoryWidget extends StatelessWidget {
   final PipeAccesorySimpleDto accesory;
   final String type;
   final DataProvider dataProvider;
-  const PipeAccesoryWidget(
-      {Key key, this.accesory, this.type, this.dataProvider})
-      : super(key: key);
+  const PipeAccesoryWidget({Key key, this.accesory, this.type, this.dataProvider}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +25,10 @@ class PipeAccesoryWidget extends StatelessWidget {
           Expanded(
             child: Row(
               children: <Widget>[
-                Container(
-                    padding: EdgeInsets.only(right: 4),
-                    height: 30,
-                    child: Extensions.defaultTypePicture(this.type)),
+                Container(padding: EdgeInsets.only(right: 4), height: 30, child: Extensions.defaultTypePicture(this.type)),
                 Text(
                   AppTranslations.of(context).text("gear.${this.type}"),
-                  style: new TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 16.0),
+                  style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
                 ),
               ],
             ),
@@ -44,17 +38,13 @@ class PipeAccesoryWidget extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 if (accesory == null) return;
-                Navigator.of(context).push(
-                    new MaterialPageRoute(builder: (BuildContext context) {
+                Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
                   return PipeAccesoryPage(pipeAccesory: accesory);
                 }));
               },
               child: this.accesory?.id != null
-                  ? Text("${accesory.brand} ${accesory.name}",
-                      style: Theme.of(context).textTheme.display3)
-                  : Text(
-                      AppTranslations.of(context).text('smoke_session.no_data'),
-                      style: Theme.of(context).textTheme.display3),
+                  ? Text("${accesory.brand} ${accesory.name}", style: Theme.of(context).textTheme.bodyText2)
+                  : Text(AppTranslations.of(context).text('smoke_session.no_data'), style: Theme.of(context).textTheme.bodyText2),
             ),
             flex: 2,
           ),

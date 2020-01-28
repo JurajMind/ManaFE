@@ -21,12 +21,11 @@ class SectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Hero(
       tag: section.title,
-          child: new Semantics(
+      child: new Semantics(
         label: section.title,
         button: true,
         child: Stack(
           children: <Widget>[
-             
             new DecoratedBox(
               decoration: new BoxDecoration(
                 gradient: new LinearGradient(
@@ -41,18 +40,26 @@ class SectionCard extends StatelessWidget {
               child: Container(
                 height: 150,
                 width: MediaQuery.of(context).size.width,
-                child: RepaintBoundary(child:new Image.asset(
-                  section.backgroundAsset,
-                  color: const Color.fromRGBO(255, 255, 255, 0.545),
-                  colorBlendMode: BlendMode.modulate,
-                  fit: BoxFit.cover,
+                child: RepaintBoundary(
+                  child: new Image.asset(
+                    section.backgroundAsset,
+                    color: const Color.fromRGBO(255, 255, 255, 0.545),
+                    colorBlendMode: BlendMode.modulate,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-            ),
-              ),),
-                Positioned(
-                child: Container(height: 150,width: MediaQuery.of(context).size.width, child: Center(child: Text(section.title,style: Theme.of(context).textTheme.title,))),
-                
               ),
+            ),
+            Positioned(
+              child: Container(
+                  height: 150,
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                      child: Text(
+                    section.title,
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ))),
+            ),
           ],
         ),
       ),
@@ -184,8 +191,7 @@ class BrandGroupWidget extends StatelessWidget {
         child: new ListTile(
           title: new Text(brandGroup.name),
           subtitle: new Text(brandGroup.itemCount.toString()),
-          leading:
-              new SizedBox(width: 32.0, height: 32.0, child: Placeholder()),
+          leading: new SizedBox(width: 32.0, height: 32.0, child: Placeholder()),
         ));
   }
 }

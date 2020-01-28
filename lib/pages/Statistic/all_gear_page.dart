@@ -24,15 +24,12 @@ class _AllGearPageState extends State<AllGearPage> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SizedBox(
-                  height: 40,
-                  width: 40,
-                  child: Extensions.defaultTypePicture(widget.label)),
+              SizedBox(height: 40, width: 40, child: Extensions.defaultTypePicture(widget.label)),
               SizedBox(
                 height: 40,
                 width: 10,
               ),
-              Text(widget.label, style: Theme.of(context).textTheme.display1),
+              Text(widget.label, style: Theme.of(context).textTheme.headline6),
             ],
           )),
       body: SingleChildScrollView(

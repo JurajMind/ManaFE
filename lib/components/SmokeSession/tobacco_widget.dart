@@ -10,8 +10,7 @@ class TobaccoWidget extends StatelessWidget {
   final TobaccoMixSimpleDto tobaccoMix;
   final ValueSetter<BuildContext> onPressed;
 
-  const TobaccoWidget({Key key, this.tobacco, this.tobaccoMix, this.onPressed})
-      : super(key: key);
+  const TobaccoWidget({Key key, this.tobacco, this.tobaccoMix, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +20,12 @@ class TobaccoWidget extends StatelessWidget {
         children: <Widget>[
           Expanded(
             flex: 7,
-            child: this.tobaccoMix != null
-                ? tobacoMixBody(context, tobaccoMix)
-                : tobacoBody(context, tobacco),
+            child: this.tobaccoMix != null ? tobacoMixBody(context, tobaccoMix) : tobacoBody(context, tobacco),
           ),
           onPressed == null
               ? Container()
               : Expanded(
-                  child: IconButton(
-                      icon: Icon(Icons.add_box),
-                      onPressed: () => onPressed(context)),
+                  child: IconButton(icon: Icon(Icons.add_box), onPressed: () => onPressed(context)),
                   flex: 1,
                 )
         ],
@@ -46,7 +41,7 @@ class TobaccoWidget extends StatelessWidget {
       return Center(
           child: Text(
         AppTranslations.of(context).text("smoke_session.no_data"),
-        style: Theme.of(context).textTheme.display2,
+        style: Theme.of(context).textTheme.headline5,
       ));
 
     return MixCardExpanded(
@@ -62,8 +57,7 @@ class TobaccoWidget extends StatelessWidget {
           tobacco.name,
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
-        Text(tobacco.brand,
-            style: TextStyle(color: Colors.black, fontSize: 10.0))
+        Text(tobacco.brand, style: TextStyle(color: Colors.black, fontSize: 10.0))
       ],
     );
   }
@@ -75,7 +69,7 @@ class TobaccoWidget extends StatelessWidget {
         child: Center(
             child: Text(
           AppTranslations.of(context).text("smoke_session.no_data"),
-          style: Theme.of(context).textTheme.display2,
+          style: Theme.of(context).textTheme.headline5,
         )),
       );
     } else {
@@ -83,20 +77,14 @@ class TobaccoWidget extends StatelessWidget {
         padding: const EdgeInsets.only(left: 0),
         child: Row(
           children: <Widget>[
-            Container(
-                padding: EdgeInsets.only(right: 4),
-                height: 30,
-                child: Extensions.defaultTypePicture('Tobacco')),
+            Container(padding: EdgeInsets.only(right: 4), height: 30, child: Extensions.defaultTypePicture('Tobacco')),
             Text(
               tobacco.name,
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headline6,
             ),
             Text(
               ' ' + tobacco.brand,
-              style: Theme.of(context)
-                  .textTheme
-                  .display1
-                  .merge(new TextStyle(fontWeight: FontWeight.normal)),
+              style: Theme.of(context).textTheme.headline6.merge(new TextStyle(fontWeight: FontWeight.normal)),
             )
           ],
         ),

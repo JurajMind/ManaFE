@@ -24,41 +24,32 @@ class ReservationButton extends StatelessWidget {
                 var toDate = DateTime.now().add(new Duration(days: 7));
                 var upcomingReservations = new Collection(snapshot.data);
                 upcomingCount = upcomingReservations
-                    .where$1((predicate, _) =>
-                        predicate.time.compareTo(DateTime.now()) > 0 &&
-                        predicate.time.compareTo(toDate) < 0 &&
-                        predicate.status != 1)
+                    .where$1((predicate, _) => predicate.time.compareTo(DateTime.now()) > 0 && predicate.time.compareTo(toDate) < 0 && predicate.status != 1)
                     .orderBy((p) => p.time)
                     .count();
               }
 
               return OutlineButton.icon(
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0)),
+                shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
                 borderSide: BorderSide(color: Colors.white),
                 icon: Container(
                   child: Center(
-                    child: Text(upcomingCount.toString(),
-                        style: Theme.of(context).textTheme.display4),
+                    child: Text(upcomingCount.toString(), style: Theme.of(context).textTheme.bodyText2),
                   ),
                   height: 25,
                   width: 25,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: AppColors.colors[2]),
+                  decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.colors[2]),
                 ),
                 label: upcomingCount == -1
                     ? Text(
                         'All reservations',
-                        style: Theme.of(context).textTheme.display3,
+                        style: Theme.of(context).textTheme.bodyText2,
                       )
                     : Text(
-                        AppTranslations.of(context)
-                                .text("reservations.upcoming_reservations") +
-                            " ",
-                        style: Theme.of(context).textTheme.display3,
+                        AppTranslations.of(context).text("reservations.upcoming_reservations") + " ",
+                        style: Theme.of(context).textTheme.bodyText2,
                       ),
-                onPressed: () => Navigator.of(context).push(
-                    new MaterialPageRoute(builder: (BuildContext context) {
+                onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
                   return new ReservationsPage();
                 })),
               );

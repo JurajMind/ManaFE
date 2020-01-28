@@ -2,45 +2,40 @@ import 'package:flutter/material.dart';
 
 ThemeData buildDarkTheme() {
   final ThemeData base = new ThemeData.dark();
+
   return base.copyWith(
-    primaryColor: AppColors.colors[1],
-    buttonColor: AppColors.colors[1],
-    indicatorColor: Colors.white,
-    accentColor: AppColors.colors[1],
-    canvasColor: const Color(0xFF202124),
-    scaffoldBackgroundColor: const Color(0xFF000d1a),
-    backgroundColor: const Color(0xFF000d1a),
-    errorColor: const Color(0xFFB00020),
-    appBarTheme: AppBarTheme(color: AppColors.black),
-    colorScheme: ColorScheme.dark(),
-    textTheme: TextTheme(
-      headline: TextStyle(color: Colors.white, fontSize: 42.0, fontWeight: FontWeight.w700, fontFamily: 'Montserrat'),
-      title: TextStyle(color: Colors.white, fontSize: 36.0, fontWeight: FontWeight.w700, fontFamily: 'Montserrat'),
-      body1: TextStyle(
-        fontSize: 14.0,
-        fontFamily: 'Montserrat',
-        color: Colors.white,
-      ),
-      body2: TextStyle(fontSize: 30.0, color: Colors.white, fontWeight: FontWeight.w700, fontFamily: 'Montserrat'),
-      subtitle: TextStyle(fontSize: 16.0, color: Colors.white, fontWeight: FontWeight.w700, fontFamily: 'Montserrat'),
-      display1: TextStyle(fontSize: 21.0, color: Colors.white, fontWeight: FontWeight.w700, fontFamily: 'Montserrat'),
-      display2: TextStyle(fontSize: 16.0, color: Colors.white, fontWeight: FontWeight.w700, fontFamily: 'Montserrat'),
-      display3: TextStyle(fontSize: 14.0, color: Colors.white, fontWeight: FontWeight.w700, fontFamily: 'Montserrat'),
-      display4: TextStyle(fontSize: 12.0, color: Colors.white, fontWeight: FontWeight.w700, fontFamily: 'Montserrat'),
-      caption: TextStyle(
-        fontSize: 12.0,
-        fontFamily: 'Montserrat',
-        color: Colors.white,
-      ),
-    ),
-    primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
-    accentTextTheme: _buildTextTheme(base.accentTextTheme),
-  );
+      primaryColor: AppColors.colors[1],
+      buttonColor: AppColors.colors[1],
+      indicatorColor: Colors.white,
+      accentColor: AppColors.colors[1],
+      canvasColor: const Color(0xFF202124),
+      scaffoldBackgroundColor: const Color(0xFF000d1a),
+      backgroundColor: const Color(0xFF000d1a),
+      errorColor: const Color(0xFFB00020),
+      appBarTheme: AppBarTheme(color: AppColors.black),
+      colorScheme: ColorScheme.dark(),
+      primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
+      accentTextTheme: _buildTextTheme(base.accentTextTheme),
+      textTheme: TextTheme(
+        headline1: TextStyle(color: AppColors.white, fontSize: 96, fontFamily: 'Montserrat', fontWeight: FontWeight.w300),
+        headline2: TextStyle(color: AppColors.white, fontSize: 60, fontFamily: 'Montserrat', fontWeight: FontWeight.w700),
+        headline3: TextStyle(color: AppColors.white, fontSize: 48, fontFamily: 'Montserrat', fontWeight: FontWeight.w400),
+        headline4: TextStyle(color: AppColors.white, fontSize: 34, fontFamily: 'Montserrat', fontWeight: FontWeight.w400),
+        headline5: TextStyle(color: AppColors.white, fontSize: 24, fontFamily: 'Montserrat', fontWeight: FontWeight.w400),
+        headline6: TextStyle(color: AppColors.white, fontSize: 20, fontFamily: 'Montserrat', fontWeight: FontWeight.w500),
+        subtitle1: TextStyle(color: AppColors.white, fontSize: 16, fontFamily: 'Montserrat'),
+        subtitle2: TextStyle(color: AppColors.white, fontSize: 14, fontFamily: 'Montserrat'),
+        bodyText1: TextStyle(color: AppColors.white, fontSize: 16, fontFamily: 'Montserrat'),
+        bodyText2: TextStyle(color: AppColors.white, fontSize: 14, fontFamily: 'Montserrat'),
+        button: TextStyle(color: AppColors.white, fontSize: 14, fontFamily: 'Montserrat'),
+        caption: TextStyle(color: AppColors.white, fontSize: 12, fontFamily: 'Montserrat'),
+        overline: TextStyle(color: AppColors.white, fontSize: 10, fontFamily: 'Montserrat'),
+      ));
 }
 
 TextTheme _buildTextTheme(TextTheme base) {
   return base.copyWith(
-    title: base.title.copyWith(fontFamily: 'Montserrat', fontWeight: FontWeight.w700, color: Colors.white),
+    headline6: base.headline6.copyWith(fontFamily: 'Montserrat', fontWeight: FontWeight.w700, color: Colors.white),
   );
 }
 

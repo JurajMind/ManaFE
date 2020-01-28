@@ -14,8 +14,7 @@ class ProgressDialog {
 
   BuildContext _buildContext, _context;
 
-  ProgressDialog(
-      BuildContext buildContext, ProgressDialogType progressDialogtype) {
+  ProgressDialog(BuildContext buildContext, ProgressDialogType progressDialogtype) {
     _buildContext = buildContext;
 
     _progressDialogType = progressDialogtype;
@@ -63,8 +62,7 @@ class ProgressDialog {
               insetAnimationCurve: Curves.easeInOut,
               insetAnimationDuration: Duration(milliseconds: 100),
               elevation: 10.0,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
               child: _dialog);
         },
       );
@@ -113,22 +111,15 @@ class _MyDialogState extends State<_MyDialog> {
           const SizedBox(width: 15.0),
           Expanded(
             child: _progressDialogType == ProgressDialogType.Normal
-                ? Text(_dialogMessage,
-                    textAlign: TextAlign.justify,
-                    style: Theme.of(context).textTheme.display2)
+                ? Text(_dialogMessage, textAlign: TextAlign.justify, style: Theme.of(context).textTheme.headline5)
                 : Stack(
                     children: <Widget>[
                       Positioned(
-                        child: Text(_dialogMessage,
-                            style: Theme.of(context).textTheme.display2),
+                        child: Text(_dialogMessage, style: Theme.of(context).textTheme.headline5),
                         top: 35.0,
                       ),
                       Positioned(
-                        child: Text("$_progress/100",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.w400)),
+                        child: Text("$_progress/100", style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w400)),
                         bottom: 15.0,
                         right: 15.0,
                       ),

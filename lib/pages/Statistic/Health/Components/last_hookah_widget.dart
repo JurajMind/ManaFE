@@ -20,7 +20,7 @@ class LastHookahWidget extends StatelessWidget {
           children: <Widget>[
             Text(
               AppTranslations.of(context).text('health.last_hookah'),
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headline6,
             ),
             SizedBox(
               height: 10,
@@ -41,12 +41,10 @@ class LastHookahWidget extends StatelessWidget {
                   }
 
                   var lastSession = snapshot.data.first;
-                  var startTime = new DateTime.fromMillisecondsSinceEpoch(
-                      lastSession.statistic.start);
+                  var startTime = new DateTime.fromMillisecondsSinceEpoch(lastSession.statistic.start);
                   var since = DateTime.now().difference(startTime);
 
-                  return Text(DateUtils.toStrungLongDuration(context, since),
-                      style: Theme.of(context).textTheme.display1);
+                  return Text(DateUtils.toStrungLongDuration(context, since), style: Theme.of(context).textTheme.headline6);
                 })
           ],
         ),

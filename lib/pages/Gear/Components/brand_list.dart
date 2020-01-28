@@ -44,7 +44,7 @@ class _BrandListState extends State<BrandList> {
         ),
         Text(
           widget.section.title,
-          style: Theme.of(context).textTheme.title,
+          style: Theme.of(context).textTheme.subtitle1,
         ),
         !searchMode
             ? Row(
@@ -90,10 +90,7 @@ class _BrandListState extends State<BrandList> {
                           this.searchString = data;
                         });
                       },
-                      decoration: InputDecoration(
-                          hintText: 'Search',
-                          border: InputBorder.none,
-                          labelStyle: Theme.of(context).textTheme.body2),
+                      decoration: InputDecoration(hintText: 'Search', border: InputBorder.none, labelStyle: Theme.of(context).textTheme.headline4),
                     ),
                   )),
                   Flexible(
@@ -131,11 +128,7 @@ class _BrandListState extends State<BrandList> {
               var data = snapshot.data;
 
               if (this.searchString != null) {
-                data = data
-                    .where((test) => test.name
-                        .toLowerCase()
-                        .contains(this.searchString.toLowerCase()))
-                    .toList();
+                data = data.where((test) => test.name.toLowerCase().contains(this.searchString.toLowerCase())).toList();
               }
 
               return ListView.builder(

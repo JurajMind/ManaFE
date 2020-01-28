@@ -17,28 +17,19 @@ class PipeAccesoryListItem extends StatelessWidget {
     return Container(
       width: 200,
       margin: EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-          color: Colors.black45, borderRadius: BorderRadius.circular(20.0)),
+      decoration: BoxDecoration(color: Colors.black45, borderRadius: BorderRadius.circular(20.0)),
       child: Container(
         child: ListTile(
-          onTap: () => Navigator.of(context)
-              .push(new MaterialPageRoute(builder: (BuildContext context) {
-            return pipeAccesory.type == "Tobacco"
-                ? TobaccoPage(tobacco: pipeAccesory)
-                : PipeAccesoryPage(pipeAccesory: pipeAccesory);
+          onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
+            return pipeAccesory.type == "Tobacco" ? TobaccoPage(tobacco: pipeAccesory) : PipeAccesoryPage(pipeAccesory: pipeAccesory);
           })),
           trailing: Icon(Icons.chevron_right),
           leading: Hero(
             tag: '${pipeAccesory.id}_name',
-            child: SizedBox(
-                height: 60.0,
-                width: 60.0,
-                child: Extensions.accesoryPicture(pipeAccesory)),
+            child: SizedBox(height: 60.0, width: 60.0, child: Extensions.accesoryPicture(pipeAccesory)),
           ),
-          title: Text(this.pipeAccesory.name,
-              style: Theme.of(context).textTheme.display2),
-          subtitle: Text(pipeAccesory.brand,
-              style: Theme.of(context).textTheme.display3),
+          title: Text(this.pipeAccesory.name, style: Theme.of(context).textTheme.headline5),
+          subtitle: Text(pipeAccesory.brand, style: Theme.of(context).textTheme.bodyText2),
         ),
       ),
     );
@@ -60,18 +51,12 @@ class PipeAccesoryListItemShimmer extends StatelessWidget {
               child: Container(
                 height: 60.0,
                 width: 60.0,
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
               )),
           title: Flex(
             direction: Axis.horizontal,
             children: <Widget>[
-              Expanded(
-                  flex: 1,
-                  child: Container(
-                      height: 16.0,
-                      width: 20.0,
-                      decoration: BoxDecoration(color: Colors.white))),
+              Expanded(flex: 1, child: Container(height: 16.0, width: 20.0, decoration: BoxDecoration(color: Colors.white))),
               Expanded(flex: 1, child: Container())
             ],
           ),

@@ -29,8 +29,7 @@ class PersonInfo extends StatelessWidget {
                         const SizedBox(
                           width: 8,
                         ),
-                        Text('Person info',
-                            style: Theme.of(context).textTheme.display1),
+                        Text('Person info', style: Theme.of(context).textTheme.headline6),
                       ],
                     ),
                     const SizedBox(
@@ -43,13 +42,13 @@ class PersonInfo extends StatelessWidget {
                             flex: 2,
                             child: Text(
                               'Name :',
-                              style: Theme.of(context).textTheme.display2,
+                              style: Theme.of(context).textTheme.headline5,
                             )),
                         Expanded(
                             flex: 2,
                             child: Text(
                               snapshot.data?.displayName ?? '...',
-                              style: Theme.of(context).textTheme.display3,
+                              style: Theme.of(context).textTheme.bodyText2,
                             )),
                       ],
                     ),
@@ -60,13 +59,13 @@ class PersonInfo extends StatelessWidget {
                             flex: 2,
                             child: Text(
                               'Email :',
-                              style: Theme.of(context).textTheme.display2,
+                              style: Theme.of(context).textTheme.headline5,
                             )),
                         Expanded(
                             flex: 2,
                             child: Text(
                               snapshot.data?.email ?? '...',
-                              style: Theme.of(context).textTheme.display3,
+                              style: Theme.of(context).textTheme.bodyText2,
                             ))
                       ],
                     ),

@@ -19,15 +19,7 @@ class MetadataItem extends StatelessWidget {
 
   final SmokeSessionBloc bloc;
 
-  const MetadataItem(
-      {Key key,
-      this.type,
-      this.icon,
-      this.pipeAccesories,
-      this.searchType,
-      this.selectedAccesories,
-      this.bloc})
-      : super(key: key);
+  const MetadataItem({Key key, this.type, this.icon, this.pipeAccesories, this.searchType, this.selectedAccesories, this.bloc}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +35,10 @@ class MetadataItem extends StatelessWidget {
                     flex: 4,
                     child: Row(
                       children: <Widget>[
-                        Container(
-                            padding: EdgeInsets.only(right: 4),
-                            height: 30,
-                            child: Extensions.defaultTypePicture(this.type)),
+                        Container(padding: EdgeInsets.only(right: 4), height: 30, child: Extensions.defaultTypePicture(this.type)),
                         Text(
-                          AppTranslations.of(context)
-                              .text("gear.${type.toLowerCase()}"),
-                          style: TextStyle(
-                              fontSize: 20.0, fontWeight: FontWeight.bold),
+                          AppTranslations.of(context).text("gear.${type.toLowerCase()}"),
+                          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -87,8 +74,7 @@ class MetadataItem extends StatelessWidget {
     );
   }
 
-  List<Widget> pipeAccesoryChips(
-      List<PipeAccesorySimpleDto> acc, PipeAccesorySimpleDto selected) {
+  List<Widget> pipeAccesoryChips(List<PipeAccesorySimpleDto> acc, PipeAccesorySimpleDto selected) {
     var sorted = new List<PipeAccesorySimpleDto>.from(acc);
     sorted.sort((a, b) {
       return a.name.compareTo(b.name);
@@ -126,9 +112,7 @@ class FilterChip extends StatelessWidget {
   final PipeAccesorySimpleDto accesory;
   final bool selected;
   final SmokeSessionBloc bloc;
-  const FilterChip(
-      {Key key, this.accesory, this.selected, this.bloc, this.searchType})
-      : super(key: key);
+  const FilterChip({Key key, this.accesory, this.selected, this.bloc, this.searchType}) : super(key: key);
   final String searchType;
 
   @override
@@ -151,12 +135,11 @@ class FilterChip extends StatelessWidget {
             decoration: BoxDecoration(
                 color: selected ? AppColors.colors[0] : AppColors.black,
                 borderRadius: new BorderRadius.all(const Radius.circular(30.0)),
-                border: new Border.all(
-                    color: const Color.fromRGBO(221, 221, 221, 1.0), width: 1)),
+                border: new Border.all(color: const Color.fromRGBO(221, 221, 221, 1.0), width: 1)),
             padding: EdgeInsets.all(5),
             child: Text(
               name,
-              style: Theme.of(context).textTheme.display3,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
           ),
         ));

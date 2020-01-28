@@ -17,7 +17,7 @@ class NoReview extends StatelessWidget {
           children: <Widget>[
             Text(
               AppTranslations.of(context).text('review.no_review'),
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headline6,
             ),
             SizedBox(
               height: 16,
@@ -27,7 +27,9 @@ class NoReview extends StatelessWidget {
               child: Flex(
                 direction: Axis.vertical,
                 children: <Widget>[
-                  Text( AppTranslations.of(context).text('review.add_new_review'),),
+                  Text(
+                    AppTranslations.of(context).text('review.add_new_review'),
+                  ),
                   Icon(
                     Icons.add,
                     size: 40,
