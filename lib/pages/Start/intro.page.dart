@@ -30,7 +30,7 @@ class _IntroPageState extends State<IntroPage> {
         new Slide(
           widgetTitle: Text(
             "Set your mood!",
-            style: Theme.of(context).textTheme.title,
+            style: Theme.of(context).textTheme.subtitle1,
             textAlign: TextAlign.center,
           ),
           centerWidget: Container(height: 300, width: 300, child: Image.asset("assets/intro_1.png", alignment: Alignment.center, fit: BoxFit.contain)),
@@ -41,7 +41,7 @@ class _IntroPageState extends State<IntroPage> {
         new Slide(
           widgetTitle: Text(
             "Track smart!",
-            style: Theme.of(context).textTheme.title,
+            style: Theme.of(context).textTheme.subtitle1,
             textAlign: TextAlign.center,
           ),
           centerWidget: Container(height: 300, width: 300, child: Image.asset("assets/intro_2.png", alignment: Alignment.center, fit: BoxFit.contain)),
@@ -52,7 +52,7 @@ class _IntroPageState extends State<IntroPage> {
         new Slide(
           widgetTitle: Text(
             "Challenge your friends!",
-            style: Theme.of(context).textTheme.title,
+            style: Theme.of(context).textTheme.subtitle1,
             textAlign: TextAlign.center,
           ),
           centerWidget: Container(height: 300, width: 300, child: Image.asset("assets/intro_3.png", alignment: Alignment.center, fit: BoxFit.contain)),

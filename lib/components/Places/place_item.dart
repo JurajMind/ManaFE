@@ -23,9 +23,7 @@ class PlaceItem extends StatelessWidget {
     return ListTile(
       onTap: () {
         placeBloc.loadPlace(place: place);
-        Navigator.of(context).push(MaterialPageRoute(
-            settings: RouteSettings(),
-            builder: (context) => PlaceDetailPage(place: place)));
+        Navigator.of(context).push(MaterialPageRoute(settings: RouteSettings(), builder: (context) => PlaceDetailPage(place: place)));
       },
       leading: SizedBox(
           height: 60.0,
@@ -34,10 +32,8 @@ class PlaceItem extends StatelessWidget {
             tag: '${place.friendlyUrl}_place',
             child: new Image(
               image: MPlatform.isWeb
-                  ? NetworkImage(
-                      Extensions.getPlaceImage(place, MediaSize.Small))
-                  : new CachedNetworkImageProvider(
-                      Extensions.getPlaceImage(place, MediaSize.Small)),
+                  ? NetworkImage(Extensions.getPlaceImage(place, MediaSize.Small))
+                  : new CachedNetworkImageProvider(Extensions.getPlaceImage(place, MediaSize.Small)),
               fit: BoxFit.cover,
             ),
           )),
@@ -47,7 +43,7 @@ class PlaceItem extends StatelessWidget {
         children: <Widget>[
           Text(
             place.name,
-            style: Theme.of(context).textTheme.display2,
+            style: Theme.of(context).textTheme.headline5,
           ),
           OpenIndicator(
             place: place,
@@ -91,8 +87,7 @@ class PlaceItemShimer extends StatelessWidget {
             Container(
               height: 15,
               width: 15,
-              decoration:
-                  BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+              decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
             ),
           ],
         ),

@@ -40,12 +40,11 @@ class _SettingPageState extends State<SettingPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         'Language: ${AppTranslations.of(context).locale.languageCode}',
-                        style: Theme.of(context).textTheme.display1,
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ))),
               ),
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => LanguageSelectorPage())),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => LanguageSelectorPage())),
             ),
             const SizedBox(
               height: 16,
@@ -67,8 +66,7 @@ class _SettingPageState extends State<SettingPage> {
                         const SizedBox(
                           width: 8,
                         ),
-                        Text('Support',
-                            style: Theme.of(context).textTheme.display1),
+                        Text('Support', style: Theme.of(context).textTheme.headline6),
                       ],
                     ),
                     ListTile(

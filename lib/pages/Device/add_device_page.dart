@@ -37,7 +37,7 @@ class _AddDevicePageState extends State<AddDevicePage> {
               children: <Widget>[
                 Text(
                   AppTranslations.of(context).text("device.welcome"),
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
                 SizedBox(
                   height: 40,
@@ -47,7 +47,7 @@ class _AddDevicePageState extends State<AddDevicePage> {
                   child: Text(
                     AppTranslations.of(context).text("device.welcome_text"),
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.display1,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                 ),
                 SizedBox(
@@ -67,43 +67,39 @@ class _AddDevicePageState extends State<AddDevicePage> {
                   children: <Widget>[
                     Text(
                       AppTranslations.of(context).text("device.where_is_code"),
-                      style: Theme.of(context).textTheme.title,
+                      style: Theme.of(context).textTheme.subtitle1,
                     ),
                     SizedBox(
                       height: 40,
                     ),
                     Text(
-                      AppTranslations.of(context)
-                          .text("device.where_is_code_text_1"),
+                      AppTranslations.of(context).text("device.where_is_code_text_1"),
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.display1,
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     Text(
-                      AppTranslations.of(context)
-                          .text("device.where_is_code_text_1_t"),
+                      AppTranslations.of(context).text("device.where_is_code_text_1_t"),
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.display2,
+                      style: Theme.of(context).textTheme.headline5,
                     ),
                     SizedBox(
                       height: 40,
                     ),
                     Text(
-                      AppTranslations.of(context)
-                          .text("device.where_is_code_text_2"),
+                      AppTranslations.of(context).text("device.where_is_code_text_2"),
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.display1,
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     Text(
-                      AppTranslations.of(context)
-                          .text("device.where_is_code_text_2_t"),
+                      AppTranslations.of(context).text("device.where_is_code_text_2_t"),
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.display2,
+                      style: Theme.of(context).textTheme.headline5,
                     ),
                     SizedBox(
                       height: 40,
@@ -123,9 +119,8 @@ class _AddDevicePageState extends State<AddDevicePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      AppTranslations.of(context)
-                          .text("device.enter_device_codes"),
-                      style: Theme.of(context).textTheme.title,
+                      AppTranslations.of(context).text("device.enter_device_codes"),
+                      style: Theme.of(context).textTheme.subtitle1,
                     ),
                     SizedBox(
                       height: 40,
@@ -137,22 +132,18 @@ class _AddDevicePageState extends State<AddDevicePage> {
                       textAlign: TextAlign.center,
                       autocorrect: false,
                       decoration: new InputDecoration(
-                        labelText: AppTranslations.of(context)
-                            .text("device.device_name"),
-                        helperText: AppTranslations.of(context)
-                            .text("device.device_name_helper"),
+                        labelText: AppTranslations.of(context).text("device.device_name"),
+                        helperText: AppTranslations.of(context).text("device.device_name_helper"),
                         labelStyle: TextStyle(
                           color: Colors.white,
                         ),
                         focusedBorder: const OutlineInputBorder(
                           // width: 0.0 produces a thin "hairline" border
-                          borderSide:
-                              const BorderSide(color: Colors.white, width: 3.0),
+                          borderSide: const BorderSide(color: Colors.white, width: 3.0),
                         ),
                         enabledBorder: const OutlineInputBorder(
                           // width: 0.0 produces a thin "hairline" border
-                          borderSide:
-                              const BorderSide(color: Colors.white, width: 3.0),
+                          borderSide: const BorderSide(color: Colors.white, width: 3.0),
                         ),
                         border: const OutlineInputBorder(),
                       ),
@@ -167,20 +158,17 @@ class _AddDevicePageState extends State<AddDevicePage> {
                       textAlign: TextAlign.center,
                       autocorrect: false,
                       decoration: new InputDecoration(
-                        labelText: AppTranslations.of(context)
-                            .text("device.device_id"),
+                        labelText: AppTranslations.of(context).text("device.device_id"),
                         labelStyle: TextStyle(
                           color: Colors.white,
                         ),
                         focusedBorder: const OutlineInputBorder(
                           // width: 0.0 produces a thin "hairline" border
-                          borderSide:
-                              const BorderSide(color: Colors.white, width: 3.0),
+                          borderSide: const BorderSide(color: Colors.white, width: 3.0),
                         ),
                         enabledBorder: const OutlineInputBorder(
                           // width: 0.0 produces a thin "hairline" border
-                          borderSide:
-                              const BorderSide(color: Colors.white, width: 3.0),
+                          borderSide: const BorderSide(color: Colors.white, width: 3.0),
                         ),
                         border: const OutlineInputBorder(),
                       ),
@@ -196,20 +184,17 @@ class _AddDevicePageState extends State<AddDevicePage> {
                       textAlign: TextAlign.center,
                       autocorrect: false,
                       decoration: new InputDecoration(
-                        labelText: AppTranslations.of(context)
-                            .text("device.pair_code"),
+                        labelText: AppTranslations.of(context).text("device.pair_code"),
                         labelStyle: TextStyle(
                           color: Colors.white,
                         ),
                         focusedBorder: const OutlineInputBorder(
                           // width: 0.0 produces a thin "hairline" border
-                          borderSide:
-                              const BorderSide(color: Colors.white, width: 3.0),
+                          borderSide: const BorderSide(color: Colors.white, width: 3.0),
                         ),
                         enabledBorder: const OutlineInputBorder(
                           // width: 0.0 produces a thin "hairline" border
-                          borderSide:
-                              const BorderSide(color: Colors.white, width: 3.0),
+                          borderSide: const BorderSide(color: Colors.white, width: 3.0),
                         ),
                         border: const OutlineInputBorder(),
                       ),
@@ -217,17 +202,14 @@ class _AddDevicePageState extends State<AddDevicePage> {
                     loading
                         ? CircularProgressIndicator()
                         : new OutlineButton.icon(
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(30.0)),
-                            borderSide:
-                                BorderSide(color: Colors.white, width: 1),
+                            shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                            borderSide: BorderSide(color: Colors.white, width: 1),
                             icon: Icon(Icons.add),
                             label: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                AppTranslations.of(context)
-                                    .text("device.add_device"),
-                                style: Theme.of(context).textTheme.display1,
+                                AppTranslations.of(context).text("device.add_device"),
+                                style: Theme.of(context).textTheme.headline6,
                               ),
                             ),
                             onPressed: () async {
@@ -235,18 +217,12 @@ class _AddDevicePageState extends State<AddDevicePage> {
                                 loading = true;
                               });
 
-                              var bloc =
-                                  DataProvider.getData(context).personBloc;
-                              var addedDevice = await bloc.addDevice(
-                                  this.idController.text,
-                                  this.codeController.text,
-                                  this.nameController.text);
+                              var bloc = DataProvider.getData(context).personBloc;
+                              var addedDevice = await bloc.addDevice(this.idController.text, this.codeController.text, this.nameController.text);
                               if (addedDevice != null) {
                                 Navigator.of(context).pop();
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    settings: RouteSettings(),
-                                    builder: (context) =>
-                                        DeviceDetailPage(device: addedDevice)));
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(settings: RouteSettings(), builder: (context) => DeviceDetailPage(device: addedDevice)));
                               }
                             },
                           )
@@ -274,7 +250,6 @@ class _AddDevicePageState extends State<AddDevicePage> {
 
   nextPage() {
     var currentPage = controller.page + 1;
-    controller.animateToPage(currentPage.round(),
-        duration: Duration(milliseconds: 300), curve: Curves.ease);
+    controller.animateToPage(currentPage.round(), duration: Duration(milliseconds: 300), curve: Curves.ease);
   }
 }

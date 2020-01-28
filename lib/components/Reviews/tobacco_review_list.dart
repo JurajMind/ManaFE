@@ -9,9 +9,7 @@ class TobaccoReviewList extends StatelessWidget {
   final bool label;
   final TobaccoInformationDto info;
 
-  const TobaccoReviewList(
-      {Key key, this.reviews, this.label = false, this.info})
-      : super(key: key);
+  const TobaccoReviewList({Key key, this.reviews, this.label = false, this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +25,7 @@ class TobaccoReviewList extends StatelessWidget {
     }
 
     if (data == null) {
-      return Center(
-          child: SizedBox(
-              height: 60, width: 60, child: CircularProgressIndicator()));
+      return Center(child: SizedBox(height: 60, width: 60, child: CircularProgressIndicator()));
     }
 
     if ((data.length) == 0) {
@@ -38,7 +34,7 @@ class TobaccoReviewList extends StatelessWidget {
           if (label) ...{
             Text(
               AppTranslations.of(context).text('review.session_title'),
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headline6,
             )
           },
           NoReview(onAdd: () {}),
@@ -54,15 +50,14 @@ class TobaccoReviewList extends StatelessWidget {
               if (label) ...{
                 Text(
                   AppTranslations.of(context).text('review.session_title'),
-                  style: Theme.of(context).textTheme.display1,
+                  style: Theme.of(context).textTheme.headline6,
                 )
               },
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text("Reviews :",
-                      style: Theme.of(context).textTheme.display2),
+                  Text("Reviews :", style: Theme.of(context).textTheme.headline5),
                   IconButton(
                     icon: Icon(Icons.add, size: 40),
                     onPressed: () {},

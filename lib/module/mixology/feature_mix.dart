@@ -21,8 +21,7 @@ class FeatureMixCreator extends StatelessWidget {
               return ListTile(
                 onTap: () {
                   mixologyBloc.loadCreatorMixes(item.name, 0);
-                  Navigator.of(context)
-                      .push(new MaterialPageRoute(builder: (context) {
+                  Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
                     return FeatureMixListView(mixCreator: item);
                   }));
                 },
@@ -37,8 +36,7 @@ class FeatureMixCreator extends StatelessWidget {
                 ),
                 title: Hero(
                   tag: "mix_brnad_${item.name}",
-                  child: Text(item.name,
-                      style: Theme.of(context).textTheme.display2),
+                  child: Text(item.name, style: Theme.of(context).textTheme.headline5),
                 ),
               );
             });

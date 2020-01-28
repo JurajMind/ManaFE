@@ -8,12 +8,9 @@ class EditablkeBusinessHour extends BusinessHoursDto {
   static DateFormat of = new DateFormat('HH:mm');
 
   @override
-  String get openTine =>
-      this.open != null ? EditablkeBusinessHour.df.format(this.open) : 'Closed';
+  String get openTine => this.open != null ? EditablkeBusinessHour.df.format(this.open) : 'Closed';
   @override
-  String get closeTime => this.close != null
-      ? EditablkeBusinessHour.df.format(this.close)
-      : 'Closed';
+  String get closeTime => this.close != null ? EditablkeBusinessHour.df.format(this.close) : 'Closed';
 
   DateTime open;
   DateTime close;
@@ -54,8 +51,7 @@ class _OpeningHoursPageState extends State<OpeningHoursPage> {
       });
     } else {
       result = List.generate(7, (index) {
-        var bh = new EditablkeBusinessHour(index,
-            new DateTime(1000, 1, 1, 10, 0), new DateTime(100, 1, 1, 22, 0));
+        var bh = new EditablkeBusinessHour(index, new DateTime(1000, 1, 1, 10, 0), new DateTime(100, 1, 1, 22, 0));
         return bh;
       });
     }
@@ -174,8 +170,7 @@ class DayEdit extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(getLongDayName(bh.id + 1, context),
-              style: Theme.of(context).textTheme.display1),
+          Text(getLongDayName(bh.id + 1, context), style: Theme.of(context).textTheme.headline6),
           SizedBox(
             height: 8,
           ),
@@ -223,8 +218,7 @@ class TimeEdit extends StatelessWidget {
   final bool open;
   final DateTime time;
   final ValueChanged<DateTime> onTimePicke;
-  const TimeEdit(this.open, this.time, {Key key, this.onTimePicke})
-      : super(key: key);
+  const TimeEdit(this.open, this.time, {Key key, this.onTimePicke}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -243,8 +237,7 @@ class TimeEdit extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          Text(open ? 'Open: ' : 'Close: ',
-              style: Theme.of(context).textTheme.display2),
+          Text(open ? 'Open: ' : 'Close: ', style: Theme.of(context).textTheme.headline5),
           Text(time != null ? EditablkeBusinessHour.of.format(time) : 'Closed'),
           Icon(Icons.edit)
         ],

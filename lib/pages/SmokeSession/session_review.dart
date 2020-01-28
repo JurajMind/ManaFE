@@ -50,8 +50,7 @@ class _SessionReviewState extends State<SessionReview> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   AppBar(),
-                  if (bloc.smokeSessionMetaData.value.tobacco == null &&
-                      bloc.smokeSessionMetaData.value.tobaccoMix == null) ...{
+                  if (bloc.smokeSessionMetaData.value.tobacco == null && bloc.smokeSessionMetaData.value.tobaccoMix == null) ...{
                     Text(
                       'Tobacco not filled, please fill tobacco metadata for precision data:',
                       textAlign: TextAlign.center,
@@ -60,7 +59,7 @@ class _SessionReviewState extends State<SessionReview> {
                   },
                   Text(
                     'Session:',
-                    style: Theme.of(context).textTheme.display2,
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                   MStarRating(
                     title: 'Taste',
@@ -93,7 +92,7 @@ class _SessionReviewState extends State<SessionReview> {
                       decoration: new InputDecoration(
                         hintText: 'Smoke note',
                         labelText: 'Add note',
-                        labelStyle: Theme.of(context).textTheme.display2,
+                        labelStyle: Theme.of(context).textTheme.headline5,
                         border: InputBorder.none,
                       ),
                     ),
@@ -113,10 +112,7 @@ class _SessionReviewState extends State<SessionReview> {
                             child: CircularProgressIndicator(),
                           ),
                         )
-                      : MButton(
-                          label: "common.save",
-                          icon: Icons.save,
-                          onPressed: () => saveReview(placeSession)),
+                      : MButton(label: "common.save", icon: Icons.save, onPressed: () => saveReview(placeSession)),
                   SizedBox(
                     height: 100,
                   )
@@ -167,7 +163,7 @@ class _SessionReviewState extends State<SessionReview> {
       ),
       Text(
         'Place:',
-        style: Theme.of(context).textTheme.display2,
+        style: Theme.of(context).textTheme.headline5,
       ),
       MStarRating(
         title: 'Ambience',
@@ -200,7 +196,7 @@ class _SessionReviewState extends State<SessionReview> {
             decoration: new InputDecoration(
               hintText: 'Place note',
               labelText: 'Place note',
-              labelStyle: Theme.of(context).textTheme.display2,
+              labelStyle: Theme.of(context).textTheme.headline5,
               border: InputBorder.none,
             )),
       ),

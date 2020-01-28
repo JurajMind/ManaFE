@@ -19,9 +19,7 @@ class _BrandSelectPageState extends State<BrandSelectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppTranslations.of(context)
-            .text("gear.select_brand")
-            .toUpperCase()),
+        title: Text(AppTranslations.of(context).text("gear.select_brand").toUpperCase()),
         centerTitle: true,
       ),
       body: PageView(
@@ -74,9 +72,7 @@ class _NewBrandTypeSelectState extends State<NewBrandTypeSelect> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppTranslations.of(context)
-            .text("gear.add_new_brand")
-            .toUpperCase()),
+        title: Text(AppTranslations.of(context).text("gear.add_new_brand").toUpperCase()),
         centerTitle: true,
       ),
       body: Center(
@@ -95,20 +91,17 @@ class _NewBrandTypeSelectState extends State<NewBrandTypeSelect> {
                       });
                     },
                     decoration: new InputDecoration(
-                      labelText: AppTranslations.of(context)
-                          .text("gear.enter_new_brand_name"),
+                      labelText: AppTranslations.of(context).text("gear.enter_new_brand_name"),
                       labelStyle: TextStyle(
                         color: Colors.white,
                       ),
                       focusedBorder: const OutlineInputBorder(
                         // width: 0.0 produces a thin "hairline" border
-                        borderSide:
-                            const BorderSide(color: Colors.white, width: 3.0),
+                        borderSide: const BorderSide(color: Colors.white, width: 3.0),
                       ),
                       enabledBorder: const OutlineInputBorder(
                         // width: 0.0 produces a thin "hairline" border
-                        borderSide:
-                            const BorderSide(color: Colors.white, width: 3.0),
+                        borderSide: const BorderSide(color: Colors.white, width: 3.0),
                       ),
                       border: const OutlineInputBorder(),
                     ),
@@ -121,11 +114,9 @@ class _NewBrandTypeSelectState extends State<NewBrandTypeSelect> {
             ),
             OutlineButton.icon(
               icon: Icon(Icons.save),
-              shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30.0)),
+              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
               borderSide: BorderSide(color: Colors.white, width: 1),
-              label:
-                  Text(AppTranslations.of(context).text("gear.use_new_brand")),
+              label: Text(AppTranslations.of(context).text("gear.use_new_brand")),
               onPressed: () {
                 if (this.brandName == null || this.brandName.length == 0) {
                   return;
@@ -196,17 +187,14 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
                   SizedBox(
                     width: 40,
                   ),
-                  Container(
-                      height: 40,
-                      width: 40,
-                      child: Extensions.defaultTypePicture(widget.type)),
+                  Container(height: 40, width: 40, child: Extensions.defaultTypePicture(widget.type)),
                   Container(
                     height: 40,
                     width: 40,
                   ),
                   Text(
                     AppTranslations.of(context).text("gear.${display}"),
-                    style: Theme.of(context).textTheme.display1,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   SizedBox(
                     width: 40,
@@ -234,10 +222,7 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
                           this.searchString = data;
                         });
                       },
-                      decoration: InputDecoration(
-                          hintText: 'Search',
-                          border: InputBorder.none,
-                          labelStyle: Theme.of(context).textTheme.body2),
+                      decoration: InputDecoration(hintText: 'Search', border: InputBorder.none, labelStyle: Theme.of(context).textTheme.headline4),
                     ),
                   )),
                   Flexible(
@@ -262,11 +247,7 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
                 var data = snapshot.data;
                 if (data != null && this.searchString != "") {
                   var dataCollection = Collection(data);
-                  data = dataCollection
-                      .where$1((a, _) => a.name
-                          .toUpperCase()
-                          .contains(this.searchString.toUpperCase()))
-                      .toList();
+                  data = dataCollection.where$1((a, _) => a.name.toUpperCase().contains(this.searchString.toUpperCase())).toList();
                 }
 
                 if (data.length == 0) {
@@ -276,16 +257,12 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
                     children: <Widget>[
                       RichText(
                         text: TextSpan(
-                          text: AppTranslations.of(context)
-                              .text("gear.no_result_1"),
+                          text: AppTranslations.of(context).text("gear.no_result_1"),
                           style: DefaultTextStyle.of(context).style,
                           children: <TextSpan>[
+                            TextSpan(text: searchString, style: TextStyle(fontWeight: FontWeight.bold)),
                             TextSpan(
-                                text: searchString,
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                            TextSpan(
-                              text: AppTranslations.of(context)
-                                  .text("gear.no_result_2"),
+                              text: AppTranslations.of(context).text("gear.no_result_2"),
                             ),
                           ],
                         ),
@@ -302,14 +279,10 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
                           children: <Widget>[
                             RichText(
                               text: TextSpan(
-                                text: AppTranslations.of(context)
-                                    .text("gear.no_result_3"),
+                                text: AppTranslations.of(context).text("gear.no_result_3"),
                                 style: DefaultTextStyle.of(context).style,
                                 children: <TextSpan>[
-                                  TextSpan(
-                                      text: searchString,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
+                                  TextSpan(text: searchString, style: TextStyle(fontWeight: FontWeight.bold)),
                                   TextSpan(text: ' as new brand'),
                                 ],
                               ),
@@ -364,10 +337,7 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
   }
 
   void addNewBrand(BuildContext context) {
-    Navigator.of(context)
-        .push<BrandGroup>(MaterialPageRoute(
-            builder: (context) => NewBrandTypeSelect(), fullscreenDialog: true))
-        .then((newGear) {
+    Navigator.of(context).push<BrandGroup>(MaterialPageRoute(builder: (context) => NewBrandTypeSelect(), fullscreenDialog: true)).then((newGear) {
       if (newGear != null) Navigator.of(context).pop(newGear);
     });
   }

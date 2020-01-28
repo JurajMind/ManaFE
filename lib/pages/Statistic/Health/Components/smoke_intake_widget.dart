@@ -16,7 +16,7 @@ class SmokeIntakeWidget extends StatelessWidget {
           children: <Widget>[
             Text(
               AppTranslations.of(context).text('health.gas'),
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headline6,
             ),
             SizedBox(
               height: 10,

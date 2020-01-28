@@ -101,7 +101,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                       child: new FlatButton(
                         child: new Text(
                           AppTranslations.of(context).text("login.log_in").toUpperCase(),
-                          style: Theme.of(context).textTheme.display2,
+                          style: Theme.of(context).textTheme.headline5,
                         ),
                         onPressed: () {
                           navigate(context, 'auth/login');
@@ -115,7 +115,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                       child: new FlatButton(
                         child: new Text(
                           AppTranslations.of(context).currentLanguage.toString().toUpperCase(),
-                          style: Theme.of(context).textTheme.display2,
+                          style: Theme.of(context).textTheme.headline5,
                         ),
                         onPressed: () {
                           navigate(context, 'auth/lang');

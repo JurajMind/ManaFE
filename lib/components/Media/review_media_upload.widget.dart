@@ -28,7 +28,7 @@ class _ReviewMediaUploadState extends State<ReviewMediaUpload> {
         children: <Widget>[
           Text(
             'Media',
-            style: Theme.of(context).textTheme.display1,
+            style: Theme.of(context).textTheme.headline6,
           ),
           const SizedBox(
             height: 8,
@@ -50,10 +50,7 @@ class _ReviewMediaUploadState extends State<ReviewMediaUpload> {
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           decoration: BoxDecoration(
-                              borderRadius: new BorderRadius.circular(10.0),
-                              border:
-                                  new Border.all(color: Colors.white, width: 2),
-                              color: Colors.transparent),
+                              borderRadius: new BorderRadius.circular(10.0), border: new Border.all(color: Colors.white, width: 2), color: Colors.transparent),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
@@ -111,10 +108,8 @@ class _ReviewMediaUploadState extends State<ReviewMediaUpload> {
       child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Container(
-            decoration: BoxDecoration(
-                borderRadius: new BorderRadius.circular(10.0),
-                border: new Border.all(color: Colors.white, width: 2),
-                color: Colors.transparent),
+            decoration:
+                BoxDecoration(borderRadius: new BorderRadius.circular(10.0), border: new Border.all(color: Colors.white, width: 2), color: Colors.transparent),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Icon(Icons.add_a_photo),

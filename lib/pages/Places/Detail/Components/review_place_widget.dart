@@ -32,7 +32,7 @@ class _ReviewPlaceWidgetState extends State<ReviewPlaceWidget> {
       initialData: null,
       builder: (BuildContext context, snapshot) {
         if (snapshot.data == null) {
-          return Center(child: Container(height: 60,width: 60, child: CircularProgressIndicator()));
+          return Center(child: Container(height: 60, width: 60, child: CircularProgressIndicator()));
         }
 
         var itemCount = snapshot?.data?.length;
@@ -67,7 +67,7 @@ class _ReviewPlaceWidgetState extends State<ReviewPlaceWidget> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Text("Review:", style: Theme.of(context).textTheme.body1),
+                    Text("Review:", style: Theme.of(context).textTheme.bodyText2),
                     new StarRating(
                       size: 40.0,
                       rating: 2.5,
@@ -139,8 +139,7 @@ class PlaceReviewItem extends StatelessWidget {
         children: <Widget>[
           if (review.sessionReview != null) Icon(Icons.pie_chart),
           if (review.text != null && review.text != '') Icon(Icons.edit),
-          if (review.medias != null && review.medias.length != 0)
-            Icon(Icons.photo)
+          if (review.medias != null && review.medias.length != 0) Icon(Icons.photo)
         ],
       ),
       trailing: Icon(Icons.chevron_right),
@@ -153,12 +152,9 @@ class PlaceReviewItem extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(32.0))),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(32.0))),
             contentPadding: EdgeInsets.only(top: 10.0),
-            content: Container(
-                width: size.width * 0.9,
-                child: ReviewView(placeReview: review)),
+            content: Container(width: size.width * 0.9, child: ReviewView(placeReview: review)),
           );
         });
   }

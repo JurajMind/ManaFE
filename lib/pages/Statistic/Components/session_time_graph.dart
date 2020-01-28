@@ -90,9 +90,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
     showingBarGroups = rawBarGroups;
 
     barTouchedResultStreamController = StreamController();
-    barTouchedResultStreamController.stream
-        .distinct()
-        .listen((BarTouchResponse response) {
+    barTouchedResultStreamController.stream.distinct().listen((BarTouchResponse response) {
       if (response == null) {
         return;
       }
@@ -105,8 +103,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
         return;
       }
 
-      touchedGroupIndex =
-          showingBarGroups.indexOf(response.spot.touchedBarGroup);
+      touchedGroupIndex = showingBarGroups.indexOf(response.spot.touchedBarGroup);
 
       setState(() {
         if (response.touchInput is FlLongPressEnd) {
@@ -115,8 +112,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
         } else {
           showingBarGroups = List.of(rawBarGroups);
           if (touchedGroupIndex != -1) {
-            showingBarGroups[touchedGroupIndex] =
-                showingBarGroups[touchedGroupIndex].copyWith(
+            showingBarGroups[touchedGroupIndex] = showingBarGroups[touchedGroupIndex].copyWith(
               barRods: showingBarGroups[touchedGroupIndex].barRods.map((rod) {
                 return rod.copyWith(color: AppColors.colors[3], y: rod.y + 1);
               }).toList(),
@@ -157,7 +153,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                   ),
                   Text(
                     AppTranslations.of(context).text('profile.session_times'),
-                    style: Theme.of(context).textTheme.display1,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                 ],
               ),
@@ -176,10 +172,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                         show: true,
                         bottomTitles: SideTitles(
                             showTitles: true,
-                            textStyle: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14),
+                            textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
                             margin: 16,
                             getTitles: (double value) {
                               var intValue = value.toInt();
@@ -188,41 +181,32 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                             }),
                         leftTitles: SideTitles(
                           showTitles: true,
-                          textStyle: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
+                          textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
                           margin: 16,
                           reservedSize: 10.0,
                           getTitles: (value) {
                             if (max == 5) {
-                              if (value % 10 == 0)
-                                return value.toStringAsFixed(0);
+                              if (value % 10 == 0) return value.toStringAsFixed(0);
                             }
 
                             if (max < 5) {
-                              if (value % 2 == 0)
-                                return value.toStringAsFixed(0);
+                              if (value % 2 == 0) return value.toStringAsFixed(0);
                             }
 
                             if (max < 20) {
-                              if (value % 5 == 0)
-                                return value.toStringAsFixed(0);
+                              if (value % 5 == 0) return value.toStringAsFixed(0);
                             }
 
                             if (max < 50) {
-                              if (value % 10 == 0)
-                                return value.toStringAsFixed(0);
+                              if (value % 10 == 0) return value.toStringAsFixed(0);
                             }
 
                             if (max < 100) {
-                              if (value % 20 == 0)
-                                return value.toStringAsFixed(0);
+                              if (value % 20 == 0) return value.toStringAsFixed(0);
                             }
 
                             if (max < 1000) {
-                              if (value % 100 == 0)
-                                return value.toStringAsFixed(0);
+                              if (value % 100 == 0) return value.toStringAsFixed(0);
                             }
 
                             return '';
@@ -254,8 +238,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
         color: AppColors.colors[2],
         width: width,
         isRound: true,
-        backDrawRodData: BackgroundBarChartRodData(
-            show: true, y: max == 0 ? 20 : max + 0.0, color: Colors.black),
+        backDrawRodData: BackgroundBarChartRodData(show: true, y: max == 0 ? 20 : max + 0.0, color: Colors.black),
       ),
     ]);
   }
@@ -287,13 +270,8 @@ class SessionDayStream extends StatelessWidget {
                 return Container();
               }
 
-              var seriesList =
-                  snapshot.data.timeStatistics.sessionStartTimeDistribution;
-              return Container(
-                  height: 250,
-                  child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SessionDayGraph(seriesList)));
+              var seriesList = snapshot.data.timeStatistics.sessionStartTimeDistribution;
+              return Container(height: 250, child: Padding(padding: const EdgeInsets.all(8.0), child: SessionDayGraph(seriesList)));
             }),
       ),
     );

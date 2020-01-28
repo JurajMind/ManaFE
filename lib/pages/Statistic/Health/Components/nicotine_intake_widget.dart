@@ -20,7 +20,7 @@ class NicotineIntakeWidget extends StatelessWidget {
           children: <Widget>[
             Text(
               AppTranslations.of(context).text('health.nicotine'),
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headline6,
             ),
             SizedBox(
               height: 10,
@@ -28,11 +28,7 @@ class NicotineIntakeWidget extends StatelessWidget {
             Text(AppTranslations.of(context).text('health.nicotine_text')),
             Container(
               height: 200,
-              child: GaugeChart(_createSampleData(),
-                  minValue: 0,
-                  value: 3.6,
-                  maxValue: 10,
-                  handColor: AppColors.colors[0]),
+              child: GaugeChart(_createSampleData(), minValue: 0, value: 3.6, maxValue: 10, handColor: AppColors.colors[0]),
             )
           ],
         ),

@@ -13,13 +13,11 @@ class SmokeSessionCarousel extends StatefulWidget {
 
 class _SmokeSessionCarouselState extends State<SmokeSessionCarousel> {
   PageController controller;
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
   @override
   initState() {
     super.initState();
-    controller = new PageController(
-        initialPage: 0, keepPage: true, viewportFraction: 0.7);
+    controller = new PageController(initialPage: 0, keepPage: true, viewportFraction: 0.7);
   }
 
   @override
@@ -45,8 +43,7 @@ class _SmokeSessionCarouselState extends State<SmokeSessionCarousel> {
                     controller: controller,
                     itemCount: snapshot.data?.length ?? 0,
                     itemBuilder: (context, index) {
-                      var data =
-                          snapshot.data == null ? null : snapshot.data[index];
+                      var data = snapshot.data == null ? null : snapshot.data[index];
                       return data != null
                           ? new SmokeSessionCarouselItem(
                               smokeSession: data,
@@ -76,8 +73,7 @@ class SmokeSessionCarouselItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
-          onTap: () => Navigator.of(context).pushReplacement(
-              new MaterialPageRoute(builder: (BuildContext context) {
+          onTap: () => Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context) {
             return new SmokeSessionPage(
               sessionId: smokeSession.sessionId,
               callback: callback,
@@ -89,18 +85,13 @@ class SmokeSessionCarouselItem extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.black,
               borderRadius: BorderRadius.circular(20.0),
-              border: new Border.all(
-                  color: const Color.fromRGBO(221, 221, 221, 1.0), width: 2.0),
+              border: new Border.all(color: const Color.fromRGBO(221, 221, 221, 1.0), width: 2.0),
             ),
             child: Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(smokeSession.device.name,
-                    style: Theme.of(context)
-                        .textTheme
-                        .display1
-                        .apply(color: online ? Colors.green : Colors.white)),
+                Text(smokeSession.device.name, style: Theme.of(context).textTheme.headline6.apply(color: online ? Colors.green : Colors.white)),
                 Text(smokeSession.sessionId),
               ],
             )),

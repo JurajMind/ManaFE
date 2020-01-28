@@ -20,8 +20,7 @@ class BrandListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-          color: Colors.black45, borderRadius: BorderRadius.circular(20.0)),
+      decoration: BoxDecoration(color: Colors.black45, borderRadius: BorderRadius.circular(20.0)),
       child: ListTile(
         onTap: () {
           if (ontap != null) {
@@ -31,8 +30,7 @@ class BrandListItem extends StatelessWidget {
 
           final gearBloc = DataProvider.getData(context).gearBloc;
           gearBloc.loadBrandAccesory(brand.name, brandType ?? "Tobacco");
-          Navigator.of(context)
-              .push(new MaterialPageRoute(builder: (BuildContext context) {
+          Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
             return new BrandPage(
               brand: brand,
               type: brandType,
@@ -40,16 +38,9 @@ class BrandListItem extends StatelessWidget {
           }));
         },
         trailing: Icon(Icons.chevron_right),
-        leading: SizedBox(
-            height: 60.0,
-            width: 60.0,
-            child: Hero(
-                tag: '${brand.name}_${brandType}_brand_picture',
-                child: Extensions.brandPicture(brand))),
-        title:
-            Text(this.brand.name, style: Theme.of(context).textTheme.display2),
-        subtitle: Text('Item count: ' + brand.itemCount.toString(),
-            style: Theme.of(context).textTheme.display3),
+        leading: SizedBox(height: 60.0, width: 60.0, child: Hero(tag: '${brand.name}_${brandType}_brand_picture', child: Extensions.brandPicture(brand))),
+        title: Text(this.brand.name, style: Theme.of(context).textTheme.headline5),
+        subtitle: Text('Item count: ' + brand.itemCount.toString(), style: Theme.of(context).textTheme.bodyText2),
       ),
     );
   }
@@ -70,18 +61,12 @@ class BrandListItemShimmer extends StatelessWidget {
               child: Container(
                 height: 60.0,
                 width: 60.0,
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
               )),
           title: Flex(
             direction: Axis.horizontal,
             children: <Widget>[
-              Expanded(
-                  flex: 1,
-                  child: Container(
-                      height: 16.0,
-                      width: 20.0,
-                      decoration: BoxDecoration(color: Colors.white))),
+              Expanded(flex: 1, child: Container(height: 16.0, width: 20.0, decoration: BoxDecoration(color: Colors.white))),
               Expanded(flex: 1, child: Container())
             ],
           ),

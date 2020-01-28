@@ -29,15 +29,12 @@ class GearUsageItem extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(
-                      height: 40,
-                      width: 40,
-                      child: Extensions.defaultTypePicture(label)),
+                  SizedBox(height: 40, width: 40, child: Extensions.defaultTypePicture(label)),
                   SizedBox(
                     height: 40,
                     width: 10,
                   ),
-                  Text(label, style: Theme.of(context).textTheme.display1),
+                  Text(label, style: Theme.of(context).textTheme.headline6),
                 ],
               )),
             ),
@@ -59,16 +56,13 @@ class GearUsageItem extends StatelessWidget {
             if ((gears?.length ?? 0) > 0)
               Center(
                   child: OutlineButton(
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0)),
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
                       borderSide: BorderSide(color: Colors.white),
                       child: Text(
                         'All ${label.toLowerCase()}',
-                        style: Theme.of(context).textTheme.display3,
+                        style: Theme.of(context).textTheme.bodyText2,
                       ),
-                      onPressed: () => Navigator.of(context).push(
-                              new MaterialPageRoute(
-                                  builder: (BuildContext context) {
+                      onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
                             return AllGearPage(label: label, gears: gears);
                           }))))
           ],

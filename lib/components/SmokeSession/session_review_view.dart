@@ -10,8 +10,7 @@ class SessionReviewView extends StatelessWidget {
   final GearTobaccoReviewDto gearReview;
   final PersonBloc bloc;
 
-  const SessionReviewView({Key key, this.review, this.gearReview, this.bloc})
-      : super(key: key);
+  const SessionReviewView({Key key, this.review, this.gearReview, this.bloc}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,6 @@ class SessionReviewView extends StatelessWidget {
     var authorId = review?.authorId ?? 0;
     var medias = review?.medias ?? gearReview.medias ?? [];
     var text = review?.tobaccoReview?.text ?? gearReview.text ?? '';
-
 
     var id = bloc.info.value.personId;
     var placeSession = review?.placeReview != null;
@@ -36,7 +34,7 @@ class SessionReviewView extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 'Session:',
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.headline5,
               ),
             ),
             MStarRating(
@@ -54,8 +52,7 @@ class SessionReviewView extends StatelessWidget {
               rating: strength / 2,
               colorIndex: 0,
             ),
-            Padding(
-                padding: const EdgeInsets.all(8.0), child: Text(text ?? '')),
+            Padding(padding: const EdgeInsets.all(8.0), child: Text(text ?? '')),
             if (placeSession) ...buildPlaceReview(context),
             SizedBox(
               height: 8,
@@ -64,19 +61,14 @@ class SessionReviewView extends StatelessWidget {
             if (authorId == id)
               InkWell(
                 onTap: () {
-                  var sessionBloc =
-                      DataProvider.getData(context).smokeSessionBloc;
-                  sessionBloc
-                      .removeReview(review)
-                      .then((_) => Navigator.of(context).pop());
+                  var sessionBloc = DataProvider.getData(context).smokeSessionBloc;
+                  sessionBloc.removeReview(review).then((_) => Navigator.of(context).pop());
                 },
                 child: Container(
                   padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                   decoration: BoxDecoration(
                     color: Colors.red,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(32.0),
-                        bottomRight: Radius.circular(32.0)),
+                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(32.0), bottomRight: Radius.circular(32.0)),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -85,7 +77,7 @@ class SessionReviewView extends StatelessWidget {
                       Icon(Icons.delete),
                       Text(
                         "Remove review",
-                        style: Theme.of(context).textTheme.display2,
+                        style: Theme.of(context).textTheme.headline5,
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -110,7 +102,7 @@ class SessionReviewView extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Text(
           'Place:',
-          style: Theme.of(context).textTheme.display2,
+          style: Theme.of(context).textTheme.headline5,
         ),
       ),
       MStarRating(
@@ -123,9 +115,7 @@ class SessionReviewView extends StatelessWidget {
         rating: review.placeReview.service / 2,
         colorIndex: 1,
       ),
-      Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(review?.placeReview?.text ?? ''))
+      Padding(padding: const EdgeInsets.all(8.0), child: Text(review?.placeReview?.text ?? ''))
     ];
   }
 
@@ -137,7 +127,7 @@ class SessionReviewView extends StatelessWidget {
         ),
         Text(
           'Media',
-          style: Theme.of(context).textTheme.display2,
+          style: Theme.of(context).textTheme.headline5,
         ),
         SizedBox(
           height: 8,

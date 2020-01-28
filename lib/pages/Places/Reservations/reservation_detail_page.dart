@@ -24,8 +24,7 @@ class ReservationDetailPage extends StatefulWidget {
 }
 
 class _ReservationDetailState extends State<ReservationDetailPage> {
-  BehaviorSubject<PlacesReservationsReservationDetailDto> reservationDetail =
-      new BehaviorSubject<PlacesReservationsReservationDetailDto>();
+  BehaviorSubject<PlacesReservationsReservationDetailDto> reservationDetail = new BehaviorSubject<PlacesReservationsReservationDetailDto>();
 
   ScrollController controller;
   bool lateReservationLoading = false;
@@ -34,9 +33,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
   void initState() {
     super.initState();
     controller = new ScrollController();
-    App.http
-        .reservationDetail(widget.reservation.id)
-        .then((data) => this.reservationDetail.add(data));
+    App.http.reservationDetail(widget.reservation.id).then((data) => this.reservationDetail.add(data));
   }
 
   @override
@@ -68,10 +65,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                       height: _appBarHeight,
                                     )
                                   : new Image(
-                                      image: new CachedNetworkImageProvider(
-                                          Extensions.getFullPlaceImage(
-                                              snapshot.data.place,
-                                              MediaSize.Large)),
+                                      image: new CachedNetworkImageProvider(Extensions.getFullPlaceImage(snapshot.data.place, MediaSize.Large)),
                                       fit: BoxFit.cover,
                                       height: _appBarHeight,
                                     );
@@ -94,32 +88,24 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                               padding: EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
                                 border: new Border.all(color: Colors.white),
-                                borderRadius: new BorderRadius.all(
-                                    const Radius.circular(40.0)),
+                                borderRadius: new BorderRadius.all(const Radius.circular(40.0)),
                               ),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
                                   Row(
                                     mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: <Widget>[
                                       LabeledValue(
-                                        DateUtils.toStringDate(
-                                            widget.reservation.time),
+                                        DateUtils.toStringDate(widget.reservation.time),
                                         icon: Icon(Icons.calendar_today),
-                                        label: AppTranslations.of(context)
-                                                .text("reservations.date") +
-                                            " : ",
+                                        label: AppTranslations.of(context).text("reservations.date") + " : ",
                                       ),
                                       LabeledValue(
-                                        DateUtils.toStringShortTime(
-                                            widget.reservation.time),
+                                        DateUtils.toStringShortTime(widget.reservation.time),
                                         icon: Icon(Icons.timer),
-                                        label: AppTranslations.of(context)
-                                                .text("reservations.time") +
-                                            " : ",
+                                        label: AppTranslations.of(context).text("reservations.time") + " : ",
                                       ),
                                     ],
                                   ),
@@ -128,67 +114,42 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       LabeledValue(widget.reservation.duration,
-                                          icon: Icon(Icons.timelapse),
-                                          label: AppTranslations.of(context)
-                                                  .text(
-                                                      "reservations.duration") +
-                                              " : "),
+                                          icon: Icon(Icons.timelapse), label: AppTranslations.of(context).text("reservations.duration") + " : "),
                                       LabeledValue(
                                         widget.reservation.persons.toString(),
                                         icon: Icon(Icons.person),
-                                        label: AppTranslations.of(context)
-                                                .text("reservations.persons") +
-                                            " : ",
+                                        label: AppTranslations.of(context).text("reservations.persons") + " : ",
                                       ),
                                     ],
                                   ),
                                   widget.reservation.text == null
                                       ? Container()
                                       : Row(
-                                          children: <Widget>[
-                                            Text(widget.reservation.text)
-                                          ],
+                                          children: <Widget>[Text(widget.reservation.text)],
                                         ),
                                   Row(
                                     mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        widget.reservation.status != 1
-                                            ? MainAxisAlignment.spaceAround
-                                            : MainAxisAlignment.center,
+                                    mainAxisAlignment: widget.reservation.status != 1 ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
                                     children: <Widget>[
                                       Flex(
                                         direction: Axis.horizontal,
                                         children: <Widget>[
-                                          new ReservationStatusIcon(
-                                              reservation: widget.reservation),
+                                          new ReservationStatusIcon(reservation: widget.reservation),
                                           Text(
-                                            ReservationStatusIcon.stateToText(
-                                                widget.reservation.status,
-                                                context),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .display2,
+                                            ReservationStatusIcon.stateToText(widget.reservation.status, context),
+                                            style: Theme.of(context).textTheme.headline5,
                                           )
                                         ],
                                       ),
                                       widget.reservation.status == 1
                                           ? Container()
                                           : OutlineButton.icon(
-                                              shape: new RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      new BorderRadius.circular(
-                                                          30.0)),
-                                              borderSide: BorderSide(
-                                                  color: Colors.white,
-                                                  width: 1),
-                                              icon: Icon(Icons.cancel,
-                                                  color: Colors.red),
+                                              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                                              borderSide: BorderSide(color: Colors.white, width: 1),
+                                              icon: Icon(Icons.cancel, color: Colors.red),
                                               label: Text(
-                                                AppTranslations.of(context)
-                                                    .text("common.cancel"),
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .display2,
+                                                AppTranslations.of(context).text("common.cancel"),
+                                                style: Theme.of(context).textTheme.headline5,
                                               ),
                                               onPressed: () => _showDialog(),
                                             )
@@ -203,46 +164,27 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                             Container(
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: new BorderRadius.all(
-                                    const Radius.circular(40.0)),
+                                borderRadius: new BorderRadius.all(const Radius.circular(40.0)),
                               ),
-                              child: StreamBuilder<
-                                      PlacesReservationsReservationDetailDto>(
+                              child: StreamBuilder<PlacesReservationsReservationDetailDto>(
                                   stream: this.reservationDetail,
                                   builder: (context, snapshot) {
-                                    var simplePlace =
-                                        toSimpePlace(snapshot?.data?.place);
+                                    var simplePlace = toSimpePlace(snapshot?.data?.place);
                                     return simplePlace == null
                                         ? Container()
                                         : Container(
                                             padding: EdgeInsets.all(8.0),
                                             child: Column(
                                               children: <Widget>[
-                                                Text(simplePlace.name,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .display1
-                                                        .merge(TextStyle(
-                                                            color:
-                                                                Colors.black))),
-                                                Text(
-                                                    Extensions.adress(
-                                                        simplePlace.address),
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .display2
-                                                        .merge(TextStyle(
-                                                            color:
-                                                                Colors.black))),
+                                                Text(simplePlace.name, style: Theme.of(context).textTheme.headline6.merge(TextStyle(color: Colors.black))),
+                                                Text(Extensions.adress(simplePlace.address),
+                                                    style: Theme.of(context).textTheme.headline5.merge(TextStyle(color: Colors.black))),
                                                 new Row(
                                                   children: <Widget>[
                                                     Expanded(
                                                       child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: PlaceInfo(
-                                                            place: simplePlace),
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: PlaceInfo(place: simplePlace),
                                                       ),
                                                       flex: 1,
                                                     ),
@@ -253,8 +195,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                                         ))
                                                   ],
                                                 ),
-                                                NavigateButton(
-                                                    place: simplePlace)
+                                                NavigateButton(place: simplePlace)
                                               ],
                                             ),
                                           );
@@ -269,18 +210,15 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                       Container(
                         decoration: BoxDecoration(
                           border: new Border.all(color: Colors.white),
-                          borderRadius:
-                              new BorderRadius.all(const Radius.circular(40.0)),
+                          borderRadius: new BorderRadius.all(const Radius.circular(40.0)),
                         ),
                         child: ExpansionTile(
                           title: Center(
                               child: Text(
                             '${AppTranslations.of(context).text("reservations.i_will_be_late")} ${(widget.reservation.lateDuration != 0 && widget.reservation.lateDuration != null) ? widget.reservation.lateDuration.toString() + ' minutes' : ''}',
-                            style: Theme.of(context).textTheme.display2,
+                            style: Theme.of(context).textTheme.headline5,
                           )),
-                          leading: !lateReservationLoading
-                              ? Icon(Icons.watch_later, color: Colors.white)
-                              : CircularProgressIndicator(),
+                          leading: !lateReservationLoading ? Icon(Icons.watch_later, color: Colors.white) : CircularProgressIndicator(),
                           onExpansionChanged: (expansion) {},
                           children: <Widget>[
                             Row(
@@ -336,20 +274,16 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: Center(
-              child:
-                  new Text(AppTranslations.of(context).text("common.cancel"))),
-          content: new Text(AppTranslations.of(context)
-              .text("reservations.cancel_reservation_confirm")),
+          title: Center(child: new Text(AppTranslations.of(context).text("common.cancel"))),
+          content: new Text(AppTranslations.of(context).text("reservations.cancel_reservation_confirm")),
           actions: <Widget>[
             OutlineButton.icon(
-              shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30.0)),
+              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
               borderSide: BorderSide(color: Colors.white, width: 1),
               icon: Icon(Icons.cancel, color: Colors.red),
               label: Text(
                 AppTranslations.of(context).text("common.cancel"),
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.headline5,
               ),
               onPressed: () async {
                 setState(() {
@@ -360,13 +294,12 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
               },
             ),
             OutlineButton.icon(
-              shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30.0)),
+              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
               borderSide: BorderSide(color: Colors.white, width: 1),
               icon: Icon(Icons.check, color: Colors.green),
               label: Text(
                 AppTranslations.of(context).text("common.keep"),
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.headline5,
               ),
               onPressed: () => Navigator.of(context).pop(),
             ),
@@ -394,12 +327,11 @@ class LateTimeButton extends StatelessWidget {
     var color = time == selectedTime ? Colors.red : Colors.white;
     return OutlineButton(
         color: Colors.red,
-        shape: new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(30.0)),
+        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
         borderSide: BorderSide(color: color, width: 1),
         child: Text(
           "${time.toString()} min",
-          style: Theme.of(context).textTheme.display2.apply(color: color),
+          style: Theme.of(context).textTheme.headline5.apply(color: color),
         ),
         onPressed: () => time != selectedTime ? onChanged(time) : ({}));
   }

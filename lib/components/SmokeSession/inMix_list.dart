@@ -11,13 +11,7 @@ class InMixList extends StatelessWidget {
   final VoidCallback onPressed;
   final int mixCount;
 
-  const InMixList(
-      {Key key,
-      this.mixes,
-      this.onPressed,
-      this.mixCount = 5,
-      this.sourceTobacco})
-      : super(key: key);
+  const InMixList({Key key, this.mixes, this.onPressed, this.mixCount = 5, this.sourceTobacco}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +35,7 @@ class InMixList extends StatelessWidget {
                 children: <Widget>[
                   new Text(
                     AppTranslations.of(context).text("mix.used_in_mixes"),
-                    style: Theme.of(context).textTheme.display1,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   const SizedBox(
                     width: 4,
@@ -54,7 +48,7 @@ class InMixList extends StatelessWidget {
           if (mixes.length == 0)
             Text(
               'smoke_session.no_smoke_session',
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline5,
             ),
           if (mixes.length > 0) ...{
             ...mixes.take(sc).map((s) => MixCardExpanded(
@@ -63,12 +57,7 @@ class InMixList extends StatelessWidget {
                 )),
           },
           if (mixes.length > 0 && mixes.length >= sc)
-            MButton(
-                iconColor: Colors.red,
-                icon: Icons.clear_all,
-                label:
-                    AppTranslations.of(context).text("mix.all_ussage_in_mix"),
-                onPressed: onPressed),
+            MButton(iconColor: Colors.red, icon: Icons.clear_all, label: AppTranslations.of(context).text("mix.all_ussage_in_mix"), onPressed: onPressed),
         ]),
       ),
     );

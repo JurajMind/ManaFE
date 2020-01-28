@@ -47,196 +47,197 @@ class _RegistryPageState extends State<RegisterPage> {
       body: Form(
         key: _formKey,
         child: Container(
+            constraints: BoxConstraints(maxWidth: 500),
             child: ListView(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              child: TextFormField(
-                  autofocus: false,
-                  style: Theme.of(context).textTheme.display3,
-                  controller: nameController,
-                  keyboardType: TextInputType.text,
-                  decoration: new InputDecoration(
-                    hintText: AppTranslations.of(context).text('login.name_hint'),
-                    labelText: AppTranslations.of(context).text('login.name'),
-                    labelStyle: Theme.of(context).textTheme.display3,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                      borderSide: BorderSide(color: Colors.white, width: 2),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                  ),
-                  onFieldSubmitted: (String textInput) {
-                    data.userName = textInput;
-                  },
-                  onSaved: (String value) {
-                    data.userName = value;
-                  }),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: new TextFormField(
-                  style: Theme.of(context).textTheme.display3,
-                  autovalidate: _emailAutoValidate,
-                  controller: emailController,
-                  validator: (String value) {
-                    return validate(value, 'E-mail Address', [new RequiredValidator(), new EmailValidator(), new MaxValidator(63)]);
-                  },
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: new InputDecoration(
-                    hintText: AppTranslations.of(context).text("login.email"),
-                    labelText: AppTranslations.of(context).text("login.email"),
-                    labelStyle: Theme.of(context).textTheme.display3,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                      borderSide: BorderSide(color: Colors.white, width: 2),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      borderSide: BorderSide(color: Colors.white, width: 2),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      borderSide: BorderSide(color: Colors.red, width: 2),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      borderSide: BorderSide(color: Colors.red, width: 2),
-                    ),
-                  ),
-                  onFieldSubmitted: (String textInput) {
-                    setState(() {
-                      _emailAutoValidate = true;
-                    });
-                    data.email = textInput;
-                  },
-                  onSaved: (String value) {
-                    data.email = value;
-                  }),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: new TextFormField(
-                  style: Theme.of(context).textTheme.display3,
-                  autovalidate: _passwordAutoValidate,
-                  autofocus: false,
-                  controller: passwordController,
-                  keyboardType: TextInputType.text,
-                  obscureText: !showPassword,
-                  decoration: new InputDecoration(
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        showPassword ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
-                        color: Colors.white,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  child: TextFormField(
+                      autofocus: false,
+                      style: Theme.of(context).textTheme.bodyText2,
+                      controller: nameController,
+                      keyboardType: TextInputType.text,
+                      decoration: new InputDecoration(
+                        hintText: AppTranslations.of(context).text('login.name_hint'),
+                        labelText: AppTranslations.of(context).text('login.name'),
+                        labelStyle: Theme.of(context).textTheme.bodyText2,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                          borderSide: BorderSide(color: Colors.white, width: 2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          showPassword = !showPassword;
-                        });
+                      onFieldSubmitted: (String textInput) {
+                        data.userName = textInput;
                       },
-                    ),
-                    hintText: AppTranslations.of(context).text("login.password"),
-                    labelText: AppTranslations.of(context).text("login.password"),
-                    labelStyle: Theme.of(context).textTheme.display3,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                      borderSide: BorderSide(color: Colors.white, width: 2),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      borderSide: BorderSide(color: Colors.white, width: 2),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      borderSide: BorderSide(color: Colors.red, width: 2),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      borderSide: BorderSide(color: Colors.red, width: 2),
-                    ),
-                  ),
-                  onFieldSubmitted: (String textInput) {
-                    data.password = textInput;
-                  },
-                  onEditingComplete: () {},
-                  onSaved: (String value) {
-                    data.password = value;
-                  }),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: new TextFormField(
-                  style: Theme.of(context).textTheme.display3,
-                  autovalidate: _passwordAutoValidate,
-                  autofocus: false,
-                  controller: password2Controller,
-                  keyboardType: TextInputType.text,
-                  obscureText: !showPassword,
-                  decoration: new InputDecoration(
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        showPassword ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
-                        color: Colors.white,
+                      onSaved: (String value) {
+                        data.userName = value;
+                      }),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: new TextFormField(
+                      style: Theme.of(context).textTheme.bodyText2,
+                      autovalidate: _emailAutoValidate,
+                      controller: emailController,
+                      validator: (String value) {
+                        return validate(value, 'E-mail Address', [new RequiredValidator(), new EmailValidator(), new MaxValidator(63)]);
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: new InputDecoration(
+                        hintText: AppTranslations.of(context).text("login.email"),
+                        labelText: AppTranslations.of(context).text("login.email"),
+                        labelStyle: Theme.of(context).textTheme.bodyText2,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                          borderSide: BorderSide(color: Colors.white, width: 2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          borderSide: BorderSide(color: Colors.white, width: 2),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          borderSide: BorderSide(color: Colors.red, width: 2),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          borderSide: BorderSide(color: Colors.red, width: 2),
+                        ),
                       ),
-                      onPressed: () {
+                      onFieldSubmitted: (String textInput) {
                         setState(() {
-                          showPassword = !showPassword;
+                          _emailAutoValidate = true;
                         });
+                        data.email = textInput;
                       },
+                      onSaved: (String value) {
+                        data.email = value;
+                      }),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: new TextFormField(
+                      style: Theme.of(context).textTheme.bodyText2,
+                      autovalidate: _passwordAutoValidate,
+                      autofocus: false,
+                      controller: passwordController,
+                      keyboardType: TextInputType.text,
+                      obscureText: !showPassword,
+                      decoration: new InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            showPassword ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              showPassword = !showPassword;
+                            });
+                          },
+                        ),
+                        hintText: AppTranslations.of(context).text("login.password"),
+                        labelText: AppTranslations.of(context).text("login.password"),
+                        labelStyle: Theme.of(context).textTheme.bodyText2,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                          borderSide: BorderSide(color: Colors.white, width: 2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          borderSide: BorderSide(color: Colors.white, width: 2),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          borderSide: BorderSide(color: Colors.red, width: 2),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          borderSide: BorderSide(color: Colors.red, width: 2),
+                        ),
+                      ),
+                      onFieldSubmitted: (String textInput) {
+                        data.password = textInput;
+                      },
+                      onEditingComplete: () {},
+                      onSaved: (String value) {
+                        data.password = value;
+                      }),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: new TextFormField(
+                      style: Theme.of(context).textTheme.bodyText2,
+                      autovalidate: _passwordAutoValidate,
+                      autofocus: false,
+                      controller: password2Controller,
+                      keyboardType: TextInputType.text,
+                      obscureText: !showPassword,
+                      decoration: new InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            showPassword ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              showPassword = !showPassword;
+                            });
+                          },
+                        ),
+                        hintText: AppTranslations.of(context).text("login.confirm_password"),
+                        labelText: AppTranslations.of(context).text("login.confirm_password"),
+                        labelStyle: Theme.of(context).textTheme.bodyText2,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                          borderSide: BorderSide(color: Colors.white, width: 2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          borderSide: BorderSide(color: Colors.white, width: 2),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          borderSide: BorderSide(color: Colors.red, width: 2),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          borderSide: BorderSide(color: Colors.red, width: 2),
+                        ),
+                      ),
+                      onFieldSubmitted: (String textInput) {
+                        data.password = textInput;
+                      },
+                      onEditingComplete: () {},
+                      onSaved: (String value) {
+                        data.password = value;
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: MaterialButton(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                      child: Text(
+                        AppTranslations.of(context).text("Create account"),
+                        style: Theme.of(context).textTheme.headline6.apply(color: Colors.black, fontSizeDelta: -7),
+                      ),
                     ),
-                    hintText: AppTranslations.of(context).text("login.confirm_password"),
-                    labelText: AppTranslations.of(context).text("login.confirm_password"),
-                    labelStyle: Theme.of(context).textTheme.display3,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                      borderSide: BorderSide(color: Colors.white, width: 2),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      borderSide: BorderSide(color: Colors.white, width: 2),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      borderSide: BorderSide(color: Colors.red, width: 2),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      borderSide: BorderSide(color: Colors.red, width: 2),
-                    ),
-                  ),
-                  onFieldSubmitted: (String textInput) {
-                    data.password = textInput;
-                  },
-                  onEditingComplete: () {},
-                  onSaved: (String value) {
-                    data.password = value;
-                  }),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: MaterialButton(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                  child: Text(
-                    AppTranslations.of(context).text("Create account"),
-                    style: Theme.of(context).textTheme.display1.apply(color: Colors.black, fontSizeDelta: -7),
+                    onPressed: () => register(context),
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(24.0)),
+                    textColor: Colors.black,
                   ),
                 ),
-                onPressed: () => register(context),
-                color: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(24.0)),
-                textColor: Colors.black,
-              ),
-            ),
-            SizedBox(
-              height: 60,
-            ),
-            ExternalAuthWidget(),
-          ],
-        )),
+                SizedBox(
+                  height: 60,
+                ),
+                ExternalAuthWidget(),
+              ],
+            )),
       ),
     );
   }

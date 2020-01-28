@@ -60,20 +60,14 @@ class ExperimentItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: () => pageWidget == null
-            ? {}
-            : Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => pageWidget)),
+        onTap: () => pageWidget == null ? {} : Navigator.of(context).push(MaterialPageRoute(builder: (context) => pageWidget)),
         child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30.0),
-              color: bgColor,
-              boxShadow: [
-                new BoxShadow(
-                  color: Colors.black,
-                  blurRadius: 20.0,
-                ),
-              ]),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(30.0), color: bgColor, boxShadow: [
+            new BoxShadow(
+              color: Colors.black,
+              blurRadius: 20.0,
+            ),
+          ]),
           child: Center(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -84,7 +78,7 @@ class ExperimentItem extends StatelessWidget {
               ),
               Text(
                 text,
-                style: Theme.of(context).textTheme.display1,
+                style: Theme.of(context).textTheme.headline6,
               )
             ],
           )),

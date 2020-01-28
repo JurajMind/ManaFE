@@ -51,11 +51,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 children: <Widget>[
                   Text(
                     'Smoking hedgehog',
-                    style: Theme.of(context).textTheme.display1,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   Text(
                     'Lvl: 4',
-                    style: Theme.of(context).textTheme.display1,
+                    style: Theme.of(context).textTheme.headline6,
                   )
                 ],
               ),
@@ -70,17 +70,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Row(
-                    children: <Widget>[
-                      Icon(Icons.star),
-                      Text('450/1000 exp',
-                          style: Theme.of(context).textTheme.display2)
-                    ],
+                    children: <Widget>[Icon(Icons.star), Text('450/1000 exp', style: Theme.of(context).textTheme.headline5)],
                   ),
                   Row(
-                    children: <Widget>[
-                      Icon(Icons.cloud),
-                      Text('120', style: Theme.of(context).textTheme.display2)
-                    ],
+                    children: <Widget>[Icon(Icons.cloud), Text('120', style: Theme.of(context).textTheme.headline5)],
                   )
                 ],
               ),
@@ -91,7 +84,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 children: <Widget>[
                   Text(
                     'Achievments 5/200',
-                    style: Theme.of(context).textTheme.display1,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   SizedBox(
                     height: 10,
@@ -102,32 +95,16 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     date: '26.4.2019',
                     icon: FontAwesomeIcons.medal,
                   ),
-                  AchievementItem(
-                      text: 'Perfect week',
-                      subText: '7days 7 hookahs',
-                      date: '20.4.2019',
-                      icon: FontAwesomeIcons.calendarWeek),
-                  AchievementItem(
-                      text: 'CHC Romana opening',
-                      subText: 'Attend opening of CHC',
-                      date: '19.8.2018',
-                      icon: FontAwesomeIcons.mapMarked),
-                  AchievementItem(
-                      text: 'Little dragon',
-                      subText: 'Take 15s long puff',
-                      date: '12.5.2018',
-                      icon: FontAwesomeIcons.fire),
+                  AchievementItem(text: 'Perfect week', subText: '7days 7 hookahs', date: '20.4.2019', icon: FontAwesomeIcons.calendarWeek),
+                  AchievementItem(text: 'CHC Romana opening', subText: 'Attend opening of CHC', date: '19.8.2018', icon: FontAwesomeIcons.mapMarked),
+                  AchievementItem(text: 'Little dragon', subText: 'Take 15s long puff', date: '12.5.2018', icon: FontAwesomeIcons.fire),
                   AchievementItem(
                     text: 'Dark side awekens',
                     subText: 'Try some Darkside tobacco',
                     date: '20.4.2018',
                     icon: FontAwesomeIcons.moon,
                   ),
-                  AchievementItem(
-                      text: 'Big dragon',
-                      subText: 'Take 60s long puff',
-                      have: false,
-                      icon: FontAwesomeIcons.fire),
+                  AchievementItem(text: 'Big dragon', subText: 'Take 60s long puff', have: false, icon: FontAwesomeIcons.fire),
                   AchievementItem(
                     text: 'Catch them all',
                     subText: 'Try ALL Darkside tobacco',
@@ -166,14 +143,7 @@ class AchievementItem extends StatelessWidget {
   final IconData icon;
   final bool have;
 
-  const AchievementItem(
-      {Key key,
-      this.text,
-      this.date,
-      this.subText,
-      this.icon,
-      this.have = true})
-      : super(key: key);
+  const AchievementItem({Key key, this.text, this.date, this.subText, this.icon, this.have = true}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     var rng = new Random();
@@ -183,8 +153,7 @@ class AchievementItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: !have ? AppColors.black : AppColors.gray,
           borderRadius: new BorderRadius.all(const Radius.circular(30.0)),
-          border: new Border.all(
-              color: const Color.fromRGBO(221, 221, 221, 1.0), width: 2),
+          border: new Border.all(color: const Color.fromRGBO(221, 221, 221, 1.0), width: 2),
         ),
         child: ListTile(
           onTap: () => showAchievementView(this, context),

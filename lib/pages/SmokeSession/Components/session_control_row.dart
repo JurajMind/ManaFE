@@ -15,60 +15,47 @@ class SessionControllRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var smokeSessionBloc = DataProvider.getData(context).smokeSessionBloc;
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          InkWell(
-            onTap: () => Navigator.of(context).push(new MaterialPageRoute(
-                fullscreenDialog: true,
-                builder: (BuildContext context) {
-                  return new AnimationPickerPage();
-                })),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  child: Icon(Icons.list, color: AppColors.colors[1], size: 50),
-                ),
-                Text(
-                  AppTranslations.of(context).text('smoke_session.animations'),
-                  style: Theme.of(context)
-                      .textTheme
-                      .display2
-                      .apply(color: AppColors.colors[1]),
-                )
-              ],
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceAround, mainAxisSize: MainAxisSize.max, children: <Widget>[
+      InkWell(
+        onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return new AnimationPickerPage();
+            })),
+        child: Column(
+          children: <Widget>[
+            Container(
+              child: Icon(Icons.list, color: AppColors.colors[1], size: 50),
             ),
-          ),
-          StreamBuilder<StandSettings>(
-              stream: smokeSessionBloc.standSettings,
-              builder: (context, snapshot) {
-                var color = snapshot?.data?.idle?.color?.toColor() ??
-                    AppColors.colors[3];
-                return InkWell(
-                  onTap: () => Navigator.of(context).push(new MaterialPageRoute(
-                      fullscreenDialog: true,
-                      builder: (BuildContext context) {
-                        return new ColorPickerPage(initData: snapshot?.data);
-                      })),
-                  child: Column(
-                    children: <Widget>[
-                      Icon(Icons.color_lens, color: color, size: 50),
-                      StreamBuilder<StandSettings>(
-                          stream: smokeSessionBloc.standSettings,
-                          builder: (context, snapshot) {
-                            return Text(
-                                AppTranslations.of(context)
-                                    .text('smoke_session.colors'),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .display2
-                                    .apply(color: color));
-                          })
-                    ],
-                  ),
-                );
-              })
-        ]);
+            Text(
+              AppTranslations.of(context).text('smoke_session.animations'),
+              style: Theme.of(context).textTheme.headline5.apply(color: AppColors.colors[1]),
+            )
+          ],
+        ),
+      ),
+      StreamBuilder<StandSettings>(
+          stream: smokeSessionBloc.standSettings,
+          builder: (context, snapshot) {
+            var color = snapshot?.data?.idle?.color?.toColor() ?? AppColors.colors[3];
+            return InkWell(
+              onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                  fullscreenDialog: true,
+                  builder: (BuildContext context) {
+                    return new ColorPickerPage(initData: snapshot?.data);
+                  })),
+              child: Column(
+                children: <Widget>[
+                  Icon(Icons.color_lens, color: color, size: 50),
+                  StreamBuilder<StandSettings>(
+                      stream: smokeSessionBloc.standSettings,
+                      builder: (context, snapshot) {
+                        return Text(AppTranslations.of(context).text('smoke_session.colors'), style: Theme.of(context).textTheme.headline5.apply(color: color));
+                      })
+                ],
+              ),
+            );
+          })
+    ]);
   }
 }

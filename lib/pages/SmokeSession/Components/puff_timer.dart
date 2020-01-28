@@ -8,8 +8,7 @@ class PuffTimeText extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
-    var dependencies =
-        DataProvider.getData(context).smokeSessionBloc.pufTimerDependencies;
+    var dependencies = DataProvider.getData(context).smokeSessionBloc.pufTimerDependencies;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -37,8 +36,7 @@ class PuffTimeText extends StatelessWidget {
             offstage: dependencies.showTimer,
             child: SizedBox(
               height: 38.0,
-              child: Text(dependencies.alternativeText,
-                  style: Theme.of(context).textTheme.body2),
+              child: Text(dependencies.alternativeText, style: Theme.of(context).textTheme.headline4),
             ))
       ],
     );
@@ -87,7 +85,7 @@ class HundredsState extends State<Hundreds> {
   @override
   Widget build(BuildContext context) {
     String hundredsStr = (hundreds % 100).toString().padLeft(2, '0');
-    return new Text(hundredsStr, style: Theme.of(context).textTheme.body2);
+    return new Text(hundredsStr, style: Theme.of(context).textTheme.headline4);
   }
 
   @override
@@ -101,8 +99,7 @@ class MinutesAndSeconds extends StatefulWidget {
   MinutesAndSeconds({this.dependencies});
   final PufTimerDependencies dependencies;
 
-  MinutesAndSecondsState createState() =>
-      new MinutesAndSecondsState(dependencies: dependencies);
+  MinutesAndSecondsState createState() => new MinutesAndSecondsState(dependencies: dependencies);
 }
 
 class MinutesAndSecondsState extends State<MinutesAndSeconds> {
@@ -128,7 +125,7 @@ class MinutesAndSecondsState extends State<MinutesAndSeconds> {
   @override
   Widget build(BuildContext context) {
     String secondsStr = (seconds).toString().padLeft(1, '0');
-    return new Text('$secondsStr.', style: Theme.of(context).textTheme.body2);
+    return new Text('$secondsStr.', style: Theme.of(context).textTheme.headline4);
   }
 
   @override

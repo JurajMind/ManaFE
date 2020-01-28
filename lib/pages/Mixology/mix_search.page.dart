@@ -18,14 +18,11 @@ class MixSearchPage extends StatefulWidget {
 }
 
 class _MixSearchPageState extends State<MixSearchPage> {
-  List<PipeAccesorySimpleDto> selectedTobacco =
-      new List<PipeAccesorySimpleDto>();
+  List<PipeAccesorySimpleDto> selectedTobacco = new List<PipeAccesorySimpleDto>();
 
-  Map<PipeAccesorySimpleDto, Color> indexColor =
-      new Map<PipeAccesorySimpleDto, Color>();
+  Map<PipeAccesorySimpleDto, Color> indexColor = new Map<PipeAccesorySimpleDto, Color>();
 
-  BehaviorSubject<List<TobaccoMixSimpleDto>> tobaccoMix =
-      new BehaviorSubject<List<TobaccoMixSimpleDto>>();
+  BehaviorSubject<List<TobaccoMixSimpleDto>> tobaccoMix = new BehaviorSubject<List<TobaccoMixSimpleDto>>();
 
   var loading = false;
   String searchString;
@@ -72,10 +69,8 @@ class _MixSearchPageState extends State<MixSearchPage> {
                             this.searchString = data;
                           });
                         },
-                        decoration: InputDecoration(
-                            hintText: 'Search by mix name',
-                            border: InputBorder.none,
-                            labelStyle: Theme.of(context).textTheme.body2),
+                        decoration:
+                            InputDecoration(hintText: 'Search by mix name', border: InputBorder.none, labelStyle: Theme.of(context).textTheme.headline4),
                       ),
                       trailing: IconButton(
                         icon: Icon(Icons.cancel),
@@ -101,20 +96,13 @@ class _MixSearchPageState extends State<MixSearchPage> {
                                   searchType: 'Tobacco',
                                   personBloc: personBloc,
                                   gearBloc: gearBloc,
-                                  ownAccesories: personBloc.myGear.value
-                                      .where((s) => s.type == "Tobacco")
-                                      .toList(),
+                                  ownAccesories: personBloc.myGear.value.where((s) => s.type == "Tobacco").toList(),
                                 )),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text('Add item in mix',
-                                      style:
-                                          Theme.of(context).textTheme.display3),
-                                  Icon(Icons.add)
-                                ],
+                                children: <Widget>[Text('Add item in mix', style: Theme.of(context).textTheme.bodyText2), Icon(Icons.add)],
                               ),
                             ),
                           )
@@ -123,7 +111,7 @@ class _MixSearchPageState extends State<MixSearchPage> {
                     Center(
                       child: Text(
                         "Mixes",
-                        style: Theme.of(context).textTheme.display1,
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
                     if (loading) ...{
@@ -137,8 +125,7 @@ class _MixSearchPageState extends State<MixSearchPage> {
                       if (snapshot.data != null) ...{
                         ...snapshot.data.map((m) => MixCardExpanded(
                               tobaccoMix: m,
-                              multiHighlight:
-                                  indexColor.map((f, c) => MapEntry(f.id, c)),
+                              multiHighlight: indexColor.map((f, c) => MapEntry(f.id, c)),
                             ))
                       } else ...{
                         Center(
@@ -191,10 +178,7 @@ class _MixSearchPageState extends State<MixSearchPage> {
     setState(() {
       loading = true;
     });
-    App.http
-        .suggestMix(this.selectedTobacco.map((f) => f.id).toList(),
-            name: searchString)
-        .then((onValue) {
+    App.http.suggestMix(this.selectedTobacco.map((f) => f.id).toList(), name: searchString).then((onValue) {
       this.tobaccoMix.add(onValue);
       setState(() {
         loading = false;
@@ -224,7 +208,7 @@ class TobaccoSearchItem extends StatelessWidget {
       ),
       title: Text(
         "${t.brand} ${t.name}",
-        style: Theme.of(context).textTheme.display2,
+        style: Theme.of(context).textTheme.headline5,
       ),
     );
   }

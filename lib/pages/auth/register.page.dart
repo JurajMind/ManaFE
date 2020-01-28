@@ -51,11 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
       body: Form(
         child: CustomPaint(
           painter: BgPainter(
-              color: color.toColor(),
-              logoSize: 1.0,
-              hueRotation: -1.2,
-              startPoint: Offset(
-                  screenSize.width * 0.2 + animOffset.dx, 270 + animOffset.dy)),
+              color: color.toColor(), logoSize: 1.0, hueRotation: -1.2, startPoint: Offset(screenSize.width * 0.2 + animOffset.dx, 270 + animOffset.dy)),
           child: Center(
             child: Container(
               constraints: BoxConstraints(maxWidth: 500),
@@ -87,32 +83,26 @@ class _RegisterPageState extends State<RegisterPage> {
         children: <Widget>[
           ShadowText(
             AppTranslations.of(context).text("login.email").toUpperCase(),
-            style: Theme.of(context).textTheme.headline,
+            style: Theme.of(context).textTheme.headline6,
             textScaleFactor: 1.0,
             softWrap: true,
           ),
           SizedBox(height: 48.0),
           new TextFormField(
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline5,
               autofocus: true,
               autovalidate: _emailAutoValidate,
               controller: emailController,
               validator: (String value) {
-                return validate(value, 'E-mail Address', [
-                  new RequiredValidator(),
-                  new EmailValidator(),
-                  new MaxValidator(63)
-                ]);
+                return validate(value, 'E-mail Address', [new RequiredValidator(), new EmailValidator(), new MaxValidator(63)]);
               },
               keyboardType: TextInputType.emailAddress,
               decoration: new InputDecoration(
                   hintText: AppTranslations.of(context).text("login.email"),
                   labelText: AppTranslations.of(context).text("login.email"),
-                  labelStyle: Theme.of(context).textTheme.body2,
-                  enabledBorder: new UnderlineInputBorder(
-                      borderSide: new BorderSide(color: Colors.white)),
-                  focusedBorder: new UnderlineInputBorder(
-                      borderSide: new BorderSide(color: Colors.white)),
+                  labelStyle: Theme.of(context).textTheme.headline4,
+                  enabledBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
+                  focusedBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
                   icon: Icon(Icons.email, color: Colors.white)),
               onFieldSubmitted: (String textInput) {
                 setState(() {
@@ -142,11 +132,8 @@ class _RegisterPageState extends State<RegisterPage> {
     controller.addListener(() {
       final Size screenSize = MediaQuery.of(context).size;
       setState(() {
-        animOffset = Offset(
-            controller.position.pixels / 3, controller.position.pixels / 10);
-        color = color.withHue((color.hue +
-                (controller.position.pixels / (screenSize.width * 5))) %
-            360);
+        animOffset = Offset(controller.position.pixels / 3, controller.position.pixels / 10);
+        color = color.withHue((color.hue + (controller.position.pixels / (screenSize.width * 5))) % 360);
       });
     });
     loadAsset();
@@ -171,9 +158,7 @@ class _RegisterPageState extends State<RegisterPage> {
               title: Container(
                 width: 200,
                 child: ShadowText(
-                  AppTranslations.of(context)
-                      .text('login.term_of_usage')
-                      .toUpperCase(),
+                  AppTranslations.of(context).text('login.term_of_usage').toUpperCase(),
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .copyWith(
@@ -212,8 +197,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     width: screenSize.width,
                   )
                 : RoundedButton(
-                    buttonName: AppTranslations.of(context)
-                        .text('login.accept_register'),
+                    buttonName: AppTranslations.of(context).text('login.accept_register'),
                     onTap: () => register(context),
                     buttonColor: Colors.transparent,
                     borderWidth: 2.0,
@@ -251,20 +235,16 @@ class _RegisterPageState extends State<RegisterPage> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: new TextFormField(
                 autofocus: false,
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.headline5,
                 controller: nameController,
                 keyboardType: TextInputType.text,
                 decoration: new InputDecoration(
-                    hintText:
-                        AppTranslations.of(context).text('login.name_hint'),
+                    hintText: AppTranslations.of(context).text('login.name_hint'),
                     labelText: AppTranslations.of(context).text('login.name'),
-                    labelStyle: Theme.of(context).textTheme.body2,
-                    enabledBorder: new UnderlineInputBorder(
-                        borderSide: new BorderSide(color: Colors.white)),
-                    focusedBorder: new UnderlineInputBorder(
-                        borderSide: new BorderSide(color: Colors.white)),
-                    icon:
-                        Icon(FontAwesomeIcons.userCircle, color: Colors.white)),
+                    labelStyle: Theme.of(context).textTheme.headline4,
+                    enabledBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
+                    focusedBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
+                    icon: Icon(FontAwesomeIcons.userCircle, color: Colors.white)),
                 onFieldSubmitted: (String textInput) {
                   data.userName = textInput;
                 },
@@ -281,8 +261,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   nextPage() {
     var currentPage = controller.page + 1;
-    controller.animateToPage(currentPage.round(),
-        duration: Duration(milliseconds: 300), curve: Curves.ease);
+    controller.animateToPage(currentPage.round(), duration: Duration(milliseconds: 300), curve: Curves.ease);
   }
 
   RoundedButton nextRoundedButton(Size screenSize) {
@@ -312,7 +291,7 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
           SizedBox(height: 48.0),
           new TextFormField(
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline5,
               autovalidate: _passwordAutoValidate,
               autofocus: true,
               controller: passwordController,
@@ -321,9 +300,7 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: new InputDecoration(
                   suffixIcon: IconButton(
                     icon: Icon(
-                      showPassword
-                          ? FontAwesomeIcons.eyeSlash
-                          : FontAwesomeIcons.eye,
+                      showPassword ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
                       color: Colors.white,
                     ),
                     onPressed: () {
@@ -334,11 +311,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   hintText: AppTranslations.of(context).text("login.password"),
                   labelText: AppTranslations.of(context).text("login.password"),
-                  labelStyle: Theme.of(context).textTheme.display3,
-                  enabledBorder: new UnderlineInputBorder(
-                      borderSide: new BorderSide(color: Colors.white)),
-                  focusedBorder: new UnderlineInputBorder(
-                      borderSide: new BorderSide(color: Colors.white)),
+                  labelStyle: Theme.of(context).textTheme.bodyText2,
+                  enabledBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
+                  focusedBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
                   icon: Icon(Icons.security, color: Colors.white)),
               onFieldSubmitted: (String textInput) {
                 data.password = textInput;
@@ -348,7 +323,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 data.password = value;
               }),
           new TextFormField(
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline5,
               autovalidate: _passwordAutoValidate,
               autofocus: true,
               controller: password2Controller,
@@ -357,9 +332,7 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: new InputDecoration(
                   suffixIcon: IconButton(
                     icon: Icon(
-                      showPassword
-                          ? FontAwesomeIcons.eyeSlash
-                          : FontAwesomeIcons.eye,
+                      showPassword ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
                       color: Colors.white,
                     ),
                     onPressed: () {
@@ -368,15 +341,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       });
                     },
                   ),
-                  hintText: AppTranslations.of(context)
-                      .text("login.confirm_password"),
-                  labelText: AppTranslations.of(context)
-                      .text("login.confirm_password"),
-                  labelStyle: Theme.of(context).textTheme.display3,
-                  enabledBorder: new UnderlineInputBorder(
-                      borderSide: new BorderSide(color: Colors.white)),
-                  focusedBorder: new UnderlineInputBorder(
-                      borderSide: new BorderSide(color: Colors.white)),
+                  hintText: AppTranslations.of(context).text("login.confirm_password"),
+                  labelText: AppTranslations.of(context).text("login.confirm_password"),
+                  labelStyle: Theme.of(context).textTheme.bodyText2,
+                  enabledBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
+                  focusedBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
                   icon: Icon(Icons.security, color: Colors.white)),
               onFieldSubmitted: (String textInput) {
                 data.password = textInput;

@@ -74,7 +74,7 @@ class SmokeProgressGraphState extends State<SmokeProgressGraph> {
                   ),
                   Text(
                     "Progress",
-                    style: Theme.of(context).textTheme.display1,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                 ],
               ),
@@ -253,33 +253,31 @@ class SmokeProgressGraphShimer extends StatelessWidget {
                 )),
             child: Padding(
               padding: EdgeInsets.all(8),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                SizedBox(
+                  height: 4,
+                ),
+                Row(
                   children: <Widget>[
+                    Icon(Icons.multiline_chart),
                     SizedBox(
-                      height: 4,
+                      width: 8,
                     ),
-                    Row(
-                      children: <Widget>[
-                        Icon(Icons.multiline_chart),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text(
-                          "Progress",
-                          style: Theme.of(context).textTheme.display1,
-                        ),
-                      ],
+                    Text(
+                      "Progress",
+                      style: Theme.of(context).textTheme.headline6,
                     ),
-                    SizedBox(
-                      height: 4,
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  ]),
+                  ],
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              ]),
             )));
   }
 }

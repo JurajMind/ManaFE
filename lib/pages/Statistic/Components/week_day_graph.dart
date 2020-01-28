@@ -43,9 +43,7 @@ class WeekDayGraphState extends State<WeekDayGraph> {
     showingBarGroups = rawBarGroups;
 
     barTouchedResultStreamController = StreamController();
-    barTouchedResultStreamController.stream
-        .distinct()
-        .listen((BarTouchResponse response) {
+    barTouchedResultStreamController.stream.distinct().listen((BarTouchResponse response) {
       if (response == null) {
         return;
       }
@@ -58,8 +56,7 @@ class WeekDayGraphState extends State<WeekDayGraph> {
         return;
       }
 
-      touchedGroupIndex =
-          showingBarGroups.indexOf(response?.spot?.touchedBarGroup);
+      touchedGroupIndex = showingBarGroups.indexOf(response?.spot?.touchedBarGroup);
 
       setState(() {
         if (response.touchInput is FlLongPressEnd) {
@@ -68,8 +65,7 @@ class WeekDayGraphState extends State<WeekDayGraph> {
         } else {
           showingBarGroups = List.of(rawBarGroups);
           if (touchedGroupIndex != -1) {
-            showingBarGroups[touchedGroupIndex] =
-                showingBarGroups[touchedGroupIndex].copyWith(
+            showingBarGroups[touchedGroupIndex] = showingBarGroups[touchedGroupIndex].copyWith(
               barRods: showingBarGroups[touchedGroupIndex].barRods.map((rod) {
                 return rod.copyWith(color: AppColors.colors[3], y: rod.y + 1);
               }).toList(),
@@ -146,7 +142,7 @@ class WeekDayGraphState extends State<WeekDayGraph> {
                   ),
                   Text(
                     AppTranslations.of(context).text('profile.week_days'),
-                    style: Theme.of(context).textTheme.display1,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                 ],
               ),
@@ -169,72 +165,52 @@ class WeekDayGraphState extends State<WeekDayGraph> {
                                 getTooltipItems: (touchedSpots) {
                                   return touchedSpots.map((touchedSpot) {
                                     if (touchedSpot?.spot == null) {
-                                      return TooltipItem(
-                                          "", TextStyle(color: Colors.yellow));
+                                      return TooltipItem("", TextStyle(color: Colors.yellow));
                                     }
                                     String weekDay;
-                                    weekDay = AppTranslations.of(context).text(
-                                        "days.long_${(touchedSpot?.spot?.x?.toInt() ?? 0) + 1}");
-                                    return TooltipItem(
-                                        weekDay +
-                                            '\n' +
-                                            touchedSpot.spot.y.toString(),
-                                        TextStyle(color: Colors.yellow));
+                                    weekDay = AppTranslations.of(context).text("days.long_${(touchedSpot?.spot?.x?.toInt() ?? 0) + 1}");
+                                    return TooltipItem(weekDay + '\n' + touchedSpot.spot.y.toString(), TextStyle(color: Colors.yellow));
                                   }).toList();
                                 }),
-                        touchResponseSink:
-                            barTouchedResultStreamController.sink,
+                        touchResponseSink: barTouchedResultStreamController.sink,
                       ),
                       titlesData: FlTitlesData(
                         show: true,
                         bottomTitles: SideTitles(
                             showTitles: true,
-                            textStyle: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14),
+                            textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
                             margin: 16,
                             getTitles: (double value) {
-                              return AppTranslations.of(context)
-                                  .text("days.short_${value.toInt() + 1}");
+                              return AppTranslations.of(context).text("days.short_${value.toInt() + 1}");
                             }),
                         leftTitles: SideTitles(
                           showTitles: true,
-                          textStyle: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
+                          textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
                           margin: 32,
                           reservedSize: 14,
                           getTitles: (value) {
                             if (max < 5) {
-                              if (value % 2 == 0)
-                                return value.toStringAsFixed(0);
+                              if (value % 2 == 0) return value.toStringAsFixed(0);
                             }
 
                             if (max < 20) {
-                              if (value % 5 == 0)
-                                return value.toStringAsFixed(0);
+                              if (value % 5 == 0) return value.toStringAsFixed(0);
                             }
 
                             if (max < 50) {
-                              if (value % 10 == 0)
-                                return value.toStringAsFixed(0);
+                              if (value % 10 == 0) return value.toStringAsFixed(0);
                             }
 
                             if (max < 100) {
-                              if (value % 20 == 0)
-                                return value.toStringAsFixed(0);
+                              if (value % 20 == 0) return value.toStringAsFixed(0);
                             }
 
                             if (max < 200) {
-                              if (value % 40 == 0)
-                                return value.toStringAsFixed(0);
+                              if (value % 40 == 0) return value.toStringAsFixed(0);
                             }
 
                             if (max < 1000) {
-                              if (value % 100 == 0)
-                                return value.toStringAsFixed(0);
+                              if (value % 100 == 0) return value.toStringAsFixed(0);
                             }
 
                             return '';
@@ -266,8 +242,7 @@ class WeekDayGraphState extends State<WeekDayGraph> {
         color: AppColors.colors[1],
         width: width,
         isRound: true,
-        backDrawRodData: BackgroundBarChartRodData(
-            show: true, y: max < 5 ? 5 : max + 0.0, color: Colors.black),
+        backDrawRodData: BackgroundBarChartRodData(show: true, y: max < 5 ? 5 : max + 0.0, color: Colors.black),
       ),
     ]);
   }

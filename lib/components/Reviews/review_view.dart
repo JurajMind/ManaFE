@@ -18,14 +18,14 @@ class ReviewView extends StatelessWidget {
     var pReview = review?.placeReview ?? placeReview;
     var medias = List<MediaDto>();
 
-    if(review?.medias != null){
+    if (review?.medias != null) {
       medias.addAll(review?.medias);
     }
-    
-    if(placeReview?.medias != null){
+
+    if (placeReview?.medias != null) {
       medias.addAll(placeReview?.medias);
     }
-    
+
     var authorId = review?.authorId ?? placeReview.authorId;
 
     return Container(
@@ -40,7 +40,7 @@ class ReviewView extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   'Session:',
-                  style: Theme.of(context).textTheme.display2,
+                  style: Theme.of(context).textTheme.headline5,
                 ),
               ),
               MStarRating(
@@ -58,9 +58,7 @@ class ReviewView extends StatelessWidget {
                 rating: review.strength / 2,
                 colorIndex: 0,
               ),
-              Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(review?.tobaccoReview?.text ?? '')),
+              Padding(padding: const EdgeInsets.all(8.0), child: Text(review?.tobaccoReview?.text ?? '')),
               Divider(
                 color: Colors.white,
               ),
@@ -76,19 +74,14 @@ class ReviewView extends StatelessWidget {
             if (authorId == id)
               InkWell(
                 onTap: () {
-                  var sessionBloc =
-                      DataProvider.getData(context).smokeSessionBloc;
-                  sessionBloc
-                      .removeReview(review)
-                      .then((_) => Navigator.of(context).pop());
+                  var sessionBloc = DataProvider.getData(context).smokeSessionBloc;
+                  sessionBloc.removeReview(review).then((_) => Navigator.of(context).pop());
                 },
                 child: Container(
                   padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                   decoration: BoxDecoration(
                     color: Colors.red,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(32.0),
-                        bottomRight: Radius.circular(32.0)),
+                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(32.0), bottomRight: Radius.circular(32.0)),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -97,7 +90,7 @@ class ReviewView extends StatelessWidget {
                       Icon(Icons.delete),
                       Text(
                         "Remove review",
-                        style: Theme.of(context).textTheme.display2,
+                        style: Theme.of(context).textTheme.headline5,
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -119,7 +112,7 @@ class ReviewView extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Text(
           'Place:',
-          style: Theme.of(context).textTheme.display2,
+          style: Theme.of(context).textTheme.headline5,
         ),
       ),
       MStarRating(
@@ -132,8 +125,7 @@ class ReviewView extends StatelessWidget {
         rating: pReview.service / 2,
         colorIndex: 1,
       ),
-      Padding(
-          padding: const EdgeInsets.all(8.0), child: Text(pReview?.text ?? ''))
+      Padding(padding: const EdgeInsets.all(8.0), child: Text(pReview?.text ?? ''))
     ];
   }
 
@@ -145,7 +137,7 @@ class ReviewView extends StatelessWidget {
         ),
         Text(
           'Media',
-          style: Theme.of(context).textTheme.display2,
+          style: Theme.of(context).textTheme.headline5,
         ),
         SizedBox(
           height: 8,

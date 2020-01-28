@@ -39,10 +39,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   children: <Widget>[
                     new TextFormField(
                         autofocus: true,
-                        style: Theme.of(context).textTheme.display2,
+                        style: Theme.of(context).textTheme.headline5,
                         keyboardType: TextInputType.emailAddress,
                         decoration: new InputDecoration(
-                            labelStyle: Theme.of(context).textTheme.display1,
+                            labelStyle: Theme.of(context).textTheme.headline6,
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.all(Radius.circular(40.0)),
                               borderSide: BorderSide(color: Colors.white, width: 2),
@@ -126,11 +126,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         return AlertDialog(
           title: new Text(
             AppTranslations.of(context).text("login.forgot_dialog_title"),
-            style: Theme.of(context).textTheme.body2,
+            style: Theme.of(context).textTheme.headline4,
           ),
           content: new Text(
             AppTranslations.of(context).text("login.forgot_dialog"),
-            style: Theme.of(context).textTheme.display2,
+            style: Theme.of(context).textTheme.headline5,
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog

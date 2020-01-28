@@ -20,11 +20,8 @@ class ReviewsSmall extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Text(AppTranslations.of(context).text('smoke_session.review'),
-                style: Theme.of(context).textTheme.display1),
-            IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () => addSessionReview(context))
+            Text(AppTranslations.of(context).text('smoke_session.review'), style: Theme.of(context).textTheme.headline6),
+            IconButton(icon: Icon(Icons.add), onPressed: () => addSessionReview(context))
           ],
         ),
         ...reviews.map((f) {
@@ -39,8 +36,7 @@ class ReviewsSmall extends StatelessWidget {
   }
 
   addSessionReview(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-        fullscreenDialog: true, builder: (context) => SessionReview()));
+    Navigator.of(context).push(MaterialPageRoute(fullscreenDialog: true, builder: (context) => SessionReview()));
   }
 }
 
@@ -123,19 +119,21 @@ class ReviewSmallItem extends StatelessWidget {
     );
   }
 
-  openAlertBox(BuildContext context) {  
-    var size = MediaQuery.of(context).size; 
-        var bloc = DataProvider.getData(context).personBloc;
+  openAlertBox(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var bloc = DataProvider.getData(context).personBloc;
     return showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(32.0))),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(32.0))),
             contentPadding: EdgeInsets.only(top: 10.0),
             content: Container(
-              width: size.width * 0.9,
-              child: SessionReviewView(review: review,bloc: bloc,)),
+                width: size.width * 0.9,
+                child: SessionReviewView(
+                  review: review,
+                  bloc: bloc,
+                )),
           );
         });
   }

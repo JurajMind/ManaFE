@@ -193,7 +193,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                               ),
                               Expanded(
                                 child: MapCarousel(
-                                  direction: Axis.horizontal,
+                                  direction: Axis.vertical,
                                   selectedPlace: _selectedPlace,
                                   nearbyPlaces: nearbyPlaces,
                                   mapController: _controller,

@@ -111,7 +111,7 @@ class _CarrousselState extends State<MapCarousel> {
             return buildAdd();
           }
           return PageView.builder(
-              scrollDirection: Axis.horizontal,
+              scrollDirection: widget.direction,
               controller: controller,
               onPageChanged: (value) async {
                 setState(() {
@@ -161,7 +161,7 @@ class _CarrousselState extends State<MapCarousel> {
                       child: Text(
                         AppTranslations.of(context).text("reservations.add_new_place"),
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.display2,
+                        style: Theme.of(context).textTheme.headline5,
                       ),
                     ),
                   )
@@ -230,7 +230,7 @@ class _CarrousselState extends State<MapCarousel> {
                               maxLines: 3,
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.display1.merge(TextStyle(
+                              style: Theme.of(context).textTheme.headline6.merge(TextStyle(
                                     color: textColor,
                                     shadows: [
                                       Shadow(

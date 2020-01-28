@@ -60,9 +60,7 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
   @override
   Widget build(BuildContext context) {
     if (place == null) {
-      return Center(
-          child: SizedBox(
-              height: 60, width: 60, child: CircularProgressIndicator()));
+      return Center(child: SizedBox(height: 60, width: 60, child: CircularProgressIndicator()));
     }
 
     return new Scaffold(
@@ -80,8 +78,7 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(Extensions.adress(place.address),
-                        style: Theme.of(context).textTheme.display2),
+                    Text(Extensions.adress(place.address), style: Theme.of(context).textTheme.headline5),
                     new StarRating(
                       size: 25.0,
                       rating: 2.0,
@@ -104,10 +101,8 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                 }),
             IconButton(
                 icon: Icon(Icons.photo_size_select_small),
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                    settings: RouteSettings(),
-                    builder: (context) =>
-                        PlacePicturesPage(place: placeBloc.placeInfo.value)))),
+                onPressed: () => Navigator.of(context)
+                    .push(MaterialPageRoute(settings: RouteSettings(), builder: (context) => PlacePicturesPage(place: placeBloc.placeInfo.value)))),
           ],
           flexibleSpace: new FlexibleSpaceBar(
             title: SizedBox(
@@ -117,7 +112,7 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                 maxLines: 2,
                 overflow: TextOverflow.fade,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.display1.merge(TextStyle(
+                style: Theme.of(context).textTheme.headline6.merge(TextStyle(
                       shadows: [
                         Shadow(
                             // bottomLeft
@@ -147,10 +142,8 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                   tag: '${place.friendlyUrl}_place',
                   child: new Image(
                     image: MPlatform.isWeb
-                        ? NetworkImage(
-                            Extensions.getPlaceImage(place, MediaSize.Large))
-                        : new CachedNetworkImageProvider(
-                            Extensions.getPlaceImage(place, MediaSize.Large)),
+                        ? NetworkImage(Extensions.getPlaceImage(place, MediaSize.Large))
+                        : new CachedNetworkImageProvider(Extensions.getPlaceImage(place, MediaSize.Large)),
                     fit: BoxFit.cover,
                     height: _appBarHeight,
                   ),
@@ -163,18 +156,21 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
           delegate: new SliverChildListDelegate(<Widget>[
             Hero(
               tag: "${place.friendlyUrl}_reservation",
-              child: Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Container(
-                    child: new Column(
-                      children: <Widget>[
-                        Container(
-                            height: MediaQuery.of(context).size.height,
-                            child: PlaceExtendedInfo(
-                              place: place,
-                            ))
-                      ],
+              child: Center(
+                child: Container(
+                  constraints: BoxConstraints(maxWidth: 800),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      child: new Column(
+                        children: <Widget>[
+                          Container(
+                              height: MediaQuery.of(context).size.height,
+                              child: PlaceExtendedInfo(
+                                place: place,
+                              ))
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -207,26 +203,21 @@ class BookMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          border: Border.all(), borderRadius: BorderRadius.circular(20.0)),
+      decoration: BoxDecoration(border: Border.all(), borderRadius: BorderRadius.circular(20.0)),
       child: buildMenu(context),
     );
   }
 
   Widget buildMenu(BuildContext context) {
     if (!(place.haveReservation ?? false)) {
-      if (!place.haveMenu)
-        return Container(
-            width: MediaQuery.of(context).size.width * 0.7,
-            child: BookButton(place: place, placeBloc: placeBloc));
+      if (!place.haveMenu) return Container(width: MediaQuery.of(context).size.width * 0.7, child: BookButton(place: place, placeBloc: placeBloc));
     }
 
     return new Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        Expanded(
-            flex: 1, child: BookButton(placeBloc: placeBloc, place: place)),
+        Expanded(flex: 1, child: BookButton(placeBloc: placeBloc, place: place)),
         Container(
           height: 35.0,
           width: 2.0,
@@ -240,9 +231,7 @@ class BookMenuWidget extends StatelessWidget {
               style: TextStyle(color: Colors.black),
             ),
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  settings: RouteSettings(),
-                  builder: (context) => MenuPage(place: place)));
+              Navigator.of(context).push(MaterialPageRoute(settings: RouteSettings(), builder: (context) => MenuPage(place: place)));
             },
           ),
         )
@@ -276,9 +265,7 @@ class DisabledChip extends StatelessWidget {
 }
 
 class IconUrlButton extends StatelessWidget {
-  const IconUrlButton(
-      {Key key, @required this.url, this.icon, this.color = Colors.black})
-      : super(key: key);
+  const IconUrlButton({Key key, @required this.url, this.icon, this.color = Colors.black}) : super(key: key);
 
   final String url;
   final IconData icon;

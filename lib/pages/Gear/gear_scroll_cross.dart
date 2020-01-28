@@ -6,12 +6,10 @@ import 'gear_scroll_alternative.dart';
 
 class GearScrollAlternativeCross extends StatefulWidget {
   @override
-  _GearScrollAlternativeCrossState createState() =>
-      _GearScrollAlternativeCrossState();
+  _GearScrollAlternativeCrossState createState() => _GearScrollAlternativeCrossState();
 }
 
-class _GearScrollAlternativeCrossState
-    extends State<GearScrollAlternativeCross> {
+class _GearScrollAlternativeCrossState extends State<GearScrollAlternativeCross> {
   var innerScrollPhysics = AlwaysScrollableScrollPhysics();
   int curentView = 0;
   onViewChanged(int newView) {
@@ -22,8 +20,7 @@ class _GearScrollAlternativeCrossState
 
   @override
   Widget build(BuildContext context) {
-    List<Section> allSections =
-        getAllSections(curentView, onViewChanged, context);
+    List<Section> allSections = getAllSections(curentView, onViewChanged, context);
 
     var shortestSide = MediaQuery.of(context).size.shortestSide;
     var useTabletLayout = shortestSide > 600;
@@ -34,8 +31,7 @@ class _GearScrollAlternativeCrossState
           child: Container(
             constraints: BoxConstraints(maxWidth: 1200),
             child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
                 itemCount: allSections.length,
                 itemBuilder: (context, index) {
                   var section = allSections[index];
@@ -58,7 +54,7 @@ class _GearScrollAlternativeCrossState
                         child: Center(
                             child: Text(
                           section.title,
-                          style: Theme.of(context).textTheme.title,
+                          style: Theme.of(context).textTheme.subtitle1,
                         )),
                       ),
                     ),
@@ -79,15 +75,13 @@ class _GearScrollAlternativeCrossState
                     index,
                     Expanded(
                       child: InkWell(
-                        onTap: () =>
-                            Navigator.of(context).push(MaterialPageRoute(
+                        onTap: () => Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => GearScrollAlternative(
                             allSections: allSections,
                             sectionIndex: index,
                           ),
                         )),
-                        child:
-                            Container(child: new SectionCard(section: value)),
+                        child: Container(child: new SectionCard(section: value)),
                       ),
                     ),
                   ))
