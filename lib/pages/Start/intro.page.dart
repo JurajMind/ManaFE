@@ -36,7 +36,7 @@ class _IntroPageState extends State<IntroPage> {
           centerWidget: Container(height: 300, width: 300, child: Image.asset("assets/intro_1.png", alignment: Alignment.center, fit: BoxFit.contain)),
           description:
               "Light your hookah up with vibrant colors and playful animations that react to your activity and set the perfect mood for every occasion.… ",
-          backgroundColor: AppColors.bgBlack,
+          backgroundColor: AppColors.scafBg,
         ),
         new Slide(
           widgetTitle: Text(
@@ -47,7 +47,7 @@ class _IntroPageState extends State<IntroPage> {
           centerWidget: Container(height: 300, width: 300, child: Image.asset("assets/intro_2.png", alignment: Alignment.center, fit: BoxFit.contain)),
           description:
               "How long is your average session, or how many puffs did you take? Keep track of your gear and stats, create and share your custom tobacco mixes!",
-          backgroundColor: AppColors.bgBlack,
+          backgroundColor: AppColors.scafBg,
         ),
         new Slide(
           widgetTitle: Text(
@@ -57,7 +57,7 @@ class _IntroPageState extends State<IntroPage> {
           ),
           centerWidget: Container(height: 300, width: 300, child: Image.asset("assets/intro_3.png", alignment: Alignment.center, fit: BoxFit.contain)),
           description: "Challenge your friends to a longest inhale competition to see whose lungs are the mightiest and share your activity on social media!",
-          backgroundColor: AppColors.bgBlack,
+          backgroundColor: AppColors.scafBg,
         ),
       ],
       onDonePress: this.onDonePress,
