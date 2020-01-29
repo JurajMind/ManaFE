@@ -54,7 +54,7 @@ class _SessionReviewState extends State<SessionReview> {
                     Text(
                       'Tobacco not filled, please fill tobacco metadata for precision data:',
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.display4,
+                      style: Theme.of(context).textTheme.headline5,
                     ),
                   },
                   Text(

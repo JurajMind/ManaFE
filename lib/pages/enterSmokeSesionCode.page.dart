@@ -11,6 +11,7 @@ import 'package:app/services/http.service.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mdns_plugin/mdns_plugin.dart';
 
 import 'SmokeSession/qr_code_reader_page.dart';
 
@@ -29,6 +30,11 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
   final ApiClient apiClient = App.http;
   bool validating = false;
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  MDNSPlugin mdns = new MDNSPlugin(Delegate());
+
+  Future sleep() {
+    return new Future.delayed(const Duration(seconds: 5), () => "5");
+  }
 
   @override
   void initState() {
@@ -41,6 +47,14 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
       });
     });
     super.initState();
+    mdns.startDiscovery("_googlecast._tcp", enableUpdating: true);
+    sleep();
+  }
+
+  @override
+  void dispose() {
+    mdns.stopDiscovery();
+    super.dispose();
   }
 
   @override
@@ -102,10 +116,22 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                         focusedBorder: const OutlineInputBorder(
                                           // width: 0.0 produces a thin "hairline" border
                                           borderSide: const BorderSide(color: Colors.white, width: 3.0),
+                                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
                                         ),
                                         enabledBorder: const OutlineInputBorder(
                                           // width: 0.0 produces a thin "hairline" border
                                           borderSide: const BorderSide(color: Colors.white, width: 3.0),
+                                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                                        ),
+                                        errorBorder: const OutlineInputBorder(
+                                          // width: 0.0 produces a thin "hairline" border
+                                          borderSide: const BorderSide(color: Colors.grey, width: 2.0),
+                                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                                        ),
+                                        focusedErrorBorder: const OutlineInputBorder(
+                                          // width: 0.0 produces a thin "hairline" border
+                                          borderSide: const BorderSide(color: Colors.grey, width: 2.0),
+                                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
                                         ),
                                         border: const OutlineInputBorder(),
                                       ),
@@ -210,6 +236,34 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
 
   Widget sessionCode(String sessionCode) {
     return Padding(padding: EdgeInsets.all(8.0), child: Text('d'));
+  }
+}
+
+class Delegate implements MDNSPluginDelegate {
+  void onDiscoveryStarted() {
+    print("Discovery started");
+  }
+
+  void onDiscoveryStopped() {
+    print("Discovery stopped");
+  }
+
+  bool onServiceFound(MDNSService service) {
+    print("Found: $service");
+    // Always returns true which begins service resolution
+    return true;
+  }
+
+  void onServiceResolved(MDNSService service) {
+    print("Resolved: $service");
+  }
+
+  void onServiceUpdated(MDNSService service) {
+    print("Updated: $service");
+  }
+
+  void onServiceRemoved(MDNSService service) {
+    print("Removed: $service");
   }
 }
 

@@ -70,6 +70,7 @@ dependencies:
     path: ./modules/flutter-intro-slider
   flare_flutter: ^2.0.1
   qr_mobile_vision: ^0.3.1
+  mdns_plugin: ^1.1.4
 
 dependency_overrides:
   intl: ^0.16.0

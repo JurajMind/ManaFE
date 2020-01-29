@@ -31,7 +31,7 @@ class StatisticRecapWidget extends StatelessWidget {
               width: 15,
               decoration: BoxDecoration(shape: BoxShape.circle, color: ballColor),
             ),
-            Text(' ${label?.toUpperCase()}', style: Theme.of(context).textTheme.headline6)
+            Text(' ${label?.toUpperCase()}', style: Theme.of(context).textTheme.bodyText2)
           ]),
           buildSecondLine(lines, context),
           buildThirdLine(lines, context)
