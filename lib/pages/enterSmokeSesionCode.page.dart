@@ -12,7 +12,7 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-//import 'SmokeSession/qr_code_reader_page.dart';
+import 'SmokeSession/qr_code_reader_page.dart';
 
 class EnterSmokeSessionCode extends StatefulWidget {
   final GlobalKey<NavigatorState> Function(int) callback;
@@ -146,7 +146,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                         flex: 1,
                                         child: InkWell(
                                             onTap: () => Navigator.of(context).push<String>(new MaterialPageRoute(builder: (BuildContext context) {
-                                                  return new Container();
+                                                  return new QrCodeReader();
                                                 })).then((smokeSessionLink) async {
                                                   if (smokeSessionLink != null && smokeSessionLink.contains("/smoke/")) {
                                                     var sessionCode = smokeSessionLink.split('/').last.trim();
