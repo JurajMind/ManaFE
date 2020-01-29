@@ -24,7 +24,6 @@ class EnterSmokeSessionCode extends StatefulWidget {
 
 class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
   final double topWidgetHeight = 200.0;
-  String _sessionCode;
   final _formKey = GlobalKey<FormState>();
   final myController = TextEditingController();
   final ApiClient apiClient = App.http;
@@ -209,10 +208,6 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
     }
   }
 
-  void _submit() {
-    print(this._sessionCode);
-  }
-
   Widget sessionCode(String sessionCode) {
     return Padding(padding: EdgeInsets.all(8.0), child: Text('d'));
   }
@@ -222,15 +217,9 @@ class UpperCaseTextFormatter extends TextInputFormatter {
   WhitelistingTextInputFormatter formatter = WhitelistingTextInputFormatter(new RegExp(r'[A-Z0-9]*'));
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-    TextEditingValue formattedValue = formatter.formatEditUpdate(oldValue, newValue);
     if (oldValue.text == newValue.text) {
       return newValue;
     }
-    final int newTextLength = formattedValue.text.length;
-
-    int selectionIndex = formattedValue.selection.end;
-    int usedSubstringIndex = 0;
-    final StringBuffer newText = new StringBuffer();
 
     return new TextEditingValue(
       text: newValue.text?.toUpperCase(),

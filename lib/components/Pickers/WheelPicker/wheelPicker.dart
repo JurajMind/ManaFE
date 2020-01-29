@@ -352,28 +352,6 @@ class WheelPicker extends StatelessWidget {
     return true;
   }
 
-  bool _onDecimalNotification(Notification notification) {
-    if (notification is ScrollNotification) {
-      //calculate middle value
-      int indexOfMiddleElement = (notification.metrics.pixels + _listViewHeight / 2) ~/ itemExtent;
-      int decimalValueInTheMiddle = indexOfMiddleElement - 1;
-      decimalValueInTheMiddle = _normalizeDecimalMiddleValue(decimalValueInTheMiddle);
-
-      if (_userStoppedScrolling(notification, decimalScrollController)) {
-        //center selected value
-        animateDecimal(decimalValueInTheMiddle);
-      }
-
-      //update selection
-      if (selectedIntValue != maxValue && decimalValueInTheMiddle != selectedDecimalValue) {
-        double decimalPart = _toDecimal(decimalValueInTheMiddle);
-        double newValue = ((selectedIntValue + decimalPart).toDouble());
-        onChanged(newValue);
-      }
-    }
-    return true;
-  }
-
   ///There was a bug, when if there was small integer range, e.g. from 1 to 5,
   ///When user scrolled to the top, whole listview got displayed.
   ///To prevent this we are calculating cacheExtent by our own so it gets smaller if number of items is smaller
@@ -396,10 +374,6 @@ class WheelPicker extends StatelessWidget {
     //make sure that max is a multiple of step
     int max = (maxValue ~/ step) * step;
     return _normalizeMiddleValue(integerValueInTheMiddle, minValue, max);
-  }
-
-  int _normalizeDecimalMiddleValue(int decimalValueInTheMiddle) {
-    return _normalizeMiddleValue(decimalValueInTheMiddle, 0, math.pow(10, decimalPlaces) - 1);
   }
 
   ///indicates if user has stopped scrolling so we can center value in the middle

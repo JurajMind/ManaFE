@@ -33,6 +33,4 @@ class Cache {
     print("init db");
     return database;
   }
-
-  Cache._internal() {}
 }

@@ -194,7 +194,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                       child: Column(
                         children: <Widget>[
                           Text(AppTranslations.of(context).text('smoke_session.last_puf'),
-                              textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline6.apply(color: Colors.grey)),
+                              textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyText2.apply(color: Colors.grey)),
                           new PuffTimeText(completeTime: asyncSnapshot.data.toString()),
                           Text(longestString)
                         ],
@@ -204,7 +204,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                       child: Column(
                         children: <Widget>[
                           Text(AppTranslations.of(context).text('smoke_session.durations'),
-                              style: Theme.of(context).textTheme.headline6.apply(color: Colors.grey)),
+                              style: Theme.of(context).textTheme.bodyText2.apply(color: Colors.grey)),
                           SinceTimer(
                             start: start,
                             pufCount: asyncSnapshot.data.pufCount,
@@ -488,7 +488,7 @@ class HeaderItem extends StatelessWidget {
     return Expanded(
       child: new Column(
         children: <Widget>[
-          Text(label, style: Theme.of(context).textTheme.headline6.apply(color: Colors.grey)),
+          Text(label, style: Theme.of(context).textTheme.bodyText2.apply(color: Colors.grey)),
           Text(
             data,
             style: Theme.of(context).textTheme.headline4,

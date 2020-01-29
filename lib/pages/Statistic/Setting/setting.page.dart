@@ -1,14 +1,11 @@
 import 'package:app/app/app.widget.dart';
 import 'package:app/components/Buttons/m_outlineButton.dart';
-import 'package:app/module/data_provider.dart';
-import 'package:app/module/person/person_bloc.dart';
 import 'package:app/pages/Settings/language_selector_page.dart';
 import 'package:app/pages/Statistic/Setting/person_info.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:openapi/api.dart';
 
 class SettingPage extends StatefulWidget {
   SettingPage({Key key}) : super(key: key);

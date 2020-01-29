@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 ThemeData buildDarkTheme() {
-  final ThemeData base = new ThemeData.dark();
+  final ThemeData base = ThemeData(fontFamily: 'Montserrat', brightness: Brightness.dark);
 
   return base.copyWith(
       primaryColor: AppColors.colors[1],
@@ -17,26 +17,24 @@ ThemeData buildDarkTheme() {
       primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
       accentTextTheme: _buildTextTheme(base.accentTextTheme),
       textTheme: TextTheme(
-        headline1: TextStyle(color: AppColors.white, fontSize: 96, fontFamily: 'Montserrat', fontWeight: FontWeight.w300),
-        headline2: TextStyle(color: AppColors.white, fontSize: 60, fontFamily: 'Montserrat', fontWeight: FontWeight.w700),
-        headline3: TextStyle(color: AppColors.white, fontSize: 48, fontFamily: 'Montserrat', fontWeight: FontWeight.w400),
-        headline4: TextStyle(color: AppColors.white, fontSize: 34, fontFamily: 'Montserrat', fontWeight: FontWeight.w400),
-        headline5: TextStyle(color: AppColors.white, fontSize: 24, fontFamily: 'Montserrat', fontWeight: FontWeight.w400),
-        headline6: TextStyle(color: AppColors.white, fontSize: 20, fontFamily: 'Montserrat', fontWeight: FontWeight.w500),
-        subtitle1: TextStyle(color: AppColors.white, fontSize: 16, fontFamily: 'Montserrat'),
-        subtitle2: TextStyle(color: AppColors.white, fontSize: 14, fontFamily: 'Montserrat'),
-        bodyText1: TextStyle(color: AppColors.white, fontSize: 16, fontFamily: 'Montserrat'),
-        bodyText2: TextStyle(color: AppColors.white, fontSize: 14, fontFamily: 'Montserrat'),
-        button: TextStyle(color: AppColors.white, fontSize: 14, fontFamily: 'Montserrat'),
-        caption: TextStyle(color: AppColors.white, fontSize: 12, fontFamily: 'Montserrat'),
-        overline: TextStyle(color: AppColors.white, fontSize: 10, fontFamily: 'Montserrat'),
+        headline1: base.textTheme.headline1.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
+        headline2: base.textTheme.headline2.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
+        headline3: base.textTheme.headline3.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
+        headline4: base.textTheme.headline4.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
+        headline5: base.textTheme.headline5.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
+        headline6: base.textTheme.headline6.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
+        subtitle1: base.textTheme.subtitle1.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
+        subtitle2: base.textTheme.subtitle2.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
+        bodyText1: base.textTheme.bodyText1.copyWith(color: AppColors.white, fontWeight: FontWeight.w500),
+        bodyText2: base.textTheme.bodyText2.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
+        button: base.textTheme.button.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
+        caption: base.textTheme.caption.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
+        overline: base.textTheme.overline.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
       ));
 }
 
 TextTheme _buildTextTheme(TextTheme base) {
-  return base.copyWith(
-    headline6: base.headline6.copyWith(fontFamily: 'Montserrat', fontWeight: FontWeight.w700, color: Colors.white),
-  );
+  return base;
 }
 
 class AppColors {

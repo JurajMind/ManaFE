@@ -5,8 +5,7 @@ import 'package:flutter/services.dart';
 
 typedef ChipsInputSuggestions<T> = FutureOr<List<T>> Function(String query);
 typedef ChipSelected<T> = void Function(T data, bool selected);
-typedef ChipsBuilder<T> = Widget Function(
-    BuildContext context, ChipsInputState<T> state, T data);
+typedef ChipsBuilder<T> = Widget Function(BuildContext context, ChipsInputState<T> state, T data);
 
 class ChipsInput<T> extends StatefulWidget {
   ChipsInput({
@@ -55,8 +54,7 @@ class ChipsInput<T> extends StatefulWidget {
   ChipsInputState<T> createState() => ChipsInputState<T>();
 }
 
-class ChipsInputState<T> extends State<ChipsInput<T>>
-    implements TextInputClient {
+class ChipsInputState<T> extends State<ChipsInput<T>> implements TextInputClient {
   static const kObjectReplacementChar = 0xFFFC;
   Set<T> _chips = Set<T>();
   List<T> _suggestions;
@@ -119,8 +117,7 @@ class ChipsInputState<T> extends State<ChipsInput<T>>
 
   _recalculateSuggestionsBoxHeight() {
     setState(() {
-      _suggestionBoxHeight = MediaQuery.of(context).size.height -
-          MediaQuery.of(context).viewInsets.bottom;
+      _suggestionBoxHeight = MediaQuery.of(context).size.height - MediaQuery.of(context).viewInsets.bottom;
     });
   }
 
@@ -138,8 +135,7 @@ class ChipsInputState<T> extends State<ChipsInput<T>>
           width: size.width,
           child: StreamBuilder(
               stream: _suggestionsStreamController.stream,
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<dynamic>> snapshot) {
+              builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
                 return (snapshot.data != null && snapshot.data?.length != 0)
                     ? CompositedTransformFollower(
                         link: this._layerLink,
@@ -149,18 +145,14 @@ class ChipsInputState<T> extends State<ChipsInput<T>>
                           elevation: 4.0,
                           child: ConstrainedBox(
                             constraints: BoxConstraints(
-                              maxHeight: widget.suggestionsBoxMaxHeight ??
-                                  (_suggestionBoxHeight - top > 0
-                                      ? _suggestionBoxHeight - top
-                                      : 400),
+                              maxHeight: widget.suggestionsBoxMaxHeight ?? (_suggestionBoxHeight - top > 0 ? _suggestionBoxHeight - top : 400),
                             ),
                             child: ListView.builder(
                               shrinkWrap: true,
                               padding: EdgeInsets.zero,
                               itemCount: snapshot.data?.length ?? 0,
                               itemBuilder: (BuildContext context, int index) {
-                                return widget.suggestionBuilder(
-                                    context, this, _suggestions[index]);
+                                return widget.suggestionBuilder(context, this, _suggestions[index]);
                               },
                             ),
                           ),
@@ -242,9 +234,7 @@ class ChipsInputState<T> extends State<ChipsInput<T>>
 
   @override
   Widget build(BuildContext context) {
-    var chipsChildren = _chips
-        .map<Widget>((data) => widget.chipBuilder(context, this, data))
-        .toList();
+    var chipsChildren = _chips.map<Widget>((data) => widget.chipBuilder(context, this, data)).toList();
 
     final theme = Theme.of(context);
 
@@ -257,8 +247,7 @@ class ChipsInputState<T> extends State<ChipsInput<T>>
           children: <Widget>[
             Text(
               text,
-              style: widget.textStyle ??
-                  theme.textTheme.subhead.copyWith(height: 1.5),
+              style: widget.textStyle ?? theme.textTheme.subtitle1.copyWith(height: 1.5),
             ),
             _TextCaret(
               resumed: _focusNode.hasFocus,
@@ -302,9 +291,7 @@ class ChipsInputState<T> extends State<ChipsInput<T>>
   }
 
   int _countReplacements(TextEditingValue value) {
-    return value.text.codeUnits
-        .where((ch) => ch == kObjectReplacementChar)
-        .length;
+    return value.text.codeUnits.where((ch) => ch == kObjectReplacementChar).length;
   }
 
   @override
@@ -313,8 +300,7 @@ class ChipsInputState<T> extends State<ChipsInput<T>>
   }
 
   void _updateTextInputState() {
-    final text =
-        String.fromCharCodes(_chips.map((_) => kObjectReplacementChar));
+    final text = String.fromCharCodes(_chips.map((_) => kObjectReplacementChar));
     _value = TextEditingValue(
       text: text,
       selection: TextSelection.collapsed(offset: text.length),
@@ -340,9 +326,7 @@ class ChipsInputState<T> extends State<ChipsInput<T>>
     final localId = ++_searchId;
     final results = await widget.findSuggestions(value);
     if (_searchId == localId && mounted) {
-      setState(() => _suggestions = results
-          .where((profile) => !_chips.contains(profile))
-          .toList(growable: false));
+      setState(() => _suggestions = results.where((profile) => !_chips.contains(profile)).toList(growable: false));
     }
     _suggestionsStreamController.add(_suggestions);
   }
@@ -380,8 +364,7 @@ class _TextCaret extends StatefulWidget {
   _TextCursorState createState() => _TextCursorState();
 }
 
-class _TextCursorState extends State<_TextCaret>
-    with SingleTickerProviderStateMixin {
+class _TextCursorState extends State<_TextCaret> with SingleTickerProviderStateMixin {
   bool _displayed = false;
   Timer _timer;
 

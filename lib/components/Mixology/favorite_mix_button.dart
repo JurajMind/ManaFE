@@ -29,7 +29,7 @@ class FavoriteMixButton extends StatelessWidget {
 
           return OutlineButton.icon(
             icon: Icon(Icons.add, color: Colors.green),
-            label: Text(AppTranslations.of(context).text("mix.add_favorite"), style: Theme.of(context).textTheme.headline5),
+            label: Text(AppTranslations.of(context).text("mix.add_favorite"), style: Theme.of(context).textTheme.bodyText2),
             onPressed: () async {
               bloc.addToFavorite(mix);
             },

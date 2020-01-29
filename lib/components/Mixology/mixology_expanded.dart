@@ -14,13 +14,7 @@ class MixCardExpanded extends StatefulWidget {
   final bool noTitle;
   final ValueChanged<TobaccoMixSimpleDto> onTap;
   final bool selected;
-  MixCardExpanded(
-      {this.tobaccoMix,
-      this.noTitle = false,
-      this.highlightId,
-      this.onTap,
-      this.selected = false,
-      this.multiHighlight});
+  MixCardExpanded({this.tobaccoMix, this.noTitle = false, this.highlightId, this.onTap, this.selected = false, this.multiHighlight});
 
   @override
   _MixologyExpandedState createState() => new _MixologyExpandedState();
@@ -40,11 +34,7 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
           if (widget.onTap != null) {
             widget.onTap(widget.tobaccoMix);
           } else {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        MixDetailPage(mix: widget.tobaccoMix)));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => MixDetailPage(mix: widget.tobaccoMix)));
           }
         },
         child: Padding(
@@ -66,12 +56,11 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                         child: widget.tobaccoMix.name != null
                             ? Text(
                                 widget.tobaccoMix.name,
-                                style: Theme.of(context).textTheme.subtitle,
+                                style: Theme.of(context).textTheme.subtitle2,
                               )
                             : Text(
-                                AppTranslations.of(context)
-                                    .text('gear.no_name'),
-                                style: Theme.of(context).textTheme.subtitle,
+                                AppTranslations.of(context).text('gear.no_name'),
+                                style: Theme.of(context).textTheme.subtitle2,
                               ),
                       ),
                     ),
@@ -97,11 +86,9 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                 child: Container(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          ..._createTobaccoRow(widget.tobaccoMix),
-                        ]),
+                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                      ..._createTobaccoRow(widget.tobaccoMix),
+                    ]),
                   ),
                 ),
                 elevation: 8.0,
@@ -122,16 +109,13 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
           child: new Column(
             children: <Widget>[
               AutoSizeText(item.tobacco?.name ?? 'd',
-                  overflow: TextOverflow.ellipsis,
-                  style: new TextStyle(
-                      fontWeight: FontWeight.bold, color: getColor(item))),
+                  overflow: TextOverflow.ellipsis, style: new TextStyle(fontWeight: FontWeight.bold, color: getColor(item))),
               AutoSizeText(
                 item.tobacco?.brand ?? 'b',
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(color: Colors.black),
               ),
-              Text(item.fraction.toString() + 'g',
-                  style: TextStyle(color: Colors.grey)),
+              Text(item.fraction.toString() + 'g', style: TextStyle(color: Colors.grey)),
             ],
           ),
         ),

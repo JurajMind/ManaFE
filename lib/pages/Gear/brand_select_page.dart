@@ -1,7 +1,6 @@
 import 'package:app/components/Brands/brand_list_item.dart';
 import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:app/models/extensions.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/general/gear_bloc.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';

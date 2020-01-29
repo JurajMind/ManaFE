@@ -29,7 +29,7 @@ class SessionControllRow extends StatelessWidget {
             ),
             Text(
               AppTranslations.of(context).text('smoke_session.animations'),
-              style: Theme.of(context).textTheme.headline5.apply(color: AppColors.colors[1]),
+              style: Theme.of(context).textTheme.headline6.apply(color: AppColors.colors[1]),
             )
           ],
         ),
@@ -50,7 +50,7 @@ class SessionControllRow extends StatelessWidget {
                   StreamBuilder<StandSettings>(
                       stream: smokeSessionBloc.standSettings,
                       builder: (context, snapshot) {
-                        return Text(AppTranslations.of(context).text('smoke_session.colors'), style: Theme.of(context).textTheme.headline5.apply(color: color));
+                        return Text(AppTranslations.of(context).text('smoke_session.colors'), style: Theme.of(context).textTheme.headline6.apply(color: color));
                       })
                 ],
               ),

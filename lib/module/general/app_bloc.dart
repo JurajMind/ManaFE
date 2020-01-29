@@ -5,7 +5,7 @@ class AppBloc {
 
   factory AppBloc() => AppBloc._instance;
 
-  AppBloc._() {}
+  AppBloc._();
 
   BehaviorSubject<int> activeTab = new BehaviorSubject<int>.seeded(2);
 

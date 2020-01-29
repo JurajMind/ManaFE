@@ -41,7 +41,7 @@ class MButton extends StatelessWidget {
               child: Text(
                 AppTranslations.of(context).text(label),
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.bodyText2,
               ),
             ),
           ));
@@ -61,7 +61,7 @@ class MButton extends StatelessWidget {
             child: Text(
               AppTranslations.of(context).text(label),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
           ),
         ),

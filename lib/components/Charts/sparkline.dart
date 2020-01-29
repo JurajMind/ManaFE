@@ -324,12 +324,7 @@ class _SparklinePainter extends CustomPainter {
         }
 
         gridLineTextPainters.add(new TextPainter(
-            text: new TextSpan(
-                text: labelPrefix + gridLineText,
-                style: new TextStyle(
-                    color: gridLineLabelColor,
-                    fontSize: 10.0,
-                    fontWeight: FontWeight.bold)),
+            text: new TextSpan(text: labelPrefix + gridLineText, style: new TextStyle(color: gridLineLabelColor, fontSize: 10.0, fontWeight: FontWeight.bold)),
             textDirection: TextDirection.ltr));
         gridLineTextPainters[i].layout();
       }
@@ -350,7 +345,7 @@ class _SparklinePainter extends CustomPainter {
     }
 
     if (enableGridLines) {
-      width = size.width - gridLineTextPainters[0].text.text.length * 6;
+      width = size.width - gridLineTextPainters[0].text.toString().length * 6;
       Paint gridPaint = new Paint()
         ..color = gridLineColor
         ..strokeWidth = gridLineWidth;
@@ -361,12 +356,10 @@ class _SparklinePainter extends CustomPainter {
       // Draw grid lines
       for (int i = 0; i < gridLineAmount; i++) {
         gridLineY = (gridLineDist * i).round().toDouble();
-        canvas.drawLine(new Offset(0.0, gridLineY),
-            new Offset(width, gridLineY), gridPaint);
+        canvas.drawLine(new Offset(0.0, gridLineY), new Offset(width, gridLineY), gridPaint);
 
         // Label grid lines
-        gridLineTextPainters[i]
-            .paint(canvas, new Offset(width + 2.0, gridLineY - 6.0));
+        gridLineTextPainters[i].paint(canvas, new Offset(width + 2.0, gridLineY - 6.0));
       }
     }
 
@@ -374,13 +367,11 @@ class _SparklinePainter extends CustomPainter {
 
     for (int i = 0; i < dataPoints.length; i++) {
       double x = i * widthNormalizer + lineWidth / 2;
-      double y =
-          height - (dataPoints[i] - _min) * heightNormalizer + lineWidth / 2;
+      double y = height - (dataPoints[i] - _min) * heightNormalizer + lineWidth / 2;
 
       normalized.add(new Offset(x, y));
 
-      if (pointsMode == PointsMode.all ||
-          (pointsMode == PointsMode.last && i == dataPoints.length - 1)) {
+      if (pointsMode == PointsMode.all || (pointsMode == PointsMode.last && i == dataPoints.length - 1)) {
         points.add(normalized[i]);
       }
     }

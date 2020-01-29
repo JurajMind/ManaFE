@@ -1,7 +1,6 @@
 import 'package:app/app/app.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/pages/Places/map_test.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:flutter/material.dart';
@@ -113,9 +112,7 @@ class _TestPageState extends State<TestPage> {
                 var auth = new Authorize();
                 auth.messToken();
 
-                var request = App.http
-                    .getPersonInitData()
-                    .then((v) => debugPrint('refreshed'));
+                var request = App.http.getPersonInitData().then((v) => debugPrint('refreshed'));
               },
             ),
             OutlineButton.icon(
@@ -150,15 +147,13 @@ class _TestPageState extends State<TestPage> {
               label: Text('Hard jump'),
               onPressed: () async {
                 var appBloc = DataProvider.getData(context).personBloc;
-                var c = appBloc.callback(1, TestPage());
+                appBloc.callback(1, TestPage());
               },
             ),
             Hero(
               tag: "DemoTag",
-              child: IconButton(
-                  icon: Icon(Icons.add, size: 70),
-                  onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => MapTest()))),
+              child:
+                  IconButton(icon: Icon(Icons.add, size: 70), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => MapTest()))),
             ),
           ],
         ),
