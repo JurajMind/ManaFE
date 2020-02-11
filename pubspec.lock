@@ -133,7 +133,7 @@ packages:
       name: coverage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.3+3"
+    version: "0.13.6"
   crypto:
     dependency: transitive
     description:
@@ -318,7 +318,7 @@ packages:
       name: flutter_plugin_android_lifecycle
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   flutter_section_table_view:
     dependency: "direct main"
     description:
@@ -344,7 +344,7 @@ packages:
       name: flutter_typeahead
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.7.0"
+    version: "1.8.0"
   font_awesome_flutter:
     dependency: "direct main"
     description:
@@ -372,7 +372,7 @@ packages:
       name: geolocator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.0"
+    version: "5.2.1"
   giffy_dialog:
     dependency: "direct main"
     description:
@@ -407,7 +407,7 @@ packages:
       name: google_maps_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.21+15"
+    version: "0.5.22+3"
   google_maps_webservice:
     dependency: "direct main"
     description:
@@ -435,7 +435,7 @@ packages:
       name: http_multi_server
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.2.0"
   http_parser:
     dependency: transitive
     description:
@@ -499,6 +499,22 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.4+1"
+  logger:
+    dependency: "direct main"
+    description:
+      name: logger
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.8.3"
+  logger_flutter:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "819efac256b98b2b89dec833feda83cee9b5ae1b"
+      url: "https://github.com/JEuler/logger_flutter.git"
+    source: git
+    version: "0.7.1"
   logging:
     dependency: transitive
     description:
@@ -519,7 +535,7 @@ packages:
       name: material_design_icons_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.4.4795"
+    version: "3.4.4995"
   mdns_plugin:
     dependency: "direct main"
     description:
@@ -610,7 +626,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.1"
+    version: "1.6.0"
   pedantic:
     dependency: transitive
     description:
@@ -853,7 +869,7 @@ packages:
       name: synchronized
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.2.0"
   term_glyph:
     dependency: transitive
     description:
@@ -1002,7 +1018,7 @@ packages:
       name: webview_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.19+5"
+    version: "0.3.19+7"
   xml:
     dependency: transitive
     description:

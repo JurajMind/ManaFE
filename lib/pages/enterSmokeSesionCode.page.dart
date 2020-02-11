@@ -11,6 +11,7 @@ import 'package:app/services/http.service.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:logger/logger.dart';
 import 'package:mdns_plugin/mdns_plugin.dart';
 
 import 'SmokeSession/qr_code_reader_page.dart';
@@ -240,30 +241,32 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
 }
 
 class Delegate implements MDNSPluginDelegate {
+  var logger = Logger();
+
   void onDiscoveryStarted() {
-    print("Discovery started");
+    logger.v("Discovery started");
   }
 
   void onDiscoveryStopped() {
-    print("Discovery stopped");
+    logger.v("Discovery stopped");
   }
 
   bool onServiceFound(MDNSService service) {
-    print("Found: $service");
+    logger.v("Found: $service");
     // Always returns true which begins service resolution
     return true;
   }
 
   void onServiceResolved(MDNSService service) {
-    print("Resolved: $service");
+    logger.v("Resolved: $service");
   }
 
   void onServiceUpdated(MDNSService service) {
-    print("Updated: $service");
+    logger.v("Updated: $service");
   }
 
   void onServiceRemoved(MDNSService service) {
-    print("Removed: $service");
+    logger.v("Removed: $service");
   }
 }
 

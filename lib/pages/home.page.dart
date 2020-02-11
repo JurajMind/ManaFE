@@ -21,16 +21,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:openapi/api.dart';
 
-import 'Gear/gear_scroll_alternative.dart';
 import 'Gear/gear_scroll_cross.dart';
 import 'Mixology/mixology_list.dart';
 import 'Places/places_map_page.dart';
 import 'SmokeSession/Components/gradiend_color_wheel_rotate.dart';
 import 'SmokeSession/smoke_session_page.dart';
 import 'Statistic/Detail/smoke_session_detail_page.dart';
+import 'package:logger_flutter/logger_flutter.dart';
 
-typedef RouteWidgetBuilder = Widget Function(
-    BuildContext context, Object argument);
+typedef RouteWidgetBuilder = Widget Function(BuildContext context, Object argument);
 
 class HomePage extends StatefulWidget {
   final Uri deeplink;
@@ -93,8 +92,7 @@ class _HomePageState extends State<HomePage> {
     });
     this.initDynamicLinks();
 
-    WidgetsBinding.instance
-        .scheduleFrameCallback((_) => firstDeepJump(context));
+    WidgetsBinding.instance.scheduleFrameCallback((_) => firstDeepJump(context));
 
     final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
     if (!MPlatform.isWeb) _firebaseMessaging.requestNotificationPermissions();
@@ -134,14 +132,12 @@ class _HomePageState extends State<HomePage> {
 
     _focusActiveTab();
 
-    activeTabSub =
-        DataProvider.getData(context).appBloc.activeTab.listen((index) {
+    activeTabSub = DataProvider.getData(context).appBloc.activeTab.listen((index) {
       _setActiveTab(index);
     });
     SystemChannels.lifecycle.setMessageHandler((msg) {
       debugPrint('SystemChannels> $msg');
-      if (msg == AppLifecycleState.paused.toString() ||
-          msg == AppLifecycleState.inactive.toString()) {
+      if (msg == AppLifecycleState.paused.toString() || msg == AppLifecycleState.inactive.toString()) {
         var smokeSessionBloc = DataProvider.getData(context).smokeSessionBloc;
         smokeSessionBloc.pauseSession();
       }
@@ -160,8 +156,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void initDynamicLinks() async {
-    FirebaseDynamicLinks.instance.onLink(
-        onSuccess: (PendingDynamicLinkData dynamicLink) async {
+    FirebaseDynamicLinks.instance.onLink(onSuccess: (PendingDynamicLinkData dynamicLink) async {
       final Uri deepLink = dynamicLink?.link;
       print(dynamicLink.toString());
 
@@ -176,8 +171,7 @@ class _HomePageState extends State<HomePage> {
 
   void firstDeepJump(BuildContext context) {
     if (widget.deeplink != null) {
-      ShareService.deepLinkNavigation(
-          _setActiveTab, widget.deeplink.path, context);
+      ShareService.deepLinkNavigation(_setActiveTab, widget.deeplink.path, context);
     }
   }
 
@@ -188,9 +182,7 @@ class _HomePageState extends State<HomePage> {
   GlobalKey<NavigatorState> _setActiveTab(int index) {
     if (index == _currentIndex) return navigatorKeys[index];
 
-    DataProvider.getData(navigatorKeys[index].currentContext)
-        .appBloc
-        .changeActiveTab(index);
+    DataProvider.getData(navigatorKeys[index].currentContext).appBloc.changeActiveTab(index);
 
     if (index == _currentIndex && index == 2) {
       if (!MPlatform.isIOS) {
@@ -230,8 +222,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       text: AppTranslations.of(context).text("tabs.mixology"),
                       color: _currentIndex == 0 ? Colors.white : Colors.grey,
-                      tooltip:
-                          AppTranslations.of(context).text("tabs.mixology"),
+                      tooltip: AppTranslations.of(context).text("tabs.mixology"),
                       onPressed: () => _setActiveTab(0),
                     ),
                   ),
@@ -336,6 +327,9 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
+              LogConsoleOnShake(
+  child: Container() // Your widgets
+),
               Positioned(
                   bottom: -10,
                   height: 55,
@@ -344,8 +338,7 @@ class _HomePageState extends State<HomePage> {
                       height: 55,
                       child: ClipRect(
                         child: BackdropFilter(
-                          filter:
-                              new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                          filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                         ),
                       ))),
               useTabletLayout
@@ -355,11 +348,7 @@ class _HomePageState extends State<HomePage> {
                       left: 200,
                       width: MediaQuery.of(context).size.width - 400,
                       child: SizedBox(height: 55, child: myBottomBar(context)))
-                  : Positioned(
-                      bottom: -10,
-                      height: 55,
-                      width: MediaQuery.of(context).size.width,
-                      child: SizedBox(height: 55, child: myBottomBar(context))),
+                  : Positioned(bottom: -10, height: 55, width: MediaQuery.of(context).size.width, child: SizedBox(height: 55, child: myBottomBar(context))),
               _buildCenter(),
             ])));
   }
@@ -379,8 +368,7 @@ class _HomePageState extends State<HomePage> {
                 _currentIndex == 2
                     ? BoxShadow(
                         color: Colors.grey,
-                        offset:
-                            MPlatform.isWeb ? Offset.zero : Offset(1.0, 6.0),
+                        offset: MPlatform.isWeb ? Offset.zero : Offset(1.0, 6.0),
                         blurRadius: MPlatform.isWeb ? 0 : 40.0,
                       )
                     : BoxShadow(
@@ -490,9 +478,7 @@ class TabNavigator extends StatelessWidget {
         initialRoute: '/',
         observers: [observable],
         onGenerateRoute: (routeSettings) {
-          return MaterialPageRoute(
-              builder: (context) => routeBuilders[routeSettings.name](
-                  context, routeSettings.arguments));
+          return MaterialPageRoute(builder: (context) => routeBuilders[routeSettings.name](context, routeSettings.arguments));
         });
   }
 }

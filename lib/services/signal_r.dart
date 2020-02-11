@@ -3,6 +3,7 @@ import 'package:app/app/app.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:async';
 
@@ -10,6 +11,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 class SignalR {
   static final SignalR _singleton = new SignalR._internal();
+  var logger = Logger();
   static String host = App.baseUri;
   static String url = 'https://$host/signalr';
   final conectionData = Uri.encodeComponent('[{"name":"smokesessionhub"}]');
@@ -23,8 +25,7 @@ class SignalR {
   Map<String, ServerCallParam> serversCall = Map<String, ServerCallParam>();
   bool connection = false;
   BehaviorSubject<ClientCall> clientCalls = new BehaviorSubject<ClientCall>();
-  BehaviorSubject<SignalStatus> connectionStatus =
-      new BehaviorSubject<SignalStatus>.seeded(SignalStatus.none);
+  BehaviorSubject<SignalStatus> connectionStatus = new BehaviorSubject<SignalStatus>.seeded(SignalStatus.none);
   factory SignalR() {
     return _singleton;
   }
@@ -46,7 +47,7 @@ class SignalR {
     var abortUrl = url +
         '/abort?transport=webSockets&clientProtocol=${connectionInfo.ProtocolVersion}&connectionToken=${Uri.encodeComponent(connectionInfo.ConnectionToken)}&connectionData=$conectionData&tid=1';
     var result = await http.get(abortUrl);
-    print('signal disconnect ${result.body}');
+    logger.d('signal disconnect ${result.body}');
   }
 
   Future<dynamic> _connect({bool force = false}) async {
@@ -58,7 +59,7 @@ class SignalR {
     var chanelUlr =
         "wss://$host/signalr/connect?transport=webSockets&clientProtocol=${negotiateResponse.ProtocolVersion}&connectionToken=${Uri.encodeComponent(negotiateResponse.ConnectionToken)}&connectionData=$conectionData&tid=1";
 
-    print(chanelUlr);
+    logger.d(chanelUlr);
     handleConnection(chanelUlr, true);
 
     await startConnection(negotiateResponse).then((_) {
@@ -68,8 +69,7 @@ class SignalR {
   }
 
   Future<NegotiateResponse> getNegotiation() async {
-    var negotiateUrl =
-        url + '/negotiate?clientProtocol=1.5&connectionData=$conectionData';
+    var negotiateUrl = url + '/negotiate?clientProtocol=1.5&connectionData=$conectionData';
     var response = await http.get(negotiateUrl);
     connection = false;
     final responseJson = json.decode(response.body);
@@ -84,7 +84,7 @@ class SignalR {
       var uri = Uri.parse(url);
       _channel = new WebSocketChannel.connect(uri);
       _channel.stream.listen((message) async {
-        print('From signal ' + message);
+        logger.d('From signal ' + message);
         if (message == "{}") {
           lastPing = DateTime.now();
           lastPingStream.add(DateTime.now());
@@ -93,7 +93,7 @@ class SignalR {
         proceedCall(serverCall);
       }, onError: (error) {
         connectionStatus.add(SignalStatus.error);
-        print(error);
+        logger.d(error);
         if (connection) {}
       });
 
@@ -103,25 +103,18 @@ class SignalR {
         }
       });
     } catch (e) {
-      print(e);
+      logger.e(e);
     }
   }
 
   Future checkConection() async {
-    if (lastPing
-            .add(new Duration(seconds: connectionInfo.KeepAliveTimeout.toInt()))
-            .microsecondsSinceEpoch >
-        DateTime.now().microsecondsSinceEpoch) {
-      debugPrint('not reconecting');
+    if (lastPing.add(new Duration(seconds: connectionInfo.KeepAliveTimeout.toInt())).microsecondsSinceEpoch > DateTime.now().microsecondsSinceEpoch) {
+      logger.d('not reconecting');
       return;
     }
 
-    if (lastPing
-            .add(
-                new Duration(seconds: connectionInfo.DisconnectTimeout.toInt()))
-            .microsecondsSinceEpoch >
-        DateTime.now().microsecondsSinceEpoch) {
-      debugPrint('reconect');
+    if (lastPing.add(new Duration(seconds: connectionInfo.DisconnectTimeout.toInt())).microsecondsSinceEpoch > DateTime.now().microsecondsSinceEpoch) {
+      logger.d('reconect');
       await restartConnection();
       var reconectCall = new ClientCall(Data: new List<ClientMethod>());
       reconectCall.Data.add(new ClientMethod(Method: "reconect"));
@@ -139,22 +132,21 @@ class SignalR {
     connection = true;
     var startUrl = url +
         '/start?transport=webSockets&clientProtocol=1.5&connectionToken=${Uri.encodeComponent(negotiateResponse.ConnectionToken)}&connectionData=$conectionData';
-    print(startUrl);
+    logger.d(startUrl);
 
     var connect = await http.get(startUrl).catchError((onError) {
-      print(onError);
+      logger.d(onError);
     });
 
-    print('Start connection' + connect.body);
+    logger.d('Start connection' + connect.body);
   }
 
   Future restartConnection() async {
-    final conectionData = Uri.encodeComponent(
-        '[{"name":"smokesessionhub","messageId":$lastMsgId}]');
+    final conectionData = Uri.encodeComponent('[{"name":"smokesessionhub","messageId":$lastMsgId}]');
     var chanelUlr =
         "wss://$host/signalr/reconnect?transport=webSockets&clientProtocol=${connectionInfo.ProtocolVersion}&connectionToken=${Uri.encodeComponent(connectionInfo.ConnectionToken)}&connectionData=$conectionData";
 
-    print(chanelUlr);
+    logger.d(chanelUlr);
 
     handleConnection(chanelUlr, false);
   }
@@ -170,8 +162,7 @@ class SignalR {
     if (serverCall.Init == 1) {
       connectionStatus.add(SignalStatus.running);
       var oneSec = Duration(seconds: connectionInfo.KeepAliveTimeout.toInt());
-      connectionTimer =
-          new Timer.periodic(oneSec, (Timer t) => checkConection());
+      connectionTimer = new Timer.periodic(oneSec, (Timer t) => checkConection());
     }
     if (serverCall.Data != null) clientCalls.add(serverCall);
   }

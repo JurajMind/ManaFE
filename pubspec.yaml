@@ -71,6 +71,9 @@ dependencies:
   flare_flutter: ^2.0.1
   qr_mobile_vision: ^0.3.1
   mdns_plugin: ^1.1.4
+  logger: ^0.8.3
+  logger_flutter:
+    git: https://github.com/JEuler/logger_flutter.git
 
 dependency_overrides:
   intl: ^0.16.0

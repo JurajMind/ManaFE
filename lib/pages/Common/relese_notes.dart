@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 
 class ReleaseNotes extends StatefulWidget {
-  static const String _key = "13.12.2019_4";
+  static const String _key = "13.1.2020_1";
   @override
   _ReleaseNotesState createState() => _ReleaseNotesState();
 }
@@ -43,9 +43,8 @@ class _ReleaseNotesState extends State<ReleaseNotes> {
               ),
               description: Text(
                   //  AppTranslations.of(context).text("release_note.text"),
-                  'Gear page scrolling  \n \n Tobacco mix search \n',
-                  style:
-                      TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600)),
+                  'QR READER  \n \n NEW LOGIN FLOW  \n \n FONT REWORK \n \n ',
+                  style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600)),
               onOkButtonPressed: () {
                 Navigator.of(dc).pop();
               },
