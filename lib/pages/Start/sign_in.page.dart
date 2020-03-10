@@ -27,7 +27,7 @@ class _LoginData {
 
 class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  final Authorize _auth = new Authorize();
+  final AuthorizeManager _auth = new AuthorizeManager();
   _LoginData data = new _LoginData();
   bool _loading = false;
   final FocusNode passwordFocusNode = FocusNode();

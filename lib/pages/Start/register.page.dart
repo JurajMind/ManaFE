@@ -253,7 +253,7 @@ class _RegistryPageState extends State<RegisterPage> {
     data.email = emailController.text;
     data.password = passwordController.text;
     data.confirmPassword = password2Controller.text;
-    var auth = new Authorize();
+    var auth = new AuthorizeManager();
     var result = await auth.register(data);
     if (result == null) {
       AppWidget.restartApp(context);

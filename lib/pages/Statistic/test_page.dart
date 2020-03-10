@@ -109,7 +109,7 @@ class _TestPageState extends State<TestPage> {
               ),
               label: Text('Test token recovery'),
               onPressed: () async {
-                var auth = new Authorize();
+                var auth = new AuthorizeManager();
                 auth.messToken();
 
                 var request = App.http.getPersonInitData().then((v) => debugPrint('refreshed'));
@@ -134,7 +134,7 @@ class _TestPageState extends State<TestPage> {
               ),
               label: Text('Corupt tokken'),
               onPressed: () async {
-                var auth = new Authorize();
+                var auth = new AuthorizeManager();
                 await auth.messToken();
               },
             ),

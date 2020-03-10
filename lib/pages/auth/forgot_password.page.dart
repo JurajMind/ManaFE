@@ -14,7 +14,7 @@ class ForgotPasswordPage extends StatefulWidget {
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  final Authorize _auth = new Authorize();
+  final AuthorizeManager _auth = new AuthorizeManager();
   String email = '';
   bool _loading = false;
 

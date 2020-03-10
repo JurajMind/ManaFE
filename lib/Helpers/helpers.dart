@@ -21,12 +21,12 @@ String validate(Object value, String attribute, List<BaseValidator> validators) 
 
 // Navigate
 void navigate(BuildContext context, String routePath, {Map<String, dynamic> params}) {
-  App.router.navigateTo(context, routePath);
+  //App.router.navigateTo(context, routePath);
 }
 
 // Redirect
 void redirect(BuildContext context, String routePath) {
-  App.router.navigateTo(context, routePath, replace: true);
+  //App.router.navigateTo(context, routePath, replace: true);
 }
 
 //CircleRadius

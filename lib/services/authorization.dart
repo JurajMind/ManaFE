@@ -10,18 +10,18 @@ import 'package:openapi/api.dart';
 
 import 'local_storage/m_local_storage.dart';
 
-class Authorize {
-  static final Authorize _singleton = new Authorize._internal();
+class AuthorizeManager {
+  static final AuthorizeManager _singleton = new AuthorizeManager._internal();
   String url = 'https://${App.baseUri}/token';
 
   String _token;
   String _userName;
 
-  factory Authorize() {
+  factory AuthorizeManager() {
     return _singleton;
   }
 
-  Authorize._internal();
+  AuthorizeManager._internal();
 
   Future<String> authorize(String userName, String password) async {
     final response = await http.post(
@@ -34,7 +34,7 @@ class Authorize {
     }
     MLocalStorage _storage = await MLocalStorage.getInstance();
     final responseJson = json.decode(response.body);
-    var sucess = await writeToken(responseJson);
+    var sucess = await _writeToken(responseJson);
     if (sucess != null) {
       await _storage.setString('password', password);
     }
@@ -60,7 +60,7 @@ class Authorize {
   Future<bool> getLocalToken(String provider, String externalToken) async {
     var response = await http.get("https://${App.baseUri}/Account/ObtainLocalAccessToken?provider=$provider&externalAccessToken=$externalToken");
     final responseJson = json.decode(response.body);
-    var success = await writeToken(responseJson);
+    var success = await _writeToken(responseJson);
     if (success != null) {
       return true;
     }
@@ -75,6 +75,10 @@ class Authorize {
     await _storage.remove('password');
     navigatorKey.currentState.pushReplacementNamed('auth/home');
     _token = null;
+  }
+
+  Future<bool> hasToken() async {
+    return (await this.getToken()) != null;
   }
 
   messToken() async {
@@ -105,7 +109,7 @@ class Authorize {
       AppWidget.restartApp(scaffoldKey.currentContext);
     }
 
-    var success = await writeToken(responseJson);
+    var success = await _writeToken(responseJson);
     if (success != null) {
       return success;
     }
@@ -127,7 +131,7 @@ class Authorize {
     );
     final responseJson = json.decode(response.body);
 
-    var success = await writeToken(responseJson);
+    var success = await _writeToken(responseJson);
     if (success != null) {
       return null;
     }
@@ -146,7 +150,7 @@ class Authorize {
     return false;
   }
 
-  Future<String> writeToken(dynamic responseJson) async {
+  Future<String> _writeToken(dynamic responseJson) async {
     MLocalStorage _storage = await MLocalStorage.getInstance();
     var token = TokenResponse.fromJson(responseJson as Map<String, dynamic>);
     if (token.accessToken != null) {

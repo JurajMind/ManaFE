@@ -31,11 +31,7 @@ class App {
   static String googleApiKeys;
 
   // Create app.
-  App(
-      {String environment,
-      String baseUri,
-      String clientId,
-      String googleApiKey}) {
+  App({String environment, String baseUri, String clientId, String googleApiKey}) {
     App.environment = environment;
     App.clientId = clientId;
     App.baseUri = baseUri;
@@ -66,13 +62,11 @@ class App {
 
   static final List<String> supportedLanguagesCodes = ["en", "cs", "de"];
 
-  static Iterable<Locale> supportedLocales() =>
-      supportedLanguagesCodes.map<Locale>((language) => Locale(language, ""));
+  static Iterable<Locale> supportedLocales() => supportedLanguagesCodes.map<Locale>((language) => Locale(language, ""));
 
   static LocaleChangeCallback onLocaleChanged;
 
-  Future onDidReceiveLocalNotification(
-      int id, String title, String body, String payload) async {}
+  Future onDidReceiveLocalNotification(int id, String title, String body, String payload) async {}
 
   Future onSelectNotification(String payload) async {}
 }

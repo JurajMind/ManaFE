@@ -14,7 +14,7 @@ import 'package:openapi/api.dart';
 
 class ApiClient {
   final Dio _dio;
-  final Authorize _authorize = new Authorize();
+  final AuthorizeManager _authorize = new AuthorizeManager();
 
   final String baseUrl;
 

@@ -292,6 +292,7 @@ class _HomePageState extends State<HomePage> {
                     VisibilityStageNavigator(
                       new MixologyList(),
                       0,
+                      url: "mixology",
                       currentIndex: _currentIndex,
                       navigatorKeys: navigatorKeys,
                       tabFocusNodes: tabFocusNodes,
@@ -299,6 +300,7 @@ class _HomePageState extends State<HomePage> {
                     VisibilityStageNavigator(
                       new PlacesMapPage(),
                       1,
+                      url: "places",
                       currentIndex: _currentIndex,
                       navigatorKeys: navigatorKeys,
                       tabFocusNodes: tabFocusNodes,
@@ -306,6 +308,7 @@ class _HomePageState extends State<HomePage> {
                     VisibilityStageNavigator(
                       new StartSmokeSessionPage(callback: _setActiveTab),
                       2,
+                      url: "session",
                       currentIndex: _currentIndex,
                       navigatorKeys: navigatorKeys,
                       tabFocusNodes: tabFocusNodes,
@@ -313,6 +316,7 @@ class _HomePageState extends State<HomePage> {
                     VisibilityStageNavigator(
                       new GearScrollAlternativeCross(),
                       3,
+                      url: "gear",
                       currentIndex: _currentIndex,
                       navigatorKeys: navigatorKeys,
                       tabFocusNodes: tabFocusNodes,
@@ -320,6 +324,7 @@ class _HomePageState extends State<HomePage> {
                     VisibilityStageNavigator(
                       new StatisticPage(),
                       4,
+                      url: "statistic",
                       currentIndex: _currentIndex,
                       navigatorKeys: navigatorKeys,
                       tabFocusNodes: tabFocusNodes,
@@ -327,9 +332,8 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              LogConsoleOnShake(
-  child: Container() // Your widgets
-),
+              LogConsoleOnShake(child: Container() // Your widgets
+                  ),
               Positioned(
                   bottom: -10,
                   height: 55,
@@ -428,12 +432,14 @@ class VisibilityStageNavigator extends StatelessWidget {
     @required int currentIndex,
     @required this.tabFocusNodes,
     @required this.navigatorKeys,
+    @required this.url,
   }) : super(key: key);
 
   final List<FocusScopeNode> tabFocusNodes;
   final Map<int, GlobalKey<NavigatorState>> navigatorKeys;
   final int index;
   final Widget child;
+  final String url;
 
   @override
   Widget build(BuildContext context) {
@@ -443,6 +449,7 @@ class VisibilityStageNavigator extends StatelessWidget {
         navigatorKey: navigatorKeys[index],
         tabItem: child,
         index: index,
+        urlPrefix: url,
       ),
     );
   }
@@ -450,22 +457,16 @@ class VisibilityStageNavigator extends StatelessWidget {
 
 class TabNavigator extends StatelessWidget {
   final int index;
+  final String urlPrefix;
 
-  TabNavigator({this.navigatorKey, this.tabItem, this.index});
+  TabNavigator({this.navigatorKey, this.tabItem, this.index, this.urlPrefix});
   final GlobalKey<NavigatorState> navigatorKey;
   final Widget tabItem;
 
   Map<String, RouteWidgetBuilder> _routeBuilders(BuildContext context) {
     return {
+      '/$urlPrefix': (context, argument) => this.tabItem,
       '/': (context, argument) => this.tabItem,
-      '/smokeSesion': (context, argument) {
-        return new SmokeSessionPage();
-      },
-      '/smokeStatistic': (context, argument) {
-        if (argument is SmokeSessionSimpleDto) {
-          return new SmokeSessioDetailPage(session: argument);
-        }
-      }
     };
   }
 
@@ -475,7 +476,7 @@ class TabNavigator extends StatelessWidget {
     var observable = HeroController();
     return Navigator(
         key: navigatorKey,
-        initialRoute: '/',
+        initialRoute: "/$urlPrefix",
         observers: [observable],
         onGenerateRoute: (routeSettings) {
           return MaterialPageRoute(builder: (context) => routeBuilders[routeSettings.name](context, routeSettings.arguments));

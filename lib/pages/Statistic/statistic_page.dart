@@ -93,7 +93,7 @@ class TimeModel {
 class _StatisticPageState extends State<StatisticPage> {
   math.Random random = new math.Random();
   PageController controller;
-  Authorize auth = new Authorize();
+  AuthorizeManager auth = new AuthorizeManager();
   TimeModel selectedTime;
   StreamController<LineTouchResponse> touchController;
   bool loading = false;

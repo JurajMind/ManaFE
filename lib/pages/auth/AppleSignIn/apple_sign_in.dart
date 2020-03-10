@@ -26,20 +26,16 @@ class _MAppleLoginState extends State<MAppleLogin> {
               }
 
               return isAvailableSnapshot.data
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          AppleSignInButton(
-                            onPressed: logIn,
-                          ),
-                          if (errorMessage != null) Text(errorMessage),
-                        ])
-                  : Text(
-                      'Sign in With Apple not available. Must be run on iOS 13+');
+                  ? Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      AppleSignInButton(
+                        onPressed: logIn,
+                      ),
+                      if (errorMessage != null) Text(errorMessage),
+                    ])
+                  : Text('Sign in With Apple not available. Must be run on iOS 13+');
             }));
   }
 
@@ -53,7 +49,7 @@ class _MAppleLoginState extends State<MAppleLogin> {
 
         // Store user ID
         var storage = await MLocalStorage();
-            storage.setString("userId", result.credential.user);
+        storage.setString("userId", result.credential.user);
 
         // Navigate to secret page (shhh!)
 
@@ -73,7 +69,7 @@ class _MAppleLoginState extends State<MAppleLogin> {
   }
 
   void checkLoggedInState() async {
-    var auth = new Authorize();
+    var auth = new AuthorizeManager();
     final userId = await auth.isAuthorized();
     if (!userId) {
       print("No stored user ID");
@@ -87,8 +83,7 @@ class _MAppleLoginState extends State<MAppleLogin> {
         break;
 
       case CredentialStatus.error:
-        print(
-            "getCredentialState returned an error: ${credentialState.error.localizedDescription}");
+        print("getCredentialState returned an error: ${credentialState.error.localizedDescription}");
         break;
 
       case CredentialStatus.revoked:

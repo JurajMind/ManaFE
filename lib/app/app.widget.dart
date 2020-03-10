@@ -83,7 +83,7 @@ class _AppWidgetState extends State<AppWidget> {
       supportedLocales: App.supportedLocales(),
       title: 'Manapipes',
       home: _isAuthorized ? new DataProvider(key: key, child: getMainPage()) : getMainPage(),
-      // onGenerateRoute: App.router.generator,
+      //onGenerateRoute: App.router.generator,
       theme: buildDarkTheme(),
     );
   }
@@ -99,7 +99,7 @@ class _AppWidgetState extends State<AppWidget> {
   }
 
   Future<bool> isUserAuthorized() async {
-    var auth = new Authorize();
+    var auth = new AuthorizeManager();
     return await auth.isAuthorized();
   }
 }

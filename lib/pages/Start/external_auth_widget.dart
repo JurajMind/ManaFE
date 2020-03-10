@@ -68,7 +68,7 @@ class ExternalAuthWidget extends StatelessWidget {
       switch (result.status) {
         case FacebookLoginStatus.loggedIn:
           {
-            var auth = new Authorize();
+            var auth = new AuthorizeManager();
             onAuthBegin(true);
             var tokenResult = await auth.getLocalToken("Facebook", result.accessToken.token);
             if (tokenResult) {

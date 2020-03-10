@@ -99,7 +99,7 @@ class _SettingPageState extends State<SettingPage> {
                 icon: FontAwesomeIcons.signOutAlt,
                 label: 'Sign out',
                 onPressed: () {
-                  Authorize auth = new Authorize();
+                  AuthorizeManager auth = new AuthorizeManager();
                   auth.signOut();
                   AppWidget.restartApp(context);
                 },
