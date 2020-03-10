@@ -2,10 +2,7 @@ import 'dart:ui';
 
 import 'package:app/app/app.widget.dart';
 import 'package:app/module/cached.bloc.dart';
-import 'package:app/routes/app.routes.dart';
-import 'package:app/routes/auth.routes.dart';
 import 'package:app/services/http.service.dart';
-import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,9 +12,6 @@ void main() {
 class App {
   // Application environment.
   static String environment;
-
-  // Application router.
-  static Router router;
 
   // Application providers.
   static ApiClient http;
@@ -40,19 +34,6 @@ class App {
     App.http = new ApiClient(baseUri);
     App.http.init();
     App.cache = new Cache();
-    // Create a router.
-    final Router router = new Router();
-
-    // Init and set app router.
-    App.router = this.initializeRoutes(router);
-  }
-
-  // Let's init our routes.
-  Router initializeRoutes(Router router) {
-    new AppRoutes(router);
-    new AuthRoutes(router);
-
-    return router;
   }
 
   // App run.

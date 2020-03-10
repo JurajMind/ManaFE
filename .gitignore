@@ -75,3 +75,4 @@ ios/Flutter/flutter_export_environment.sh
 openapi/.dart_tool/pub/bin/test/test.dart.snapshot.dart2
 ios/Flutter/flutter_export_environment.sh
 pubspec.lock
+lib/generated_plugin_registrant.dart

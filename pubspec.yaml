@@ -10,14 +10,13 @@ dependencies:
   validator:
     git: https://github.com/jodinathan/validator.dart
   web_socket_channel: ^1.1.0
-  fluro: ^1.4.0
   rxdart: ^0.23.1
   intl: ^0.16.0
   animated_background: ^1.0.5
   tuple: ^1.0.2
   percent_indicator: '^1.0.13'
   dio: ^3.0.3
-  flutter_facebook_login: 
+  flutter_facebook_login:
     git:
       url: https://github.com/romulojjunior/flutter_facebook_login.git
       ref: feature/web_support
