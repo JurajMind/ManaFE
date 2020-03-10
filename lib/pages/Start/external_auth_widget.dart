@@ -36,27 +36,30 @@ class ExternalAuthWidget extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: <Widget>[
-          IconButton(
-            onPressed: () => facebookLogin(context),
-            icon: Icon(
-              FontAwesomeIcons.facebook,
-              size: 40,
+        Container(
+          constraints: BoxConstraints(maxWidth: 600),
+          child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: <Widget>[
+            IconButton(
+              onPressed: () => facebookLogin(context),
+              icon: Icon(
+                FontAwesomeIcons.facebook,
+                size: 40,
+              ),
             ),
-          ),
-          IconButton(
-            icon: Icon(
-              FontAwesomeIcons.google,
-              size: 40,
+            IconButton(
+              icon: Icon(
+                FontAwesomeIcons.google,
+                size: 40,
+              ),
             ),
-          ),
-          IconButton(
-            icon: Icon(
-              FontAwesomeIcons.apple,
-              size: 40,
-            ),
-          )
-        ])
+            IconButton(
+              icon: Icon(
+                FontAwesomeIcons.apple,
+                size: 40,
+              ),
+            )
+          ]),
+        )
       ],
     );
   }

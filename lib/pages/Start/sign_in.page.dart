@@ -65,7 +65,10 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
 
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(AppTranslations.of(context).text("login.sign_in").toUpperCase()),
+        title: new Text(
+          AppTranslations.of(context).text("login.sign_in").toUpperCase(),
+          style: Theme.of(context).textTheme.headline4,
+        ),
       ),
       body: Center(
         child: Container(

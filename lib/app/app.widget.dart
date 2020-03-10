@@ -21,7 +21,7 @@ class AppWidget extends StatefulWidget {
   }
 
   static restartApp(BuildContext context) async {
-    final _AppWidgetState state = context.ancestorStateOfType(const TypeMatcher<_AppWidgetState>());
+    final _AppWidgetState state = context.findAncestorStateOfType<_AppWidgetState>();
     state.restartApp();
   }
 }
