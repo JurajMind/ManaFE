@@ -296,9 +296,11 @@ packages:
   flutter_facebook_login:
     dependency: "direct main"
     description:
-      name: flutter_facebook_login
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: "feature/web_support"
+      resolved-ref: "93617d09c4fbf169b658950cbd5996ed2531ee05"
+      url: "https://github.com/romulojjunior/flutter_facebook_login.git"
+    source: git
     version: "3.0.0"
   flutter_form_builder:
     dependency: "direct main"
@@ -366,6 +368,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
+  flutter_web_plugins:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   font_awesome_flutter:
     dependency: "direct main"
     description:

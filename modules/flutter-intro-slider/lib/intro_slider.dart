@@ -972,16 +972,18 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
             // Description
             Container(
-              child: widgetDescription ??
-                  Text(
-                    description ?? "",
-                    style: styleDescription ?? TextStyle(color: Colors.white, fontSize: 18.0),
-                    textAlign: TextAlign.center,
-                    maxLines: maxLineTextDescription != null ? maxLineTextDescription : 100,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-              margin: marginDescription ?? EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
-            ),
+                constraints: BoxConstraints(maxWidth: 600),
+                child: widgetDescription ??
+                    Container(
+                      child: Text(
+                        description ?? "",
+                        style: styleDescription ?? TextStyle(color: Colors.white, fontSize: 18.0),
+                        textAlign: TextAlign.center,
+                        maxLines: maxLineTextDescription != null ? maxLineTextDescription : 100,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      margin: marginDescription ?? EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
+                    )),
           ],
         ),
       ),
