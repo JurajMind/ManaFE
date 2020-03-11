@@ -50,7 +50,10 @@ dependencies:
   achievement_view: ^0.1.2
   avatar_glow: ^0.2.0
   auto_size_text: ^2.1.0
-  flushbar: ^1.9.0
+  flushbar:
+    git:
+      url: git://github.com/valterh4ck3r/flushbar
+      ref: master
   date_range_picker: ^1.0.5
   #flutter_qr_scanner: ^0.1.5
   flutter_material_color_picker: ^1.0.0
