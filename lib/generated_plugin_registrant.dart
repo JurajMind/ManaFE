@@ -9,6 +9,7 @@ import 'package:flutter_facebook_login/src/web/facebook_login_plugin_web.dart';
 
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
+// ignore: public_member_api_docs
 void registerPlugins(PluginRegistry registry) {
   FacebookLoginPlugin.registerWith(registry.registrarFor(FacebookLoginPlugin));
   registry.registerMessageHandler();
