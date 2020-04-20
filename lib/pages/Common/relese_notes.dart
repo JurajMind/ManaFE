@@ -1,7 +1,7 @@
-import 'package:app/services/local_storage/m_local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ReleaseNotes extends StatefulWidget {
   static const String _key = "13.1.2020_1";
@@ -15,7 +15,7 @@ class _ReleaseNotesState extends State<ReleaseNotes> {
   @override
   void initState() {
     super.initState();
-    MLocalStorage.getInstance().then((v) {
+    SharedPreferences.getInstance().then((v) {
       var value = v.getString("relese_note");
       if (value == ReleaseNotes._key) {
       } else {
@@ -49,7 +49,7 @@ class _ReleaseNotesState extends State<ReleaseNotes> {
                 Navigator.of(dc).pop();
               },
             )).then((_) async {
-      MLocalStorage.getInstance().then((v) {
+      SharedPreferences.getInstance().then((v) {
         v.setString("relese_note", ReleaseNotes._key);
       });
     });

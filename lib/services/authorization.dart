@@ -7,8 +7,7 @@ import 'package:app/app/app.widget.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:http/http.dart' as http;
 import 'package:openapi/api.dart';
-
-import 'local_storage/m_local_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthorizeManager {
   static final AuthorizeManager _singleton = new AuthorizeManager._internal();
@@ -32,7 +31,7 @@ class AuthorizeManager {
     if (response.statusCode != 200) {
       return null;
     }
-    MLocalStorage _storage = await MLocalStorage.getInstance();
+    var _storage = await SharedPreferences.getInstance();
     final responseJson = json.decode(response.body);
     var sucess = await _writeToken(responseJson);
     if (sucess != null) {
@@ -43,7 +42,7 @@ class AuthorizeManager {
 
   Future<String> getToken() async {
     if (_token == null) {
-      MLocalStorage _storage = await MLocalStorage.getInstance();
+      SharedPreferences _storage = await SharedPreferences.getInstance();
       _token = _storage.getString('accessToken');
     }
     return _token;
@@ -51,7 +50,7 @@ class AuthorizeManager {
 
   Future<String> getUserName() async {
     if (_userName == null) {
-      MLocalStorage _storage = await MLocalStorage.getInstance();
+      SharedPreferences _storage = await SharedPreferences.getInstance();
       _userName = _storage.getString('userName');
     }
     return _userName;
@@ -68,7 +67,7 @@ class AuthorizeManager {
   }
 
   Future signOut() async {
-    MLocalStorage _storage = await MLocalStorage.getInstance();
+    SharedPreferences _storage = await SharedPreferences.getInstance();
     await _storage.remove('accessToken');
     await _storage.remove('refreshToken');
     await _storage.remove('userName');
@@ -83,12 +82,12 @@ class AuthorizeManager {
 
   messToken() async {
     _token = "token";
-    MLocalStorage _storage = await MLocalStorage.getInstance();
+    SharedPreferences _storage = await SharedPreferences.getInstance();
     await _storage.setString('accessToken', 'token');
   }
 
   Future<String> refreshToken() async {
-    MLocalStorage _storage = await MLocalStorage.getInstance();
+    SharedPreferences _storage = await SharedPreferences.getInstance();
     var refreshToken = _storage.getString('refreshToken');
     // await _storage.delete(key: 'accessToken');
     // await _storage.delete(key: 'refreshToken');
@@ -151,7 +150,7 @@ class AuthorizeManager {
   }
 
   Future<String> _writeToken(dynamic responseJson) async {
-    MLocalStorage _storage = await MLocalStorage.getInstance();
+    SharedPreferences _storage = await SharedPreferences.getInstance();
     var token = TokenResponse.fromJson(responseJson as Map<String, dynamic>);
     if (token.accessToken != null) {
       await _storage.setString('accessToken', token.accessToken);
