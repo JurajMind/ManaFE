@@ -51,12 +51,14 @@ class ExternalAuthWidget extends StatelessWidget {
                 FontAwesomeIcons.google,
                 size: 40,
               ),
+              onPressed: () {},
             ),
             IconButton(
               icon: Icon(
                 FontAwesomeIcons.apple,
                 size: 40,
               ),
+              onPressed: () {},
             )
           ]),
         )
