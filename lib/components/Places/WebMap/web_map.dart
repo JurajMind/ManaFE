@@ -33,46 +33,6 @@ class _MapWebState extends State<MapWeb> {
     print("map_rebuild ${widget.markers.length}");
 
     // ignore: undefined_prefixed_name
-    ui.platformViewRegistry.registerViewFactory(htmlId, (int viewId) {
-      var location = DataProvider.getData(context).placeBloc.location.value;
-      LatLng myLatLng;
-      if (location != null) {
-        myLatLng = new LatLng(location.latitude, location.longitude);
-      } else {
-        return DivElement();
-      }
-
-      final mapOptions = new MapOptions()
-        ..zoom = 12
-        ..center = myLatLng;
-
-      final elem = DivElement()
-        ..id = htmlId
-        ..style.width = "100%"
-        ..style.height = "100%"
-        ..style.border = 'none';
-
-      final map = new GMap(elem, mapOptions);
-      if (widget.markers != null) {
-        widget.markers.forEach((f) {
-          var marker = Marker(
-            MarkerOptions()
-              ..position = LatLng(f.position.latitude, f.position.longitude)
-              ..map = map
-              ..clickable = true
-              ..title = f.infoWindow.title,
-          );
-
-          marker.onClick.listen((onData) {
-            print(f.markerId);
-            f.onTap();
-          });
-        });
-        widget.controller.map = map;
-      }
-
-      return elem;
-    });
 
     var bloc = DataProvider.getData(context).placeBloc;
     return StreamBuilder<geo.Position>(

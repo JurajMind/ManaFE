@@ -40,10 +40,9 @@ class SmokeSessionBloc {
   factory SmokeSessionBloc() => SmokeSessionBloc._instance;
 
   BehaviorSubject<int> smokeState = new BehaviorSubject<int>.seeded(0);
-  BehaviorSubject<SmokeStatisticDataModel> smokeStatistic =
-      new BehaviorSubject<SmokeStatisticDataModel>();
+  BehaviorSubject<SmokeStatisticDataModel> smokeStatistic = new BehaviorSubject<SmokeStatisticDataModel>();
 
-  Observable<int> get smokeStateBroadcast {
+  Stream<int> get smokeStateBroadcast {
     return this.smokeState.asBroadcastStream();
   }
 
@@ -51,45 +50,32 @@ class SmokeSessionBloc {
 
   BehaviorSubject<String> lastSession = new BehaviorSubject<String>();
 
-  BehaviorSubject<SmokeSessionMetaDataDto> smokeSessionMetaData =
-      new BehaviorSubject<SmokeSessionMetaDataDto>.seeded(
-          new SmokeSessionMetaDataDto());
+  BehaviorSubject<SmokeSessionMetaDataDto> smokeSessionMetaData = new BehaviorSubject<SmokeSessionMetaDataDto>.seeded(new SmokeSessionMetaDataDto());
 
-  BehaviorSubject<SmokeSessionSimpleDto> smokeSession =
-      new BehaviorSubject<SmokeSessionSimpleDto>.seeded(
-          new SmokeSessionSimpleDto());
+  BehaviorSubject<SmokeSessionSimpleDto> smokeSession = new BehaviorSubject<SmokeSessionSimpleDto>.seeded(new SmokeSessionSimpleDto());
 
-  BehaviorSubject<StandSettings> standSettings =
-      new BehaviorSubject<StandSettings>.seeded(new StandSettings.empty());
+  BehaviorSubject<StandSettings> standSettings = new BehaviorSubject<StandSettings>.seeded(new StandSettings.empty());
 
   BehaviorSubject<List<SmartHookahHelpersAnimation>> animations =
-      new BehaviorSubject<List<SmartHookahHelpersAnimation>>.seeded(
-          new List<SmartHookahHelpersAnimation>());
+      new BehaviorSubject<List<SmartHookahHelpersAnimation>>.seeded(new List<SmartHookahHelpersAnimation>());
 
-  BehaviorSubject<List<Color>> sessionColor =
-      new BehaviorSubject<List<Color>>();
+  BehaviorSubject<List<Color>> sessionColor = new BehaviorSubject<List<Color>>();
 
-  PublishSubject<Tuple2<StandSettings, SmokeState>> futureSettings =
-      new PublishSubject<Tuple2<StandSettings, SmokeState>>();
+  PublishSubject<Tuple2<StandSettings, SmokeState>> futureSettings = new PublishSubject<Tuple2<StandSettings, SmokeState>>();
 
-  Observable<Tuple2<StandSettings, SmokeState>> futureSettingDebounce;
+  Stream<Tuple2<StandSettings, SmokeState>> futureSettingDebounce;
 
-  BehaviorSubject<List<DevicePreset>> devicePresets =
-      new BehaviorSubject<List<DevicePreset>>.seeded(new List<DevicePreset>());
+  BehaviorSubject<List<DevicePreset>> devicePresets = new BehaviorSubject<List<DevicePreset>>.seeded(new List<DevicePreset>());
 
-  BehaviorSubject<DevicePreset> selectedPreset =
-      new BehaviorSubject<DevicePreset>.seeded(DevicePreset.empty());
+  BehaviorSubject<DevicePreset> selectedPreset = new BehaviorSubject<DevicePreset>.seeded(DevicePreset.empty());
 
-  BehaviorSubject<List<SmartHookahModelsDbSessionDtoSessionReviewDto>>
-      sessionReviews = new BehaviorSubject<
-          List<SmartHookahModelsDbSessionDtoSessionReviewDto>>();
+  BehaviorSubject<List<SmartHookahModelsDbSessionDtoSessionReviewDto>> sessionReviews =
+      new BehaviorSubject<List<SmartHookahModelsDbSessionDtoSessionReviewDto>>();
 
-  PublishSubject<DevicePreset> futureDevicePreset =
-      new PublishSubject<DevicePreset>();
-  Observable<DevicePreset> futureDevicePresetDebounce;
+  PublishSubject<DevicePreset> futureDevicePreset = new PublishSubject<DevicePreset>();
+  Stream<DevicePreset> futureDevicePresetDebounce;
 
-  StreamController<Flushbar<Map<String, dynamic>>> notifications =
-      new StreamController<Flushbar<Map<String, dynamic>>>.broadcast();
+  StreamController<Flushbar<Map<String, dynamic>>> notifications = new StreamController<Flushbar<Map<String, dynamic>>>.broadcast();
 
   pauseSession() {
     smokeState.add(0);
@@ -97,9 +83,8 @@ class SmokeSessionBloc {
 
   setColor(Color color, SmokeState smokeState) async {
     sessionColor.add([color, ColorHelper.getOpositeColor(color)]);
-    await App.http.changeColor(
-        this.hookahCode, new HSVColor.fromColor(color), smokeState);
-                   HapticFeedback.selectionClick();
+    await App.http.changeColor(this.hookahCode, new HSVColor.fromColor(color), smokeState);
+    HapticFeedback.selectionClick();
   }
 
   setAnimation(int animationIndex, SmokeState smokeState) {
@@ -122,7 +107,7 @@ class SmokeSessionBloc {
     editSetting.brightness = brigtness;
     curentSetting.setStateSetting(smokeState, editSetting);
 
-                   HapticFeedback.selectionClick();
+    HapticFeedback.selectionClick();
   }
 
   setSpeed(int speed, SmokeState smokeState) async {
@@ -135,7 +120,7 @@ class SmokeSessionBloc {
     editSetting.speed = speed;
     curentSetting.setStateSetting(smokeState, editSetting);
 
-                   HapticFeedback.selectionClick();
+    HapticFeedback.selectionClick();
   }
 
   _futureSetAnimation(Tuple2<StandSettings, SmokeState> data) async {
@@ -143,7 +128,7 @@ class SmokeSessionBloc {
     await App.http.changeAnimation(animationId, data.item2, hookahCode);
     standSettings.add(data.item1);
 
-                   HapticFeedback.selectionClick();
+    HapticFeedback.selectionClick();
   }
 
   Future joinSession(String sessionCode) async {
@@ -184,8 +169,7 @@ class SmokeSessionBloc {
   Future _joinSession(String sessionCode) async {
     List<String> params = new List<String>();
     params.add(sessionCode);
-    this.signalR.callServerFunction(
-        new ServerCallParam(name: 'JoinSession', params: params));
+    this.signalR.callServerFunction(new ServerCallParam(name: 'JoinSession', params: params));
     lastSession.add(sessionCode);
     await loadSessionData();
   }
@@ -197,17 +181,13 @@ class SmokeSessionBloc {
       sessionReviews.add(reviews);
     });
     standSettings.add(sessionData.setting);
-    sessionColor.add([
-      sessionData.setting.puf.color.toColor(),
-      ColorHelper.getOpositeColor(sessionData.setting.puf.color.toColor())
-    ]);
+    sessionColor.add([sessionData.setting.puf.color.toColor(), ColorHelper.getOpositeColor(sessionData.setting.puf.color.toColor())]);
     smokeStatistic.add(sessionData.session.smokeSessionData);
     smokeSessionMetaData.add(sessionData.dtoSession.metaData);
     smokeSession.add(sessionData.dtoSession);
     hookahCode = sessionData.session.hookah.code;
     if (animations.value == null) {
-      animations
-          .add(await App.http.getAnimations(sessionData.session.hookah.code));
+      animations.add(await App.http.getAnimations(sessionData.session.hookah.code));
     }
   }
 
@@ -288,8 +268,7 @@ class SmokeSessionBloc {
     if (!metaDataChanged) return;
     var metadataOld = smokeSessionMetaData.value;
 
-    var newMetadata = await App.http
-        .postMetadata(this.activeSessionId, smokeSessionMetaData.value);
+    var newMetadata = await App.http.postMetadata(this.activeSessionId, smokeSessionMetaData.value);
     // this.smokeSessionMetaData.add(newMetadata);
     if (newMetadata.tobaccoMix?.id != metadataOld.tobaccoMix?.id) {
       metadataOld.tobaccoMix.id = newMetadata.tobaccoMix?.id;
@@ -310,12 +289,10 @@ class SmokeSessionBloc {
       proceddCalls(onData);
     });
 
-    futureSettingDebounce =
-        futureSettings.debounceTime(Duration(milliseconds: 800));
+    futureSettingDebounce = futureSettings.debounceTime(Duration(milliseconds: 800));
     futureSettingDebounce.listen((onData) => _futureSetAnimation(onData));
 
-    futureDevicePresetDebounce =
-        futureDevicePreset.debounceTime(Duration(milliseconds: 800));
+    futureDevicePresetDebounce = futureDevicePreset.debounceTime(Duration(milliseconds: 800));
     futureDevicePresetDebounce.listen((onData) => _futureSetPreset(onData));
 
     pufTimerDependencies = new PufTimerDependencies(this);
@@ -403,8 +380,7 @@ class SmokeSessionBloc {
   }
 
   Future _futureSetPreset(DevicePreset newPreset) async {
-    if (newPreset.id != -1)
-      await App.http.setDevicePreset(this.hookahCode, newPreset.id);
+    if (newPreset.id != -1) await App.http.setDevicePreset(this.hookahCode, newPreset.id);
     selectedPreset.add(newPreset);
     HapticFeedback.selectionClick();
   }
@@ -412,8 +388,7 @@ class SmokeSessionBloc {
   _leaveOldSession(String activeSessionId) {
     List<String> params = new List<String>();
     params.add(activeSessionId);
-    this.signalR.callServerFunction(
-        new ServerCallParam(name: 'LeaveSession', params: params));
+    this.signalR.callServerFunction(new ServerCallParam(name: 'LeaveSession', params: params));
     animations.add(null);
     sessionReviews.add(null);
     smokeSession.add(null);
@@ -421,14 +396,12 @@ class SmokeSessionBloc {
   }
 
   void handleSettingChanged(ClientMethod f) {
-    var newSettingJson =
-        StandSettings.fromJson(f.Data[0] as Map<String, dynamic>);
+    var newSettingJson = StandSettings.fromJson(f.Data[0] as Map<String, dynamic>);
 
     this.standSettings.add(newSettingJson);
   }
 
-  Future saveReview(SmartHookahModelsDbSessionDtoSessionReviewDto review,
-      List<File> media) async {
+  Future saveReview(SmartHookahModelsDbSessionDtoSessionReviewDto review, List<File> media) async {
     var newReview = await App.http.addSessionReview(review);
 
     var mediaDto = new List<MediaDto>();
@@ -448,8 +421,7 @@ class SmokeSessionBloc {
     sessionReviews.add(allReviews);
   }
 
-  Future removeReview(
-      SmartHookahModelsDbSessionDtoSessionReviewDto review) async {
+  Future removeReview(SmartHookahModelsDbSessionDtoSessionReviewDto review) async {
     var state = await App.http.removeSessionReview(review.id);
     var allReviews = sessionReviews.value;
     var reviewIndex = allReviews.indexWhere((test) => test.id == review.id);

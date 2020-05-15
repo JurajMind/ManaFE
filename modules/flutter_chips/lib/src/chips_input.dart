@@ -343,6 +343,15 @@ class ChipsInputState<T> extends State<ChipsInput<T>> implements TextInputClient
 
   @override
   TextEditingValue get currentTextEditingValue => _value;
+
+  @override
+  // TODO: implement currentAutofillScope
+  AutofillScope get currentAutofillScope => throw UnimplementedError();
+
+  @override
+  void showAutocorrectionPromptRect(int start, int end) {
+    // TODO: implement showAutocorrectionPromptRect
+  }
 }
 
 class AlwaysDisabledFocusNode extends FocusNode {

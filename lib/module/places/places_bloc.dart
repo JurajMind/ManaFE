@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:app/app/app.dart';
 import 'package:app/services/position/m_position.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
@@ -12,12 +11,10 @@ import 'dart:convert';
 class PlacesBloc {
   bool _permission = false;
   String error;
-  BehaviorSubject<List<PlaceSimpleDto>> places =
-      new BehaviorSubject<List<PlaceSimpleDto>>();
+  BehaviorSubject<List<PlaceSimpleDto>> places = new BehaviorSubject<List<PlaceSimpleDto>>();
   BehaviorSubject<bool> loading = new BehaviorSubject<bool>.seeded(false);
 
-  BehaviorSubject<bool> localizationnPermision =
-      new BehaviorSubject<bool>.seeded(false);
+  BehaviorSubject<bool> localizationnPermision = new BehaviorSubject<bool>.seeded(false);
 
   BehaviorSubject<Position> location = new BehaviorSubject<Position>();
 
@@ -33,19 +30,16 @@ class PlacesBloc {
 
   Future loadPlaces() async {
     var geolocator = MPosition();
-    GeolocationStatus geolocationStatus =
-        await geolocator.checkGeolocationPermissionStatus();
+    GeolocationStatus geolocationStatus = await geolocator.checkGeolocationPermissionStatus();
     // if (geolocationStatus == GeolocationStatus.denied) return;
-    geolocator
-        .getLastKnownPosition(desiredAccuracy: LocationAccuracy.low)
-        .then((value) async {
+    geolocator.getLastKnownPosition(desiredAccuracy: LocationAccuracy.low).then((value) async {
       if (value != null) {
         location.add(value);
         await _loadPlaces();
       }
     });
     loadPlacesFromCache();
-    
+
     posSub = geolocator.getPositionStream().listen((onData) => this.location.add(onData));
   }
 
