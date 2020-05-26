@@ -1,13 +1,20 @@
+import 'package:app/app/app.dart';
 import 'package:app/app/app.widget.dart';
+import 'package:app/services/auth_helpers/auth_interop.dart';
 import 'package:app/services/authorization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:js/js.dart';
+
+import 'custom_web_view.dart';
 
 class ExternalAuthWidget extends StatelessWidget {
   final ValueChanged<bool> onAuthBegin;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  const ExternalAuthWidget({
+  ExternalAuthWidget({
     Key key,
     this.onAuthBegin,
   }) : super(key: key);
@@ -38,62 +45,83 @@ class ExternalAuthWidget extends StatelessWidget {
         ),
         Container(
           constraints: BoxConstraints(maxWidth: 600),
-          child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: <Widget>[
-            IconButton(
-              onPressed: () => facebookLogin(context),
-              icon: Icon(
-                FontAwesomeIcons.facebook,
-                size: 40,
-              ),
-            ),
-            IconButton(
-              icon: Icon(
-                FontAwesomeIcons.google,
-                size: 40,
-              ),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(
-                FontAwesomeIcons.apple,
-                size: 40,
-              ),
-              onPressed: () {},
-            )
-          ]),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                IconButton(
+                  onPressed: () => facebookLogin(context),
+                  icon: Icon(
+                    FontAwesomeIcons.facebook,
+                    size: 40,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => googleLogin(context),
+                  icon: Icon(
+                    FontAwesomeIcons.google,
+                    size: 40,
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(
+                    FontAwesomeIcons.apple,
+                    size: 40,
+                  ),
+                  onPressed: () {},
+                )
+              ]),
         )
       ],
     );
   }
 
-  Future facebookLogin(context) async {
-    var facebookLogin = new FacebookLogin();
-    var result = await facebookLogin.logIn(['email']);
+  Future googleLogin(context) async {
     try {
-      switch (result.status) {
-        case FacebookLoginStatus.loggedIn:
-          {
-            var auth = new Authorize();
-            onAuthBegin(true);
-            var tokenResult = await auth.getLocalToken("Facebook", result.accessToken.token);
-            if (tokenResult) {
-              AppWidget.restartApp(context);
-            } else {
-              onAuthBegin(false);
-            }
-            break;
-          }
+      await _googleSignIn.signIn();
+    } catch (error) {
+      print(error);
+    }
+  }
 
-        case FacebookLoginStatus.cancelledByUser:
-          break;
-        case FacebookLoginStatus.error:
-          break;
+  GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: <String>[
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
+  );
+
+  Future facebookLogin(context) async {
+    fbCallback = allowInterop((token) async {
+      var auth = new Authorize();
+      if (onAuthBegin != null) onAuthBegin(true);
+      var tokenResult = await auth.getLocalToken("Facebook", token);
+      if (tokenResult) {
+        AppWidget.restartApp(context);
+      } else {
+        onAuthBegin(false);
       }
-    } catch (e) {
-      AppWidget.restartApp(context);
-      Scaffold.of(context).showSnackBar(new SnackBar(
-        content: new Text("Facebook login error :("),
-      ));
+    });
+
+    var fbToken = fbWebLogin();
+
+    return;
+
+    String result = await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CustomWebView(
+                  selectedUrl:
+                      'https://www.facebook.com/dialog/oauth?client_id=${App.facebookClientId}&redirect_uri=${App.your_redirect_url}&response_type=token&scope=email,public_profile,',
+                ),
+            maintainState: true));
+
+    if (result != null) {
+      try {
+        final facebookAuthCred =
+            FacebookAuthProvider.getCredential(accessToken: result);
+
+        final user = await _auth.signInWithCredential(facebookAuthCred);
+      } catch (e) {}
     }
   }
 }

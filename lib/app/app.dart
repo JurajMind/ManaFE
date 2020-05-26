@@ -30,6 +30,11 @@ class App {
 
   static String googleApiKeys;
 
+  static String facebookClientId = "1107199546054049";
+
+  static const your_redirect_url =
+    "https://www.facebook.com/connect/login_success.html";
+
   // Create app.
   App(
       {String environment,

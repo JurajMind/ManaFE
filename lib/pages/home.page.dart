@@ -27,7 +27,7 @@ import 'Places/places_map_page.dart';
 import 'SmokeSession/Components/gradiend_color_wheel_rotate.dart';
 import 'SmokeSession/smoke_session_page.dart';
 import 'Statistic/Detail/smoke_session_detail_page.dart';
-import 'package:logger_flutter/logger_flutter.dart';
+//import 'package:logger_flutter/logger_flutter.dart';
 
 typedef RouteWidgetBuilder = Widget Function(BuildContext context, Object argument);
 
@@ -327,9 +327,8 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              LogConsoleOnShake(
-  child: Container() // Your widgets
-),
+
+
               Positioned(
                   bottom: -10,
                   height: 55,

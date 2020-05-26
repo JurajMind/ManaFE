@@ -6,7 +6,8 @@
     <meta name="description" content="Manapipes">
     <meta name="keywords" content="Manapipes, Hookah, Shisha, Iot">
     <meta name="author" content="Juraj Hamornik">
-    <meta name="theme-color" content="#6200EA" />    
+    <meta name="theme-color" content="#6200EA" />
+    <meta name="google-signin-client_id" content="652590711591-466859ahk4ujbm3ang2pj17342hcal8l.apps.googleusercontent.com">    
     <link rel="apple-touch-icon" sizes="57x57" href="icons/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="icons/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="icons/apple-icon-72x72.png">
@@ -27,34 +28,20 @@
     <script defer src="main.dart.js" type="application/javascript"></script>
 </head>
 <body>
-  <script src="main.dart.js" type="application/javascript"></script>
+  <script src="support.js" type="application/javascript"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=***REMOVED***"></script>
-  <script>
-      window.test = function(args){
-        var shadow =  window.document.getElementsByTagName("flt-platform-view")[0].shadowRoot.getElementById("mapIframe");
-        window.document.getElementsByTagName("flt-platform-view")[0].shadowRoot.getElementById("mapIframe").contentWindow.myFunction('d')
-        shadow.contentWindow.myFunction(args);
-      }
-    </script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script>
       window.fbAsyncInit = function() {
         FB.init({
           appId      : '1107199546054049', // Replace "000000000000" with your Facebook App ID here.
           xfbml      : true,
-          version    : 'v6.0' // Check current Facebook SDK version
+          version    : 'v7.0' // Check current Facebook SDK version
         });
         FB.AppEvents.logPageView();
       };
     </script>
-     <script>
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "https://connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
-    </script>
+<script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
 </body>
 </html>
 

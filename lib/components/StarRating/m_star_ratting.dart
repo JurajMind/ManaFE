@@ -32,7 +32,7 @@ class MStarRating extends StatelessWidget {
               ),
               SmoothStarRating(
                   allowHalfRating: true,
-                  onRatingChanged: onRatingChanged,
+                  onRated: onRatingChanged,
                   starCount: 5,
                   rating: rating,
                   size: starSize + 0.0,

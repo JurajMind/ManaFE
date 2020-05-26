@@ -5,10 +5,19 @@ import 'dart:core';
 import 'package:app/app/app.dart';
 import 'package:app/app/app.widget.dart';
 import 'package:app/pages/home.page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:openapi/api.dart';
 
 import 'local_storage/m_local_storage.dart';
+
+
+
+@immutable
+abstract class Authenticator {
+  Map<String, String> getAuthHeaders();
+}
+
 
 class Authorize {
   static final Authorize _singleton = new Authorize._internal();
