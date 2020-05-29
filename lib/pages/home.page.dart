@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:ui';
-
+import 'package:universal_html/prefer_universal/html.dart' as html;
 import 'package:app/app/app.dart';
+import 'package:app/app/app.widget.dart';
 import 'package:app/components/icon_button_title.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
@@ -27,14 +28,16 @@ import 'Places/places_map_page.dart';
 import 'SmokeSession/Components/gradiend_color_wheel_rotate.dart';
 import 'SmokeSession/smoke_session_page.dart';
 import 'Statistic/Detail/smoke_session_detail_page.dart';
-//import 'package:logger_flutter/logger_flutter.dart';
 
-typedef RouteWidgetBuilder = Widget Function(BuildContext context, Object argument);
+typedef RouteWidgetBuilder = Widget Function(
+    BuildContext context, Object argument);
 
 class HomePage extends StatefulWidget {
   final Uri deeplink;
+  final RouteObserver<PageRoute> routeObserver;
 
-  const HomePage({Key key, this.deeplink}) : super(key: key);
+  const HomePage({Key key, this.deeplink, this.routeObserver})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -46,7 +49,7 @@ final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
 StreamSubscription<Flushbar<Map<String, dynamic>>> subscription;
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with RouteAware {
   int _currentIndex = 2;
 
   final Map<int, GlobalKey<NavigatorState>> navigatorKeys = {
@@ -67,8 +70,17 @@ class _HomePageState extends State<HomePage> {
   Stream popNotification;
 
   @override
+  void didPush() {}
+
+  @override
+  void didPopNext() {
+    // Covering route was popped off the navigator.
+  }
+
+  @override
   void initState() {
     super.initState();
+
     Future.delayed(Duration.zero, () {
       smokeSessionBloc = DataProvider.getSmokeSession(context);
       personBloc = DataProvider.getData(context).personBloc;
@@ -92,7 +104,8 @@ class _HomePageState extends State<HomePage> {
     });
     this.initDynamicLinks();
 
-    WidgetsBinding.instance.scheduleFrameCallback((_) => firstDeepJump(context));
+    WidgetsBinding.instance
+        .scheduleFrameCallback((_) => firstDeepJump(context));
 
     final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
     if (!MPlatform.isWeb) _firebaseMessaging.requestNotificationPermissions();
@@ -132,12 +145,14 @@ class _HomePageState extends State<HomePage> {
 
     _focusActiveTab();
 
-    activeTabSub = DataProvider.getData(context).appBloc.activeTab.listen((index) {
+    activeTabSub =
+        DataProvider.getData(context).appBloc.activeTab.listen((index) {
       _setActiveTab(index);
     });
     SystemChannels.lifecycle.setMessageHandler((msg) {
       debugPrint('SystemChannels> $msg');
-      if (msg == AppLifecycleState.paused.toString() || msg == AppLifecycleState.inactive.toString()) {
+      if (msg == AppLifecycleState.paused.toString() ||
+          msg == AppLifecycleState.inactive.toString()) {
         var smokeSessionBloc = DataProvider.getData(context).smokeSessionBloc;
         smokeSessionBloc.pauseSession();
       }
@@ -156,7 +171,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void initDynamicLinks() async {
-    FirebaseDynamicLinks.instance.onLink(onSuccess: (PendingDynamicLinkData dynamicLink) async {
+    FirebaseDynamicLinks.instance.onLink(
+        onSuccess: (PendingDynamicLinkData dynamicLink) async {
       final Uri deepLink = dynamicLink?.link;
       print(dynamicLink.toString());
 
@@ -171,18 +187,45 @@ class _HomePageState extends State<HomePage> {
 
   void firstDeepJump(BuildContext context) {
     if (widget.deeplink != null) {
-      ShareService.deepLinkNavigation(_setActiveTab, widget.deeplink.path, context);
+      ShareService.deepLinkNavigation(
+          _setActiveTab, widget.deeplink.path, context);
     }
   }
 
   void _focusActiveTab() {
+    html.window.history.replaceState(null, "test", this.getUrlPrefix());
     FocusScope.of(context).setFirstFocus(tabFocusNodes[_currentIndex]);
+  }
+
+  String getUrlPrefix() {
+    if (_currentIndex == 0) {
+      return "#/mixology/";
+    }
+    if (_currentIndex == 1) {
+      return "#/places/";
+    }
+
+    if (_currentIndex == 2) {
+      return "#/session/";
+    }
+
+    if (_currentIndex == 3) {
+      return "#/gear/";
+    }
+
+    if (_currentIndex == 4) {
+      return "#/profile/";
+    }
+
+    return "#/";
   }
 
   GlobalKey<NavigatorState> _setActiveTab(int index) {
     if (index == _currentIndex) return navigatorKeys[index];
 
-    DataProvider.getData(navigatorKeys[index].currentContext).appBloc.changeActiveTab(index);
+    DataProvider.getData(navigatorKeys[index].currentContext)
+        .appBloc
+        .changeActiveTab(index);
 
     if (index == _currentIndex && index == 2) {
       if (!MPlatform.isIOS) {
@@ -222,7 +265,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                       text: AppTranslations.of(context).text("tabs.mixology"),
                       color: _currentIndex == 0 ? Colors.white : Colors.grey,
-                      tooltip: AppTranslations.of(context).text("tabs.mixology"),
+                      tooltip:
+                          AppTranslations.of(context).text("tabs.mixology"),
                       onPressed: () => _setActiveTab(0),
                     ),
                   ),
@@ -327,8 +371,6 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-
-
               Positioned(
                   bottom: -10,
                   height: 55,
@@ -337,7 +379,8 @@ class _HomePageState extends State<HomePage> {
                       height: 55,
                       child: ClipRect(
                         child: BackdropFilter(
-                          filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                          filter:
+                              new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                         ),
                       ))),
               useTabletLayout
@@ -347,7 +390,11 @@ class _HomePageState extends State<HomePage> {
                       left: 200,
                       width: MediaQuery.of(context).size.width - 400,
                       child: SizedBox(height: 55, child: myBottomBar(context)))
-                  : Positioned(bottom: -10, height: 55, width: MediaQuery.of(context).size.width, child: SizedBox(height: 55, child: myBottomBar(context))),
+                  : Positioned(
+                      bottom: -10,
+                      height: 55,
+                      width: MediaQuery.of(context).size.width,
+                      child: SizedBox(height: 55, child: myBottomBar(context))),
               _buildCenter(),
             ])));
   }
@@ -367,7 +414,8 @@ class _HomePageState extends State<HomePage> {
                 _currentIndex == 2
                     ? BoxShadow(
                         color: Colors.grey,
-                        offset: MPlatform.isWeb ? Offset.zero : Offset(1.0, 6.0),
+                        offset:
+                            MPlatform.isWeb ? Offset.zero : Offset(1.0, 6.0),
                         blurRadius: MPlatform.isWeb ? 0 : 40.0,
                       )
                     : BoxShadow(
@@ -449,10 +497,10 @@ class VisibilityStageNavigator extends StatelessWidget {
 
 class TabNavigator extends StatelessWidget {
   final int index;
-
-  TabNavigator({this.navigatorKey, this.tabItem, this.index});
   final GlobalKey<NavigatorState> navigatorKey;
   final Widget tabItem;
+
+  TabNavigator({this.navigatorKey, this.tabItem, this.index});
 
   Map<String, RouteWidgetBuilder> _routeBuilders(BuildContext context) {
     return {
@@ -477,7 +525,9 @@ class TabNavigator extends StatelessWidget {
         initialRoute: '/',
         observers: [observable],
         onGenerateRoute: (routeSettings) {
-          return MaterialPageRoute(builder: (context) => routeBuilders[routeSettings.name](context, routeSettings.arguments));
+          return MaterialPageRoute(
+              builder: (context) => routeBuilders[routeSettings.name](
+                  context, routeSettings.arguments));
         });
   }
 }

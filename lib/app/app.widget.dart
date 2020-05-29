@@ -5,10 +5,12 @@ import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Start/start.page.dart';
 import 'package:app/pages/home.page.dart';
-import 'package:app/services/authorization.dart';
 import 'package:app/utils/translations/app_translations_delegate.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+import 'package:app/module/authorization/autorization_store.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -21,15 +23,14 @@ class AppWidget extends StatefulWidget {
   }
 
   static restartApp(BuildContext context) async {
-    final _AppWidgetState state = context.findAncestorStateOfType<_AppWidgetState>();
+    final _AppWidgetState state =
+        context.findAncestorStateOfType<_AppWidgetState>();
     state.restartApp();
   }
 }
 
 class _AppWidgetState extends State<AppWidget> {
-  Key key = new UniqueKey();
-  bool _isAuthorized = false;
-  bool splash = true;
+  var globalNavKey = GlobalKey<NavigatorState>();
   AppTranslationsDelegate _newLocaleDelegate;
   Uri deeplink;
 
@@ -40,14 +41,11 @@ class _AppWidgetState extends State<AppWidget> {
     initDynamicLinks();
     App.onLocaleChanged = onLocaleChange;
     _newLocaleDelegate = AppTranslationsDelegate(newLocale: null);
-    isUserAuthorized().then((authorized) => setState(() {
-          _isAuthorized = authorized;
-          splash = false;
-        }));
   }
 
   void initDynamicLinks() async {
-    final PendingDynamicLinkData data = await FirebaseDynamicLinks.instance.getInitialLink();
+    final PendingDynamicLinkData data =
+        await FirebaseDynamicLinks.instance.getInitialLink();
     final Uri _deepLink = data?.link;
 
     if (_deepLink != null) {
@@ -56,10 +54,8 @@ class _AppWidgetState extends State<AppWidget> {
   }
 
   Future restartApp() async {
-    var auth = await isUserAuthorized();
     this.setState(() {
-      _isAuthorized = auth;
-      key = new UniqueKey();
+      globalNavKey = GlobalKey<NavigatorState>();
     });
   }
 
@@ -71,38 +67,60 @@ class _AppWidgetState extends State<AppWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      key: key,
-      localizationsDelegates: [
-        _newLocaleDelegate,
-        //provides localised strings
-        GlobalMaterialLocalizations.delegate,
-        //provides RTL support
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: App.supportedLocales(),
-      title: 'Manapipes',
-      home: _isAuthorized ? new DataProvider(key: key, child: getMainPage()) : getMainPage(),
-      // onGenerateRoute: App.router.generator,
-      theme: buildDarkTheme(),
+    return Provider<AuthorizationStore>(
+      create: (BuildContext context) {
+        return AuthorizationStore()..getStatus();
+      },
+      child: Observer(builder: (context) {
+        var authStore = Provider.of<AuthorizationStore>(context);
+
+        if (authStore.status == AuthorizationStatus.inProgress) {
+          return SplashScreen();
+        }
+
+        if (authStore.status == AuthorizationStatus.anonymous) {
+          return MaterialApp(
+            localizationsDelegates: [
+              _newLocaleDelegate,
+              //provides localised strings
+              GlobalMaterialLocalizations.delegate,
+              //provides RTL support
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            supportedLocales: App.supportedLocales(),
+            onGenerateInitialRoutes: ,
+            title: 'Manapipes',
+            home: StartPage(),
+            // onGenerateRoute: App.router.generator,
+            theme: buildDarkTheme(),
+          );
+        }
+
+        return MaterialApp(
+          key: globalNavKey,
+          localizationsDelegates: [
+            _newLocaleDelegate,
+            //provides localised strings
+            GlobalMaterialLocalizations.delegate,
+            //provides RTL support
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: App.supportedLocales(),
+          title: 'Manapipes',
+          navigatorObservers: [routeObserver],
+
+          home: DataProvider(
+              child: new HomePage(
+                  deeplink: deeplink, routeObserver: routeObserver)),
+          // onGenerateRoute: App.router.generator,
+          theme: buildDarkTheme(),
+        );
+      }),
     );
   }
-
-  Widget getMainPage() {
-    if (splash) return new SplashScreen();
-
-    if (_isAuthorized) {
-      return new HomePage(deeplink: deeplink);
-    }
-
-    return new StartPage();
-  }
-
-  Future<bool> isUserAuthorized() async {
-    var auth = new Authorize();
-    return await auth.isAuthorized();
-  }
 }
+
+final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 class SplashScreen extends StatelessWidget {
   @override
