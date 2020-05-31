@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps/google_maps.dart' hide Icon;
 import 'package:google_maps_flutter/google_maps_flutter.dart' as googleFlutter;
 import 'package:geolocator/geolocator.dart' as geo;
-import 'dart:ui' as ui;
+import './UiFake.dart' if (dart.library.html) 'dart:ui' as ui;
 
 class MapWeb extends StatefulWidget {
   final Set<googleFlutter.Marker> markers;
@@ -31,8 +31,47 @@ class _MapWebState extends State<MapWeb> {
     htmlIdCount = widget?.markers?.length ?? -1;
     String htmlId = htmlIdCount.toString();
     print("map_rebuild ${widget.markers.length}");
-
     // ignore: undefined_prefixed_name
+    ui.platformViewRegistry.registerViewFactory(htmlId, (int viewId) {
+      var location = DataProvider.getData(context).placeBloc.location.value;
+      LatLng myLatLng;
+      if (location != null) {
+        myLatLng = new LatLng(location.latitude, location.longitude);
+      } else {
+        return DivElement();
+      }
+
+      final mapOptions = new MapOptions()
+        ..zoom = 12
+        ..center = myLatLng;
+
+      final elem = DivElement()
+        ..id = htmlId
+        ..style.width = "100%"
+        ..style.height = "100%"
+        ..style.border = 'none';
+
+      final map = new GMap(elem, mapOptions);
+      if (widget.markers != null) {
+        widget.markers.forEach((f) {
+          var marker = Marker(
+            MarkerOptions()
+              ..position = LatLng(f.position.latitude, f.position.longitude)
+              ..map = map
+              ..clickable = true
+              ..title = f.infoWindow.title,
+          );
+
+          marker.onClick.listen((onData) {
+            print(f.markerId);
+            f.onTap();
+          });
+        });
+        widget.controller.map = map;
+      }
+
+      return elem;
+    });
 
     var bloc = DataProvider.getData(context).placeBloc;
     return StreamBuilder<geo.Position>(

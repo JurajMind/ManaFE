@@ -23,8 +23,7 @@ class AppWidget extends StatefulWidget {
   }
 
   static restartApp(BuildContext context) async {
-    final _AppWidgetState state =
-        context.findAncestorStateOfType<_AppWidgetState>();
+    final _AppWidgetState state = context.findAncestorStateOfType<_AppWidgetState>();
     state.restartApp();
   }
 }
@@ -44,8 +43,7 @@ class _AppWidgetState extends State<AppWidget> {
   }
 
   void initDynamicLinks() async {
-    final PendingDynamicLinkData data =
-        await FirebaseDynamicLinks.instance.getInitialLink();
+    final PendingDynamicLinkData data = await FirebaseDynamicLinks.instance.getInitialLink();
     final Uri _deepLink = data?.link;
 
     if (_deepLink != null) {
@@ -88,7 +86,6 @@ class _AppWidgetState extends State<AppWidget> {
               GlobalWidgetsLocalizations.delegate,
             ],
             supportedLocales: App.supportedLocales(),
-            onGenerateInitialRoutes: ,
             title: 'Manapipes',
             home: StartPage(),
             // onGenerateRoute: App.router.generator,
@@ -109,9 +106,7 @@ class _AppWidgetState extends State<AppWidget> {
           title: 'Manapipes',
           navigatorObservers: [routeObserver],
 
-          home: DataProvider(
-              child: new HomePage(
-                  deeplink: deeplink, routeObserver: routeObserver)),
+          home: DataProvider(child: new HomePage(deeplink: deeplink, routeObserver: routeObserver)),
           // onGenerateRoute: App.router.generator,
           theme: buildDarkTheme(),
         );

@@ -30,8 +30,8 @@ dependencies:
   sembast: ^1.13.0
   url_launcher: ^5.4.10
   url_launcher_web: ^0.1.1+6
-  google_maps_flutter: ^0.5.26+4
-  google_maps: '>=3.0.0 <4.0.0'
+  google_maps_flutter: ^0.5.28+1
+  google_maps: ^3.4.2
   tinycolor: ^1.0.2
   shimmer: ^1.1.1
   date_format: ^1.0.6
@@ -77,15 +77,15 @@ dependencies:
   logger: ^0.9.1
   #logger_flutter:
   #  git: https://github.com/JEuler/logger_flutter.git
-  js: ^0.6.0  
+  js: ^0.6.0
   google_sign_in: ^4.5.1
   mobx: ^1.2.1
   flutter_mobx: ^1.1.0
   provider: ^4.1.2
+  flutter_chips_input: ^1.9.0-dev.1
 
 dependency_overrides:
-
-
+  flutter_chips_input: ^1.9.0-dev.1
 
 flutter_icons:
   android: true
