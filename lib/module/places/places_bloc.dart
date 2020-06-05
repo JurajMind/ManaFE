@@ -11,10 +11,12 @@ import 'dart:convert';
 class PlacesBloc {
   bool _permission = false;
   String error;
-  BehaviorSubject<List<PlaceSimpleDto>> places = new BehaviorSubject<List<PlaceSimpleDto>>();
+  BehaviorSubject<List<PlaceSimpleDto>> places =
+      new BehaviorSubject<List<PlaceSimpleDto>>();
   BehaviorSubject<bool> loading = new BehaviorSubject<bool>.seeded(false);
 
-  BehaviorSubject<bool> localizationnPermision = new BehaviorSubject<bool>.seeded(false);
+  BehaviorSubject<bool> localizationnPermision =
+      new BehaviorSubject<bool>.seeded(false);
 
   BehaviorSubject<Position> location = new BehaviorSubject<Position>();
 
@@ -30,9 +32,12 @@ class PlacesBloc {
 
   Future loadPlaces() async {
     var geolocator = MPosition();
-    GeolocationStatus geolocationStatus = await geolocator.checkGeolocationPermissionStatus();
+    GeolocationStatus geolocationStatus =
+        await geolocator.checkGeolocationPermissionStatus();
     // if (geolocationStatus == GeolocationStatus.denied) return;
-    geolocator.getLastKnownPosition(desiredAccuracy: LocationAccuracy.low).then((value) async {
+    geolocator
+        .getLastKnownPosition(desiredAccuracy: LocationAccuracy.low)
+        .then((value) async {
       if (value != null) {
         location.add(value);
         await _loadPlaces();
@@ -40,7 +45,9 @@ class PlacesBloc {
     });
     loadPlacesFromCache();
 
-    posSub = geolocator.getPositionStream().listen((onData) => this.location.add(onData));
+    posSub = geolocator
+        .getPositionStream()
+        .listen((onData) => this.location.add(onData));
   }
 
   Future _loadPlaces() async {
@@ -51,7 +58,7 @@ class PlacesBloc {
     App.http.getNearbyPlaces(lat: lat, lng: lng).then((places) async {
       this.places.add(places);
       var db = await App.cache.getDatabase();
-      var key = await db.put(json.encode(places), 'places');
+      //var key = await db.put(json.encode(places), 'places');
       this.loading.add(false);
     });
   }
@@ -59,7 +66,8 @@ class PlacesBloc {
   Future loadPlacesFromCache() async {
     try {
       var db = await App.cache.getDatabase();
-      var value = await db.get('places');
+      //var value = await db.get('places');
+      var value = null;
       if (value == null) {
         return;
       }

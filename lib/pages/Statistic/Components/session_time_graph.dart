@@ -90,7 +90,9 @@ class SessionDayGraphState extends State<SessionDayGraph> {
     showingBarGroups = rawBarGroups;
 
     barTouchedResultStreamController = StreamController();
-    barTouchedResultStreamController.stream.distinct().listen((BarTouchResponse response) {
+    barTouchedResultStreamController.stream
+        .distinct()
+        .listen((BarTouchResponse response) {
       if (response == null) {
         return;
       }
@@ -103,7 +105,8 @@ class SessionDayGraphState extends State<SessionDayGraph> {
         return;
       }
 
-      touchedGroupIndex = showingBarGroups.indexOf(response.spot.touchedBarGroup);
+      touchedGroupIndex =
+          showingBarGroups.indexOf(response.spot.touchedBarGroup);
 
       setState(() {
         if (response.touchInput is FlLongPressEnd) {
@@ -112,7 +115,8 @@ class SessionDayGraphState extends State<SessionDayGraph> {
         } else {
           showingBarGroups = List.of(rawBarGroups);
           if (touchedGroupIndex != -1) {
-            showingBarGroups[touchedGroupIndex] = showingBarGroups[touchedGroupIndex].copyWith(
+            showingBarGroups[touchedGroupIndex] =
+                showingBarGroups[touchedGroupIndex].copyWith(
               barRods: showingBarGroups[touchedGroupIndex].barRods.map((rod) {
                 return rod.copyWith(color: AppColors.colors[3], y: rod.y + 1);
               }).toList(),
@@ -166,59 +170,67 @@ class SessionDayGraphState extends State<SessionDayGraph> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: FlChart(
-                    chart: BarChart(BarChartData(
-                      titlesData: FlTitlesData(
-                        show: true,
-                        bottomTitles: SideTitles(
-                            showTitles: true,
-                            textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
-                            margin: 16,
-                            getTitles: (double value) {
-                              var intValue = value.toInt();
-                              if (intValue % 3 == 0) return intValue.toString();
-                              return '';
-                            }),
-                        leftTitles: SideTitles(
+                  child: BarChart(BarChartData(
+                    titlesData: FlTitlesData(
+                      show: true,
+                      bottomTitles: SideTitles(
                           showTitles: true,
-                          textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+                          textStyle: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14),
                           margin: 16,
-                          reservedSize: 10.0,
-                          getTitles: (value) {
-                            if (max == 5) {
-                              if (value % 10 == 0) return value.toStringAsFixed(0);
-                            }
-
-                            if (max < 5) {
-                              if (value % 2 == 0) return value.toStringAsFixed(0);
-                            }
-
-                            if (max < 20) {
-                              if (value % 5 == 0) return value.toStringAsFixed(0);
-                            }
-
-                            if (max < 50) {
-                              if (value % 10 == 0) return value.toStringAsFixed(0);
-                            }
-
-                            if (max < 100) {
-                              if (value % 20 == 0) return value.toStringAsFixed(0);
-                            }
-
-                            if (max < 1000) {
-                              if (value % 100 == 0) return value.toStringAsFixed(0);
-                            }
-
+                          getTitles: (double value) {
+                            var intValue = value.toInt();
+                            if (intValue % 3 == 0) return intValue.toString();
                             return '';
-                          },
-                        ),
+                          }),
+                      leftTitles: SideTitles(
+                        showTitles: true,
+                        textStyle: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14),
+                        margin: 16,
+                        reservedSize: 10.0,
+                        getTitles: (value) {
+                          if (max == 5) {
+                            if (value % 10 == 0)
+                              return value.toStringAsFixed(0);
+                          }
+
+                          if (max < 5) {
+                            if (value % 2 == 0) return value.toStringAsFixed(0);
+                          }
+
+                          if (max < 20) {
+                            if (value % 5 == 0) return value.toStringAsFixed(0);
+                          }
+
+                          if (max < 50) {
+                            if (value % 10 == 0)
+                              return value.toStringAsFixed(0);
+                          }
+
+                          if (max < 100) {
+                            if (value % 20 == 0)
+                              return value.toStringAsFixed(0);
+                          }
+
+                          if (max < 1000) {
+                            if (value % 100 == 0)
+                              return value.toStringAsFixed(0);
+                          }
+
+                          return '';
+                        },
                       ),
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
-                      barGroups: showingBarGroups,
-                    )),
-                  ),
+                    ),
+                    borderData: FlBorderData(
+                      show: false,
+                    ),
+                    barGroups: showingBarGroups,
+                  )),
                 ),
               ),
               SizedBox(
@@ -237,8 +249,8 @@ class SessionDayGraphState extends State<SessionDayGraph> {
         y: y,
         color: AppColors.colors[2],
         width: width,
-        isRound: true,
-        backDrawRodData: BackgroundBarChartRodData(show: true, y: max == 0 ? 20 : max + 0.0, color: Colors.black),
+        backDrawRodData: BackgroundBarChartRodData(
+            show: true, y: max == 0 ? 20 : max + 0.0, color: Colors.black),
       ),
     ]);
   }
@@ -270,8 +282,13 @@ class SessionDayStream extends StatelessWidget {
                 return Container();
               }
 
-              var seriesList = snapshot.data.timeStatistics.sessionStartTimeDistribution;
-              return Container(height: 250, child: Padding(padding: const EdgeInsets.all(8.0), child: SessionDayGraph(seriesList)));
+              var seriesList =
+                  snapshot.data.timeStatistics.sessionStartTimeDistribution;
+              return Container(
+                  height: 250,
+                  child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SessionDayGraph(seriesList)));
             }),
       ),
     );

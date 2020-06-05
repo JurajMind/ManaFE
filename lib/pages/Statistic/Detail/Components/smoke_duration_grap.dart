@@ -12,7 +12,9 @@ class SmokeDurationGraph extends StatefulWidget {
   final Collection<Duration> inDurations;
   final Collection<Duration> outDurations;
 
-  const SmokeDurationGraph({Key key, this.idleDurations, this.inDurations, this.outDurations}) : super(key: key);
+  const SmokeDurationGraph(
+      {Key key, this.idleDurations, this.inDurations, this.outDurations})
+      : super(key: key);
   @override
   State<StatefulWidget> createState() => _SmokeDurationGraphState();
 }
@@ -27,9 +29,12 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
 
   @override
   void initState() {
-    var inMilis = widget.inDurations?.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0;
-    var outMilis = widget.outDurations?.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0;
-    var idleMilis = widget.idleDurations?.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0;
+    var inMilis =
+        widget.inDurations?.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0;
+    var outMilis =
+        widget.outDurations?.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0;
+    var idleMilis =
+        widget.idleDurations?.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0;
     var all = (inMilis + outMilis + idleMilis);
 
     final section1 = PieChartSectionData(
@@ -37,7 +42,8 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
       value: inMilis / all,
       title: ((inMilis / all) * 100).toStringAsFixed(1) + '%',
       radius: 50,
-      titleStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
+      titleStyle: TextStyle(
+          fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
     );
 
     final section2 = PieChartSectionData(
@@ -45,7 +51,8 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
       value: outMilis / all,
       title: ((outMilis / all) * 100).toStringAsFixed(1) + '%',
       radius: 50,
-      titleStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
+      titleStyle: TextStyle(
+          fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
     );
 
     final section3 = PieChartSectionData(
@@ -53,7 +60,8 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
       value: idleMilis / all,
       title: ((idleMilis / all) * 100).toStringAsFixed(1) + '%',
       radius: 50,
-      titleStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
+      titleStyle: TextStyle(
+          fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
     );
 
     final items = [
@@ -73,8 +81,8 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
       }
 
       touchedIndex = -1;
-      if (details.sectionData != null) {
-        touchedIndex = showingSections.indexOf(details.sectionData);
+      if (details.touchedSection != null) {
+        touchedIndex = showingSections.indexOf(details.touchedSection);
       }
 
       setState(() {
@@ -86,7 +94,8 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
 
           if (touchedIndex != -1) {
             final TextStyle style = showingSections[touchedIndex].titleStyle;
-            showingSections[touchedIndex] = showingSections[touchedIndex].copyWith(
+            showingSections[touchedIndex] =
+                showingSections[touchedIndex].copyWith(
               titleStyle: style.copyWith(
                 fontSize: 24,
               ),
@@ -141,17 +150,11 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
                       Expanded(
                         child: AspectRatio(
                           aspectRatio: 1,
-                          child: FlChart(
-                            chart: PieChart(
-                              PieChartData(
-                                  pieTouchData: PieTouchData(touchResponseStreamSink: pieTouchedResultStreamController.sink),
-                                  borderData: FlBorderData(
-                                    show: false,
-                                  ),
-                                  sectionsSpace: 0,
-                                  centerSpaceRadius: useTabletLayout ? 160 : 40,
-                                  sections: showingSections),
-                            ),
+                          child: PieChart(
+                            PieChartData(
+                                sectionsSpace: 0,
+                                centerSpaceRadius: useTabletLayout ? 160 : 40,
+                                sections: showingSections),
                           ),
                         ),
                       ),
@@ -224,31 +227,33 @@ class SmokeDurationGraphShimer extends StatelessWidget {
                 )),
             child: Padding(
               padding: EdgeInsets.all(8),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-                SizedBox(
-                  height: 4,
-                ),
-                Row(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Icon(Icons.pie_chart),
                     SizedBox(
-                      width: 8,
+                      height: 4,
                     ),
-                    Text(
-                      "Distribution",
-                      style: Theme.of(context).textTheme.headline6,
+                    Row(
+                      children: <Widget>[
+                        Icon(Icons.pie_chart),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          "Distribution",
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Expanded(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
-              ]),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  ]),
             )));
   }
 }

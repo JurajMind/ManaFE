@@ -110,110 +110,107 @@ class SmokeProgressGraphState extends State<SmokeProgressGraph> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(right: 16.0, left: 6.0),
-                  child: FlChart(
-                    chart: LineChart(
-                      LineChartData(
-                        lineTouchData: LineTouchData(
-                            touchResponseSink: controller.sink,
-                            touchTooltipData: TouchTooltipData(
-                              tooltipBgColor: Colors.blueGrey.withOpacity(0.8),
-                            )),
-                        gridData: FlGridData(
-                          show: false,
-                        ),
-                        titlesData: FlTitlesData(
-                          bottomTitles: SideTitles(
-                            showTitles: true,
-                            reservedSize: 22,
-                            textStyle: TextStyle(
-                              color: const Color(0xff72719b),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                            margin: 10,
-                            getTitles: (value) {
-                              var cValue = inList.length < 5 ? 3 : 6;
-                              if ((value % cValue) == 0) {
-                                return (value * 5).toStringAsFixed(0) + 'm';
-                              }
-
-                              return '';
-                            },
-                          ),
-                          leftTitles: SideTitles(
-                            showTitles: true,
-                            textStyle: TextStyle(
-                              color: Color(0xff75729e),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                            getTitles: (value) {
-                              if ((value % 3) == 0) {
-                                return value.toStringAsFixed(0);
-                              }
-
-                              return '';
-                            },
-                            margin: 8,
-                            reservedSize: 30,
-                          ),
-                        ),
-                        borderData: FlBorderData(
-                            show: true,
-                            border: Border(
-                              bottom: BorderSide(
-                                color: Color(0xff4e4965),
-                                width: 4,
-                              ),
-                              left: BorderSide(
-                                color: Colors.transparent,
-                              ),
-                              right: BorderSide(
-                                color: Colors.transparent,
-                              ),
-                              top: BorderSide(
-                                color: Colors.transparent,
-                              ),
-                            )),
-                        minX: 0,
-                        maxX: inList.length + 0.0,
-                        maxY: maxY * 1.2,
-                        minY: 0,
-                        lineBarsData: [
-                          if (inList != null && inList.length > 0)
-                            LineChartBarData(
-                              spots: [...inList],
-                              isCurved: true,
-                              colors: [
-                                AppColors.colors[0],
-                              ],
-                              barWidth: 8,
-                              isStrokeCapRound: true,
-                              dotData: FlDotData(
-                                show: false,
-                              ),
-                              belowBarData: BelowBarData(
-                                show: true,
-                              ),
-                            ),
-                          if (outList != null && outList.length > 0)
-                            LineChartBarData(
-                              spots: [...outList],
-                              isCurved: true,
-                              colors: [
-                                AppColors.colors[1],
-                              ],
-                              barWidth: 8,
-                              isStrokeCapRound: true,
-                              dotData: FlDotData(
-                                show: false,
-                              ),
-                              belowBarData: BelowBarData(
-                                show: true,
-                              ),
-                            ),
-                        ],
+                  child: LineChart(
+                    LineChartData(
+                      lineTouchData: LineTouchData(
+                          touchTooltipData: LineTouchTooltipData(
+                        tooltipBgColor: Colors.blueGrey.withOpacity(0.8),
+                      )),
+                      gridData: FlGridData(
+                        show: false,
                       ),
+                      titlesData: FlTitlesData(
+                        bottomTitles: SideTitles(
+                          showTitles: true,
+                          reservedSize: 22,
+                          textStyle: TextStyle(
+                            color: const Color(0xff72719b),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                          margin: 10,
+                          getTitles: (value) {
+                            var cValue = inList.length < 5 ? 3 : 6;
+                            if ((value % cValue) == 0) {
+                              return (value * 5).toStringAsFixed(0) + 'm';
+                            }
+
+                            return '';
+                          },
+                        ),
+                        leftTitles: SideTitles(
+                          showTitles: true,
+                          textStyle: TextStyle(
+                            color: Color(0xff75729e),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                          getTitles: (value) {
+                            if ((value % 3) == 0) {
+                              return value.toStringAsFixed(0);
+                            }
+
+                            return '';
+                          },
+                          margin: 8,
+                          reservedSize: 30,
+                        ),
+                      ),
+                      borderData: FlBorderData(
+                          show: true,
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Color(0xff4e4965),
+                              width: 4,
+                            ),
+                            left: BorderSide(
+                              color: Colors.transparent,
+                            ),
+                            right: BorderSide(
+                              color: Colors.transparent,
+                            ),
+                            top: BorderSide(
+                              color: Colors.transparent,
+                            ),
+                          )),
+                      minX: 0,
+                      maxX: inList.length + 0.0,
+                      maxY: maxY * 1.2,
+                      minY: 0,
+                      lineBarsData: [
+                        if (inList != null && inList.length > 0)
+                          LineChartBarData(
+                            spots: [...inList],
+                            isCurved: true,
+                            colors: [
+                              AppColors.colors[0],
+                            ],
+                            barWidth: 8,
+                            isStrokeCapRound: true,
+                            dotData: FlDotData(
+                              show: false,
+                            ),
+                            belowBarData: BarAreaData(
+                              show: true,
+                            ),
+                          ),
+                        if (outList != null && outList.length > 0)
+                          LineChartBarData(
+                            spots: [...outList],
+                            isCurved: true,
+                            colors: [
+                              AppColors.colors[1],
+                            ],
+                            barWidth: 8,
+                            isStrokeCapRound: true,
+                            dotData: FlDotData(
+                              show: false,
+                            ),
+                            belowBarData: BarAreaData(
+                              show: true,
+                            ),
+                          ),
+                      ],
                     ),
                   ),
                 ),
@@ -253,31 +250,33 @@ class SmokeProgressGraphShimer extends StatelessWidget {
                 )),
             child: Padding(
               padding: EdgeInsets.all(8),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-                SizedBox(
-                  height: 4,
-                ),
-                Row(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Icon(Icons.multiline_chart),
                     SizedBox(
-                      width: 8,
+                      height: 4,
                     ),
-                    Text(
-                      "Progress",
-                      style: Theme.of(context).textTheme.headline6,
+                    Row(
+                      children: <Widget>[
+                        Icon(Icons.multiline_chart),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          "Progress",
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Expanded(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
-              ]),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  ]),
             )));
   }
 }
