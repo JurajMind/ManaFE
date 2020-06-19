@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MThemeData {
@@ -366,9 +367,11 @@ class MThemeData {
   double get inputLabelVerticalPadding => 4;
 
   double get mediumPageWidth => 580;
-  double get maxPageWidth => 1260;
+  double get maxPageWidth => 800;
 
   double get pageMaxDecoratorWidth => 1312;
+
+  Constraints get pageConstrains => BoxConstraints(maxWidth: this.maxPageWidth);
 }
 
 //

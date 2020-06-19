@@ -136,6 +136,7 @@ class _StatisticPageState extends State<StatisticPage> {
       child: Padding(
         padding: const EdgeInsets.only(top: 20.0),
         child: Text(label.toUpperCase(),
+            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline6),
       ),
     );
@@ -281,54 +282,64 @@ class _StatisticPageState extends State<StatisticPage> {
                     children: <Widget>[
                       Expanded(
                           flex: 4,
-                          child: OutlineButton(
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(30.0)),
-                            borderSide:
-                                BorderSide(color: Colors.white, width: 1),
-                            onPressed: () =>
-                                _showDialog(context).then((value) async {
-                              if (value == null) {
-                                return;
-                              }
-                              if (value == 4) {
-                                final List<DateTime> picked =
-                                    await DateRagePicker.showDatePicker(
-                                        context: context,
-                                        initialFirstDate: selectedTime.from,
-                                        initialLastDate: selectedTime.to,
-                                        firstDate: new DateTime(2017),
-                                        lastDate: new DateTime.now());
-                                if (picked != null && picked.length == 2) {
-                                  print(picked);
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              constraints: BoxConstraints(maxWidth: 300),
+                              child: OutlineButton(
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(30.0)),
+                                borderSide:
+                                    BorderSide(color: Colors.white, width: 1),
+                                onPressed: () =>
+                                    _showDialog(context).then((value) async {
+                                  if (value == null) {
+                                    return;
+                                  }
+                                  if (value == 4) {
+                                    final List<DateTime> picked =
+                                        await DateRagePicker.showDatePicker(
+                                            context: context,
+                                            initialFirstDate: selectedTime.from,
+                                            initialLastDate: selectedTime.to,
+                                            firstDate: new DateTime(2017),
+                                            lastDate: new DateTime.now());
+                                    if (picked != null && picked.length == 2) {
+                                      print(picked);
 
+                                      setState(() {
+                                        selectedTime = new TimeModel.fromCustom(
+                                            picked[0], picked[1]);
+                                      });
+                                      loadTime(bloc, selectedTime);
+                                    }
+                                  }
                                   setState(() {
-                                    selectedTime = new TimeModel.fromCustom(
-                                        picked[0], picked[1]);
+                                    if (value >= 0 && value < 4) {
+                                      selectedTime =
+                                          new TimeModel.fromSelect(value);
+                                    }
                                   });
                                   loadTime(bloc, selectedTime);
-                                }
-                              }
-                              setState(() {
-                                if (value >= 0 && value < 4) {
-                                  selectedTime =
-                                      new TimeModel.fromSelect(value);
-                                }
-                              });
-                              loadTime(bloc, selectedTime);
-                            }),
-                            child: Row(
-                              children: <Widget>[
-                                const Icon(Icons.calendar_today),
-                                const SizedBox(
-                                  width: 4,
+                                }),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      const Icon(Icons.calendar_today),
+                                      const SizedBox(
+                                        width: 4,
+                                      ),
+                                      Expanded(
+                                          child: AutoSizeText(
+                                        selectedTime.label,
+                                        maxLines: 1,
+                                      )),
+                                    ],
+                                  ),
                                 ),
-                                Expanded(
-                                    child: AutoSizeText(
-                                  selectedTime.label,
-                                  maxLines: 1,
-                                )),
-                              ],
+                              ),
                             ),
                           )),
                       Expanded(

@@ -64,7 +64,8 @@ class Devices extends StatelessWidget {
                             MaterialPageRoute(
                                 settings: RouteSettings(),
                                 builder: (context) => AddDevicePage())),
-                        leading: Icon(Icons.add),
+                        leading: Container(
+                            width: 60, child: Center(child: Icon(Icons.add))),
                         title: Text(
                           AppTranslations.of(context).text("device.add_device"),
                           style: Theme.of(context).textTheme.headline6,
@@ -72,6 +73,7 @@ class Devices extends StatelessWidget {
                   );
                 }
                 var device = snapshot.data[index];
+
                 return Container(
                   margin: EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
@@ -93,7 +95,7 @@ class Devices extends StatelessWidget {
                     ),
                   ),
                 );
-              }));
+              }, childCount: (snapshot.data?.length ?? 0) + 1));
             }
 
             return SliverGrid(

@@ -37,17 +37,22 @@ class _HealthPageState extends State<HealthPage> {
           stream: statBloc.smokeSessions,
           initialData: null,
           builder: (context, snapshot) {
-            return ListView(
-              children: <Widget>[
-                const SessionTimeWidget(),
-                const LastHookahWidget(),
-                new CarbonMonoxideWidget(widget.from, widget.to),
-                const SmokeIntakeWidget(),
-                const NicotineIntakeWidget(),
-                SizedBox(
-                  height: 100,
-                )
-              ],
+            return Center(
+              child: Container(
+                constraints: theme.pageConstrains,
+                child: ListView(
+                  children: <Widget>[
+                    const SessionTimeWidget(),
+                    const LastHookahWidget(),
+                    new CarbonMonoxideWidget(widget.from, widget.to),
+                    const SmokeIntakeWidget(),
+                    const NicotineIntakeWidget(),
+                    SizedBox(
+                      height: 100,
+                    )
+                  ],
+                ),
+              ),
             );
           }),
     );

@@ -43,11 +43,14 @@ class PlacesBloc {
         await _loadPlaces();
       }
     });
-    loadPlacesFromCache();
+    //loadPlacesFromCache();
 
     posSub = geolocator
-        .getPositionStream()
-        .listen((onData) => this.location.add(onData));
+        .getPositionStream(LocationOptions(accuracy: LocationAccuracy.medium))
+        .listen((onData) {
+      print(onData);
+      this.location.add(onData);
+    });
   }
 
   Future _loadPlaces() async {
