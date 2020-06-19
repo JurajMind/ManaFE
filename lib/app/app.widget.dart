@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:app/app/app.dart';
-import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Start/start.page.dart';
 import 'package:app/pages/home.page.dart';
+import 'package:app/theme/theme_widget.dart';
 import 'package:app/utils/translations/app_translations_delegate.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +23,8 @@ class AppWidget extends StatefulWidget {
   }
 
   static restartApp(BuildContext context) async {
-    final _AppWidgetState state = context.findAncestorStateOfType<_AppWidgetState>();
+    final _AppWidgetState state =
+        context.findAncestorStateOfType<_AppWidgetState>();
     state.restartApp();
   }
 }
@@ -43,7 +44,8 @@ class _AppWidgetState extends State<AppWidget> {
   }
 
   void initDynamicLinks() async {
-    final PendingDynamicLinkData data = await FirebaseDynamicLinks.instance.getInitialLink();
+    final PendingDynamicLinkData data =
+        await FirebaseDynamicLinks.instance.getInitialLink();
     final Uri _deepLink = data?.link;
 
     if (_deepLink != null) {
@@ -65,19 +67,37 @@ class _AppWidgetState extends State<AppWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Provider<AuthorizationStore>(
-      create: (BuildContext context) {
-        return AuthorizationStore()..getStatus();
-      },
-      child: Observer(builder: (context) {
-        var authStore = Provider.of<AuthorizationStore>(context);
+    return MTheme(
+      child: Provider<AuthorizationStore>(
+        create: (BuildContext context) {
+          return AuthorizationStore()..getStatus();
+        },
+        child: Observer(builder: (context) {
+          var authStore = Provider.of<AuthorizationStore>(context);
+          var theme = MTheme.of(context);
+          if (authStore.status == AuthorizationStatus.inProgress) {
+            return SplashScreen();
+          }
 
-        if (authStore.status == AuthorizationStatus.inProgress) {
-          return SplashScreen();
-        }
+          if (authStore.status == AuthorizationStatus.anonymous) {
+            return MaterialApp(
+              localizationsDelegates: [
+                _newLocaleDelegate,
+                //provides localised strings
+                GlobalMaterialLocalizations.delegate,
+                //provides RTL support
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              supportedLocales: App.supportedLocales(),
+              title: 'Manapipes',
+              home: StartPage(),
+              // onGenerateRoute: App.router.generator,
+              theme: MTheme.buildDarkTheme(theme),
+            );
+          }
 
-        if (authStore.status == AuthorizationStatus.anonymous) {
           return MaterialApp(
+            key: globalNavKey,
             localizationsDelegates: [
               _newLocaleDelegate,
               //provides localised strings
@@ -87,30 +107,16 @@ class _AppWidgetState extends State<AppWidget> {
             ],
             supportedLocales: App.supportedLocales(),
             title: 'Manapipes',
-            home: StartPage(),
+            navigatorObservers: [routeObserver],
+
+            home: DataProvider(
+                child: new HomePage(
+                    deeplink: deeplink, routeObserver: routeObserver)),
             // onGenerateRoute: App.router.generator,
-            theme: buildDarkTheme(),
+            theme: MTheme.buildDarkTheme(theme),
           );
-        }
-
-        return MaterialApp(
-          key: globalNavKey,
-          localizationsDelegates: [
-            _newLocaleDelegate,
-            //provides localised strings
-            GlobalMaterialLocalizations.delegate,
-            //provides RTL support
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          supportedLocales: App.supportedLocales(),
-          title: 'Manapipes',
-          navigatorObservers: [routeObserver],
-
-          home: DataProvider(child: new HomePage(deeplink: deeplink, routeObserver: routeObserver)),
-          // onGenerateRoute: App.router.generator,
-          theme: buildDarkTheme(),
-        );
-      }),
+        }),
+      ),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/theme/theme_widget.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -22,10 +23,14 @@ class _HealthPageState extends State<HealthPage> {
   @override
   Widget build(BuildContext context) {
     var statBloc = DataProvider.getData(context).statisticBloc;
+    var theme = MTheme.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.black,
-        title: Text(AppTranslations.of(context).text('health.title')),
+        title: Text(
+          AppTranslations.of(context).text('health.title'),
+          style: theme.appBarStyle,
+        ),
         centerTitle: true,
       ),
       body: StreamBuilder<List<SmokeSessionSimpleDto>>(

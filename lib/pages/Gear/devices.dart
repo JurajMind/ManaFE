@@ -4,6 +4,7 @@ import 'package:app/pages/Device/add_device_page.dart';
 import 'package:app/pages/Device/device_detail_page.dart';
 import 'package:app/pages/Gear/Components/arrow_indicator.dart';
 import 'package:app/pages/Gear/sections.dart';
+import 'package:app/theme/theme_widget.dart';
 import 'package:app/utils/translations/app_translations.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -21,12 +22,13 @@ class Devices extends StatelessWidget {
 
     var shortestSide = MediaQuery.of(context).size.shortestSide;
     var useTabletLayout = shortestSide > 600;
-
+    var theme = MTheme.of(context);
     return Container(
       child: CustomScrollView(slivers: <Widget>[
         SliverAppBar(
           pinned: true,
           expandedHeight: 200.0,
+          backgroundColor: theme.appBarColor,
           flexibleSpace: new FlexibleSpaceBar(
               title: ArrowPageIndicator(
                 pageController: controller,
@@ -38,7 +40,9 @@ class Devices extends StatelessWidget {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage(section.backgroundAsset),
-                        colorFilter: ColorFilter.mode(const Color.fromRGBO(255, 255, 255, 0.545), BlendMode.modulate),
+                        colorFilter: ColorFilter.mode(
+                            const Color.fromRGBO(255, 255, 255, 0.545),
+                            BlendMode.modulate),
                         fit: BoxFit.cover)),
               )),
         ),
@@ -47,13 +51,19 @@ class Devices extends StatelessWidget {
           initialData: null,
           builder: (context, snapshot) {
             if (useTabletLayout) {
-              return SliverList(delegate: SliverChildBuilderDelegate((context, index) {
+              return SliverList(
+                  delegate: SliverChildBuilderDelegate((context, index) {
                 if (snapshot.data.length == index) {
                   return Container(
                     margin: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(color: Colors.black45, borderRadius: BorderRadius.circular(20.0)),
+                    decoration: BoxDecoration(
+                        color: Colors.black45,
+                        borderRadius: BorderRadius.circular(20.0)),
                     child: ListTile(
-                        onTap: () => Navigator.of(context).push(MaterialPageRoute(settings: RouteSettings(), builder: (context) => AddDevicePage())),
+                        onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                                settings: RouteSettings(),
+                                builder: (context) => AddDevicePage())),
                         leading: Icon(Icons.add),
                         title: Text(
                           AppTranslations.of(context).text("device.add_device"),
@@ -64,10 +74,14 @@ class Devices extends StatelessWidget {
                 var device = snapshot.data[index];
                 return Container(
                   margin: EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(color: Colors.black45, borderRadius: BorderRadius.circular(20.0)),
+                  decoration: BoxDecoration(
+                      color: Colors.black45,
+                      borderRadius: BorderRadius.circular(20.0)),
                   child: ListTile(
-                    onTap: () =>
-                        Navigator.of(context).push(MaterialPageRoute(settings: RouteSettings(), builder: (context) => DeviceDetailPage(device: device))),
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        settings: RouteSettings(),
+                        builder: (context) =>
+                            DeviceDetailPage(device: device))),
                     leading: Hero(
                       tag: "${device.code}_hero",
                       child: Image.asset(Extensions.devicePicture(device.type)),
@@ -83,7 +97,8 @@ class Devices extends StatelessWidget {
             }
 
             return SliverGrid(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              gridDelegate:
+                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
                   if (snapshot.data == null) {
@@ -124,7 +139,9 @@ class DeviceGridItem extends StatelessWidget {
     return Hero(
       tag: "${device.code}_hero",
       child: InkWell(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(settings: RouteSettings(), builder: (context) => DeviceDetailPage(device: device))),
+        onTap: () => Navigator.of(context).push(MaterialPageRoute(
+            settings: RouteSettings(),
+            builder: (context) => DeviceDetailPage(device: device))),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Card(
@@ -133,7 +150,10 @@ class DeviceGridItem extends StatelessWidget {
               child: new DecoratedBox(
                   decoration: new BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
-                    gradient: new LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: Extensions.deviceAccentColor(device.type)),
+                    gradient: new LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: Extensions.deviceAccentColor(device.type)),
                   ),
                   child: Container(
                     child: Column(
@@ -145,7 +165,10 @@ class DeviceGridItem extends StatelessWidget {
                           child: Text(
                             device.name,
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 20.0),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black,
+                                fontSize: 20.0),
                           ),
                         ),
                       ],
@@ -153,8 +176,11 @@ class DeviceGridItem extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
                         image: DecorationImage(
-                            image: AssetImage(Extensions.devicePicture(device.type)),
-                            colorFilter: ColorFilter.mode(const Color.fromRGBO(255, 255, 255, 0.545), BlendMode.modulate),
+                            image: AssetImage(
+                                Extensions.devicePicture(device.type)),
+                            colorFilter: ColorFilter.mode(
+                                const Color.fromRGBO(255, 255, 255, 0.545),
+                                BlendMode.modulate),
                             fit: BoxFit.cover)),
                   )),
             ),
@@ -173,7 +199,8 @@ class AddDeviceGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(settings: RouteSettings(), builder: (context) => AddDevicePage())),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+          settings: RouteSettings(), builder: (context) => AddDevicePage())),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Card(
@@ -192,7 +219,10 @@ class AddDeviceGridItem extends StatelessWidget {
                   child: Text(
                     AppTranslations.of(context).text("device.add_device"),
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.w700, color: Colors.white, fontSize: 20.0),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                        fontSize: 20.0),
                   ),
                 ),
                 Icon(

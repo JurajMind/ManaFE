@@ -1,3 +1,4 @@
+import 'package:app/theme/theme_widget.dart';
 import 'package:flutter/material.dart';
 
 class ArrowPageIndicator extends StatelessWidget {
@@ -11,6 +12,7 @@ class ArrowPageIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = MTheme.of(context);
     return Container(
       constraints: BoxConstraints(maxWidth: 800),
       height: 50,
@@ -38,7 +40,10 @@ class ArrowPageIndicator extends StatelessWidget {
                         curve: Curves.easeIn);
                   },
                 ),
-          Text(title),
+          Text(
+            title,
+            style: theme.appBarStyle,
+          ),
           index == itemCount - 1
               ? Container(
                   width: 50,

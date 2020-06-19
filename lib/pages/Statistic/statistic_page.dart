@@ -535,50 +535,55 @@ class HealthWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.white),
-          borderRadius: BorderRadius.circular(16.0)),
-      child: StreamBuilder<StatisticRecap>(
-          stream: bloc.recap,
-          builder: (context, snapshot) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: InkWell(
-                onTap: () => Navigator.of(context).push(
-                    new MaterialPageRoute(builder: (BuildContext context) {
-                  return HealthPage(
-                    from: this.time.from,
-                    to: this.time.to,
-                  );
-                })),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: new HealthIcon(snapshot.data?.sessionCount),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Column(
-                        children: <Widget>[
-                          Text(AppTranslations.of(context).text('health.title'),
-                              style: Theme.of(context).textTheme.headline5),
-                        ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            borderRadius: BorderRadius.circular(16.0)),
+        child: StreamBuilder<StatisticRecap>(
+            stream: bloc.recap,
+            builder: (context, snapshot) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () => Navigator.of(context).push(
+                      new MaterialPageRoute(builder: (BuildContext context) {
+                    return HealthPage(
+                      from: this.time.from,
+                      to: this.time.to,
+                    );
+                  })),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 1,
+                        child: new HealthIcon(snapshot.data?.sessionCount),
                       ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Icon(
-                        Icons.chevron_right,
-                        size: 40,
+                      Expanded(
+                        flex: 4,
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                                AppTranslations.of(context)
+                                    .text('health.title'),
+                                style: Theme.of(context).textTheme.headline5),
+                          ],
+                        ),
                       ),
-                    )
-                  ],
+                      Expanded(
+                        flex: 1,
+                        child: Icon(
+                          Icons.chevron_right,
+                          size: 40,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }),
+              );
+            }),
+      ),
     );
   }
 }
