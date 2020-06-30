@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:app/models/App/Gear/gear_model.dart';
+import 'package:app/support/m_platform.dart';
 import 'package:flutter/material.dart';
 
 import 'sections.dart';
@@ -27,16 +28,18 @@ class SectionCard extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             new DecoratedBox(
-              decoration: new BoxDecoration(
-                gradient: new LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: <Color>[
-                    section.leftColor,
-                    section.rightColor,
-                  ],
-                ),
-              ),
+              decoration: MPlatform.isWeb
+                  ? BoxDecoration()
+                  : new BoxDecoration(
+                      gradient: new LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: <Color>[
+                          section.leftColor,
+                          section.rightColor,
+                        ],
+                      ),
+                    ),
               child: Container(
                 height: 150,
                 width: MediaQuery.of(context).size.width,
@@ -191,7 +194,8 @@ class BrandGroupWidget extends StatelessWidget {
         child: new ListTile(
           title: new Text(brandGroup.name),
           subtitle: new Text(brandGroup.itemCount.toString()),
-          leading: new SizedBox(width: 32.0, height: 32.0, child: Placeholder()),
+          leading:
+              new SizedBox(width: 32.0, height: 32.0, child: Placeholder()),
         ));
   }
 }

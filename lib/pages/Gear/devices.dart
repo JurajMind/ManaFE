@@ -4,6 +4,7 @@ import 'package:app/pages/Device/add_device_page.dart';
 import 'package:app/pages/Device/device_detail_page.dart';
 import 'package:app/pages/Gear/Components/arrow_indicator.dart';
 import 'package:app/pages/Gear/sections.dart';
+import 'package:app/support/m_platform.dart';
 import 'package:app/theme/theme_widget.dart';
 import 'package:app/utils/translations/app_translations.dart';
 
@@ -40,9 +41,11 @@ class Devices extends StatelessWidget {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage(section.backgroundAsset),
-                        colorFilter: ColorFilter.mode(
-                            const Color.fromRGBO(255, 255, 255, 0.545),
-                            BlendMode.modulate),
+                        colorFilter: MPlatform.isWeb
+                            ? null
+                            : ColorFilter.mode(
+                                const Color.fromRGBO(255, 255, 255, 0.545),
+                                BlendMode.modulate),
                         fit: BoxFit.cover)),
               )),
         ),
@@ -180,9 +183,11 @@ class DeviceGridItem extends StatelessWidget {
                         image: DecorationImage(
                             image: AssetImage(
                                 Extensions.devicePicture(device.type)),
-                            colorFilter: ColorFilter.mode(
-                                const Color.fromRGBO(255, 255, 255, 0.545),
-                                BlendMode.modulate),
+                            colorFilter: MPlatform.isWeb
+                                ? null
+                                : ColorFilter.mode(
+                                    const Color.fromRGBO(255, 255, 255, 0.545),
+                                    BlendMode.modulate),
                             fit: BoxFit.cover)),
                   )),
             ),

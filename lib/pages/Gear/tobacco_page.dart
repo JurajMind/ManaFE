@@ -5,6 +5,7 @@ import 'package:app/components/SmokeSession/inMix_list.dart';
 import 'package:app/components/SmokeSession/session_list.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/services/share.dart';
+import 'package:app/theme/theme_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -56,6 +57,7 @@ class _TobaccoPageState extends State<TobaccoPage> {
         child: CircularProgressIndicator(),
       );
     }
+    var theme = MTheme.of(context);
     return new Container(
         color: Theme.of(context).backgroundColor,
         child: Center(
@@ -83,13 +85,14 @@ class _TobaccoPageState extends State<TobaccoPage> {
                             height: 50,
                             child: Extensions.accesoryPicture(pipeAccesory))),
                     SizedBox(
-                      width: 8,
+                      width: 16,
                     ),
                     Container(
-                        width: MediaQuery.of(context).size.width - 200,
+                        width: MediaQuery.of(context).size.width - 220,
                         child: AutoSizeText(
                           "${pipeAccesory.brand} ${pipeAccesory.name}",
                           maxLines: 1,
+                          style: theme.appBarStyle,
                           minFontSize: 8,
                         ))
                   ],
@@ -103,10 +106,13 @@ class _TobaccoPageState extends State<TobaccoPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: FractionallySizedBox(
-                      widthFactor: 0.7,
-                      child: AddRemoveGearButton(
-                        gear: pipeAccesory,
+                    child: Center(
+                      child: Container(
+                        constraints:
+                            BoxConstraints(maxWidth: theme.maxPageWidth),
+                        child: AddRemoveGearButton(
+                          gear: pipeAccesory,
+                        ),
                       ),
                     ),
                   ),

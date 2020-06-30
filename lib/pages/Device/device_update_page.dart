@@ -2,6 +2,7 @@ import 'package:app/Helpers/date_utils.dart';
 import 'package:app/app/app.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/models/extensions.dart';
+import 'package:app/theme/theme_widget.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -17,7 +18,8 @@ class DeviceUpdatePage extends StatefulWidget {
 }
 
 class _DeviceUpdatePageState extends State<DeviceUpdatePage> {
-  BehaviorSubject<List<DeviceUpdateDto>> updates = new BehaviorSubject<List<DeviceUpdateDto>>();
+  BehaviorSubject<List<DeviceUpdateDto>> updates =
+      new BehaviorSubject<List<DeviceUpdateDto>>();
 
   @override
   void initState() {
@@ -27,12 +29,14 @@ class _DeviceUpdatePageState extends State<DeviceUpdatePage> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = MTheme.of(context);
     return Scaffold(
       bottomNavigationBar: SizedBox(
         height: 55,
       ),
       appBar: AppBar(
-        title: Text(AppTranslations.of(context).text("device.update_device")),
+        title: Text(AppTranslations.of(context).text("device.update_device"),
+            style: theme.appBarStyle),
         centerTitle: true,
         backgroundColor: AppColors.black,
       ),
@@ -47,7 +51,8 @@ class _DeviceUpdatePageState extends State<DeviceUpdatePage> {
                   if (snapshot.data != null) {
                     update = snapshot.data[index];
                   }
-                  return DeviceUpdateListItem(update: update, device: widget.device);
+                  return DeviceUpdateListItem(
+                      update: update, device: widget.device);
                 },
               );
             }),
@@ -59,7 +64,8 @@ class _DeviceUpdatePageState extends State<DeviceUpdatePage> {
 class DeviceUpdateListItem extends StatelessWidget {
   final DeviceUpdateDto update;
   final DeviceSimpleDto device;
-  const DeviceUpdateListItem({Key key, this.update, this.device}) : super(key: key);
+  const DeviceUpdateListItem({Key key, this.update, this.device})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -107,13 +113,17 @@ class DeviceUpdateListItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
-          decoration: BoxDecoration(color: Colors.black45, borderRadius: BorderRadius.circular(20.0)),
+          decoration: BoxDecoration(
+              color: Colors.black45, borderRadius: BorderRadius.circular(20.0)),
           child: ListTile(
             onTap: () => promptUpdate(context),
             trailing: Icon(Icons.file_download),
             leading: Text(
               'v ${Extensions.deviceVersion(update.version)}',
-              style: Theme.of(context).textTheme.headline5.apply(color: device.version >= update.version ? Colors.white : Colors.green),
+              style: Theme.of(context).textTheme.headline5.apply(
+                  color: device.version >= update.version
+                      ? Colors.white
+                      : Colors.green),
             ),
             title: Text(update.releseNote),
             subtitle: Text(DateUtils.toStringDate(update.releseDate)),
@@ -137,7 +147,8 @@ class DeviceUpdateListItem extends StatelessWidget {
           ),
           actions: <Widget>[
             OutlineButton.icon(
-                shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0)),
                 borderSide: BorderSide(color: Colors.white, width: 1),
                 icon: Icon(Icons.cancel, color: Colors.red),
                 label: Text(
@@ -146,7 +157,8 @@ class DeviceUpdateListItem extends StatelessWidget {
                 ),
                 onPressed: () => Navigator.of(context).pop(false)),
             OutlineButton.icon(
-              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)),
               borderSide: BorderSide(color: Colors.white, width: 1),
               icon: Icon(Icons.file_download, color: Colors.green),
               label: Text(

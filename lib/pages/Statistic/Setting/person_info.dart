@@ -29,7 +29,8 @@ class PersonInfo extends StatelessWidget {
                         const SizedBox(
                           width: 8,
                         ),
-                        Text('Person info', style: Theme.of(context).textTheme.headline6),
+                        Text('Person info',
+                            style: Theme.of(context).textTheme.headline6),
                       ],
                     ),
                     const SizedBox(
@@ -42,15 +43,18 @@ class PersonInfo extends StatelessWidget {
                             flex: 2,
                             child: Text(
                               'Name :',
-                              style: Theme.of(context).textTheme.headline5,
+                              style: Theme.of(context).textTheme.headline6,
                             )),
                         Expanded(
                             flex: 2,
                             child: Text(
                               snapshot.data?.displayName ?? '...',
-                              style: Theme.of(context).textTheme.bodyText2,
+                              style: Theme.of(context).textTheme.headline6,
                             )),
                       ],
+                    ),
+                    const SizedBox(
+                      height: 16,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -59,15 +63,18 @@ class PersonInfo extends StatelessWidget {
                             flex: 2,
                             child: Text(
                               'Email :',
-                              style: Theme.of(context).textTheme.headline5,
+                              style: Theme.of(context).textTheme.headline6,
                             )),
                         Expanded(
                             flex: 2,
                             child: Text(
                               snapshot.data?.email ?? '...',
-                              style: Theme.of(context).textTheme.bodyText2,
+                              style: Theme.of(context).textTheme.headline6,
                             ))
                       ],
+                    ),
+                    const SizedBox(
+                      height: 16,
                     ),
                   ],
                 ),

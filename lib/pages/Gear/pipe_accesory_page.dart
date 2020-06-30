@@ -5,6 +5,7 @@ import 'package:app/components/SmokeSession/session_list.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/pages/Gear/tobacco_page.dart';
 import 'package:app/services/share.dart';
+import 'package:app/theme/theme_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -61,6 +62,7 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = MTheme.of(context);
     if (pipeAccesory == null) {
       return Center(
         child: CircularProgressIndicator(),
@@ -91,13 +93,14 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
                           width: 50,
                           child: Extensions.accesoryPicture(pipeAccesory))),
                   SizedBox(
-                    width: 8,
+                    width: 16,
                   ),
                   Container(
-                      width: MediaQuery.of(context).size.width - 200,
+                      width: MediaQuery.of(context).size.width - 220,
                       child: AutoSizeText(
                         "${pipeAccesory.brand} ${pipeAccesory.name}",
                         maxLines: 1,
+                        style: theme.appBarStyle,
                         minFontSize: 8,
                       ))
                 ],
@@ -111,8 +114,13 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: AddRemoveGearButton(
-                    gear: pipeAccesory,
+                  child: Center(
+                    child: Container(
+                      constraints: BoxConstraints(maxWidth: theme.maxPageWidth),
+                      child: AddRemoveGearButton(
+                        gear: pipeAccesory,
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(

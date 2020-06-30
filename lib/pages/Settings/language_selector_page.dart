@@ -1,5 +1,6 @@
 import 'package:app/app/app.dart';
 import 'package:app/const/theme.dart';
+import 'package:app/theme/theme_widget.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 
@@ -21,13 +22,16 @@ class _LanguageSelectorPageState extends State<LanguageSelectorPage> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = MTheme.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
-        title: Text(AppTranslations.of(context)
-            .text("settings.select_language")
-            .toUpperCase()),
+        title: Text(
+            AppTranslations.of(context)
+                .text("settings.select_language")
+                .toUpperCase(),
+            style: theme.appBarStyle),
       ),
       body: _buildLanguagesList(),
     );

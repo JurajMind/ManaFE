@@ -2,6 +2,7 @@ import 'package:app/app/app.dart';
 import 'package:app/components/LazyScroll/lazy_load_scroll_view.dart';
 import 'package:app/components/Mixology/mixology_expanded.dart';
 import 'package:app/module/mixology/mix_card_expanded_shimmer.dart';
+import 'package:app/theme/theme_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
@@ -62,45 +63,47 @@ class _InMixesLazyListState extends State<InMixesLazyList> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = MTheme.of(context);
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Row(
-          children: <Widget>[
-            Text(widget.tobacco.brand + ' '),
-            Text(widget.tobacco.name),
-          ],
+          centerTitle: true,
+          title: Text(
+              "${widget?.tobacco?.brand ?? ""} ${widget?.tobacco?.name ?? ""}",
+              style: theme.appBarStyle)),
+      body: Center(
+        child: Container(
+          constraints: BoxConstraints(maxWidth: theme.maxPageWidth),
+          child: StreamBuilder<List<TobaccoMixSimpleDto>>(
+              stream: inMixes,
+              initialData: null,
+              builder: (context, snapshot) {
+                return LazyLoadScrollView(
+                  onRefresh: () => loadMoreMixes(snapshot.data, refresh: true),
+                  onEndOfPage: () => loadMoreMixes(snapshot.data),
+                  child: ListView.builder(
+                      itemCount: (snapshot?.data?.length ?? 0) + 1,
+                      itemBuilder: (context, index) {
+                        if (index >= snapshot.data.length) {
+                          return SizedBox(
+                            height: 100,
+                          );
+                        }
+
+                        var item = snapshot.data[index];
+                        if (item == null) {
+                          return MixCardExpandedShimmer(
+                            move: false,
+                          );
+                        } else {
+                          return MixCardExpanded(
+                              tobaccoMix: snapshot.data[index],
+                              highlightId: widget.tobacco.id);
+                        }
+                      }),
+                );
+              }),
         ),
       ),
-      body: StreamBuilder<List<TobaccoMixSimpleDto>>(
-          stream: inMixes,
-          initialData: null,
-          builder: (context, snapshot) {
-            return LazyLoadScrollView(
-              onRefresh: () => loadMoreMixes(snapshot.data, refresh: true),
-              onEndOfPage: () => loadMoreMixes(snapshot.data),
-              child: ListView.builder(
-                  itemCount: (snapshot?.data?.length ?? 0) + 1,
-                  itemBuilder: (context, index) {
-                    if (index >= snapshot.data.length) {
-                      return SizedBox(
-                        height: 100,
-                      );
-                    }
-
-                    var item = snapshot.data[index];
-                    if (item == null) {
-                      return MixCardExpandedShimmer(
-                        move: false,
-                      );
-                    } else {
-                      return MixCardExpanded(
-                          tobaccoMix: snapshot.data[index],
-                          highlightId: widget.tobacco.id);
-                    }
-                  }),
-            );
-          }),
     );
   }
 }

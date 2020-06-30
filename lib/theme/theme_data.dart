@@ -31,7 +31,7 @@ class MThemeData {
 
   Color get quaternaryColor => const Color(0xFF363A3E);
 
-  Color get accentColor => const Color(0xFF4589FF);
+  Color get accentColor => this.colors[1];
 
   Color get dangerColor => const Color(0xFFD23031);
 

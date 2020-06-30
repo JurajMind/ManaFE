@@ -7,6 +7,7 @@ import 'package:app/components/Places/PlacePicker/place_picker.dart';
 import 'package:app/components/Places/open_dropdown.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/theme/theme_widget.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -45,175 +46,186 @@ class _AddPlacePageState extends State<AddPlacePage> {
           placesBloc.location.value.longitude);
     }
 
+    var theme = MTheme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Hero(
             tag: 'add_new_place_label',
             child: Text(
-              AppTranslations.of(context).text("reservations.add_new_place"),
-            )),
+                AppTranslations.of(context).text("reservations.add_new_place"),
+                style: theme.appBarStyle)),
         backgroundColor: AppColors.black,
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            FormBuilder(
-              key: fbKey,
-              autovalidate: true,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
+          child: Container(
+            constraints: theme.pageConstrains,
+            child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  FormBuilderTextField(
-                    attribute: "name",
-                    decoration: InputDecoration(labelText: "Name"),
-                    validators: [
-                      FormBuilderValidators.required(),
-                      FormBuilderValidators.max(70),
-                    ],
-                  ),
-                  FormBuilderTextField(
-                    attribute: "phoneNumber",
-                    decoration: InputDecoration(
-                        labelText: "Phone number or other contact"),
-                    validators: [],
+                  FormBuilder(
+                    key: fbKey,
+                    autovalidate: true,
+                    child: Column(
+                      children: <Widget>[
+                        FormBuilderTextField(
+                          attribute: "name",
+                          decoration: InputDecoration(labelText: "Name"),
+                          validators: [
+                            FormBuilderValidators.required(),
+                            FormBuilderValidators.max(70),
+                          ],
+                        ),
+                        FormBuilderTextField(
+                          attribute: "phoneNumber",
+                          decoration: InputDecoration(
+                              labelText: "Phone number or other contact"),
+                          validators: [],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        AddressPicker(
+                          onAddressChange: (add) {
+                            this._address = add;
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                                flex: 4,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text('Opening hours',
+                                        style: new TextStyle(
+                                            fontSize: 16, color: Colors.grey)),
+                                    SizedBox(height: 5),
+                                    _businessHour == null
+                                        ? Text("No opening hours")
+                                        : OpenDropdown(
+                                            hours: _businessHour,
+                                            dark: true,
+                                          )
+                                  ],
+                                )),
+                            Expanded(
+                                flex: 1,
+                                child: IconButton(
+                                  icon: Icon(Icons.edit),
+                                  onPressed: () async {
+                                    showOpeningHourPicker();
+                                  },
+                                ))
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                                flex: 4,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text('Photo',
+                                        style: new TextStyle(
+                                            fontSize: 16, color: Colors.grey)),
+                                    SizedBox(height: 5),
+                                    _image == null
+                                        ? Text('No image selected.')
+                                        : Image.file(_image),
+                                  ],
+                                )),
+                            Expanded(
+                                flex: 1,
+                                child: IconButton(
+                                  icon: Icon(Icons.photo_library),
+                                  onPressed: () async {
+                                    var image = await ImagePicker.pickImage(
+                                        source: ImageSource.gallery);
+
+                                    setState(() {
+                                      _image = image;
+                                    });
+                                  },
+                                )),
+                            Expanded(
+                                flex: 1,
+                                child: IconButton(
+                                  icon: Icon(Icons.camera_enhance),
+                                  onPressed: () async {
+                                    var image = await ImagePicker.pickImage(
+                                        source: ImageSource.camera);
+
+                                    setState(() {
+                                      _image = image;
+                                    });
+                                  },
+                                ))
+                          ],
+                        ),
+                        FormBuilderCheckboxList(
+                          decoration: InputDecoration(
+                              labelText: "Place features",
+                              labelStyle: TextStyle(fontSize: 24)),
+                          attribute: "features",
+                          options: [
+                            FormBuilderFieldOption(
+                                value: "WIFI", label: "Wifi available"),
+                            FormBuilderFieldOption(
+                                value: "CARD", label: "Credit card accepted"),
+                            FormBuilderFieldOption(
+                                value: "OUTDOOR",
+                                label: "Outdoor seats available"),
+                            FormBuilderFieldOption(
+                                value: "FOOD", label: "Food available"),
+                            FormBuilderFieldOption(
+                                value: "PET", label: "Pet accepted"),
+                          ],
+                        ),
+                        FormBuilderSwitch(
+                          label: Text('I am owner of this place'),
+                          attribute: "owner",
+                          initialValue: false,
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
-                  AddressPicker(
-                    onAddressChange: (add) {
-                      this._address = add;
-                    },
-                  ),
+                  _uploading
+                      ? CircularProgressIndicator()
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            OutlineButton(
+                              color: Colors.green,
+                              child: Text("Submit"),
+                              onPressed: () {
+                                savePlace(context);
+                              },
+                            ),
+                            MaterialButton(
+                              child: Text("Reset"),
+                              onPressed: () {
+                                fbKey.currentState.reset();
+                              },
+                            ),
+                          ],
+                        ),
                   SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                          flex: 4,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text('Opening hours',
-                                  style: new TextStyle(
-                                      fontSize: 16, color: Colors.grey)),
-                              SizedBox(height: 5),
-                              _businessHour == null
-                                  ? Text("No opening hours")
-                                  : OpenDropdown(
-                                      hours: _businessHour,
-                                      dark: true,
-                                    )
-                            ],
-                          )),
-                      Expanded(
-                          flex: 1,
-                          child: IconButton(
-                            icon: Icon(Icons.edit),
-                            onPressed: () async {
-                              showOpeningHourPicker();
-                            },
-                          ))
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                          flex: 4,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text('Photo',
-                                  style: new TextStyle(
-                                      fontSize: 16, color: Colors.grey)),
-                              SizedBox(height: 5),
-                              _image == null
-                                  ? Text('No image selected.')
-                                  : Image.file(_image),
-                            ],
-                          )),
-                      Expanded(
-                          flex: 1,
-                          child: IconButton(
-                            icon: Icon(Icons.photo_library),
-                            onPressed: () async {
-                              var image = await ImagePicker.pickImage(
-                                  source: ImageSource.gallery);
-
-                              setState(() {
-                                _image = image;
-                              });
-                            },
-                          )),
-                      Expanded(
-                          flex: 1,
-                          child: IconButton(
-                            icon: Icon(Icons.camera_enhance),
-                            onPressed: () async {
-                              var image = await ImagePicker.pickImage(
-                                  source: ImageSource.camera);
-
-                              setState(() {
-                                _image = image;
-                              });
-                            },
-                          ))
-                    ],
-                  ),
-                  FormBuilderCheckboxList(
-                    decoration: InputDecoration(
-                        labelText: "Place features",
-                        labelStyle: TextStyle(fontSize: 24)),
-                    attribute: "features",
-                    options: [
-                      FormBuilderFieldOption(
-                          value: "WIFI", label: "Wifi available"),
-                      FormBuilderFieldOption(
-                          value: "CARD", label: "Credit card accepted"),
-                      FormBuilderFieldOption(
-                          value: "OUTDOOR", label: "Outdoor seats available"),
-                      FormBuilderFieldOption(
-                          value: "FOOD", label: "Food available"),
-                      FormBuilderFieldOption(
-                          value: "PET", label: "Pet accepted"),
-                    ],
-                  ),
-                  FormBuilderSwitch(
-                    label: Text('I am owner of this place'),
-                    attribute: "owner",
-                    initialValue: false,
+                    height: 100,
                   ),
                 ],
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            _uploading
-                ? CircularProgressIndicator()
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      OutlineButton(
-                        color: Colors.green,
-                        child: Text("Submit"),
-                        onPressed: () {
-                          savePlace(context);
-                        },
-                      ),
-                      MaterialButton(
-                        child: Text("Reset"),
-                        onPressed: () {
-                          fbKey.currentState.reset();
-                        },
-                      ),
-                    ],
-                  ),
-            SizedBox(
-              height: 100,
-            ),
-          ],
+          ),
         ),
       ),
     );
