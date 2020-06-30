@@ -60,7 +60,7 @@ class PresetPickerState extends State<PresetPicker> {
             : ListWheelScrollView(
                 itemExtent: 70.0,
                 controller: scrollController,
-                clipToSize: true,
+                //   clipToSize: true,
                 diameterRatio: 10.0,
                 perspective: 0.005,
                 onSelectedItemChanged: (int index) {

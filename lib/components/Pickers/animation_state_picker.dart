@@ -101,7 +101,7 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
               : ListWheelScrollView(
                   itemExtent: 70.0,
                   controller: scrollController,
-                  clipToSize: true,
+                  // clipToSize: true,
                   diameterRatio: 10.0,
                   perspective: 0.005,
                   onSelectedItemChanged: (int index) {
@@ -111,8 +111,8 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
                     widget.onChanged(index);
                     setState(() {
                       _focusIndex = index;
-                   //Vibration.vibrate(duration: 2);
-                   HapticFeedback.selectionClick();
+                      //Vibration.vibrate(duration: 2);
+                      HapticFeedback.selectionClick();
                     });
                   },
                   children: List.generate(
