@@ -1,4 +1,6 @@
-import 'package:app/services/position/position_polyfy_fake.dart' if (dart.library.js) 'package:app/services/position/position_polyfy.dart' as wgeo;
+import 'package:app/services/position/position_polyfy_fake.dart'
+    if (dart.library.js) 'package:app/services/position/position_polyfy.dart'
+    as wgeo;
 import 'package:app/support/m_platform.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -18,46 +20,62 @@ class MPosition {
     }
   }
 
-  Stream<Position> getPositionStream(
-      [LocationOptions locationOptions = const LocationOptions(), GeolocationPermission locationPermissionLevel = GeolocationPermission.location]) {
+  Stream<Position> getPositionStream([
+    LocationOptions locationOptions = const LocationOptions(),
+  ]) {
     if (MPlatform.isWeb) {
       return _wgeo.watchPosition().map((a) {
-        return new Position(latitude: a.coordinates.latitude, longitude: a.coordinates.longitude);
+        return new Position(
+            latitude: a.coordinates.latitude,
+            longitude: a.coordinates.longitude);
       });
     }
-    return _geo.getPositionStream(locationOptions, locationPermissionLevel);
+    return Geolocator.getPositionStream();
   }
 
-  Future<GeolocationStatus> checkGeolocationPermissionStatus({GeolocationPermission locationPermission = GeolocationPermission.location}) async {
+  Future<LocationPermission> checkGeolocationPermissionStatus() async {
     if (MPlatform.isWeb) {
-      var a = await _wgeo.getCurrentPosition(enableHighAccuracy: false, timeout: new Duration(seconds: 10), maximumAge: Duration(hours: 1));
+      var a = await _wgeo.getCurrentPosition(
+          enableHighAccuracy: false,
+          timeout: new Duration(seconds: 10),
+          maximumAge: Duration(hours: 1));
       if (a != null) {
-        return GeolocationStatus.granted;
+        return LocationPermission.always;
       } else {
-        return GeolocationStatus.unknown;
+        return LocationPermission.denied;
       }
     }
 
-    return _geo.checkGeolocationPermissionStatus();
+    return await Geolocator.checkPermission();
   }
 
-  Future<Position> getLastKnownPosition(
-      {LocationAccuracy desiredAccuracy = LocationAccuracy.best, GeolocationPermission locationPermissionLevel = GeolocationPermission.location}) async {
+  Future<Position> getLastKnownPosition({
+    LocationAccuracy desiredAccuracy = LocationAccuracy.best,
+  }) async {
     if (MPlatform.isWeb) {
-      var a = await _wgeo.getCurrentPosition(enableHighAccuracy: false, timeout: new Duration(seconds: 1), maximumAge: Duration(days: 1));
-      return new Position(latitude: a.coordinates.latitude, longitude: a.coordinates.longitude);
+      var a = await _wgeo.getCurrentPosition(
+          enableHighAccuracy: false,
+          timeout: new Duration(seconds: 1),
+          maximumAge: Duration(days: 1));
+      return new Position(
+          latitude: a.coordinates.latitude, longitude: a.coordinates.longitude);
     }
 
-    return _geo.getLastKnownPosition(desiredAccuracy: desiredAccuracy, locationPermissionLevel: locationPermissionLevel);
+    return await Geolocator.getLastKnownPosition();
   }
 
-  Future<Position> getCurrentPosition(
-      {LocationAccuracy desiredAccuracy = LocationAccuracy.best, GeolocationPermission locationPermissionLevel = GeolocationPermission.location}) async {
+  Future<Position> getCurrentPosition({
+    LocationAccuracy desiredAccuracy = LocationAccuracy.best,
+  }) async {
     if (MPlatform.isWeb) {
-      var a = await _wgeo.getCurrentPosition(enableHighAccuracy: false, timeout: new Duration(seconds: 1), maximumAge: Duration(hours: 1));
-      return new Position(latitude: a.coordinates.latitude, longitude: a.coordinates.longitude);
+      var a = await _wgeo.getCurrentPosition(
+          enableHighAccuracy: false,
+          timeout: new Duration(seconds: 1),
+          maximumAge: Duration(hours: 1));
+      return new Position(
+          latitude: a.coordinates.latitude, longitude: a.coordinates.longitude);
     }
 
-    return _geo.getCurrentPosition(desiredAccuracy: desiredAccuracy, locationPermissionLevel: locationPermissionLevel);
+    return await Geolocator.getCurrentPosition();
   }
 }

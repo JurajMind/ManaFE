@@ -180,7 +180,11 @@ class PlacePickerState extends State<PlacePicker> {
               markers: markers,
             ),
           ),
-          (this.hasSearchTerm) ? SizedBox() : widget.onlyLocation ? buildOnlyLocation(context) : buildNearbyAddress(context),
+          (this.hasSearchTerm)
+              ? SizedBox()
+              : widget.onlyLocation
+                  ? buildOnlyLocation(context)
+                  : buildNearbyAddress(context),
         ],
       ),
     );
@@ -260,7 +264,8 @@ class PlacePickerState extends State<PlacePicker> {
     final RenderBox renderBox = context.findRenderObject();
     Size size = renderBox.size;
 
-    final RenderBox appBarBox = this.appBarKey.currentContext.findRenderObject();
+    final RenderBox appBarBox =
+        this.appBarKey.currentContext.findRenderObject();
 
     this.overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
@@ -310,10 +315,13 @@ class PlacePickerState extends State<PlacePicker> {
   void autoCompleteSearch(String place) {
     place = place.replaceAll(" ", "+");
     var endpoint =
-        "https://maps.googleapis.com/maps/api/place/autocomplete/json?" + "key=${widget.apiKey}&" + "input={$place}&sessiontoken=${this.sessionToken}";
+        "https://maps.googleapis.com/maps/api/place/autocomplete/json?" +
+            "key=${widget.apiKey}&" +
+            "input={$place}&sessiontoken=${this.sessionToken}";
 
     if (this.locationResult != null) {
-      endpoint += "&location=${this.locationResult.latLng.latitude}," + "${this.locationResult.latLng.longitude}";
+      endpoint += "&location=${this.locationResult.latLng.latitude}," +
+          "${this.locationResult.latLng.longitude}";
     }
     http.get(endpoint).then((response) {
       if (response.statusCode == 200) {
@@ -356,11 +364,14 @@ class PlacePickerState extends State<PlacePicker> {
   void decodeAndSelectPlace(String placeId) {
     clearOverlay();
 
-    String endpoint = "${App.baseUri}/api/Places/GoogleProxy/place/details/json?key=${widget.apiKey}" + "&placeid=$placeId";
+    String endpoint =
+        "${App.baseUri}/api/Places/GoogleProxy/place/details/json?key=${widget.apiKey}" +
+            "&placeid=$placeId";
 
     http.get(endpoint).then((response) {
       if (response.statusCode == 200) {
-        Map<String, dynamic> location = jsonDecode(response.body)['result']['geometry']['location'];
+        Map<String, dynamic> location =
+            jsonDecode(response.body)['result']['geometry']['location'];
 
         LatLng latLng = LatLng(location['lat'], location['lng']);
 
@@ -376,7 +387,8 @@ class PlacePickerState extends State<PlacePicker> {
     final RenderBox renderBox = context.findRenderObject();
     Size size = renderBox.size;
 
-    final RenderBox appBarBox = this.appBarKey.currentContext.findRenderObject();
+    final RenderBox appBarBox =
+        this.appBarKey.currentContext.findRenderObject();
 
     clearOverlay();
 
@@ -434,10 +446,15 @@ class PlacePickerState extends State<PlacePicker> {
 
   /// Fetches and updates the nearby places to the provided lat,lng
   void getNearbyPlaces(LatLng latLng) {
-    http.get("https://maps.googleapis.com/maps/api/geocode/json?" + "key=${widget.apiKey}&" + "latlng=${latLng.latitude},${latLng.longitude}").then((response) {
+    http
+        .get("https://maps.googleapis.com/maps/api/geocode/json?" +
+            "key=${widget.apiKey}&" +
+            "latlng=${latLng.latitude},${latLng.longitude}")
+        .then((response) {
       if (response.statusCode == 200) {
         this.nearbyPlaces.clear();
-        for (Map<String, dynamic> item in jsonDecode(response.body)['results']) {
+        for (Map<String, dynamic> item
+            in jsonDecode(response.body)['results']) {
           NearbyAddress nearbyPlace = NearbyAddress();
           nearbyPlace.address = new AddressDto();
           List<dynamic> addressComponents = item["address_components"];
@@ -493,8 +510,10 @@ class PlacePickerState extends State<PlacePicker> {
         street = street ?? extractAddressFeature(types, f, 'route');
         zip = zip ?? extractAddressFeature(types, f, 'postal_code');
         locality = locality ?? extractAddressFeature(types, f, 'locality');
-        locality1 = locality1 ?? extractAddressFeature(types, f, 'administrative_area_level_1');
-        locality2 = locality2 ?? extractAddressFeature(types, f, 'administrative_area_level_2');
+        locality1 = locality1 ??
+            extractAddressFeature(types, f, 'administrative_area_level_1');
+        locality2 = locality2 ??
+            extractAddressFeature(types, f, 'administrative_area_level_2');
         country = country ?? extractAddressFeature(types, f, 'country');
 
         return null;
@@ -537,10 +556,9 @@ class PlacePickerState extends State<PlacePicker> {
   }
 
   Future moveToCurrentUserLocation() async {
-    var geolocator = Geolocator();
-    GeolocationStatus geolocationStatus = await geolocator.checkGeolocationPermissionStatus();
-    if (geolocationStatus == GeolocationStatus.denied) return;
-    geolocator.getLastKnownPosition(desiredAccuracy: LocationAccuracy.low).then((value) async {
+    LocationPermission geolocationStatus = await Geolocator.checkPermission();
+    if (geolocationStatus == LocationPermission.denied) return;
+    Geolocator.getLastKnownPosition().then((value) async {
       if (value != null) {
         LatLng target = LatLng(value.latitude, value.longitude);
         moveToLocation(target);
@@ -646,11 +664,17 @@ class SearchInputState extends State<SearchInput> {
           ),
           Expanded(
             child: TextField(
-              style: Theme.of(context).textTheme.headline5.apply(color: Colors.black),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5
+                  .apply(color: Colors.black),
               decoration: InputDecoration(
                 hintText: "Search address",
                 fillColor: Colors.black,
-                hintStyle: Theme.of(context).textTheme.headline5.apply(color: Colors.black),
+                hintStyle: Theme.of(context)
+                    .textTheme
+                    .headline5
+                    .apply(color: Colors.black),
                 border: InputBorder.none,
               ),
               controller: this.editController,
@@ -808,7 +832,8 @@ class RichSuggestion extends StatelessWidget {
   List<TextSpan> getStyledTexts(BuildContext context) {
     final List<TextSpan> result = [];
 
-    String startText = this.autoCompleteItem.text.substring(0, this.autoCompleteItem.offset);
+    String startText =
+        this.autoCompleteItem.text.substring(0, this.autoCompleteItem.offset);
     if (startText.isNotEmpty) {
       result.add(
         TextSpan(
@@ -821,7 +846,9 @@ class RichSuggestion extends StatelessWidget {
       );
     }
 
-    String boldText = this.autoCompleteItem.text.substring(this.autoCompleteItem.offset, this.autoCompleteItem.offset + this.autoCompleteItem.length);
+    String boldText = this.autoCompleteItem.text.substring(
+        this.autoCompleteItem.offset,
+        this.autoCompleteItem.offset + this.autoCompleteItem.length);
 
     result.add(TextSpan(
       text: boldText,
@@ -831,7 +858,10 @@ class RichSuggestion extends StatelessWidget {
       ),
     ));
 
-    String remainingText = this.autoCompleteItem.text.substring(this.autoCompleteItem.offset + this.autoCompleteItem.length);
+    String remainingText = this
+        .autoCompleteItem
+        .text
+        .substring(this.autoCompleteItem.offset + this.autoCompleteItem.length);
     result.add(
       TextSpan(
         text: remainingText,

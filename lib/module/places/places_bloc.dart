@@ -32,8 +32,6 @@ class PlacesBloc {
 
   Future loadPlaces() async {
     var geolocator = MPosition();
-    GeolocationStatus geolocationStatus =
-        await geolocator.checkGeolocationPermissionStatus();
     // if (geolocationStatus == GeolocationStatus.denied) return;
     geolocator
         .getLastKnownPosition(desiredAccuracy: LocationAccuracy.low)

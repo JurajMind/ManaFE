@@ -17,7 +17,7 @@ class App {
   static String environment;
 
   // Application router.
-  static Router router;
+  static FluroRouter router;
 
   // Application providers.
   static ApiClient http;
@@ -33,7 +33,7 @@ class App {
   static String facebookClientId = "1107199546054049";
 
   static const your_redirect_url =
-    "https://www.facebook.com/connect/login_success.html";
+      "https://www.facebook.com/connect/login_success.html";
 
   // Create app.
   App(
@@ -50,14 +50,14 @@ class App {
     App.http.init();
     App.cache = new Cache();
     // Create a router.
-    final Router router = new Router();
+    final FluroRouter router = new FluroRouter();
 
     // Init and set app router.
     App.router = this.initializeRoutes(router);
   }
 
   // Let's init our routes.
-  Router initializeRoutes(Router router) {
+  FluroRouter initializeRoutes(FluroRouter router) {
     new AppRoutes(router);
     new AuthRoutes(router);
 

@@ -10,7 +10,7 @@ dependencies:
   validator:
     git: https://github.com/jodinathan/validator.dart
   web_socket_channel: ^1.1.0
-  fluro: ^1.6.3
+  fluro: ^1.7.8
   rxdart: ^0.24.0
   intl: ^0.16.0
   animated_background: ^1.0.5
@@ -18,8 +18,8 @@ dependencies:
   percent_indicator: ^2.1.4
   dio: ^3.0.3
   flutter_webview_plugin: ^0.3.10+1
-  firebase_auth: ^0.16.1
-  geolocator: ^5.1.3
+  firebase_auth: ^0.18.4+1
+  geolocator: ^6.1.10
   #cached_network_image: 1.1.3
   cached_network_image: ^2.2.0+1
   date_utils: ^0.1.0
@@ -28,10 +28,10 @@ dependencies:
     path: ./openapi
   sticky_headers: '^0.1.8'
   sembast: ^2.4.4+1
-  url_launcher: ^5.4.10
-  url_launcher_web: ^0.1.1+6
-  google_maps_flutter: ^0.5.28+1
-  google_maps: ^3.4.2
+  url_launcher: ^5.7.10
+  url_launcher_web: ^0.1.5+1
+  google_maps_flutter: ^1.0.6
+  google_maps: ^3.4.5
   tinycolor: ^1.0.2
   shimmer: ^1.1.1
   date_format: ^1.0.6
@@ -41,7 +41,7 @@ dependencies:
   font_awesome_flutter: ^8.4.0
   uri: ^0.11.3+1
   google_maps_webservice: ^0.0.15
-  firebase_messaging: ^6.0.13
+  firebase_messaging: ^7.0.3
   charts_flutter: ^0.9.0
   flutter_section_table_view: ^1.0.5
   shake: ^0.1.0
@@ -54,13 +54,13 @@ dependencies:
   date_range_picker: ^1.0.5
   #flutter_qr_scanner: ^0.1.5
   flutter_material_color_picker: ^1.0.0
-  flutter_form_builder: ^3.6.1
+  flutter_form_builder: ^4.0.2
   image_picker: ^0.6.7+1
   shared_preferences: ^0.5.7+3 
   flutter_slidable: '^0.5.3'
   smooth_star_rating: ^1.0.3
   fl_chart: ^0.10.0
-  firebase_dynamic_links: ^0.5.0+1
+  firebase_dynamic_links: ^0.6.3
   giffy_dialog: ^1.3.0
   pretty_dio_logger: ^1.0.4
   apple_sign_in: ^0.1.0
@@ -86,7 +86,8 @@ dependencies:
   google_fonts: ^1.1.0
 
 dependency_overrides:
-  flutter_chips_input: ^1.9.0-dev.1
+  google_maps_flutter: ^1.0.6
+
 
 flutter_icons:
   android: true
