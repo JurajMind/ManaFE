@@ -1,4 +1,4 @@
-import 'package:app/Helpers/date_utils.dart';
+import 'package:app/Helpers/date_utils.dart' as dateUtils;
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/person/statistic_bloc.dart';
 import 'package:app/utils/translations/app_translations.dart';
@@ -35,7 +35,7 @@ class SessionTimeWidget extends StatelessWidget {
                   if (snapshot.data == null) {
                     return Container();
                   }
-                  return Text(DateUtils.toStrungLongDuration(context, snapshot.data.smokingTime), style: Theme.of(context).textTheme.headline6);
+                  return Text(dateUtils.DateUtils.toStrungLongDuration(context, snapshot.data.smokingTime), style: Theme.of(context).textTheme.headline6);
                 })
           ],
         ),

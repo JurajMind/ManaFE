@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:app/Helpers/date_utils.dart';
+import 'package:app/Helpers/date_utils.dart' as dateUtils;
 import 'package:app/app/app.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
@@ -176,7 +176,7 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          "TOP: ${DateUtils.toSecondDuration(snapshot.data.longestPuf)}",
+                          "TOP: ${dateUtils.DateUtils.toSecondDuration(snapshot.data.longestPuf)}",
                           style: Theme.of(context).textTheme.headline6,
                         ),
                         Expanded(

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:app/Helpers/date_utils.dart';
+import 'package:app/Helpers/date_utils.dart' as dateUtils;
 import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
@@ -170,9 +170,9 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         if (asyncSnapshot.data.duration == null) {
           return Text('NoData');
         }
-        var durationString = DateUtils.toStringDuration(asyncSnapshot.data.smokeDuration);
+        var durationString = dateUtils.DateUtils.toStringDuration(asyncSnapshot.data.smokeDuration);
 
-        var longestString = DateUtils.toSecondDuration(asyncSnapshot.data.longestPuf);
+        var longestString = dateUtils.DateUtils.toSecondDuration(asyncSnapshot.data.longestPuf);
 
         var start = asyncSnapshot.data.start;
         return Container(

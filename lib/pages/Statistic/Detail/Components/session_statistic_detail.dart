@@ -1,4 +1,4 @@
-import 'package:app/Helpers/date_utils.dart';
+import 'package:app/Helpers/date_utils.dart' as dateUtils;
 import 'package:app/pages/Statistic/Detail/Components/smoke_duration_grap.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -53,7 +53,7 @@ class SessionStatisticDetail extends StatelessWidget {
                           flex: 1,
                           child: Text(
                               snapshot.data != null
-                                  ? '${DateUtils.toStringDate(snapshot.data.statistics.start)} ${DateUtils.toStringShortTime(snapshot.data.statistics.start)}'
+                                  ? '${dateUtils.DateUtils.toStringDate(snapshot.data.statistics.start)} ${dateUtils.DateUtils.toStringShortTime(snapshot.data.statistics.start)}'
                                   : '...',
                               style: Theme.of(context).textTheme.headline6),
                         ),
@@ -68,7 +68,7 @@ class SessionStatisticDetail extends StatelessWidget {
                           flex: 1,
                           child: Text(
                               snapshot.data != null
-                                  ? '${DateUtils.toStringDuration(DateUtils.parseDuration(snapshot.data.statistics.sessionDuration))}'
+                                  ? '${dateUtils.DateUtils.toStringDuration(dateUtils.DateUtils.parseDuration(snapshot.data.statistics.sessionDuration))}'
                                   : '...',
                               style: Theme.of(context).textTheme.headline6),
                         ),
@@ -118,9 +118,9 @@ class SessionStatisticDetail extends StatelessWidget {
                 "Duration",
                 style: Theme.of(context).textTheme.bodyText2,
               ),
-              Text(DateUtils.toStringDuration(new Duration(milliseconds: this.inDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
-              Text(DateUtils.toStringDuration(new Duration(milliseconds: this.outDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
-              Text(DateUtils.toStringDuration(new Duration(milliseconds: this.idleDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
+              Text(dateUtils.DateUtils.toStringDuration(new Duration(milliseconds: this.inDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
+              Text(dateUtils.DateUtils.toStringDuration(new Duration(milliseconds: this.outDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
+              Text(dateUtils.DateUtils.toStringDuration(new Duration(milliseconds: this.idleDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
             ]),
             TableRow(
                 decoration: BoxDecoration(
@@ -131,18 +131,18 @@ class SessionStatisticDetail extends StatelessWidget {
                     "Longest",
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
-                  Text(DateUtils.toSecondDuration(new Duration(milliseconds: this.inDurations.max$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
-                  Text(DateUtils.toSecondDuration(new Duration(milliseconds: this.outDurations.max$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
-                  Text(DateUtils.toSecondDuration(new Duration(milliseconds: this.idleDurations.max$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
+                  Text(dateUtils.DateUtils.toSecondDuration(new Duration(milliseconds: this.inDurations.max$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
+                  Text(dateUtils.DateUtils.toSecondDuration(new Duration(milliseconds: this.outDurations.max$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
+                  Text(dateUtils.DateUtils.toSecondDuration(new Duration(milliseconds: this.idleDurations.max$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
                 ]),
             TableRow(children: [
               Text(
                 "Average",
                 style: Theme.of(context).textTheme.bodyText2,
               ),
-              Text(DateUtils.toSecondDuration(new Duration(milliseconds: this.inDurations.average((s) => s.inMilliseconds)?.toInt() ?? 0))),
-              Text(DateUtils.toSecondDuration(new Duration(milliseconds: this.outDurations.average((s) => s.inMilliseconds)?.toInt() ?? 0))),
-              Text(DateUtils.toSecondDuration(new Duration(milliseconds: this.idleDurations.average((s) => s.inMilliseconds)?.toInt() ?? 0))),
+              Text(dateUtils.DateUtils.toSecondDuration(new Duration(milliseconds: this.inDurations.average((s) => s.inMilliseconds)?.toInt() ?? 0))),
+              Text(dateUtils.DateUtils.toSecondDuration(new Duration(milliseconds: this.outDurations.average((s) => s.inMilliseconds)?.toInt() ?? 0))),
+              Text(dateUtils.DateUtils.toSecondDuration(new Duration(milliseconds: this.idleDurations.average((s) => s.inMilliseconds)?.toInt() ?? 0))),
             ]),
             TableRow(
                 decoration: BoxDecoration(
@@ -153,13 +153,13 @@ class SessionStatisticDetail extends StatelessWidget {
                     "Median",
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
-                  Text(DateUtils.toSecondDuration(this.outDurations.length == 0
+                  Text(dateUtils.DateUtils.toSecondDuration(this.outDurations.length == 0
                       ? new Duration()
                       : this.inDurations.orderBy((s) => s.inMilliseconds).elementAt(this.inDurations.length ~/ 2))),
-                  Text(DateUtils.toSecondDuration(this.outDurations.length == 0
+                  Text(dateUtils.DateUtils.toSecondDuration(this.outDurations.length == 0
                       ? new Duration()
                       : this.outDurations.orderBy((s) => s.inMilliseconds).elementAt(this.outDurations.length ~/ 2))),
-                  Text(DateUtils.toSecondDuration(this.outDurations.length == 0
+                  Text(dateUtils.DateUtils.toSecondDuration(this.outDurations.length == 0
                       ? new Duration()
                       : this.idleDurations.orderBy((s) => s.inMilliseconds).elementAt(this.idleDurations.length ~/ 2))),
                 ]),

@@ -1,4 +1,4 @@
-import 'package:app/Helpers/date_utils.dart';
+import 'package:app/Helpers/date_utils.dart' as dateHelper;
 import 'package:app/components/Common/labeled_value.dart';
 import 'package:app/pages/Places/Reservations/reservation_detail_page.dart';
 import 'package:app/utils/translations/app_translations.dart';
@@ -16,9 +16,7 @@ class ReservationItem extends StatelessWidget {
       child: Hero(
         tag: 'reservation_${reservation.id.toString()}',
         child: Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.white),
-              borderRadius: BorderRadius.circular(16.0)),
+          decoration: BoxDecoration(border: Border.all(color: Colors.white), borderRadius: BorderRadius.circular(16.0)),
           child: InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
               builder: (BuildContext context) {
@@ -47,14 +45,14 @@ class ReservationItem extends StatelessWidget {
                             Expanded(
                                 flex: 2,
                                 child: LabeledValue(
-                                  DateUtils.toStringDate(reservation.time),
+                                  dateHelper.DateUtils.toStringDate(reservation.time),
                                   icon: Icon(Icons.calendar_today),
                                   padding: EdgeInsets.only(),
                                 )),
                             Expanded(
                                 flex: 2,
                                 child: LabeledValue(
-                                  DateUtils.toStringShortTime(reservation.time),
+                                  dateHelper.DateUtils.toStringShortTime(reservation.time),
                                   icon: Icon(Icons.timer),
                                   padding: EdgeInsets.only(),
                                 )),
@@ -118,8 +116,7 @@ class ReservationStatusIcon extends StatelessWidget {
         return AppTranslations.of(context).text("reservations.confirmed");
       // ConfirmationRequired
       case 6:
-        return AppTranslations.of(context)
-            .text("reservations.confirmation_required");
+        return AppTranslations.of(context).text("reservations.confirmation_required");
       default:
         return reservationState.toString();
     }

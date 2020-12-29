@@ -1,4 +1,4 @@
-import 'package:app/Helpers/date_utils.dart';
+import 'package:app/Helpers/date_utils.dart' as dateUtils;
 import 'package:app/module/data_provider.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +44,7 @@ class LastHookahWidget extends StatelessWidget {
                   var startTime = new DateTime.fromMillisecondsSinceEpoch(lastSession.statistic.start);
                   var since = DateTime.now().difference(startTime);
 
-                  return Text(DateUtils.toStrungLongDuration(context, since), style: Theme.of(context).textTheme.headline6);
+                  return Text(dateUtils.DateUtils.toStrungLongDuration(context, since), style: Theme.of(context).textTheme.headline6);
                 })
           ],
         ),

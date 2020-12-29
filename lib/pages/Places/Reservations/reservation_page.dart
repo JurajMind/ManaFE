@@ -56,8 +56,7 @@ class _ReservationPageState extends State<ReservationPage> {
   PageController pageController = new PageController(initialPage: 0);
   TextEditingController nameTextController;
   TextEditingController noteTextController;
-  BehaviorSubject<List<ParsedTimes>> reservationInfo =
-      new BehaviorSubject.seeded(new List<ParsedTimes>());
+  BehaviorSubject<List<ParsedTimes>> reservationInfo = new BehaviorSubject.seeded(new List<ParsedTimes>());
 
   List<ParsedTimes> _disabledTimes;
 
@@ -77,7 +76,6 @@ class _ReservationPageState extends State<ReservationPage> {
 
   @override
   Widget build(BuildContext context) {
-    
     var reservationBloc = DataProvider.getData(context).reservationBloc;
     var personBloc = DataProvider.getData(context).personBloc;
     nameTextController.text = personBloc?.info?.value?.displayName ?? "";
@@ -88,11 +86,9 @@ class _ReservationPageState extends State<ReservationPage> {
       body: Hero(
         tag: "${widget.place.friendlyUrl}_reservation",
         child: Theme(
-          isMaterialAppTheme: true,
           data: ThemeData.light(),
           child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(32.0), color: Colors.white),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(32.0), color: Colors.white),
             child: new Column(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
@@ -131,18 +127,15 @@ class _ReservationPageState extends State<ReservationPage> {
                                   highlightToday: true,
                                   showCalendarPickerIcon: false,
                                   onDateSelected: (date) async {
-                                    var dateCompare =
-                                        compareDate(date, DateTime.now());
+                                    var dateCompare = compareDate(date, DateTime.now());
 
                                     if (dateCompare >= 0) {
-                                      await loadReservationInfo(date)
-                                          .then((data) {
+                                      await loadReservationInfo(date).then((data) {
                                         if (data.length == 0) {
                                           return;
                                         }
                                         selectedTimeLabel = data[0].label;
-                                        selectedTimeValue =
-                                            data[0].timeSlot.capacityLeft;
+                                        selectedTimeValue = data[0].timeSlot.capacityLeft;
                                       });
                                     }
 
@@ -157,15 +150,11 @@ class _ReservationPageState extends State<ReservationPage> {
                                   stream: reservationInfo,
                                   initialData: null,
                                   builder: (context, snapshot) {
-                                    if (snapshot.data != null &&
-                                        DateHelper.compareDate(
-                                            selectedDate, DateTime.now())) {
+                                    if (snapshot.data != null && DateHelper.compareDate(selectedDate, DateTime.now())) {
                                       // selectedTime = 4;
                                     } else {}
-                                    if (selectedTime == null &&
-                                        snapshot.data != null) {
-                                      selectTime(1, snapshot.data,
-                                          new List<ParsedTimes>());
+                                    if (selectedTime == null && snapshot.data != null) {
+                                      selectTime(1, snapshot.data, new List<ParsedTimes>());
                                     }
 
                                     return Column(
@@ -175,34 +164,18 @@ class _ReservationPageState extends State<ReservationPage> {
                                             : Card(
                                                 elevation: 2.0,
                                                 child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  mainAxisSize: MainAxisSize.max,
                                                   children: <Widget>[
-                                                    Expanded(
-                                                        flex: 1,
-                                                        child:
-                                                            buildPeoplesColumn()),
-                                                    Expanded(
-                                                        flex: 1,
-                                                        child: buildTimeColumn(
-                                                            snapshot.data,
-                                                            this._disabledTimes)),
-                                                    Expanded(
-                                                        flex: 1,
-                                                        child: buildDurationColumn(
-                                                            snapshot.data,
-                                                            this._disabledTimes)),
+                                                    Expanded(flex: 1, child: buildPeoplesColumn()),
+                                                    Expanded(flex: 1, child: buildTimeColumn(snapshot.data, this._disabledTimes)),
+                                                    Expanded(flex: 1, child: buildDurationColumn(snapshot.data, this._disabledTimes)),
                                                   ],
                                                 ),
                                               ),
                                         Padding(
                                           padding: EdgeInsets.all(10.0),
-                                          child: buildNextButton(
-                                              this._disabledTimes,
-                                              _cannotReserve),
+                                          child: buildNextButton(this._disabledTimes, _cannotReserve),
                                         ),
                                       ],
                                     );
@@ -221,41 +194,25 @@ class _ReservationPageState extends State<ReservationPage> {
                                 children: <Widget>[
                                   Row(
                                     mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
                                       LabeledValue(
-                                        formatDate(selectedDate,
-                                            [d, '.', m, '.', yyyy]),
-                                        label: AppTranslations.of(context)
-                                                .text('reservations.date') +
-                                            " : ",
+                                        formatDate(selectedDate, [d, '.', m, '.', yyyy]),
+                                        label: AppTranslations.of(context).text('reservations.date') + " : ",
                                       ),
                                       LabeledValue(
                                         selectedTimeLabel,
-                                        label: AppTranslations.of(context)
-                                                .text('reservations.time') +
-                                            " : ",
+                                        label: AppTranslations.of(context).text('reservations.time') + " : ",
                                       ),
                                     ],
                                   ),
                                   Row(
                                     mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
-                                      LabeledValue(selectedPersons.toString(),
-                                          label: AppTranslations.of(context)
-                                                  .text(
-                                                      'reservations.persons') +
-                                              " : "),
-                                      LabeledValue(
-                                          slotDurationString(
-                                              selectedDuration + durations[0]),
-                                          label: AppTranslations.of(context)
-                                                  .text(
-                                                      'reservations.duration') +
-                                              " : "),
+                                      LabeledValue(selectedPersons.toString(), label: AppTranslations.of(context).text('reservations.persons') + " : "),
+                                      LabeledValue(slotDurationString(selectedDuration + durations[0]),
+                                          label: AppTranslations.of(context).text('reservations.duration') + " : "),
                                     ],
                                   )
                                 ],
@@ -271,16 +228,13 @@ class _ReservationPageState extends State<ReservationPage> {
                                     TextField(
                                       controller: nameTextController,
                                       decoration: new InputDecoration(
-                                        labelText: AppTranslations.of(context)
-                                            .text('reservations.name'),
+                                        labelText: AppTranslations.of(context).text('reservations.name'),
                                       ),
                                     ),
                                     TextField(
                                       controller: noteTextController,
                                       decoration: new InputDecoration(
-                                        labelText: AppTranslations.of(context)
-                                            .text(
-                                                'reservations.reservation_note'),
+                                        labelText: AppTranslations.of(context).text('reservations.reservation_note'),
                                       ),
                                       maxLines: 5,
                                     )
@@ -292,14 +246,9 @@ class _ReservationPageState extends State<ReservationPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 new RoundedButton(
-                                  buttonName: AppTranslations.of(context)
-                                      .text("common.back")
-                                      .toUpperCase(),
+                                  buttonName: AppTranslations.of(context).text("common.back").toUpperCase(),
                                   onTap: () {
-                                    pageController.animateToPage(0,
-                                        curve: Curves.easeIn,
-                                        duration:
-                                            const Duration(milliseconds: 500));
+                                    pageController.animateToPage(0, curve: Curves.easeIn, duration: const Duration(milliseconds: 500));
                                   },
                                   textColor: Colors.red,
                                   buttonColor: Colors.transparent,
@@ -311,15 +260,12 @@ class _ReservationPageState extends State<ReservationPage> {
                                 postingReservation
                                     ? CircularProgressIndicator()
                                     : new RoundedButton(
-                                        buttonName: AppTranslations.of(context)
-                                            .text('reservations.reserve')
-                                            .toUpperCase(),
+                                        buttonName: AppTranslations.of(context).text('reservations.reserve').toUpperCase(),
                                         onTap: () {
                                           setState(() {
                                             postingReservation = true;
                                           });
-                                          _createReservations(
-                                              context, reservationBloc);
+                                          _createReservations(context, reservationBloc);
                                         },
                                         buttonColor: Colors.black,
                                         borderWidth: 0.0,
@@ -347,20 +293,16 @@ class _ReservationPageState extends State<ReservationPage> {
     setState(() {
       loading = true;
     });
-    return await App.http
-        .getPlaceReservationInfo(widget.place.id, date)
-        .then((data) {
+    return await App.http.getPlaceReservationInfo(widget.place.id, date).then((data) {
       if (compareDate(selectedDate, date) == 0) {
         setState(() {
           selectedTime = 2;
         });
       }
-      var parsed =
-          data.timeSlots.map((f) => new ParsedTimes.fromTimeSlot(f)).toList();
+      var parsed = data.timeSlots.map((f) => new ParsedTimes.fromTimeSlot(f)).toList();
 
       setState(() {
-        this._disabledTimes =
-            this.disabledTimeDuration(date, parsed, this.selectedDuration);
+        this._disabledTimes = this.disabledTimeDuration(date, parsed, this.selectedDuration);
       });
       setState(() {
         loading = false;
@@ -371,9 +313,7 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
   Widget buildNextButton(List<ParsedTimes> disabledTimes, int _cannotReserve) {
-    var noNext =
-        disabledTimes.map((f) => f.label).contains(selectedTimeLabel) ||
-            (_cannotReserve < 0);
+    var noNext = disabledTimes.map((f) => f.label).contains(selectedTimeLabel) || (_cannotReserve < 0);
 
     if (selectedTimeLabel == null) {
       noNext = true;
@@ -383,11 +323,7 @@ class _ReservationPageState extends State<ReservationPage> {
     }
     return new RoundedButton(
       buttonName: AppTranslations.of(context).text("common.next").toUpperCase(),
-      onTap: () => noNext
-          ? null
-          : pageController.animateToPage(1,
-              curve: Curves.easeIn,
-              duration: const Duration(milliseconds: 500)),
+      onTap: () => noNext ? null : pageController.animateToPage(1, curve: Curves.easeIn, duration: const Duration(milliseconds: 500)),
       buttonColor: noNext ? Colors.grey : Colors.black,
       borderWidth: 0.0,
       bottomMargin: 0.0,
@@ -409,7 +345,7 @@ class _ReservationPageState extends State<ReservationPage> {
           maxValue: 10,
           onChanged: (value) {
             print(value);
-                   HapticFeedback.selectionClick();
+            HapticFeedback.selectionClick();
             setState(() {
               selectedPersons = value;
             });
@@ -426,8 +362,7 @@ class _ReservationPageState extends State<ReservationPage> {
     return true;
   }
 
-  Widget buildTimeColumn(
-      List<ParsedTimes> data, List<ParsedTimes> disabledTimes) {
+  Widget buildTimeColumn(List<ParsedTimes> data, List<ParsedTimes> disabledTimes) {
     return Column(
       children: <Widget>[
         Text(
@@ -443,7 +378,7 @@ class _ReservationPageState extends State<ReservationPage> {
                 stringItems: data.map((s) => s.timeSlot.text).toList(),
                 disableItems: disabledTimes.map((d) => d.label).toList(),
                 onChanged: (value) {
-                   HapticFeedback.selectionClick();
+                  HapticFeedback.selectionClick();
                   print(value);
                   setState(() {
                     selectTime(value, data, disabledTimes);
@@ -454,8 +389,7 @@ class _ReservationPageState extends State<ReservationPage> {
     );
   }
 
-  Column buildDurationColumn(
-      List<ParsedTimes> data, List<ParsedTimes> disabledTimes) {
+  Column buildDurationColumn(List<ParsedTimes> data, List<ParsedTimes> disabledTimes) {
     return Column(
       children: <Widget>[
         Text(
@@ -467,11 +401,10 @@ class _ReservationPageState extends State<ReservationPage> {
           stringItems: durations.map((s) => slotDurationString(s)).toList(),
           onChanged: (value) {
             print(value);
-                   HapticFeedback.selectionClick();
+            HapticFeedback.selectionClick();
             setState(() {
               selectedDuration = value;
-              this._disabledTimes =
-                  this.disabledTimeDuration(selectedDate, data, value);
+              this._disabledTimes = this.disabledTimeDuration(selectedDate, data, value);
             });
           },
         )
@@ -479,8 +412,7 @@ class _ReservationPageState extends State<ReservationPage> {
     );
   }
 
-  void selectTime(
-      num value, List<ParsedTimes> snapShot, List<ParsedTimes> disabledTimes) {
+  void selectTime(num value, List<ParsedTimes> snapShot, List<ParsedTimes> disabledTimes) {
     if (snapShot == null) {
       return;
     }
@@ -489,8 +421,7 @@ class _ReservationPageState extends State<ReservationPage> {
     selectedTimeLabel = snapShot[value].timeSlot.text;
   }
 
-  List<ParsedTimes> disabledTimeDuration(
-      DateTime date, List<ParsedTimes> times, int duration) {
+  List<ParsedTimes> disabledTimeDuration(DateTime date, List<ParsedTimes> times, int duration) {
     if (times == null) return new List<ParsedTimes>();
     List<ParsedTimes> result = new List<ParsedTimes>();
 
@@ -537,16 +468,12 @@ class _ReservationPageState extends State<ReservationPage> {
     newReservation.placeId = widget.place.id;
     newReservation.name = nameTextController.value.text;
     newReservation.text = noteTextController.value.text;
-    newReservation.duration =
-        slotDurationString(selectedDuration + durations[0]);
+    newReservation.duration = slotDurationString(selectedDuration + durations[0]);
     DateFormat df = new DateFormat('HH:mm');
     var time = df.parse(selectedTimeLabel);
-    newReservation.time = new DateTime(selectedDate.year, selectedDate.month,
-        selectedDate.day, time.hour, time.minute);
+    newReservation.time = new DateTime(selectedDate.year, selectedDate.month, selectedDate.day, time.hour, time.minute);
 
     var result = await bloc.createReservation(newReservation);
-    Navigator.of(context).pushReplacement(new MaterialPageRoute(
-        builder: ((BuildContext context) =>
-            ReservationDetailPage(reservation: result))));
+    Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: ((BuildContext context) => ReservationDetailPage(reservation: result))));
   }
 }

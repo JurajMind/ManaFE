@@ -5,7 +5,7 @@ import 'package:app/components/Media/media.widget.dart';
 import 'package:app/components/Places/WebMap/web_map_placeholder.dart' if (dart.library.js) 'package:app/components/Places/WebMap/web_map.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/models/extensions.dart';
-import 'package:app/pages/Places/add_place_page.dart';
+
 import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -143,7 +143,7 @@ class _CarrousselState extends State<MapCarousel> {
   Widget buildAdd() {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddPlacePage(), fullscreenDialog: true));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Placeholder(), fullscreenDialog: true));
       },
       child: Padding(
           padding: const EdgeInsets.all(4.0),

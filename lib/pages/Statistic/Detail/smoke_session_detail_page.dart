@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:app/Helpers/date_utils.dart';
+import 'package:app/Helpers/date_utils.dart' as dateUtils;
 import 'package:app/app/app.dart';
 import 'package:app/components/SmokeSession/leave_session_button.dart';
 import 'package:app/models/SmokeSession/puf_type.dart';
@@ -94,7 +94,7 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage> with Tick
               },
             )
           ],
-          title: Text("${DateUtils.toStringDate(start)} - ${DateUtils.toStringShortTime(start)} ${session.sessionId}")),
+          title: Text("${dateUtils.DateUtils.toStringDate(start)} - ${dateUtils.DateUtils.toStringShortTime(start)} ${session.sessionId}")),
       body: Center(
         child: Container(
           constraints: BoxConstraints(maxWidth: 800),

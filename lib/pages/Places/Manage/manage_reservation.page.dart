@@ -1,4 +1,4 @@
-import 'package:app/Helpers/date_utils.dart';
+import 'package:app/Helpers/date_utils.dart' as dateUtils;
 import 'package:app/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -14,10 +14,8 @@ class ManageReservationPage extends StatefulWidget {
   _ManageReservationPageState createState() => _ManageReservationPageState();
 }
 
-class _ManageReservationPageState extends State<ManageReservationPage>
-    with AutomaticKeepAliveClientMixin<ManageReservationPage> {
-  BehaviorSubject<PlacesReservationsReservationManageDto> reservations =
-      new BehaviorSubject();
+class _ManageReservationPageState extends State<ManageReservationPage> with AutomaticKeepAliveClientMixin<ManageReservationPage> {
+  BehaviorSubject<PlacesReservationsReservationManageDto> reservations = new BehaviorSubject();
 
   @override
   void initState() {
@@ -36,12 +34,9 @@ class _ManageReservationPageState extends State<ManageReservationPage>
             return CircularProgressIndicator();
           }
 
-          var slots = snapshot.data.endTime
-                  .difference(snapshot.data.startTime)
-                  .inMinutes /
-              snapshot.data.timeSlotSize;
+          var slots = snapshot.data.endTime.difference(snapshot.data.startTime).inMinutes / snapshot.data.timeSlotSize;
 
-              slots ++;
+          slots++;
 
           var startTime = snapshot.data.startTime;
 
@@ -61,9 +56,7 @@ class _ManageReservationPageState extends State<ManageReservationPage>
                 seat: seat,
                 slots: slots,
                 start: snapshot.data.startTime,
-                reservation: snapshot.data.reservations
-                    .where((test) => test.seats.contains(seat.id))
-                    .toList(),
+                reservation: snapshot.data.reservations.where((test) => test.seats.contains(seat.id)).toList(),
                 slotSize: snapshot.data.timeSlotSize,
               );
             },
@@ -104,8 +97,7 @@ class ReservationRowHeader extends StatelessWidget {
                 ),
               ),
               child: Text(
-                DateUtils.toStringShortTime(
-                    startTime.add(new Duration(minutes: index * 30))),
+                dateUtils.DateUtils.toStringShortTime(startTime.add(new Duration(minutes: index * 30))),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.display4,
               ),
@@ -150,20 +142,19 @@ class ReservationRow extends StatelessWidget {
           ..index = i
           ..size = 1);
       } else {
-       var sSize = DateUtils.parseDuration(timeReservation.first.duration)
-                  .inMinutes ~/ slotSize;
+        var sSize = dateUtils.DateUtils.parseDuration(timeReservation.first.duration).inMinutes ~/ slotSize;
         slotData.add(new ColumnData()
           ..index = i
           ..reservation = timeReservation.first
           ..size = sSize);
-              i = i + sSize -1 ; 
+        i = i + sSize - 1;
       }
     }
 
     return Row(
       children: <Widget>[
         Container(
-          width: cellWidth,
+            width: cellWidth,
             decoration: BoxDecoration(
               border: Border(
                   bottom: BorderSide(color: Colors.white, width: 2.0),
@@ -174,11 +165,7 @@ class ReservationRow extends StatelessWidget {
             ),
             constraints: BoxConstraints(maxHeight: 100, minHeight: 40),
             child: Column(
-              children: <Widget>[
-                Text(seat.name),
-                Text(seat.capacity.toString()),
-                Text(slotData.length.toString())
-              ],
+              children: <Widget>[Text(seat.name), Text(seat.capacity.toString()), Text(slotData.length.toString())],
             )),
         ...slotData.map((d) {
           return ReservationCell(

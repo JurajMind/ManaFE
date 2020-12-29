@@ -1,4 +1,4 @@
-import 'package:app/Helpers/date_utils.dart';
+import 'package:app/Helpers/date_utils.dart' as dateUtils;
 import 'package:app/Helpers/type_helper.dart';
 import 'package:app/app/app.dart';
 import 'package:app/components/Common/labeled_value.dart';
@@ -98,12 +98,12 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: <Widget>[
                                       LabeledValue(
-                                        DateUtils.toStringDate(widget.reservation.time),
+                                        dateUtils.DateUtils.toStringDate(widget.reservation.time),
                                         icon: Icon(Icons.calendar_today),
                                         label: AppTranslations.of(context).text("reservations.date") + " : ",
                                       ),
                                       LabeledValue(
-                                        DateUtils.toStringShortTime(widget.reservation.time),
+                                        dateUtils.DateUtils.toStringShortTime(widget.reservation.time),
                                         icon: Icon(Icons.timer),
                                         label: AppTranslations.of(context).text("reservations.time") + " : ",
                                       ),
