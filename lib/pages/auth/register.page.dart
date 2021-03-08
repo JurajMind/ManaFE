@@ -163,11 +163,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   style: Theme.of(context)
                       .copyWith(
                           textTheme: TextTheme(
-                              headline: TextStyle(
+                              headline5: TextStyle(
                         fontSize: 16.0,
                       )))
                       .textTheme
-                      .headline,
+                      .headline5,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   textScaleFactor: 1.0,
@@ -226,7 +226,7 @@ class _RegisterPageState extends State<RegisterPage> {
         children: <Widget>[
           ShadowText(
             AppTranslations.of(context).text('login.name'),
-            style: Theme.of(context).textTheme.headline,
+            style: Theme.of(context).textTheme.headline5,
             textScaleFactor: 1.0,
             softWrap: true,
           ),
@@ -285,7 +285,7 @@ class _RegisterPageState extends State<RegisterPage> {
         children: <Widget>[
           ShadowText(
             AppTranslations.of(context).text("login.password").toUpperCase(),
-            style: Theme.of(context).textTheme.headline,
+            style: Theme.of(context).textTheme.headline5,
             textScaleFactor: 1.0,
             softWrap: true,
           ),

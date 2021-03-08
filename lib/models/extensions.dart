@@ -11,7 +11,7 @@ class Extensions {
     if (image == null) {
       return 'https://${App.baseUri}/Content/Placeholder/place.jpg';
     }
-    return 'https://${App.baseUri}${image}${MediaWidget.getSize(size)}';
+    return 'https://${App.baseUri}$image${MediaWidget.getSize(size)}';
   }
 
   static String getFullPlaceImage(PlaceDto place, MediaSize size) {

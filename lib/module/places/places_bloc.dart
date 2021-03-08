@@ -68,7 +68,7 @@ class PlacesBloc {
     try {
       var db = await App.cache.getDatabase();
       //var value = await db.get('places');
-      var value = null;
+      var value;
       if (value == null) {
         return;
       }

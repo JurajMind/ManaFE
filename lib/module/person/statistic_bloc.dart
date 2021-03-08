@@ -77,7 +77,6 @@ class StatisticBloc {
           item.smokeSessions = item.smokeSessions + 1;
         });
       }
-      ;
       result.add(item);
       curentDate = curentDate
           .add(month ? new Duration(days: 31) : new Duration(days: 1));

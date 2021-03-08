@@ -192,7 +192,7 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
                     width: 40,
                   ),
                   Text(
-                    AppTranslations.of(context).text("gear.${display}"),
+                    AppTranslations.of(context).text("gear.$display"),
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   SizedBox(

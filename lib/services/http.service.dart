@@ -128,7 +128,7 @@ class ApiClient {
   String addParamList(String url, String key, List<dynamic> value) {
     var result = url.toString();
     value.forEach((f) {
-      result += '&${key}=${f.toString()}';
+      result += '&$key=${f.toString()}';
     });
     return result;
   }

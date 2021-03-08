@@ -96,7 +96,6 @@ class MyGear extends StatelessWidget {
                 return new PipeAccesoryListItemShimmer();
               }, childCount: 10));
             }
-            ;
 
             var filtered = snapshot.data.where((s) => s.type == type).toList();
 

@@ -255,7 +255,8 @@ class IntroSlider extends StatefulWidget {
   }
 }
 
-class IntroSliderState extends State<IntroSlider> with SingleTickerProviderStateMixin {
+class IntroSliderState extends State<IntroSlider>
+    with SingleTickerProviderStateMixin {
   /// Default values
   static TextStyle defaultBtnNameTextStyle = TextStyle(color: Colors.white);
 
@@ -523,36 +524,47 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
         switch (typeDotAnimation) {
           case dotSliderAnimation.DOT_MOVEMENT:
             marginLeftDotFocused = tabController.animation.value * sizeDot * 2;
-            marginRightDotFocused = initValueMarginRight - tabController.animation.value * sizeDot * 2;
+            marginRightDotFocused = initValueMarginRight -
+                tabController.animation.value * sizeDot * 2;
             break;
           case dotSliderAnimation.SIZE_TRANSITION:
             if (tabController.animation.value == currentAnimationValue) {
               break;
             }
 
-            double diffValueAnimation = (tabController.animation.value - currentAnimationValue).abs();
+            double diffValueAnimation =
+                (tabController.animation.value - currentAnimationValue).abs();
             int diffValueIndex = (currentTabIndex - tabController.index).abs();
 
             // When press skip button
-            if (tabController.indexIsChanging && (tabController.index - tabController.previousIndex).abs() > 1) {
+            if (tabController.indexIsChanging &&
+                (tabController.index - tabController.previousIndex).abs() > 1) {
               if (diffValueAnimation < 1.0) {
                 diffValueAnimation = 1.0;
               }
-              sizeDots[currentTabIndex] = sizeDot * 1.5 - (sizeDot / 2) * (1 - (diffValueIndex - diffValueAnimation));
-              sizeDots[tabController.index] = sizeDot + (sizeDot / 2) * (1 - (diffValueIndex - diffValueAnimation));
-              opacityDots[currentTabIndex] = 1.0 - (diffValueAnimation / diffValueIndex) / 2;
-              opacityDots[tabController.index] = 0.5 + (diffValueAnimation / diffValueIndex) / 2;
+              sizeDots[currentTabIndex] = sizeDot * 1.5 -
+                  (sizeDot / 2) * (1 - (diffValueIndex - diffValueAnimation));
+              sizeDots[tabController.index] = sizeDot +
+                  (sizeDot / 2) * (1 - (diffValueIndex - diffValueAnimation));
+              opacityDots[currentTabIndex] =
+                  1.0 - (diffValueAnimation / diffValueIndex) / 2;
+              opacityDots[tabController.index] =
+                  0.5 + (diffValueAnimation / diffValueIndex) / 2;
             } else {
               if (tabController.animation.value > currentAnimationValue) {
                 // Swipe left
-                sizeDots[currentTabIndex] = sizeDot * 1.5 - (sizeDot / 2) * diffValueAnimation;
-                sizeDots[currentTabIndex + 1] = sizeDot + (sizeDot / 2) * diffValueAnimation;
+                sizeDots[currentTabIndex] =
+                    sizeDot * 1.5 - (sizeDot / 2) * diffValueAnimation;
+                sizeDots[currentTabIndex + 1] =
+                    sizeDot + (sizeDot / 2) * diffValueAnimation;
                 opacityDots[currentTabIndex] = 1.0 - diffValueAnimation / 2;
                 opacityDots[currentTabIndex + 1] = 0.5 + diffValueAnimation / 2;
               } else {
                 // Swipe right
-                sizeDots[currentTabIndex] = sizeDot * 1.5 - (sizeDot / 2) * diffValueAnimation;
-                sizeDots[currentTabIndex - 1] = sizeDot + (sizeDot / 2) * diffValueAnimation;
+                sizeDots[currentTabIndex] =
+                    sizeDot * 1.5 - (sizeDot / 2) * diffValueAnimation;
+                sizeDots[currentTabIndex - 1] =
+                    sizeDot + (sizeDot / 2) * diffValueAnimation;
                 opacityDots[currentTabIndex] = 1.0 - diffValueAnimation / 2;
                 opacityDots[currentTabIndex - 1] = 0.5 + diffValueAnimation / 2;
               }
@@ -694,7 +706,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
   // Checking if tab is animating
   bool isAnimating(value) {
-    return tabController.animation.value - tabController.animation.value.truncate() != 0;
+    return tabController.animation.value -
+            tabController.animation.value.truncate() !=
+        0;
   }
 
   bool isRTLLanguage(language) {
@@ -716,7 +730,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
             TabBarView(
               children: tabs,
               controller: tabController,
-              physics: isScrollable ? ScrollPhysics() : NeverScrollableScrollPhysics(),
+              physics: isScrollable
+                  ? ScrollPhysics()
+                  : NeverScrollableScrollPhysics(),
             ),
             renderBottom(),
           ],
@@ -735,7 +751,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
         child: renderSkipBtn,
         color: colorSkipBtn,
         highlightColor: highlightColorSkipBtn,
-        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusSkipBtn)),
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(borderRadiusSkipBtn)),
       );
     }
   }
@@ -746,7 +763,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
       child: renderDoneBtn,
       color: colorDoneBtn,
       highlightColor: highlightColorDoneBtn,
-      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
+      shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
     );
   }
 
@@ -763,7 +781,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
         child: renderPrevBtn,
         color: colorPrevBtn,
         highlightColor: highlightColorPrevBtn,
-        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusPrevBtn)),
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(borderRadiusPrevBtn)),
       );
     }
   }
@@ -778,7 +797,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
       child: renderNextBtn,
       color: colorDoneBtn,
       highlightColor: highlightColorDoneBtn,
-      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
+      shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
     );
   }
 
@@ -789,9 +809,14 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
           // Skip button
           Container(
             alignment: Alignment.center,
-            child: isShowSkipBtn ? buildSkipButton() : (isShowPrevBtn ? buildPrevButton() : Container()),
-            width:
-                isShowSkipBtn ? widthSkipBtn ?? MediaQuery.of(context).size.width / 4 : (isShowPrevBtn ? widthPrevBtn : MediaQuery.of(context).size.width / 4),
+            child: isShowSkipBtn
+                ? buildSkipButton()
+                : (isShowPrevBtn ? buildPrevButton() : Container()),
+            width: isShowSkipBtn
+                ? widthSkipBtn ?? MediaQuery.of(context).size.width / 4
+                : (isShowPrevBtn
+                    ? widthPrevBtn
+                    : MediaQuery.of(context).size.width / 4),
           ),
 
           // Dot indicator
@@ -807,12 +832,23 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                         typeDotAnimation == dotSliderAnimation.DOT_MOVEMENT
                             ? Center(
                                 child: Container(
-                                  decoration: BoxDecoration(color: colorActiveDot, borderRadius: BorderRadius.circular(sizeDot / 2)),
+                                  decoration: BoxDecoration(
+                                      color: colorActiveDot,
+                                      borderRadius:
+                                          BorderRadius.circular(sizeDot / 2)),
                                   width: sizeDot,
                                   height: sizeDot,
                                   margin: EdgeInsets.only(
-                                      left: this.isRTLLanguage(Localizations.localeOf(context).languageCode) ? marginRightDotFocused : marginLeftDotFocused,
-                                      right: this.isRTLLanguage(Localizations.localeOf(context).languageCode) ? marginLeftDotFocused : marginRightDotFocused),
+                                      left: this.isRTLLanguage(
+                                              Localizations.localeOf(context)
+                                                  .languageCode)
+                                          ? marginRightDotFocused
+                                          : marginLeftDotFocused,
+                                      right: this.isRTLLanguage(
+                                              Localizations.localeOf(context)
+                                                  .languageCode)
+                                          ? marginLeftDotFocused
+                                          : marginRightDotFocused),
                                 ),
                               )
                             : Container()
@@ -825,7 +861,11 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
           // Next, Done button
           Container(
             alignment: Alignment.center,
-            child: isShowDoneBtn ? (tabController.index + 1 == slides.length ? buildDoneButton() : buildNextButton()) : Container(),
+            child: isShowDoneBtn
+                ? (tabController.index + 1 == slides.length
+                    ? buildDoneButton()
+                    : buildNextButton())
+                : Container(),
             width: widthDoneBtn ?? MediaQuery.of(context).size.width / 4,
           ),
         ],
@@ -921,7 +961,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                 fit: backgroundImageFit ?? BoxFit.cover,
                 colorFilter: ColorFilter.mode(
                   backgroundOpacityColor != null
-                      ? backgroundOpacityColor.withOpacity(backgroundOpacity ?? 0.5)
+                      ? backgroundOpacityColor
+                          .withOpacity(backgroundOpacity ?? 0.5)
                       : Colors.black.withOpacity(backgroundOpacity ?? 0.5),
                   backgroundBlendMode ?? BlendMode.darken,
                 ),
@@ -929,13 +970,19 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
             )
           : BoxDecoration(
               gradient: LinearGradient(
-                colors: backgroundColor != null ? [backgroundColor, backgroundColor] : [colorBegin ?? Colors.amberAccent, colorEnd ?? Colors.amberAccent],
+                colors: backgroundColor != null
+                    ? [backgroundColor, backgroundColor]
+                    : [
+                        colorBegin ?? Colors.amberAccent,
+                        colorEnd ?? Colors.amberAccent
+                      ],
                 begin: directionColorBegin ?? Alignment.topLeft,
                 end: directionColorEnd ?? Alignment.bottomRight,
               ),
             ),
       child: Container(
-        margin: marginTitle ?? EdgeInsets.only(top: 20.0, bottom: 50.0, left: 20.0, right: 20.0),
+        margin: marginTitle ??
+            EdgeInsets.only(top: 20.0, bottom: 50.0, left: 20.0, right: 20.0),
         child: ListView(
           children: <Widget>[
             // Image or Center widget
@@ -977,12 +1024,16 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                     Container(
                       child: Text(
                         description ?? "",
-                        style: styleDescription ?? TextStyle(color: Colors.white, fontSize: 18.0),
+                        style: styleDescription ??
+                            TextStyle(color: Colors.white, fontSize: 18.0),
                         textAlign: TextAlign.center,
-                        maxLines: maxLineTextDescription != null ? maxLineTextDescription : 100,
+                        maxLines: maxLineTextDescription != null
+                            ? maxLineTextDescription
+                            : 100,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      margin: marginDescription ?? EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
+                      margin: marginDescription ??
+                          EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
                     )),
           ],
         ),
@@ -1001,7 +1052,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   Widget renderDot(double radius, Color color, double opacity) {
     return Opacity(
       child: Container(
-        decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(radius / 2)),
+        decoration: BoxDecoration(
+            color: color, borderRadius: BorderRadius.circular(radius / 2)),
         width: radius,
         height: radius,
         margin: EdgeInsets.only(left: radius / 2, right: radius / 2),

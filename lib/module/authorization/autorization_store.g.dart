@@ -34,7 +34,7 @@ mixin _$AuthorizationStore on _AuthorizationStore, Store {
   @override
   String toString() {
     return '''
-status: ${status}
+status: $status
     ''';
   }
 }

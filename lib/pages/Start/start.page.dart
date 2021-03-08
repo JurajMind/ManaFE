@@ -32,7 +32,8 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
     return new Scaffold(
         body: AnimatedBackground(
       vsync: this,
-      behaviour: RandomParticleBehaviour(options: ParticleOptions(baseColor: Colors.blue)),
+      behaviour: RandomParticleBehaviour(
+          options: ParticleOptions(baseColor: Colors.blue)),
       child: new Center(
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -46,32 +47,32 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                 maxLines: 2,
               ),
             ),
-            new Container(
-              child: Image.asset(
-                'images/logo.png',
-                fit: BoxFit.scaleDown,
-                height: 200.0,
-              ),
-            ),
+            ManaLogoW(),
             new Container(
               child: MaterialButton(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
                   child: Text(
                     AppTranslations.of(context).text("Start").toUpperCase(),
-                    style: Theme.of(context).textTheme.headline4.apply(color: Colors.black, fontSizeDelta: -7),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline4
+                        .apply(color: Colors.black, fontSizeDelta: -7),
                   ),
                 ),
                 onPressed: () => navigate(context, 'auth/intro'),
                 color: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(24.0)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(24.0)),
                 textColor: Colors.black,
               ),
               margin: new EdgeInsets.only(top: 25.0),
             ),
             const SizedBox(height: 16),
             InkWell(
-              onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
+              onTap: () => Navigator.of(context)
+                  .push(new MaterialPageRoute(builder: (BuildContext context) {
                 return SignInPage();
               })),
               child: Padding(
@@ -81,11 +82,17 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                   children: <Widget>[
                     Text(
                       'Already have an account? ',
-                      style: Theme.of(context).textTheme.headline5.apply(fontWeightDelta: 0),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5
+                          .apply(fontWeightDelta: 0),
                     ),
                     Text(
                       'SIGN IN',
-                      style: Theme.of(context).textTheme.headline5.apply(fontWeightDelta: 10, color: AppColors.colors[3], decoration: TextDecoration.underline),
+                      style: Theme.of(context).textTheme.headline5.apply(
+                          fontWeightDelta: 10,
+                          color: AppColors.colors[3],
+                          decoration: TextDecoration.underline),
                     ),
                   ],
                 ),
@@ -94,9 +101,12 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
             Align(
               heightFactor: 1,
               alignment: Alignment.bottomCenter,
-              child: new FlatButton(
+              child: new TextButton(
                 child: new Text(
-                  AppTranslations.of(context).currentLanguage.toString().toUpperCase(),
+                  AppTranslations.of(context)
+                      .currentLanguage
+                      .toString()
+                      .toUpperCase(),
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 onPressed: () {
@@ -108,5 +118,27 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
         ),
       ),
     ));
+  }
+}
+
+class ManaLogoW extends StatefulWidget {
+  const ManaLogoW({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _ManaLogoWState createState() => _ManaLogoWState();
+}
+
+class _ManaLogoWState extends State<ManaLogoW> {
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      child: Image.asset(
+        'images/logo.png',
+        fit: BoxFit.scaleDown,
+        height: 200.0,
+      ),
+    );
   }
 }

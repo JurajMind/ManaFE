@@ -315,8 +315,7 @@ class _FatSliderState extends State<FatSlider> with SingleTickerProviderStateMix
             ),
           ),
           child: Stack(
-            overflow: Overflow.visible,
-            children: <Widget>[
+            clipBehavior: Clip.none, children: <Widget>[
               CustomPaint(
                 painter: SliderPainter(
                     thumbDiameter: thumbDiameter, splashColor: widget.sliderColor, width: lerpDouble(thumbPadding, remainingWidth, thumbPosFactor) + 45),

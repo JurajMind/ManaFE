@@ -140,7 +140,7 @@ class PersonBloc extends SignalBloc {
       var db = await App.cache.getDatabase();
       var key = await store.add(db, {'name': 'perspn'});
       var record = await store.record(key).getSnapshot(db);
-      var value = null;
+      var value;
       if (value == null) {
         return;
       }

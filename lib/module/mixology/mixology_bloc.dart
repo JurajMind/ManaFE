@@ -178,8 +178,7 @@ class MixologyProvider extends InheritedWidget {
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) => true;
 
-  static MixologyBloc of(BuildContext context) =>
-      (context.inheritFromWidgetOfExactType(MixologyProvider)
-              as MixologyProvider)
-          .mixologyBloc;
+  static MixologyBloc of(BuildContext context) => context
+      .dependOnInheritedWidgetOfExactType<MixologyProvider>()
+      .mixologyBloc;
 }

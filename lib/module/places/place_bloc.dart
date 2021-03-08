@@ -25,7 +25,7 @@ class PlaceBloc {
 
   factory PlaceBloc() => PlaceBloc._instance;
 
-  PlaceBloc._() {}
+  PlaceBloc._();
 
   Future<PlaceSimpleDto> loadPlace({int placeId, PlaceSimpleDto place}) async {
     _place = place;

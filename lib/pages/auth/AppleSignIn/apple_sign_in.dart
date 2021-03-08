@@ -52,7 +52,7 @@ class _MAppleLoginState extends State<MAppleLogin> {
       case AuthorizationStatus.authorized:
 
         // Store user ID
-        var storage = await MLocalStorage();
+        var storage = MLocalStorage();
             storage.setString("userId", result.credential.user);
 
         // Navigate to secret page (shhh!)
