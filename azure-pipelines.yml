@@ -1,15 +1,37 @@
-# Xcode
-# Build, test, and archive an Xcode workspace on macOS.
-# Add steps that install certificates, test, sign, and distribute an app, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/xcode
+variables:
+  FlutterChannel: 'stable'
+  FlutterVersion: 'latest'
+
+  ProjectSlug: '<APP_CENTER_USERNAME>/<APP_CENTER_APP>'
+  ProjectDirectory: '$(Build.SourcesDirectory)'
+
+  BuildNumber: '$(Build.BuildNumber)'
+  BuildMessage: '$(Build.SourceVersionMessage)'
+  BuildDirectory: '$(ProjectDirectory)/build/app/outputs/apk/release/app-release.apk'
 
 trigger:
 - master
+
 
 pool:
   vmImage: 'macos-latest'
 
 steps:
+- task: FlutterInstall@0
+  displayName: Setup flutter
+  inputs:
+    channel: 'stable'
+    version: 'latest'
+- task: PowerShell@2
+  displayName: Setup environment
+    inputs:
+      targetType: 'inline'
+        script: |
+          Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
+          Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
+          Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
+          Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
+
 - task: Xcode@5
   inputs:
     actions: 'archive' 
