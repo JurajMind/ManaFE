@@ -2,7 +2,7 @@ variables:
   FlutterChannel: 'stable'
   FlutterVersion: 'latest'
 
-  ProjectSlug: 'juraj.hamornik-outlook.com>/Manapipes'
+  ProjectSlug: 'juraj.hamornik-outlook.com/Manapipes'
   ProjectDirectory: '$(Build.SourcesDirectory)'
 
   BuildNumber: '$(Build.BuildNumber)'
