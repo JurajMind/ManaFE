@@ -2,7 +2,7 @@ variables:
   FlutterChannel: 'stable'
   FlutterVersion: 'latest'
 
-  ProjectSlug: '<APP_CENTER_USERNAME>/<APP_CENTER_APP>'
+  ProjectSlug: 'juraj.hamornik-outlook.com>/Manapipes'
   ProjectDirectory: '$(Build.SourcesDirectory)'
 
   BuildNumber: '$(Build.BuildNumber)'
@@ -37,7 +37,7 @@ jobs:
           targetType: 'inline'
           script: |
             $buildName = "$(Build.SourceVersion)".SubString(0,7)
-            $distributionGroup = "<APP_CENTER_BETA_DISTRIBUTION_GROUP_ID>"
+            $distributionGroup = "Internal"
             Write-Host "##vso[task.setvariable variable=BuildName;]$buildName"
             Write-Host "##vso[task.setvariable variable=DistributionGroup;]$distributionGroup"
 
@@ -48,7 +48,7 @@ jobs:
           targetType: 'inline'
           script: |
             $buildName = "$(Build.SourceBranch)".SubString(11)
-            $distributionGroup = "<APP_CENTER_PUBLIC_DISTRIBUTION_GROUP_ID>"
+            $distributionGroup = "Internal"
             Write-Host "##vso[task.setvariable variable=BuildName;]$buildName"
             Write-Host "##vso[task.setvariable variable=DistributionGroup;]$distributionGroup"
 
