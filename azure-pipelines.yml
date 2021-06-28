@@ -1,21 +1,66 @@
-# Xcode
-# Build, test, and archive an Xcode workspace on macOS.
-# Add steps that install certificates, test, sign, and distribute an app, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/xcode
+variables:
+  FlutterChannel: 'stable'
+  FlutterVersion: 'latest'
 
-trigger:
-- master
+  ProjectSlug: 'juraj.hamornik-outlook.com/Manapipes'
+  ProjectDirectory: '$(Build.SourcesDirectory)'
 
-pool:
-  vmImage: 'macos-latest'
+  BuildNumber: '$(Build.BuildNumber)'
+  BuildMessage: '$(Build.SourceVersionMessage)'
+  BuildDirectory: '$(ProjectDirectory)/build/app/outputs/apk/release/app-release.apk'
 
-steps:
-- task: Xcode@5
-  inputs:
-    actions: 'archive' 
-    sdk: '$(sdk)'
-    scheme: '$(scheme)'
-    configuration: '$(configuration)'
-    xcodeVersion: 'default' # Options: default, 10, 9, 8, specifyPath
-    xcWorkspacePath: '**/*.xcodeproj/project.xcworkspace'
-    
+jobs:
+  - job: Build
+    pool:
+      vmImage: 'macOS-latest'
+    steps:
+      - task: FlutterInstall@0
+        displayName: Setup flutter
+        inputs:
+          channel: '$(FlutterChannel)'
+          version: '$(FlutterVersion)'
+
+      - task: PowerShell@2
+        displayName: Setup environment
+        inputs:
+          targetType: 'inline'
+          script: |
+            Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
+            Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
+            Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
+            Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
+
+      - task: PowerShell@2
+        displayName: Setup variables (beta)
+        condition: startsWith(variables['Build.SourceBranch'], 'refs/heads/')
+        inputs:
+          targetType: 'inline'
+          script: |
+            $buildName = "$(Build.SourceVersion)".SubString(0,7)
+            $distributionGroup = "Internal"
+            Write-Host "##vso[task.setvariable variable=BuildName;]$buildName"
+            Write-Host "##vso[task.setvariable variable=DistributionGroup;]$distributionGroup"
+
+      - task: PowerShell@2
+        displayName: Setup variables (public)
+        condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
+        inputs:
+          targetType: 'inline'
+          script: |
+            $buildName = "$(Build.SourceBranch)".SubString(11)
+            $distributionGroup = "Internal"
+            Write-Host "##vso[task.setvariable variable=BuildName;]$buildName"
+            Write-Host "##vso[task.setvariable variable=DistributionGroup;]$distributionGroup"
+
+      - task: CmdLine@2
+        displayName: Run install
+        inputs:
+          script: 'flutter pub get'
+
+      - task: FlutterBuild@0
+        displayName: Run build
+        inputs:
+          target: 'apk'
+          projectDirectory: '$(ProjectDirectory)'
+          buildName: '$(BuildName)'
+          buildNumber: '$(BuildNumber)'
