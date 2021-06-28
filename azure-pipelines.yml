@@ -64,3 +64,13 @@ jobs:
           projectDirectory: '$(ProjectDirectory)'
           buildName: '$(BuildName)'
           buildNumber: '$(BuildNumber)'
+      - task: AppCenterDistribute@3
+        displayName: Run distribute
+        inputs:
+          serverEndpoint: 'AppCenter Service Connection'
+          appSlug: '$(ProjectSlug)'
+          appFile: '$(BuildDirectory)'
+          releaseNotesOption: 'input'
+          releaseNotesInput: '$(BuildMessage)'
+          destinationType: 'groups'
+          distributionGroupId: '$(DistributionGroup)'    
