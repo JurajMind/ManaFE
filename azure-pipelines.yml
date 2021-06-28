@@ -5,7 +5,7 @@ variables:
   ProjectSlug: 'juraj.hamornik-outlook.com/Manapipes'
   ProjectDirectory: '$(Build.SourcesDirectory)'
 
-  BuildNumber: '$(Build.BuildNumber)'
+  BuildNumber: ''
   BuildMessage: '$(Build.SourceVersionMessage)'
   BuildDirectory: '$(ProjectDirectory)/build/app/outputs/apk/release/app-release.apk'
 
