@@ -110,38 +110,38 @@ class Extensions {
     return "$whole.$major.$minor";
   }
 
-  static String devicePicture(int type) {
+  static String devicePicture(DeviceSimpleDtoTypeEnum type) {
     switch (type) {
-      case 13:
+      case DeviceSimpleDtoTypeEnum.number13:
         return 'images/devices/wood.jpg';
-      case 12:
+      case DeviceSimpleDtoTypeEnum.number12:
         return 'images/devices/wood.jpg';
-      case 11:
+      case DeviceSimpleDtoTypeEnum.number11:
         return 'images/devices/black.jpg';
-      case 10:
+      case DeviceSimpleDtoTypeEnum.number10:
         return 'images/devices/white.jpg';
     }
     return 'images/devices/prototype.jpg';
   }
 
-  static List<Color> deviceAccentColor(int type) {
+  static List<Color> deviceAccentColor(DeviceSimpleDtoTypeEnum type) {
     switch (type) {
-      case 13:
+      case DeviceSimpleDtoTypeEnum.number13:
         return [
           Colors.transparent,
           Colors.blue,
         ];
-      case 12:
+      case DeviceSimpleDtoTypeEnum.number12:
         return [
           Colors.transparent,
           Colors.orangeAccent,
         ];
-      case 11:
+      case DeviceSimpleDtoTypeEnum.number11:
         return [
           Colors.transparent,
           Colors.grey,
         ];
-      case 10:
+      case DeviceSimpleDtoTypeEnum.number10:
         return [
           Colors.transparent,
           Colors.indigoAccent,

@@ -1,5 +1,5 @@
 import 'package:app/services/authorization.dart';
-import 'package:app/services/local_storage/m_local_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:flutter/material.dart';
 
@@ -52,8 +52,8 @@ class _MAppleLoginState extends State<MAppleLogin> {
       case AuthorizationStatus.authorized:
 
         // Store user ID
-        var storage = MLocalStorage();
-            storage.setString("userId", result.credential.user);
+        SharedPreferences.getInstance()
+            .then((value) => value.setString("userId", result.credential.user));
 
         // Navigate to secret page (shhh!)
 

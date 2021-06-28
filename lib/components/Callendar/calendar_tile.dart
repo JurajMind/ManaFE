@@ -61,8 +61,10 @@ class CalendarTile extends StatelessWidget {
         decoration: getDecorator(context),
         alignment: Alignment.center,
         child: new Text(
-          Utils.formatDay(date).toString(),
-          style: isSelected ? new TextStyle(color: Colors.white) : Theme.of(context).textTheme.bodyText2,
+          date.toString(),
+          style: isSelected
+              ? new TextStyle(color: Colors.white)
+              : Theme.of(context).textTheme.bodyText2,
           textAlign: TextAlign.center,
         ),
       );
@@ -71,7 +73,12 @@ class CalendarTile extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             container,
-            Positioned(width: 20.0, height: 20.0, bottom: 5, right: 0, child: (buildEventCount(eventCount))),
+            Positioned(
+                width: 20.0,
+                height: 20.0,
+                bottom: 5,
+                right: 0,
+                child: (buildEventCount(eventCount))),
           ],
         ),
       );

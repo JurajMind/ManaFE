@@ -1,84 +1,120 @@
+//
+// AUTO-GENERATED FILE, DO NOT MODIFY!
+//
+// @dart=2.0
+
+// ignore_for_file: unused_element, unused_import
+// ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: lines_longer_than_80_chars
+
 part of openapi.api;
 
 class PlacesReservationsReservationManageDto {
-  
-  DateTime startTime = null;
-  
-  DateTime endTime = null;
-  
-  int timeSlotSize = null;
-  
-  DateTime date = null;
-  
-  List<SeatDto> tables = [];
-  
-  List<PlacesReservationsReservationDto> reservations = [];
-  PlacesReservationsReservationManageDto();
+  /// Returns a new [PlacesReservationsReservationManageDto] instance.
+  PlacesReservationsReservationManageDto({
+    this.startTime,
+    this.endTime,
+    this.timeSlotSize,
+    this.date,
+    this.tables = const [],
+    this.reservations = const [],
+  });
+
+  DateTime startTime;
+
+  DateTime endTime;
+
+  int timeSlotSize;
+
+  DateTime date;
+
+  List<SeatDto> tables;
+
+  List<PlacesReservationsReservationDto> reservations;
 
   @override
-  String toString() {
-    return 'PlacesReservationsReservationManageDto[startTime=$startTime, endTime=$endTime, timeSlotSize=$timeSlotSize, date=$date, tables=$tables, reservations=$reservations, ]';
-  }
+  bool operator ==(Object other) => identical(this, other) || other is PlacesReservationsReservationManageDto &&
+     other.startTime == startTime &&
+     other.endTime == endTime &&
+     other.timeSlotSize == timeSlotSize &&
+     other.date == date &&
+     other.tables == tables &&
+     other.reservations == reservations;
 
-  PlacesReservationsReservationManageDto.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['startTime'] == null) {
-      startTime = null;
-    } else {
-      startTime = DateTime.parse(json['startTime']);
-    }
-    if (json['endTime'] == null) {
-      endTime = null;
-    } else {
-      endTime = DateTime.parse(json['endTime']);
-    }
-    if (json['TimeSlotSize'] == null) {
-      timeSlotSize = null;
-    } else {
-          timeSlotSize = json['TimeSlotSize'];
-    }
-    if (json['Date'] == null) {
-      date = null;
-    } else {
-      date = DateTime.parse(json['Date']);
-    }
-    if (json['Tables'] == null) {
-      tables = null;
-    } else {
-      tables = SeatDto.listFromJson(json['Tables']);
-    }
-    if (json['Reservations'] == null) {
-      reservations = null;
-    } else {
-      reservations = PlacesReservationsReservationDto.listFromJson(json['Reservations']);
-    }
-  }
+  @override
+  int get hashCode =>
+    (startTime == null ? 0 : startTime.hashCode) +
+    (endTime == null ? 0 : endTime.hashCode) +
+    (timeSlotSize == null ? 0 : timeSlotSize.hashCode) +
+    (date == null ? 0 : date.hashCode) +
+    (tables == null ? 0 : tables.hashCode) +
+    (reservations == null ? 0 : reservations.hashCode);
+
+  @override
+  String toString() => 'PlacesReservationsReservationManageDto[startTime=$startTime, endTime=$endTime, timeSlotSize=$timeSlotSize, date=$date, tables=$tables, reservations=$reservations]';
 
   Map<String, dynamic> toJson() {
-    Map <String, dynamic> json = {};
-    if (startTime != null)
-      json['startTime'] = startTime == null ? null : startTime.toUtc().toIso8601String();
-    if (endTime != null)
-      json['endTime'] = endTime == null ? null : endTime.toUtc().toIso8601String();
-    if (timeSlotSize != null)
-      json['TimeSlotSize'] = timeSlotSize;
-    if (date != null)
-      json['Date'] = date == null ? null : date.toUtc().toIso8601String();
-    if (tables != null)
-      json['Tables'] = tables;
-    if (reservations != null)
-      json['Reservations'] = reservations;
+    final json = <String, dynamic>{};
+    if (startTime != null) {
+      json[r'startTime'] = startTime.toUtc().toIso8601String();
+    }
+    if (endTime != null) {
+      json[r'endTime'] = endTime.toUtc().toIso8601String();
+    }
+    if (timeSlotSize != null) {
+      json[r'TimeSlotSize'] = timeSlotSize;
+    }
+    if (date != null) {
+      json[r'Date'] = date.toUtc().toIso8601String();
+    }
+    if (tables != null) {
+      json[r'Tables'] = tables;
+    }
+    if (reservations != null) {
+      json[r'Reservations'] = reservations;
+    }
     return json;
   }
 
-  static List<PlacesReservationsReservationManageDto> listFromJson(List<dynamic> json) {
-    return json == null ? new List<PlacesReservationsReservationManageDto>() : json.map((value) => new PlacesReservationsReservationManageDto.fromJson(value)).toList();
-  }
+  /// Returns a new [PlacesReservationsReservationManageDto] instance and imports its values from
+  /// [json] if it's non-null, null if [json] is null.
+  static PlacesReservationsReservationManageDto fromJson(Map<String, dynamic> json) => json == null
+    ? null
+    : PlacesReservationsReservationManageDto(
+        startTime: json[r'startTime'] == null
+          ? null
+          : DateTime.parse(json[r'startTime']),
+        endTime: json[r'endTime'] == null
+          ? null
+          : DateTime.parse(json[r'endTime']),
+        timeSlotSize: json[r'TimeSlotSize'],
+        date: json[r'Date'] == null
+          ? null
+          : DateTime.parse(json[r'Date']),
+        tables: SeatDto.listFromJson(json[r'Tables']),
+        reservations: PlacesReservationsReservationDto.listFromJson(json[r'Reservations']),
+    );
+
+  static List<PlacesReservationsReservationManageDto> listFromJson(List<dynamic> json, {bool emptyIsNull, bool growable,}) =>
+    json == null || json.isEmpty
+      ? true == emptyIsNull ? null : <PlacesReservationsReservationManageDto>[]
+      : json.map((v) => PlacesReservationsReservationManageDto.fromJson(v)).toList(growable: true == growable);
 
   static Map<String, PlacesReservationsReservationManageDto> mapFromJson(Map<String, dynamic> json) {
-    var map = new Map<String, PlacesReservationsReservationManageDto>();
+    final map = <String, PlacesReservationsReservationManageDto>{};
     if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = new PlacesReservationsReservationManageDto.fromJson(value));
+      json.forEach((String key, dynamic v) => map[key] = PlacesReservationsReservationManageDto.fromJson(v));
+    }
+    return map;
+  }
+
+  // maps a json object with a list of PlacesReservationsReservationManageDto-objects as value to a dart map
+  static Map<String, List<PlacesReservationsReservationManageDto>> mapListFromJson(Map<String, dynamic> json, {bool emptyIsNull, bool growable,}) {
+    final map = <String, List<PlacesReservationsReservationManageDto>>{};
+    if (json != null && json.isNotEmpty) {
+      json.forEach((String key, dynamic v) {
+        map[key] = PlacesReservationsReservationManageDto.listFromJson(v, emptyIsNull: emptyIsNull, growable: growable);
+      });
     }
     return map;
   }

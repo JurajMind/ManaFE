@@ -137,7 +137,7 @@ class IntroSlider extends StatefulWidget {
   // Constructor
   IntroSlider({
     // Slides
-    @required this.slides,
+    this.slides,
     this.backgroundColorAllSlides,
 
     // Skip
@@ -397,60 +397,60 @@ class IntroSliderState extends State<IntroSlider>
   // Constructor
   IntroSliderState({
     // List slides
-    @required this.slides,
-    @required this.backgroundColorAllSlides,
+    this.slides,
+    this.backgroundColorAllSlides,
 
     // Skip button
-    @required this.renderSkipBtn,
-    @required this.widthSkipBtn,
-    @required this.onSkipPress,
-    @required this.nameSkipBtn,
-    @required this.styleNameSkipBtn,
-    @required this.colorSkipBtn,
-    @required this.highlightColorSkipBtn,
-    @required this.isShowSkipBtn,
-    @required this.borderRadiusSkipBtn,
+    this.renderSkipBtn,
+    this.widthSkipBtn,
+    this.onSkipPress,
+    this.nameSkipBtn,
+    this.styleNameSkipBtn,
+    this.colorSkipBtn,
+    this.highlightColorSkipBtn,
+    this.isShowSkipBtn,
+    this.borderRadiusSkipBtn,
 
     // Prev button
-    @required this.widthPrevBtn,
-    @required this.isShowPrevBtn,
-    @required this.namePrevBtn,
-    @required this.renderPrevBtn,
-    @required this.styleNamePrevBtn,
-    @required this.colorPrevBtn,
-    @required this.highlightColorPrevBtn,
-    @required this.borderRadiusPrevBtn,
+    this.widthPrevBtn,
+    this.isShowPrevBtn,
+    this.namePrevBtn,
+    this.renderPrevBtn,
+    this.styleNamePrevBtn,
+    this.colorPrevBtn,
+    this.highlightColorPrevBtn,
+    this.borderRadiusPrevBtn,
 
     // Done button
-    @required this.renderDoneBtn,
-    @required this.widthDoneBtn,
-    @required this.onDonePress,
-    @required this.nameDoneBtn,
-    @required this.styleNameDoneBtn,
-    @required this.colorDoneBtn,
-    @required this.highlightColorDoneBtn,
-    @required this.borderRadiusDoneBtn,
-    @required this.isShowDoneBtn,
+    this.renderDoneBtn,
+    this.widthDoneBtn,
+    this.onDonePress,
+    this.nameDoneBtn,
+    this.styleNameDoneBtn,
+    this.colorDoneBtn,
+    this.highlightColorDoneBtn,
+    this.borderRadiusDoneBtn,
+    this.isShowDoneBtn,
 
     // Next button
-    @required this.nameNextBtn,
-    @required this.renderNextBtn,
+    this.nameNextBtn,
+    this.renderNextBtn,
 
     // Dot indicator
-    @required this.isShowDotIndicator,
-    @required this.colorDot,
-    @required this.colorActiveDot,
-    @required this.sizeDot,
-    @required this.typeDotAnimation,
+    this.isShowDotIndicator,
+    this.colorDot,
+    this.colorActiveDot,
+    this.sizeDot,
+    this.typeDotAnimation,
 
     // Tabs
-    @required this.listCustomTabs,
-    @required this.onTabChangeCompleted,
-    @required this.refFuncGoToTab,
+    this.listCustomTabs,
+    this.onTabChangeCompleted,
+    this.refFuncGoToTab,
 
     // Behavior
-    @required this.isScrollable,
-    @required this.shouldHideStatusBar,
+    this.isScrollable,
+    this.shouldHideStatusBar,
   });
 
   TabController tabController;

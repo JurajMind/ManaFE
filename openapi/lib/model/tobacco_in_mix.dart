@@ -1,48 +1,78 @@
+//
+// AUTO-GENERATED FILE, DO NOT MODIFY!
+//
+// @dart=2.0
+
+// ignore_for_file: unused_element, unused_import
+// ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: lines_longer_than_80_chars
+
 part of openapi.api;
 
 class TobaccoInMix {
-  
-  TobaccoSimpleDto tobacco = null;
-  
-  int fraction = null;
-  TobaccoInMix();
+  /// Returns a new [TobaccoInMix] instance.
+  TobaccoInMix({
+    this.tobacco,
+    this.fraction,
+  });
+
+  TobaccoSimpleDto tobacco;
+
+  int fraction;
 
   @override
-  String toString() {
-    return 'TobaccoInMix[tobacco=$tobacco, fraction=$fraction, ]';
-  }
+  bool operator ==(Object other) => identical(this, other) || other is TobaccoInMix &&
+     other.tobacco == tobacco &&
+     other.fraction == fraction;
 
-  TobaccoInMix.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['Tobacco'] == null) {
-      tobacco = null;
-    } else {
-      tobacco = new TobaccoSimpleDto.fromJson(json['Tobacco']);
-    }
-    if (json['Fraction'] == null) {
-      fraction = null;
-    } else {
-          fraction = json['Fraction'];
-    }
-  }
+  @override
+  int get hashCode =>
+    (tobacco == null ? 0 : tobacco.hashCode) +
+    (fraction == null ? 0 : fraction.hashCode);
+
+  @override
+  String toString() => 'TobaccoInMix[tobacco=$tobacco, fraction=$fraction]';
 
   Map<String, dynamic> toJson() {
-    Map <String, dynamic> json = {};
-    if (tobacco != null)
-      json['Tobacco'] = tobacco;
-    if (fraction != null)
-      json['Fraction'] = fraction;
+    final json = <String, dynamic>{};
+    if (tobacco != null) {
+      json[r'Tobacco'] = tobacco;
+    }
+    if (fraction != null) {
+      json[r'Fraction'] = fraction;
+    }
     return json;
   }
 
-  static List<TobaccoInMix> listFromJson(List<dynamic> json) {
-    return json == null ? new List<TobaccoInMix>() : json.map((value) => new TobaccoInMix.fromJson(value)).toList();
-  }
+  /// Returns a new [TobaccoInMix] instance and imports its values from
+  /// [json] if it's non-null, null if [json] is null.
+  static TobaccoInMix fromJson(Map<String, dynamic> json) => json == null
+    ? null
+    : TobaccoInMix(
+        tobacco: TobaccoSimpleDto.fromJson(json[r'Tobacco']),
+        fraction: json[r'Fraction'],
+    );
+
+  static List<TobaccoInMix> listFromJson(List<dynamic> json, {bool emptyIsNull, bool growable,}) =>
+    json == null || json.isEmpty
+      ? true == emptyIsNull ? null : <TobaccoInMix>[]
+      : json.map((v) => TobaccoInMix.fromJson(v)).toList(growable: true == growable);
 
   static Map<String, TobaccoInMix> mapFromJson(Map<String, dynamic> json) {
-    var map = new Map<String, TobaccoInMix>();
+    final map = <String, TobaccoInMix>{};
     if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = new TobaccoInMix.fromJson(value));
+      json.forEach((String key, dynamic v) => map[key] = TobaccoInMix.fromJson(v));
+    }
+    return map;
+  }
+
+  // maps a json object with a list of TobaccoInMix-objects as value to a dart map
+  static Map<String, List<TobaccoInMix>> mapListFromJson(Map<String, dynamic> json, {bool emptyIsNull, bool growable,}) {
+    final map = <String, List<TobaccoInMix>>{};
+    if (json != null && json.isNotEmpty) {
+      json.forEach((String key, dynamic v) {
+        map[key] = TobaccoInMix.listFromJson(v, emptyIsNull: emptyIsNull, growable: growable);
+      });
     }
     return map;
   }

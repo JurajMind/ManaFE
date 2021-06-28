@@ -1,66 +1,96 @@
+//
+// AUTO-GENERATED FILE, DO NOT MODIFY!
+//
+// @dart=2.0
+
+// ignore_for_file: unused_element, unused_import
+// ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: lines_longer_than_80_chars
+
 part of openapi.api;
 
 class Animations {
-  
-  List<SmartHookahHelpersAnimation> animations = [];
-  
-  bool success = null;
-  
-  String message = null;
-  
-  int httpResponseCode = null;
-  Animations();
+  /// Returns a new [Animations] instance.
+  Animations({
+    this.animations = const [],
+    this.success,
+    this.message,
+    this.httpResponseCode,
+  });
+
+  List<SmartHookahHelpersAnimation> animations;
+
+  bool success;
+
+  String message;
+
+  int httpResponseCode;
 
   @override
-  String toString() {
-    return 'Animations[animations=$animations, success=$success, message=$message, httpResponseCode=$httpResponseCode, ]';
-  }
+  bool operator ==(Object other) => identical(this, other) || other is Animations &&
+     other.animations == animations &&
+     other.success == success &&
+     other.message == message &&
+     other.httpResponseCode == httpResponseCode;
 
-  Animations.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['Animations'] == null) {
-      animations = null;
-    } else {
-      animations = SmartHookahHelpersAnimation.listFromJson(json['Animations']);
-    }
-    if (json['Success'] == null) {
-      success = null;
-    } else {
-          success = json['Success'];
-    }
-    if (json['Message'] == null) {
-      message = null;
-    } else {
-          message = json['Message'];
-    }
-    if (json['HttpResponseCode'] == null) {
-      httpResponseCode = null;
-    } else {
-          httpResponseCode = json['HttpResponseCode'];
-    }
-  }
+  @override
+  int get hashCode =>
+    (animations == null ? 0 : animations.hashCode) +
+    (success == null ? 0 : success.hashCode) +
+    (message == null ? 0 : message.hashCode) +
+    (httpResponseCode == null ? 0 : httpResponseCode.hashCode);
+
+  @override
+  String toString() => 'Animations[animations=$animations, success=$success, message=$message, httpResponseCode=$httpResponseCode]';
 
   Map<String, dynamic> toJson() {
-    Map <String, dynamic> json = {};
-    if (animations != null)
-      json['Animations'] = animations;
-    if (success != null)
-      json['Success'] = success;
-    if (message != null)
-      json['Message'] = message;
-    if (httpResponseCode != null)
-      json['HttpResponseCode'] = httpResponseCode;
+    final json = <String, dynamic>{};
+    if (animations != null) {
+      json[r'Animations'] = animations;
+    }
+    if (success != null) {
+      json[r'Success'] = success;
+    }
+    if (message != null) {
+      json[r'Message'] = message;
+    }
+    if (httpResponseCode != null) {
+      json[r'HttpResponseCode'] = httpResponseCode;
+    }
     return json;
   }
 
-  static List<Animations> listFromJson(List<dynamic> json) {
-    return json == null ? new List<Animations>() : json.map((value) => new Animations.fromJson(value)).toList();
-  }
+  /// Returns a new [Animations] instance and imports its values from
+  /// [json] if it's non-null, null if [json] is null.
+  static Animations fromJson(Map<String, dynamic> json) => json == null
+    ? null
+    : Animations(
+        animations: SmartHookahHelpersAnimation.listFromJson(json[r'Animations']),
+        success: json[r'Success'],
+        message: json[r'Message'],
+        httpResponseCode: json[r'HttpResponseCode'],
+    );
+
+  static List<Animations> listFromJson(List<dynamic> json, {bool emptyIsNull, bool growable,}) =>
+    json == null || json.isEmpty
+      ? true == emptyIsNull ? null : <Animations>[]
+      : json.map((v) => Animations.fromJson(v)).toList(growable: true == growable);
 
   static Map<String, Animations> mapFromJson(Map<String, dynamic> json) {
-    var map = new Map<String, Animations>();
+    final map = <String, Animations>{};
     if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = new Animations.fromJson(value));
+      json.forEach((String key, dynamic v) => map[key] = Animations.fromJson(v));
+    }
+    return map;
+  }
+
+  // maps a json object with a list of Animations-objects as value to a dart map
+  static Map<String, List<Animations>> mapListFromJson(Map<String, dynamic> json, {bool emptyIsNull, bool growable,}) {
+    final map = <String, List<Animations>>{};
+    if (json != null && json.isNotEmpty) {
+      json.forEach((String key, dynamic v) {
+        map[key] = Animations.listFromJson(v, emptyIsNull: emptyIsNull, growable: growable);
+      });
     }
     return map;
   }

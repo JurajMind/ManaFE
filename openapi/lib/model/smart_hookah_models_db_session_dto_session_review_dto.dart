@@ -1,156 +1,188 @@
+//
+// AUTO-GENERATED FILE, DO NOT MODIFY!
+//
+// @dart=2.0
+
+// ignore_for_file: unused_element, unused_import
+// ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: lines_longer_than_80_chars
+
 part of openapi.api;
 
 class SmartHookahModelsDbSessionDtoSessionReviewDto {
-  
-  int id = null;
-  
-  int authorId = null;
-  
-  String author = null;
-  
-  DateTime publishDate = null;
-  
-  GearTobaccoReviewDto tobaccoReview = null;
-  
-  int placeReviewId = null;
-  
-  PlacesPlaceReviewDto placeReview = null;
-  
-  List<MediaDto> medias = [];
-  
-  int smokeSessionId = null;
-  
-  int taste = null;
-  
-  int smoke = null;
-  
-  int strength = null;
-  
-  int duration = null;
-  
-  SmokeSessionSimpleDto smokeSession = null;
-  SmartHookahModelsDbSessionDtoSessionReviewDto();
+  /// Returns a new [SmartHookahModelsDbSessionDtoSessionReviewDto] instance.
+  SmartHookahModelsDbSessionDtoSessionReviewDto({
+    this.id,
+    this.authorId,
+    this.author,
+    this.publishDate,
+    this.tobaccoReview,
+    this.placeReviewId,
+    this.placeReview,
+    this.medias = const [],
+    this.smokeSessionId,
+    this.taste,
+    this.smoke,
+    this.strength,
+    this.duration,
+    this.smokeSession,
+  });
+
+  int id;
+
+  int authorId;
+
+  String author;
+
+  DateTime publishDate;
+
+  GearTobaccoReviewDto tobaccoReview;
+
+  int placeReviewId;
+
+  PlacesPlaceReviewDto placeReview;
+
+  List<MediaDto> medias;
+
+  int smokeSessionId;
+
+  int taste;
+
+  int smoke;
+
+  int strength;
+
+  int duration;
+
+  SmokeSessionSimpleDto smokeSession;
 
   @override
-  String toString() {
-    return 'SmartHookahModelsDbSessionDtoSessionReviewDto[id=$id, authorId=$authorId, author=$author, publishDate=$publishDate, tobaccoReview=$tobaccoReview, placeReviewId=$placeReviewId, placeReview=$placeReview, medias=$medias, smokeSessionId=$smokeSessionId, taste=$taste, smoke=$smoke, strength=$strength, duration=$duration, smokeSession=$smokeSession, ]';
-  }
+  bool operator ==(Object other) => identical(this, other) || other is SmartHookahModelsDbSessionDtoSessionReviewDto &&
+     other.id == id &&
+     other.authorId == authorId &&
+     other.author == author &&
+     other.publishDate == publishDate &&
+     other.tobaccoReview == tobaccoReview &&
+     other.placeReviewId == placeReviewId &&
+     other.placeReview == placeReview &&
+     other.medias == medias &&
+     other.smokeSessionId == smokeSessionId &&
+     other.taste == taste &&
+     other.smoke == smoke &&
+     other.strength == strength &&
+     other.duration == duration &&
+     other.smokeSession == smokeSession;
 
-  SmartHookahModelsDbSessionDtoSessionReviewDto.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['id'] == null) {
-      id = null;
-    } else {
-          id = json['id'];
-    }
-    if (json['authorId'] == null) {
-      authorId = null;
-    } else {
-          authorId = json['authorId'];
-    }
-    if (json['author'] == null) {
-      author = null;
-    } else {
-          author = json['author'];
-    }
-    if (json['publishDate'] == null) {
-      publishDate = null;
-    } else {
-      publishDate = DateTime.parse(json['publishDate']);
-    }
-    if (json['tobaccoReview'] == null) {
-      tobaccoReview = null;
-    } else {
-      tobaccoReview = new GearTobaccoReviewDto.fromJson(json['tobaccoReview']);
-    }
-    if (json['placeReviewId'] == null) {
-      placeReviewId = null;
-    } else {
-          placeReviewId = json['placeReviewId'];
-    }
-    if (json['placeReview'] == null) {
-      placeReview = null;
-    } else {
-      placeReview = new PlacesPlaceReviewDto.fromJson(json['placeReview']);
-    }
-    if (json['medias'] == null) {
-      medias = null;
-    } else {
-      medias = MediaDto.listFromJson(json['medias']);
-    }
-    if (json['smokeSessionId'] == null) {
-      smokeSessionId = null;
-    } else {
-          smokeSessionId = json['smokeSessionId'];
-    }
-    if (json['taste'] == null) {
-      taste = null;
-    } else {
-          taste = json['taste'];
-    }
-    if (json['smoke'] == null) {
-      smoke = null;
-    } else {
-          smoke = json['smoke'];
-    }
-    if (json['strength'] == null) {
-      strength = null;
-    } else {
-          strength = json['strength'];
-    }
-    if (json['duration'] == null) {
-      duration = null;
-    } else {
-          duration = json['duration'];
-    }
-    if (json['smokeSession'] == null) {
-      smokeSession = null;
-    } else {
-      smokeSession = new SmokeSessionSimpleDto.fromJson(json['smokeSession']);
-    }
-  }
+  @override
+  int get hashCode =>
+    (id == null ? 0 : id.hashCode) +
+    (authorId == null ? 0 : authorId.hashCode) +
+    (author == null ? 0 : author.hashCode) +
+    (publishDate == null ? 0 : publishDate.hashCode) +
+    (tobaccoReview == null ? 0 : tobaccoReview.hashCode) +
+    (placeReviewId == null ? 0 : placeReviewId.hashCode) +
+    (placeReview == null ? 0 : placeReview.hashCode) +
+    (medias == null ? 0 : medias.hashCode) +
+    (smokeSessionId == null ? 0 : smokeSessionId.hashCode) +
+    (taste == null ? 0 : taste.hashCode) +
+    (smoke == null ? 0 : smoke.hashCode) +
+    (strength == null ? 0 : strength.hashCode) +
+    (duration == null ? 0 : duration.hashCode) +
+    (smokeSession == null ? 0 : smokeSession.hashCode);
+
+  @override
+  String toString() => 'SmartHookahModelsDbSessionDtoSessionReviewDto[id=$id, authorId=$authorId, author=$author, publishDate=$publishDate, tobaccoReview=$tobaccoReview, placeReviewId=$placeReviewId, placeReview=$placeReview, medias=$medias, smokeSessionId=$smokeSessionId, taste=$taste, smoke=$smoke, strength=$strength, duration=$duration, smokeSession=$smokeSession]';
 
   Map<String, dynamic> toJson() {
-    Map <String, dynamic> json = {};
-    if (id != null)
-      json['id'] = id;
-    if (authorId != null)
-      json['authorId'] = authorId;
-    if (author != null)
-      json['author'] = author;
-    if (publishDate != null)
-      json['publishDate'] = publishDate == null ? null : publishDate.toUtc().toIso8601String();
-    if (tobaccoReview != null)
-      json['tobaccoReview'] = tobaccoReview;
-    if (placeReviewId != null)
-      json['placeReviewId'] = placeReviewId;
-    if (placeReview != null)
-      json['placeReview'] = placeReview;
-    if (medias != null)
-      json['medias'] = medias;
-    if (smokeSessionId != null)
-      json['smokeSessionId'] = smokeSessionId;
-    if (taste != null)
-      json['taste'] = taste;
-    if (smoke != null)
-      json['smoke'] = smoke;
-    if (strength != null)
-      json['strength'] = strength;
-    if (duration != null)
-      json['duration'] = duration;
-    if (smokeSession != null)
-      json['smokeSession'] = smokeSession;
+    final json = <String, dynamic>{};
+    if (id != null) {
+      json[r'id'] = id;
+    }
+    if (authorId != null) {
+      json[r'authorId'] = authorId;
+    }
+    if (author != null) {
+      json[r'author'] = author;
+    }
+    if (publishDate != null) {
+      json[r'publishDate'] = publishDate.toUtc().toIso8601String();
+    }
+    if (tobaccoReview != null) {
+      json[r'tobaccoReview'] = tobaccoReview;
+    }
+    if (placeReviewId != null) {
+      json[r'placeReviewId'] = placeReviewId;
+    }
+    if (placeReview != null) {
+      json[r'placeReview'] = placeReview;
+    }
+    if (medias != null) {
+      json[r'medias'] = medias;
+    }
+    if (smokeSessionId != null) {
+      json[r'smokeSessionId'] = smokeSessionId;
+    }
+    if (taste != null) {
+      json[r'taste'] = taste;
+    }
+    if (smoke != null) {
+      json[r'smoke'] = smoke;
+    }
+    if (strength != null) {
+      json[r'strength'] = strength;
+    }
+    if (duration != null) {
+      json[r'duration'] = duration;
+    }
+    if (smokeSession != null) {
+      json[r'smokeSession'] = smokeSession;
+    }
     return json;
   }
 
-  static List<SmartHookahModelsDbSessionDtoSessionReviewDto> listFromJson(List<dynamic> json) {
-    return json == null ? new List<SmartHookahModelsDbSessionDtoSessionReviewDto>() : json.map((value) => new SmartHookahModelsDbSessionDtoSessionReviewDto.fromJson(value)).toList();
-  }
+  /// Returns a new [SmartHookahModelsDbSessionDtoSessionReviewDto] instance and imports its values from
+  /// [json] if it's non-null, null if [json] is null.
+  static SmartHookahModelsDbSessionDtoSessionReviewDto fromJson(Map<String, dynamic> json) => json == null
+    ? null
+    : SmartHookahModelsDbSessionDtoSessionReviewDto(
+        id: json[r'id'],
+        authorId: json[r'authorId'],
+        author: json[r'author'],
+        publishDate: json[r'publishDate'] == null
+          ? null
+          : DateTime.parse(json[r'publishDate']),
+        tobaccoReview: GearTobaccoReviewDto.fromJson(json[r'tobaccoReview']),
+        placeReviewId: json[r'placeReviewId'],
+        placeReview: PlacesPlaceReviewDto.fromJson(json[r'placeReview']),
+        medias: MediaDto.listFromJson(json[r'medias']),
+        smokeSessionId: json[r'smokeSessionId'],
+        taste: json[r'taste'],
+        smoke: json[r'smoke'],
+        strength: json[r'strength'],
+        duration: json[r'duration'],
+        smokeSession: SmokeSessionSimpleDto.fromJson(json[r'smokeSession']),
+    );
+
+  static List<SmartHookahModelsDbSessionDtoSessionReviewDto> listFromJson(List<dynamic> json, {bool emptyIsNull, bool growable,}) =>
+    json == null || json.isEmpty
+      ? true == emptyIsNull ? null : <SmartHookahModelsDbSessionDtoSessionReviewDto>[]
+      : json.map((v) => SmartHookahModelsDbSessionDtoSessionReviewDto.fromJson(v)).toList(growable: true == growable);
 
   static Map<String, SmartHookahModelsDbSessionDtoSessionReviewDto> mapFromJson(Map<String, dynamic> json) {
-    var map = new Map<String, SmartHookahModelsDbSessionDtoSessionReviewDto>();
+    final map = <String, SmartHookahModelsDbSessionDtoSessionReviewDto>{};
     if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = new SmartHookahModelsDbSessionDtoSessionReviewDto.fromJson(value));
+      json.forEach((String key, dynamic v) => map[key] = SmartHookahModelsDbSessionDtoSessionReviewDto.fromJson(v));
+    }
+    return map;
+  }
+
+  // maps a json object with a list of SmartHookahModelsDbSessionDtoSessionReviewDto-objects as value to a dart map
+  static Map<String, List<SmartHookahModelsDbSessionDtoSessionReviewDto>> mapListFromJson(Map<String, dynamic> json, {bool emptyIsNull, bool growable,}) {
+    final map = <String, List<SmartHookahModelsDbSessionDtoSessionReviewDto>>{};
+    if (json != null && json.isNotEmpty) {
+      json.forEach((String key, dynamic v) {
+        map[key] = SmartHookahModelsDbSessionDtoSessionReviewDto.listFromJson(v, emptyIsNull: emptyIsNull, growable: growable);
+      });
     }
     return map;
   }

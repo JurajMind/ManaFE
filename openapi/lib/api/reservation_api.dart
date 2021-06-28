@@ -1,582 +1,767 @@
+//
+// AUTO-GENERATED FILE, DO NOT MODIFY!
+//
+// @dart=2.0
+
+// ignore_for_file: unused_element, unused_import
+// ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: lines_longer_than_80_chars
+
 part of openapi.api;
 
 
-
 class ReservationApi {
-  final ApiClient apiClient;
-
   ReservationApi([ApiClient apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
-  /// 
+  final ApiClient apiClient;
+
+  /// Performs an HTTP 'POST /api/Reservations/{id}/AddLateTime' operation and returns the [Response].
+  /// Parameters:
   ///
-  /// 
-  Future<PlacesReservationsReservationDto> reservationAddLateTime(int id, int time) async {
+  /// * [int] id (required):
+  ///
+  /// * [int] time (required):
+  Future<Response> reservationAddLateTimeWithHttpInfo(int id, int time) async {
+    // Verify required params are set.
+    if (id == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: id');
+    }
+    if (time == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: time');
+    }
+
+    final path = r'/api/Reservations/{id}/AddLateTime'
+      .replaceAll('{' + 'id' + '}', id.toString());
+
     Object postBody = time;
 
-    // verify required params are set
-    if(id == null) {
-     throw new ApiException(400, "Missing required param: id");
-    }
-    if(time == null) {
-     throw new ApiException(400, "Missing required param: time");
-    }
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
 
-    // create path and map variables
-    String path = "/api/Reservations/{id}/AddLateTime".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+    final contentTypes = <String>['application/json', 'text/json', 'application/xml', 'text/xml', 'multipart/form-data', 'application/x-www-form-urlencoded'];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
       bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
         postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'POST',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'PlacesReservationsReservationDto') as PlacesReservationsReservationDto;
+      }
     } else {
-      return null;
     }
+
+    return await apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
   }
-  /// 
+
+  /// Parameters:
   ///
-  /// 
-  Future<PlacesReservationsReservationDto> reservationAddTable(int id, int tableId) async {
+  /// * [int] id (required):
+  ///
+  /// * [int] time (required):
+  Future<PlacesReservationsReservationDto> reservationAddLateTime(int id, int time) async {
+    final response = await reservationAddLateTimeWithHttpInfo(id, time);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body != null && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'PlacesReservationsReservationDto',) as PlacesReservationsReservationDto;
+        }
+    return Future<PlacesReservationsReservationDto>.value(null);
+  }
+
+  /// Performs an HTTP 'POST /api/Reservations/{id}/AddTable' operation and returns the [Response].
+  /// Parameters:
+  ///
+  /// * [int] id (required):
+  ///
+  /// * [int] tableId (required):
+  Future<Response> reservationAddTableWithHttpInfo(int id, int tableId) async {
+    // Verify required params are set.
+    if (id == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: id');
+    }
+    if (tableId == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: tableId');
+    }
+
+    final path = r'/api/Reservations/{id}/AddTable'
+      .replaceAll('{' + 'id' + '}', id.toString());
+
     Object postBody = tableId;
 
-    // verify required params are set
-    if(id == null) {
-     throw new ApiException(400, "Missing required param: id");
-    }
-    if(tableId == null) {
-     throw new ApiException(400, "Missing required param: tableId");
-    }
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
 
-    // create path and map variables
-    String path = "/api/Reservations/{id}/AddTable".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+    final contentTypes = <String>['application/json', 'text/json', 'application/xml', 'text/xml', 'multipart/form-data', 'application/x-www-form-urlencoded'];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
       bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
         postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'POST',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'PlacesReservationsReservationDto') as PlacesReservationsReservationDto;
+      }
     } else {
-      return null;
     }
+
+    return await apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
   }
-  /// 
+
+  /// Parameters:
   ///
-  /// 
-  Future<bool> reservationCancelReservation(int id) async {
+  /// * [int] id (required):
+  ///
+  /// * [int] tableId (required):
+  Future<PlacesReservationsReservationDto> reservationAddTable(int id, int tableId) async {
+    final response = await reservationAddTableWithHttpInfo(id, tableId);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body != null && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'PlacesReservationsReservationDto',) as PlacesReservationsReservationDto;
+        }
+    return Future<PlacesReservationsReservationDto>.value(null);
+  }
+
+  /// Performs an HTTP 'POST /api/Reservations/{id}/Cancel' operation and returns the [Response].
+  /// Parameters:
+  ///
+  /// * [int] id (required):
+  Future<Response> reservationCancelReservationWithHttpInfo(int id) async {
+    // Verify required params are set.
+    if (id == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: id');
+    }
+
+    final path = r'/api/Reservations/{id}/Cancel'
+      .replaceAll('{' + 'id' + '}', id.toString());
+
     Object postBody;
 
-    // verify required params are set
-    if(id == null) {
-     throw new ApiException(400, "Missing required param: id");
-    }
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
 
-    // create path and map variables
-    String path = "/api/Reservations/{id}/Cancel".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+    final contentTypes = <String>[];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-
-    List<String> contentTypes = [];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
       bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
         postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'POST',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'bool') as bool;
+      }
     } else {
-      return null;
     }
+
+    return await apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
   }
-  /// 
+
+  /// Parameters:
   ///
-  /// 
-  Future<PlacesReservationsReservationDto> reservationCreate(PlacesReservationsReservationDto reservation) async {
+  /// * [int] id (required):
+  Future<bool> reservationCancelReservation(int id) async {
+    final response = await reservationCancelReservationWithHttpInfo(id);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body != null && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'bool',) as bool;
+        }
+    return Future<bool>.value(null);
+  }
+
+  /// Performs an HTTP 'POST /api/Reservations/Create' operation and returns the [Response].
+  /// Parameters:
+  ///
+  /// * [PlacesReservationsReservationDto] reservation (required):
+  Future<Response> reservationCreateWithHttpInfo(PlacesReservationsReservationDto reservation) async {
+    // Verify required params are set.
+    if (reservation == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: reservation');
+    }
+
+    final path = r'/api/Reservations/Create';
+
     Object postBody = reservation;
 
-    // verify required params are set
-    if(reservation == null) {
-     throw new ApiException(400, "Missing required param: reservation");
-    }
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
 
-    // create path and map variables
-    String path = "/api/Reservations/Create".replaceAll("{format}","json");
+    final contentTypes = <String>['application/json', 'text/json', 'application/xml', 'text/xml', 'multipart/form-data', 'application/x-www-form-urlencoded'];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
       bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
         postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'POST',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'PlacesReservationsReservationDto') as PlacesReservationsReservationDto;
+      }
     } else {
-      return null;
     }
+
+    return await apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
   }
-  /// 
+
+  /// Parameters:
   ///
-  /// 
+  /// * [PlacesReservationsReservationDto] reservation (required):
+  Future<PlacesReservationsReservationDto> reservationCreate(PlacesReservationsReservationDto reservation) async {
+    final response = await reservationCreateWithHttpInfo(reservation);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body != null && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'PlacesReservationsReservationDto',) as PlacesReservationsReservationDto;
+        }
+    return Future<PlacesReservationsReservationDto>.value(null);
+  }
+
+  /// Performs an HTTP 'GET /api/Reservations/{id}/Manage' operation and returns the [Response].
+  /// Parameters:
+  ///
+  /// * [int] id (required):
+  ///
+  /// * [DateTime] date (required):
+  Future<Response> reservationGetManagereservationsInfoWithHttpInfo(int id, DateTime date) async {
+    // Verify required params are set.
+    if (id == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: id');
+    }
+    if (date == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: date');
+    }
+
+    final path = r'/api/Reservations/{id}/Manage'
+      .replaceAll('{' + 'id' + '}', id.toString());
+
+    Object postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+      queryParams.addAll(_convertParametersForCollectionFormat('', 'date', date));
+
+    final contentTypes = <String>[];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
+
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
+      bool hasFields = false;
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
+        postBody = mp;
+      }
+    } else {
+    }
+
+    return await apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
+  }
+
+  /// Parameters:
+  ///
+  /// * [int] id (required):
+  ///
+  /// * [DateTime] date (required):
   Future<PlacesReservationsReservationManageDto> reservationGetManagereservationsInfo(int id, DateTime date) async {
+    final response = await reservationGetManagereservationsInfoWithHttpInfo(id, date);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body != null && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'PlacesReservationsReservationManageDto',) as PlacesReservationsReservationManageDto;
+        }
+    return Future<PlacesReservationsReservationManageDto>.value(null);
+  }
+
+  /// Performs an HTTP 'GET /api/Reservations/Person' operation and returns the [Response].
+  Future<Response> reservationGetPersonReservationsWithHttpInfo() async {
+    final path = r'/api/Reservations/Person';
+
     Object postBody;
 
-    // verify required params are set
-    if(id == null) {
-     throw new ApiException(400, "Missing required param: id");
-    }
-    if(date == null) {
-     throw new ApiException(400, "Missing required param: date");
-    }
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
 
-    // create path and map variables
-    String path = "/api/Reservations/{id}/Manage".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+    final contentTypes = <String>[];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-      queryParams.addAll(_convertParametersForCollectionFormat("", "date", date));
-
-    List<String> contentTypes = [];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
       bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
         postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'GET',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'PlacesReservationsReservationManageDto') as PlacesReservationsReservationManageDto;
+      }
     } else {
-      return null;
     }
+
+    return await apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
   }
-  /// 
-  ///
-  /// 
+
   Future<List<PlacesReservationsReservationDto>> reservationGetPersonReservations() async {
+    final response = await reservationGetPersonReservationsWithHttpInfo();
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body != null && response.statusCode != HttpStatus.noContent) {
+      return (await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'List<PlacesReservationsReservationDto>') as List)
+        .cast<PlacesReservationsReservationDto>()
+        .toList(growable: false);
+    }
+    return Future<List<PlacesReservationsReservationDto>>.value(null);
+  }
+
+  /// Performs an HTTP 'GET /api/Reservations/{id}/Detail' operation and returns the [Response].
+  /// Parameters:
+  ///
+  /// * [int] id (required):
+  Future<Response> reservationGetReservationDetailWithHttpInfo(int id) async {
+    // Verify required params are set.
+    if (id == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: id');
+    }
+
+    final path = r'/api/Reservations/{id}/Detail'
+      .replaceAll('{' + 'id' + '}', id.toString());
+
     Object postBody;
 
-    // verify required params are set
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
 
-    // create path and map variables
-    String path = "/api/Reservations/Person".replaceAll("{format}","json");
+    final contentTypes = <String>[];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-
-    List<String> contentTypes = [];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
       bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
         postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'GET',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<PlacesReservationsReservationDto>') as List).map((item) => item as PlacesReservationsReservationDto).toList();
+      }
     } else {
-      return null;
     }
+
+    return await apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
   }
-  /// 
+
+  /// Parameters:
   ///
-  /// 
+  /// * [int] id (required):
   Future<PlacesReservationsReservationDetailDto> reservationGetReservationDetail(int id) async {
+    final response = await reservationGetReservationDetailWithHttpInfo(id);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body != null && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'PlacesReservationsReservationDetailDto',) as PlacesReservationsReservationDetailDto;
+        }
+    return Future<PlacesReservationsReservationDetailDto>.value(null);
+  }
+
+  /// Performs an HTTP 'GET /api/Reservations/{id}/Usage' operation and returns the [Response].
+  /// Parameters:
+  ///
+  /// * [int] id (required):
+  ///
+  /// * [DateTime] date (required):
+  Future<Response> reservationGetReservationUsageWithHttpInfo(int id, DateTime date) async {
+    // Verify required params are set.
+    if (id == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: id');
+    }
+    if (date == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: date');
+    }
+
+    final path = r'/api/Reservations/{id}/Usage'
+      .replaceAll('{' + 'id' + '}', id.toString());
+
     Object postBody;
 
-    // verify required params are set
-    if(id == null) {
-     throw new ApiException(400, "Missing required param: id");
-    }
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
 
-    // create path and map variables
-    String path = "/api/Reservations/{id}/Detail".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+      queryParams.addAll(_convertParametersForCollectionFormat('', 'date', date));
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
+    final contentTypes = <String>[];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
 
-    List<String> contentTypes = [];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
       bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
         postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'GET',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'PlacesReservationsReservationDetailDto') as PlacesReservationsReservationDetailDto;
+      }
     } else {
-      return null;
     }
+
+    return await apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
   }
-  /// 
+
+  /// Parameters:
   ///
-  /// 
+  /// * [int] id (required):
+  ///
+  /// * [DateTime] date (required):
   Future<SmartHookahServicesPlaceReservationUsageDto> reservationGetReservationUsage(int id, DateTime date) async {
+    final response = await reservationGetReservationUsageWithHttpInfo(id, date);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body != null && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'SmartHookahServicesPlaceReservationUsageDto',) as SmartHookahServicesPlaceReservationUsageDto;
+        }
+    return Future<SmartHookahServicesPlaceReservationUsageDto>.value(null);
+  }
+
+  /// Performs an HTTP 'GET /api/Reservations/Reservations' operation and returns the [Response].
+  /// Parameters:
+  ///
+  /// * [DateTime] from (required):
+  ///
+  /// * [DateTime] to (required):
+  Future<Response> reservationGetReservationsWithHttpInfo(DateTime from, DateTime to) async {
+    // Verify required params are set.
+    if (from == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: from');
+    }
+    if (to == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: to');
+    }
+
+    final path = r'/api/Reservations/Reservations';
+
     Object postBody;
 
-    // verify required params are set
-    if(id == null) {
-     throw new ApiException(400, "Missing required param: id");
-    }
-    if(date == null) {
-     throw new ApiException(400, "Missing required param: date");
-    }
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
 
-    // create path and map variables
-    String path = "/api/Reservations/{id}/Usage".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+      queryParams.addAll(_convertParametersForCollectionFormat('', 'from', from));
+      queryParams.addAll(_convertParametersForCollectionFormat('', 'to', to));
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-      queryParams.addAll(_convertParametersForCollectionFormat("", "date", date));
+    final contentTypes = <String>[];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
 
-    List<String> contentTypes = [];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
       bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
         postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'GET',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'SmartHookahServicesPlaceReservationUsageDto') as SmartHookahServicesPlaceReservationUsageDto;
+      }
     } else {
-      return null;
     }
+
+    return await apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
   }
-  /// 
+
+  /// Parameters:
   ///
-  /// 
+  /// * [DateTime] from (required):
+  ///
+  /// * [DateTime] to (required):
   Future<List<PlacesReservationsReservationDto>> reservationGetReservations(DateTime from, DateTime to) async {
-    Object postBody;
-
-    // verify required params are set
-    if(from == null) {
-     throw new ApiException(400, "Missing required param: from");
+    final response = await reservationGetReservationsWithHttpInfo(from, to);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
-    if(to == null) {
-     throw new ApiException(400, "Missing required param: to");
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body != null && response.statusCode != HttpStatus.noContent) {
+      return (await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'List<PlacesReservationsReservationDto>') as List)
+        .cast<PlacesReservationsReservationDto>()
+        .toList(growable: false);
     }
-
-    // create path and map variables
-    String path = "/api/Reservations/Reservations".replaceAll("{format}","json");
-
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-      queryParams.addAll(_convertParametersForCollectionFormat("", "from", from));
-      queryParams.addAll(_convertParametersForCollectionFormat("", "to", to));
-
-    List<String> contentTypes = [];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
-      bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'GET',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<PlacesReservationsReservationDto>') as List).map((item) => item as PlacesReservationsReservationDto).toList();
-    } else {
-      return null;
-    }
+    return Future<List<PlacesReservationsReservationDto>>.value(null);
   }
-  /// 
+
+  /// Performs an HTTP 'DELETE /api/Reservations/{id}/RemoveTable' operation and returns the [Response].
+  /// Parameters:
   ///
-  /// 
-  Future<PlacesReservationsReservationDto> reservationRemoveTable(int id, int tableId) async {
+  /// * [int] id (required):
+  ///
+  /// * [int] tableId (required):
+  Future<Response> reservationRemoveTableWithHttpInfo(int id, int tableId) async {
+    // Verify required params are set.
+    if (id == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: id');
+    }
+    if (tableId == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: tableId');
+    }
+
+    final path = r'/api/Reservations/{id}/RemoveTable'
+      .replaceAll('{' + 'id' + '}', id.toString());
+
     Object postBody = tableId;
 
-    // verify required params are set
-    if(id == null) {
-     throw new ApiException(400, "Missing required param: id");
-    }
-    if(tableId == null) {
-     throw new ApiException(400, "Missing required param: tableId");
-    }
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
 
-    // create path and map variables
-    String path = "/api/Reservations/{id}/RemoveTable".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+    final contentTypes = <String>['application/json', 'text/json', 'application/xml', 'text/xml', 'multipart/form-data', 'application/x-www-form-urlencoded'];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
       bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
         postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'DELETE',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'PlacesReservationsReservationDto') as PlacesReservationsReservationDto;
+      }
     } else {
-      return null;
     }
+
+    return await apiClient.invokeAPI(
+      path,
+      'DELETE',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
   }
-  /// 
+
+  /// Parameters:
   ///
-  /// 
-  Future<bool> reservationUpdateReservationState(int id, String state) async {
+  /// * [int] id (required):
+  ///
+  /// * [int] tableId (required):
+  Future<PlacesReservationsReservationDto> reservationRemoveTable(int id, int tableId) async {
+    final response = await reservationRemoveTableWithHttpInfo(id, tableId);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body != null && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'PlacesReservationsReservationDto',) as PlacesReservationsReservationDto;
+        }
+    return Future<PlacesReservationsReservationDto>.value(null);
+  }
+
+  /// Performs an HTTP 'POST /api/Reservations/{id}/UpdateState' operation and returns the [Response].
+  /// Parameters:
+  ///
+  /// * [int] id (required):
+  ///
+  /// * [String] state (required):
+  Future<Response> reservationUpdateReservationStateWithHttpInfo(int id, String state) async {
+    // Verify required params are set.
+    if (id == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: id');
+    }
+    if (state == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: state');
+    }
+
+    final path = r'/api/Reservations/{id}/UpdateState'
+      .replaceAll('{' + 'id' + '}', id.toString());
+
     Object postBody = state;
 
-    // verify required params are set
-    if(id == null) {
-     throw new ApiException(400, "Missing required param: id");
-    }
-    if(state == null) {
-     throw new ApiException(400, "Missing required param: state");
-    }
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
 
-    // create path and map variables
-    String path = "/api/Reservations/{id}/UpdateState".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+    final contentTypes = <String>['application/json', 'text/json', 'application/xml', 'text/xml', 'multipart/form-data', 'application/x-www-form-urlencoded'];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-
-    List<String> contentTypes = ["application/json","text/json","application/xml","text/xml","multipart/form-data","application/x-www-form-urlencoded"];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
       bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
         postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'POST',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'bool') as bool;
+      }
     } else {
-      return null;
     }
+
+    return await apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
+  }
+
+  /// Parameters:
+  ///
+  /// * [int] id (required):
+  ///
+  /// * [String] state (required):
+  Future<bool> reservationUpdateReservationState(int id, String state) async {
+    final response = await reservationUpdateReservationStateWithHttpInfo(id, state);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body != null && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'bool',) as bool;
+        }
+    return Future<bool>.value(null);
   }
 }

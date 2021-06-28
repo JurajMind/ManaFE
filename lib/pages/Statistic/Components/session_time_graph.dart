@@ -109,7 +109,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
           showingBarGroups.indexOf(response.spot.touchedBarGroup);
 
       setState(() {
-        if (response.touchInput is FlLongPressEnd) {
+        if (response.touchInput is dynamic) {
           touchedGroupIndex = -1;
           showingBarGroups = List.of(rawBarGroups);
         } else {
@@ -118,7 +118,8 @@ class SessionDayGraphState extends State<SessionDayGraph> {
             showingBarGroups[touchedGroupIndex] =
                 showingBarGroups[touchedGroupIndex].copyWith(
               barRods: showingBarGroups[touchedGroupIndex].barRods.map((rod) {
-                return rod.copyWith(color: AppColors.colors[3], y: rod.y + 1);
+                return rod
+                    .copyWith(colors: [AppColors.colors[3]], y: rod.y + 1);
               }).toList(),
             );
           }
@@ -175,10 +176,6 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                       show: true,
                       bottomTitles: SideTitles(
                           showTitles: true,
-                          textStyle: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
                           margin: 16,
                           getTitles: (double value) {
                             var intValue = value.toInt();
@@ -187,10 +184,6 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                           }),
                       leftTitles: SideTitles(
                         showTitles: true,
-                        textStyle: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
                         margin: 16,
                         reservedSize: 10.0,
                         getTitles: (value) {
@@ -247,10 +240,10 @@ class SessionDayGraphState extends State<SessionDayGraph> {
     return BarChartGroupData(x: x, barRods: [
       BarChartRodData(
         y: y,
-        color: AppColors.colors[2],
+        colors: [AppColors.colors[2]],
         width: width,
         backDrawRodData: BackgroundBarChartRodData(
-            show: true, y: max == 0 ? 20 : max + 0.0, color: Colors.black),
+            show: true, y: max == 0 ? 20 : max + 0.0, colors: [Colors.black]),
       ),
     ]);
   }

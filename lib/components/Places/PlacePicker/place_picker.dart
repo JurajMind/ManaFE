@@ -323,7 +323,7 @@ class PlacePickerState extends State<PlacePicker> {
       endpoint += "&location=${this.locationResult.latLng.latitude}," +
           "${this.locationResult.latLng.longitude}";
     }
-    http.get(endpoint).then((response) {
+    http.get(Uri.parse(endpoint)).then((response) {
       if (response.statusCode == 200) {
         Map<String, dynamic> data = jsonDecode(response.body);
         List<dynamic> predictions = data['predictions'];
@@ -368,7 +368,7 @@ class PlacePickerState extends State<PlacePicker> {
         "${App.baseUri}/api/Places/GoogleProxy/place/details/json?key=${widget.apiKey}" +
             "&placeid=$placeId";
 
-    http.get(endpoint).then((response) {
+    http.get(Uri.parse(endpoint)).then((response) {
       if (response.statusCode == 200) {
         Map<String, dynamic> location =
             jsonDecode(response.body)['result']['geometry']['location'];
@@ -447,9 +447,9 @@ class PlacePickerState extends State<PlacePicker> {
   /// Fetches and updates the nearby places to the provided lat,lng
   void getNearbyPlaces(LatLng latLng) {
     http
-        .get("https://maps.googleapis.com/maps/api/geocode/json?" +
+        .get(Uri.parse("https://maps.googleapis.com/maps/api/geocode/json?" +
             "key=${widget.apiKey}&" +
-            "latlng=${latLng.latitude},${latLng.longitude}")
+            "latlng=${latLng.latitude},${latLng.longitude}"))
         .then((response) {
       if (response.statusCode == 200) {
         this.nearbyPlaces.clear();

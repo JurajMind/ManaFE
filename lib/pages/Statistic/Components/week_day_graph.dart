@@ -62,7 +62,7 @@ class WeekDayGraphState extends State<WeekDayGraph> {
           showingBarGroups.indexOf(response?.spot?.touchedBarGroup);
 
       setState(() {
-        if (response.touchInput is FlLongPressEnd) {
+        if (response.touchInput is dynamic) {
           touchedGroupIndex = -1;
           showingBarGroups = List.of(rawBarGroups);
         } else {
@@ -71,7 +71,8 @@ class WeekDayGraphState extends State<WeekDayGraph> {
             showingBarGroups[touchedGroupIndex] =
                 showingBarGroups[touchedGroupIndex].copyWith(
               barRods: showingBarGroups[touchedGroupIndex].barRods.map((rod) {
-                return rod.copyWith(color: AppColors.colors[3], y: rod.y + 1);
+                return rod
+                    .copyWith(colors: [AppColors.colors[3]], y: rod.y + 1);
               }).toList(),
             );
           }
@@ -169,10 +170,6 @@ class WeekDayGraphState extends State<WeekDayGraph> {
                       show: true,
                       bottomTitles: SideTitles(
                           showTitles: true,
-                          textStyle: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
                           margin: 16,
                           getTitles: (double value) {
                             return AppTranslations.of(context)
@@ -180,10 +177,6 @@ class WeekDayGraphState extends State<WeekDayGraph> {
                           }),
                       leftTitles: SideTitles(
                         showTitles: true,
-                        textStyle: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
                         margin: 32,
                         reservedSize: 14,
                         getTitles: (value) {
@@ -240,10 +233,10 @@ class WeekDayGraphState extends State<WeekDayGraph> {
     return BarChartGroupData(x: x, barRods: [
       BarChartRodData(
         y: y,
-        color: AppColors.colors[1],
+        colors: [AppColors.colors[1]],
         width: width,
         backDrawRodData: BackgroundBarChartRodData(
-            show: true, y: max < 5 ? 5 : max + 0.0, color: Colors.black),
+            show: true, y: max < 5 ? 5 : max + 0.0, colors: [Colors.black]),
       ),
     ]);
   }

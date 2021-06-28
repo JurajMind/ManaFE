@@ -1,66 +1,96 @@
+//
+// AUTO-GENERATED FILE, DO NOT MODIFY!
+//
+// @dart=2.0
+
+// ignore_for_file: unused_element, unused_import
+// ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: lines_longer_than_80_chars
+
 part of openapi.api;
 
 class PlacesDevicePlaceDashboardDto {
-  
-  DeviceSimpleDto device = null;
-  
-  DynamicSmokeStatisticRawDto statistic = null;
-  
-  SmokeSessionMetaDataDto metaData = null;
-  
-  double tobaccoEstimate = null;
-  PlacesDevicePlaceDashboardDto();
+  /// Returns a new [PlacesDevicePlaceDashboardDto] instance.
+  PlacesDevicePlaceDashboardDto({
+    this.device,
+    this.statistic,
+    this.metaData,
+    this.tobaccoEstimate,
+  });
+
+  DeviceSimpleDto device;
+
+  DynamicSmokeStatisticRawDto statistic;
+
+  SmokeSessionMetaDataDto metaData;
+
+  double tobaccoEstimate;
 
   @override
-  String toString() {
-    return 'PlacesDevicePlaceDashboardDto[device=$device, statistic=$statistic, metaData=$metaData, tobaccoEstimate=$tobaccoEstimate, ]';
-  }
+  bool operator ==(Object other) => identical(this, other) || other is PlacesDevicePlaceDashboardDto &&
+     other.device == device &&
+     other.statistic == statistic &&
+     other.metaData == metaData &&
+     other.tobaccoEstimate == tobaccoEstimate;
 
-  PlacesDevicePlaceDashboardDto.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['Device'] == null) {
-      device = null;
-    } else {
-      device = new DeviceSimpleDto.fromJson(json['Device']);
-    }
-    if (json['Statistic'] == null) {
-      statistic = null;
-    } else {
-      statistic = new DynamicSmokeStatisticRawDto.fromJson(json['Statistic']);
-    }
-    if (json['MetaData'] == null) {
-      metaData = null;
-    } else {
-      metaData = new SmokeSessionMetaDataDto.fromJson(json['MetaData']);
-    }
-    if (json['TobaccoEstimate'] == null) {
-      tobaccoEstimate = null;
-    } else {
-          tobaccoEstimate = json['TobaccoEstimate'];
-    }
-  }
+  @override
+  int get hashCode =>
+    (device == null ? 0 : device.hashCode) +
+    (statistic == null ? 0 : statistic.hashCode) +
+    (metaData == null ? 0 : metaData.hashCode) +
+    (tobaccoEstimate == null ? 0 : tobaccoEstimate.hashCode);
+
+  @override
+  String toString() => 'PlacesDevicePlaceDashboardDto[device=$device, statistic=$statistic, metaData=$metaData, tobaccoEstimate=$tobaccoEstimate]';
 
   Map<String, dynamic> toJson() {
-    Map <String, dynamic> json = {};
-    if (device != null)
-      json['Device'] = device;
-    if (statistic != null)
-      json['Statistic'] = statistic;
-    if (metaData != null)
-      json['MetaData'] = metaData;
-    if (tobaccoEstimate != null)
-      json['TobaccoEstimate'] = tobaccoEstimate;
+    final json = <String, dynamic>{};
+    if (device != null) {
+      json[r'Device'] = device;
+    }
+    if (statistic != null) {
+      json[r'Statistic'] = statistic;
+    }
+    if (metaData != null) {
+      json[r'MetaData'] = metaData;
+    }
+    if (tobaccoEstimate != null) {
+      json[r'TobaccoEstimate'] = tobaccoEstimate;
+    }
     return json;
   }
 
-  static List<PlacesDevicePlaceDashboardDto> listFromJson(List<dynamic> json) {
-    return json == null ? new List<PlacesDevicePlaceDashboardDto>() : json.map((value) => new PlacesDevicePlaceDashboardDto.fromJson(value)).toList();
-  }
+  /// Returns a new [PlacesDevicePlaceDashboardDto] instance and imports its values from
+  /// [json] if it's non-null, null if [json] is null.
+  static PlacesDevicePlaceDashboardDto fromJson(Map<String, dynamic> json) => json == null
+    ? null
+    : PlacesDevicePlaceDashboardDto(
+        device: DeviceSimpleDto.fromJson(json[r'Device']),
+        statistic: DynamicSmokeStatisticRawDto.fromJson(json[r'Statistic']),
+        metaData: SmokeSessionMetaDataDto.fromJson(json[r'MetaData']),
+        tobaccoEstimate: json[r'TobaccoEstimate'],
+    );
+
+  static List<PlacesDevicePlaceDashboardDto> listFromJson(List<dynamic> json, {bool emptyIsNull, bool growable,}) =>
+    json == null || json.isEmpty
+      ? true == emptyIsNull ? null : <PlacesDevicePlaceDashboardDto>[]
+      : json.map((v) => PlacesDevicePlaceDashboardDto.fromJson(v)).toList(growable: true == growable);
 
   static Map<String, PlacesDevicePlaceDashboardDto> mapFromJson(Map<String, dynamic> json) {
-    var map = new Map<String, PlacesDevicePlaceDashboardDto>();
+    final map = <String, PlacesDevicePlaceDashboardDto>{};
     if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = new PlacesDevicePlaceDashboardDto.fromJson(value));
+      json.forEach((String key, dynamic v) => map[key] = PlacesDevicePlaceDashboardDto.fromJson(v));
+    }
+    return map;
+  }
+
+  // maps a json object with a list of PlacesDevicePlaceDashboardDto-objects as value to a dart map
+  static Map<String, List<PlacesDevicePlaceDashboardDto>> mapListFromJson(Map<String, dynamic> json, {bool emptyIsNull, bool growable,}) {
+    final map = <String, List<PlacesDevicePlaceDashboardDto>>{};
+    if (json != null && json.isNotEmpty) {
+      json.forEach((String key, dynamic v) {
+        map[key] = PlacesDevicePlaceDashboardDto.listFromJson(v, emptyIsNull: emptyIsNull, growable: growable);
+      });
     }
     return map;
   }

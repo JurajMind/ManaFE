@@ -1,427 +1,552 @@
+//
+// AUTO-GENERATED FILE, DO NOT MODIFY!
+//
+// @dart=2.0
+
+// ignore_for_file: unused_element, unused_import
+// ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: lines_longer_than_80_chars
+
 part of openapi.api;
 
 
-
 class DevicePresetApi {
-  final ApiClient apiClient;
-
   DevicePresetApi([ApiClient apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
-  /// 
+  final ApiClient apiClient;
+
+  /// Performs an HTTP 'DELETE /api/Device/Preset/{id}/Delete' operation and returns the [Response].
+  /// Parameters:
   ///
-  /// 
+  /// * [int] id (required):
+  Future<Response> devicePresetDeletePresetWithHttpInfo(int id) async {
+    // Verify required params are set.
+    if (id == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: id');
+    }
+
+    final path = r'/api/Device/Preset/{id}/Delete'
+      .replaceAll('{' + 'id' + '}', id.toString());
+
+    Object postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    final contentTypes = <String>[];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
+
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
+      bool hasFields = false;
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
+        postBody = mp;
+      }
+    } else {
+    }
+
+    return await apiClient.invokeAPI(
+      path,
+      'DELETE',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
+  }
+
+  /// Parameters:
+  ///
+  /// * [int] id (required):
   Future<Object> devicePresetDeletePreset(int id) async {
+    final response = await devicePresetDeletePresetWithHttpInfo(id);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body != null && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'Object',) as Object;
+        }
+    return Future<Object>.value(null);
+  }
+
+  /// Performs an HTTP 'GET /api/Device/Preset/{id}/GetPreset' operation and returns the [Response].
+  /// Parameters:
+  ///
+  /// * [int] id (required):
+  Future<Response> devicePresetGetPresetWithHttpInfo(int id) async {
+    // Verify required params are set.
+    if (id == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: id');
+    }
+
+    final path = r'/api/Device/Preset/{id}/GetPreset'
+      .replaceAll('{' + 'id' + '}', id.toString());
+
     Object postBody;
 
-    // verify required params are set
-    if(id == null) {
-     throw new ApiException(400, "Missing required param: id");
-    }
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
 
-    // create path and map variables
-    String path = "/api/Device/Preset/{id}/Delete".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+    final contentTypes = <String>[];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-
-    List<String> contentTypes = [];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
       bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
         postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'DELETE',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'Object') as Object;
+      }
     } else {
-      return null;
     }
+
+    return await apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
   }
-  /// 
+
+  /// Parameters:
   ///
-  /// 
+  /// * [int] id (required):
   Future<DevicePresetDto> devicePresetGetPreset(int id) async {
+    final response = await devicePresetGetPresetWithHttpInfo(id);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body != null && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'DevicePresetDto',) as DevicePresetDto;
+        }
+    return Future<DevicePresetDto>.value(null);
+  }
+
+  /// Performs an HTTP 'GET /api/Device/Preset/GetUserPresets' operation and returns the [Response].
+  Future<Response> devicePresetGetUserPresetsWithHttpInfo() async {
+    final path = r'/api/Device/Preset/GetUserPresets';
+
     Object postBody;
 
-    // verify required params are set
-    if(id == null) {
-     throw new ApiException(400, "Missing required param: id");
-    }
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
 
-    // create path and map variables
-    String path = "/api/Device/Preset/{id}/GetPreset".replaceAll("{format}","json").replaceAll("{" + "id" + "}", id.toString());
+    final contentTypes = <String>[];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-
-    List<String> contentTypes = [];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
       bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
         postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'GET',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'DevicePresetDto') as DevicePresetDto;
+      }
     } else {
-      return null;
     }
+
+    return await apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
   }
-  /// 
-  ///
-  /// 
+
   Future<List<DevicePresetDto>> devicePresetGetUserPresets() async {
+    final response = await devicePresetGetUserPresetsWithHttpInfo();
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body != null && response.statusCode != HttpStatus.noContent) {
+      return (await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'List<DevicePresetDto>') as List)
+        .cast<DevicePresetDto>()
+        .toList(growable: false);
+    }
+    return Future<List<DevicePresetDto>>.value(null);
+  }
+
+  /// Performs an HTTP 'POST /api/Device/Preset/SavePresetFromDevice/{deviceId}' operation and returns the [Response].
+  /// Parameters:
+  ///
+  /// * [String] deviceId (required):
+  ///
+  /// * [String] name (required):
+  ///
+  /// * [bool] addToPerson:
+  ///
+  /// * [bool] setDefault:
+  Future<Response> devicePresetSaveDevicePresetWithHttpInfo(String deviceId, String name, { bool addToPerson, bool setDefault }) async {
+    // Verify required params are set.
+    if (deviceId == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: deviceId');
+    }
+    if (name == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: name');
+    }
+
+    final path = r'/api/Device/Preset/SavePresetFromDevice/{deviceId}'
+      .replaceAll('{' + 'deviceId' + '}', deviceId.toString());
+
     Object postBody;
 
-    // verify required params are set
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
 
-    // create path and map variables
-    String path = "/api/Device/Preset/GetUserPresets".replaceAll("{format}","json");
+      queryParams.addAll(_convertParametersForCollectionFormat('', 'name', name));
+    if (addToPerson != null) {
+      queryParams.addAll(_convertParametersForCollectionFormat('', 'addToPerson', addToPerson));
+    }
+    if (setDefault != null) {
+      queryParams.addAll(_convertParametersForCollectionFormat('', 'setDefault', setDefault));
+    }
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
+    final contentTypes = <String>[];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
 
-    List<String> contentTypes = [];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
       bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
         postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'GET',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return (apiClient.deserialize(_decodeBodyBytes(response), 'List<DevicePresetDto>') as List).map((item) => item as DevicePresetDto).toList();
+      }
     } else {
-      return null;
     }
+
+    return await apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
   }
-  /// 
+
+  /// Parameters:
   ///
-  /// 
+  /// * [String] deviceId (required):
+  ///
+  /// * [String] name (required):
+  ///
+  /// * [bool] addToPerson:
+  ///
+  /// * [bool] setDefault:
   Future<DevicePresetDto> devicePresetSaveDevicePreset(String deviceId, String name, { bool addToPerson, bool setDefault }) async {
+    final response = await devicePresetSaveDevicePresetWithHttpInfo(deviceId, name,  addToPerson: addToPerson, setDefault: setDefault );
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body != null && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'DevicePresetDto',) as DevicePresetDto;
+        }
+    return Future<DevicePresetDto>.value(null);
+  }
+
+  /// Performs an HTTP 'POST /api/Device/Preset/{sessionCode}/SavePresetFromSession' operation and returns the [Response].
+  /// Parameters:
+  ///
+  /// * [String] sessionCode (required):
+  ///
+  /// * [String] name (required):
+  ///
+  /// * [bool] addToPerson:
+  ///
+  /// * [bool] setDefault:
+  Future<Response> devicePresetSaveSessionPresetWithHttpInfo(String sessionCode, String name, { bool addToPerson, bool setDefault }) async {
+    // Verify required params are set.
+    if (sessionCode == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: sessionCode');
+    }
+    if (name == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: name');
+    }
+
+    final path = r'/api/Device/Preset/{sessionCode}/SavePresetFromSession'
+      .replaceAll('{' + 'sessionCode' + '}', sessionCode.toString());
+
     Object postBody;
 
-    // verify required params are set
-    if(deviceId == null) {
-     throw new ApiException(400, "Missing required param: deviceId");
-    }
-    if(name == null) {
-     throw new ApiException(400, "Missing required param: name");
-    }
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
 
-    // create path and map variables
-    String path = "/api/Device/Preset/SavePresetFromDevice/{deviceId}".replaceAll("{format}","json").replaceAll("{" + "deviceId" + "}", deviceId.toString());
-
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-      queryParams.addAll(_convertParametersForCollectionFormat("", "name", name));
-    if(addToPerson != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat("", "addToPerson", addToPerson));
+      queryParams.addAll(_convertParametersForCollectionFormat('', 'name', name));
+    if (addToPerson != null) {
+      queryParams.addAll(_convertParametersForCollectionFormat('', 'addToPerson', addToPerson));
     }
-    if(setDefault != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat("", "setDefault", setDefault));
+    if (setDefault != null) {
+      queryParams.addAll(_convertParametersForCollectionFormat('', 'setDefault', setDefault));
     }
 
-    List<String> contentTypes = [];
+    final contentTypes = <String>[];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
 
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
       bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
         postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'POST',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'DevicePresetDto') as DevicePresetDto;
+      }
     } else {
-      return null;
     }
+
+    return await apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
   }
-  /// 
+
+  /// Parameters:
   ///
-  /// 
+  /// * [String] sessionCode (required):
+  ///
+  /// * [String] name (required):
+  ///
+  /// * [bool] addToPerson:
+  ///
+  /// * [bool] setDefault:
   Future<DevicePresetDto> devicePresetSaveSessionPreset(String sessionCode, String name, { bool addToPerson, bool setDefault }) async {
+    final response = await devicePresetSaveSessionPresetWithHttpInfo(sessionCode, name,  addToPerson: addToPerson, setDefault: setDefault );
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body != null && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'DevicePresetDto',) as DevicePresetDto;
+        }
+    return Future<DevicePresetDto>.value(null);
+  }
+
+  /// Performs an HTTP 'POST /api/Device/Preset/{presetId}/SetDefault' operation and returns the [Response].
+  /// Parameters:
+  ///
+  /// * [int] presetId (required):
+  Future<Response> devicePresetSetDefaultWithHttpInfo(int presetId) async {
+    // Verify required params are set.
+    if (presetId == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: presetId');
+    }
+
+    final path = r'/api/Device/Preset/{presetId}/SetDefault'
+      .replaceAll('{' + 'presetId' + '}', presetId.toString());
+
     Object postBody;
 
-    // verify required params are set
-    if(sessionCode == null) {
-     throw new ApiException(400, "Missing required param: sessionCode");
-    }
-    if(name == null) {
-     throw new ApiException(400, "Missing required param: name");
-    }
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
 
-    // create path and map variables
-    String path = "/api/Device/Preset/{sessionCode}/SavePresetFromSession".replaceAll("{format}","json").replaceAll("{" + "sessionCode" + "}", sessionCode.toString());
+    final contentTypes = <String>[];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-      queryParams.addAll(_convertParametersForCollectionFormat("", "name", name));
-    if(addToPerson != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat("", "addToPerson", addToPerson));
-    }
-    if(setDefault != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat("", "setDefault", setDefault));
-    }
-
-    List<String> contentTypes = [];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
       bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
         postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'POST',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'DevicePresetDto') as DevicePresetDto;
+      }
     } else {
-      return null;
+    }
+
+    return await apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
+  }
+
+  /// Parameters:
+  ///
+  /// * [int] presetId (required):
+  Future<void> devicePresetSetDefault(int presetId) async {
+    final response = await devicePresetSetDefaultWithHttpInfo(presetId);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
   }
-  /// 
+
+  /// Performs an HTTP 'POST /api/Device/Preset/UseDefault/{sessionId}' operation and returns the [Response].
+  /// Parameters:
   ///
-  /// 
-  Future devicePresetSetDefault(int presetId) async {
+  /// * [String] sessionId (required):
+  Future<Response> devicePresetUseDefaultWithHttpInfo(String sessionId) async {
+    // Verify required params are set.
+    if (sessionId == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: sessionId');
+    }
+
+    final path = r'/api/Device/Preset/UseDefault/{sessionId}'
+      .replaceAll('{' + 'sessionId' + '}', sessionId.toString());
+
     Object postBody;
 
-    // verify required params are set
-    if(presetId == null) {
-     throw new ApiException(400, "Missing required param: presetId");
-    }
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
 
-    // create path and map variables
-    String path = "/api/Device/Preset/{presetId}/SetDefault".replaceAll("{format}","json").replaceAll("{" + "presetId" + "}", presetId.toString());
+    final contentTypes = <String>[];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-
-    List<String> contentTypes = [];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
       bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
         postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'POST',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
+      }
     } else {
-      return;
+    }
+
+    return await apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
+  }
+
+  /// Parameters:
+  ///
+  /// * [String] sessionId (required):
+  Future<void> devicePresetUseDefault(String sessionId) async {
+    final response = await devicePresetUseDefaultWithHttpInfo(sessionId);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
   }
-  /// 
+
+  /// Performs an HTTP 'POST /api/Device/Preset/{presetId}/Use/{sessionId}' operation and returns the [Response].
+  /// Parameters:
   ///
-  /// 
-  Future devicePresetUseDefault(String sessionId) async {
+  /// * [String] sessionId (required):
+  ///
+  /// * [int] presetId (required):
+  Future<Response> devicePresetUsePresetWithHttpInfo(String sessionId, int presetId) async {
+    // Verify required params are set.
+    if (sessionId == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: sessionId');
+    }
+    if (presetId == null) {
+     throw ApiException(HttpStatus.badRequest, 'Missing required param: presetId');
+    }
+
+    final path = r'/api/Device/Preset/{presetId}/Use/{sessionId}'
+      .replaceAll('{' + 'sessionId' + '}', sessionId.toString())
+      .replaceAll('{' + 'presetId' + '}', presetId.toString());
+
     Object postBody;
 
-    // verify required params are set
-    if(sessionId == null) {
-     throw new ApiException(400, "Missing required param: sessionId");
-    }
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
 
-    // create path and map variables
-    String path = "/api/Device/Preset/UseDefault/{sessionId}".replaceAll("{format}","json").replaceAll("{" + "sessionId" + "}", sessionId.toString());
+    final contentTypes = <String>[];
+    final nullableContentType = contentTypes.isNotEmpty ? contentTypes[0] : null;
+    final authNames = <String>[];
 
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-
-    List<String> contentTypes = [];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
+    if (
+      nullableContentType != null &&
+      nullableContentType.toLowerCase().startsWith('multipart/form-data')
+    ) {
       bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
+      final mp = MultipartRequest(null, null);
+      if (hasFields) {
         postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'POST',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
+      }
     } else {
-      return;
     }
+
+    return await apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      nullableContentType,
+      authNames,
+    );
   }
-  /// 
+
+  /// Parameters:
   ///
-  /// 
-  Future devicePresetUsePreset(String sessionId, int presetId) async {
-    Object postBody;
-
-    // verify required params are set
-    if(sessionId == null) {
-     throw new ApiException(400, "Missing required param: sessionId");
-    }
-    if(presetId == null) {
-     throw new ApiException(400, "Missing required param: presetId");
-    }
-
-    // create path and map variables
-    String path = "/api/Device/Preset/{presetId}/Use/{sessionId}".replaceAll("{format}","json").replaceAll("{" + "sessionId" + "}", sessionId.toString()).replaceAll("{" + "presetId" + "}", presetId.toString());
-
-    // query params
-    List<QueryParam> queryParams = [];
-    Map<String, String> headerParams = {};
-    Map<String, String> formParams = {};
-
-    List<String> contentTypes = [];
-
-    String contentType = contentTypes.isNotEmpty ? contentTypes[0] : "application/json";
-    List<String> authNames = [];
-
-    if(contentType.startsWith("multipart/form-data")) {
-      bool hasFields = false;
-      MultipartRequest mp = new MultipartRequest(null, null);
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-    }
-
-    var response = await apiClient.invokeAPI(path,
-                                             'POST',
-                                             queryParams,
-                                             postBody,
-                                             headerParams,
-                                             formParams,
-                                             contentType,
-                                             authNames);
-
-    if(response.statusCode >= 400) {
-      throw new ApiException(response.statusCode, _decodeBodyBytes(response));
-    } else if(response.body != null) {
-    } else {
-      return;
+  /// * [String] sessionId (required):
+  ///
+  /// * [int] presetId (required):
+  Future<void> devicePresetUsePreset(String sessionId, int presetId) async {
+    final response = await devicePresetUsePresetWithHttpInfo(sessionId, presetId);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
   }
 }

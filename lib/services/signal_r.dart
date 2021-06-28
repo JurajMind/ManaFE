@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:app/app/app.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
-import 'package:flutter/material.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
@@ -25,7 +25,8 @@ class SignalR {
   Map<String, ServerCallParam> serversCall = Map<String, ServerCallParam>();
   bool connection = false;
   BehaviorSubject<ClientCall> clientCalls = new BehaviorSubject<ClientCall>();
-  BehaviorSubject<SignalStatus> connectionStatus = new BehaviorSubject<SignalStatus>.seeded(SignalStatus.none);
+  BehaviorSubject<SignalStatus> connectionStatus =
+      new BehaviorSubject<SignalStatus>.seeded(SignalStatus.none);
   factory SignalR() {
     return _singleton;
   }
@@ -46,7 +47,7 @@ class SignalR {
     connectionTimer.cancel();
     var abortUrl = url +
         '/abort?transport=webSockets&clientProtocol=${connectionInfo.ProtocolVersion}&connectionToken=${Uri.encodeComponent(connectionInfo.ConnectionToken)}&connectionData=$conectionData&tid=1';
-    var result = await http.get(abortUrl);
+    var result = await http.get(Uri.parse(abortUrl));
     logger.d('signal disconnect ${result.body}');
   }
 
@@ -69,8 +70,9 @@ class SignalR {
   }
 
   Future<NegotiateResponse> getNegotiation() async {
-    var negotiateUrl = url + '/negotiate?clientProtocol=1.5&connectionData=$conectionData';
-    var response = await http.get(negotiateUrl);
+    var negotiateUrl =
+        url + '/negotiate?clientProtocol=1.5&connectionData=$conectionData';
+    var response = await http.get(Uri.parse(negotiateUrl));
     connection = false;
     final responseJson = json.decode(response.body);
 
@@ -108,12 +110,19 @@ class SignalR {
   }
 
   Future checkConection() async {
-    if (lastPing.add(new Duration(seconds: connectionInfo.KeepAliveTimeout.toInt())).microsecondsSinceEpoch > DateTime.now().microsecondsSinceEpoch) {
+    if (lastPing
+            .add(new Duration(seconds: connectionInfo.KeepAliveTimeout.toInt()))
+            .microsecondsSinceEpoch >
+        DateTime.now().microsecondsSinceEpoch) {
       logger.d('not reconecting');
       return;
     }
 
-    if (lastPing.add(new Duration(seconds: connectionInfo.DisconnectTimeout.toInt())).microsecondsSinceEpoch > DateTime.now().microsecondsSinceEpoch) {
+    if (lastPing
+            .add(
+                new Duration(seconds: connectionInfo.DisconnectTimeout.toInt()))
+            .microsecondsSinceEpoch >
+        DateTime.now().microsecondsSinceEpoch) {
       logger.d('reconect');
       await restartConnection();
       var reconectCall = new ClientCall(Data: new List<ClientMethod>());
@@ -134,7 +143,7 @@ class SignalR {
         '/start?transport=webSockets&clientProtocol=1.5&connectionToken=${Uri.encodeComponent(negotiateResponse.ConnectionToken)}&connectionData=$conectionData';
     logger.d(startUrl);
 
-    var connect = await http.get(startUrl).catchError((onError) {
+    var connect = await http.get(Uri.parse(startUrl)).catchError((onError) {
       logger.d(onError);
     });
 
@@ -142,7 +151,8 @@ class SignalR {
   }
 
   Future restartConnection() async {
-    final conectionData = Uri.encodeComponent('[{"name":"smokesessionhub","messageId":$lastMsgId}]');
+    final conectionData = Uri.encodeComponent(
+        '[{"name":"smokesessionhub","messageId":$lastMsgId}]');
     var chanelUlr =
         "wss://$host/signalr/reconnect?transport=webSockets&clientProtocol=${connectionInfo.ProtocolVersion}&connectionToken=${Uri.encodeComponent(connectionInfo.ConnectionToken)}&connectionData=$conectionData";
 
@@ -162,7 +172,8 @@ class SignalR {
     if (serverCall.Init == 1) {
       connectionStatus.add(SignalStatus.running);
       var oneSec = Duration(seconds: connectionInfo.KeepAliveTimeout.toInt());
-      connectionTimer = new Timer.periodic(oneSec, (Timer t) => checkConection());
+      connectionTimer =
+          new Timer.periodic(oneSec, (Timer t) => checkConection());
     }
     if (serverCall.Data != null) clientCalls.add(serverCall);
   }

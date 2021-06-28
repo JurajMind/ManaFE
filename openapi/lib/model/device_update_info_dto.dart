@@ -1,48 +1,78 @@
+//
+// AUTO-GENERATED FILE, DO NOT MODIFY!
+//
+// @dart=2.0
+
+// ignore_for_file: unused_element, unused_import
+// ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: lines_longer_than_80_chars
+
 part of openapi.api;
 
 class DeviceUpdateInfoDto {
-  
-  DeviceUpdateDto stableVersion = null;
-  
-  DeviceUpdateDto betaVersion = null;
-  DeviceUpdateInfoDto();
+  /// Returns a new [DeviceUpdateInfoDto] instance.
+  DeviceUpdateInfoDto({
+    this.stableVersion,
+    this.betaVersion,
+  });
+
+  DeviceUpdateDto stableVersion;
+
+  DeviceUpdateDto betaVersion;
 
   @override
-  String toString() {
-    return 'DeviceUpdateInfoDto[stableVersion=$stableVersion, betaVersion=$betaVersion, ]';
-  }
+  bool operator ==(Object other) => identical(this, other) || other is DeviceUpdateInfoDto &&
+     other.stableVersion == stableVersion &&
+     other.betaVersion == betaVersion;
 
-  DeviceUpdateInfoDto.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['StableVersion'] == null) {
-      stableVersion = null;
-    } else {
-      stableVersion = new DeviceUpdateDto.fromJson(json['StableVersion']);
-    }
-    if (json['BetaVersion'] == null) {
-      betaVersion = null;
-    } else {
-      betaVersion = new DeviceUpdateDto.fromJson(json['BetaVersion']);
-    }
-  }
+  @override
+  int get hashCode =>
+    (stableVersion == null ? 0 : stableVersion.hashCode) +
+    (betaVersion == null ? 0 : betaVersion.hashCode);
+
+  @override
+  String toString() => 'DeviceUpdateInfoDto[stableVersion=$stableVersion, betaVersion=$betaVersion]';
 
   Map<String, dynamic> toJson() {
-    Map <String, dynamic> json = {};
-    if (stableVersion != null)
-      json['StableVersion'] = stableVersion;
-    if (betaVersion != null)
-      json['BetaVersion'] = betaVersion;
+    final json = <String, dynamic>{};
+    if (stableVersion != null) {
+      json[r'StableVersion'] = stableVersion;
+    }
+    if (betaVersion != null) {
+      json[r'BetaVersion'] = betaVersion;
+    }
     return json;
   }
 
-  static List<DeviceUpdateInfoDto> listFromJson(List<dynamic> json) {
-    return json == null ? new List<DeviceUpdateInfoDto>() : json.map((value) => new DeviceUpdateInfoDto.fromJson(value)).toList();
-  }
+  /// Returns a new [DeviceUpdateInfoDto] instance and imports its values from
+  /// [json] if it's non-null, null if [json] is null.
+  static DeviceUpdateInfoDto fromJson(Map<String, dynamic> json) => json == null
+    ? null
+    : DeviceUpdateInfoDto(
+        stableVersion: DeviceUpdateDto.fromJson(json[r'StableVersion']),
+        betaVersion: DeviceUpdateDto.fromJson(json[r'BetaVersion']),
+    );
+
+  static List<DeviceUpdateInfoDto> listFromJson(List<dynamic> json, {bool emptyIsNull, bool growable,}) =>
+    json == null || json.isEmpty
+      ? true == emptyIsNull ? null : <DeviceUpdateInfoDto>[]
+      : json.map((v) => DeviceUpdateInfoDto.fromJson(v)).toList(growable: true == growable);
 
   static Map<String, DeviceUpdateInfoDto> mapFromJson(Map<String, dynamic> json) {
-    var map = new Map<String, DeviceUpdateInfoDto>();
+    final map = <String, DeviceUpdateInfoDto>{};
     if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = new DeviceUpdateInfoDto.fromJson(value));
+      json.forEach((String key, dynamic v) => map[key] = DeviceUpdateInfoDto.fromJson(v));
+    }
+    return map;
+  }
+
+  // maps a json object with a list of DeviceUpdateInfoDto-objects as value to a dart map
+  static Map<String, List<DeviceUpdateInfoDto>> mapListFromJson(Map<String, dynamic> json, {bool emptyIsNull, bool growable,}) {
+    final map = <String, List<DeviceUpdateInfoDto>>{};
+    if (json != null && json.isNotEmpty) {
+      json.forEach((String key, dynamic v) {
+        map[key] = DeviceUpdateInfoDto.listFromJson(v, emptyIsNull: emptyIsNull, growable: growable);
+      });
     }
     return map;
   }

@@ -82,11 +82,11 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
 
       touchedIndex = -1;
       if (details.touchedSection != null) {
-        touchedIndex = showingSections.indexOf(details.touchedSection);
+        //  touchedIndex = showingSections.indexOf(details.touchedSection);
       }
 
       setState(() {
-        if (details.touchInput is FlLongPressEnd) {
+        if (details.touchInput is dynamic) {
           touchedIndex = -1;
           showingSections = List.of(pieChartRawSections);
         } else {

@@ -1,0 +1,61 @@
+//
+// AUTO-GENERATED FILE, DO NOT MODIFY!
+//
+// @dart=2.0
+
+// ignore_for_file: unused_element, unused_import
+// ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: lines_longer_than_80_chars
+
+import 'package:openapi/api.dart';
+import 'package:test/test.dart';
+
+// tests for DynamicSmokeStatisticRawDto
+void main() {
+  final instance = DynamicSmokeStatisticRawDto();
+
+  group('test DynamicSmokeStatisticRawDto', () {
+    // int pufCount
+    test('to test the property `pufCount`', () async {
+      // TODO
+    });
+
+    // int lastPuf
+    test('to test the property `lastPuf`', () async {
+      // TODO
+    });
+
+    // int lastPufTime
+    test('to test the property `lastPufTime`', () async {
+      // TODO
+    });
+
+    // int smokeDuration
+    test('to test the property `smokeDuration`', () async {
+      // TODO
+    });
+
+    // int longestPuf
+    test('to test the property `longestPuf`', () async {
+      // TODO
+    });
+
+    // int start
+    test('to test the property `start`', () async {
+      // TODO
+    });
+
+    // int duration
+    test('to test the property `duration`', () async {
+      // TODO
+    });
+
+    // int longestPufMilis
+    test('to test the property `longestPufMilis`', () async {
+      // TODO
+    });
+
+
+  });
+
+}

@@ -123,11 +123,6 @@ class SmokeProgressGraphState extends State<SmokeProgressGraph> {
                         bottomTitles: SideTitles(
                           showTitles: true,
                           reservedSize: 22,
-                          textStyle: TextStyle(
-                            color: const Color(0xff72719b),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
                           margin: 10,
                           getTitles: (value) {
                             var cValue = inList.length < 5 ? 3 : 6;
@@ -140,11 +135,6 @@ class SmokeProgressGraphState extends State<SmokeProgressGraph> {
                         ),
                         leftTitles: SideTitles(
                           showTitles: true,
-                          textStyle: TextStyle(
-                            color: Color(0xff75729e),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
                           getTitles: (value) {
                             if ((value % 3) == 0) {
                               return value.toStringAsFixed(0);

@@ -49,7 +49,7 @@ class _UploadPicturePageState extends State<UploadPicturePage> {
                         child: _image == null
                             ? Center(child: Text('No image selected.'))
                             : Container(
-                               height: 280,
+                                height: 280,
                                 child: Image.file(
                                   _image,
                                   fit: BoxFit.fitHeight,
@@ -74,11 +74,11 @@ class _UploadPicturePageState extends State<UploadPicturePage> {
                         child: IconButton(
                           icon: Icon(Icons.photo_library),
                           onPressed: () async {
-                            var image = await ImagePicker.pickImage(
-                                source: ImageSource.gallery);
+                            var image = await ImagePicker()
+                                .getImage(source: ImageSource.gallery);
 
                             setState(() {
-                              _image = image;
+                              _image = File(image.path);
                             });
                           },
                         ),
@@ -95,13 +95,13 @@ class _UploadPicturePageState extends State<UploadPicturePage> {
                         child: IconButton(
                           icon: Icon(Icons.camera_enhance),
                           onPressed: () async {
-                            var image = await ImagePicker.pickImage(
+                            var image = await ImagePicker().getImage(
                                 maxHeight: 1600,
                                 imageQuality: 50,
                                 source: ImageSource.camera);
 
                             setState(() {
-                              _image = image;
+                              _image = File(image.path);
                             });
                           },
                         ),

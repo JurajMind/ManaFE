@@ -51,11 +51,11 @@ class _TestSearchState extends State<TestSearch> {
                   child: IconButton(
                     icon: Icon(Icons.photo_library),
                     onPressed: () async {
-                      var image = await ImagePicker.pickImage(
-                          source: ImageSource.gallery);
+                      var image = await ImagePicker()
+                          .getImage(source: ImageSource.gallery);
 
                       setState(() {
-                        _image = image;
+                        _image = File(image.path);
                       });
                     },
                   )),
@@ -64,11 +64,11 @@ class _TestSearchState extends State<TestSearch> {
                   child: IconButton(
                     icon: Icon(Icons.camera_enhance),
                     onPressed: () async {
-                      var image = await ImagePicker.pickImage(
-                          source: ImageSource.camera);
+                      var image = await ImagePicker()
+                          .getImage(source: ImageSource.camera);
 
                       setState(() {
-                        _image = image;
+                        _image = File(image.path);
                       });
                     },
                   ))

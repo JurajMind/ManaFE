@@ -1,66 +1,96 @@
+//
+// AUTO-GENERATED FILE, DO NOT MODIFY!
+//
+// @dart=2.0
+
+// ignore_for_file: unused_element, unused_import
+// ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: lines_longer_than_80_chars
+
 part of openapi.api;
 
 class BrandGroupDto {
-  
-  String id = null;
-  
-  String picture = null;
-  
-  String name = null;
-  
-  int itemCount = null;
-  BrandGroupDto();
+  /// Returns a new [BrandGroupDto] instance.
+  BrandGroupDto({
+    this.id,
+    this.picture,
+    this.name,
+    this.itemCount,
+  });
+
+  String id;
+
+  String picture;
+
+  String name;
+
+  int itemCount;
 
   @override
-  String toString() {
-    return 'BrandGroupDto[id=$id, picture=$picture, name=$name, itemCount=$itemCount, ]';
-  }
+  bool operator ==(Object other) => identical(this, other) || other is BrandGroupDto &&
+     other.id == id &&
+     other.picture == picture &&
+     other.name == name &&
+     other.itemCount == itemCount;
 
-  BrandGroupDto.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['Id'] == null) {
-      id = null;
-    } else {
-          id = json['Id'];
-    }
-    if (json['Picture'] == null) {
-      picture = null;
-    } else {
-          picture = json['Picture'];
-    }
-    if (json['Name'] == null) {
-      name = null;
-    } else {
-          name = json['Name'];
-    }
-    if (json['ItemCount'] == null) {
-      itemCount = null;
-    } else {
-          itemCount = json['ItemCount'];
-    }
-  }
+  @override
+  int get hashCode =>
+    (id == null ? 0 : id.hashCode) +
+    (picture == null ? 0 : picture.hashCode) +
+    (name == null ? 0 : name.hashCode) +
+    (itemCount == null ? 0 : itemCount.hashCode);
+
+  @override
+  String toString() => 'BrandGroupDto[id=$id, picture=$picture, name=$name, itemCount=$itemCount]';
 
   Map<String, dynamic> toJson() {
-    Map <String, dynamic> json = {};
-    if (id != null)
-      json['Id'] = id;
-    if (picture != null)
-      json['Picture'] = picture;
-    if (name != null)
-      json['Name'] = name;
-    if (itemCount != null)
-      json['ItemCount'] = itemCount;
+    final json = <String, dynamic>{};
+    if (id != null) {
+      json[r'Id'] = id;
+    }
+    if (picture != null) {
+      json[r'Picture'] = picture;
+    }
+    if (name != null) {
+      json[r'Name'] = name;
+    }
+    if (itemCount != null) {
+      json[r'ItemCount'] = itemCount;
+    }
     return json;
   }
 
-  static List<BrandGroupDto> listFromJson(List<dynamic> json) {
-    return json == null ? new List<BrandGroupDto>() : json.map((value) => new BrandGroupDto.fromJson(value)).toList();
-  }
+  /// Returns a new [BrandGroupDto] instance and imports its values from
+  /// [json] if it's non-null, null if [json] is null.
+  static BrandGroupDto fromJson(Map<String, dynamic> json) => json == null
+    ? null
+    : BrandGroupDto(
+        id: json[r'Id'],
+        picture: json[r'Picture'],
+        name: json[r'Name'],
+        itemCount: json[r'ItemCount'],
+    );
+
+  static List<BrandGroupDto> listFromJson(List<dynamic> json, {bool emptyIsNull, bool growable,}) =>
+    json == null || json.isEmpty
+      ? true == emptyIsNull ? null : <BrandGroupDto>[]
+      : json.map((v) => BrandGroupDto.fromJson(v)).toList(growable: true == growable);
 
   static Map<String, BrandGroupDto> mapFromJson(Map<String, dynamic> json) {
-    var map = new Map<String, BrandGroupDto>();
+    final map = <String, BrandGroupDto>{};
     if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = new BrandGroupDto.fromJson(value));
+      json.forEach((String key, dynamic v) => map[key] = BrandGroupDto.fromJson(v));
+    }
+    return map;
+  }
+
+  // maps a json object with a list of BrandGroupDto-objects as value to a dart map
+  static Map<String, List<BrandGroupDto>> mapListFromJson(Map<String, dynamic> json, {bool emptyIsNull, bool growable,}) {
+    final map = <String, List<BrandGroupDto>>{};
+    if (json != null && json.isNotEmpty) {
+      json.forEach((String key, dynamic v) {
+        map[key] = BrandGroupDto.listFromJson(v, emptyIsNull: emptyIsNull, growable: growable);
+      });
     }
     return map;
   }
