@@ -73,4 +73,3 @@ jobs:
           releaseNotesOption: 'input'
           releaseNotesInput: '$(BuildMessage)'
           destinationType: 'groups'
-          distributionGroupId: '$(DistributionGroup)'    
