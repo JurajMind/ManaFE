@@ -54,8 +54,8 @@ class ApiClient {
       return error;
     }));
 
-    _dio.interceptors
-        .add(InterceptorsWrapper(onRequest: (RequestOptions options, _) async {
+    _dio.interceptors.add(
+        InterceptorsWrapper(onRequest: (RequestOptions options, handler) async {
       var token = await _authorize.getToken();
       options.headers['Authorization'] = 'Bearer $token';
       options.headers["Accept"] = "application/json";

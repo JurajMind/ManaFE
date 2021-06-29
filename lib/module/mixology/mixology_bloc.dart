@@ -116,7 +116,7 @@ class MixologyBloc {
     }
 
     // add fake data
-    var fakeMixes = this.mixCreatorMixes[creatorName].value ??
+    var fakeMixes = this.mixCreatorMixes[creatorName].valueOrNull ??
         new List<TobaccoMixSimpleDto>();
     fakeMixes.addAll(Iterable.generate(_mixPerPage, (_) => null));
     this.mixCreatorMixes[creatorName].add(fakeMixes);
