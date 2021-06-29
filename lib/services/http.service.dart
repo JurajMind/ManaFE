@@ -11,11 +11,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 import 'package:openapi/api.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+
+import 'auth_helpers/auth_token_inceptor.dart';
 
 class ApiClient {
   final Dio _dio;
-  final Authorize _authorize = new Authorize();
 
   final String baseUrl;
 
@@ -23,6 +23,7 @@ class ApiClient {
       : baseUrl = url,
         _dio = new Dio(new BaseOptions(
           baseUrl: url,
+          connectTimeout: 20000,
         ));
 
   Future<dynamic> _getJson(Uri uri) async {
@@ -33,80 +34,7 @@ class ApiClient {
   }
 
   void init() {
-    _dio.interceptors
-        .add(InterceptorsWrapper(onError: (DioError error, _) async {
-      if (error.response?.statusCode == 401 ||
-          error.response?.statusCode == 403) {
-        var token = await _authorize.getToken();
-        var tokenHeader = 'Bearer $token';
-        RequestOptions options = error?.response?.requestOptions;
-        // If the token has been updated, repeat directly.
-        if (token != null || options == null)
-          return await _handleAuthError(tokenHeader, options, token);
-        else {
-          print('Null token');
-        }
-      } else {
-        print(error.message);
-        print(error.response);
-        print(error?.response?.requestOptions?.path);
-      }
-      return error;
-    }));
-
-    _dio.interceptors.add(
-        InterceptorsWrapper(onRequest: (RequestOptions options, handler) async {
-      var token = await _authorize.getToken();
-      options.headers['Authorization'] = 'Bearer $token';
-      options.headers["Accept"] = "application/json";
-      options.headers['content-type'] = 'application/json';
-      print(options.uri.toString());
-      return options;
-    }));
-
-    _dio.interceptors.add(PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseBody: true,
-        responseHeader: false,
-        error: false,
-        compact: true,
-        maxWidth: 90));
-  }
-
-  _handleAuthError(
-      String tokenHeader, RequestOptions options, String token) async {
-    log('error handling');
-    if (tokenHeader != options.headers["Authorization"]) {
-      options.headers["Authorization"] = tokenHeader;
-      //repeat
-      return _dio.request(
-        options.path,
-        options: Options(
-            contentType: options.contentType,
-            extra: options.extra,
-            followRedirects: options.followRedirects,
-            headers: options.headers),
-      );
-    }
-    _dio.lock();
-    _dio.interceptors.responseLock.lock();
-    _dio.interceptors.errorLock.lock();
-    await _authorize.refreshToken().then((d) {
-      options.headers["Authorization"] = 'Bearer $d';
-      _dio.unlock();
-      _dio.interceptors.responseLock.unlock();
-      _dio.interceptors.errorLock.unlock();
-
-      return _dio.request(
-        options.path,
-        options: Options(
-            contentType: options.contentType,
-            extra: options.extra,
-            followRedirects: options.followRedirects,
-            headers: options.headers),
-      );
-    });
+    _dio.interceptors.add(AuthTokenInceptor(_dio));
   }
 
   Future<List<TobaccoMixSimpleDto>> fetchtobacoMix(

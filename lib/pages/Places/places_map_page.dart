@@ -91,8 +91,8 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
         setView(newPosition);
       });
 
-      setMarkers(bloc.places.value);
-      nearbyPlaces.add(bloc.places.value);
+      setMarkers(bloc.places.valueOrNull);
+      nearbyPlaces.add(bloc.places.valueOrNull);
       bloc.places.listen((onData) {
         setMarkers(onData);
         nearbyPlaces.add(onData);

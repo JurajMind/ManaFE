@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 void main() {
   new App(
     environment: 'local',
-    baseUri: 'app.manapipes.com',
+    baseUri: 'smarthookah.azurewebsites.net',
     clientId: 'test',
     googleApiKey: '***REMOVED***',
   ).run(runApp);
