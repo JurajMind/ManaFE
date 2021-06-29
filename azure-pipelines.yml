@@ -89,7 +89,7 @@ jobs:
         inputs:
           serverEndpoint: 'AppCenter Service Connection'
           appSlug: '$(ProjectSlug)'
-          appFile: '$(BuildDirectoryIos)'
+          appFile: '$(build.artifactStagingDirectory)/$(ipaApkName)/ios/build/$(ipaApkName).ipa'
           releaseNotesOption: 'input'
           releaseNotesInput: '$(BuildMessage)'
           destinationType: 'groups'
