@@ -7,7 +7,7 @@ variables:
 
   BuildNumber: ''
   BuildMessage: '$(Build.SourceVersionMessage)'
-  BuildDirectoryIos: '$(ProjectDirectory)/build/ios/build/app.ipa'
+  BuildDirectoryIos: '$(ProjectDirectory)/build/ios/iphoneos/app.ipa'
   BuildDirectoryAndroid: '$(ProjectDirectory)/build/app/outputs/apk/release/app-release.apk'
   YOUR_TOKEN: '414d9c39086268a3a50dc01138f1c87da253e152'
   ipaApkName: app
