@@ -61,8 +61,11 @@ jobs:
       - task: CmdLine@2
         displayName: Run install
         inputs:
-          script: 'flutter pub get'
-
+          script: |
+           'flutter pub get'
+           'cd ios'
+           'pod repo update'
+           'cd ..'
       - task: FlutterBuild@0
         displayName: 'Flutter Build ios'
         inputs:
