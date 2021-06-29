@@ -8,7 +8,7 @@ variables:
   BuildNumber: ''
   BuildMessage: '$(Build.SourceVersionMessage)'
   BuildDirectory: '$(ProjectDirectory)/build/app/outputs/apk/release/app-release.apk'
-  YOUR_TOKEN: 'f7290900e1234597361827e13935a37e4720dada'
+  YOUR_TOKEN: '414d9c39086268a3a50dc01138f1c87da253e152'
 jobs:
   - job: Build
     pool:
@@ -22,7 +22,7 @@ jobs:
         
 
       - script: sudo npm install -g appcenter-cli
-      - script: appcenter login --token {YOUR_TOKEN}
+      - script: appcenter login --token '$(YOUR_TOKEN)'
 
       - task: PowerShell@2
         displayName: Setup environment
@@ -82,3 +82,4 @@ jobs:
           releaseNotesOption: 'input'
           releaseNotesInput: '$(BuildMessage)'
           destinationType: 'groups'
+
