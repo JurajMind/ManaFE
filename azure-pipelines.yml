@@ -65,6 +65,8 @@ jobs:
            flutter pub get
            cd ios
            pod repo update
+           rm Podfile.lock
+           rm -rf Pods
            cd ..
       - task: FlutterBuild@0
         displayName: 'Flutter Build ios'
