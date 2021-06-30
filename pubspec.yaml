@@ -74,8 +74,6 @@ dependencies:
   pretty_dio_logger: ^1.0.4
   apple_sign_in: ^0.1.0
   universal_html: ^2.0.8
-  #webview_flutter: ^0.3.15+1
-  #easy_google_maps: ^1.0.0+2
   intro_slider:
     path: ./modules/flutter-intro-slider
   flare_flutter: ^2.0.1

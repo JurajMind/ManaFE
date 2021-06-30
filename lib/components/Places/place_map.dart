@@ -31,22 +31,27 @@ class PlaceMap extends StatelessWidget {
     return StreamBuilder<Position>(
         stream: location,
         builder: (context, snapshot) {
-          var distance = PlaceHelpers.calculateDistanceFromAddress(place.address, snapshot.data);
+          var distance = PlaceHelpers.calculateDistanceFromAddress(
+              place.address, snapshot.data);
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               new InkWell(
                 onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        PlacesMapPage(position: Position(latitude: double.parse(place.address.lat), longitude: double.parse(place.address.lng))))),
+                    builder: (context) => PlacesMapPage(
+                        position: Position(
+                            latitude: double.parse(place.address.lat),
+                            longitude: double.parse(place.address.lng))))),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: MPlatform.isWeb
                       ? Image.network(mapUrl)
                       : new CachedNetworkImage(
                           imageUrl: mapUrl,
-                          placeholder: (context, url) => new CircularProgressIndicator(),
-                          errorWidget: (context, url, error) => new Icon(Icons.error),
+                          placeholder: (context, url) =>
+                              new CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              new Icon(Icons.error),
                         ),
                 ),
               ),
@@ -59,7 +64,11 @@ class PlaceMap extends StatelessWidget {
                       FontAwesomeIcons.walking,
                       color: Colors.black,
                     ),
-                    DistanceWidget(distance, textStyle: Theme.of(context).textTheme.headline5.apply(color: Colors.black))
+                    DistanceWidget(distance,
+                        textStyle: Theme.of(context)
+                            .textTheme
+                            .headline5
+                            .apply(color: Colors.black))
                   ],
                 ),
               ),
@@ -70,9 +79,12 @@ class PlaceMap extends StatelessWidget {
 
   Uri mapUri() {
     var staticMapProvider = new StaticMapProvider(App.googleApiKeys);
-    var mapUri = staticMapProvider.getStaticUriWithMarkersAndZoom(
-        [new Marker(place.id.toString(), place.name, double.parse(place.address.lat), double.parse(place.address.lng))],
-        center: new Location(double.parse(place.address.lat), double.parse(place.address.lng)),
+    var mapUri = staticMapProvider.getStaticUriWithMarkersAndZoom([
+      new Marker(place.id.toString(), place.name,
+          double.parse(place.address.lat), double.parse(place.address.lng))
+    ],
+        center: new Location(
+            double.parse(place.address.lat), double.parse(place.address.lng)),
         zoomLevel: 13,
         width: 450,
         height: 350,

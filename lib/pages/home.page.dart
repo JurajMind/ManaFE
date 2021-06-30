@@ -107,31 +107,47 @@ class _HomePageState extends State<HomePage> with RouteAware {
     WidgetsBinding.instance
         .scheduleFrameCallback((_) => firstDeepJump(context));
 
-    //final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
     //if (!MPlatform.isWeb) _firebaseMessaging.requestNotificationPermissions();
     try {
-      /*_firebaseMessaging.getToken().then((token) async {
+      messaging.getToken().then((token) async {
         await App.http.updateNotificationToken(token);
-      }); */
+      });
     } catch (e) {}
-    /*firebaseMessaging.configure(onLaunch: (_) {
-      print('notification');
-    }, onMessage: (msg) {
-      print('MSG $msg');
-      var title = msg['notification']['title'];
-      var body = msg['notification']['body'];
-      Flushbar(
-        title: title,
-        message: body,
-        icon: Icon(
-          Icons.info_outline,
-          size: 28.0,
-          color: AppColors.colors[2],
-        ),
-        duration: Duration(seconds: 10),
-        leftBarIndicatorColor: AppColors.colors[2],
-      )..show(context);
-    });*/
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
+
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+        var title = message.notification.title;
+        var body = message.notification.body;
+        Flushbar(
+          title: title,
+          message: body,
+          icon: Icon(
+            Icons.info_outline,
+            size: 28.0,
+            color: AppColors.colors[2],
+          ),
+          duration: Duration(seconds: 10),
+          leftBarIndicatorColor: AppColors.colors[2],
+        )..show(context);
+      }
+    });
+
     tabs = new List<Widget>(5);
     tabFocusNodes = new List<FocusScopeNode>.generate(
       5,

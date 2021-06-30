@@ -6,6 +6,7 @@ import 'package:app/pages/Start/start.page.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:app/theme/theme_widget.dart';
 import 'package:app/utils/translations/app_translations_delegate.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -33,6 +34,7 @@ class _AppWidgetState extends State<AppWidget> {
   var globalNavKey = GlobalKey<NavigatorState>();
   AppTranslationsDelegate _newLocaleDelegate;
   Uri deeplink;
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   @override
   void initState() {
@@ -90,7 +92,14 @@ class _AppWidgetState extends State<AppWidget> {
               ],
               supportedLocales: App.supportedLocales(),
               title: 'Manapipes',
-              home: StartPage(),
+              home: FutureBuilder<FirebaseApp>(
+                  future: _initialization,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return StartPage();
+                    }
+                    return Container();
+                  }),
               // onGenerateRoute: App.router.generator,
               theme: MTheme.buildDarkTheme(theme),
             );

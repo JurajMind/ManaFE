@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:app/app/app.dart';
-import 'package:app/services/position/m_position.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
@@ -9,8 +8,10 @@ import 'package:rxdart/rxdart.dart';
 import 'dart:convert';
 
 class PlacesBloc {
-  bool _permission = false;
+  bool serviceEnabled;
+  LocationPermission permission;
   String error;
+
   BehaviorSubject<List<PlaceSimpleDto>> places =
       new BehaviorSubject<List<PlaceSimpleDto>>();
   BehaviorSubject<bool> loading = new BehaviorSubject<bool>.seeded(false);
@@ -31,21 +32,41 @@ class PlacesBloc {
   }
 
   Future loadPlaces() async {
-    var geolocator = MPosition();
-    // if (geolocationStatus == GeolocationStatus.denied) return;
-    geolocator
-        .getLastKnownPosition(desiredAccuracy: LocationAccuracy.low)
-        .then((value) async {
-      if (value != null) {
-        location.add(value);
-        await _loadPlaces();
-      }
-    });
-    //loadPlacesFromCache();
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return;
+    }
 
-    posSub = geolocator
-        .getPositionStream(LocationOptions(accuracy: LocationAccuracy.medium))
-        .listen((onData) {
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.deniedForever) {
+        // Permissions are denied forever, handle appropriately.
+        return;
+      }
+
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return;
+      }
+    }
+
+    var position = await Geolocator.getLastKnownPosition();
+    if (position == null) {
+      position = await Geolocator.getCurrentPosition();
+    }
+    location.add(position);
+    await _loadPlaces();
+
+    posSub = Geolocator.getPositionStream().listen((onData) {
       print(onData);
       this.location.add(onData);
     });
@@ -81,13 +102,6 @@ class PlacesBloc {
       print('error');
       print(e);
     }
-  }
-
-  Future<bool> _getPermissionStatus() async {
-    final res = false; //await _location.hasPermission();
-
-    localizationnPermision.add(res);
-    return res;
   }
 
   replacePlaces(List<PlaceSimpleDto> value) {
