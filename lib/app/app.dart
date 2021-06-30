@@ -5,10 +5,13 @@ import 'package:app/module/cached.bloc.dart';
 import 'package:app/routes/app.routes.dart';
 import 'package:app/routes/auth.routes.dart';
 import 'package:app/services/http.service.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(new AppWidget());
 }
 
@@ -65,7 +68,8 @@ class App {
   }
 
   // App run.
-  void run(runApp) {
+  Future<void> run(runApp) async {
+    await Firebase.initializeApp();
     runApp(new AppWidget());
   }
 

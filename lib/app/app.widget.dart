@@ -34,7 +34,6 @@ class _AppWidgetState extends State<AppWidget> {
   var globalNavKey = GlobalKey<NavigatorState>();
   AppTranslationsDelegate _newLocaleDelegate;
   Uri deeplink;
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   @override
   void initState() {
@@ -92,14 +91,7 @@ class _AppWidgetState extends State<AppWidget> {
               ],
               supportedLocales: App.supportedLocales(),
               title: 'Manapipes',
-              home: FutureBuilder<FirebaseApp>(
-                  future: _initialization,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      return StartPage();
-                    }
-                    return Container();
-                  }),
+              home: StartPage(),
               // onGenerateRoute: App.router.generator,
               theme: MTheme.buildDarkTheme(theme),
             );

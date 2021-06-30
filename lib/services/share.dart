@@ -28,6 +28,12 @@ class ShareService {
         true, link.toString(), "${gear.name}", "Someone shered you a gear");
   }
 
+  static Future<Uri> tobaccoShareLink(PipeAccesorySimpleDto gear) async {
+    var link = Uri.parse(_appUrl + "/tobacco/${gear.id}");
+    return await createDynamicLink(
+        true, link.toString(), "${gear.name}", "Someone shered you a tobacco");
+  }
+
   static Future<Uri> sessionShareLink(SmokeSessionSimpleDto session) async {
     var link = Uri.parse(_appUrl + "/session/${session.id}");
     return await createDynamicLink(true, link.toString(),

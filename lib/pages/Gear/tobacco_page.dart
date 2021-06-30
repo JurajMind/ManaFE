@@ -71,8 +71,8 @@ class _TobaccoPageState extends State<TobaccoPage> {
                   IconButton(
                       icon: Icon(Icons.share),
                       onPressed: () async {
-                        var url =
-                            await ShareService.gearShareLink(this.pipeAccesory);
+                        var url = await ShareService.tobaccoShareLink(
+                            this.pipeAccesory);
                         Share.share(url.toString());
                       }),
                 ],
