@@ -1,4 +1,5 @@
 import 'package:app/app/app.dart';
+import 'package:app/app/app.widget.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/services/authorization.dart';
@@ -30,7 +31,8 @@ class _TestPageState extends State<TestPage> {
               initialData: null,
               builder: (BuildContext context, snapshot) {
                 return Container(
-                  child: Text(snapshot.data?.latitude?.toString() ?? 'NO LOCATION'),
+                  child: Text(
+                      snapshot.data?.latitude?.toString() ?? 'NO LOCATION'),
                 );
               },
             ),
@@ -110,7 +112,9 @@ class _TestPageState extends State<TestPage> {
                 var auth = new Authorize();
                 auth.messToken();
 
-                var request = App.http.getPersonInitData().then((v) => debugPrint('refreshed'));
+                var request = App.http
+                    .getPersonInitData()
+                    .then((v) => debugPrint('refreshed'));
               },
             ),
             OutlineButton.icon(
@@ -148,10 +152,23 @@ class _TestPageState extends State<TestPage> {
                 appBloc.callback(1, TestPage());
               },
             ),
+            OutlineButton.icon(
+              borderSide: BorderSide(color: Colors.white),
+              icon: Icon(
+                Icons.restart_alt,
+                color: Colors.blue,
+              ),
+              label: Text('Restart app'),
+              onPressed: () async {
+                AppWidget.restartApp(context);
+              },
+            ),
             Hero(
               tag: "DemoTag",
               child: IconButton(
-                  icon: Icon(Icons.add, size: 70), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Placeholder()))),
+                  icon: Icon(Icons.add, size: 70),
+                  onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => Placeholder()))),
             ),
           ],
         ),

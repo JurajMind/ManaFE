@@ -85,7 +85,7 @@ class Authorize {
     await _storage.remove('refreshToken');
     await _storage.remove('userName');
     await _storage.remove('password');
-    navigatorKey.currentState.pushReplacementNamed('auth/home');
+    //navigatorKey.currentState.pushReplacementNamed('auth/home');
     _token = null;
   }
 
@@ -170,8 +170,7 @@ class Authorize {
       if (token.refreshToken != null)
         await _storage.setString('refreshToken', token.refreshToken);
 
-      await _storage.setString('userName', token.userName);
-      // OneSignal.shared.sendTag('user_id', token.userName);
+      await _storage.setString('userName', token.userName ?? 'No user name');
 
       return token.accessToken;
     }

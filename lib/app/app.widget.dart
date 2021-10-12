@@ -4,6 +4,7 @@ import 'package:app/app/app.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Start/start.page.dart';
 import 'package:app/pages/home.page.dart';
+import 'package:app/services/authorization.dart';
 import 'package:app/theme/theme_widget.dart';
 import 'package:app/utils/translations/app_translations_delegate.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -69,18 +70,15 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   Widget build(BuildContext context) {
     return MTheme(
-      child: Provider<AuthorizationStore>(
-        create: (BuildContext context) {
-          return AuthorizationStore()..getStatus();
-        },
-        child: Observer(builder: (context) {
-          var authStore = Provider.of<AuthorizationStore>(context);
+      child: FutureBuilder<bool>(
+        future: Authorize().isAuthorized(),
+        builder: (context, data) => Observer(builder: (context) {
           var theme = MTheme.of(context);
-          if (authStore.status == AuthorizationStatus.inProgress) {
+          if (data == null) {
             return SplashScreen();
           }
-
-          if (authStore.status == AuthorizationStatus.anonymous) {
+          // User is not logged
+          if (!(data.data ?? false)) {
             return MaterialApp(
               localizationsDelegates: [
                 _newLocaleDelegate,

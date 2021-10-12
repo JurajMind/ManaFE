@@ -101,9 +101,9 @@ class _SettingPageState extends State<SettingPage> {
                 child: MButton(
                   icon: FontAwesomeIcons.signOutAlt,
                   label: 'Sign out',
-                  onPressed: () {
+                  onPressed: () async {
                     Authorize auth = new Authorize();
-                    auth.signOut();
+                    await auth.signOut();
                     AppWidget.restartApp(context);
                   },
                 ),

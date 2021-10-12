@@ -5,9 +5,9 @@ import 'package:app/Helpers/day_helper.dart';
 import 'package:app/Helpers/helpers.dart';
 import 'package:app/components/Callendar/calendar_tile.dart';
 import 'package:app/utils/translations/app_translations.dart';
-import 'package:flutter/material.dart';
+import 'package:dartz/dartz.dart' hide State;
 
-import 'package:tuple/tuple.dart';
+import 'package:flutter/material.dart';
 
 typedef DayBuilder(BuildContext context, DateTime day);
 

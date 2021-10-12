@@ -1,6 +1,6 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:tuple/tuple.dart';
 
 class StatisticRecapWidget extends StatelessWidget {
   final Color ballColor;
@@ -25,14 +25,19 @@ class StatisticRecapWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         direction: Axis.vertical,
         children: <Widget>[
-          Flex(direction: Axis.horizontal, mainAxisAlignment: MainAxisAlignment.center, children: [
-            Container(
-              height: 15,
-              width: 15,
-              decoration: BoxDecoration(shape: BoxShape.circle, color: ballColor),
-            ),
-            Text(' ${label?.toUpperCase()}', style: Theme.of(context).textTheme.bodyText2)
-          ]),
+          Flex(
+              direction: Axis.horizontal,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 15,
+                  width: 15,
+                  decoration:
+                      BoxDecoration(shape: BoxShape.circle, color: ballColor),
+                ),
+                Text(' ${label?.toUpperCase()}',
+                    style: Theme.of(context).textTheme.bodyText2)
+              ]),
           buildSecondLine(lines, context),
           buildThirdLine(lines, context)
         ],
@@ -48,9 +53,10 @@ class StatisticRecapWidget extends StatelessWidget {
         child: Text(' Loading', style: Theme.of(context).textTheme.headline6),
       );
 
-    if (duration == null) return Text(' $value', style: Theme.of(context).textTheme.headline6);
+    if (duration == null)
+      return Text(' $value', style: Theme.of(context).textTheme.headline6);
 
-    return Text(lines.item1, style: Theme.of(context).textTheme.bodyText1);
+    return Text(lines.value1, style: Theme.of(context).textTheme.bodyText1);
   }
 
   Widget buildThirdLine(Tuple2<String, String> lines, BuildContext context) {
@@ -58,7 +64,7 @@ class StatisticRecapWidget extends StatelessWidget {
 
     if (duration == null) return Container(height: 16);
 
-    return Text(lines.item2, style: Theme.of(context).textTheme.bodyText2);
+    return Text(lines.value2, style: Theme.of(context).textTheme.bodyText2);
   }
 
   Tuple2<String, String> timeDuration() {

@@ -49,7 +49,7 @@ class ExternalAuthWidget extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () => googleLogin(context),
+                  onPressed: null, //() => googleLogin(context),
                   icon: Icon(
                     FontAwesomeIcons.google,
                     size: 40,
@@ -60,7 +60,7 @@ class ExternalAuthWidget extends StatelessWidget {
                     FontAwesomeIcons.apple,
                     size: 40,
                   ),
-                  onPressed: () {},
+                  onPressed: null,
                 )
               ]),
         )

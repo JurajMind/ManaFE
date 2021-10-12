@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 
+import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:tuple/tuple.dart';
 
 /// Created by Marcin Szałek
 
@@ -86,12 +86,17 @@ class WheelPicker extends StatelessWidget {
         assert(maxValue > minValue),
         assert(initialValue >= minValue && initialValue <= maxValue),
         selectedIntValue = initialValue.floor(),
-        selectedDecimalValue = ((initialValue - initialValue.floorToDouble()) * math.pow(10, decimalPlaces)).round(),
+        selectedDecimalValue = ((initialValue - initialValue.floorToDouble()) *
+                math.pow(10, decimalPlaces))
+            .round(),
         intScrollController = new ScrollController(
           initialScrollOffset: (initialValue.floor() - minValue) * itemExtent,
         ),
         decimalScrollController = new ScrollController(
-          initialScrollOffset: ((initialValue - initialValue.floorToDouble()) * math.pow(10, decimalPlaces)).roundToDouble() * itemExtent,
+          initialScrollOffset: ((initialValue - initialValue.floorToDouble()) *
+                      math.pow(10, decimalPlaces))
+                  .roundToDouble() *
+              itemExtent,
         ),
         _listViewHeight = 3 * itemExtent,
         step = 1,
@@ -167,7 +172,9 @@ class WheelPicker extends StatelessWidget {
 
   animateDecimalAndInteger(double valueToSelect) {
     animateInt(valueToSelect.floor());
-    animateDecimal(((valueToSelect - valueToSelect.floorToDouble()) * math.pow(10, decimalPlaces)).round());
+    animateDecimal(((valueToSelect - valueToSelect.floorToDouble()) *
+            math.pow(10, decimalPlaces))
+        .round());
   }
 
   //
@@ -190,7 +197,8 @@ class WheelPicker extends StatelessWidget {
 
   Widget _stringListView(ThemeData themeData) {
     TextStyle defaultStyle = themeData.textTheme.bodyText2;
-    TextStyle selectedStyle = themeData.textTheme.headline6.copyWith(color: themeData.accentColor);
+    TextStyle selectedStyle =
+        themeData.textTheme.headline6.copyWith(color: themeData.accentColor);
 
     int itemCount = stringItems.length + 3;
 
@@ -207,7 +215,8 @@ class WheelPicker extends StatelessWidget {
             final int value = _intValueFromIndex(index);
 
             //define special style for selected (middle) element
-            TextStyle itemStyle = value == selectedIntValue ? selectedStyle : defaultStyle;
+            TextStyle itemStyle =
+                value == selectedIntValue ? selectedStyle : defaultStyle;
 
             var isDisabled = this.disableItems != null &&
                 this.stringItems != null &&
@@ -217,14 +226,19 @@ class WheelPicker extends StatelessWidget {
 
             // Item is disabled
             if (isDisabled) {
-              itemStyle = itemStyle.copyWith(decoration: TextDecoration.lineThrough);
+              itemStyle =
+                  itemStyle.copyWith(decoration: TextDecoration.lineThrough);
             }
             bool isExtra = index == 0 || value > stringItems.length - 1;
 
             return isExtra
                 ? new Container() //empty first and last element
                 : new Center(
-                    child: new Text(stringItems == null ? value.toString() : stringItems[value], style: itemStyle),
+                    child: new Text(
+                        stringItems == null
+                            ? value.toString()
+                            : stringItems[value],
+                        style: itemStyle),
                   );
           },
         ),
@@ -235,7 +249,8 @@ class WheelPicker extends StatelessWidget {
 
   Widget _integerListView(ThemeData themeData) {
     TextStyle defaultStyle = themeData.textTheme.bodyText2;
-    TextStyle selectedStyle = themeData.textTheme.headline6.copyWith(color: themeData.accentColor);
+    TextStyle selectedStyle =
+        themeData.textTheme.headline6.copyWith(color: themeData.accentColor);
 
     int itemCount = (maxValue - minValue) ~/ step + 3;
 
@@ -252,18 +267,26 @@ class WheelPicker extends StatelessWidget {
             final int value = _intValueFromIndex(index);
 
             //define special style for selected (middle) element
-            TextStyle itemStyle = value == selectedIntValue ? selectedStyle : defaultStyle;
+            TextStyle itemStyle =
+                value == selectedIntValue ? selectedStyle : defaultStyle;
 
             // Item is disabled
-            if (this.disableItems != null && this.stringItems != null && disableItems.contains(this.stringItems[0])) {
-              itemStyle = itemStyle.copyWith(decoration: TextDecoration.lineThrough);
+            if (this.disableItems != null &&
+                this.stringItems != null &&
+                disableItems.contains(this.stringItems[0])) {
+              itemStyle =
+                  itemStyle.copyWith(decoration: TextDecoration.lineThrough);
             }
             bool isExtra = index == 0 || index == itemCount - 1;
 
             return isExtra
                 ? new Container() //empty first and last element
                 : new Center(
-                    child: new Text(stringItems == null ? value.toString() : stringItems[value], style: itemStyle),
+                    child: new Text(
+                        stringItems == null
+                            ? value.toString()
+                            : stringItems[value],
+                        style: itemStyle),
                   );
           },
         ),
@@ -281,7 +304,8 @@ class WheelPicker extends StatelessWidget {
   bool _onIntegerNotification(Notification notification) {
     if (notification is ScrollNotification) {
       //calculate
-      int intIndexOfMiddleElement = (notification.metrics.pixels + _listViewHeight / 2) ~/ itemExtent;
+      int intIndexOfMiddleElement =
+          (notification.metrics.pixels + _listViewHeight / 2) ~/ itemExtent;
       int intValueInTheMiddle = _intValueFromIndex(intIndexOfMiddleElement);
       intValueInTheMiddle = _normalizeIntegerMiddleValue(intValueInTheMiddle);
 
@@ -316,7 +340,8 @@ class WheelPicker extends StatelessWidget {
   bool _onStringNotification(Notification notification) {
     if (notification is ScrollNotification) {
       //calculate
-      int intIndexOfMiddleElement = (notification.metrics.pixels + _listViewHeight / 2) ~/ itemExtent;
+      int intIndexOfMiddleElement =
+          (notification.metrics.pixels + _listViewHeight / 2) ~/ itemExtent;
       int intValueInTheMiddle = _intValueFromIndex(intIndexOfMiddleElement);
       intValueInTheMiddle = _normalizeIntegerMiddleValue(intValueInTheMiddle);
 
@@ -377,7 +402,8 @@ class WheelPicker extends StatelessWidget {
   }
 
   ///indicates if user has stopped scrolling so we can center value in the middle
-  bool _userStoppedScrolling(Notification notification, ScrollController scrollController) {
+  bool _userStoppedScrolling(
+      Notification notification, ScrollController scrollController) {
     return notification is UserScrollNotification &&
         notification.direction == ScrollDirection.idle &&
         scrollController.position.activity is! HoldScrollActivity;
@@ -387,11 +413,13 @@ class WheelPicker extends StatelessWidget {
   ///e.g. decimalPlaces = 1, value = 4  >>> result = 0.4
   ///     decimalPlaces = 2, value = 12 >>> result = 0.12
   double _toDecimal(int decimalValueAsInteger) {
-    return double.parse((decimalValueAsInteger * math.pow(10, -decimalPlaces)).toStringAsFixed(decimalPlaces));
+    return double.parse((decimalValueAsInteger * math.pow(10, -decimalPlaces))
+        .toStringAsFixed(decimalPlaces));
   }
 
   ///scroll to selected value
   _animate(ScrollController scrollController, double value) {
-    scrollController.animateTo(value, duration: new Duration(seconds: 1), curve: new ElasticOutCurve());
+    scrollController.animateTo(value,
+        duration: new Duration(seconds: 1), curve: new ElasticOutCurve());
   }
 }
