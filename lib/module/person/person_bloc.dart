@@ -6,7 +6,7 @@ import 'package:app/module/signal_bloc.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:flutter/material.dart';
-import 'package:mdns_plugin/mdns_plugin.dart';
+
 import 'package:openapi/api.dart';
 import 'package:queries/collections.dart';
 import 'package:rxdart/rxdart.dart';
@@ -39,7 +39,7 @@ class PersonBloc extends SignalBloc {
 
   GlobalKey<NavigatorState> Function(int, Widget) callback;
 
-  BehaviorSubject<PersonInfoDto> info = new BehaviorSubject<PersonInfoDto>();
+  BehaviorSubject<PersonInfoDto> info = BehaviorSubject<PersonInfoDto>();
 
   BehaviorSubject<List<PipeAccesorySimpleDto>> myGear =
       new BehaviorSubject<List<PipeAccesorySimpleDto>>();
@@ -48,19 +48,15 @@ class PersonBloc extends SignalBloc {
       new BehaviorSubject<List<PlacesReservationsReservationDto>>();
 
   BehaviorSubject<List<DeviceSimpleDto>> devices =
-      new BehaviorSubject<List<DeviceSimpleDto>>.seeded(
-          new List<DeviceSimpleDto>());
+      new BehaviorSubject<List<DeviceSimpleDto>>.seeded(<DeviceSimpleDto>[]);
 
   BehaviorSubject<List<SmokeSessionSimpleDto>> smokeSessions =
       new BehaviorSubject<List<SmokeSessionSimpleDto>>.seeded(
-          new List<SmokeSessionSimpleDto>());
+          <SmokeSessionSimpleDto>[]);
 
   BehaviorSubject<List<SmokeSessionSimpleDto>> smokeSessionsCodes =
       new BehaviorSubject<List<SmokeSessionSimpleDto>>.seeded(
-          new List<SmokeSessionSimpleDto>());
-
-  BehaviorSubject<List<MDNSService>> ndnsServices =
-      new BehaviorSubject<List<MDNSService>>.seeded(new List<MDNSService>());
+          <SmokeSessionSimpleDto>[]);
 
   loadMyGear(bool reload) async {
     if (_loadedGear && !reload) return;
@@ -68,10 +64,6 @@ class PersonBloc extends SignalBloc {
     var gear = await App.http.getMyGear();
 
     myGear.add(gear);
-  }
-
-  loadNdnsServices(List<MDNSService> services) {
-    this.ndnsServices.add(services);
   }
 
   addSmokeSession(SmokeSessionSimpleDto smokeSessionId) {

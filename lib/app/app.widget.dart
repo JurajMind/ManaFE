@@ -10,9 +10,7 @@ import 'package:app/utils/translations/app_translations_delegate.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:app/module/authorization/autorization_store.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -72,7 +70,7 @@ class _AppWidgetState extends State<AppWidget> {
     return MTheme(
       child: FutureBuilder<bool>(
         future: Authorize().isAuthorized(),
-        builder: (context, data) => Observer(builder: (context) {
+        builder: (context, data) => Builder(builder: (context) {
           var theme = MTheme.of(context);
           if (data == null) {
             return SplashScreen();

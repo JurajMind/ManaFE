@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/services/authorization.dart';
 import 'package:provider/provider.dart';
-import 'package:app/module/authorization/autorization_store.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'external_auth_widget.dart';
@@ -46,8 +45,6 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
         this._loading = true;
       });
       if (await _auth.authorize(data.email, data.password) != null) {
-        var authStore = Provider.of<AuthorizationStore>(context, listen: false);
-        authStore.status = AuthorizationStatus.authorized;
       } else {
         final snackBar = SnackBar(content: Text('Wrong email or password'));
 

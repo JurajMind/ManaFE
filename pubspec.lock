@@ -29,13 +29,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
-  apple_sign_in:
-    dependency: "direct main"
-    description:
-      name: apple_sign_in
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.0"
   archive:
     dependency: transitive
     description:
@@ -512,13 +505,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0+2"
-  flutter_mobx:
+  flutter_mdns_plugin:
     dependency: "direct main"
     description:
-      name: flutter_mobx
+      name: flutter_mdns_plugin
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "0.0.3"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -601,6 +594,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.6"
+  get_it:
+    dependency: "direct main"
+    description:
+      name: get_it
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "7.2.0"
   giffy_dialog:
     dependency: "direct main"
     description:
@@ -665,7 +665,7 @@ packages:
     source: hosted
     version: "2.1.0"
   google_sign_in_web:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: google_sign_in_web
       url: "https://pub.dartlang.org"
@@ -804,13 +804,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.5955"
-  mdns_plugin:
-    dependency: "direct main"
-    description:
-      name: mdns_plugin
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.4"
   meta:
     dependency: transitive
     description:
@@ -825,20 +818,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  mobx:
-    dependency: "direct main"
-    description:
-      name: mobx
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.5"
-  mobx_codegen:
-    dependency: "direct dev"
-    description:
-      name: mobx_codegen
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.4"
   nested:
     dependency: transitive
     description:
@@ -1126,6 +1105,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  sign_in_with_apple:
+    dependency: "direct main"
+    description:
+      name: sign_in_with_apple
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.2.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -1142,13 +1128,6 @@ packages:
     dependency: "direct main"
     description:
       name: smooth_star_rating
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.1"
-  source_gen:
-    dependency: transitive
-    description:
-      name: source_gen
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"

@@ -1,7 +1,10 @@
+import 'package:app/app/app.widget.dart';
 import 'package:app/services/auth_helpers/facebook_login_mobile.dart';
+import 'package:app/services/authorization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class ExternalAuthWidget extends StatelessWidget {
   final ValueChanged<bool> onAuthBegin;
@@ -49,7 +52,7 @@ class ExternalAuthWidget extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: null, //() => googleLogin(context),
+                  onPressed: () => googleLogin(context),
                   icon: Icon(
                     FontAwesomeIcons.google,
                     size: 40,
@@ -70,7 +73,16 @@ class ExternalAuthWidget extends StatelessWidget {
 
   Future googleLogin(context) async {
     try {
-      await _googleSignIn.signIn();
+      var result = await _googleSignIn.signIn();
+      var auth = new Authorize();
+      var authToken = await result.authentication;
+      var tokenResult =
+          await auth.getLocalToken("Google", authToken.accessToken);
+      if (tokenResult) {
+        AppWidget.restartApp(context);
+      } else {
+        onAuthBegin(false);
+      }
     } catch (error) {
       print(error);
     }

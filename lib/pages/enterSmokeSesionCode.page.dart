@@ -13,7 +13,6 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
-import 'package:mdns_plugin/mdns_plugin.dart';
 
 import 'SmokeSession/qr_code_reader_page.dart';
 
@@ -32,7 +31,6 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
   final ApiClient apiClient = App.http;
   bool validating = false;
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
-  MDNSPlugin mdns = new MDNSPlugin(Delegate());
 
   Future sleep() {
     return new Future.delayed(const Duration(seconds: 5), () => "5");
@@ -49,13 +47,11 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
       });
     });
     super.initState();
-    mdns.startDiscovery("_googlecast._tcp", enableUpdating: true);
     sleep();
   }
 
   @override
   void dispose() {
-    mdns.stopDiscovery();
     super.dispose();
   }
 
@@ -293,36 +289,6 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
 
   Widget sessionCode(String sessionCode) {
     return Padding(padding: EdgeInsets.all(8.0), child: Text('d'));
-  }
-}
-
-class Delegate implements MDNSPluginDelegate {
-  var logger = Logger();
-
-  void onDiscoveryStarted() {
-    logger.v("Discovery started");
-  }
-
-  void onDiscoveryStopped() {
-    logger.v("Discovery stopped");
-  }
-
-  bool onServiceFound(MDNSService service) {
-    logger.v("Found: $service");
-    // Always returns true which begins service resolution
-    return true;
-  }
-
-  void onServiceResolved(MDNSService service) {
-    logger.v("Resolved: $service");
-  }
-
-  void onServiceUpdated(MDNSService service) {
-    logger.v("Updated: $service");
-  }
-
-  void onServiceRemoved(MDNSService service) {
-    logger.v("Removed: $service");
   }
 }
 
