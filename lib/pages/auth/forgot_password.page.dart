@@ -1,4 +1,6 @@
+import 'package:app/app/app.widget.dart';
 import 'package:app/components/Buttons/m_outlineButton.dart';
+import 'package:app/main.dart';
 import 'package:app/support/validators/email.validator.dart';
 import 'package:app/support/validators/max.validator.dart';
 import 'package:app/support/validators/required.validator.dart';
@@ -14,7 +16,7 @@ class ForgotPasswordPage extends StatefulWidget {
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  final Authorize _auth = new Authorize();
+  final AuthorizeRepository _auth = getIt.get<AuthorizeRepository>();
   String email = '';
   bool _loading = false;
 
@@ -22,7 +24,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppTranslations.of(context).text("login.forgot_password").toUpperCase()),
+        title: Text(AppTranslations.of(context)
+            .text("login.forgot_password")
+            .toUpperCase()),
       ),
       body: new SingleChildScrollView(
           child: new Column(
@@ -44,25 +48,38 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         decoration: new InputDecoration(
                             labelStyle: Theme.of(context).textTheme.headline6,
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                              borderSide: BorderSide(color: Colors.white, width: 2),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(40.0)),
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 2),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                              borderSide: BorderSide(color: Colors.white, width: 2),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50.0)),
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 2),
                             ),
                             errorBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                              borderSide: BorderSide(color: Colors.red, width: 2),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50.0)),
+                              borderSide:
+                                  BorderSide(color: Colors.red, width: 2),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                              borderSide: BorderSide(color: Colors.red, width: 2),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50.0)),
+                              borderSide:
+                                  BorderSide(color: Colors.red, width: 2),
                             ),
                             hintText: 'your@email.com',
-                            labelText: AppTranslations.of(context).text("login.email")),
+                            labelText: AppTranslations.of(context)
+                                .text("login.email")),
                         validator: (String value) {
-                          return validate(value, 'E-mail Address', [new RequiredValidator(), new EmailValidator(), new MaxValidator(63)]);
+                          return validate(value, 'E-mail Address', [
+                            new RequiredValidator(),
+                            new EmailValidator(),
+                            new MaxValidator(63)
+                          ]);
                         },
                         onSaved: (String value) {
                           email = value;
@@ -71,10 +88,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       child: _loading
                           ? CircularProgressIndicator()
                           : OutlineButton.icon(
-                              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-                              borderSide: BorderSide(color: Colors.white, width: 2),
+                              shape: new RoundedRectangleBorder(
+                                  borderRadius:
+                                      new BorderRadius.circular(30.0)),
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 2),
                               icon: Icon(Icons.refresh),
-                              label: Text(AppTranslations.of(context).text("login.reset_password")),
+                              label: Text(AppTranslations.of(context)
+                                  .text("login.reset_password")),
                               onPressed: () {
                                 submit(context);
                               },

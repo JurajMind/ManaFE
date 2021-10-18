@@ -1,16 +1,16 @@
 import 'dart:async';
 
 import 'package:app/app/app.dart';
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/person/person_bloc.dart';
 import 'package:app/pages/Start/start.page.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/theme/theme_widget.dart';
 import 'package:app/utils/translations/app_translations_delegate.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -69,7 +69,7 @@ class _AppWidgetState extends State<AppWidget> {
   Widget build(BuildContext context) {
     return MTheme(
       child: FutureBuilder<bool>(
-        future: Authorize().isAuthorized(),
+        future: getIt.get<AuthorizeRepository>().isAuthorized(),
         builder: (context, data) => Builder(builder: (context) {
           var theme = MTheme.of(context);
           if (data == null) {
@@ -107,6 +107,7 @@ class _AppWidgetState extends State<AppWidget> {
             navigatorObservers: [routeObserver],
 
             home: DataProvider(
+                personBloc: getIt.get<PersonBloc>(),
                 child: new HomePage(
                     deeplink: deeplink, routeObserver: routeObserver)),
             // onGenerateRoute: App.router.generator,

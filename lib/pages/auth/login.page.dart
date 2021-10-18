@@ -1,5 +1,6 @@
 import 'package:app/app/app.widget.dart';
 import 'package:app/Helpers/helpers.dart';
+import 'package:app/main.dart';
 import 'package:app/support/validators/email.validator.dart';
 import 'package:app/support/validators/max.validator.dart';
 import 'package:app/support/validators/min.validator.dart';
@@ -25,7 +26,7 @@ class _LoginData {
 
 class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  final Authorize _auth = new Authorize();
+  final AuthorizeRepository _auth = getIt.get<AuthorizeRepository>();
   _LoginData data = new _LoginData();
   bool _loading = false;
   final FocusNode passwordFocusNode = FocusNode();
@@ -62,7 +63,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     return new Scaffold(
       appBar: new AppBar(
         centerTitle: true,
-        title: new Text(AppTranslations.of(context).text("login.log_in").toUpperCase()),
+        title: new Text(
+            AppTranslations.of(context).text("login.log_in").toUpperCase()),
         backgroundColor: Colors.transparent,
       ),
       body: Center(
@@ -83,17 +85,28 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                             keyboardType: TextInputType.emailAddress,
                             style: Theme.of(context).textTheme.headline5,
                             decoration: new InputDecoration(
-                                labelStyle: Theme.of(context).textTheme.headline6,
-                                enabledBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
-                                focusedBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
+                                labelStyle:
+                                    Theme.of(context).textTheme.headline6,
+                                enabledBorder: new UnderlineInputBorder(
+                                    borderSide:
+                                        new BorderSide(color: Colors.white)),
+                                focusedBorder: new UnderlineInputBorder(
+                                    borderSide:
+                                        new BorderSide(color: Colors.white)),
                                 icon: Icon(Icons.mail, color: Colors.white),
                                 hintText: 'your@email.com',
-                                labelText: AppTranslations.of(context).text("login.email")),
+                                labelText: AppTranslations.of(context)
+                                    .text("login.email")),
                             validator: (String value) {
-                              return validate(value, 'E-mail Address', [new RequiredValidator(), new EmailValidator(), new MaxValidator(63)]);
+                              return validate(value, 'E-mail Address', [
+                                new RequiredValidator(),
+                                new EmailValidator(),
+                                new MaxValidator(63)
+                              ]);
                             },
                             onFieldSubmitted: (String textInput) {
-                              FocusScope.of(context).requestFocus(passwordFocusNode);
+                              FocusScope.of(context)
+                                  .requestFocus(passwordFocusNode);
                             },
                             onSaved: (String value) {
                               data.email = value;
@@ -105,7 +118,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                             decoration: new InputDecoration(
                                 suffixIcon: IconButton(
                                   icon: Icon(
-                                    showPassword ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
+                                    showPassword
+                                        ? FontAwesomeIcons.eyeSlash
+                                        : FontAwesomeIcons.eye,
                                     color: Colors.white,
                                   ),
                                   onPressed: () {
@@ -114,13 +129,23 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                     });
                                   },
                                 ),
-                                labelStyle: Theme.of(context).textTheme.headline6,
-                                enabledBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
-                                focusedBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
+                                labelStyle:
+                                    Theme.of(context).textTheme.headline6,
+                                enabledBorder: new UnderlineInputBorder(
+                                    borderSide:
+                                        new BorderSide(color: Colors.white)),
+                                focusedBorder: new UnderlineInputBorder(
+                                    borderSide:
+                                        new BorderSide(color: Colors.white)),
                                 icon: Icon(Icons.security, color: Colors.white),
-                                labelText: AppTranslations.of(context).text("login.password")),
+                                labelText: AppTranslations.of(context)
+                                    .text("login.password")),
                             validator: (String value) {
-                              return validate(value, 'Password', [new RequiredValidator(), new StringValidator(), new MinValidator(6)]);
+                              return validate(value, 'Password', [
+                                new RequiredValidator(),
+                                new StringValidator(),
+                                new MinValidator(6)
+                              ]);
                             },
                             onFieldSubmitted: (String value) {
                               this.submit(context);
@@ -144,7 +169,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                   ),
                                 )
                               : new RoundedButton(
-                                  buttonName: AppTranslations.of(context).text("login.log_in").toUpperCase(),
+                                  buttonName: AppTranslations.of(context)
+                                      .text("login.log_in")
+                                      .toUpperCase(),
                                   onTap: () => this.submit(context),
                                   buttonColor: Colors.transparent,
                                   borderWidth: 1.0,
@@ -158,7 +185,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                           width: screenSize.width,
                           child: new FlatButton(
                             child: new Text(
-                              AppTranslations.of(context).text("login.forgot_password") + " ?",
+                              AppTranslations.of(context)
+                                      .text("login.forgot_password") +
+                                  " ?",
                               style: Theme.of(context).textTheme.headline5,
                             ),
                             onPressed: () {

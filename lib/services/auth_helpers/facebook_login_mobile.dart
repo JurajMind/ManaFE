@@ -1,4 +1,5 @@
 import 'package:app/app/app.widget.dart';
+import 'package:app/main.dart';
 import 'package:app/services/authorization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -14,7 +15,7 @@ class FacebookLoginHelper {
     if (result.status == LoginStatus.success) {
       // you are logged
       final AccessToken accessToken = result.accessToken;
-      var auth = new Authorize();
+      var auth = getIt.get<AuthorizeRepository>();
       var tokenResult = await auth.getLocalToken("Facebook", accessToken.token);
       if (tokenResult) {
         AppWidget.restartApp(context);

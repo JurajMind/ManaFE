@@ -15,12 +15,9 @@ import 'package:sembast/sembast.dart';
 class PersonBloc extends SignalBloc {
   bool _loadedGear = false;
   bool _loadedInit = false;
+  AuthorizeRepository authorizeRepository;
 
-  static final PersonBloc _instance = new PersonBloc._();
-
-  factory PersonBloc() => PersonBloc._instance;
-
-  PersonBloc._() {
+  PersonBloc(this.authorizeRepository) {
     this.connect();
     loadInitData();
     loadMyGear(false);
@@ -117,7 +114,7 @@ class PersonBloc extends SignalBloc {
     try {
       var signal = new SignalR();
       List<String> params = new List<String>();
-      var auth = new Authorize();
+      var auth = this.authorizeRepository;
       params.add(await auth.getUserName());
       signal.callServerFunction(
           new ServerCallParam(name: 'JoinPerson', params: params));

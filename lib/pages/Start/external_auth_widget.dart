@@ -1,4 +1,5 @@
 import 'package:app/app/app.widget.dart';
+import 'package:app/main.dart';
 import 'package:app/services/auth_helpers/facebook_login_mobile.dart';
 import 'package:app/services/authorization.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +75,7 @@ class ExternalAuthWidget extends StatelessWidget {
   Future googleLogin(context) async {
     try {
       var result = await _googleSignIn.signIn();
-      var auth = new Authorize();
+      var auth = getIt.get<AuthorizeRepository>();
       var authToken = await result.authentication;
       var tokenResult =
           await auth.getLocalToken("Google", authToken.accessToken);

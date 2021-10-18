@@ -1,5 +1,6 @@
 import 'package:app/app/app.widget.dart';
 import 'package:app/components/Buttons/m_outlineButton.dart';
+import 'package:app/main.dart';
 import 'package:app/pages/Settings/language_selector_page.dart';
 import 'package:app/pages/Statistic/Setting/person_info.dart';
 import 'package:app/services/authorization.dart';
@@ -102,7 +103,7 @@ class _SettingPageState extends State<SettingPage> {
                   icon: FontAwesomeIcons.signOutAlt,
                   label: 'Sign out',
                   onPressed: () async {
-                    Authorize auth = new Authorize();
+                    AuthorizeRepository auth = getIt.get<AuthorizeRepository>();
                     await auth.signOut();
                     AppWidget.restartApp(context);
                   },

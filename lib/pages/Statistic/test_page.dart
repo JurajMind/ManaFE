@@ -1,5 +1,6 @@
 import 'package:app/app/app.dart';
 import 'package:app/app/app.widget.dart';
+import 'package:app/main.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/services/authorization.dart';
@@ -109,7 +110,7 @@ class _TestPageState extends State<TestPage> {
               ),
               label: Text('Test token recovery'),
               onPressed: () async {
-                var auth = new Authorize();
+                var auth = getIt.get<AuthorizeRepository>();
                 auth.messToken();
 
                 var request = App.http
@@ -136,7 +137,7 @@ class _TestPageState extends State<TestPage> {
               ),
               label: Text('Corupt tokken'),
               onPressed: () async {
-                var auth = new Authorize();
+                var auth = getIt.get<AuthorizeRepository>();
                 await auth.messToken();
               },
             ),

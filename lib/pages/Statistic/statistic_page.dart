@@ -6,6 +6,7 @@ import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/SmokeSession/session_list.dart';
 import 'package:app/components/Statistic/recap.dart';
 import 'package:app/const/theme.dart';
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/person/statistic_bloc.dart';
 import 'package:app/pages/Places/test_search.dart';
@@ -96,7 +97,7 @@ class TimeModel {
 class _StatisticPageState extends State<StatisticPage> {
   math.Random random = new math.Random();
   PageController controller;
-  Authorize auth = new Authorize();
+  AuthorizeRepository auth = getIt.get<AuthorizeRepository>();
   TimeModel selectedTime;
   StreamController<LineTouchResponse> touchController;
   bool loading = false;

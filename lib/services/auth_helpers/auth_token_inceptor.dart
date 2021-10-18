@@ -1,9 +1,11 @@
+import 'package:app/app/app.widget.dart';
+import 'package:app/main.dart';
 import 'package:dio/dio.dart';
 
 import '../authorization.dart';
 
 class AuthTokenInceptor extends Interceptor {
-  final Authorize _authorize = new Authorize();
+  final AuthorizeRepository _authorize = getIt.get<AuthorizeRepository>();
   final Dio _dio;
 
   AuthTokenInceptor(this._dio);

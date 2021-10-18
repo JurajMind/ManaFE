@@ -23,13 +23,10 @@ class DataProvider extends InheritedWidget {
   final ReservationBloc reservationBloc;
   final AppBloc appBloc;
 
-  DataProvider({
-    Key key,
-    Widget child,
-  })  : mixologyBloc = new MixologyBloc(),
+  DataProvider({Key key, Widget child, this.personBloc})
+      : mixologyBloc = new MixologyBloc(),
         smokeSessionBloc = new SmokeSessionBloc(),
         placeBloc = new PlacesBloc(),
-        personBloc = new PersonBloc(),
         gearBloc = new GearBloc(),
         menuBloc = new MenuBloc(),
         placeSingleBloc = new PlaceBloc(),

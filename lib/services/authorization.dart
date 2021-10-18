@@ -11,23 +11,11 @@ import 'package:openapi/api.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-@immutable
-abstract class Authenticator {
-  Map<String, String> getAuthHeaders();
-}
-
-class Authorize {
-  static final Authorize _singleton = new Authorize._internal();
+class AuthorizeRepository {
   String url = 'https://${App.baseUri}/token';
 
   String _token;
   String _userName;
-
-  factory Authorize() {
-    return _singleton;
-  }
-
-  Authorize._internal();
 
   Future<String> authorize(String userName, String password) async {
     final response = await http.post(

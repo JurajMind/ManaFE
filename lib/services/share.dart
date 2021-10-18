@@ -1,4 +1,5 @@
 import 'package:app/pages/Gear/pipe_accesory_page.dart';
+import 'package:app/pages/Gear/tobacco_page.dart';
 import 'package:app/pages/Mixology/mix_detail_page.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/pages/Statistic/Detail/smoke_session_detail_page.dart';
@@ -29,9 +30,9 @@ class ShareService {
   }
 
   static Future<Uri> tobaccoShareLink(PipeAccesorySimpleDto gear) async {
-    var link = Uri.parse(_appUrl + "/tobacco/${gear.id}");
+    var link = Uri.parse(_appUrl + "/flavor/${gear.id}");
     return await createDynamicLink(
-        true, link.toString(), "${gear.name}", "Someone shered you a tobacco");
+        true, link.toString(), "${gear.name}", "Someone shered you a a flavor");
   }
 
   static Future<Uri> sessionShareLink(SmokeSessionSimpleDto session) async {
@@ -78,6 +79,16 @@ class ShareService {
       BuildContext context) async {
     var chunk = link.split('/');
     switch (chunk[1]) {
+      case 'flavor':
+        {
+          var navigator = callback(0);
+          var mixId = int.parse(chunk[2]);
+          navigator.currentState.push(MaterialPageRoute(
+              builder: (context) => TobaccoPage(
+                    pipeAccesoryId: mixId,
+                  )));
+          break;
+        }
       case 'mix':
         {
           var navigator = callback(0);

@@ -1,6 +1,7 @@
 import 'dart:js';
 
 import 'package:app/app/app.widget.dart';
+import 'package:app/main.dart';
 import 'package:flutter/widgets.dart';
 
 import '../authorization.dart';
@@ -12,7 +13,7 @@ class FacebookLoginHelper {
   FacebookLoginHelper(this.onAuthBegin);
   Future facebookLogin(context) async {
     fbCallback = allowInterop((token) async {
-      var auth = new Authorize();
+      var auth = getIt.get<AuthorizeRepository>();
       if (onAuthBegin != null) onAuthBegin(true);
       var tokenResult = await auth.getLocalToken("Facebook", token);
       if (tokenResult) {

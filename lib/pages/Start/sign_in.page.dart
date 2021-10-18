@@ -1,4 +1,6 @@
 import 'package:app/Helpers/helpers.dart';
+import 'package:app/app/app.widget.dart';
+import 'package:app/main.dart';
 import 'package:app/support/validators/email.validator.dart';
 import 'package:app/support/validators/max.validator.dart';
 import 'package:app/support/validators/min.validator.dart';
@@ -27,7 +29,7 @@ class _LoginData {
 
 class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  final Authorize _auth = new Authorize();
+  final AuthorizeRepository _auth = getIt.get<AuthorizeRepository>();
   _LoginData data = new _LoginData();
   bool _loading = false;
   final FocusNode passwordFocusNode = FocusNode();

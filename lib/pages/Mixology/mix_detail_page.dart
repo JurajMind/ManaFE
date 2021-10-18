@@ -152,7 +152,10 @@ class MixDetailPageState extends State<MixDetailPage> {
                   icon: Icon(Icons.share),
                   onPressed: () async {
                     var url = await ShareService.mixShareLink(mix);
-                    Share.share(url.toString());
+                    Share.share(
+                      url.toString(),
+                      subject: 'Mix ${mix.name}',
+                    );
                   }),
               mix.myMix
                   ? IconButton(
