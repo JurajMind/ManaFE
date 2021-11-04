@@ -1,22 +1,25 @@
-import 'package:app/components/Shimmer/shimmer.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class MixCardExpandedShimmer extends StatelessWidget {
   final bool move;
   const MixCardExpandedShimmer({
-    Key key, this.move = true,
+    Key key,
+    this.move = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: move ? Shimmer.fromColors(
-        baseColor: Colors.grey[400],
-        highlightColor: Colors.white,
-        child: new _ShimmerBody(),
-      ) : _ShimmerBody(),
+      child: true
+          ? Shimmer.fromColors(
+              baseColor: Colors.grey[400],
+              highlightColor: Colors.white,
+              child: new _ShimmerBody(),
+            )
+          : _ShimmerBody(),
     );
   }
 }
@@ -38,8 +41,11 @@ class _ShimmerBody extends StatelessWidget {
             Icon(
               Icons.add,
             ),
-            Expanded(flex: 1, child: Container(width: 1.0,height: 12.0, color:Colors.white)),
-            Expanded(flex: 1, child: Container(width: 1.0,height: 12.0)),
+            Expanded(
+                flex: 1,
+                child:
+                    Container(width: 1.0, height: 12.0, color: Colors.white)),
+            Expanded(flex: 1, child: Container(width: 1.0, height: 12.0)),
             Expanded(
                 flex: 1,
                 child: new StarRating(

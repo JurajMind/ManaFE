@@ -1,7 +1,9 @@
 import 'package:app/components/Media/media.widget.dart';
 import 'package:app/components/Places/open_indicator.dart';
+import 'package:app/main.dart';
 import 'package:app/models/extensions.dart';
-import 'package:app/module/data_provider.dart';
+
+import 'package:app/module/module.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/support/m_platform.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -19,11 +21,13 @@ class PlaceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var placeBloc = DataProvider.getData(context).placeSingleBloc;
+    var placeBloc = getIt.get<PlaceBloc>();
     return ListTile(
       onTap: () {
         placeBloc.loadPlace(place: place);
-        Navigator.of(context).push(MaterialPageRoute(settings: RouteSettings(), builder: (context) => PlaceDetailPage(place: place)));
+        Navigator.of(context).push(MaterialPageRoute(
+            settings: RouteSettings(),
+            builder: (context) => PlaceDetailPage(place: place)));
       },
       leading: SizedBox(
           height: 60.0,
@@ -32,8 +36,10 @@ class PlaceItem extends StatelessWidget {
             tag: '${place.friendlyUrl}_place',
             child: new Image(
               image: MPlatform.isWeb
-                  ? NetworkImage(Extensions.getPlaceImage(place, MediaSize.Small))
-                  : new CachedNetworkImageProvider(Extensions.getPlaceImage(place, MediaSize.Small)),
+                  ? NetworkImage(
+                      Extensions.getPlaceImage(place, MediaSize.Small))
+                  : new CachedNetworkImageProvider(
+                      Extensions.getPlaceImage(place, MediaSize.Small)),
               fit: BoxFit.cover,
             ),
           )),
@@ -87,7 +93,8 @@ class PlaceItemShimer extends StatelessWidget {
             Container(
               height: 15,
               width: 15,
-              decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+              decoration:
+                  BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
             ),
           ],
         ),

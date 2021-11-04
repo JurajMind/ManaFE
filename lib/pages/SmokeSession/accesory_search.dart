@@ -1,4 +1,5 @@
 import 'package:app/app/app.dart';
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/general/gear_bloc.dart';
 import 'package:app/module/person/person_bloc.dart';
@@ -32,7 +33,9 @@ class PipeAccesorySearch extends StatefulWidget {
 }
 
 class PipeAccesorySearchState extends State<PipeAccesorySearch> {
-  BehaviorSubject<List<PipeAccesorySimpleDto>> searchResult = new BehaviorSubject<List<PipeAccesorySimpleDto>>.seeded(new List<PipeAccesorySimpleDto>());
+  BehaviorSubject<List<PipeAccesorySimpleDto>> searchResult =
+      new BehaviorSubject<List<PipeAccesorySimpleDto>>.seeded(
+          new List<PipeAccesorySimpleDto>());
   final searchOnChange = new BehaviorSubject<String>();
   bool loading = false;
   String lastSearch = "";
@@ -42,8 +45,11 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
   @override
   void initState() {
     super.initState();
-    ownSimpleAccesories = widget.ownAccesories ?? new List<PipeAccesorySimpleDto>();
-    searchOnChange.debounceTime(Duration(milliseconds: 500)).listen((queryString) {
+    ownSimpleAccesories =
+        widget.ownAccesories ?? new List<PipeAccesorySimpleDto>();
+    searchOnChange
+        .debounceTime(Duration(milliseconds: 500))
+        .listen((queryString) {
       if (queryString.length > 3) submitSearch(queryString);
     });
   }
@@ -100,7 +106,13 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                 ),
               ),
             ),
-            Expanded(child: Center(child: Container(constraints: BoxConstraints(maxWidth: 800), child: controller.text == "" ? buildDefault() : buildResult())))
+            Expanded(
+                child: Center(
+                    child: Container(
+                        constraints: BoxConstraints(maxWidth: 800),
+                        child: controller.text == ""
+                            ? buildDefault()
+                            : buildResult())))
           ],
         ),
       ),
@@ -119,7 +131,9 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
       lastSearch = text;
     });
     this.searchResult.add(new List<PipeAccesorySimpleDto>());
-    App.http.searchGear(text, widget.searchType.toLowerCase(), 0, 1000).then((value) {
+    App.http
+        .searchGear(text, widget.searchType.toLowerCase(), 0, 1000)
+        .then((value) {
       this.searchResult.add(value);
       setState(() {
         loading = false;
@@ -146,8 +160,12 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                     text: AppTranslations.of(context).text("gear.no_result_1"),
                     style: DefaultTextStyle.of(context).style,
                     children: <TextSpan>[
-                      TextSpan(text: controller.text, style: TextStyle(fontWeight: FontWeight.bold)),
-                      TextSpan(text: AppTranslations.of(context).text("gear.no_result_2")),
+                      TextSpan(
+                          text: controller.text,
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      TextSpan(
+                          text: AppTranslations.of(context)
+                              .text("gear.no_result_2")),
                     ],
                   ),
                 ),
@@ -158,7 +176,10 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                   onTap: () {
                     Navigator.of(context)
                         .push<PipeAccesorySimpleDto>(MaterialPageRoute(
-                            builder: (context) => AddGearPage(selectedType: widget.searchType, pretypedName: controller.text, bloc: widget.gearBloc),
+                            builder: (context) => AddGearPage(
+                                selectedType: widget.searchType,
+                                pretypedName: controller.text,
+                                bloc: widget.gearBloc),
                             fullscreenDialog: true))
                         .then((newGear) {
                       Navigator.of(context).pop(newGear);
@@ -169,11 +190,17 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                     children: <Widget>[
                       RichText(
                         text: TextSpan(
-                          text: AppTranslations.of(context).text("gear.no_result_3"),
+                          text: AppTranslations.of(context)
+                              .text("gear.no_result_3"),
                           style: DefaultTextStyle.of(context).style,
                           children: <TextSpan>[
-                            TextSpan(text: controller.text, style: TextStyle(fontWeight: FontWeight.bold)),
-                            TextSpan(text: AppTranslations.of(context).text("gear.no_result_4") + ' ${widget.searchType}'),
+                            TextSpan(
+                                text: controller.text,
+                                style: TextStyle(fontWeight: FontWeight.bold)),
+                            TextSpan(
+                                text: AppTranslations.of(context)
+                                        .text("gear.no_result_4") +
+                                    ' ${widget.searchType}'),
                           ],
                         ),
                       ),
@@ -191,7 +218,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
             ));
           }
 
-          var data = DataProvider.getData(context)?.personBloc ?? widget.personBloc;
+          var data = getIt.get<PersonBloc>() ?? widget.personBloc;
           return StreamBuilder<List<PipeAccesorySimpleDto>>(
               stream: data?.myGear,
               builder: (context, ownSs) {
@@ -203,20 +230,32 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                           leading: Icon(Icons.add),
                           onTap: () => Navigator.of(context)
                               .push<PipeAccesorySimpleDto>(MaterialPageRoute(
-                                  builder: (context) => AddGearPage(selectedType: widget.searchType, pretypedName: controller.text, bloc: widget.gearBloc),
+                                  builder: (context) => AddGearPage(
+                                      selectedType: widget.searchType,
+                                      pretypedName: controller.text,
+                                      bloc: widget.gearBloc),
                                   fullscreenDialog: true))
                               .then((newGear) {
                             Navigator.of(context).pop(newGear);
                           }),
-                          title: Center(child: Text('Not found what you were looking for?')),
+                          title: Center(
+                              child:
+                                  Text('Not found what you were looking for?')),
                           subtitle: Center(
                             child: RichText(
                               text: TextSpan(
-                                text: AppTranslations.of(context).text("gear.no_result_3"),
+                                text: AppTranslations.of(context)
+                                    .text("gear.no_result_3"),
                                 style: DefaultTextStyle.of(context).style,
                                 children: <TextSpan>[
-                                  TextSpan(text: controller.text, style: TextStyle(fontWeight: FontWeight.bold)),
-                                  TextSpan(text: AppTranslations.of(context).text("gear.no_result_4") + '${widget.searchType}'),
+                                  TextSpan(
+                                      text: controller.text,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                  TextSpan(
+                                      text: AppTranslations.of(context)
+                                              .text("gear.no_result_4") +
+                                          '${widget.searchType}'),
                                 ],
                               ),
                             ),
@@ -224,9 +263,13 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                         );
                       }
 
-                      var owned = (ownSs.data?.indexWhere((a) => a.id == snapshot.data[index].id) ?? -1) != -1;
+                      var owned = (ownSs.data?.indexWhere(
+                                  (a) => a.id == snapshot.data[index].id) ??
+                              -1) !=
+                          -1;
 
-                      return _createResult(index, snapshot.data[index], context, owned);
+                      return _createResult(
+                          index, snapshot.data[index], context, owned);
                     });
               });
         });
@@ -234,11 +277,14 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
 
   Widget buildDefault() {
     return new ListView(
-      children: ownSimpleAccesories.map((f) => _createResult(0, f, context, true)).toList(),
+      children: ownSimpleAccesories
+          .map((f) => _createResult(0, f, context, true))
+          .toList(),
     );
   }
 
-  ListTile _createResult(int index, PipeAccesorySimpleDto data, BuildContext context, bool owned) {
+  ListTile _createResult(
+      int index, PipeAccesorySimpleDto data, BuildContext context, bool owned) {
     var text = '${data.brand} ${data.name}';
 
     return new ListTile(
@@ -249,7 +295,10 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                 height: 10.0,
               ),
         onTap: () => Navigator.pop(context, data),
-        title: RichText(text: TextSpan(style: Theme.of(context).textTheme.headline5, children: getChunks(text, controller.text))));
+        title: RichText(
+            text: TextSpan(
+                style: Theme.of(context).textTheme.headline5,
+                children: getChunks(text, controller.text))));
   }
 
   List<int> getIndexes(String text, String match) {
@@ -283,13 +332,18 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
     }
     for (var i = 0; i < index.length; i++) {
       if (index[i] != 0) {
-        result.add(new TextSpan(text: text.substring(0, index[i]), style: nonMatchStyle));
+        result.add(new TextSpan(
+            text: text.substring(0, index[i]), style: nonMatchStyle));
       }
-      result.add(new TextSpan(text: text.substring(index[i], index[i] + match.length), style: matchStyle));
+      result.add(new TextSpan(
+          text: text.substring(index[i], index[i] + match.length),
+          style: matchStyle));
     }
 
     if (index.last < text.length) {
-      result.add(new TextSpan(text: text.substring(index.last + match.length), style: nonMatchStyle));
+      result.add(new TextSpan(
+          text: text.substring(index.last + match.length),
+          style: nonMatchStyle));
     }
     return result;
   }

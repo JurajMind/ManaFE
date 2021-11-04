@@ -1,6 +1,8 @@
 import 'package:app/components/SmokeSession/session_review_view.dart';
 import 'package:app/const/theme.dart';
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:app/pages/SmokeSession/session_review.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +22,11 @@ class ReviewsSmall extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Text(AppTranslations.of(context).text('smoke_session.review'), style: Theme.of(context).textTheme.headline6),
-            IconButton(icon: Icon(Icons.add), onPressed: () => addSessionReview(context))
+            Text(AppTranslations.of(context).text('smoke_session.review'),
+                style: Theme.of(context).textTheme.headline6),
+            IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () => addSessionReview(context))
           ],
         ),
         ...reviews.map((f) {
@@ -36,7 +41,8 @@ class ReviewsSmall extends StatelessWidget {
   }
 
   addSessionReview(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(fullscreenDialog: true, builder: (context) => SessionReview()));
+    Navigator.of(context).push(MaterialPageRoute(
+        fullscreenDialog: true, builder: (context) => SessionReview()));
   }
 }
 
@@ -121,12 +127,13 @@ class ReviewSmallItem extends StatelessWidget {
 
   openAlertBox(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    var bloc = DataProvider.getData(context).personBloc;
+    var bloc = getIt.get<PersonBloc>();
     return showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(32.0))),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(32.0))),
             contentPadding: EdgeInsets.only(top: 10.0),
             content: Container(
                 width: size.width * 0.9,

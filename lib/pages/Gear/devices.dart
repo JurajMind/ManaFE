@@ -1,5 +1,7 @@
+import 'package:app/main.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:app/pages/Device/add_device_page.dart';
 import 'package:app/pages/Device/device_detail_page.dart';
 import 'package:app/pages/Gear/Components/arrow_indicator.dart';
@@ -19,7 +21,7 @@ class Devices extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var personBloc = DataProvider.getData(context).personBloc;
+    var personBloc = getIt.get<PersonBloc>();
 
     var shortestSide = MediaQuery.of(context).size.shortestSide;
     var useTabletLayout = shortestSide > 600;

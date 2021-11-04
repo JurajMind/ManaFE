@@ -1,6 +1,8 @@
 import 'dart:html';
 
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps/google_maps.dart' hide Icon;
 import 'package:google_maps_flutter/google_maps_flutter.dart' as googleFlutter;
@@ -33,7 +35,7 @@ class _MapWebState extends State<MapWeb> {
     print("map_rebuild ${widget.markers.length}");
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(htmlId, (int viewId) {
-      var location = DataProvider.getData(context).placeBloc.location.value;
+      var location = getIt.get<PlacesBloc>().location.value;
       LatLng myLatLng;
       if (location != null) {
         myLatLng = new LatLng(location.latitude, location.longitude);
@@ -73,7 +75,7 @@ class _MapWebState extends State<MapWeb> {
       return elem;
     });
 
-    var bloc = DataProvider.getData(context).placeBloc;
+    var bloc = getIt.get<PlacesBloc>();
     return StreamBuilder<geo.Position>(
         stream: bloc.location,
         builder: (context, snapshot) {

@@ -2,7 +2,9 @@ import 'package:app/components/Places/navigate_button.dart';
 import 'package:app/components/Places/place_detail.dart';
 import 'package:app/components/Places/place_map.dart';
 import 'package:app/components/Places/taxi_button.dart';
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -15,7 +17,7 @@ class AboutPlaceWidget extends StatelessWidget {
   const AboutPlaceWidget({Key key, this.place}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var placeBloc = DataProvider.getData(context).placeSingleBloc;
+    var placeBloc = getIt.get<PlaceBloc>();
     return Column(
       children: <Widget>[
         StreamBuilder<PlaceDto>(

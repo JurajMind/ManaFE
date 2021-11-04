@@ -8,8 +8,10 @@ import 'package:app/components/Places/WebMap/web_map_placeholder.dart'
 import 'package:app/components/Places/map_carousel.dart';
 import 'package:app/components/Reservations/reservation_item.dart';
 import 'package:app/const/theme.dart';
+import 'package:app/main.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/pages/Places/places_search_page.dart';
@@ -86,7 +88,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
     lastIdleView = curentView;
 
     new Future.delayed(Duration.zero, () {
-      bloc = DataProvider.getData(context).placeBloc;
+      bloc = getIt.get<PlacesBloc>();
       positionSub = bloc.location.asBroadcastStream().listen((newPosition) {
         setView(newPosition);
       });

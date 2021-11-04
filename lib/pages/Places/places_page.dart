@@ -1,7 +1,9 @@
 import 'package:app/app/app.dart';
 import 'package:app/components/Places/place_item.dart';
 import 'package:app/components/Reservations/reservation_item.dart';
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:app/module/places/place_bloc.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:app/pages/Places/Reservations/reservations_page.dart';
@@ -30,8 +32,9 @@ class _PlacesPageState extends State<PlacesPage> {
   var staticMapProvider = new StaticMapProvider(App.googleApiKeys);
 
   Location myUserLocation;
-  PlacesBloc placesBloc;
-  PlaceBloc placeBloc;
+  PlacesBloc placesBloc = getIt.get<PlacesBloc>();
+  PlaceBloc placeBloc = getIt.get<PlaceBloc>();
+  PersonBloc personBloc = getIt.get<PersonBloc>();
 
   @override
   initState() {
@@ -42,8 +45,6 @@ class _PlacesPageState extends State<PlacesPage> {
   @override
   didChangeDependencies() {
     super.didChangeDependencies();
-    placesBloc = DataProvider.getPlaces(context);
-    placeBloc = DataProvider.getData(context).placeSingleBloc;
   }
 
   @override
@@ -52,7 +53,6 @@ class _PlacesPageState extends State<PlacesPage> {
 
 //https://maps.googleapis.com/maps/api/staticmap?center=${myUserLocation.altitude},${myUserLocation.longitude}&zoom=15&format=png&maptype=roadmap&style=element:geometry%7Ccolor:0x1d2c4d&style=element:labels.text.fill%7Ccolor:0x8ec3b9&style=element:labels.text.stroke%7Ccolor:0x1a3646&style=feature:administrative.country%7Celement:geometry.stroke%7Ccolor:0x4b6878&style=feature:administrative.land_parcel%7Celement:labels.text.fill%7Ccolor:0x64779e&style=feature:administrative.province%7Celement:geometry.stroke%7Ccolor:0x4b6878&style=feature:landscape.man_made%7Celement:geometry.stroke%7Ccolor:0x334e87&style=feature:landscape.natural%7Celement:geometry%7Ccolor:0x023e58&style=feature:poi%7Celement:geometry%7Ccolor:0x283d6a&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0x6f9ba5&style=feature:poi%7Celement:labels.text.stroke%7Ccolor:0x1d2c4d&style=feature:poi.business%7Cvisibility:off&style=feature:poi.park%7Celement:geometry.fill%7Ccolor:0x023e58&style=feature:poi.park%7Celement:labels.text%7Cvisibility:off&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x3C7680&style=feature:road%7Celement:geometry%7Ccolor:0x304a7d&style=feature:road%7Celement:labels.text.fill%7Ccolor:0x98a5be&style=feature:road%7Celement:labels.text.stroke%7Ccolor:0x1d2c4d&style=feature:road.highway%7Celement:geometry%7Ccolor:0x2c6675&style=feature:road.highway%7Celement:geometry.stroke%7Ccolor:0x255763&style=feature:road.highway%7Celement:labels.text.fill%7Ccolor:0xb0d5ce&style=feature:road.highway%7Celement:labels.text.stroke%7Ccolor:0x023e58&style=feature:transit%7Celement:labels.text.fill%7Ccolor:0x98a5be&style=feature:transit%7Celement:labels.text.stroke%7Ccolor:0x1d2c4d&style=feature:transit.line%7Celement:geometry.fill%7Ccolor:0x283d6a&style=feature:transit.station%7Celement:geometry%7Ccolor:0x3a4762&style=feature:water%7Celement:geometry%7Ccolor:0x0e1626&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x4e6d70&size=900x500&key${App.googleApiKeys}
 
-    var personBloc = DataProvider.getData(context).personBloc;
     var reservationBloc = DataProvider.getData(context).reservationBloc;
     return Scaffold(
       bottomNavigationBar: SizedBox(height: 45),
@@ -68,7 +68,8 @@ class _PlacesPageState extends State<PlacesPage> {
               actions: <Widget>[
                 IconButton(
                   icon: Icon(Icons.search),
-                  onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
+                  onPressed: () => Navigator.of(context).push(
+                      new MaterialPageRoute(builder: (BuildContext context) {
                     return new PlacesSearchPage(
                       places: placesBloc.places.value,
                     );
@@ -81,7 +82,8 @@ class _PlacesPageState extends State<PlacesPage> {
                   background: StreamBuilder<Position>(
                       stream: placesBloc.location,
                       builder: (context, snapshot) {
-                        return Container(height: height, child: mapBuilder(height));
+                        return Container(
+                            height: height, child: mapBuilder(height));
                       }),
                 ),
               ),
@@ -98,17 +100,23 @@ class _PlacesPageState extends State<PlacesPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
                                 Text(
-                                  AppTranslations.of(context).text("reservations.upcoming_reservations"),
+                                  AppTranslations.of(context).text(
+                                      "reservations.upcoming_reservations"),
                                   style: Theme.of(context).textTheme.headline5,
                                 ),
                                 OutlineButton(
-                                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                                  shape: new RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(30.0)),
                                   borderSide: BorderSide(color: Colors.white),
                                   child: Text(
                                     'All reservations',
-                                    style: Theme.of(context).textTheme.bodyText2,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
                                   ),
-                                  onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
+                                  onPressed: () => Navigator.of(context).push(
+                                      new MaterialPageRoute(
+                                          builder: (BuildContext context) {
                                     return new ReservationsPage();
                                   })),
                                 ),
@@ -125,7 +133,8 @@ class _PlacesPageState extends State<PlacesPage> {
     );
   }
 
-  StreamBuilder<List<PlaceSimpleDto>> placeBuilder(BehaviorSubject<List<PlaceSimpleDto>> places) {
+  StreamBuilder<List<PlaceSimpleDto>> placeBuilder(
+      BehaviorSubject<List<PlaceSimpleDto>> places) {
     return StreamBuilder(
         stream: places,
         initialData: null,
@@ -152,7 +161,8 @@ class _PlacesPageState extends State<PlacesPage> {
         });
   }
 
-  StreamBuilder<List<PlacesReservationsReservationDto>> reservationBuilder(BehaviorSubject<List<PlacesReservationsReservationDto>> reservations) {
+  StreamBuilder<List<PlacesReservationsReservationDto>> reservationBuilder(
+      BehaviorSubject<List<PlacesReservationsReservationDto>> reservations) {
     return StreamBuilder(
         stream: reservations,
         initialData: null,
@@ -161,7 +171,9 @@ class _PlacesPageState extends State<PlacesPage> {
           if (snapshot.data != null) {
             var upcomingReservations = new Collection(snapshot.data);
             reservation = upcomingReservations
-                .where$1((predicate, _) => predicate.time.compareTo(DateTime.now()) > 0 && predicate.status != 1)
+                .where$1((predicate, _) =>
+                    predicate.time.compareTo(DateTime.now()) > 0 &&
+                    predicate.status != 1)
                 .orderBy((p) => p.time)
                 .firstOrDefault();
           }
@@ -173,7 +185,11 @@ class _PlacesPageState extends State<PlacesPage> {
                 }
                 return ReservationItem(reservation: reservation ?? null);
               },
-              childCount: snapshot.data == null ? 0 : snapshot.data.length == 0 ? 0 : 1,
+              childCount: snapshot.data == null
+                  ? 0
+                  : snapshot.data.length == 0
+                      ? 0
+                      : 1,
             ),
           );
         });
@@ -183,9 +199,12 @@ class _PlacesPageState extends State<PlacesPage> {
     return StreamBuilder<List<PlaceSimpleDto>>(
         stream: placesBloc.places,
         builder: (context, snapshot) {
-          var markers = new List<Marker>();
+          var markers = <Marker>[];
           if (snapshot.data != null) {
-            markers = snapshot.data.map((f) => Marker(f.id.toString(), f.name, double.parse(f.address.lat), double.parse(f.address.lng))).toList();
+            markers = snapshot.data
+                .map((f) => Marker(f.id.toString(), f.name,
+                    double.parse(f.address.lat), double.parse(f.address.lng)))
+                .toList();
           }
 
           return StreamBuilder<Position>(
@@ -195,9 +214,11 @@ class _PlacesPageState extends State<PlacesPage> {
                 if (snapshot.data == null) {
                   return CircularProgressIndicator();
                 }
-                var staticMapUri = staticMapProvider.getStaticUriWithMarkers(markers,
+                var staticMapUri = staticMapProvider.getStaticUriWithMarkers(
+                    markers,
                     zoomLevel: 14,
-                    center: new Location(snapshot.data.latitude, snapshot.data.longitude),
+                    center: new Location(
+                        snapshot.data.latitude, snapshot.data.longitude),
                     width: MediaQuery.of(context).size.width.round(),
                     height: height.round(),
                     maptype: StaticMapViewType.roadmap);
@@ -213,7 +234,11 @@ class _PlacesPageState extends State<PlacesPage> {
                             height: MediaQuery.of(context).size.height / 2,
                           ),
                         ),
-                        onTap: () => {Navigator.of(context).push(MaterialPageRoute(builder: (context) => PlacesMapPage(position: snapshot.data)))},
+                        onTap: () => {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  PlacesMapPage(position: snapshot.data)))
+                        },
                       );
               });
         });

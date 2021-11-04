@@ -1,28 +1,37 @@
 import 'package:app/app/app.dart';
+import 'package:app/module/module.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'module/person/person_bloc.dart';
 import 'services/authorization.dart';
 
 Future<void> main() async {
-  setup();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  new App(
-    environment: 'local',
-    baseUri: 'smarthookah.azurewebsites.net',
-    clientId: 'test',
-    googleApiKey: '***REMOVED***',
-  ).run(runApp);
+
+  getIt.registerLazySingletonAsync<SharedPreferences>(() async {
+    return await SharedPreferences.getInstance();
+  });
+  GetIt.I.isReady<SharedPreferences>().then((_) {
+    setup(getIt);
+    var app = new App(
+      environment: 'local',
+      baseUri: 'smarthookah.azurewebsites.net',
+      clientId: 'test',
+      googleApiKey: '***REMOVED***',
+    );
+    app.run(runApp);
+  });
 }
 
 final getIt = GetIt.instance;
-
-void setup() {
-  getIt.registerLazySingleton<AuthorizeRepository>(() => AuthorizeRepository());
+void setup(GetIt getIt) {
+  getIt.registerLazySingleton<PlacesBloc>(() => PlacesBloc()..loadPlaces());
+  getIt.registerLazySingleton<PlaceBloc>(() => PlaceBloc());
+  getIt.registerLazySingleton<AuthorizeRepository>(() =>
+      AuthorizeRepository(sharedPreferences: getIt.get<SharedPreferences>()));
   getIt.registerLazySingleton<PersonBloc>(
       () => PersonBloc(getIt.get<AuthorizeRepository>()));
 }

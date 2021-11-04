@@ -4,9 +4,11 @@ import 'package:app/components/Mixology/use_mix_button.dart';
 import 'package:app/components/Reviews/tobacco_review_list.dart';
 import 'package:app/components/SmokeSession/session_list.dart';
 import 'package:app/const/theme.dart';
+import 'package:app/main.dart';
 import 'package:app/models/extensions.dart';
 
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:app/pages/Gear/tobacco_page.dart';
 import 'package:app/services/share.dart';
 import 'package:app/theme/theme_widget.dart';
@@ -133,7 +135,7 @@ class MixDetailPageState extends State<MixDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    var bloc = DataProvider.getData(context).personBloc;
+    var bloc = getIt.get<PersonBloc>();
 
     if (mix == null) {
       return Center(

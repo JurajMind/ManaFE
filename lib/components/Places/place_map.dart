@@ -1,6 +1,8 @@
 import 'package:app/Helpers/place_helper.dart';
 import 'package:app/app/app.dart';
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:app/pages/Places/places_map_page.dart';
 import 'package:app/support/m_platform.dart';
 import 'package:app/utils/Map/location.dart';
@@ -27,7 +29,7 @@ class PlaceMap extends StatelessWidget {
       return Container();
     }
     var mapUrl = mapUri().toString() + '&scale=1';
-    var location = DataProvider.getData(context).placeBloc.location;
+    var location = getIt.get<PlacesBloc>().location;
     return StreamBuilder<Position>(
         stream: location,
         builder: (context, snapshot) {

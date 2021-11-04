@@ -1,6 +1,8 @@
 import 'package:app/components/SmokeSession/session_review_view.dart';
 import 'package:app/const/theme.dart';
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
@@ -86,7 +88,7 @@ class TobaccoReviewItem extends StatelessWidget {
 
   openAlertBox(BuildContext context) {
     var size = MediaQuery.of(context).size;
-        var bloc = DataProvider.getData(context).personBloc;
+    var bloc = getIt.get<PersonBloc>();
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -96,7 +98,10 @@ class TobaccoReviewItem extends StatelessWidget {
               contentPadding: EdgeInsets.only(top: 10.0),
               content: Container(
                   width: size.width * 0.9,
-                  child: SessionReviewView(gearReview: this.review,bloc: bloc,)));
+                  child: SessionReviewView(
+                    gearReview: this.review,
+                    bloc: bloc,
+                  )));
         });
   }
 }

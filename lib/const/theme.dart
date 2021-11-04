@@ -5,17 +5,13 @@ ThemeData buildDarkTheme() {
 
   return base.copyWith(
       primaryColor: AppColors.colors[1],
-      buttonColor: AppColors.colors[1],
       indicatorColor: Colors.white,
-      accentColor: AppColors.colors[1],
       canvasColor: const Color(0xFF202124),
       scaffoldBackgroundColor: const Color(0xFF000d1a),
       backgroundColor: const Color(0xFF000d1a),
       errorColor: const Color(0xFFB00020),
       appBarTheme: AppBarTheme(color: AppColors.black),
-      colorScheme: ColorScheme.dark(),
       primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
-      accentTextTheme: _buildTextTheme(base.accentTextTheme),
       textTheme: TextTheme(
         headline1: base.textTheme.headline1.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
         headline2: base.textTheme.headline2.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
@@ -30,7 +26,7 @@ ThemeData buildDarkTheme() {
         button: base.textTheme.button.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
         caption: base.textTheme.caption.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
         overline: base.textTheme.overline.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
-      ));
+      ), colorScheme: ColorScheme.dark().copyWith(secondary: AppColors.colors[1]));
 }
 
 TextTheme _buildTextTheme(TextTheme base) {

@@ -1,8 +1,10 @@
 import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/components/SmokeSession/session_list.dart';
+import 'package:app/main.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:app/theme/theme_widget.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -355,8 +357,8 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                         _removeDialog().then((data) => {
                               if (data)
                                 {
-                                  DataProvider.getData(context)
-                                      .personBloc
+                                  getIt
+                                      .get<PersonBloc>()
                                       .removeDevice(widget.device.code)
                                       .then((onValue) =>
                                           Navigator.of(context).pop())

@@ -1,5 +1,7 @@
 import 'package:app/components/Buttons/m_outlineButton.dart';
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/theme/theme_widget.dart';
 
@@ -20,7 +22,7 @@ class MetadataBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = MTheme.of(context);
     var smokeSessionBloc = dataProvider.smokeSessionBloc;
-    var personBloc = dataProvider.personBloc;
+    var personBloc = getIt.get<PersonBloc>();
     return Scaffold(
       appBar: AppBar(
         title: Text('Metadata'.toUpperCase(), style: theme.appBarStyle),

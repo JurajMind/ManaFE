@@ -11,11 +11,17 @@ import 'package:openapi/api.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+const String _password = 'password';
+const String _usernName = 'userName';
+const String _accessToken = 'accessToken';
+const String _refreshToken = 'refreshToken';
+
 class AuthorizeRepository {
+  final SharedPreferences sharedPreferences;
+
   String url = 'https://${App.baseUri}/token';
 
-  String _token;
-  String _userName;
+  AuthorizeRepository({@required this.sharedPreferences});
 
   Future<String> authorize(String userName, String password) async {
     final response = await http.post(
@@ -31,29 +37,21 @@ class AuthorizeRepository {
     if (response.statusCode != 200) {
       return null;
     }
-    SharedPreferences _storage = await SharedPreferences.getInstance();
+
     final responseJson = json.decode(response.body);
     var sucess = await writeToken(responseJson);
     if (sucess != null) {
-      await _storage.setString('password', password);
+      await sharedPreferences.setString(_password, password);
     }
     return sucess;
   }
 
-  Future<String> getToken() async {
-    if (_token == null) {
-      SharedPreferences _storage = await SharedPreferences.getInstance();
-      _token = _storage.getString('accessToken');
-    }
-    return _token;
+  String getToken() {
+    return sharedPreferences.getString(_accessToken);
   }
 
-  Future<String> getUserName() async {
-    if (_userName == null) {
-      SharedPreferences _storage = await SharedPreferences.getInstance();
-      _userName = _storage.getString('userName');
-    }
-    return _userName;
+  String getUserName() {
+    return sharedPreferences.getString(_usernName);
   }
 
   Future<bool> getLocalToken(String provider, String externalToken) async {
@@ -68,27 +66,21 @@ class AuthorizeRepository {
   }
 
   Future signOut() async {
-    SharedPreferences _storage = await SharedPreferences.getInstance();
-    await _storage.remove('accessToken');
-    await _storage.remove('refreshToken');
-    await _storage.remove('userName');
-    await _storage.remove('password');
-    //navigatorKey.currentState.pushReplacementNamed('auth/home');
-    _token = null;
+    await sharedPreferences.remove(_accessToken);
+    await sharedPreferences.remove(_refreshToken);
+    await sharedPreferences.remove(_usernName);
+    await sharedPreferences.remove(_password);
   }
 
   messToken() async {
-    _token = "token";
-    SharedPreferences _storage = await SharedPreferences.getInstance();
-    await _storage.setString('accessToken', 'token');
+    await sharedPreferences.setString(_accessToken, 'token');
   }
 
   Future<String> refreshToken() async {
-    SharedPreferences _storage = await SharedPreferences.getInstance();
-    var refreshToken = _storage.getString('refreshToken');
+    var refreshToken = sharedPreferences.getString(_refreshToken);
     // await _storage.delete(key: 'accessToken');
     // await _storage.delete(key: 'refreshToken');
-    _token = null;
+
     final response = await http.post(
       Uri.parse(url),
       body: {
@@ -99,13 +91,15 @@ class AuthorizeRepository {
     );
     final responseJson = json.decode(response.body);
     if (responseJson['error'] != null) {
-      var password = _storage.getString('password');
-      var userName = _storage.getString('userName');
-      var reAuthorize = await this.authorize(userName, password);
-      if (reAuthorize != null) return reAuthorize;
+      var password = sharedPreferences.getString(_password);
+      var userName = sharedPreferences.getString(_usernName);
+      if (password != null) {
+        var reAuthorize = await this.authorize(userName, password);
+        if (reAuthorize != null) return reAuthorize;
+      }
 
-      await _storage.remove('refreshToken');
-      await _storage.remove('accessToken');
+      await sharedPreferences.remove(_refreshToken);
+      await sharedPreferences.remove(_accessToken);
       AppWidget.restartApp(scaffoldKey.currentContext);
     }
 
@@ -119,7 +113,6 @@ class AuthorizeRepository {
   }
 
   Future<String> register(UserModel userData) async {
-    _token = null;
     final response = await http.post(
       Uri.parse('https://${App.baseUri}/api/Account/Register'),
       body: {
@@ -139,7 +132,6 @@ class AuthorizeRepository {
   }
 
   Future<bool> forgotPassword(String email) async {
-    _token = null;
     final response = await http.post(
       Uri.parse('https://${App.baseUri}/api/Account/ForgotPassword'),
       body: {"Email": email},
@@ -151,23 +143,22 @@ class AuthorizeRepository {
   }
 
   Future<String> writeToken(dynamic responseJson) async {
-    SharedPreferences _storage = await SharedPreferences.getInstance();
     var token = TokenResponse.fromJson(responseJson as Map<String, dynamic>);
     if (token.accessToken != null) {
-      await _storage.setString('accessToken', token.accessToken);
+      await sharedPreferences.setString(_accessToken, token.accessToken);
       if (token.refreshToken != null)
-        await _storage.setString('refreshToken', token.refreshToken);
+        await sharedPreferences.setString(_refreshToken, token.refreshToken);
 
-      await _storage.setString('userName', token.userName ?? 'No user name');
+      await sharedPreferences.setString(
+          _usernName, token.userName ?? 'No user name');
 
       return token.accessToken;
     }
     return null;
   }
 
-  Future<bool> isAuthorized() async {
-    //TODO api ping
-    var token = await getToken();
+  bool isAuthorized() {
+    var token = getToken();
     return token != null;
   }
 }

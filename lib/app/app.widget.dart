@@ -67,34 +67,14 @@ class _AppWidgetState extends State<AppWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var authorized = getIt.get<AuthorizeRepository>().isAuthorized();
     return MTheme(
-      child: FutureBuilder<bool>(
-        future: getIt.get<AuthorizeRepository>().isAuthorized(),
-        builder: (context, data) => Builder(builder: (context) {
-          var theme = MTheme.of(context);
-          if (data == null) {
-            return SplashScreen();
-          }
-          // User is not logged
-          if (!(data.data ?? false)) {
-            return MaterialApp(
-              localizationsDelegates: [
-                _newLocaleDelegate,
-                //provides localised strings
-                GlobalMaterialLocalizations.delegate,
-                //provides RTL support
-                GlobalWidgetsLocalizations.delegate,
-              ],
-              supportedLocales: App.supportedLocales(),
-              title: 'Manapipes',
-              home: StartPage(),
-              // onGenerateRoute: App.router.generator,
-              theme: MTheme.buildDarkTheme(theme),
-            );
-          }
+      child: Builder(builder: (context) {
+        var theme = MTheme.of(context);
 
+        // User is not logged
+        if (!authorized) {
           return MaterialApp(
-            key: globalNavKey,
             localizationsDelegates: [
               _newLocaleDelegate,
               //provides localised strings
@@ -104,17 +84,32 @@ class _AppWidgetState extends State<AppWidget> {
             ],
             supportedLocales: App.supportedLocales(),
             title: 'Manapipes',
-            navigatorObservers: [routeObserver],
-
-            home: DataProvider(
-                personBloc: getIt.get<PersonBloc>(),
-                child: new HomePage(
-                    deeplink: deeplink, routeObserver: routeObserver)),
+            home: StartPage(),
             // onGenerateRoute: App.router.generator,
             theme: MTheme.buildDarkTheme(theme),
           );
-        }),
-      ),
+        }
+
+        return MaterialApp(
+          key: globalNavKey,
+          localizationsDelegates: [
+            _newLocaleDelegate,
+            //provides localised strings
+            GlobalMaterialLocalizations.delegate,
+            //provides RTL support
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: App.supportedLocales(),
+          title: 'Manapipes',
+          navigatorObservers: [routeObserver],
+
+          home: DataProvider(
+              child: new HomePage(
+                  deeplink: deeplink, routeObserver: routeObserver)),
+          // onGenerateRoute: App.router.generator,
+          theme: MTheme.buildDarkTheme(theme),
+        );
+      }),
     );
   }
 }

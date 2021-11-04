@@ -1,5 +1,7 @@
 import 'package:app/app/app.dart';
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:app/module/places/place_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -15,7 +17,7 @@ class ManagePlacePage extends StatefulWidget {
 }
 
 class _ManagePlacePageState extends State<ManagePlacePage> {
-  PlaceBloc placeBloc;
+  PlaceBloc placeBloc = getIt.get<PlaceBloc>();
 
   @override
   initState() {
@@ -27,7 +29,7 @@ class _ManagePlacePageState extends State<ManagePlacePage> {
   Future didChangeDependencies() async {
     super.didChangeDependencies();
     if (placeBloc == null) {
-      placeBloc = DataProvider.getData(context).placeSingleBloc;
+      placeBloc = getIt.get<PlaceBloc>();
     }
     await placeBloc.loadPlace(placeId: widget.place.id);
   }

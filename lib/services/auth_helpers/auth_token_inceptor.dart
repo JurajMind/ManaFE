@@ -1,4 +1,3 @@
-import 'package:app/app/app.widget.dart';
 import 'package:app/main.dart';
 import 'package:dio/dio.dart';
 
@@ -14,7 +13,7 @@ class AuthTokenInceptor extends Interceptor {
   void onError(DioError error, ErrorInterceptorHandler handler) async {
     if (error.response?.statusCode == 401 ||
         error.response?.statusCode == 403) {
-      var token = await _authorize.getToken();
+      var token = _authorize.getToken();
       var tokenHeader = 'Bearer $token';
       RequestOptions options = error?.response?.requestOptions;
       // If the token has been updated, repeat directly.
@@ -47,27 +46,26 @@ class AuthTokenInceptor extends Interceptor {
     _dio.lock();
     _dio.interceptors.responseLock.lock();
     _dio.interceptors.errorLock.lock();
-    await _authorize.refreshToken().then((d) {
-      options.headers["Authorization"] = 'Bearer $d';
-      _dio.unlock();
-      _dio.interceptors.responseLock.unlock();
-      _dio.interceptors.errorLock.unlock();
 
-      return _dio.request(
-        options.path,
-        options: Options(
-            contentType: options.contentType,
-            extra: options.extra,
-            followRedirects: options.followRedirects,
-            headers: options.headers),
-      );
-    });
+    var refreshToken = await _authorize.refreshToken();
+    options.headers["Authorization"] = 'Bearer $refreshToken';
+    _dio.unlock();
+    _dio.interceptors.responseLock.unlock();
+    _dio.interceptors.errorLock.unlock();
+
+    return _dio.request(
+      options.path,
+      options: Options(
+          contentType: options.contentType,
+          extra: options.extra,
+          followRedirects: options.followRedirects,
+          headers: options.headers),
+    );
   }
 
   @override
-  void onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
-    var token = await _authorize.getToken();
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    var token = _authorize.getToken();
     options.headers['Authorization'] = 'Bearer $token';
     options.headers["Accept"] = "application/json";
     options.headers['content-type'] = 'application/json';

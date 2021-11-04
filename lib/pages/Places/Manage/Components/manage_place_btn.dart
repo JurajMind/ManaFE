@@ -1,4 +1,6 @@
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:app/pages/Places/Manage/manage_place.page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,7 +13,7 @@ class ManagePlaceBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var bloc = DataProvider.getData(context).personBloc;
+    var bloc = getIt.get<PersonBloc>();
     return Container(
       child: StreamBuilder<PersonInfoDto>(
           stream: bloc.info,

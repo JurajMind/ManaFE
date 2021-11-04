@@ -1,8 +1,10 @@
 import 'package:app/app/app.dart';
 import 'package:app/components/Mixology/mixology_expanded.dart';
 import 'package:app/const/theme.dart';
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mix_card_expanded_shimmer.dart';
+import 'package:app/module/module.dart';
 import 'package:app/pages/SmokeSession/accesory_search.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
@@ -18,11 +20,14 @@ class MixSearchPage extends StatefulWidget {
 }
 
 class _MixSearchPageState extends State<MixSearchPage> {
-  List<PipeAccesorySimpleDto> selectedTobacco = new List<PipeAccesorySimpleDto>();
+  List<PipeAccesorySimpleDto> selectedTobacco =
+      new List<PipeAccesorySimpleDto>();
 
-  Map<PipeAccesorySimpleDto, Color> indexColor = new Map<PipeAccesorySimpleDto, Color>();
+  Map<PipeAccesorySimpleDto, Color> indexColor =
+      new Map<PipeAccesorySimpleDto, Color>();
 
-  BehaviorSubject<List<TobaccoMixSimpleDto>> tobaccoMix = new BehaviorSubject<List<TobaccoMixSimpleDto>>();
+  BehaviorSubject<List<TobaccoMixSimpleDto>> tobaccoMix =
+      new BehaviorSubject<List<TobaccoMixSimpleDto>>();
 
   var loading = false;
   String searchString;
@@ -42,7 +47,7 @@ class _MixSearchPageState extends State<MixSearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    var personBloc = DataProvider.getData(context).personBloc;
+    var personBloc = getIt.get<PersonBloc>();
     var gearBloc = DataProvider.getData(context).gearBloc;
     return SafeArea(
       child: Scaffold(
@@ -69,8 +74,10 @@ class _MixSearchPageState extends State<MixSearchPage> {
                             this.searchString = data;
                           });
                         },
-                        decoration:
-                            InputDecoration(hintText: 'Search by mix name', border: InputBorder.none, labelStyle: Theme.of(context).textTheme.headline4),
+                        decoration: InputDecoration(
+                            hintText: 'Search by mix name',
+                            border: InputBorder.none,
+                            labelStyle: Theme.of(context).textTheme.headline4),
                       ),
                       trailing: IconButton(
                         icon: Icon(Icons.cancel),
@@ -96,13 +103,21 @@ class _MixSearchPageState extends State<MixSearchPage> {
                                   searchType: 'Tobacco',
                                   personBloc: personBloc,
                                   gearBloc: gearBloc,
-                                  ownAccesories: personBloc.myGear.value.where((s) => s.type == "Tobacco").toList(),
+                                  ownAccesories: personBloc.myGear.value
+                                      .where((s) => s.type == "Tobacco")
+                                      .toList(),
                                 )),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[Text('Add item in mix', style: Theme.of(context).textTheme.bodyText2), Icon(Icons.add)],
+                                children: <Widget>[
+                                  Text('Add item in mix',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText2),
+                                  Icon(Icons.add)
+                                ],
                               ),
                             ),
                           )
@@ -117,15 +132,13 @@ class _MixSearchPageState extends State<MixSearchPage> {
                     if (loading) ...{
                       if (selectedTobacco.length > 0)
                         ...List.generate(
-                            10,
-                            (index) => MixCardExpandedShimmer(
-                                  move: false,
-                                ))
+                            10, (index) => MixCardExpandedShimmer())
                     } else ...{
                       if (snapshot.data != null) ...{
                         ...snapshot.data.map((m) => MixCardExpanded(
                               tobaccoMix: m,
-                              multiHighlight: indexColor.map((f, c) => MapEntry(f.id, c)),
+                              multiHighlight:
+                                  indexColor.map((f, c) => MapEntry(f.id, c)),
                             ))
                       } else ...{
                         Center(
@@ -178,7 +191,10 @@ class _MixSearchPageState extends State<MixSearchPage> {
     setState(() {
       loading = true;
     });
-    App.http.suggestMix(this.selectedTobacco.map((f) => f.id).toList(), name: searchString).then((onValue) {
+    App.http
+        .suggestMix(this.selectedTobacco.map((f) => f.id).toList(),
+            name: searchString)
+        .then((onValue) {
       this.tobaccoMix.add(onValue);
       setState(() {
         loading = false;

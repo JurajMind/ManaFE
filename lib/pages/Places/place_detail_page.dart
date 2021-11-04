@@ -1,5 +1,6 @@
 import 'package:app/components/Media/media.widget.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
+import 'package:app/main.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/place_bloc.dart';
@@ -35,7 +36,7 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
   Future didChangeDependencies() async {
     super.didChangeDependencies();
     if (placeBloc == null) {
-      placeBloc = DataProvider.getData(context).placeSingleBloc;
+      placeBloc = placeBloc = getIt.get<PlaceBloc>();
     }
     if (this.place != null)
       placeBloc.loadPlace(place: this.place);

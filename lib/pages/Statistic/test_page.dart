@@ -3,6 +3,7 @@ import 'package:app/app/app.widget.dart';
 import 'package:app/main.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,8 @@ class TestPage extends StatefulWidget {
 class _TestPageState extends State<TestPage> {
   @override
   Widget build(BuildContext context) {
-    var service = DataProvider.getData(context).personBloc;
-    var place = DataProvider.getData(context).placeBloc;
+    var service = getIt.get<PersonBloc>();
+    var place = getIt.get<PlacesBloc>();
 
     return Scaffold(
       appBar: AppBar(
@@ -149,8 +150,7 @@ class _TestPageState extends State<TestPage> {
               ),
               label: Text('Hard jump'),
               onPressed: () async {
-                var appBloc = DataProvider.getData(context).personBloc;
-                appBloc.callback(1, TestPage());
+                service.callback(1, TestPage());
               },
             ),
             OutlineButton.icon(

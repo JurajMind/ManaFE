@@ -719,7 +719,7 @@ class IntroSliderState extends State<IntroSlider>
   Widget build(BuildContext context) {
     // Full screen view
     if (shouldHideStatusBar == true) {
-      SystemChrome.setEnabledSystemUIOverlays([]);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     }
 
     return Scaffold(

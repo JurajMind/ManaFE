@@ -115,7 +115,7 @@ class PersonBloc extends SignalBloc {
       var signal = new SignalR();
       List<String> params = new List<String>();
       var auth = this.authorizeRepository;
-      params.add(await auth.getUserName());
+      params.add(auth.getUserName());
       signal.callServerFunction(
           new ServerCallParam(name: 'JoinPerson', params: params));
     } catch (e) {}

@@ -1,6 +1,8 @@
 import 'package:app/components/Places/place_flag.dart';
 import 'package:app/const/theme.dart';
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:app/support/mana_icons_icons.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,7 @@ import 'package:openapi/api.dart';
 class ExtraPlaceWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var placeBloc = DataProvider.getData(context).placeSingleBloc;
+    var placeBloc = getIt.get<PlaceBloc>();
     return Container(
       child: Column(
         children: <Widget>[
@@ -42,8 +44,9 @@ class ExtraPlaceWidget extends StatelessWidget {
                                   child: Text(
                                       snapshot.data.description[lang] ??
                                           'No description',
-                                      style:
-                                          Theme.of(context).textTheme.headline5),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline5),
                                 ),
                               ),
                             ],

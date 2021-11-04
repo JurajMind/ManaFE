@@ -1,5 +1,7 @@
 import 'package:app/components/Common/labeled_value.dart';
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/pages/Statistic/Detail/smoke_session_detail_page.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +24,7 @@ class LiveSmokeSessionListItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.0)),
         child: InkWell(
           onTap: () async {
-            var bloc = DataProvider.getData(context).personBloc;
+            var bloc = getIt.get<PersonBloc>();
 
             if (session.live == true) {
               bloc.callback(

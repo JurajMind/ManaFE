@@ -1,6 +1,8 @@
 import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/const/theme.dart';
-import 'package:app/module/data_provider.dart';
+import 'package:app/main.dart';
+
+import 'package:app/module/module.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
@@ -10,7 +12,7 @@ class AddRemoveGearButton extends StatelessWidget {
   const AddRemoveGearButton({Key key, this.gear}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var bloc = DataProvider.getData(context).personBloc;
+    var bloc = getIt.get<PersonBloc>();
 
     return StreamBuilder<List<PipeAccesorySimpleDto>>(
         stream: bloc.myGear,

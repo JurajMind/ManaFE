@@ -1,4 +1,6 @@
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/api.dart';
@@ -10,7 +12,7 @@ class PersonInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var person = DataProvider.getData(context).personBloc;
+    var person = getIt.get<PersonBloc>();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(

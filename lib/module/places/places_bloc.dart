@@ -23,11 +23,7 @@ class PlacesBloc {
 
   StreamSubscription<Position> posSub;
 
-  static final PlacesBloc _instance = new PlacesBloc._();
-
-  factory PlacesBloc() => PlacesBloc._instance;
-
-  PlacesBloc._() {
+  PlacesBloc() {
     this.loading.add(true);
   }
 
@@ -66,7 +62,7 @@ class PlacesBloc {
     location.add(position);
     await _loadPlaces();
 
-    posSub = Geolocator.getPositionStream().listen((onData) {
+    posSub = Geolocator.getPositionStream(distanceFilter: 50).listen((onData) {
       print(onData);
       this.location.add(onData);
     });

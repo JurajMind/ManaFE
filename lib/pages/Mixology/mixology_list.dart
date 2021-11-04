@@ -24,21 +24,30 @@ class MixologyList extends StatefulWidget {
 class MixologyListState extends State<MixologyList> {
   int curentView = 0;
 
-  static const Map<int, String> labels = {0: 'mix.my_mixes', 1: 'mix.featured_creators', 2: 'mix.favorite_mixes'};
+  static const Map<int, String> labels = {
+    0: 'mix.my_mixes',
+    1: 'mix.featured_creators',
+    2: 'mix.favorite_mixes'
+  };
 
-  Future showTobaccoDialog({BuildContext context, MixologyBloc mixologyBloc}) async {
-    TobaccoEditModel tobacco = await Navigator.of(context).push(new MaterialPageRoute<TobaccoEditModel>(
-        builder: (BuildContext context) {
-          return new TobaccoEditWidget(
-            tobaccoWeight: 0,
-            tobacco: null,
-            mix: null,
-          );
-        },
-        fullscreenDialog: true));
+  Future showTobaccoDialog(
+      {BuildContext context, MixologyBloc mixologyBloc}) async {
+    TobaccoEditModel tobacco = await Navigator.of(context)
+        .push(new MaterialPageRoute<TobaccoEditModel>(
+            builder: (BuildContext context) {
+              return new TobaccoEditWidget(
+                tobaccoWeight: 0,
+                tobacco: null,
+                mix: null,
+              );
+            },
+            fullscreenDialog: true));
     if (tobacco.mix != null && tobacco.mix.tobaccos.length > 0)
       mixologyBloc.saveMix(tobacco.mix).then((onValue) {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => MixDetailPage(mix: onValue)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MixDetailPage(mix: onValue)));
       });
   }
 
@@ -55,14 +64,16 @@ class MixologyListState extends State<MixologyList> {
               child: AppBar(
                 leading: IconButton(
                     icon: Icon(Icons.search),
-                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                    onPressed: () =>
+                        Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => MixSearchPage(),
                         ))),
                 actions: <Widget>[
                   curentView == 0
                       ? IconButton(
                           icon: Icon(Icons.add),
-                          onPressed: () => showTobaccoDialog(context: context, mixologyBloc: mixologyBloc),
+                          onPressed: () => showTobaccoDialog(
+                              context: context, mixologyBloc: mixologyBloc),
                         )
                       : Container()
                 ],
@@ -93,12 +104,14 @@ class MixologyListState extends State<MixologyList> {
         return PaggingMixListView(
           mixologyBloc: mixologyBloc,
           mixCreator: 'me',
-          showTobaccoDialog: () => showTobaccoDialog(context: context, mixologyBloc: mixologyBloc),
+          showTobaccoDialog: () =>
+              showTobaccoDialog(context: context, mixologyBloc: mixologyBloc),
         );
       case 1:
         return FeatureMixCreator();
       case 2:
-        return PaggingMixListView(mixologyBloc: mixologyBloc, mixCreator: 'favorite');
+        return PaggingMixListView(
+            mixologyBloc: mixologyBloc, mixCreator: 'favorite');
     }
     return Placeholder();
   }
@@ -149,7 +162,9 @@ class _PaggingMixListViewState extends State<PaggingMixListView> {
                     'Try add new mix',
                     style: Theme.of(context).textTheme.headline6,
                   ),
-                  IconButton(icon: Icon(Icons.add), onPressed: () => widget.showTobaccoDialog())
+                  IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () => widget.showTobaccoDialog())
                 },
                 if (widget.mixCreator == "favorite")
                   Text(
@@ -170,14 +185,17 @@ class _PaggingMixListViewState extends State<PaggingMixListView> {
           return LazyLoadScrollView(
             onRefresh: () => Future.delayed(Duration.zero, () => {}),
             onEndOfPage: () {
-              if (!snapshot.data.contains(null)) widget.mixologyBloc.loadCreatorMixesNextPage(widget.mixCreator, false);
+              if (!snapshot.data.contains(null))
+                widget.mixologyBloc
+                    .loadCreatorMixesNextPage(widget.mixCreator, false);
             },
             child: useTabletLayout
                 ? Row(
                     children: <Widget>[
                       Expanded(
                         flex: 1,
-                        child: buildListView(itemCount, snapshot, onTap: (value) {
+                        child:
+                            buildListView(itemCount, snapshot, onTap: (value) {
                           setState(() {
                             this.selectedMix = value.id;
                             this.righPanel = new MixDetailPage(
@@ -199,7 +217,9 @@ class _PaggingMixListViewState extends State<PaggingMixListView> {
         });
   }
 
-  ListView buildListView(int itemCount, AsyncSnapshot<List<TobaccoMixSimpleDto>> snapshot, {ValueChanged<TobaccoMixSimpleDto> onTap, int selectedMixId}) {
+  ListView buildListView(
+      int itemCount, AsyncSnapshot<List<TobaccoMixSimpleDto>> snapshot,
+      {ValueChanged<TobaccoMixSimpleDto> onTap, int selectedMixId}) {
     return ListView.builder(
       physics: ClampingScrollPhysics(),
       itemCount: itemCount ?? 10,
@@ -216,9 +236,7 @@ class _PaggingMixListViewState extends State<PaggingMixListView> {
             selected: selectedMix.id == selectedMixId,
           );
         } else {
-          return MixCardExpandedShimmer(
-            move: false,
-          );
+          return MixCardExpandedShimmer();
         }
       },
     );

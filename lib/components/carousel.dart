@@ -1,6 +1,7 @@
 import 'package:app/Helpers/place_helper.dart';
 import 'package:app/components/Media/media.widget.dart';
 import 'package:app/components/Places/open_indicator.dart';
+import 'package:app/main.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/places_bloc.dart';
@@ -22,13 +23,14 @@ class Carroussel extends StatefulWidget {
   final void Function(PlaceSimpleDto) navigateToDetail;
 
   @override
-  _CarrousselState createState() => new _CarrousselState(navigateToDetail: navigateToDetail);
+  _CarrousselState createState() =>
+      new _CarrousselState(navigateToDetail: navigateToDetail);
 }
 
 class _CarrousselState extends State<Carroussel> {
   final void Function(PlaceSimpleDto) navigateToDetail;
 
-  PlacesBloc placeBloc;
+  PlacesBloc placeBloc = getIt.get<PlacesBloc>();
 
   _CarrousselState({this.navigateToDetail});
 
@@ -49,7 +51,6 @@ class _CarrousselState extends State<Carroussel> {
   Future didChangeDependencies() async {
     super.didChangeDependencies();
     if (placeBloc == null) {
-      placeBloc = DataProvider.getPlaces(context);
       await placeBloc.loadPlaces();
     }
   }
@@ -83,8 +84,11 @@ class _CarrousselState extends State<Carroussel> {
           return StreamBuilder<Position>(
               stream: bloc.location,
               builder: (context, position) {
-                Map<int, double> positions = new Map<int, double>.fromIterable(snapshot.data,
-                    key: (v) => v.id, value: (v) => PlaceHelpers.calculateDistanceFromAddress(v.address, position.data));
+                Map<int, double> positions = new Map<int, double>.fromIterable(
+                    snapshot.data,
+                    key: (v) => v.id,
+                    value: (v) => PlaceHelpers.calculateDistanceFromAddress(
+                        v.address, position.data));
                 return PageView.builder(
                   onPageChanged: (value) {
                     setState(() {
@@ -92,8 +96,11 @@ class _CarrousselState extends State<Carroussel> {
                     });
                   },
                   controller: controller,
-                  itemCount: snapshot.data != null ? math.min(snapshot.data.length, 5) : 0,
-                  itemBuilder: (context, index) => builder(index, snapshot.data[index], positions),
+                  itemCount: snapshot.data != null
+                      ? math.min(snapshot.data.length, 5)
+                      : 0,
+                  itemBuilder: (context, index) =>
+                      builder(index, snapshot.data[index], positions),
                 );
               });
         });
@@ -127,14 +134,17 @@ class _CarrousselState extends State<Carroussel> {
   Widget buildAdd() {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Placeholder(), fullscreenDialog: true));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => Placeholder(), fullscreenDialog: true));
       },
       child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Container(
               width: MediaQuery.of(context).size.width * 0.4,
               decoration: BoxDecoration(
-                  borderRadius: new BorderRadius.circular(10.0), border: new Border.all(color: Colors.white, width: 2), color: Colors.transparent),
+                  borderRadius: new BorderRadius.circular(10.0),
+                  border: new Border.all(color: Colors.white, width: 2),
+                  color: Colors.transparent),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -142,7 +152,8 @@ class _CarrousselState extends State<Carroussel> {
                   Hero(
                     tag: 'add_new_place_label',
                     child: Text(
-                      AppTranslations.of(context).text("reservations.add_new_place"),
+                      AppTranslations.of(context)
+                          .text("reservations.add_new_place"),
                       style: Theme.of(context).textTheme.headline6,
                       textAlign: TextAlign.center,
                     ),
@@ -159,11 +170,13 @@ class _CarrousselState extends State<Carroussel> {
         var curentIndex = controller.page.round();
 
         if (curentIndex > index) {
-          controller.previousPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
+          controller.previousPage(
+              duration: Duration(milliseconds: 500), curve: Curves.ease);
         }
 
         if (curentIndex < index) {
-          controller.nextPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
+          controller.nextPage(
+              duration: Duration(milliseconds: 500), curve: Curves.ease);
         }
 
         if (curentIndex == index) {
@@ -178,8 +191,10 @@ class _CarrousselState extends State<Carroussel> {
                 color: Colors.grey[300],
                 image: DecorationImage(
                     image: MPlatform.isWeb
-                        ? NetworkImage(Extensions.getPlaceImage(place, MediaSize.Medium))
-                        : CachedNetworkImageProvider(Extensions.getPlaceImage(place, MediaSize.Medium)),
+                        ? NetworkImage(
+                            Extensions.getPlaceImage(place, MediaSize.Medium))
+                        : CachedNetworkImageProvider(
+                            Extensions.getPlaceImage(place, MediaSize.Medium)),
                     fit: BoxFit.cover)),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -239,7 +254,10 @@ class _CarrousselState extends State<Carroussel> {
                     children: <Widget>[
                       new Flex(
                         direction: Axis.horizontal,
-                        children: <Widget>[new Icon(FontAwesomeIcons.walking), DistanceWidget(distance)],
+                        children: <Widget>[
+                          new Icon(FontAwesomeIcons.walking),
+                          DistanceWidget(distance)
+                        ],
                       ),
                       new OpenIndicator(
                         place: place,

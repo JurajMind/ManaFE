@@ -5,6 +5,7 @@ import 'package:app/app/app.dart';
 import 'package:app/app/app.widget.dart';
 import 'package:app/components/icon_button_title.dart';
 import 'package:app/const/theme.dart';
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/person/person_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
@@ -64,7 +65,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
   List<FocusScopeNode> tabFocusNodes;
 
   SmokeSessionBloc smokeSessionBloc;
-  PersonBloc personBloc;
+  PersonBloc personBloc = getIt.get<PersonBloc>();
 
   StreamSubscription<int> activeTabSub;
   Stream popNotification;
@@ -83,7 +84,6 @@ class _HomePageState extends State<HomePage> with RouteAware {
 
     Future.delayed(Duration.zero, () {
       smokeSessionBloc = DataProvider.getSmokeSession(context);
-      personBloc = DataProvider.getData(context).personBloc;
       personBloc.callback = _setActiveAndJumpTab;
 
       subscription = smokeSessionBloc.notifications.stream.listen((data) {

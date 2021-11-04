@@ -1,6 +1,8 @@
 import 'package:app/components/Media/media.widget.dart';
 import 'package:app/components/StarRating/m_star_ratting.dart';
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
@@ -12,7 +14,7 @@ class ReviewView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var bloc = DataProvider.getData(context).personBloc;
+    var bloc = getIt.get<PersonBloc>();
     var id = bloc.info.value.personId;
 
     var pReview = review?.placeReview ?? placeReview;
@@ -58,7 +60,9 @@ class ReviewView extends StatelessWidget {
                 rating: review.strength / 2,
                 colorIndex: 0,
               ),
-              Padding(padding: const EdgeInsets.all(8.0), child: Text(review?.tobaccoReview?.text ?? '')),
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(review?.tobaccoReview?.text ?? '')),
               Divider(
                 color: Colors.white,
               ),
@@ -74,14 +78,19 @@ class ReviewView extends StatelessWidget {
             if (authorId == id)
               InkWell(
                 onTap: () {
-                  var sessionBloc = DataProvider.getData(context).smokeSessionBloc;
-                  sessionBloc.removeReview(review).then((_) => Navigator.of(context).pop());
+                  var sessionBloc =
+                      DataProvider.getData(context).smokeSessionBloc;
+                  sessionBloc
+                      .removeReview(review)
+                      .then((_) => Navigator.of(context).pop());
                 },
                 child: Container(
                   padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                   decoration: BoxDecoration(
                     color: Colors.red,
-                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(32.0), bottomRight: Radius.circular(32.0)),
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(32.0),
+                        bottomRight: Radius.circular(32.0)),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -125,7 +134,8 @@ class ReviewView extends StatelessWidget {
         rating: pReview.service / 2,
         colorIndex: 1,
       ),
-      Padding(padding: const EdgeInsets.all(8.0), child: Text(pReview?.text ?? ''))
+      Padding(
+          padding: const EdgeInsets.all(8.0), child: Text(pReview?.text ?? ''))
     ];
   }
 

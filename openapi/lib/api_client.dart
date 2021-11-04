@@ -10,7 +10,7 @@
 part of openapi.api;
 
 class ApiClient {
-  ApiClient({this.basePath = 'https://devmana.azurewebsites.net'}) {}
+  ApiClient({this.basePath = 'https://devmana.azurewebsites.net'});
 
   final String basePath;
 

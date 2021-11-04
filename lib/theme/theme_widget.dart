@@ -34,17 +34,13 @@ class MTheme extends StatelessWidget {
 
     return base.copyWith(
         primaryColor: theme.colors[0],
-        buttonColor: theme.colors[1],
         indicatorColor: Colors.white,
-        accentColor: theme.colors[1],
         canvasColor: const Color(0xFF202124),
         scaffoldBackgroundColor: const Color(0xFF000d1a),
         backgroundColor: const Color(0xFF000d1a),
         errorColor: const Color(0xFFB00020),
         appBarTheme: AppBarTheme(color: theme.black),
-        colorScheme: ColorScheme.dark(),
         primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
-        accentTextTheme: _buildTextTheme(base.accentTextTheme),
         textTheme: TextTheme(
           headline1: base.textTheme.headline1
               .copyWith(color: theme.white, fontWeight: FontWeight.w700),
@@ -72,7 +68,7 @@ class MTheme extends StatelessWidget {
               .copyWith(color: theme.white, fontWeight: FontWeight.w700),
           overline: base.textTheme.overline
               .copyWith(color: theme.white, fontWeight: FontWeight.w700),
-        ));
+        ), colorScheme: ColorScheme.dark().copyWith(secondary: theme.colors[1]));
   }
 
   static TextTheme _buildTextTheme(TextTheme base) {

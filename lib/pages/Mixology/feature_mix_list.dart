@@ -105,9 +105,7 @@ class _FeatureMixListViewState extends State<FeatureMixListView> {
                       ],
                     );
                   } else {
-                    return MixCardExpandedShimmer(
-                      move: false,
-                    );
+                    return MixCardExpandedShimmer();
                   }
                 },
               ),

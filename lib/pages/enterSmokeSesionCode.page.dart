@@ -5,7 +5,9 @@ import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/components/Common/circle_painter.dart';
 import 'package:app/components/SmokeSession/smoke_session_carousel.dart';
 import 'package:app/Helpers/helpers.dart';
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/services/http.service.dart';
 import 'package:app/theme/theme_widget.dart';
@@ -39,7 +41,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
   @override
   void initState() {
     new Future.delayed(Duration.zero, () {
-      var bloc = DataProvider.getData(context).personBloc;
+      var bloc = getIt.get<PersonBloc>();
       bloc.loadSessions();
       var sessionBloc = DataProvider.getData(context).smokeSessionBloc;
       setState(() {
