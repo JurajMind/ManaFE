@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:app/app/app.dart';
 import 'package:app/models/SignalR/device_online.dart';
 import 'package:app/module/signal_bloc.dart';
@@ -11,7 +9,6 @@ import 'package:hive/hive.dart';
 import 'package:openapi/api.dart';
 import 'package:queries/collections.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:sembast/sembast.dart';
 
 class PersonBloc extends SignalBloc {
   bool _loadedGear = false;
@@ -86,7 +83,9 @@ class PersonBloc extends SignalBloc {
     if (_loadedGear && !reload) return;
 
     _loadedGear = true;
-    loadGearFromCache().then((value) => myGear.add(value));
+    loadGearFromCache().then((value) {
+      if (value != null) myGear.add(value);
+    });
     var gear = await App.http.getMyGear();
     storeGearToCache(gear);
     myGear.add(gear);
@@ -117,6 +116,7 @@ class PersonBloc extends SignalBloc {
 
   Future removeMyGear(PipeAccesorySimpleDto accesory, int count) async {
     var removed = await App.http.removeMyGear(accesory.id);
+    if (!removed) return;
     var oldGear = this.myGear.value;
     oldGear.removeWhere((a) => a.id == accesory.id);
     this.myGear.add(oldGear.toSet().toList());
@@ -125,7 +125,7 @@ class PersonBloc extends SignalBloc {
   loadInitData({bool reload = false}) async {
     if (_loadedInit && !reload) return;
     _loadedInit = true;
-    loadInitDataFromCache();
+
     var init = await App.http.getPersonInitData();
 
     var infoTask = App.http.getPersonInfo();
@@ -142,34 +142,12 @@ class PersonBloc extends SignalBloc {
     _loadedInit = true;
     try {
       var signal = new SignalR();
-      List<String> params = new List<String>();
+      List<String> params = <String>[];
       var auth = this.authorizeRepository;
       params.add(auth.getUserName());
       signal.callServerFunction(
           new ServerCallParam(name: 'JoinPerson', params: params));
     } catch (e) {}
-    var db = await App.cache.getDatabase();
-    //var key = await db.put(json.encode(init), 'person');
-  }
-
-  Future loadInitDataFromCache() async {
-    try {
-      var store = intMapStoreFactory.store('my_store');
-      var db = await App.cache.getDatabase();
-      var key = await store.add(db, {'name': 'perspn'});
-      var record = await store.record(key).getSnapshot(db);
-      var value;
-      if (value == null) {
-        return;
-      }
-      var it = json.decode(value);
-      var fromCache = PersonActiveDataDto.fromJson(it);
-      devices.add(fromCache.devices);
-      myReservations.add(fromCache.activeReservations);
-    } catch (e) {
-      print('error');
-      print(e);
-    }
   }
 
   Future loadSessions() async {
