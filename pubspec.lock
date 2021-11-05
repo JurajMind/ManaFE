@@ -72,12 +72,12 @@ packages:
     source: hosted
     version: "2.0.1"
   better_player:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: better_player
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.77"
+    version: "0.0.73"
   boolean_selector:
     dependency: transitive
     description:
@@ -593,7 +593,7 @@ packages:
       name: flutter_widget_from_html_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.0"
+    version: "0.6.2"
   font_awesome_flutter:
     dependency: "direct main"
     description:
