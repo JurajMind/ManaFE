@@ -1,6 +1,7 @@
 import 'package:app/models/SmokeSession/smoke_session.dart';
 
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
+import 'package:clickable_list_wheel_view/clickable_list_wheel_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 import 'package:flutter/services.dart';
@@ -98,8 +99,41 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
         builder: (context, snapshot) {
           return snapshot?.data?.length == 0
               ? Container()
+              : ClickableListWheelScrollView(
+                  scrollController: scrollController,
+                  itemHeight: 70,
+                  itemCount: snapshot.data.length,
+                  onItemTapCallback: (index) {
+                    print("onItemTapCallback index: $index");
+                  },
+                  scrollOnTap: true,
+                  child: ListWheelScrollView.useDelegate(
+                    controller: scrollController,
+                    itemExtent: 70,
+                    physics: FixedExtentScrollPhysics(),
+                    overAndUnderCenterOpacity: 0.7,
+                    perspective: 0.004,
+                    onSelectedItemChanged: (index) {
+                      if (index == 0) {
+                        print('fake');
+                      }
+                      widget.onChanged(index);
+                      setState(() {
+                        _focusIndex = index;
+                        //Vibration.vibrate(duration: 2);
+                        HapticFeedback.selectionClick();
+                      });
+                    },
+                    childDelegate: ListWheelChildBuilderDelegate(
+                      builder: (context, index) => _createAnimation(index,
+                          snapshot.data[index], context, widget.selectedIndex),
+                      childCount: snapshot.data.length,
+                    ),
+                  ));
+
+          return snapshot?.data?.length == 0
+              ? Container()
               : ListWheelScrollView(
-                
                   itemExtent: 70.0,
                   controller: scrollController,
                   // clipToSize: true,
