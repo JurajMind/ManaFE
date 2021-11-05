@@ -108,10 +108,17 @@ class MixologyListState extends State<MixologyList> {
               showTobaccoDialog(context: context, mixologyBloc: mixologyBloc),
         );
       case 1:
-        return FeatureMixCreator();
+        {
+          mixologyBloc.loadMixCreator();
+          return FeatureMixCreator();
+        }
+
       case 2:
-        return PaggingMixListView(
-            mixologyBloc: mixologyBloc, mixCreator: 'favorite');
+        {
+          mixologyBloc.loadCreatorMixes('favorite', 0);
+          return PaggingMixListView(
+              mixologyBloc: mixologyBloc, mixCreator: 'favorite');
+        }
     }
     return Placeholder();
   }

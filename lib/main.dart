@@ -1,10 +1,14 @@
+import 'package:alice/alice.dart';
 import 'package:app/app/app.dart';
 import 'package:app/module/module.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'models/Hive/hive.dart';
 import 'services/authorization.dart';
 
 Future<void> main() async {
@@ -28,6 +32,16 @@ Future<void> main() async {
 
 final getIt = GetIt.instance;
 void setup(GetIt getIt) {
+  Hive
+    ..initFlutter()
+    ..registerAdapter(PlaceSimpleDtoAdapter())
+    ..registerAdapter(AddressDtoAdapter())
+    ..registerAdapter(TobaccoMixSimpleDtoAdapter())
+    ..registerAdapter(PipeAccesorySimpleDtoAdapter());
+  getIt.registerLazySingleton<Alice>(() => Alice(
+        darkTheme: true,
+        showNotification: false,
+      ));
   getIt.registerLazySingleton<PlacesBloc>(() => PlacesBloc()..loadPlaces());
   getIt.registerLazySingleton<PlaceBloc>(() => PlaceBloc());
   getIt.registerLazySingleton<AuthorizeRepository>(() =>

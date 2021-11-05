@@ -94,11 +94,12 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
   StreamBuilder<List<SmartHookahHelpersAnimation>> buildAnimationList() {
     return StreamBuilder<List<SmartHookahHelpersAnimation>>(
         stream: widget.smokeSessionBloc.animations,
-        initialData: List<SmartHookahHelpersAnimation>(),
+        initialData: <SmartHookahHelpersAnimation>[],
         builder: (context, snapshot) {
           return snapshot?.data?.length == 0
               ? Container()
               : ListWheelScrollView(
+                
                   itemExtent: 70.0,
                   controller: scrollController,
                   // clipToSize: true,
@@ -130,16 +131,23 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
       scrollController.jumpToItem(index);
       _focusIndex = index;
     }
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Container(
-        child: Center(
-          child: Text(data.displayName,
-              style: TextStyle(
-                color: index == selected ? Colors.white : Colors.grey,
-                fontWeight: FontWeight.bold,
-                fontSize: data.id == _focusIndex ? 35.0 : 25.0,
-              )),
+    return GestureDetector(
+      onTap: () {
+        scrollController.animateToItem(index,
+            duration: Duration(microseconds: 500), curve: Curves.easeIn);
+        _focusIndex = index;
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Container(
+          child: Center(
+            child: Text(data.displayName,
+                style: TextStyle(
+                  color: index == selected ? Colors.white : Colors.grey,
+                  fontWeight: FontWeight.bold,
+                  fontSize: data.id == _focusIndex ? 35.0 : 25.0,
+                )),
+          ),
         ),
       ),
     );

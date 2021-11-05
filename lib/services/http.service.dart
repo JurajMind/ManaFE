@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:app/main.dart';
 import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
@@ -11,7 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 import 'package:openapi/api.dart';
-
+import 'package:alice/alice.dart';
 import 'auth_helpers/auth_token_inceptor.dart';
 
 class ApiClient {
@@ -35,6 +36,7 @@ class ApiClient {
 
   void init() {
     _dio.interceptors.add(AuthTokenInceptor(_dio));
+    _dio.interceptors.add(getIt.get<Alice>().getDioInterceptor());
   }
 
   Future<List<TobaccoMixSimpleDto>> fetchtobacoMix(

@@ -6,6 +6,7 @@ import 'package:app/module/signal_bloc.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 import 'package:openapi/api.dart';
 import 'package:queries/collections.dart';
@@ -34,6 +35,8 @@ class PersonBloc extends SignalBloc {
     }
   }
 
+  Box cache;
+
   GlobalKey<NavigatorState> Function(int, Widget) callback;
 
   BehaviorSubject<PersonInfoDto> info = BehaviorSubject<PersonInfoDto>();
@@ -55,11 +58,37 @@ class PersonBloc extends SignalBloc {
       new BehaviorSubject<List<SmokeSessionSimpleDto>>.seeded(
           <SmokeSessionSimpleDto>[]);
 
+  storeGearToCache(List<PipeAccesorySimpleDto> gear) {
+    cache.put('my_gear', gear);
+  }
+
+  Future<List<PipeAccesorySimpleDto>> loadGearFromCache() async {
+    try {
+      if (cache == null) {
+        cache = await Hive.openBox('profile');
+      }
+      var fromCache = cache.get('my_gear');
+      if (fromCache == null) {
+        return null;
+      }
+      if (fromCache is List<dynamic>)
+        return fromCache.map((e) => e as PipeAccesorySimpleDto).toList();
+
+      return null;
+    } catch (e) {
+      print('error');
+      print(e);
+      return null;
+    }
+  }
+
   loadMyGear(bool reload) async {
     if (_loadedGear && !reload) return;
-    _loadedGear = true;
-    var gear = await App.http.getMyGear();
 
+    _loadedGear = true;
+    loadGearFromCache().then((value) => myGear.add(value));
+    var gear = await App.http.getMyGear();
+    storeGearToCache(gear);
     myGear.add(gear);
   }
 

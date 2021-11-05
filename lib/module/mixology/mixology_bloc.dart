@@ -3,16 +3,14 @@ import 'dart:async';
 import 'package:app/app/app.dart';
 
 import 'package:flutter/widgets.dart';
+import 'package:hive/hive.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MixologyBloc {
   static const _mixPerPage = 10;
-
+  Box cache;
   final _apiClient = App.http;
-
-  final _cache = Map<int, TobaccoMixSimpleDto>();
-  final _downloaders = Map<int, Future<List<TobaccoMixSimpleDto>>>();
 
   final mixCreator = BehaviorSubject<List<FeatureMixCreatorSimpleDto>>();
 
@@ -29,7 +27,7 @@ class MixologyBloc {
   }
 
   final Map<String, int> mixCreatorMixesPages = new Map<String, int>();
-  final List<String> fullLoaded = new List<String>();
+  final List<String> fullLoaded = <String>[];
   int maxInt = 0x7fffffff;
 
   bool haveNext = true;
@@ -39,9 +37,9 @@ class MixologyBloc {
   factory MixologyBloc() => MixologyBloc._instance;
 
   MixologyBloc._() {
-    loadMixCreator();
+    //loadMixCreator();
     loadCreatorMixes('me', 0);
-    loadCreatorMixes('favorite', 0);
+    loadFakeCreatorMixes('favorite', 0);
   }
 
   Future loadMixCreator() async {
@@ -58,7 +56,7 @@ class MixologyBloc {
     }
 
     var old = this.mixCreatorMixes[favorite].value;
-    if (old == null) old = new List<TobaccoMixSimpleDto>();
+    if (old == null) old = <TobaccoMixSimpleDto>[];
     old.add(mix);
     this.mixCreatorMixes[favorite].add(old);
   }
@@ -72,7 +70,7 @@ class MixologyBloc {
     }
 
     var old = this.mixCreatorMixes[favorite].value;
-    if (old == null) old = new List<TobaccoMixSimpleDto>();
+    if (old == null) old = <TobaccoMixSimpleDto>[];
     old.remove(mix);
     this.mixCreatorMixes[favorite].add(old);
   }
@@ -98,12 +96,35 @@ class MixologyBloc {
     }
 
     var nextPage = 0;
-    this.mixCreatorMixes[creatorName].add(new List<TobaccoMixSimpleDto>());
+    this.mixCreatorMixes[creatorName].add(<TobaccoMixSimpleDto>[]);
     await this.loadCreatorMixes(creatorName, nextPage, featured: featured);
   }
 
-  Future loadCreatorMixes(String creatorName, int page,
-      {bool featured = false}) async {
+  Future<List<TobaccoMixSimpleDto>> loadMixesFromCache(String key) async {
+    try {
+      if (cache == null) {
+        cache = await Hive.openBox('mixes');
+      }
+      var fromCache = cache.get(key);
+      if (fromCache == null) {
+        return null;
+      }
+      if (fromCache is List<dynamic>)
+        return fromCache.map((e) => e as TobaccoMixSimpleDto).toList();
+
+      return null;
+    } catch (e) {
+      print('error');
+      print(e);
+      return null;
+    }
+  }
+
+  void storeMixesToCache(String key, List<TobaccoMixSimpleDto> mix) {
+    cache.put(key, mix);
+  }
+
+  Future loadFakeCreatorMixes(String creatorName, int page) async {
     if (this.mixCreatorMixes[creatorName] == null) {
       this.mixCreatorMixes[creatorName] =
           new BehaviorSubject<List<TobaccoMixSimpleDto>>();
@@ -115,11 +136,21 @@ class MixologyBloc {
       return;
     }
 
-    // add fake data
     var fakeMixes = this.mixCreatorMixes[creatorName].valueOrNull ??
-        new List<TobaccoMixSimpleDto>();
+        <TobaccoMixSimpleDto>[];
     fakeMixes.addAll(Iterable.generate(_mixPerPage, (_) => null));
     this.mixCreatorMixes[creatorName].add(fakeMixes);
+  }
+
+  Future loadCreatorMixes(String creatorName, int page,
+      {bool featured = false}) async {
+    loadFakeCreatorMixes(creatorName, page);
+    var cacheKey = '${creatorName}_${page}';
+    loadMixesFromCache(cacheKey).then((value) {
+      if (value != null) {
+        this.mixCreatorMixes[creatorName].add(value);
+      }
+    });
 
     this.mixCreatorMixesPages[creatorName] = page;
     final mixes = await _apiClient.fetchtobacoMix(
@@ -127,13 +158,14 @@ class MixologyBloc {
         author: creatorName,
         page: page,
         pageSize: _mixPerPage);
+    storeMixesToCache(cacheKey, mixes);
     var oldMixes = this.mixCreatorMixes[creatorName].value;
     oldMixes.removeWhere((t) => t == null);
     if (mixes.length < _mixPerPage) {
       fullLoaded.add(creatorName);
     }
     if (oldMixes == null) {
-      oldMixes = new List<TobaccoMixSimpleDto>();
+      oldMixes = <TobaccoMixSimpleDto>[];
     }
     oldMixes.addAll(mixes);
     this.mixCreatorMixes[creatorName].add(oldMixes);
@@ -160,7 +192,7 @@ class MixologyBloc {
     this.mixCreatorMixes["favorite"] =
         new BehaviorSubject<List<TobaccoMixSimpleDto>>();
 
-    this.mixCreatorMixes["favorite"].add(new List<TobaccoMixSimpleDto>());
+    this.mixCreatorMixes["favorite"].add(<TobaccoMixSimpleDto>[]);
   }
 }
 

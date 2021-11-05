@@ -1,3 +1,4 @@
+import 'package:alice/alice.dart';
 import 'package:app/app/app.dart';
 import 'package:app/app/app.widget.dart';
 import 'package:app/main.dart';
@@ -162,6 +163,17 @@ class _TestPageState extends State<TestPage> {
               label: Text('Restart app'),
               onPressed: () async {
                 AppWidget.restartApp(context);
+              },
+            ),
+            OutlineButton.icon(
+              borderSide: BorderSide(color: Colors.white),
+              icon: Icon(
+                Icons.restart_alt,
+                color: Colors.blue,
+              ),
+              label: Text('Alice'),
+              onPressed: () async {
+                getIt.get<Alice>().showInspector();
               },
             ),
             Hero(

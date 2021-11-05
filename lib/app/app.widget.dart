@@ -13,6 +13,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:alice/alice.dart';
 
 final navigatorKey = new GlobalKey<NavigatorState>();
 
@@ -91,6 +92,7 @@ class _AppWidgetState extends State<AppWidget> {
         }
 
         return MaterialApp(
+          navigatorKey: getIt.get<Alice>().getNavigatorKey(),
           key: globalNavKey,
           localizationsDelegates: [
             _newLocaleDelegate,

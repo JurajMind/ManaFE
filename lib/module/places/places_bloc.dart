@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app/app/app.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hive/hive.dart';
 import 'package:openapi/api.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -11,6 +12,7 @@ class PlacesBloc {
   bool serviceEnabled;
   LocationPermission permission;
   String error;
+  Box cache;
 
   BehaviorSubject<List<PlaceSimpleDto>> places =
       new BehaviorSubject<List<PlaceSimpleDto>>();
@@ -28,6 +30,7 @@ class PlacesBloc {
   }
 
   Future loadPlaces() async {
+    await loadPlacesFromCache();
     // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
@@ -75,32 +78,26 @@ class PlacesBloc {
 
     App.http.getNearbyPlaces(lat: lat, lng: lng).then((places) async {
       this.places.add(places);
-      var db = await App.cache.getDatabase();
-      //var key = await db.put(json.encode(places), 'places');
+      cache.put('nearby', places);
       this.loading.add(false);
     });
   }
 
-  Future loadPlacesFromCache() async {
+  Future<void> loadPlacesFromCache() async {
     try {
-      var db = await App.cache.getDatabase();
-      //var value = await db.get('places');
-      var value;
-      if (value == null) {
+      if (cache == null) {
+        cache = await Hive.openBox('places');
+      }
+      var fromCache = cache.get('nearby');
+      if (fromCache == null) {
         return;
       }
-
-      var it = json.decode(value);
-      var fromCache = PlaceSimpleDto.listFromJson(it);
-      this.places.add(fromCache);
+      if (fromCache is List<dynamic>)
+        this.places.add(fromCache.map((e) => e as PlaceSimpleDto).toList());
       this.loading.add(false);
     } catch (e) {
       print('error');
       print(e);
     }
-  }
-
-  replacePlaces(List<PlaceSimpleDto> value) {
-    this.places.add(value);
   }
 }
