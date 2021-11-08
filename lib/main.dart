@@ -1,6 +1,7 @@
 import 'package:alice/alice.dart';
 import 'package:app/app/app.dart';
 import 'package:app/module/module.dart';
+import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -44,6 +45,7 @@ void setup(GetIt getIt) {
       ));
   getIt.registerLazySingleton<PlacesBloc>(() => PlacesBloc()..loadPlaces());
   getIt.registerLazySingleton<PlaceBloc>(() => PlaceBloc());
+  getIt.registerLazySingleton<SmokeSessionBloc>(() => SmokeSessionBloc());
   getIt.registerLazySingleton<AuthorizeRepository>(() =>
       AuthorizeRepository(sharedPreferences: getIt.get<SharedPreferences>()));
   getIt.registerLazySingleton<PersonBloc>(

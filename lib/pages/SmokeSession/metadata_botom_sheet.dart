@@ -21,7 +21,7 @@ class MetadataBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = MTheme.of(context);
-    var smokeSessionBloc = dataProvider.smokeSessionBloc;
+    var smokeSessionBloc = getIt.get<SmokeSessionBloc>();
     var personBloc = getIt.get<PersonBloc>();
     return Scaffold(
       appBar: AppBar(

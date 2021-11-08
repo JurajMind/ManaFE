@@ -4,6 +4,7 @@ import 'package:app/module/module.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
+import 'package:shimmer/shimmer.dart';
 
 class SmokeSessionCarousel extends StatefulWidget {
   final GlobalKey<NavigatorState> Function(int) callback;
@@ -14,50 +15,56 @@ class SmokeSessionCarousel extends StatefulWidget {
 }
 
 class _SmokeSessionCarouselState extends State<SmokeSessionCarousel> {
-  PageController controller;
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
+  ScrollController _controller;
+  var personBloc = getIt.get<PersonBloc>();
+
   @override
   initState() {
+    _controller = ScrollController();
+    _controller.addListener(_scrollListener);
     super.initState();
-    controller = new PageController(
-        initialPage: 0, keepPage: true, viewportFraction: 0.7);
+  }
+
+  _scrollListener() {
+    if (_controller.offset >= _controller.position.maxScrollExtent &&
+        !_controller.position.outOfRange) {
+      personBloc.loadSessions();
+    }
+    if (_controller.offset <= _controller.position.minScrollExtent &&
+        !_controller.position.outOfRange) {
+      personBloc.loadSessions();
+    }
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    var personBloc = getIt.get<PersonBloc>();
-
     return new Center(
-        child: StreamBuilder<List<SmokeSessionSimpleDto>>(
-            initialData: null,
-            stream: personBloc.smokeSessionsCodes,
-            builder: (context, snapshot) {
-              return RefreshIndicator(
-                key: _refreshIndicatorKey,
-                onRefresh: () => personBloc.loadSessions(),
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    controller: controller,
-                    itemCount: snapshot.data?.length ?? 0,
-                    itemBuilder: (context, index) {
-                      var data =
-                          snapshot.data == null ? null : snapshot.data[index];
-                      return data != null
-                          ? new SmokeSessionCarouselItem(
-                              smokeSession: data,
-                              callback: widget.callback,
-                            )
-                          : Placeholder();
-                    }),
-              );
-            }));
+      child: StreamBuilder<List<SmokeSessionSimpleDto>>(
+        stream: personBloc.smokeSessionsCodes,
+        builder: (context, snapshot) {
+          return ListView.builder(
+            scrollDirection: Axis.horizontal,
+            controller: _controller,
+            itemCount: snapshot.data?.length ?? 0,
+            itemBuilder: (context, index) {
+              var data = snapshot.data == null ? null : snapshot.data[index];
+              return data != null
+                  ? new SmokeSessionCarouselItem(
+                      smokeSession: data,
+                      callback: widget.callback,
+                    )
+                  : Placeholder();
+            },
+          );
+        },
+      ),
+    );
   }
 }
 
@@ -72,6 +79,28 @@ class SmokeSessionCarouselItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (smokeSession.id == -1) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Shimmer.fromColors(
+            child: Container(
+              width: 250,
+              height: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                border: new Border.all(
+                    color: const Color.fromRGBO(221, 221, 221, 1.0),
+                    width: 2.0),
+              ),
+              child: Center(
+                  child: Text('Loading',
+                      style: Theme.of(context).textTheme.headline6)),
+            ),
+            baseColor: Colors.grey[400],
+            highlightColor: Colors.white),
+      );
+    }
+
     var online = smokeSession.device.isOnline;
     return Hero(
       tag: "${smokeSession.sessionId}_session",

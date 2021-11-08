@@ -18,7 +18,7 @@ import 'package:app/support/mana_icons_icons.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:openapi/api.dart';
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
     super.initState();
 
     Future.delayed(Duration.zero, () {
-      smokeSessionBloc = DataProvider.getSmokeSession(context);
+      smokeSessionBloc = getIt.get<SmokeSessionBloc>();
       personBloc.callback = _setActiveAndJumpTab;
 
       subscription = smokeSessionBloc.notifications.stream.listen((data) {
@@ -169,7 +169,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
       debugPrint('SystemChannels> $msg');
       if (msg == AppLifecycleState.paused.toString() ||
           msg == AppLifecycleState.inactive.toString()) {
-        var smokeSessionBloc = DataProvider.getData(context).smokeSessionBloc;
+        var smokeSessionBloc = getIt.get<SmokeSessionBloc>();
         smokeSessionBloc.pauseSession();
       }
 

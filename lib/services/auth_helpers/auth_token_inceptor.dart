@@ -26,6 +26,7 @@ class AuthTokenInceptor extends Interceptor {
       print(error.message);
       print(error.response);
       print(error?.response?.requestOptions?.path);
+      return handler.next(error);
     }
   }
 

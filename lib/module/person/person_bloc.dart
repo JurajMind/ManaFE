@@ -52,9 +52,7 @@ class PersonBloc extends SignalBloc {
           <SmokeSessionSimpleDto>[]);
 
   BehaviorSubject<List<SmokeSessionSimpleDto>> smokeSessionsCodes =
-      new BehaviorSubject<List<SmokeSessionSimpleDto>>.seeded(
-          <SmokeSessionSimpleDto>[]);
-
+      new BehaviorSubject<List<SmokeSessionSimpleDto>>();
   storeGearToCache(List<PipeAccesorySimpleDto> gear) {
     cache.put('my_gear', gear);
   }
@@ -125,7 +123,8 @@ class PersonBloc extends SignalBloc {
   loadInitData({bool reload = false}) async {
     if (_loadedInit && !reload) return;
     _loadedInit = true;
-
+    smokeSessionsCodes
+        .add(List.generate(4, (index) => SmokeSessionSimpleDto(id: -1)));
     var init = await App.http.getPersonInitData();
 
     var infoTask = App.http.getPersonInfo();
@@ -147,10 +146,16 @@ class PersonBloc extends SignalBloc {
       params.add(auth.getUserName());
       signal.callServerFunction(
           new ServerCallParam(name: 'JoinPerson', params: params));
-    } catch (e) {}
+    } catch (e) {
+      print('cannot join user');
+    }
   }
 
   Future loadSessions() async {
+    if (!smokeSessionsCodes.hasValue) {
+      var loading = List.generate(4, (index) => SmokeSessionSimpleDto(id: -1));
+      smokeSessionsCodes.add(loading);
+    }
     var activeSmokeSessions = await App.http.getPersonSessions();
     var sessions = new Collection(activeSmokeSessions);
     sessions

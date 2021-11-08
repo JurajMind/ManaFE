@@ -8,6 +8,7 @@ import 'package:app/Helpers/helpers.dart';
 import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
+import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/services/http.service.dart';
 import 'package:app/theme/theme_widget.dart';
@@ -43,9 +44,11 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
     new Future.delayed(Duration.zero, () {
       var bloc = getIt.get<PersonBloc>();
       bloc.loadSessions();
-      var sessionBloc = DataProvider.getData(context).smokeSessionBloc;
+      var sessionBloc = getIt.get<SmokeSessionBloc>();
       setState(() {
-        myController.text = sessionBloc.lastSession.value;
+        if (sessionBloc.lastSession.hasValue) {
+          myController.text = sessionBloc.lastSession.value;
+        }
       });
     });
     super.initState();

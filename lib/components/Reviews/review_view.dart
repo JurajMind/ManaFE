@@ -3,6 +3,7 @@ import 'package:app/components/StarRating/m_star_ratting.dart';
 import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
+import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
@@ -78,8 +79,7 @@ class ReviewView extends StatelessWidget {
             if (authorId == id)
               InkWell(
                 onTap: () {
-                  var sessionBloc =
-                      DataProvider.getData(context).smokeSessionBloc;
+                  var sessionBloc = getIt.get<SmokeSessionBloc>();
                   sessionBloc
                       .removeReview(review)
                       .then((_) => Navigator.of(context).pop());

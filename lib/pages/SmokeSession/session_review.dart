@@ -1,14 +1,18 @@
 import 'dart:io';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/components/Media/review_media_upload.widget.dart';
 import 'package:app/components/StarRating/m_star_ratting.dart';
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
 class SessionReview extends StatefulWidget {
-  SessionReview({Key key}) : super(key: key);
+  final VoidCallback onReviewSave;
+  SessionReview({Key key, this.onReviewSave}) : super(key: key);
 
   _SessionReviewState createState() => _SessionReviewState();
 }
@@ -35,7 +39,7 @@ class _SessionReviewState extends State<SessionReview> {
 
   @override
   Widget build(BuildContext context) {
-    var bloc = DataProvider.getData(context).smokeSessionBloc;
+    var bloc = getIt.get<SmokeSessionBloc>();
     var placeSession = bloc.smokeSession.value.placeId != null;
     return Scaffold(
       body: SingleChildScrollView(
@@ -50,7 +54,8 @@ class _SessionReviewState extends State<SessionReview> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   AppBar(),
-                  if (bloc.smokeSessionMetaData.value.tobacco == null && bloc.smokeSessionMetaData.value.tobaccoMix == null) ...{
+                  if (bloc.smokeSessionMetaData.value.tobacco == null &&
+                      bloc.smokeSessionMetaData.value.tobaccoMix == null) ...{
                     Text(
                       'Tobacco not filled, please fill tobacco metadata for precision data:',
                       textAlign: TextAlign.center,
@@ -112,7 +117,10 @@ class _SessionReviewState extends State<SessionReview> {
                             child: CircularProgressIndicator(),
                           ),
                         )
-                      : MButton(label: "common.save", icon: Icons.save, onPressed: () => saveReview(placeSession)),
+                      : MButton(
+                          label: "common.save",
+                          icon: Icons.save,
+                          onPressed: () => saveReview(placeSession)),
                   SizedBox(
                     height: 100,
                   )
@@ -129,7 +137,7 @@ class _SessionReviewState extends State<SessionReview> {
     setState(() {
       posting = true;
     });
-    var bloc = DataProvider.getData(context).smokeSessionBloc;
+    var bloc = getIt.get<SmokeSessionBloc>();
 
     var review = new SmartHookahModelsDbSessionDtoSessionReviewDto();
     review.smokeSessionId = bloc.smokeSession.value.id;
@@ -149,8 +157,11 @@ class _SessionReviewState extends State<SessionReview> {
     review.tobaccoReview = tobaccoReview;
 
     bloc.saveReview(review, files).then((_) {
-      Navigator.of(context).pop();
+      if (widget.onReviewSave != null) {
+        widget.onReviewSave();
+      }
     });
+    Navigator.of(context).pop();
   }
 
   List<Widget> buildPlaceReview() {

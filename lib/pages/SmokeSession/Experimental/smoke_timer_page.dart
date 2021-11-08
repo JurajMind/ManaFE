@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:app/Helpers/date_utils.dart' as dateUtils;
 import 'package:app/app/app.dart';
 import 'package:app/const/theme.dart';
+import 'package:app/main.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/Components/puff_timer.dart';
 import 'package:app/pages/SmokeSession/Components/stop_watches.dart';
 import 'package:app/utils/translations/app_translations.dart';
@@ -40,7 +42,8 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
     super.didChangeDependencies();
     dataProvider = DataProvider.getData(context);
 
-    subscription = dataProvider.smokeSessionBloc.smokeStateBroadcast.listen((data) {
+    subscription =
+        getIt.get<SmokeSessionBloc>().smokeStateBroadcast.listen((data) {
       if (data == 1) {
         setState(() {
           if (mounted) this.height = maxHeight;
@@ -53,13 +56,17 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
       }
     });
 
-    dataProvider.smokeSessionBloc.smokeStatistic.listen((data) {
+    getIt.get<SmokeSessionBloc>().smokeStatistic.listen((data) {
       if (data.lastPuf > 2) {
         lastPuf = data.lastPuf;
       }
 
       charts.add(data.lastPuf);
-      charts = Collection(charts).orderByDescending((f) => f).distinct().take(5).toList();
+      charts = Collection(charts)
+          .orderByDescending((f) => f)
+          .distinct()
+          .take(5)
+          .toList();
     });
   }
 
@@ -89,7 +96,9 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
                 },
               ),
               new FlatButton(
-                child: new Text(AppTranslations.of(context).text("common.save").toUpperCase()),
+                child: new Text(AppTranslations.of(context)
+                    .text("common.save")
+                    .toUpperCase()),
                 textColor: Colors.green,
                 onPressed: () {
                   Navigator.of(context).pop(true);
@@ -99,7 +108,9 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
           );
         }).then((result) {
       if (!result) return;
-      App.http.addCompetitionEntry(_textFieldController.text, lastPuf).then((onValue) {
+      App.http
+          .addCompetitionEntry(_textFieldController.text, lastPuf)
+          .then((onValue) {
         HapticFeedback.selectionClick();
         setState(() {
           _textFieldController.text = '';
@@ -118,8 +129,7 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
       ),
       body: Container(
         child: StreamBuilder<SmokeStatisticDataModel>(
-            stream: dataProvider.smokeSessionBloc.smokeStatistic,
-            initialData: dataProvider.smokeSessionBloc.smokeStatistic.value,
+            stream: getIt.get<SmokeSessionBloc>().smokeStatistic,
             builder: (context, snapshot) {
               return Column(
                 children: <Widget>[
@@ -138,7 +148,9 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
                             ),
                             Expanded(
                               flex: 1,
-                              child: IconButton(icon: Icon(Icons.add), onPressed: () => _displayDialog(context)),
+                              child: IconButton(
+                                  icon: Icon(Icons.add),
+                                  onPressed: () => _displayDialog(context)),
                             ),
                           ],
                         ),
@@ -148,7 +160,9 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
                     child: Align(
                         alignment: Alignment.bottomCenter,
                         child: AnimatedContainer(
-                          duration: snapshot.data.longestPuf == new Duration() ? new Duration(seconds: 4) : snapshot.data.longestPuf,
+                          duration: snapshot.data.longestPuf == new Duration()
+                              ? new Duration(seconds: 4)
+                              : snapshot.data.longestPuf,
                           width: 200,
                           height: height,
                           child: WaveWidget(

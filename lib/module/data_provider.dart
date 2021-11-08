@@ -10,7 +10,6 @@ import 'general/app_bloc.dart';
 
 class DataProvider extends InheritedWidget {
   final MixologyBloc mixologyBloc;
-  final SmokeSessionBloc smokeSessionBloc;
 
   final MenuBloc menuBloc;
 
@@ -24,7 +23,6 @@ class DataProvider extends InheritedWidget {
     Key key,
     Widget child,
   })  : mixologyBloc = new MixologyBloc(),
-        smokeSessionBloc = new SmokeSessionBloc(),
         gearBloc = new GearBloc(),
         menuBloc = new MenuBloc(),
         statisticBloc = new StatisticBloc(),
@@ -37,10 +35,6 @@ class DataProvider extends InheritedWidget {
 
   static MixologyBloc getMixology(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<DataProvider>().mixologyBloc;
-
-  static SmokeSessionBloc getSmokeSession(BuildContext context) => context
-      .dependOnInheritedWidgetOfExactType<DataProvider>()
-      .smokeSessionBloc;
 
   static DataProvider getData(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<DataProvider>();

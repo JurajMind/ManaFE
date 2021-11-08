@@ -1,8 +1,10 @@
 import 'package:app/components/Pickers/bottom_controll_bar.dart';
 import 'package:app/components/Pickers/smoke_color_wheel.dart';
+import 'package:app/main.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
@@ -133,13 +135,12 @@ class _StateColorPickerState extends State<StateColorPicker> {
   Color _tempMainColor;
   @override
   Widget build(BuildContext context) {
-    var smokeSessionBloc = DataProvider.getData(context).smokeSessionBloc;
+    var smokeSessionBloc = getIt.get<SmokeSessionBloc>();
     return Container(
       child: Stack(
         children: <Widget>[
           Center(
             child: Container(
-            
               child: StreamBuilder<StandSettings>(
                   stream: smokeSessionBloc.standSettings,
                   builder: (context, snapshot) {
@@ -222,7 +223,7 @@ class _StateColorPickerState extends State<StateColorPicker> {
               textColor: _tempMainColor,
               onPressed: () {
                 setState(() => color = _tempMainColor);
-                var bloc = DataProvider.getData(context).smokeSessionBloc;
+                var bloc = getIt.get<SmokeSessionBloc>();
                 bloc.setColor(_tempMainColor, SmokeState.idle);
 
                 Navigator.of(context).pop();

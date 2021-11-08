@@ -1,5 +1,7 @@
+import 'package:app/main.dart';
 import 'package:app/models/SmokeSession/timer_dependency.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
 
 class PuffTimeText extends StatelessWidget {
@@ -8,7 +10,7 @@ class PuffTimeText extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
-    var dependencies = DataProvider.getData(context).smokeSessionBloc.pufTimerDependencies;
+    var dependencies = getIt.get<SmokeSessionBloc>().pufTimerDependencies;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -36,7 +38,8 @@ class PuffTimeText extends StatelessWidget {
             offstage: dependencies.showTimer,
             child: SizedBox(
               height: 38.0,
-              child: Text(dependencies.alternativeText, style: Theme.of(context).textTheme.headline4),
+              child: Text(dependencies.alternativeText,
+                  style: Theme.of(context).textTheme.headline4),
             ))
       ],
     );
@@ -99,7 +102,8 @@ class MinutesAndSeconds extends StatefulWidget {
   MinutesAndSeconds({this.dependencies});
   final PufTimerDependencies dependencies;
 
-  MinutesAndSecondsState createState() => new MinutesAndSecondsState(dependencies: dependencies);
+  MinutesAndSecondsState createState() =>
+      new MinutesAndSecondsState(dependencies: dependencies);
 }
 
 class MinutesAndSecondsState extends State<MinutesAndSeconds> {
@@ -125,7 +129,8 @@ class MinutesAndSecondsState extends State<MinutesAndSeconds> {
   @override
   Widget build(BuildContext context) {
     String secondsStr = (seconds).toString().padLeft(1, '0');
-    return new Text('$secondsStr.', style: Theme.of(context).textTheme.headline4);
+    return new Text('$secondsStr.',
+        style: Theme.of(context).textTheme.headline4);
   }
 
   @override

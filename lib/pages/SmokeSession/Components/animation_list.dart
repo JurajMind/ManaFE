@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app/components/Pickers/animation_state_picker.dart';
+import 'package:app/main.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/models/Stand/preset.dart';
@@ -32,7 +33,7 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
 
   PageController controller;
 
-  SmokeSessionBloc smokeSessionBloc;
+  SmokeSessionBloc smokeSessionBloc = getIt.get<SmokeSessionBloc>();
 
   int selectedPresetIndex = 0;
 
@@ -120,7 +121,6 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
 
   @override
   void didChangeDependencies() {
-    smokeSessionBloc = DataProvider.getSmokeSession(context);
     smokeSessionBloc.loadAnimation();
     smokeSessionBloc.loadPresets();
     super.didChangeDependencies();

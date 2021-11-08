@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:app/app/app.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/models/SignalR/device_online.dart';
@@ -14,7 +15,7 @@ import 'package:app/models/Stand/preset.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:app/utils/color.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flushbar/flushbar.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:openapi/api.dart';
@@ -451,7 +452,8 @@ class SmokeSessionBloc {
   Future removeReview(
       SmartHookahModelsDbSessionDtoSessionReviewDto review) async {
     var state = await App.http.removeSessionReview(review.id);
-    var allReviews = sessionReviews.value;
+    var allReviews = List<SmartHookahModelsDbSessionDtoSessionReviewDto>.from(
+        sessionReviews.value);
     var reviewIndex = allReviews.indexWhere((test) => test.id == review.id);
     allReviews.removeAt(reviewIndex);
     sessionReviews.add(allReviews);

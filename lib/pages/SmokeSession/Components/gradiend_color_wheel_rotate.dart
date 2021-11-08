@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/smoke_rotaion.dart';
@@ -31,7 +32,7 @@ class GradientColorWheelRotateState extends State<GradientColorWheelRotate> {
 
   @override
   Widget build(BuildContext context) {
-    final smokeSessionBloc = DataProvider.getSmokeSession(context);
+    final smokeSessionBloc = getIt.get<SmokeSessionBloc>();
 
     Size size = widget.size == null ? MediaQuery.of(context).size : widget.size;
 

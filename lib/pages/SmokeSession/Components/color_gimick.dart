@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:app/components/Common/bg_painter.dart';
+import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
 
 class ColorSessionGimick extends StatefulWidget {
@@ -89,7 +91,7 @@ class _ColorSessionGimickState extends State<ColorSessionGimick>
     var dataProvider = DataProvider.getData(context);
 
     subscription =
-        dataProvider.smokeSessionBloc.smokeStateBroadcast.listen((data) {
+        getIt.get<SmokeSessionBloc>().smokeStateBroadcast.listen((data) {
       if (data == 1) {
         _controller.duration = Duration(seconds: 10);
         _controller.repeat();

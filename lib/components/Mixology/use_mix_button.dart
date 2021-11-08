@@ -1,7 +1,9 @@
 import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/const/theme.dart';
+import 'package:app/main.dart';
 import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
 
@@ -11,7 +13,7 @@ class UseMixButton extends StatelessWidget {
   const UseMixButton({Key key, this.mix}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var bloc = DataProvider.getData(context).smokeSessionBloc;
+    var bloc = getIt.get<SmokeSessionBloc>();
 
     return StreamBuilder<SmokeSessionMetaDataDto>(
         stream: bloc.smokeSessionMetaData,

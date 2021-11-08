@@ -1,4 +1,5 @@
 import 'package:app/const/theme.dart';
+import 'package:app/main.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/module/data_provider.dart';
@@ -24,7 +25,7 @@ class BottomControllBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var sessionBlock = DataProvider.getData(context).smokeSessionBloc;
+    var sessionBlock = getIt.get<SmokeSessionBloc>();
     return StreamBuilder<StandSettings>(
         stream: sessionBlock.standSettings,
         initialData: StandSettings.empty(),
