@@ -85,8 +85,7 @@ dependencies:
   #qr_mobile_vision: ^1.0.0+3
   flutter_mdns_plugin: ^0.0.3
   logger: ^1.0.0
-  #logger_flutter:
-  #  git: https://github.com/JEuler/logger_flutter.git
+
   js: ^0.6.0
   google_sign_in: ^5.1.1
   google_sign_in_web: ^0.10.0+3

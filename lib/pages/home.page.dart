@@ -7,6 +7,7 @@ import 'package:app/components/icon_button_title.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
+import 'package:app/module/module.dart';
 import 'package:app/module/person/person_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Statistic/statistic_page.dart';
@@ -81,7 +82,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
   @override
   void initState() {
     super.initState();
-
+    var placesBloc = getIt.get<PlacesBloc>()..loadPlaces();
     Future.delayed(Duration.zero, () {
       smokeSessionBloc = getIt.get<SmokeSessionBloc>();
       personBloc.callback = _setActiveAndJumpTab;

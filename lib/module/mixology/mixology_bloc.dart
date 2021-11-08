@@ -9,7 +9,14 @@ import 'package:rxdart/rxdart.dart';
 
 class MixologyBloc {
   static const _mixPerPage = 10;
-  Box cache;
+  Box _cache;
+  Future<Box> get cache async {
+    if (_cache == null) {
+      _cache = await Hive.openBox('mixes');
+    }
+    return _cache;
+  }
+
   final _apiClient = App.http;
 
   final mixCreator = BehaviorSubject<List<FeatureMixCreatorSimpleDto>>();
@@ -102,10 +109,7 @@ class MixologyBloc {
 
   Future<List<TobaccoMixSimpleDto>> loadMixesFromCache(String key) async {
     try {
-      if (cache == null) {
-        cache = await Hive.openBox('mixes');
-      }
-      var fromCache = cache.get(key);
+      var fromCache = (await cache).get(key);
       if (fromCache == null) {
         return null;
       }
@@ -120,8 +124,9 @@ class MixologyBloc {
     }
   }
 
-  void storeMixesToCache(String key, List<TobaccoMixSimpleDto> mix) {
-    cache.put(key, mix);
+  Future<void> storeMixesToCache(
+      String key, List<TobaccoMixSimpleDto> mix) async {
+    (await cache).put(key, mix);
   }
 
   Future loadFakeCreatorMixes(String creatorName, int page) async {
@@ -158,7 +163,7 @@ class MixologyBloc {
         author: creatorName,
         page: page,
         pageSize: _mixPerPage);
-    storeMixesToCache(cacheKey, mixes);
+    await storeMixesToCache(cacheKey, mixes);
     var oldMixes = this.mixCreatorMixes[creatorName].value;
     oldMixes.removeWhere((t) => t == null);
     if (mixes.length < _mixPerPage) {

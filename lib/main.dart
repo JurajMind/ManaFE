@@ -19,8 +19,8 @@ Future<void> main() async {
   getIt.registerLazySingletonAsync<SharedPreferences>(() async {
     return await SharedPreferences.getInstance();
   });
-  GetIt.I.isReady<SharedPreferences>().then((_) {
-    setup(getIt);
+  GetIt.I.isReady<SharedPreferences>().then((_) async {
+    await setup(getIt);
     var app = new App(
       environment: 'local',
       baseUri: 'smarthookah.azurewebsites.net',
@@ -32,9 +32,10 @@ Future<void> main() async {
 }
 
 final getIt = GetIt.instance;
-void setup(GetIt getIt) {
-  Hive
-    ..initFlutter()
+Future<void> setup(GetIt getIt) async {
+  var hive = Hive;
+  await hive.initFlutter();
+  hive
     ..registerAdapter(PlaceSimpleDtoAdapter())
     ..registerAdapter(AddressDtoAdapter())
     ..registerAdapter(TobaccoMixSimpleDtoAdapter())
@@ -43,7 +44,7 @@ void setup(GetIt getIt) {
         darkTheme: true,
         showNotification: false,
       ));
-  getIt.registerLazySingleton<PlacesBloc>(() => PlacesBloc()..loadPlaces());
+  getIt.registerLazySingleton<PlacesBloc>(() => PlacesBloc());
   getIt.registerLazySingleton<PlaceBloc>(() => PlaceBloc());
   getIt.registerLazySingleton<SmokeSessionBloc>(() => SmokeSessionBloc());
   getIt.registerLazySingleton<AuthorizeRepository>(() =>

@@ -190,7 +190,11 @@ class _PaggingMixListViewState extends State<PaggingMixListView> {
           var useTabletLayout = shortestSide > 600;
 
           return LazyLoadScrollView(
-            onRefresh: () => Future.delayed(Duration.zero, () => {}),
+            onRefresh: () => Future.delayed(
+                Duration.zero,
+                () => {
+                      widget.mixologyBloc.loadCreatorMixes(widget.mixCreator, 0)
+                    }),
             onEndOfPage: () {
               if (!snapshot.data.contains(null))
                 widget.mixologyBloc
