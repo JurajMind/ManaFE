@@ -116,7 +116,7 @@ class ReviewSmallItem extends StatelessWidget {
                     child: Row(
                       children: <Widget>[
                         Icon(Icons.edit),
-                        Text(review.tobaccoReview.text),
+                        Text(review.tobaccoReview?.text ?? ''),
                       ],
                     ),
                   )
