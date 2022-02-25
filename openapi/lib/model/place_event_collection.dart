@@ -11,7 +11,7 @@ part of openapi.api;
 
 class PlaceEventCollection {
   /// Returns a new [PlaceEventCollection] instance.
-  PlaceEventList.from({
+  PlaceEventCollection.from({
     this.eventCollection = const [],
     this.success,
     this.message,
@@ -27,21 +27,24 @@ class PlaceEventCollection {
   int httpResponseCode;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is PlaceEventCollection &&
-     other.eventCollection == eventCollection &&
-     other.success == success &&
-     other.message == message &&
-     other.httpResponseCode == httpResponseCode;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PlaceEventCollection &&
+          other.eventCollection == eventCollection &&
+          other.success == success &&
+          other.message == message &&
+          other.httpResponseCode == httpResponseCode;
 
   @override
   int get hashCode =>
-    (eventCollection == null ? 0 : eventCollection.hashCode) +
-    (success == null ? 0 : success.hashCode) +
-    (message == null ? 0 : message.hashCode) +
-    (httpResponseCode == null ? 0 : httpResponseCode.hashCode);
+      (eventCollection == null ? 0 : eventCollection.hashCode) +
+      (success == null ? 0 : success.hashCode) +
+      (message == null ? 0 : message.hashCode) +
+      (httpResponseCode == null ? 0 : httpResponseCode.hashCode);
 
   @override
-  String toString() => 'PlaceEventCollection[eventCollection=$eventCollection, success=$success, message=$message, httpResponseCode=$httpResponseCode]';
+  String toString() =>
+      'PlaceEventCollection[eventCollection=$eventCollection, success=$success, message=$message, httpResponseCode=$httpResponseCode]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -63,18 +66,24 @@ class PlaceEventCollection {
   /// Returns a new [PlaceEventCollection] instance and imports its values from
   /// [json] if it's non-null, null if [json] is null.
   static PlaceEventCollection fromJson(Map<String, dynamic> json) => json == null
-    ? null
-    : PlaceEventList.from(
-        eventCollection: PlaceEvent.listFromJson(json[r'EventCollection']),
-        success: json[r'Success'],
-        message: json[r'Message'],
-        httpResponseCode: json[r'HttpResponseCode'],
-    );
+      ? null
+      : PlaceEventCollection.from(
+          eventCollection: PlaceEvent.listFromJson(json[r'EventCollection']),
+          success: json[r'Success'],
+          message: json[r'Message'],
+          httpResponseCode: json[r'HttpResponseCode'],
+        );
 
-  static List<PlaceEventCollection> listFromJson(List<dynamic> json, {bool emptyIsNull, bool growable,}) =>
-    json == null || json.isEmpty
-      ? true == emptyIsNull ? null : <PlaceEventCollection>[]
-      : json.map((v) => PlaceEventCollection.fromJson(v)).toList(growable: true == growable);
+  static List<PlaceEventCollection> listFromJson(
+    List<dynamic> json, {
+    bool emptyIsNull,
+    bool growable,
+  }) =>
+      json == null || json.isEmpty
+          ? true == emptyIsNull
+              ? null
+              : <PlaceEventCollection>[]
+          : json.map((v) => PlaceEventCollection.fromJson(v)).toList(growable: true == growable);
 
   static Map<String, PlaceEventCollection> mapFromJson(Map<String, dynamic> json) {
     final map = <String, PlaceEventCollection>{};
@@ -85,7 +94,11 @@ class PlaceEventCollection {
   }
 
   // maps a json object with a list of PlaceEventCollection-objects as value to a dart map
-  static Map<String, List<PlaceEventCollection>> mapListFromJson(Map<String, dynamic> json, {bool emptyIsNull, bool growable,}) {
+  static Map<String, List<PlaceEventCollection>> mapListFromJson(
+    Map<String, dynamic> json, {
+    bool emptyIsNull,
+    bool growable,
+  }) {
     final map = <String, List<PlaceEventCollection>>{};
     if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic v) {
@@ -95,4 +108,3 @@ class PlaceEventCollection {
     return map;
   }
 }
-
