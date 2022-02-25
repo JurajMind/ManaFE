@@ -14,12 +14,10 @@ class PlacesBloc {
   String error;
   Box cache;
 
-  BehaviorSubject<List<PlaceSimpleDto>> places =
-      new BehaviorSubject<List<PlaceSimpleDto>>();
+  BehaviorSubject<List<PlaceSimpleDto>> places = new BehaviorSubject<List<PlaceSimpleDto>>();
   BehaviorSubject<bool> loading = new BehaviorSubject<bool>.seeded(false);
 
-  BehaviorSubject<bool> localizationnPermision =
-      new BehaviorSubject<bool>.seeded(false);
+  BehaviorSubject<bool> localizationnPermision = new BehaviorSubject<bool>.seeded(false);
 
   BehaviorSubject<Position> location = new BehaviorSubject<Position>();
 
@@ -65,7 +63,7 @@ class PlacesBloc {
     location.add(position);
     await _loadPlaces();
 
-    posSub = Geolocator.getPositionStream(distanceFilter: 50).listen((onData) {
+    posSub = Geolocator.getPositionStream(locationSettings: LocationSettings(distanceFilter: 50)).listen((onData) {
       print(onData);
       this.location.add(onData);
     });
@@ -92,8 +90,7 @@ class PlacesBloc {
       if (fromCache == null) {
         return;
       }
-      if (fromCache is List<dynamic>)
-        this.places.add(fromCache.map((e) => e as PlaceSimpleDto).toList());
+      if (fromCache is List<dynamic>) this.places.add(fromCache.map((e) => e as PlaceSimpleDto).toList());
       this.loading.add(false);
     } catch (e) {
       print('error');

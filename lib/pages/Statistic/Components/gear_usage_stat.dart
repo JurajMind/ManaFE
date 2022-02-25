@@ -1,7 +1,7 @@
 import 'package:app/module/data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
-import 'package:queries/collections.dart';
+import 'package:darq/darq.dart';
 
 import 'gear_usage_item.dart';
 
@@ -28,18 +28,14 @@ class GearUsageStat extends StatelessWidget {
               width: 200,
               child: Padding(
                 padding: EdgeInsets.all(8.0),
-                child: PageView( 
+                child: PageView(
                   children: <Widget>[
                     GearUsageItem(
                       label: "Tobacco",
                       gears: getUsageByType(snapshot.data, "Tobacco"),
                     ),
-                    GearUsageItem(
-                        label: "Hookah",
-                        gears: getUsageByType(snapshot.data, "Hookah")),
-                    GearUsageItem(
-                        label: "Bowl",
-                        gears: getUsageByType(snapshot.data, "Bowl")),
+                    GearUsageItem(label: "Hookah", gears: getUsageByType(snapshot.data, "Hookah")),
+                    GearUsageItem(label: "Bowl", gears: getUsageByType(snapshot.data, "Bowl")),
                   ],
                 ),
               ),
@@ -48,15 +44,11 @@ class GearUsageStat extends StatelessWidget {
     );
   }
 
-  List<PipeAccessoryUsageDto> getUsageByType(
-      List<PipeAccessoryUsageDto> usage, String type) {
+  List<PipeAccessoryUsageDto> getUsageByType(List<PipeAccessoryUsageDto> usage, String type) {
     if (usage == null) {
       return null;
     }
 
-    return Collection(usage)
-        .where((f) => f.type == type)
-        .orderByDescending((o) => o.used)
-        .toList();
+    return List.from(usage).where((f) => f.type == type).orderByDescending((o) => o.used).toList();
   }
 }

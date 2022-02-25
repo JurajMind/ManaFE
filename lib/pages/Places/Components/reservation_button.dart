@@ -4,7 +4,7 @@ import 'package:app/pages/Places/Reservations/reservations_page.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
-import 'package:queries/collections.dart';
+import 'package:darq/darq.dart';
 
 class ReservationButton extends StatelessWidget {
   const ReservationButton({
@@ -22,9 +22,12 @@ class ReservationButton extends StatelessWidget {
               var upcomingCount = 0;
               if (snapshot.data != null) {
                 var toDate = DateTime.now().add(new Duration(days: 7));
-                var upcomingReservations = new Collection(snapshot.data);
+                var upcomingReservations = snapshot.data;
                 upcomingCount = upcomingReservations
-                    .where$1((predicate, _) => predicate.time.compareTo(DateTime.now()) > 0 && predicate.time.compareTo(toDate) < 0 && predicate.status != 1)
+                    .where((predicate) =>
+                        predicate.time.compareTo(DateTime.now()) > 0 &&
+                        predicate.time.compareTo(toDate) < 0 &&
+                        predicate.status != 1)
                     .orderBy((p) => p.time)
                     .count();
               }

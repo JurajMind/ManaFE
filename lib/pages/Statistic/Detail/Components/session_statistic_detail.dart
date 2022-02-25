@@ -3,14 +3,14 @@ import 'package:app/pages/Statistic/Detail/Components/smoke_duration_grap.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/api.dart';
-import 'package:queries/collections.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:darq/darq.dart';
 
 class SessionStatisticDetail extends StatelessWidget {
   final BehaviorSubject<FinishedSessionDataDto> data;
-  final Collection<Duration> inDurations;
-  final Collection<Duration> outDurations;
-  final Collection<Duration> idleDurations;
+  final List<Duration> inDurations;
+  final List<Duration> outDurations;
+  final List<Duration> idleDurations;
   const SessionStatisticDetail(
     this.inDurations,
     this.outDurations,
@@ -81,7 +81,8 @@ class SessionStatisticDetail extends StatelessWidget {
         SizedBox(
           height: 16,
         ),
-        new SmokeDurationGraph(idleDurations: this.idleDurations, inDurations: this.inDurations, outDurations: this.outDurations),
+        new SmokeDurationGraph(
+            idleDurations: this.idleDurations, inDurations: this.inDurations, outDurations: this.outDurations),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Table(children: [
@@ -118,9 +119,12 @@ class SessionStatisticDetail extends StatelessWidget {
                 "Duration",
                 style: Theme.of(context).textTheme.bodyText2,
               ),
-              Text(dateUtils.DateUtils.toStringDuration(new Duration(milliseconds: this.inDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
-              Text(dateUtils.DateUtils.toStringDuration(new Duration(milliseconds: this.outDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
-              Text(dateUtils.DateUtils.toStringDuration(new Duration(milliseconds: this.idleDurations.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
+              Text(dateUtils.DateUtils.toStringDuration(
+                  new Duration(milliseconds: this.inDurations.sum<int>((s) => s.inMilliseconds)?.toInt() ?? 0))),
+              Text(dateUtils.DateUtils.toStringDuration(
+                  new Duration(milliseconds: this.outDurations.sum<int>((s) => s.inMilliseconds)?.toInt() ?? 0))),
+              Text(dateUtils.DateUtils.toStringDuration(
+                  new Duration(milliseconds: this.idleDurations.sum<int>((s) => s.inMilliseconds)?.toInt() ?? 0))),
             ]),
             TableRow(
                 decoration: BoxDecoration(
@@ -131,18 +135,33 @@ class SessionStatisticDetail extends StatelessWidget {
                     "Longest",
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
-                  Text(dateUtils.DateUtils.toSecondDuration(new Duration(milliseconds: this.inDurations.max$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
-                  Text(dateUtils.DateUtils.toSecondDuration(new Duration(milliseconds: this.outDurations.max$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
-                  Text(dateUtils.DateUtils.toSecondDuration(new Duration(milliseconds: this.idleDurations.max$1((s) => s.inMilliseconds)?.toInt() ?? 0))),
+                  Text(dateUtils.DateUtils.toSecondDuration(new Duration(
+                      milliseconds: this
+                          .inDurations
+                          .select((element, index) => (element.inMilliseconds)?.toInt() ?? 0)
+                          .max((a, b) => a.compareTo(b))))),
+                  Text(dateUtils.DateUtils.toSecondDuration(new Duration(
+                      milliseconds: this
+                          .outDurations
+                          .select((element, index) => (element.inMilliseconds)?.toInt() ?? 0)
+                          .max((a, b) => a.compareTo(b))))),
+                  Text(dateUtils.DateUtils.toSecondDuration(new Duration(
+                      milliseconds: this
+                          .idleDurations
+                          .select((element, index) => (element.inMilliseconds)?.toInt() ?? 0)
+                          .max((a, b) => a.compareTo(b))))),
                 ]),
             TableRow(children: [
               Text(
                 "Average",
                 style: Theme.of(context).textTheme.bodyText2,
               ),
-              Text(dateUtils.DateUtils.toSecondDuration(new Duration(milliseconds: this.inDurations.average((s) => s.inMilliseconds)?.toInt() ?? 0))),
-              Text(dateUtils.DateUtils.toSecondDuration(new Duration(milliseconds: this.outDurations.average((s) => s.inMilliseconds)?.toInt() ?? 0))),
-              Text(dateUtils.DateUtils.toSecondDuration(new Duration(milliseconds: this.idleDurations.average((s) => s.inMilliseconds)?.toInt() ?? 0))),
+              Text(dateUtils.DateUtils.toSecondDuration(
+                  new Duration(milliseconds: this.inDurations.average((s) => s.inMilliseconds)?.toInt() ?? 0))),
+              Text(dateUtils.DateUtils.toSecondDuration(
+                  new Duration(milliseconds: this.outDurations.average((s) => s.inMilliseconds)?.toInt() ?? 0))),
+              Text(dateUtils.DateUtils.toSecondDuration(
+                  new Duration(milliseconds: this.idleDurations.average((s) => s.inMilliseconds)?.toInt() ?? 0))),
             ]),
             TableRow(
                 decoration: BoxDecoration(

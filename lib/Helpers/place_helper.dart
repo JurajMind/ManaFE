@@ -1,7 +1,7 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:openapi/api.dart';
-import 'package:queries/collections.dart';
+
 import 'dart:math' show cos, sqrt, asin;
 
 class PlaceHelpers {
@@ -9,8 +9,7 @@ class PlaceHelpers {
     try {
       if (place.businessHours == null) return null;
       if (place.businessHours.length == 0) return null;
-      var today = Collection(place.businessHours)
-          .firstOrDefault((a) => a.day == (DateTime.now().weekday));
+      var today = place.businessHours.firstWhere((a) => a.day == (DateTime.now().weekday), orElse: () => null);
       if (today == null) return false;
       if (today.openTine == null || today.closeTime == null) return false;
       var now = DateTime.now();
@@ -22,8 +21,7 @@ class PlaceHelpers {
       if (close.compareTo(open) < 0) {
         close = close.add(Duration(days: 1));
       }
-      if (open.compareTo(DateTime.now()) < 0 &&
-          close.compareTo(DateTime.now()) > 0) {
+      if (open.compareTo(DateTime.now()) < 0 && close.compareTo(DateTime.now()) > 0) {
         return true;
       }
 
@@ -36,19 +34,15 @@ class PlaceHelpers {
   static double calculateDistance(lat1, lon1, lat2, lon2) {
     var p = 0.017453292519943295;
     var c = cos;
-    var a = 0.5 -
-        c((lat2 - lat1) * p) / 2 +
-        c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+    var a = 0.5 - c((lat2 - lat1) * p) / 2 + c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
     return 6371 * asin(sqrt(a));
   }
 
-  static double calculateDistanceFromAddress(
-      AddressDto address, Position position) {
+  static double calculateDistanceFromAddress(AddressDto address, Position position) {
     var lat1 = double.tryParse(address.lat);
     var lon1 = double.tryParse(address.lng);
     if (lat1 != null && lon1 != null && position != null) {
-      return calculateDistance(
-          lat1, lon1, position.latitude, position.longitude);
+      return calculateDistance(lat1, lon1, position.latitude, position.longitude);
     }
     return null;
   }

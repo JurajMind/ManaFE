@@ -1,10 +1,9 @@
 import 'package:openapi/api.dart';
-import 'package:queries/collections.dart';
+import 'package:darq/darq.dart';
 
 class DetailPageHelper {
   static List<Duration> getDuration(
-      bool Function(SmartHookahModelsDbPuf) predicate,
-      List<SmartHookahModelsDbPuf> pufs) {
+      bool Function(SmartHookahModelsDbPuf) predicate, List<SmartHookahModelsDbPuf> pufs) {
     var result = new List<Duration>();
     for (var i = 1; i < pufs.length; i++) {
       if (predicate(pufs[i - 1])) {
@@ -22,16 +21,14 @@ class DetailPageHelper {
     return result;
   }
 
-  static List<List<SmartHookahModelsDbPuf>> createHistogram(
-      List<SmartHookahModelsDbPuf> pufs, int i) {
-    var pufCollection = new Collection(pufs);
+  static List<List<SmartHookahModelsDbPuf>> createHistogram(List<SmartHookahModelsDbPuf> pufs, int i) {
+    var pufCollection = new List.from(pufs);
     var start = new DateTime.fromMillisecondsSinceEpoch(
-        pufCollection.min$1((a) => a.D.millisecondsSinceEpoch));
+        pufCollection.min((a, b) => a.D.millisecondsSinceEpoch < b.D.millisecondsSinceEpoch));
     var end = start.add(new Duration(seconds: i));
     var result = new List<List<SmartHookahModelsDbPuf>>();
     var bucket = new List<SmartHookahModelsDbPuf>();
-    var orderpufs =
-        pufCollection.orderBy((s) => s.D.millisecondsSinceEpoch).toList();
+    var orderpufs = pufCollection.orderBy((s) => s.D.millisecondsSinceEpoch).toList();
     for (int j = 0; j < orderpufs.length; j++) {
       var puf = orderpufs[j];
       if (puf.D.millisecondsSinceEpoch >= start.millisecondsSinceEpoch &&

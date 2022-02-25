@@ -13,36 +13,30 @@ class ShareService {
 
   static Future<Uri> mixShareLink(TobaccoMixSimpleDto mixId) async {
     var link = Uri.parse(_appUrl + "/mix/${mixId.id}");
-    return await createDynamicLink(
-        true, link.toString(), "Mix ${mixId.name}", "Someone shered you a mix");
+    return await createDynamicLink(true, link.toString(), "Mix ${mixId.name}", "Someone shered you a mix");
   }
 
   static Future<Uri> placeShareLink(PlaceSimpleDto place) async {
     var link = Uri.parse(_appUrl + "/place/${place.id}");
-    return await createDynamicLink(
-        true, link.toString(), "${place.name}", "Someone shered you a place");
+    return await createDynamicLink(true, link.toString(), "${place.name}", "Someone shered you a place");
   }
 
   static Future<Uri> gearShareLink(PipeAccesorySimpleDto gear) async {
     var link = Uri.parse(_appUrl + "/gear/${gear.id}");
-    return await createDynamicLink(
-        true, link.toString(), "${gear.name}", "Someone shered you a gear");
+    return await createDynamicLink(true, link.toString(), "${gear.name}", "Someone shered you a gear");
   }
 
   static Future<Uri> tobaccoShareLink(PipeAccesorySimpleDto gear) async {
     var link = Uri.parse(_appUrl + "/flavor/${gear.id}");
-    return await createDynamicLink(
-        true, link.toString(), "${gear.name}", "Someone shered you a a flavor");
+    return await createDynamicLink(true, link.toString(), "${gear.name}", "Someone shered you a a flavor");
   }
 
   static Future<Uri> sessionShareLink(SmokeSessionSimpleDto session) async {
     var link = Uri.parse(_appUrl + "/session/${session.id}");
-    return await createDynamicLink(true, link.toString(),
-        "${session.sessionId}", "Someone shered you a session");
+    return await createDynamicLink(true, link.toString(), "${session.sessionId}", "Someone shered you a session");
   }
 
-  static Future<Uri> createDynamicLink(
-      bool short, String inputUrl, String socTitle, String socDesc) async {
+  static Future<Uri> createDynamicLink(bool short, String inputUrl, String socTitle, String socDesc) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
         uriPrefix: _urlPrefix,
         link: Uri.parse(inputUrl),
@@ -50,10 +44,7 @@ class ShareService {
           packageName: 'com.manapipes.app',
           minimumVersion: 0,
         ),
-        dynamicLinkParametersOptions: DynamicLinkParametersOptions(
-          shortDynamicLinkPathLength: ShortDynamicLinkPathLength.short,
-        ),
-        iosParameters: IosParameters(
+        iosParameters: IOSParameters(
           bundleId: 'com.manapipes.dev',
           minimumVersion: '0',
         ),
@@ -64,19 +55,17 @@ class ShareService {
 
     Uri url;
     if (short) {
-      final ShortDynamicLink shortLink = await parameters.buildShortLink();
-      url = shortLink.shortUrl;
+      //final ShortDynamicLink shortLink = await parameters.buildShortLink();
+      //url = shortLink.shortUrl;
     } else {
-      url = await parameters.buildUrl();
+      url = parameters.link;
     }
 
     return url;
   }
 
   static void deepLinkNavigation(
-      GlobalKey<NavigatorState> Function(int) callback,
-      String link,
-      BuildContext context) async {
+      GlobalKey<NavigatorState> Function(int) callback, String link, BuildContext context) async {
     var chunk = link.split('/');
     switch (chunk[1]) {
       case 'flavor':

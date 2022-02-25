@@ -4,7 +4,7 @@ import 'package:app/models/extensions.dart';
 import 'package:app/module/general/gear_bloc.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
-import 'package:queries/collections.dart';
+import 'package:darq/darq.dart';
 
 class BrandSelectPage extends StatefulWidget {
   final GearBloc bloc;
@@ -221,7 +221,10 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
                           this.searchString = data;
                         });
                       },
-                      decoration: InputDecoration(hintText: 'Search', border: InputBorder.none, labelStyle: Theme.of(context).textTheme.headline4),
+                      decoration: InputDecoration(
+                          hintText: 'Search',
+                          border: InputBorder.none,
+                          labelStyle: Theme.of(context).textTheme.headline4),
                     ),
                   )),
                   Flexible(
@@ -245,8 +248,10 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
                 if (snapshot?.data == null) return Container();
                 var data = snapshot.data;
                 if (data != null && this.searchString != "") {
-                  var dataCollection = Collection(data);
-                  data = dataCollection.where$1((a, _) => a.name.toUpperCase().contains(this.searchString.toUpperCase())).toList();
+                  var dataCollection = List.from(data);
+                  data = dataCollection
+                      .where((a) => a.name.toUpperCase().contains(this.searchString.toUpperCase()))
+                      .toList();
                 }
 
                 if (data.length == 0) {
@@ -336,7 +341,9 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
   }
 
   void addNewBrand(BuildContext context) {
-    Navigator.of(context).push<BrandGroup>(MaterialPageRoute(builder: (context) => NewBrandTypeSelect(), fullscreenDialog: true)).then((newGear) {
+    Navigator.of(context)
+        .push<BrandGroup>(MaterialPageRoute(builder: (context) => NewBrandTypeSelect(), fullscreenDialog: true))
+        .then((newGear) {
       if (newGear != null) Navigator.of(context).pop(newGear);
     });
   }

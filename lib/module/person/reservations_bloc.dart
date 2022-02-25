@@ -2,7 +2,7 @@ import 'package:app/Helpers/helpers.dart';
 import 'package:app/app/app.dart';
 import 'package:app/module/signal_bloc.dart';
 import 'package:openapi/api.dart';
-import 'package:queries/collections.dart';
+import 'package:darq/darq.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ReservationBloc extends SignalBloc {
@@ -37,9 +37,7 @@ class ReservationBloc extends SignalBloc {
     }
 
     var result = await App.http.getReservations(from, to);
-    var order = new Collection(result)
-        .orderBy((keySelector) => keySelector.time)
-        .toList();
+    var order = new List.from(result).orderBy((keySelector) => keySelector.time).toList();
 
     if (from.month == DateTime.now().month) {
       this.reservations.add(order);
@@ -60,8 +58,7 @@ class ReservationBloc extends SignalBloc {
             date = DateTime.parse(data[0]['Time']);
           } on Exception {}
           var from = new DateTime(date.year, date.month, 1);
-          var to = new DateTime(date.year, date.month + 1, 1)
-              .subtract(new Duration(days: 1));
+          var to = new DateTime(date.year, date.month + 1, 1).subtract(new Duration(days: 1));
           this.loadReservations(from, to);
           break;
         }
@@ -77,12 +74,10 @@ class ReservationBloc extends SignalBloc {
     this.reservationDetail.add(result);
   }
 
-  Future<PlacesReservationsReservationDto> createReservation(
-      PlacesReservationsReservationDto newReservation) async {
+  Future<PlacesReservationsReservationDto> createReservation(PlacesReservationsReservationDto newReservation) async {
     var createdReservation = await App.http.createReservation(newReservation);
     if (createdReservation != null) {
-      var oldReservations = this.reservations.value ??
-          new List<PlacesReservationsReservationDto>();
+      var oldReservations = this.reservations.value ?? new List<PlacesReservationsReservationDto>();
       oldReservations.add(createdReservation);
       this.reservations.add(oldReservations);
     }

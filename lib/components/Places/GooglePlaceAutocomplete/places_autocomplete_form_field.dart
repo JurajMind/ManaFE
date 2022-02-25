@@ -68,19 +68,16 @@ class PlacesAutocompleteFormField extends FormField<String> {
   })  : assert(initialValue == null || controller == null),
         super(
           key: key,
-          initialValue:
-              controller != null ? controller.text : (initialValue ?? ''),
+          initialValue: controller != null ? controller.text : (initialValue ?? ''),
           onSaved: onSaved,
           validator: validator,
-          autovalidate: autovalidate,
           builder: (FormFieldState<String> field) {
             final _TextFormFieldState state = field;
-            final InputDecoration effectiveDecoration = inputDecoration
-                ?.applyDefaults(Theme.of(state.context).inputDecorationTheme);
+            final InputDecoration effectiveDecoration =
+                inputDecoration?.applyDefaults(Theme.of(state.context).inputDecorationTheme);
             return PlacesAutocompleteField(
               key: key,
-              inputDecoration:
-                  effectiveDecoration?.copyWith(errorText: state.errorText),
+              inputDecoration: effectiveDecoration?.copyWith(errorText: state.errorText),
               controller: state._effectiveController,
               apiKey: apiKey,
               leading: leading,
@@ -115,8 +112,7 @@ class PlacesAutocompleteFormField extends FormField<String> {
 class _TextFormFieldState extends FormFieldState<String> {
   TextEditingController _controller;
 
-  TextEditingController get _effectiveController =>
-      widget.controller ?? _controller;
+  TextEditingController get _effectiveController => widget.controller ?? _controller;
 
   @override
   PlacesAutocompleteFormField get widget => super.widget;
@@ -139,8 +135,7 @@ class _TextFormFieldState extends FormFieldState<String> {
       widget.controller?.addListener(_handleControllerChanged);
 
       if (oldWidget.controller != null && widget.controller == null)
-        _controller =
-            TextEditingController.fromValue(oldWidget.controller.value);
+        _controller = TextEditingController.fromValue(oldWidget.controller.value);
       if (widget.controller != null) {
         setValue(widget.controller.text);
         if (oldWidget.controller == null) _controller = null;
@@ -170,7 +165,6 @@ class _TextFormFieldState extends FormFieldState<String> {
     // notifications for changes originating from within this class -- for
     // example, the reset() method. In such cases, the FormField value will
     // already have been set.
-    if (_effectiveController.text != value)
-      didChange(_effectiveController.text);
+    if (_effectiveController.text != value) didChange(_effectiveController.text);
   }
 }

@@ -24,20 +24,16 @@ class FeatureMixListView extends StatefulWidget {
 }
 
 class _FeatureMixListViewState extends State<FeatureMixListView> {
-  BehaviorSubject<FeatureMixCreatorDto> creatorInfo =
-      new BehaviorSubject<FeatureMixCreatorDto>();
+  BehaviorSubject<FeatureMixCreatorDto> creatorInfo = new BehaviorSubject<FeatureMixCreatorDto>();
 
   @override
   initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
       var mixologyBloc = DataProvider.getData(context).mixologyBloc;
-      mixologyBloc.loadCreatorMixesNextPage(
-          widget.mixCreator.id.toString(), true);
+      mixologyBloc.loadCreatorMixesNextPage(widget.mixCreator.id.toString(), true);
 
-      App.http
-          .getFeatureCreatorInfo(widget.mixCreator.id)
-          .then((info) => creatorInfo.add(info));
+      App.http.getFeatureCreatorInfo(widget.mixCreator.id).then((info) => creatorInfo.add(info));
     });
   }
 
@@ -60,12 +56,10 @@ class _FeatureMixListViewState extends State<FeatureMixListView> {
               itemCount = snapshot.data.length + 2;
             }
             return LazyLoadScrollView(
-              onRefresh: () => mixologyBloc.loadCreatorMixesRefresh(
-                  widget.mixCreator.id.toString(), true),
+              onRefresh: () => mixologyBloc.loadCreatorMixesRefresh(widget.mixCreator.id.toString(), true),
               onEndOfPage: () {
                 if (!snapshot.data.contains(null))
-                  mixologyBloc.loadCreatorMixesNextPage(
-                      widget.mixCreator.id.toString(), true);
+                  mixologyBloc.loadCreatorMixesNextPage(widget.mixCreator.id.toString(), true);
               },
               child: ListView.builder(
                 itemCount: itemCount ?? 10,
@@ -81,28 +75,51 @@ class _FeatureMixListViewState extends State<FeatureMixListView> {
                     return SizedBox(height: 100);
                   }
 
-                  if (snapshot.data != null &&
-                      snapshot.data[index - 1] != null) {
+                  if (snapshot.data != null && snapshot.data[index - 1] != null) {
                     return Slidable(
-                      actionPane: SlidableDrawerActionPane(),
-                      child:
-                          MixCardExpanded(tobaccoMix: snapshot.data[index - 1]),
-                      actions: <Widget>[
-                        IconSlideAction(
-                            caption: 'Like',
-                            color: Colors.green,
+                      child: MixCardExpanded(tobaccoMix: snapshot.data[index - 1]),
+                      startActionPane: ActionPane(
+                        // A motion is a widget used to control how the pane animates.
+                        motion: const ScrollMotion(),
+
+                        // A pane can dismiss the Slidable.
+                        dismissible: DismissiblePane(onDismissed: () {}),
+
+                        // All actions are defined in the children parameter.
+                        children: [
+                          // A SlidableAction can have an icon and/or a label.
+                          SlidableAction(
+                            backgroundColor: Colors.green,
                             icon: FontAwesomeIcons.thumbsUp,
-                            onTap: () =>
-                                {++snapshot.data[index - 1].likeCount}),
-                      ],
-                      secondaryActions: <Widget>[
-                        IconSlideAction(
-                            caption: 'Dis Like',
-                            color: Colors.red,
+                            label: 'Like',
+                            onPressed: (_) {},
+                          ),
+                        ],
+                      ),
+                      endActionPane: ActionPane(
+                        // A motion is a widget used to control how the pane animates.
+                        motion: const ScrollMotion(),
+
+                        // A pane can dismiss the Slidable.
+                        dismissible: DismissiblePane(onDismissed: () {}),
+
+                        // All actions are defined in the children parameter.
+                        children: [
+                          // A SlidableAction can have an icon and/or a label.
+                          SlidableAction(
+                            backgroundColor: Colors.green,
+                            icon: FontAwesomeIcons.thumbsUp,
+                            label: 'Dislike',
+                            onPressed: (_) {},
+                          ),
+                          SlidableAction(
+                            onPressed: (_) {},
+                            backgroundColor: Colors.red,
                             icon: FontAwesomeIcons.thumbsDown,
-                            onTap: () =>
-                                {--snapshot.data[index - 1].likeCount}),
-                      ],
+                            label: 'Share',
+                          ),
+                        ],
+                      ),
                     );
                   } else {
                     return MixCardExpandedShimmer();

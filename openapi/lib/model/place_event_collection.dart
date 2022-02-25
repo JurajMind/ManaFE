@@ -11,7 +11,7 @@ part of openapi.api;
 
 class PlaceEventCollection {
   /// Returns a new [PlaceEventCollection] instance.
-  PlaceEventCollection({
+  PlaceEventList.from({
     this.eventCollection = const [],
     this.success,
     this.message,
@@ -64,7 +64,7 @@ class PlaceEventCollection {
   /// [json] if it's non-null, null if [json] is null.
   static PlaceEventCollection fromJson(Map<String, dynamic> json) => json == null
     ? null
-    : PlaceEventCollection(
+    : PlaceEventList.from(
         eventCollection: PlaceEvent.listFromJson(json[r'EventCollection']),
         success: json[r'Success'],
         message: json[r'Message'],

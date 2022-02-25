@@ -6,7 +6,8 @@ import 'package:app/module/person/reservations_bloc.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
-import 'package:queries/collections.dart';
+
+import 'package:darq/darq.dart';
 
 class ReservationsPage extends StatefulWidget {
   @override
@@ -20,8 +21,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
   DateTime _selectedDay;
   Map<DateTime, List> _events;
   int reservationFilter = -1;
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
   @override
   void initState() {
     super.initState();
@@ -49,9 +49,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
-        title: Text(AppTranslations.of(context)
-            .text("reservations.reservations")
-            .toUpperCase()),
+        title: Text(AppTranslations.of(context).text("reservations.reservations").toUpperCase()),
       ),
       body: Container(
         child: StreamBuilder<List<PlacesReservationsReservationDto>>(
@@ -59,9 +57,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
             builder: (context, snapshot) {
               var filteredReservations = _selectedDay == null
                   ? snapshot.data
-                  : snapshot.data
-                      .where((d) => compareDate(d.time, _selectedDay) == 0)
-                      .toList();
+                  : snapshot.data.where((d) => compareDate(d.time, _selectedDay) == 0).toList();
               var childrens = new List<Widget>();
               childrens.add(_buildTableCalendar(snapshot.data));
 
@@ -78,8 +74,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
               childrens.addAll(_buildEventList(filteredReservations));
               return RefreshIndicator(
                 key: _refreshIndicatorKey,
-                onRefresh: () =>
-                    loadReservation(_selectedDay ?? DateTime.now()),
+                onRefresh: () => loadReservation(_selectedDay ?? DateTime.now()),
                 child: Stack(
                   children: <Widget>[
                     ListView(
@@ -128,24 +123,16 @@ class _ReservationsPageState extends State<ReservationsPage> {
       });
     }
 
-    var reservations = new Collection(data);
+    var reservations = new List.from(data);
     if (reservationFilter != -1) {
-      reservations = reservations
-          .where$1((p, _) => p.status == reservationFilter)
-          .toCollection();
+      reservations = reservations.where((p) => p.status == reservationFilter);
     }
-    return reservations
-        .reverse()
-        .toList()
-        .map((r) => ReservationItem(reservation: r))
-        .toList();
+    return reservations.reverse().toList().map((r) => ReservationItem(reservation: r)).toList();
   }
 
   void changeDate(DateTime newDate) {
     print(newDate);
-    if (newDate != null &&
-        _selectedDay != null &&
-        _selectedDay.month != newDate.month) {
+    if (newDate != null && _selectedDay != null && _selectedDay.month != newDate.month) {
       loadReservation(newDate);
     }
     setState(() {
@@ -168,9 +155,7 @@ class ReservationFilterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 200,
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.white),
-          borderRadius: BorderRadius.circular(16.0)),
+      decoration: BoxDecoration(border: Border.all(color: Colors.white), borderRadius: BorderRadius.circular(16.0)),
       child: new InkWell(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

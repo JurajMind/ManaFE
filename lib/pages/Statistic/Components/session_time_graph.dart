@@ -7,7 +7,7 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/api.dart';
-import 'package:queries/collections.dart';
+import 'package:darq/darq.dart';
 import 'dart:math' as math;
 
 class SessionDayGraph extends StatefulWidget {
@@ -75,7 +75,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
         .values
         .toList();
 
-    var cItems = Collection(items);
+    var cItems = List.from(items);
 
     return cItems.orderBy((a) => a.x).toList();
   }
@@ -90,9 +90,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
     showingBarGroups = rawBarGroups;
 
     barTouchedResultStreamController = StreamController();
-    barTouchedResultStreamController.stream
-        .distinct()
-        .listen((BarTouchResponse response) {
+    barTouchedResultStreamController.stream.distinct().listen((BarTouchResponse response) {
       if (response == null) {
         return;
       }
@@ -105,21 +103,18 @@ class SessionDayGraphState extends State<SessionDayGraph> {
         return;
       }
 
-      touchedGroupIndex =
-          showingBarGroups.indexOf(response.spot.touchedBarGroup);
+      touchedGroupIndex = showingBarGroups.indexOf(response.spot.touchedBarGroup);
 
       setState(() {
-        if (response.touchInput is dynamic) {
+        if (response is dynamic) {
           touchedGroupIndex = -1;
           showingBarGroups = List.of(rawBarGroups);
         } else {
           showingBarGroups = List.of(rawBarGroups);
           if (touchedGroupIndex != -1) {
-            showingBarGroups[touchedGroupIndex] =
-                showingBarGroups[touchedGroupIndex].copyWith(
+            showingBarGroups[touchedGroupIndex] = showingBarGroups[touchedGroupIndex].copyWith(
               barRods: showingBarGroups[touchedGroupIndex].barRods.map((rod) {
-                return rod
-                    .copyWith(colors: [AppColors.colors[3]], y: rod.y + 1);
+                return rod.copyWith(colors: [AppColors.colors[3]], y: rod.y + 1);
               }).toList(),
             );
           }
@@ -188,8 +183,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                         reservedSize: 10.0,
                         getTitles: (value) {
                           if (max == 5) {
-                            if (value % 10 == 0)
-                              return value.toStringAsFixed(0);
+                            if (value % 10 == 0) return value.toStringAsFixed(0);
                           }
 
                           if (max < 5) {
@@ -201,18 +195,15 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                           }
 
                           if (max < 50) {
-                            if (value % 10 == 0)
-                              return value.toStringAsFixed(0);
+                            if (value % 10 == 0) return value.toStringAsFixed(0);
                           }
 
                           if (max < 100) {
-                            if (value % 20 == 0)
-                              return value.toStringAsFixed(0);
+                            if (value % 20 == 0) return value.toStringAsFixed(0);
                           }
 
                           if (max < 1000) {
-                            if (value % 100 == 0)
-                              return value.toStringAsFixed(0);
+                            if (value % 100 == 0) return value.toStringAsFixed(0);
                           }
 
                           return '';
@@ -242,8 +233,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
         y: y,
         colors: [AppColors.colors[2]],
         width: width,
-        backDrawRodData: BackgroundBarChartRodData(
-            show: true, y: max == 0 ? 20 : max + 0.0, colors: [Colors.black]),
+        backDrawRodData: BackgroundBarChartRodData(show: true, y: max == 0 ? 20 : max + 0.0, colors: [Colors.black]),
       ),
     ]);
   }
@@ -275,13 +265,9 @@ class SessionDayStream extends StatelessWidget {
                 return Container();
               }
 
-              var seriesList =
-                  snapshot.data.timeStatistics.sessionStartTimeDistribution;
+              var seriesList = snapshot.data.timeStatistics.sessionStartTimeDistribution;
               return Container(
-                  height: 250,
-                  child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SessionDayGraph(seriesList)));
+                  height: 250, child: Padding(padding: const EdgeInsets.all(8.0), child: SessionDayGraph(seriesList)));
             }),
       ),
     );

@@ -12,8 +12,6 @@ import 'package:test/test.dart';
 
 // tests for PlaceEventCollection
 void main() {
-  final instance = PlaceEventCollection();
-
   group('test PlaceEventCollection', () {
     // List<PlaceEvent> eventCollection (default value: const [])
     test('to test the property `eventCollection`', () async {
@@ -34,8 +32,5 @@ void main() {
     test('to test the property `httpResponseCode`', () async {
       // TODO
     });
-
-
   });
-
 }

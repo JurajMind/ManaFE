@@ -1,6 +1,6 @@
 import 'package:app/app/app.dart';
 import 'package:openapi/api.dart';
-import 'package:queries/collections.dart';
+import 'package:darq/darq.dart';
 import 'package:rxdart/rxdart.dart';
 
 class StatisticBloc {
@@ -16,17 +16,13 @@ class StatisticBloc {
   DateTime from;
   DateTime to;
 
-  BehaviorSubject<PersonStatisticsOverallDto> statistic =
-      new BehaviorSubject<PersonStatisticsOverallDto>();
+  BehaviorSubject<PersonStatisticsOverallDto> statistic = new BehaviorSubject<PersonStatisticsOverallDto>();
 
-  BehaviorSubject<List<StatisticItem>> topGraphData =
-      new BehaviorSubject<List<StatisticItem>>();
+  BehaviorSubject<List<StatisticItem>> topGraphData = new BehaviorSubject<List<StatisticItem>>();
 
-  BehaviorSubject<List<SmokeSessionSimpleDto>> smokeSessions =
-      new BehaviorSubject<List<SmokeSessionSimpleDto>>();
+  BehaviorSubject<List<SmokeSessionSimpleDto>> smokeSessions = new BehaviorSubject<List<SmokeSessionSimpleDto>>();
 
-  BehaviorSubject<List<PipeAccessoryUsageDto>> gearUsage =
-      new BehaviorSubject<List<PipeAccessoryUsageDto>>();
+  BehaviorSubject<List<PipeAccessoryUsageDto>> gearUsage = new BehaviorSubject<List<PipeAccessoryUsageDto>>();
 
   BehaviorSubject<StatisticRecap> recap = new BehaviorSubject<StatisticRecap>();
 
@@ -40,8 +36,7 @@ class StatisticBloc {
       month = true;
     }
 
-    var statistic =
-        this.getDisplayStatistic(from, to, result.smokeSessions, month: month);
+    var statistic = this.getDisplayStatistic(from, to, result.smokeSessions, month: month);
     topGraphData.add(statistic);
 
     var recap = this.getStatsRecap(result.smokeSessions);
@@ -50,8 +45,7 @@ class StatisticBloc {
     this.gearUsage.add(result.accessoriesUsage);
   }
 
-  List<StatisticItem> getDisplayStatistic(
-      DateTime from, DateTime to, List<SmokeSessionSimpleDto> statistic,
+  List<StatisticItem> getDisplayStatistic(DateTime from, DateTime to, List<SmokeSessionSimpleDto> statistic,
       {bool month = false}) {
     var result = new List<StatisticItem>();
     var curentDate = from;
@@ -61,8 +55,7 @@ class StatisticBloc {
       var thisDaySmokeSession = statistic.where((s) {
         var start = DateTime.fromMillisecondsSinceEpoch(s.statistic.start);
         if (month) {
-          return start.month == curentDate.month &&
-              start.year == curentDate.year;
+          return start.month == curentDate.month && start.year == curentDate.year;
         }
         return start.difference(curentDate).inDays == 0;
       });
@@ -78,31 +71,23 @@ class StatisticBloc {
         });
       }
       result.add(item);
-      curentDate = curentDate
-          .add(month ? new Duration(days: 31) : new Duration(days: 1));
+      curentDate = curentDate.add(month ? new Duration(days: 31) : new Duration(days: 1));
     }
 
     return result;
   }
 
   StatisticRecap getStatsRecap(List<SmokeSessionSimpleDto> sessions) {
-    var sessionCollection = Collection(sessions);
-    var pufCount =
-        sessionCollection.sum$1((selector) => selector.statistic.pufCount) ?? 0;
-    var smokingTimeMilis = sessionCollection
-            .sum$1((selector) => selector.statistic.smokeDuration) ??
-        0;
+    var sessionCollection = List.from(sessions);
+    var pufCount = sessionCollection.sum<int>((selector) => selector.statistic.pufCount) ?? 0;
+    var smokingTimeMilis = sessionCollection.sum<int>((selector) => selector.statistic.smokeDuration) ?? 0;
 
-    var activityMilis =
-        sessionCollection.sum$1((selector) => selector.statistic.duration) ?? 0;
+    var activityMilis = sessionCollection.sum<int>((selector) => selector.statistic.duration) ?? 0;
 
     var smokingTime = new Duration(milliseconds: smokingTimeMilis);
     var activityTyme = new Duration(milliseconds: activityMilis);
     return StatisticRecap(
-        pufCount: pufCount,
-        smokingTime: smokingTime,
-        activity: activityTyme,
-        sessionCount: sessions.length);
+        pufCount: pufCount, smokingTime: smokingTime, activity: activityTyme, sessionCount: sessions.length);
   }
 
   Future<bool> unAssignSession(int id) async {
@@ -146,8 +131,7 @@ class StatisticItem {
 }
 
 class StatisticRecap {
-  StatisticRecap(
-      {this.sessionCount, this.pufCount, this.smokingTime, this.activity});
+  StatisticRecap({this.sessionCount, this.pufCount, this.smokingTime, this.activity});
 
   int pufCount;
 

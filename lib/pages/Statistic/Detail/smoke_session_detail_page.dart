@@ -10,7 +10,7 @@ import 'package:app/services/share.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/api.dart';
-import 'package:queries/collections.dart';
+import 'package:darq/darq.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:share/share.dart';
 
@@ -94,7 +94,8 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage> with Tick
               },
             )
           ],
-          title: Text("${dateUtils.DateUtils.toStringDate(start)} - ${dateUtils.DateUtils.toStringShortTime(start)} ${session.sessionId}")),
+          title: Text(
+              "${dateUtils.DateUtils.toStringDate(start)} - ${dateUtils.DateUtils.toStringShortTime(start)} ${session.sessionId}")),
       body: Center(
         child: Container(
           constraints: BoxConstraints(maxWidth: 800),
@@ -146,8 +147,7 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage> with Tick
                                 if (snapshot.data == null) {
                                   return SessionStatisticShimer();
                                 }
-                                return new SessionStatisticDetail(
-                                    new Collection(inDurations), new Collection(outDurations), new Collection(idleDurations), this.data);
+                                return new SessionStatisticDetail(inDurations, outDurations, idleDurations, this.data);
                               },
                             ),
                           ),
@@ -220,7 +220,11 @@ class HrWidget extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[Text('Heart rate monitor', style: Theme.of(context).textTheme.headline6), SizedBox(width: 8), Icon(FontAwesomeIcons.heartbeat)],
+            children: <Widget>[
+              Text('Heart rate monitor', style: Theme.of(context).textTheme.headline6),
+              SizedBox(width: 8),
+              Icon(FontAwesomeIcons.heartbeat)
+            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

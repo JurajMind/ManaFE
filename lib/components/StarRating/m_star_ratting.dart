@@ -11,7 +11,9 @@ class MStarRating extends StatelessWidget {
   final RatingChangeCallback onRatingChanged;
   final int starSize;
   final TextStyle textStyle;
-  const MStarRating({Key key, this.rating, this.title, this.colorIndex = 0, this.onRatingChanged, this.starSize = 30, this.textStyle}) : super(key: key);
+  const MStarRating(
+      {Key key, this.rating, this.title, this.colorIndex = 0, this.onRatingChanged, this.starSize = 30, this.textStyle})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class MStarRating extends StatelessWidget {
               ),
               SmoothStarRating(
                   allowHalfRating: true,
-                  onRated: onRatingChanged,
+                  onRatingChanged: onRatingChanged,
                   starCount: 5,
                   rating: rating,
                   size: starSize + 0.0,

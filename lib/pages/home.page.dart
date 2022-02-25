@@ -31,15 +31,13 @@ import 'SmokeSession/Components/gradiend_color_wheel_rotate.dart';
 import 'SmokeSession/smoke_session_page.dart';
 import 'Statistic/Detail/smoke_session_detail_page.dart';
 
-typedef RouteWidgetBuilder = Widget Function(
-    BuildContext context, Object argument);
+typedef RouteWidgetBuilder = Widget Function(BuildContext context, Object argument);
 
 class HomePage extends StatefulWidget {
   final Uri deeplink;
   final RouteObserver<PageRoute> routeObserver;
 
-  const HomePage({Key key, this.deeplink, this.routeObserver})
-      : super(key: key);
+  const HomePage({Key key, this.deeplink, this.routeObserver}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -105,8 +103,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
     });
     this.initDynamicLinks();
 
-    WidgetsBinding.instance
-        .scheduleFrameCallback((_) => firstDeepJump(context));
+    WidgetsBinding.instance.scheduleFrameCallback((_) => firstDeepJump(context));
 
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
@@ -162,14 +159,12 @@ class _HomePageState extends State<HomePage> with RouteAware {
 
     _focusActiveTab();
 
-    activeTabSub =
-        DataProvider.getData(context).appBloc.activeTab.listen((index) {
+    activeTabSub = DataProvider.getData(context).appBloc.activeTab.listen((index) {
       _setActiveTab(index);
     });
     SystemChannels.lifecycle.setMessageHandler((msg) {
       debugPrint('SystemChannels> $msg');
-      if (msg == AppLifecycleState.paused.toString() ||
-          msg == AppLifecycleState.inactive.toString()) {
+      if (msg == AppLifecycleState.paused.toString() || msg == AppLifecycleState.inactive.toString()) {
         var smokeSessionBloc = getIt.get<SmokeSessionBloc>();
         smokeSessionBloc.pauseSession();
       }
@@ -188,6 +183,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
   }
 
   void initDynamicLinks() async {
+    /*
     FirebaseDynamicLinks.instance.onLink(
         onSuccess: (PendingDynamicLinkData dynamicLink) async {
       final Uri deepLink = dynamicLink?.link;
@@ -200,12 +196,12 @@ class _HomePageState extends State<HomePage> with RouteAware {
       print('onLinkError');
       print(e.message);
     });
+    */
   }
 
   void firstDeepJump(BuildContext context) {
     if (widget.deeplink != null) {
-      ShareService.deepLinkNavigation(
-          _setActiveTab, widget.deeplink.path, context);
+      ShareService.deepLinkNavigation(_setActiveTab, widget.deeplink.path, context);
     }
   }
 
@@ -281,8 +277,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                       ),
                       text: AppTranslations.of(context).text("tabs.mixology"),
                       color: _currentIndex == 0 ? Colors.white : Colors.grey,
-                      tooltip:
-                          AppTranslations.of(context).text("tabs.mixology"),
+                      tooltip: AppTranslations.of(context).text("tabs.mixology"),
                       onPressed: () => _setActiveTab(0),
                     ),
                   ),
@@ -393,8 +388,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                       height: 55,
                       child: ClipRect(
                         child: BackdropFilter(
-                          filter:
-                              new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                          filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                         ),
                       ))),
               useTabletLayout
@@ -428,8 +422,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                 _currentIndex == 2
                     ? BoxShadow(
                         color: Colors.grey,
-                        offset:
-                            MPlatform.isWeb ? Offset.zero : Offset(1.0, 6.0),
+                        offset: MPlatform.isWeb ? Offset.zero : Offset(1.0, 6.0),
                         blurRadius: MPlatform.isWeb ? 0 : 40.0,
                       )
                     : BoxShadow(
@@ -540,8 +533,7 @@ class TabNavigator extends StatelessWidget {
         observers: [observable],
         onGenerateRoute: (routeSettings) {
           return MaterialPageRoute(
-              builder: (context) => routeBuilders[routeSettings.name](
-                  context, routeSettings.arguments));
+              builder: (context) => routeBuilders[routeSettings.name](context, routeSettings.arguments));
         });
   }
 }

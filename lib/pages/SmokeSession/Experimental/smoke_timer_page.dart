@@ -12,7 +12,7 @@ import 'package:app/pages/SmokeSession/Components/stop_watches.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:queries/collections.dart';
+import 'package:darq/darq.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
@@ -42,8 +42,7 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
     super.didChangeDependencies();
     dataProvider = DataProvider.getData(context);
 
-    subscription =
-        getIt.get<SmokeSessionBloc>().smokeStateBroadcast.listen((data) {
+    subscription = getIt.get<SmokeSessionBloc>().smokeStateBroadcast.listen((data) {
       if (data == 1) {
         setState(() {
           if (mounted) this.height = maxHeight;
@@ -62,11 +61,7 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
       }
 
       charts.add(data.lastPuf);
-      charts = Collection(charts)
-          .orderByDescending((f) => f)
-          .distinct()
-          .take(5)
-          .toList();
+      charts = List.from(charts).orderByDescending((f) => f).distinct().take(5).toList();
     });
   }
 
@@ -96,9 +91,7 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
                 },
               ),
               new FlatButton(
-                child: new Text(AppTranslations.of(context)
-                    .text("common.save")
-                    .toUpperCase()),
+                child: new Text(AppTranslations.of(context).text("common.save").toUpperCase()),
                 textColor: Colors.green,
                 onPressed: () {
                   Navigator.of(context).pop(true);
@@ -108,9 +101,7 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
           );
         }).then((result) {
       if (!result) return;
-      App.http
-          .addCompetitionEntry(_textFieldController.text, lastPuf)
-          .then((onValue) {
+      App.http.addCompetitionEntry(_textFieldController.text, lastPuf).then((onValue) {
         HapticFeedback.selectionClick();
         setState(() {
           _textFieldController.text = '';
@@ -148,9 +139,7 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
                             ),
                             Expanded(
                               flex: 1,
-                              child: IconButton(
-                                  icon: Icon(Icons.add),
-                                  onPressed: () => _displayDialog(context)),
+                              child: IconButton(icon: Icon(Icons.add), onPressed: () => _displayDialog(context)),
                             ),
                           ],
                         ),

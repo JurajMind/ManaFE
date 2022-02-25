@@ -11,7 +11,7 @@ import 'package:app/module/places/places_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:openapi/api.dart';
-import 'package:queries/collections.dart';
+import 'package:darq/darq.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -25,9 +25,7 @@ class PlacesSearchPage extends StatefulWidget {
   final List<PlaceSimpleDto> places;
   final bool returnToMap;
   final String searchLabel;
-  PlacesSearchPage(
-      {Key key, this.places, this.returnToMap = false, this.searchLabel})
-      : super(key: key);
+  PlacesSearchPage({Key key, this.places, this.returnToMap = false, this.searchLabel}) : super(key: key);
 
   _PlacesSearchPageState createState() => _PlacesSearchPageState();
 }
@@ -37,8 +35,7 @@ class PlacesSearchPage extends StatefulWidget {
 class _PlacesSearchPageState extends State<PlacesSearchPage> {
   BehaviorSubject<List<PlaceSimpleDto>> places;
   PlacesBloc placesBloc = getIt.get<PlacesBloc>();
-  GoogleMapsPlaces _places = GoogleMapsPlaces(
-      baseUrl: "https://${App.baseUri}/api/Places/GoogleProxy");
+  GoogleMapsPlaces _places = GoogleMapsPlaces(baseUrl: "https://${App.baseUri}/api/Places/GoogleProxy");
   Mode _mode = Mode.overlay;
   String currentLocation;
   LatLng currentCitiLocation;
@@ -73,8 +70,7 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
   Future<Null> displayPrediction(Prediction p) async {
     if (p != null) {
       // get detail (lat/lng)
-      PlacesDetailsResponse detail =
-          await _places.getDetailsByPlaceId(p.placeId);
+      PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(p.placeId);
       setState(() {
         this.currentLocation = detail.result.name;
       });
@@ -115,8 +111,7 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
                               decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(16.0)),
+                                  border: Border.all(color: Colors.white), borderRadius: BorderRadius.circular(16.0)),
                               child: Column(
                                 children: <Widget>[
                                   Expanded(
@@ -125,14 +120,12 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                                         children: <Widget>[
                                           Flexible(
                                               child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 8.0),
+                                            padding: const EdgeInsets.only(left: 8.0),
                                             child: Icon(Icons.search),
                                           )),
                                           Expanded(
                                               child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 15.0),
+                                            padding: const EdgeInsets.only(left: 15.0),
                                             child: TextField(
                                               onChanged: (data) {
                                                 setState(() {
@@ -142,9 +135,7 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                                               decoration: InputDecoration(
                                                   hintText: 'Search',
                                                   border: InputBorder.none,
-                                                  labelStyle: Theme.of(context)
-                                                      .textTheme
-                                                      .headline4),
+                                                  labelStyle: Theme.of(context).textTheme.headline4),
                                             ),
                                           )),
                                         ],
@@ -159,42 +150,28 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                                             icon: Icon(Icons.place),
                                             onPressed: () {
                                               setState(() {
-                                                this.currentLocation =
-                                                    "Current location";
+                                                this.currentLocation = "Current location";
                                               });
-                                              var location = this
-                                                  .placesBloc
-                                                  .location
-                                                  .value;
+                                              var location = this.placesBloc.location.value;
                                               App.http
-                                                  .getNearbyPlaces(
-                                                      lat: location.latitude,
-                                                      lng: location.longitude)
+                                                  .getNearbyPlaces(lat: location.latitude, lng: location.longitude)
                                                   .then((value) {
                                                 places.add(value);
-                                                currentCitiLocation =
-                                                    new LatLng(
-                                                        location.latitude,
-                                                        location.longitude);
+                                                currentCitiLocation = new LatLng(location.latitude, location.longitude);
                                               });
                                             },
                                           ),
                                         ),
-                                        Container(
-                                            width: 1, color: Colors.white),
+                                        Container(width: 1, color: Colors.white),
                                         Flexible(
                                             flex: 4,
                                             fit: FlexFit.tight,
                                             child: GestureDetector(
                                               onTap: () => _handlePressButton(),
                                               child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 4.0),
-                                                child: Text(
-                                                    this.currentLocation,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline5),
+                                                padding: const EdgeInsets.only(left: 4.0),
+                                                child: Text(this.currentLocation,
+                                                    style: Theme.of(context).textTheme.headline5),
                                               ),
                                             )),
                                       ],
@@ -214,11 +191,9 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                       builder: (context, snapshot) {
                         var data = snapshot.data;
                         if (data != null && this.searchString != "") {
-                          var dataCollection = Collection(data);
+                          var dataCollection = List.from(data);
                           data = dataCollection
-                              .where$1((a, _) => a.name
-                                  .toUpperCase()
-                                  .contains(this.searchString.toUpperCase()))
+                              .where((a) => a.name.toUpperCase().contains(this.searchString.toUpperCase()))
                               .toList();
                         }
 
@@ -276,11 +251,9 @@ class Uuid {
         '${_bitsDigits(16, 4)}${_bitsDigits(16, 4)}${_bitsDigits(16, 4)}';
   }
 
-  String _bitsDigits(int bitCount, int digitCount) =>
-      _printDigits(_generateBits(bitCount), digitCount);
+  String _bitsDigits(int bitCount, int digitCount) => _printDigits(_generateBits(bitCount), digitCount);
 
   int _generateBits(int bitCount) => _random.nextInt(1 << bitCount);
 
-  String _printDigits(int value, int count) =>
-      value.toRadixString(16).padLeft(count, '0');
+  String _printDigits(int value, int count) => value.toRadixString(16).padLeft(count, '0');
 }

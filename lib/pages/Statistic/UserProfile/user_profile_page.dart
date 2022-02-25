@@ -4,7 +4,7 @@ import 'package:app/const/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:achievement_view/achievement_view.dart';
+// import 'package:achievement_view/achievement_view.dart';
 
 class UserProfilePage extends StatefulWidget {
   @override
@@ -70,7 +70,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Row(
-                    children: <Widget>[Icon(Icons.star), Text('450/1000 exp', style: Theme.of(context).textTheme.headline5)],
+                    children: <Widget>[
+                      Icon(Icons.star),
+                      Text('450/1000 exp', style: Theme.of(context).textTheme.headline5)
+                    ],
                   ),
                   Row(
                     children: <Widget>[Icon(Icons.cloud), Text('120', style: Theme.of(context).textTheme.headline5)],
@@ -95,16 +98,29 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     date: '26.4.2019',
                     icon: FontAwesomeIcons.medal,
                   ),
-                  AchievementItem(text: 'Perfect week', subText: '7days 7 hookahs', date: '20.4.2019', icon: FontAwesomeIcons.calendarWeek),
-                  AchievementItem(text: 'CHC Romana opening', subText: 'Attend opening of CHC', date: '19.8.2018', icon: FontAwesomeIcons.mapMarked),
-                  AchievementItem(text: 'Little dragon', subText: 'Take 15s long puff', date: '12.5.2018', icon: FontAwesomeIcons.fire),
+                  AchievementItem(
+                      text: 'Perfect week',
+                      subText: '7days 7 hookahs',
+                      date: '20.4.2019',
+                      icon: FontAwesomeIcons.calendarWeek),
+                  AchievementItem(
+                      text: 'CHC Romana opening',
+                      subText: 'Attend opening of CHC',
+                      date: '19.8.2018',
+                      icon: FontAwesomeIcons.mapMarked),
+                  AchievementItem(
+                      text: 'Little dragon',
+                      subText: 'Take 15s long puff',
+                      date: '12.5.2018',
+                      icon: FontAwesomeIcons.fire),
                   AchievementItem(
                     text: 'Dark side awekens',
                     subText: 'Try some Darkside tobacco',
                     date: '20.4.2018',
                     icon: FontAwesomeIcons.moon,
                   ),
-                  AchievementItem(text: 'Big dragon', subText: 'Take 60s long puff', have: false, icon: FontAwesomeIcons.fire),
+                  AchievementItem(
+                      text: 'Big dragon', subText: 'Take 60s long puff', have: false, icon: FontAwesomeIcons.fire),
                   AchievementItem(
                     text: 'Catch them all',
                     subText: 'Try ALL Darkside tobacco',
@@ -179,7 +195,7 @@ class AchievementItem extends StatelessWidget {
 
   void showAchievementView(AchievementItem item, BuildContext context) {
     if (item.have) return;
-
+/*
     AchievementView(context,
         title: item.text,
         subTitle: item.subText,
@@ -202,6 +218,6 @@ class AchievementItem extends StatelessWidget {
       //AchievementState.closing
       //AchievementState.closed
     })
-      ..show();
+      ..show();*/
   }
 }

@@ -43,9 +43,7 @@ class WeekDayGraphState extends State<WeekDayGraph> {
     showingBarGroups = rawBarGroups;
 
     barTouchedResultStreamController = StreamController();
-    barTouchedResultStreamController.stream
-        .distinct()
-        .listen((BarTouchResponse response) {
+    barTouchedResultStreamController.stream.distinct().listen((BarTouchResponse response) {
       if (response == null) {
         return;
       }
@@ -58,21 +56,18 @@ class WeekDayGraphState extends State<WeekDayGraph> {
         return;
       }
 
-      touchedGroupIndex =
-          showingBarGroups.indexOf(response?.spot?.touchedBarGroup);
+      touchedGroupIndex = showingBarGroups.indexOf(response?.spot?.touchedBarGroup);
 
       setState(() {
-        if (response.touchInput is dynamic) {
+        if (response is dynamic) {
           touchedGroupIndex = -1;
           showingBarGroups = List.of(rawBarGroups);
         } else {
           showingBarGroups = List.of(rawBarGroups);
           if (touchedGroupIndex != -1) {
-            showingBarGroups[touchedGroupIndex] =
-                showingBarGroups[touchedGroupIndex].copyWith(
+            showingBarGroups[touchedGroupIndex] = showingBarGroups[touchedGroupIndex].copyWith(
               barRods: showingBarGroups[touchedGroupIndex].barRods.map((rod) {
-                return rod
-                    .copyWith(colors: [AppColors.colors[3]], y: rod.y + 1);
+                return rod.copyWith(colors: [AppColors.colors[3]], y: rod.y + 1);
               }).toList(),
             );
           }
@@ -172,8 +167,7 @@ class WeekDayGraphState extends State<WeekDayGraph> {
                           showTitles: true,
                           margin: 16,
                           getTitles: (double value) {
-                            return AppTranslations.of(context)
-                                .text("days.short_${value.toInt() + 1}");
+                            return AppTranslations.of(context).text("days.short_${value.toInt() + 1}");
                           }),
                       leftTitles: SideTitles(
                         showTitles: true,
@@ -189,23 +183,19 @@ class WeekDayGraphState extends State<WeekDayGraph> {
                           }
 
                           if (max < 50) {
-                            if (value % 10 == 0)
-                              return value.toStringAsFixed(0);
+                            if (value % 10 == 0) return value.toStringAsFixed(0);
                           }
 
                           if (max < 100) {
-                            if (value % 20 == 0)
-                              return value.toStringAsFixed(0);
+                            if (value % 20 == 0) return value.toStringAsFixed(0);
                           }
 
                           if (max < 200) {
-                            if (value % 40 == 0)
-                              return value.toStringAsFixed(0);
+                            if (value % 40 == 0) return value.toStringAsFixed(0);
                           }
 
                           if (max < 1000) {
-                            if (value % 100 == 0)
-                              return value.toStringAsFixed(0);
+                            if (value % 100 == 0) return value.toStringAsFixed(0);
                           }
 
                           return '';
@@ -235,8 +225,7 @@ class WeekDayGraphState extends State<WeekDayGraph> {
         y: y,
         colors: [AppColors.colors[1]],
         width: width,
-        backDrawRodData: BackgroundBarChartRodData(
-            show: true, y: max < 5 ? 5 : max + 0.0, colors: [Colors.black]),
+        backDrawRodData: BackgroundBarChartRodData(show: true, y: max < 5 ? 5 : max + 0.0, colors: [Colors.black]),
       ),
     ]);
   }

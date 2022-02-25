@@ -3,18 +3,16 @@ import 'dart:async';
 import 'package:app/const/theme.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:queries/collections.dart';
+import 'package:darq/darq.dart';
 
 import 'indicator.dart';
 
 class SmokeDurationGraph extends StatefulWidget {
-  final Collection<Duration> idleDurations;
-  final Collection<Duration> inDurations;
-  final Collection<Duration> outDurations;
+  final List<Duration> idleDurations;
+  final List<Duration> inDurations;
+  final List<Duration> outDurations;
 
-  const SmokeDurationGraph(
-      {Key key, this.idleDurations, this.inDurations, this.outDurations})
-      : super(key: key);
+  const SmokeDurationGraph({Key key, this.idleDurations, this.inDurations, this.outDurations}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _SmokeDurationGraphState();
 }
@@ -29,12 +27,9 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
 
   @override
   void initState() {
-    var inMilis =
-        widget.inDurations?.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0;
-    var outMilis =
-        widget.outDurations?.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0;
-    var idleMilis =
-        widget.idleDurations?.sum$1((s) => s.inMilliseconds)?.toInt() ?? 0;
+    var inMilis = widget.inDurations?.sum<int>((s) => s.inMilliseconds)?.toInt() ?? 0;
+    var outMilis = widget.outDurations?.sum<int>((s) => s.inMilliseconds)?.toInt() ?? 0;
+    var idleMilis = widget.idleDurations?.sum<int>((s) => s.inMilliseconds)?.toInt() ?? 0;
     var all = (inMilis + outMilis + idleMilis);
 
     final section1 = PieChartSectionData(
@@ -42,8 +37,7 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
       value: inMilis / all,
       title: ((inMilis / all) * 100).toStringAsFixed(1) + '%',
       radius: 50,
-      titleStyle: TextStyle(
-          fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
+      titleStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
     );
 
     final section2 = PieChartSectionData(
@@ -51,8 +45,7 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
       value: outMilis / all,
       title: ((outMilis / all) * 100).toStringAsFixed(1) + '%',
       radius: 50,
-      titleStyle: TextStyle(
-          fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
+      titleStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
     );
 
     final section3 = PieChartSectionData(
@@ -60,8 +53,7 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
       value: idleMilis / all,
       title: ((idleMilis / all) * 100).toStringAsFixed(1) + '%',
       radius: 50,
-      titleStyle: TextStyle(
-          fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
+      titleStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xffffffff)),
     );
 
     final items = [
@@ -86,7 +78,7 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
       }
 
       setState(() {
-        if (details.touchInput is dynamic) {
+        if (details is dynamic) {
           touchedIndex = -1;
           showingSections = List.of(pieChartRawSections);
         } else {
@@ -94,8 +86,7 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
 
           if (touchedIndex != -1) {
             final TextStyle style = showingSections[touchedIndex].titleStyle;
-            showingSections[touchedIndex] =
-                showingSections[touchedIndex].copyWith(
+            showingSections[touchedIndex] = showingSections[touchedIndex].copyWith(
               titleStyle: style.copyWith(
                 fontSize: 24,
               ),
@@ -227,33 +218,31 @@ class SmokeDurationGraphShimer extends StatelessWidget {
                 )),
             child: Padding(
               padding: EdgeInsets.all(8),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                SizedBox(
+                  height: 4,
+                ),
+                Row(
                   children: <Widget>[
+                    Icon(Icons.pie_chart),
                     SizedBox(
-                      height: 4,
+                      width: 8,
                     ),
-                    Row(
-                      children: <Widget>[
-                        Icon(Icons.pie_chart),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text(
-                          "Distribution",
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                      ],
+                    Text(
+                      "Distribution",
+                      style: Theme.of(context).textTheme.headline6,
                     ),
-                    SizedBox(
-                      height: 4,
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  ]),
+                  ],
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              ]),
             )));
   }
 }

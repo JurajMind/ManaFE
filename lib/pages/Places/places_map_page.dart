@@ -20,7 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/api.dart';
-import 'package:queries/collections.dart';
+import 'package:darq/darq.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:math' show cos, sqrt, asin;
 import 'package:flutter/services.dart' show rootBundle;
@@ -49,8 +49,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   Set<Marker> markers;
   Set<Marker> originMarkers;
   bool loading = false;
-  BehaviorSubject<List<PlaceSimpleDto>> nearbyPlaces =
-      new BehaviorSubject<List<PlaceSimpleDto>>.seeded(null);
+  BehaviorSubject<List<PlaceSimpleDto>> nearbyPlaces = new BehaviorSubject<List<PlaceSimpleDto>>.seeded(null);
   PlacesBloc bloc;
   BitmapDescriptor _manaMarker;
   PlaceSimpleDto _selectedPlace;
@@ -126,10 +125,8 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
 
   Future<void> _createMarkerImageFromAsset(BuildContext context) async {
     if (_manaMarker == null) {
-      final ImageConfiguration imageConfiguration =
-          createLocalImageConfiguration(context);
-      BitmapDescriptor.fromAssetImage(imageConfiguration, 'assets/man_pin.png')
-          .then(_updateBitmap);
+      final ImageConfiguration imageConfiguration = createLocalImageConfiguration(context);
+      BitmapDescriptor.fromAssetImage(imageConfiguration, 'assets/man_pin.png').then(_updateBitmap);
     }
   }
 
@@ -144,18 +141,14 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
     var c = cos;
     var a = 0.5 -
         c((pos2.latitude - pos1.latitude) * p) / 2 +
-        c(pos1.latitude * p) *
-            c(pos2.latitude * p) *
-            (1 - c((pos2.longitude - pos1.longitude) * p)) /
-            2;
+        c(pos1.latitude * p) * c(pos2.latitude * p) * (1 - c((pos2.longitude - pos1.longitude) * p)) / 2;
     return 12742 * asin(sqrt(a));
   }
 
   @override
   Widget build(BuildContext context) {
     var shortestSide = MediaQuery.of(context).size.shortestSide;
-    var isLansdscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    var isLansdscape = MediaQuery.of(context).orientation == Orientation.landscape;
     var useTabletLayout = shortestSide > 600;
 
     return SafeArea(
@@ -173,8 +166,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                       children: <Widget>[
                         buildExpandedMap(snapshot),
                         Container(
-                          constraints: BoxConstraints(
-                              maxWidth: useTabletLayout ? 400 : 200),
+                          constraints: BoxConstraints(maxWidth: useTabletLayout ? 400 : 200),
                           child: Column(
                             children: <Widget>[
                               Container(
@@ -185,8 +177,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                                     ),
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                                       children: <Widget>[
                                         buildFloatingSearchButton(context),
                                         buildFloatingRefreshButton(),
@@ -220,10 +211,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                   : Stack(
                       children: <Widget>[
                         Column(
-                          children: <Widget>[
-                            buildExpandedMap(snapshot),
-                            SizedBox(height: 140)
-                          ],
+                          children: <Widget>[buildExpandedMap(snapshot), SizedBox(height: 140)],
                         ),
                         Positioned(
                           bottom: 10,
@@ -248,8 +236,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                               width: MediaQuery.of(context).size.width * 0.6,
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: <Widget>[
                                   buildFloatingSearchButton(context),
                                   buildFloatingRefreshButton(),
@@ -265,10 +252,8 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                             child: isDefaultPage
                                 ? Container()
                                 : IconButton(
-                                    icon: Icon(Icons.chevron_left,
-                                        color: Colors.black, size: 50),
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
+                                    icon: Icon(Icons.chevron_left, color: Colors.black, size: 50),
+                                    onPressed: () => Navigator.of(context).pop(),
                                   )),
                         Positioned(
                             bottom: 170,
@@ -321,8 +306,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
               markers: markers,
               myLocationEnabled: true,
               onCameraIdle: () {
-                var distance =
-                    calculateDistance(lastIdleView.target, curentView.target);
+                var distance = calculateDistance(lastIdleView.target, curentView.target);
 
                 setState(() {
                   moving = false;
@@ -360,13 +344,11 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
         builder: (context, snapshot) {
           PlacesReservationsReservationDto reservation;
           if (snapshot.data != null) {
-            var upcomingReservations = new Collection(snapshot.data);
+            var upcomingReservations = new List.from(snapshot.data);
             reservation = upcomingReservations
-                .where$1((predicate, _) =>
-                    predicate.time.compareTo(DateTime.now()) > 0 &&
-                    predicate.status != 1)
+                .where((predicate) => predicate.time.compareTo(DateTime.now()) > 0 && predicate.status != 1)
                 .orderBy((p) => p.time)
-                .firstOrDefault();
+                .firstOrDefault(defaultValue: null);
           }
           return SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -387,8 +369,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   }
 
   void searchCity(BuildContext context) async {
-    var result = await Navigator.of(context)
-        .push(new MaterialPageRoute(builder: (BuildContext context) {
+    var result = await Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
       return new PlacesSearchPage(
         places: nearbyPlaces.value,
         returnToMap: true,
@@ -402,11 +383,8 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
       nearbyPlaces.add(location.places);
       this.searchLabel = location.label;
       controller
-          .animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-              bearing: 0,
-              target: location.position,
-              tilt: 0,
-              zoom: 15.151926040649414)))
+          .animateCamera(CameraUpdate.newCameraPosition(
+              CameraPosition(bearing: 0, target: location.position, tilt: 0, zoom: 15.151926040649414)))
           .then((_) {
         setState(() {
           this._selectedPlace = location.places.first;
@@ -420,16 +398,14 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
       loading = true;
     });
     var position = imPosition ?? curentView.target;
-    var newPlaces = await App.http
-        .getNearbyPlaces(lat: position.latitude, lng: position.longitude);
+    var newPlaces = await App.http.getNearbyPlaces(lat: position.latitude, lng: position.longitude);
 
     var oldPlaces = nearbyPlaces.value;
     var merge = new List<PlaceSimpleDto>();
     if (oldPlaces != null) merge.addAll(oldPlaces);
     if (newPlaces != null) merge.addAll(newPlaces);
 
-    var comparer = new PalceComparer();
-    var a = new Collection(merge).distinct(comparer).toList();
+    var a = new List.from(merge).distinct((element) => element).toList();
     this.nearbyPlaces.add(a);
     setMarkers(a);
 
@@ -445,36 +421,30 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
           icon: f.haveMana ? _manaMarker : BitmapDescriptor.defaultMarker,
           onTap: () async {
             if (_selectedPlace == f) {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => PlaceDetailPage(place: f)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => PlaceDetailPage(place: f)));
             }
             setState(() {
               _selectedPlace = f;
             });
             if (MPlatform.isWeb) {
-              webMapController.moveToLocation(LatLng(
-                  double.parse(f.address.lat), double.parse(f.address.lng)));
+              webMapController.moveToLocation(LatLng(double.parse(f.address.lat), double.parse(f.address.lng)));
               return;
             }
             var controller = await _controller.future;
-            controller.animateCamera(CameraUpdate.newCameraPosition(
-                CameraPosition(
-                    bearing: 0,
-                    target: new LatLng(double.parse(f.address.lat),
-                        double.parse(f.address.lng)),
-                    tilt: 0,
-                    zoom: 15.151926040649414)));
+            controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+                bearing: 0,
+                target: new LatLng(double.parse(f.address.lat), double.parse(f.address.lng)),
+                tilt: 0,
+                zoom: 15.151926040649414)));
           },
           markerId: MarkerId(f.id.toString()),
           infoWindow: InfoWindow(
               title: f.name,
               snippet: Extensions.adress(f.address),
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => PlaceDetailPage(place: f)));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => PlaceDetailPage(place: f)));
               }),
-          position:
-              LatLng(double.parse(f.address.lat), double.parse(f.address.lng)));
+          position: LatLng(double.parse(f.address.lat), double.parse(f.address.lng)));
       return marker;
     }).toSet();
 
@@ -497,8 +467,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
               onTap: () async {
                 {
                   var controller = await _controller.future;
-                  controller.animateCamera(
-                      CameraUpdate.newCameraPosition(CameraPosition(
+                  controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
                     bearing: 0,
                     zoom: minClusterZoom + 0.2,
                     target: f.position,
@@ -511,17 +480,5 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
       });
       {}
     }
-  }
-}
-
-class PalceComparer implements IEqualityComparer<PlaceSimpleDto> {
-  @override
-  bool equals(a, b) {
-    return a?.id == b?.id;
-  }
-
-  @override
-  int getHashCode(object) {
-    return object.id;
   }
 }
