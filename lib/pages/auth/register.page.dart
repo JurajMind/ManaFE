@@ -12,7 +12,7 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -22,12 +22,12 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  PageController controller;
+  PageController? controller;
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   HSVColor color = HSVColor.fromColor(Colors.orange);
   Offset animOffset = Offset(0.0, 0.0);
   final FocusNode passwordFocusNode = FocusNode();
-  UserModel data = new UserModel();
+  UserModel data = new UserModel(email: '', password: '');
   String termOfUssage = "";
   bool showPassword = false;
   AutovalidateMode _emailAutoValidate = AutovalidateMode.disabled;
@@ -86,7 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
         padding: EdgeInsets.only(left: 24.0, right: 24.0),
         children: <Widget>[
           ShadowText(
-            AppTranslations.of(context).text("login.email").toUpperCase(),
+            AppTranslations.of(context)!.text("login.email").toUpperCase(),
             style: Theme.of(context).textTheme.headline6,
             textScaleFactor: 1.0,
             softWrap: true,
@@ -97,14 +97,14 @@ class _RegisterPageState extends State<RegisterPage> {
               autofocus: true,
               autovalidateMode: _emailAutoValidate,
               controller: emailController,
-              validator: (String value) {
+              validator: (String? value) {
                 return validate(
                     value, 'E-mail Address', [new RequiredValidator(), new EmailValidator(), new MaxValidator(63)]);
               },
               keyboardType: TextInputType.emailAddress,
               decoration: new InputDecoration(
-                  hintText: AppTranslations.of(context).text("login.email"),
-                  labelText: AppTranslations.of(context).text("login.email"),
+                  hintText: AppTranslations.of(context)!.text("login.email"),
+                  labelText: AppTranslations.of(context)!.text("login.email"),
                   labelStyle: Theme.of(context).textTheme.headline4,
                   enabledBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
                   focusedBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
@@ -115,8 +115,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 });
                 data.email = textInput;
               },
-              onSaved: (String value) {
-                data.email = value;
+              onSaved: (String? value) {
+                data.email = value!;
               }),
           SizedBox(height: 48.0),
           nextRoundedButton(screenSize),
@@ -134,11 +134,11 @@ class _RegisterPageState extends State<RegisterPage> {
     super.initState();
 
     controller = new PageController();
-    controller.addListener(() {
+    controller!.addListener(() {
       final Size screenSize = MediaQuery.of(context).size;
       setState(() {
-        animOffset = Offset(controller.position.pixels / 3, controller.position.pixels / 10);
-        color = color.withHue((color.hue + (controller.position.pixels / (screenSize.width * 5))) % 360);
+        animOffset = Offset(controller!.position.pixels / 3, controller!.position.pixels / 10);
+        color = color.withHue((color.hue + (controller!.position.pixels / (screenSize.width * 5))) % 360);
       });
     });
     loadAsset();
@@ -163,7 +163,7 @@ class _RegisterPageState extends State<RegisterPage> {
               title: Container(
                 width: 200,
                 child: ShadowText(
-                  AppTranslations.of(context).text('login.term_of_usage').toUpperCase(),
+                  AppTranslations.of(context)!.text('login.term_of_usage').toUpperCase(),
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .copyWith(
@@ -202,7 +202,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     width: screenSize.width,
                   )
                 : RoundedButton(
-                    buttonName: AppTranslations.of(context).text('login.accept_register'),
+                    buttonName: AppTranslations.of(context)!.text('login.accept_register'),
                     onTap: () => register(context),
                     buttonColor: Colors.transparent,
                     borderWidth: 2.0,
@@ -230,7 +230,7 @@ class _RegisterPageState extends State<RegisterPage> {
         padding: EdgeInsets.only(left: 24.0, right: 24.0),
         children: <Widget>[
           ShadowText(
-            AppTranslations.of(context).text('login.name'),
+            AppTranslations.of(context)!.text('login.name'),
             style: Theme.of(context).textTheme.headline5,
             textScaleFactor: 1.0,
             softWrap: true,
@@ -244,8 +244,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 controller: nameController,
                 keyboardType: TextInputType.text,
                 decoration: new InputDecoration(
-                    hintText: AppTranslations.of(context).text('login.name_hint'),
-                    labelText: AppTranslations.of(context).text('login.name'),
+                    hintText: AppTranslations.of(context)!.text('login.name_hint'),
+                    labelText: AppTranslations.of(context)!.text('login.name'),
                     labelStyle: Theme.of(context).textTheme.headline4,
                     enabledBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
                     focusedBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
@@ -253,7 +253,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 onFieldSubmitted: (String textInput) {
                   data.userName = textInput;
                 },
-                onSaved: (String value) {
+                onSaved: (String? value) {
                   data.userName = value;
                 }),
           ),
@@ -265,13 +265,13 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   nextPage() {
-    var currentPage = controller.page + 1;
-    controller.animateToPage(currentPage.round(), duration: Duration(milliseconds: 300), curve: Curves.ease);
+    var currentPage = controller!.page! + 1;
+    controller!.animateToPage(currentPage.round(), duration: Duration(milliseconds: 300), curve: Curves.ease);
   }
 
   RoundedButton nextRoundedButton(Size screenSize) {
     return new RoundedButton(
-      buttonName: AppTranslations.of(context).text("common.next").toUpperCase(),
+      buttonName: AppTranslations.of(context)!.text("common.next").toUpperCase(),
       onTap: () => nextPage(),
       buttonColor: Colors.transparent,
       borderWidth: 2.0,
@@ -289,7 +289,7 @@ class _RegisterPageState extends State<RegisterPage> {
         padding: EdgeInsets.only(left: 24.0, right: 24.0),
         children: <Widget>[
           ShadowText(
-            AppTranslations.of(context).text("login.password").toUpperCase(),
+            AppTranslations.of(context)!.text("login.password").toUpperCase(),
             style: Theme.of(context).textTheme.headline5,
             textScaleFactor: 1.0,
             softWrap: true,
@@ -314,8 +314,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       });
                     },
                   ),
-                  hintText: AppTranslations.of(context).text("login.password"),
-                  labelText: AppTranslations.of(context).text("login.password"),
+                  hintText: AppTranslations.of(context)!.text("login.password"),
+                  labelText: AppTranslations.of(context)!.text("login.password"),
                   labelStyle: Theme.of(context).textTheme.bodyText2,
                   enabledBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
                   focusedBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
@@ -324,8 +324,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 data.password = textInput;
               },
               onEditingComplete: () {},
-              onSaved: (String value) {
-                data.password = value;
+              onSaved: (String? value) {
+                data.password = value!;
               }),
           new TextFormField(
               style: Theme.of(context).textTheme.headline5,
@@ -346,8 +346,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       });
                     },
                   ),
-                  hintText: AppTranslations.of(context).text("login.confirm_password"),
-                  labelText: AppTranslations.of(context).text("login.confirm_password"),
+                  hintText: AppTranslations.of(context)!.text("login.confirm_password"),
+                  labelText: AppTranslations.of(context)!.text("login.confirm_password"),
                   labelStyle: Theme.of(context).textTheme.bodyText2,
                   enabledBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
                   focusedBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
@@ -356,8 +356,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 data.password = textInput;
               },
               onEditingComplete: () {},
-              onSaved: (String value) {
-                data.password = value;
+              onSaved: (String? value) {
+                data.password = value!;
               }),
           SizedBox(height: 48.0),
           nextRoundedButton(screenSize),
@@ -367,8 +367,8 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   register(BuildContext context) async {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
     }
     setState(() {
       this.loading = true;

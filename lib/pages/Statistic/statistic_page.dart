@@ -21,11 +21,12 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/Charts/sparkline.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'dart:math' as math;
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 import 'package:shimmer/shimmer.dart';
 
+import '../../components/Buttons/m_outlineButton.dart';
 import 'Components/gear_usage_stat.dart';
 import 'Components/session_time_graph.dart';
 import 'Components/week_day_graph.dart';
@@ -54,7 +55,7 @@ class TimeModel {
         {
           from = now.subtract(new Duration(days: 30));
           to = now;
-          label = '${dateUtils.DateUtils.toStringDate(from)} - ${dateUtils.DateUtils.toStringDate(to)}';
+          label = '${dateUtils.DateUtils.toStringDate(from!)} - ${dateUtils.DateUtils.toStringDate(to!)}';
           break;
         }
 
@@ -62,7 +63,7 @@ class TimeModel {
         {
           from = now.subtract(new Duration(days: 7));
           to = now;
-          label = '${dateUtils.DateUtils.toStringDate(from)} - ${dateUtils.DateUtils.toStringDate(to)}';
+          label = '${dateUtils.DateUtils.toStringDate(from!)} - ${dateUtils.DateUtils.toStringDate(to!)}';
           break;
         }
 
@@ -84,22 +85,22 @@ class TimeModel {
     }
   }
 
-  String label;
+  String? label;
 
-  DateTime from;
+  DateTime? from;
 
-  DateTime to;
+  DateTime? to;
 }
 
 class _StatisticPageState extends State<StatisticPage> {
   math.Random random = new math.Random();
-  PageController controller;
+  PageController? controller;
   AuthorizeRepository auth = getIt.get<AuthorizeRepository>();
-  TimeModel selectedTime;
-  StreamController<LineTouchResponse> touchController;
+  TimeModel? selectedTime;
+  late StreamController<LineTouchResponse> touchController;
   bool loading = false;
 
-  Future<int> _showDialog(BuildContext context) {
+  Future<int?> _showDialog(BuildContext context) {
     return showDialog<int>(
         context: context,
         builder: (BuildContext context) {
@@ -152,14 +153,14 @@ class _StatisticPageState extends State<StatisticPage> {
 
   @override
   void dispose() {
-    controller.dispose();
+    controller!.dispose();
     touchController.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    var bloc = DataProvider.getData(context).statisticBloc;
+    var bloc = DataProvider.getData(context)!.statisticBloc;
     var shortestSide = MediaQuery.of(context).size.shortestSide;
     var useTabletLayout = shortestSide > 600;
     return new Scaffold(
@@ -273,18 +274,20 @@ class _StatisticPageState extends State<StatisticPage> {
                             alignment: Alignment.centerLeft,
                             child: Container(
                               constraints: BoxConstraints(maxWidth: 300),
-                              child: OutlineButton(
-                                shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-                                borderSide: BorderSide(color: Colors.white, width: 1),
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                                  side: BorderSide(color: Colors.white, width: 1),
+                                ),
                                 onPressed: () => _showDialog(context).then((value) async {
                                   if (value == null) {
                                     return;
                                   }
                                   if (value == 4) {
-                                    final List<DateTime> picked = await DateRagePicker.showDatePicker(
+                                    final List<DateTime>? picked = await DateRagePicker.showDatePicker(
                                         context: context,
-                                        initialFirstDate: selectedTime.from,
-                                        initialLastDate: selectedTime.to,
+                                        initialFirstDate: selectedTime!.from!,
+                                        initialLastDate: selectedTime!.to!,
                                         firstDate: new DateTime(2017),
                                         lastDate: new DateTime.now());
                                     if (picked != null && picked.length == 2) {
@@ -293,7 +296,7 @@ class _StatisticPageState extends State<StatisticPage> {
                                       setState(() {
                                         selectedTime = new TimeModel.fromCustom(picked[0], picked[1]);
                                       });
-                                      loadTime(bloc, selectedTime);
+                                      loadTime(bloc, selectedTime!);
                                     }
                                   }
                                   setState(() {
@@ -301,7 +304,7 @@ class _StatisticPageState extends State<StatisticPage> {
                                       selectedTime = new TimeModel.fromSelect(value);
                                     }
                                   });
-                                  loadTime(bloc, selectedTime);
+                                  loadTime(bloc, selectedTime!);
                                 }),
                                 child: Center(
                                   child: Row(
@@ -313,7 +316,7 @@ class _StatisticPageState extends State<StatisticPage> {
                                       ),
                                       Expanded(
                                           child: AutoSizeText(
-                                        selectedTime.label,
+                                        selectedTime!.label!,
                                         maxLines: 1,
                                       )),
                                     ],
@@ -334,7 +337,7 @@ class _StatisticPageState extends State<StatisticPage> {
                                     builder: (context, snapshot) {
                                       return snapshot.data?.sessionCount == null
                                           ? Shimmer.fromColors(
-                                              baseColor: Colors.grey[400],
+                                              baseColor: Colors.grey[400]!,
                                               highlightColor: Colors.white,
                                               child: Text(
                                                 "??",
@@ -342,7 +345,7 @@ class _StatisticPageState extends State<StatisticPage> {
                                               ),
                                             )
                                           : Text(
-                                              snapshot.data.sessionCount.toString(),
+                                              snapshot.data!.sessionCount.toString(),
                                               style: Theme.of(context).textTheme.headline4,
                                             );
                                     }),
@@ -416,7 +419,7 @@ class _StatisticPageState extends State<StatisticPage> {
     setState(() {
       this.loading = true;
     });
-    bloc.loadStatistic(time.from, time.to).then((_) {
+    bloc.loadStatistic(time.from!, time.to!).then((_) {
       setState(() {
         this.loading = false;
       });
@@ -438,21 +441,21 @@ class _StatisticPageState extends State<StatisticPage> {
               children: <Widget>[
                 Expanded(
                   child: new StatisticRecapWidget(
-                    label: AppTranslations.of(context).text("profile.puffs"),
+                    label: AppTranslations.of(context)!.text("profile.puffs"),
                     ballColor: AppColors.colors[1],
                     value: snapshot?.data?.pufCount?.toString(),
                   ),
                 ),
                 Expanded(
                   child: new StatisticRecapWidget(
-                    label: AppTranslations.of(context).text("profile.smoking"),
+                    label: AppTranslations.of(context)!.text("profile.smoking"),
                     ballColor: AppColors.colors[0],
                     duration: snapshot?.data?.smokingTime,
                   ),
                 ),
                 Expanded(
                   child: new StatisticRecapWidget(
-                    label: AppTranslations.of(context).text("profile.activity"),
+                    label: AppTranslations.of(context)!.text("profile.activity"),
                     ballColor: AppColors.colors[2],
                     duration: snapshot?.data?.activity,
                   ),
@@ -467,7 +470,7 @@ class _StatisticPageState extends State<StatisticPage> {
 
   String getShortTime(Duration duration) {
     if (duration == null) {
-      return null;
+      return '';
     }
 
     if (duration.inHours > 0) {
@@ -486,13 +489,13 @@ class _StatisticPageState extends State<StatisticPage> {
             return Container(
               height: 200,
               width: MediaQuery.of(context).size.width,
-              child: snapshot.data == null || snapshot.data.length == 0
+              child: snapshot.data == null || snapshot.data!.length == 0
                   ? Container()
                   : Sparkline(
                       cubicSmoothingFactor: 0.3,
                       useCubicSmoothing: true,
                       sharpCorners: false,
-                      data: snapshot.data.map((f) => funct(f)).toList(),
+                      data: snapshot.data!.map((f) => funct(f)).toList(),
                       lineColor: AppColors.colors[color],
                       fillMode: FillMode.below,
                       fillColor: AppColors.colors[color].withAlpha(60),
@@ -508,10 +511,10 @@ class _StatisticPageState extends State<StatisticPage> {
 }
 
 class HealthWidget extends StatelessWidget {
-  final TimeModel time;
+  final TimeModel? time;
   const HealthWidget({
-    Key key,
-    @required this.bloc,
+    Key? key,
+    required this.bloc,
     this.time,
   }) : super(key: key);
 
@@ -531,8 +534,8 @@ class HealthWidget extends StatelessWidget {
                 child: InkWell(
                   onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
                     return HealthPage(
-                      from: this.time.from,
-                      to: this.time.to,
+                      from: this.time!.from,
+                      to: this.time!.to,
                     );
                   })),
                   child: Row(
@@ -545,7 +548,7 @@ class HealthWidget extends StatelessWidget {
                         flex: 4,
                         child: Column(
                           children: <Widget>[
-                            Text(AppTranslations.of(context).text('health.title'),
+                            Text(AppTranslations.of(context)!.text('health.title'),
                                 style: Theme.of(context).textTheme.headline5),
                           ],
                         ),
@@ -569,18 +572,18 @@ class HealthWidget extends StatelessWidget {
 
 class SmokeSessionStat extends StatelessWidget {
   const SmokeSessionStat({
-    Key key,
-    @required this.bloc,
+    Key? key,
+    required this.bloc,
   }) : super(key: key);
 
   final StatisticBloc bloc;
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<SmokeSessionSimpleDto>>(
+    return StreamBuilder<List<SmokeSessionSimpleDto>?>(
         stream: bloc.smokeSessions,
         initialData: null,
-        builder: (BuildContext context, AsyncSnapshot<List<SmokeSessionSimpleDto>> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List<SmokeSessionSimpleDto>?> snapshot) {
           return SessionList(
             sessions: snapshot.data,
             sessionCount: 5,
@@ -596,10 +599,10 @@ class SmokeSessionStat extends StatelessWidget {
 class HealthIcon extends StatelessWidget {
   const HealthIcon(
     this.pufCount, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
-  final int pufCount;
+  final int? pufCount;
   @override
   Widget build(BuildContext context) {
     if (pufCount == null) {
@@ -610,7 +613,7 @@ class HealthIcon extends StatelessWidget {
       );
     }
 
-    if (pufCount < 10) {
+    if (pufCount! < 10) {
       return Icon(
         FontAwesomeIcons.smile,
         size: 40,
@@ -618,7 +621,7 @@ class HealthIcon extends StatelessWidget {
       );
     }
 
-    if (pufCount < 30) {
+    if (pufCount! < 30) {
       return Icon(
         FontAwesomeIcons.frown,
         size: 40,
@@ -643,12 +646,12 @@ class ChartData {
 }
 
 class TimeSelect extends StatelessWidget {
-  final String label;
+  final String? label;
   final bool selected;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   const TimeSelect({
-    Key key,
+    Key? key,
     this.label,
     this.selected: false,
     this.onTap,
@@ -661,7 +664,7 @@ class TimeSelect extends StatelessWidget {
           borderWidth: 1,
           bottomMargin: 1,
           buttonColor: Colors.white,
-          child: Text(label, style: Theme.of(context).textTheme.bodyText2.apply(color: Colors.black)),
+          child: Text(label!, style: Theme.of(context).textTheme.bodyText2!.apply(color: Colors.black)),
           height: 40,
           width: 30,
           onTap: () {});
@@ -671,7 +674,7 @@ class TimeSelect extends StatelessWidget {
       bottomMargin: 1,
       buttonColor: Colors.black,
       child: Text(
-        label,
+        label!,
         style: Theme.of(context).textTheme.bodyText2,
       ),
       height: 40,
