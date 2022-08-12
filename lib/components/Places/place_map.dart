@@ -14,14 +14,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 import 'distance_widget.dart';
 
 class PlaceMap extends StatelessWidget {
-  final PlaceSimpleDto place;
+  final PlaceSimpleDto? place;
 
-  const PlaceMap({Key key, this.place}) : super(key: key);
+  const PlaceMap({Key? key, this.place}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +33,7 @@ class PlaceMap extends StatelessWidget {
     return StreamBuilder<Position>(
         stream: location,
         builder: (context, snapshot) {
-          var distance = PlaceHelpers.calculateDistanceFromAddress(
-              place.address, snapshot.data);
+          var distance = PlaceHelpers.calculateDistanceFromAddress(place!.address!, snapshot.data);
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -42,18 +41,22 @@ class PlaceMap extends StatelessWidget {
                 onTap: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => PlacesMapPage(
                         position: Position(
-                            latitude: double.parse(place.address.lat),
-                            longitude: double.parse(place.address.lng))))),
+                            heading: 0,
+                            accuracy: 0.0,
+                            speed: 0.0,
+                            altitude: 0.0,
+                            speedAccuracy: 0.0,
+                            timestamp: DateTime.now(),
+                            latitude: double.parse(place!.address!.lat!),
+                            longitude: double.parse(place!.address!.lng!))))),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: MPlatform.isWeb
                       ? Image.network(mapUrl)
                       : new CachedNetworkImage(
                           imageUrl: mapUrl,
-                          placeholder: (context, url) =>
-                              new CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                              new Icon(Icons.error),
+                          placeholder: (context, url) => new CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => new Icon(Icons.error),
                         ),
                 ),
               ),
@@ -67,10 +70,7 @@ class PlaceMap extends StatelessWidget {
                       color: Colors.black,
                     ),
                     DistanceWidget(distance,
-                        textStyle: Theme.of(context)
-                            .textTheme
-                            .headline5
-                            .apply(color: Colors.black))
+                        textStyle: Theme.of(context).textTheme.headline5!.apply(color: Colors.black))
                   ],
                 ),
               ),
@@ -82,11 +82,10 @@ class PlaceMap extends StatelessWidget {
   Uri mapUri() {
     var staticMapProvider = new StaticMapProvider(App.googleApiKeys);
     var mapUri = staticMapProvider.getStaticUriWithMarkersAndZoom([
-      new Marker(place.id.toString(), place.name,
-          double.parse(place.address.lat), double.parse(place.address.lng))
+      new Marker(
+          place!.id.toString(), place!.name, double.parse(place!.address!.lat!), double.parse(place!.address!.lng!))
     ],
-        center: new Location(
-            double.parse(place.address.lat), double.parse(place.address.lng)),
+        center: new Location(double.parse(place!.address!.lat!), double.parse(place!.address!.lng!)),
         zoomLevel: 13,
         width: 450,
         height: 350,

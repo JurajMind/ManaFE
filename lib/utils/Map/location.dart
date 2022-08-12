@@ -1,35 +1,35 @@
 class Location {
-  final double latitude;
-  final double longitude;
+  final double? latitude;
+  final double? longitude;
 
   /// Time in milliseconds
-  final int time;
+  final int? time;
 
   /// Altitude in meters.
   ///
   /// Read platform specification for this value.
-  final double altitude;
+  final double? altitude;
 
   /// Speed in meters per second
-  final double speed;
+  final double? speed;
 
   /// Bearing value in a range from 0.0 to 360.0.
   ///
   /// This value is called "course" in the iOS platform. Check the CLLocation class reference for more info.
   ///
   /// This is not the device orientation. For more info, read each platform documentation regarding this value.
-  final double bearing;
+  final double? bearing;
 
   /// Horizontal accuracy in meters
   ///
   /// Read platform specification for this value.
-  final double horizontalAccuracy;
+  final double? horizontalAccuracy;
 
   /// Vertical accuracy in meters.
   ///
   /// Read platform specification for this value.
   /// In Android is required API 26 onwards.
-  final double verticalAccuracy;
+  final double? verticalAccuracy;
 
   const Location(latitude, longitude)
       : latitude = latitude,

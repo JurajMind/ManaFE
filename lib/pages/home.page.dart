@@ -22,7 +22,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 import 'Gear/gear_scroll_cross.dart';
 import 'Mixology/mixology_list.dart';
@@ -31,13 +31,13 @@ import 'SmokeSession/Components/gradiend_color_wheel_rotate.dart';
 import 'SmokeSession/smoke_session_page.dart';
 import 'Statistic/Detail/smoke_session_detail_page.dart';
 
-typedef RouteWidgetBuilder = Widget Function(BuildContext context, Object argument);
+typedef RouteWidgetBuilder = Widget? Function(BuildContext context, Object? argument);
 
 class HomePage extends StatefulWidget {
-  final Uri deeplink;
-  final RouteObserver<PageRoute> routeObserver;
+  final Uri? deeplink;
+  final RouteObserver<PageRoute>? routeObserver;
 
-  const HomePage({Key key, this.deeplink, this.routeObserver}) : super(key: key);
+  const HomePage({Key? key, this.deeplink, this.routeObserver}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -47,7 +47,7 @@ class HomePage extends StatefulWidget {
 
 final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
-StreamSubscription<Flushbar<Map<String, dynamic>>> subscription;
+late StreamSubscription<Flushbar<Map<String, dynamic>>> subscription;
 
 class _HomePageState extends State<HomePage> with RouteAware {
   int _currentIndex = 2;
@@ -60,14 +60,14 @@ class _HomePageState extends State<HomePage> with RouteAware {
     4: GlobalKey<NavigatorState>(),
   };
 
-  List<Widget> tabs;
-  List<FocusScopeNode> tabFocusNodes;
+  List<Widget?>? tabs;
+  List<FocusScopeNode>? tabFocusNodes;
 
-  SmokeSessionBloc smokeSessionBloc;
+  late SmokeSessionBloc smokeSessionBloc;
   PersonBloc personBloc = getIt.get<PersonBloc>();
 
-  StreamSubscription<int> activeTabSub;
-  Stream popNotification;
+  late StreamSubscription<int> activeTabSub;
+  Stream? popNotification;
 
   @override
   void didPush() {}
@@ -88,9 +88,9 @@ class _HomePageState extends State<HomePage> with RouteAware {
       subscription = smokeSessionBloc.notifications.stream.listen((data) {
         data.show(context).then((data) {
           if (data == null) return;
-          var sessionId = data['sessionId'] as String;
+          var sessionId = data['sessionId'] as String?;
           if (sessionId == null) return;
-          navigatorKeys[2].currentState.push(new MaterialPageRoute(
+          navigatorKeys[2]!.currentState!.push(new MaterialPageRoute(
             builder: (BuildContext context) {
               return new SmokeSessionPage(
                 sessionId: sessionId,
@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
     //if (!MPlatform.isWeb) _firebaseMessaging.requestNotificationPermissions();
     try {
       messaging.getToken().then((token) async {
-        await App.http.updateNotificationToken(token);
+        await App.http!.updateNotificationToken(token);
       });
     } catch (e) {}
 
@@ -130,8 +130,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
 
       if (message.notification != null) {
         print('Message also contained a notification: ${message.notification}');
-        var title = message.notification.title;
-        var body = message.notification.body;
+        var title = message.notification!.title;
+        var body = message.notification!.body;
         Flushbar(
           title: title,
           message: body,
@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
       }
     });
 
-    tabs = new List<Widget>(5);
+    tabs = <Widget?>[];
     tabFocusNodes = new List<FocusScopeNode>.generate(
       5,
       (int index) => new FocusScopeNode(),
@@ -159,7 +159,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
 
     _focusActiveTab();
 
-    activeTabSub = DataProvider.getData(context).appBloc.activeTab.listen((index) {
+    activeTabSub = DataProvider.getData(context)!.appBloc.activeTab.listen((index) {
       _setActiveTab(index);
     });
     SystemChannels.lifecycle.setMessageHandler((msg) {
@@ -173,7 +173,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
         var signal = new SignalR();
         signal.checkConection();
       }
-    });
+    } as Future<String?> Function(String?)?);
   }
 
   @override
@@ -201,7 +201,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
 
   void firstDeepJump(BuildContext context) {
     if (widget.deeplink != null) {
-      ShareService.deepLinkNavigation(_setActiveTab, widget.deeplink.path, context);
+      ShareService.deepLinkNavigation(_setActiveTab, widget.deeplink!.path, context);
     }
   }
 
@@ -233,15 +233,15 @@ class _HomePageState extends State<HomePage> with RouteAware {
     return "#/";
   }
 
-  GlobalKey<NavigatorState> _setActiveTab(int index) {
+  GlobalKey<NavigatorState>? _setActiveTab(int index) {
     if (index == _currentIndex) return navigatorKeys[index];
 
-    var bloc = DataProvider.getData(navigatorKeys[index].currentContext);
+    var bloc = DataProvider.getData(navigatorKeys[index]!.currentContext!)!;
     bloc.appBloc.changeActiveTab(index);
 
     if (index == _currentIndex && index == 2) {
       if (!MPlatform.isIOS) {
-        navigatorKeys[index].currentState.maybePop();
+        navigatorKeys[index]!.currentState!.maybePop();
       }
     }
     setState(() {
@@ -252,8 +252,9 @@ class _HomePageState extends State<HomePage> with RouteAware {
   }
 
   GlobalKey<NavigatorState> _setActiveAndJumpTab(int index, Widget widget) {
-    var bc = _setActiveTab(index);
-    bc.currentState.push(MaterialPageRoute(builder: (context) => widget));
+    var bc = _setActiveTab(index)!;
+    bc.currentState!.push(MaterialPageRoute(builder: (context) => widget));
+    return bc;
   }
 
   Widget myBottomBar(context) => new Container(
@@ -275,9 +276,9 @@ class _HomePageState extends State<HomePage> with RouteAware {
                       icon: Icon(
                         MPlatform.isWeb ? Icons.pie_chart : ManaIcons.leaf,
                       ),
-                      text: AppTranslations.of(context).text("tabs.mixology"),
+                      text: AppTranslations.of(context)!.text("tabs.mixology"),
                       color: _currentIndex == 0 ? Colors.white : Colors.grey,
-                      tooltip: AppTranslations.of(context).text("tabs.mixology"),
+                      tooltip: AppTranslations.of(context)!.text("tabs.mixology"),
                       onPressed: () => _setActiveTab(0),
                     ),
                   ),
@@ -285,7 +286,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                     flex: 1,
                     child: IconButtonTitle(
                       icon: Icon(Icons.place),
-                      text: AppTranslations.of(context).text("tabs.places"),
+                      text: AppTranslations.of(context)!.text("tabs.places"),
                       color: _currentIndex == 1 ? Colors.white : Colors.grey,
                       onPressed: () => _setActiveTab(1),
                     ),
@@ -295,7 +296,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                     flex: 1,
                     child: IconButtonTitle(
                       icon: Icon(ManaIcons.hookah),
-                      text: AppTranslations.of(context).text("tabs.gear"),
+                      text: AppTranslations.of(context)!.text("tabs.gear"),
                       color: _currentIndex == 3 ? Colors.white : Colors.grey,
                       onPressed: () => _setActiveTab(3),
                     ),
@@ -304,7 +305,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                     flex: 1,
                     child: IconButtonTitle(
                       icon: Icon(Icons.person),
-                      text: AppTranslations.of(context).text("tabs.profile"),
+                      text: AppTranslations.of(context)!.text("tabs.profile"),
                       color: _currentIndex == 4 ? Colors.white : Colors.grey,
                       onPressed: () => _setActiveTab(4),
                     ),
@@ -323,14 +324,14 @@ class _HomePageState extends State<HomePage> with RouteAware {
 
     return WillPopScope(
         onWillPop: () async {
-          if (!navigatorKeys[_currentIndex].currentState.canPop()) {
+          if (!navigatorKeys[_currentIndex]!.currentState!.canPop()) {
             if (_currentIndex != 2) {
               _setActiveTab(2);
             } else {
               return true;
             }
           } else {
-            await navigatorKeys[_currentIndex].currentState.maybePop();
+            await navigatorKeys[_currentIndex]!.currentState!.maybePop();
           }
           return false;
         },
@@ -465,7 +466,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
 
   @override
   void dispose() {
-    for (FocusScopeNode focusScopeNode in tabFocusNodes) {
+    for (FocusScopeNode focusScopeNode in tabFocusNodes!) {
       focusScopeNode.dispose();
     }
     subscription.cancel();
@@ -478,13 +479,13 @@ class VisibilityStageNavigator extends StatelessWidget {
   const VisibilityStageNavigator(
     this.child,
     this.index, {
-    Key key,
-    @required int currentIndex,
-    @required this.tabFocusNodes,
-    @required this.navigatorKeys,
+    Key? key,
+    required int currentIndex,
+    required this.tabFocusNodes,
+    required this.navigatorKeys,
   }) : super(key: key);
 
-  final List<FocusScopeNode> tabFocusNodes;
+  final List<FocusScopeNode>? tabFocusNodes;
   final Map<int, GlobalKey<NavigatorState>> navigatorKeys;
   final int index;
   final Widget child;
@@ -492,7 +493,7 @@ class VisibilityStageNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FocusScope(
-      node: tabFocusNodes[index],
+      node: tabFocusNodes![index],
       child: TabNavigator(
         navigatorKey: navigatorKeys[index],
         tabItem: child,
@@ -503,9 +504,9 @@ class VisibilityStageNavigator extends StatelessWidget {
 }
 
 class TabNavigator extends StatelessWidget {
-  final int index;
-  final GlobalKey<NavigatorState> navigatorKey;
-  final Widget tabItem;
+  final int? index;
+  final GlobalKey<NavigatorState>? navigatorKey;
+  final Widget? tabItem;
 
   TabNavigator({this.navigatorKey, this.tabItem, this.index});
 
@@ -533,7 +534,7 @@ class TabNavigator extends StatelessWidget {
         observers: [observable],
         onGenerateRoute: (routeSettings) {
           return MaterialPageRoute(
-              builder: (context) => routeBuilders[routeSettings.name](context, routeSettings.arguments));
+              builder: (context) => routeBuilders[routeSettings.name!]!(context, routeSettings.arguments)!);
         });
   }
 }

@@ -11,7 +11,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -20,33 +20,29 @@ import 'device_change_picture_page.dart';
 import 'device_update_page.dart';
 
 class DeviceDetailPage extends StatefulWidget {
-  final DeviceSimpleDto device;
+  final DeviceSimpleDto? device;
 
-  const DeviceDetailPage({Key key, this.device}) : super(key: key);
+  const DeviceDetailPage({Key? key, this.device}) : super(key: key);
 
   @override
   _DeviceDetailPageState createState() => _DeviceDetailPageState();
 }
 
 class _DeviceDetailPageState extends State<DeviceDetailPage> {
-  DeviceDevicePictureDto picture;
-  BehaviorSubject<List<SmokeSessionSimpleDto>> sessions =
-      new BehaviorSubject<List<SmokeSessionSimpleDto>>();
+  DeviceDevicePictureDto? picture;
+  BehaviorSubject<List<SmokeSessionSimpleDto>> sessions = new BehaviorSubject<List<SmokeSessionSimpleDto>>();
   bool editName = false;
-  TextEditingController nameController;
-  ScrollController controller;
+  TextEditingController? nameController;
+  ScrollController? controller;
   @override
   void initState() {
-    this.nameController =
-        new TextEditingController(text: widget.device.name ?? "");
-    App.http.getDeviceInfo(widget.device.id).then((data) {
+    this.nameController = new TextEditingController(text: widget.device!.name ?? "");
+    App.http!.getDeviceInfo(widget.device!.id).then((data) {
       setState(() {
         if (mounted) picture = data.picture;
       });
     });
-    App.http
-        .getDeviceSessions(widget.device.id, page: 0, pageSize: 6)
-        .then((data) {
+    App.http!.getDeviceSessions(widget.device!.id, page: 0, pageSize: 6).then((data) {
       sessions.add(data);
     });
     controller = new ScrollController();
@@ -58,8 +54,7 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
     var theme = MTheme.of(context);
     return WillPopScope(
       onWillPop: () async {
-        await controller.animateTo(0,
-            curve: Curves.fastOutSlowIn, duration: Duration(milliseconds: 500));
+        await controller!.animateTo(0, curve: Curves.fastOutSlowIn, duration: Duration(milliseconds: 500));
         return true;
       },
       child: Container(
@@ -80,7 +75,7 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                       ),
-                      DeviceOnlineDot(widget.device.isOnline)
+                      DeviceOnlineDot(widget.device!.isOnline)
                     ],
                   ),
                 ),
@@ -106,48 +101,42 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                               hintText: 'Enter new device name'),
                         ),
                       )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                            SizedBox(
-                              width: 200,
-                              child: AutoSizeText(
-                                widget.device.name.toUpperCase(),
-                                textAlign: TextAlign.center,
-                                style: theme.appBarStyle,
-                                maxLines: 2,
-                              ),
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.edit),
-                              onPressed: () => setState(() {
-                                editName = true;
-                              }),
-                            )
-                          ]),
+                    : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                        SizedBox(
+                          width: 200,
+                          child: AutoSizeText(
+                            widget.device!.name!.toUpperCase(),
+                            textAlign: TextAlign.center,
+                            style: theme.appBarStyle,
+                            maxLines: 2,
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () => setState(() {
+                            editName = true;
+                          }),
+                        )
+                      ]),
                 centerTitle: true,
                 background: new Stack(
                   fit: StackFit.expand,
                   children: <Widget>[
                     Hero(
-                      tag: "${widget.device.code}_hero",
+                      tag: "${widget.device!.code}_hero",
                       child: new DecoratedBox(
                           decoration: new BoxDecoration(
                             gradient: new LinearGradient(
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
-                                colors: Extensions.deviceAccentColor(
-                                    widget.device.type)),
+                                colors: Extensions.deviceAccentColor(widget.device!.type)),
                           ),
                           child: Container(
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage(Extensions.devicePicture(
-                                        widget.device.type)),
+                                    image: AssetImage(Extensions.devicePicture(widget.device!.type)),
                                     colorFilter: ColorFilter.mode(
-                                        const Color.fromRGBO(
-                                            255, 255, 255, 0.545),
-                                        BlendMode.modulate),
+                                        const Color.fromRGBO(255, 255, 255, 0.545), BlendMode.modulate),
                                     fit: BoxFit.cover)),
                           )),
                     )
@@ -167,27 +156,19 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                     children: <Widget>[
                       Expanded(
                         flex: 2,
-                        child: Text(
-                            AppTranslations.of(context)
-                                    .text("device.device_picture") +
-                                ' : ',
+                        child: Text(AppTranslations.of(context)!.text("device.device_picture") + ' : ',
                             style: Theme.of(context).textTheme.headline5),
                       ),
                       Expanded(
                           flex: 1,
                           child: Container(
-                              child: Container(
-                                  height: 64,
-                                  width: 64,
-                                  child: DevicePictureItem(
-                                      picture?.inlinePicture)))),
+                              child:
+                                  Container(height: 64, width: 64, child: DevicePictureItem(picture?.inlinePicture)))),
                       Expanded(
                           flex: 1,
                           child: IconButton(
                             icon: Icon(FontAwesomeIcons.cog),
-                            onPressed: () => Navigator.of(context)
-                                .push<DeviceDevicePictureDto>(
-                                    new MaterialPageRoute(
+                            onPressed: () => Navigator.of(context).push<DeviceDevicePictureDto>(new MaterialPageRoute(
                               builder: (BuildContext context) {
                                 return new DeviceChangePicturePage(
                                   slectedPictureId: picture?.id,
@@ -201,8 +182,7 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                                   picture = newPicture;
                                 });
                               }
-                              App.http.changeDevicePicture(
-                                  widget.device.id, newPicture.id);
+                              App.http!.changeDevicePicture(widget.device!.id, newPicture.id);
                             }),
                           ))
                     ],
@@ -219,16 +199,14 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                       Expanded(
                         flex: 2,
                         child: Text(
-                          AppTranslations.of(context)
-                                  .text("device.software_version") +
-                              ' : ',
+                          AppTranslations.of(context)!.text("device.software_version") + ' : ',
                           style: Theme.of(context).textTheme.headline5,
                         ),
                       ),
                       Expanded(
                         flex: 1,
                         child: Text(
-                          'v ${Extensions.deviceVersion(widget.device.version)}',
+                          'v ${Extensions.deviceVersion(widget.device!.version!)}',
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
@@ -236,9 +214,7 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                         flex: 1,
                         child: IconButton(
                           icon: Icon(FontAwesomeIcons.cog),
-                          onPressed: () => Navigator.of(context)
-                              .push<DeviceDevicePictureDto>(
-                                  new MaterialPageRoute(
+                          onPressed: () => Navigator.of(context).push<DeviceDevicePictureDto>(new MaterialPageRoute(
                             builder: (BuildContext context) {
                               return new DeviceUpdatePage(
                                 device: widget.device,
@@ -252,8 +228,7 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                                 picture = newPicture;
                               });
                             }
-                            App.http.changeDevicePicture(
-                                widget.device.id, newPicture.id);
+                            App.http!.changeDevicePicture(widget.device!.id, newPicture.id);
                           }),
                         ),
                       )
@@ -272,13 +247,11 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Icon(Icons.airline_seat_individual_suite),
-                              Text(AppTranslations.of(context)
-                                  .text("device.sleep")
-                                  .toUpperCase())
+                              Text(AppTranslations.of(context)!.text("device.sleep").toUpperCase())
                             ],
                           ),
                           onTap: () {
-                            App.http.sleepDevice(widget.device.code);
+                            App.http!.sleepDevice(widget.device!.code);
                           },
                           buttonColor: Colors.transparent,
                           borderWidth: 1.0,
@@ -294,13 +267,11 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Icon(Icons.refresh),
-                              Text(AppTranslations.of(context)
-                                  .text("device.restart")
-                                  .toUpperCase())
+                              Text(AppTranslations.of(context)!.text("device.restart").toUpperCase())
                             ],
                           ),
                           onTap: () {
-                            App.http.restartDevice(widget.device.code);
+                            App.http!.restartDevice(widget.device!.code);
                           },
                           buttonColor: Colors.transparent,
                           borderWidth: 1.0,
@@ -314,13 +285,11 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Icon(Icons.phonelink_ring),
-                            Text(AppTranslations.of(context)
-                                .text("device.ping")
-                                .toUpperCase())
+                            Text(AppTranslations.of(context)!.text("device.ping").toUpperCase())
                           ],
                         ),
                         onTap: () {
-                          App.http.pingDevice(widget.device.code);
+                          App.http!.pingDevice(widget.device!.code);
                         },
                         buttonColor: Colors.transparent,
                         borderWidth: 1.0,
@@ -355,13 +324,12 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                       label: 'device.remove_device',
                       onPressed: () {
                         _removeDialog().then((data) => {
-                              if (data)
+                              if (data!)
                                 {
                                   getIt
                                       .get<PersonBloc>()
-                                      .removeDevice(widget.device.code)
-                                      .then((onValue) =>
-                                          Navigator.of(context).pop())
+                                      .removeDevice(widget.device!.code)
+                                      .then((onValue) => Navigator.of(context).pop())
                                 }
                             });
                       },
@@ -379,7 +347,7 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
     );
   }
 
-  Future<bool> _removeDialog() {
+  Future<bool?> _removeDialog() {
     // flutter defined function
     return showDialog<bool>(
       context: context,
@@ -387,17 +355,17 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
         // return object of type Dialog
         return AlertDialog(
           title: new Text(
-            AppTranslations.of(context).text("device.remove_device"),
+            AppTranslations.of(context)!.text("device.remove_device"),
             style: Theme.of(context).textTheme.headline4,
           ),
           content: new Text(
-            AppTranslations.of(context).text("device.remove_device_dialog"),
+            AppTranslations.of(context)!.text("device.remove_device_dialog"),
             style: Theme.of(context).textTheme.headline5,
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new MButton(
-              label: AppTranslations.of(context).text("common.yes"),
+              label: AppTranslations.of(context)!.text("common.yes"),
               icon: Icons.delete,
               iconColor: Colors.red,
               onPressed: () {
@@ -405,7 +373,7 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
               },
             ),
             new MButton(
-              label: AppTranslations.of(context).text("common.no"),
+              label: AppTranslations.of(context)!.text("common.no"),
               icon: Icons.close,
               onPressed: () {
                 Navigator.of(context).pop(false);
@@ -418,19 +386,18 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
   }
 
   changeName() async {
-    widget.device.name = nameController.value.text;
-    await App.http
-        .changeDeviceName(widget.device.code, nameController.value.text);
+    widget.device!.name = nameController!.value.text;
+    await App.http!.changeDeviceName(widget.device!.code, nameController!.value.text);
   }
 }
 
 class DeviceOnlineDot extends StatelessWidget {
   const DeviceOnlineDot(
     this.isOnline, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
-  final bool isOnline;
+  final bool? isOnline;
 
   @override
   Widget build(BuildContext context) {
@@ -440,9 +407,7 @@ class DeviceOnlineDot extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: !isOnline ? Colors.redAccent : Colors.lightGreen),
+          decoration: BoxDecoration(shape: BoxShape.circle, color: !isOnline! ? Colors.redAccent : Colors.lightGreen),
         ),
       ),
     );

@@ -27,18 +27,18 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReservationApi();
-final id = 56; // int | 
-final time = int(); // int | 
+final api = Openapi().getReservationApi();
+final int id = 56; // int | 
+final int time = 56; // int | 
 
-try { 
-    final result = api_instance.reservationAddLateTime(id, time);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reservationAddLateTime(id, time);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReservationApi->reservationAddLateTime: $e\n');
 }
 ```
@@ -70,18 +70,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReservationApi();
-final id = 56; // int | 
-final tableId = int(); // int | 
+final api = Openapi().getReservationApi();
+final int id = 56; // int | 
+final int tableId = 56; // int | 
 
-try { 
-    final result = api_instance.reservationAddTable(id, tableId);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reservationAddTable(id, tableId);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReservationApi->reservationAddTable: $e\n');
 }
 ```
@@ -113,17 +113,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReservationApi();
-final id = 56; // int | 
+final api = Openapi().getReservationApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.reservationCancelReservation(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reservationCancelReservation(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReservationApi->reservationCancelReservation: $e\n');
 }
 ```
@@ -154,17 +154,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReservationApi();
-final reservation = PlacesReservationsReservationDto(); // PlacesReservationsReservationDto | 
+final api = Openapi().getReservationApi();
+final PlacesReservationsReservationDto reservation = ; // PlacesReservationsReservationDto | 
 
-try { 
-    final result = api_instance.reservationCreate(reservation);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reservationCreate(reservation);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReservationApi->reservationCreate: $e\n');
 }
 ```
@@ -195,18 +195,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReservationApi();
-final id = 56; // int | 
-final date = 2013-10-20T19:20:30+01:00; // DateTime | 
+final api = Openapi().getReservationApi();
+final int id = 56; // int | 
+final DateTime date = 2013-10-20T19:20:30+01:00; // DateTime | 
 
-try { 
-    final result = api_instance.reservationGetManagereservationsInfo(id, date);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reservationGetManagereservationsInfo(id, date);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReservationApi->reservationGetManagereservationsInfo: $e\n');
 }
 ```
@@ -238,16 +238,16 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReservationApi();
+final api = Openapi().getReservationApi();
 
-try { 
-    final result = api_instance.reservationGetPersonReservations();
-    print(result);
-} catch (e) {
+try {
+    final response = api.reservationGetPersonReservations();
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReservationApi->reservationGetPersonReservations: $e\n');
 }
 ```
@@ -257,7 +257,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**List<PlacesReservationsReservationDto>**](PlacesReservationsReservationDto.md)
+[**List&lt;PlacesReservationsReservationDto&gt;**](PlacesReservationsReservationDto.md)
 
 ### Authorization
 
@@ -275,17 +275,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReservationApi();
-final id = 56; // int | 
+final api = Openapi().getReservationApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.reservationGetReservationDetail(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reservationGetReservationDetail(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReservationApi->reservationGetReservationDetail: $e\n');
 }
 ```
@@ -316,18 +316,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReservationApi();
-final id = 56; // int | 
-final date = 2013-10-20T19:20:30+01:00; // DateTime | 
+final api = Openapi().getReservationApi();
+final int id = 56; // int | 
+final DateTime date = 2013-10-20T19:20:30+01:00; // DateTime | 
 
-try { 
-    final result = api_instance.reservationGetReservationUsage(id, date);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reservationGetReservationUsage(id, date);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReservationApi->reservationGetReservationUsage: $e\n');
 }
 ```
@@ -359,18 +359,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReservationApi();
-final from = 2013-10-20T19:20:30+01:00; // DateTime | 
-final to = 2013-10-20T19:20:30+01:00; // DateTime | 
+final api = Openapi().getReservationApi();
+final DateTime from = 2013-10-20T19:20:30+01:00; // DateTime | 
+final DateTime to = 2013-10-20T19:20:30+01:00; // DateTime | 
 
-try { 
-    final result = api_instance.reservationGetReservations(from, to);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reservationGetReservations(from, to);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReservationApi->reservationGetReservations: $e\n');
 }
 ```
@@ -384,7 +384,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<PlacesReservationsReservationDto>**](PlacesReservationsReservationDto.md)
+[**List&lt;PlacesReservationsReservationDto&gt;**](PlacesReservationsReservationDto.md)
 
 ### Authorization
 
@@ -402,18 +402,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReservationApi();
-final id = 56; // int | 
-final tableId = int(); // int | 
+final api = Openapi().getReservationApi();
+final int id = 56; // int | 
+final int tableId = 56; // int | 
 
-try { 
-    final result = api_instance.reservationRemoveTable(id, tableId);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reservationRemoveTable(id, tableId);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReservationApi->reservationRemoveTable: $e\n');
 }
 ```
@@ -445,18 +445,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReservationApi();
-final id = 56; // int | 
-final state = String(); // String | 
+final api = Openapi().getReservationApi();
+final int id = 56; // int | 
+final String state = state_example; // String | 
 
-try { 
-    final result = api_instance.reservationUpdateReservationState(id, state);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reservationUpdateReservationState(id, state);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReservationApi->reservationUpdateReservationState: $e\n');
 }
 ```

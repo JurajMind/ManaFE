@@ -8,7 +8,7 @@ import 'package:openapi/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**tastes** | **List<int>** |  | [optional] [default to const []]
+**tastes** | **List&lt;int&gt;** |  | [optional] 
 **sortBy** | **int** |  | [optional] 
 **brand** | **String** |  | [optional] 
 **owned** | **bool** |  | [optional] 

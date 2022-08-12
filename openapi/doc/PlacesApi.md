@@ -25,18 +25,18 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlacesApi();
-final placeId = 56; // int | 
-final flags = [List<String>()]; // List<String> | 
+final api = Openapi().getPlacesApi();
+final int placeId = 56; // int | 
+final List<String> flags = ; // List<String> | 
 
-try { 
-    final result = api_instance.placesAddFlags(placeId, flags);
-    print(result);
-} catch (e) {
+try {
+    final response = api.placesAddFlags(placeId, flags);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlacesApi->placesAddFlags: $e\n');
 }
 ```
@@ -46,7 +46,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **placeId** | **int**|  | 
- **flags** | [**List<String>**](String.md)|  | 
+ **flags** | [**List&lt;String&gt;**](String.md)|  | 
 
 ### Return type
 
@@ -68,17 +68,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlacesApi();
-final importedPlace = PlaceDto(); // PlaceDto | 
+final api = Openapi().getPlacesApi();
+final PlaceDto importedPlace = ; // PlaceDto | 
 
-try { 
-    final result = api_instance.placesAddPlace(importedPlace);
-    print(result);
-} catch (e) {
+try {
+    final response = api.placesAddPlace(importedPlace);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlacesApi->placesAddPlace: $e\n');
 }
 ```
@@ -109,15 +109,15 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlacesApi();
+final api = Openapi().getPlacesApi();
 
-try { 
-    api_instance.placesFixLocation();
-} catch (e) {
+try {
+    api.placesFixLocation();
+} catch on DioError (e) {
     print('Exception when calling PlacesApi->placesFixLocation: $e\n');
 }
 ```
@@ -145,17 +145,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlacesApi();
-final placeId = 56; // int | 
+final api = Openapi().getPlacesApi();
+final int placeId = 56; // int | 
 
-try { 
-    final result = api_instance.placesGetDashboardData(placeId);
-    print(result);
-} catch (e) {
+try {
+    final response = api.placesGetDashboardData(placeId);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlacesApi->placesGetDashboardData: $e\n');
 }
 ```
@@ -186,17 +186,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlacesApi();
-final id = 56; // int | 
+final api = Openapi().getPlacesApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.placesGetPlaceInfo(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.placesGetPlaceInfo(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlacesApi->placesGetPlaceInfo: $e\n');
 }
 ```
@@ -227,17 +227,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlacesApi();
-final id = 56; // int | 
+final api = Openapi().getPlacesApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.placesGetPlaceMenu(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.placesGetPlaceMenu(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlacesApi->placesGetPlaceMenu: $e\n');
 }
 ```
@@ -268,16 +268,16 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlacesApi();
+final api = Openapi().getPlacesApi();
 
-try { 
-    final result = api_instance.placesImportPlaces();
-    print(result);
-} catch (e) {
+try {
+    final response = api.placesImportPlaces();
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlacesApi->placesImportPlaces: $e\n');
 }
 ```
@@ -287,7 +287,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 
@@ -305,16 +305,16 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlacesApi();
+final api = Openapi().getPlacesApi();
 
-try { 
-    final result = api_instance.placesImportPlacesFromMap();
-    print(result);
-} catch (e) {
+try {
+    final response = api.placesImportPlacesFromMap();
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlacesApi->placesImportPlacesFromMap: $e\n');
 }
 ```
@@ -324,7 +324,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 
@@ -342,21 +342,21 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlacesApi();
-final page = 56; // int | 
-final pageSize = 56; // int | 
-final lat = 1.2; // double | 
-final lng = 1.2; // double | 
-final radius = 3.4; // double | 
+final api = Openapi().getPlacesApi();
+final int page = 56; // int | 
+final int pageSize = 56; // int | 
+final double lat = 1.2; // double | 
+final double lng = 1.2; // double | 
+final double radius = 3.4; // double | 
 
-try { 
-    final result = api_instance.placesSearchNearby(page, pageSize, lat, lng, radius);
-    print(result);
-} catch (e) {
+try {
+    final response = api.placesSearchNearby(page, pageSize, lat, lng, radius);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlacesApi->placesSearchNearby: $e\n');
 }
 ```

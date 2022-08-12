@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class DistanceWidget extends StatelessWidget {
-  final double distance;
-  final TextStyle textStyle;
+  final double? distance;
+  final TextStyle? textStyle;
 
-  const DistanceWidget(this.distance, {Key key, this.textStyle}) : super(key: key);
+  const DistanceWidget(this.distance, {Key? key, this.textStyle}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +13,10 @@ class DistanceWidget extends StatelessWidget {
     }
 
     String text;
-    if (distance < 1) {
-      text = "${(distance * 1000).toStringAsFixed(1)} m";
+    if (distance! < 1) {
+      text = "${(distance! * 1000).toStringAsFixed(1)} m";
     } else {
-      text = "${(distance).toStringAsFixed(1)} km";
+      text = "${distance!.toStringAsFixed(1)} km";
     }
 
     return Container(

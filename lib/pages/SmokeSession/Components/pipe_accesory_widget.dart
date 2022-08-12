@@ -7,20 +7,18 @@ import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class PipeAccesoryWidget extends StatelessWidget {
-  final PipeAccesorySimpleDto accesory;
-  final String type;
-  final DataProvider dataProvider;
-  const PipeAccesoryWidget(
-      {Key key, this.accesory, this.type, this.dataProvider})
-      : super(key: key);
+  final PipeAccesorySimpleDto? accesory;
+  final String? type;
+  final DataProvider? dataProvider;
+  const PipeAccesoryWidget({Key? key, this.accesory, this.type, this.dataProvider}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (accesory == null) {
-      Text(AppTranslations.of(context).text('smoke_session.no_data'));
+      Text(AppTranslations.of(context)!.text('smoke_session.no_data'));
     }
     return Padding(
       padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
@@ -30,13 +28,10 @@ class PipeAccesoryWidget extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Container(
-                    padding: EdgeInsets.only(right: 4),
-                    height: 30,
-                    child: Extensions.defaultTypePicture(this.type)),
+                    padding: EdgeInsets.only(right: 4), height: 30, child: Extensions.defaultTypePicture(this.type!)),
                 Text(
-                  AppTranslations.of(context).text("gear.${this.type}"),
-                  style: new TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 16.0),
+                  AppTranslations.of(context)!.text("gear.${this.type}"),
+                  style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
                 ),
               ],
             ),
@@ -46,16 +41,13 @@ class PipeAccesoryWidget extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 if (accesory == null) return;
-                Navigator.of(context).push(
-                    new MaterialPageRoute(builder: (BuildContext context) {
+                Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
                   return PipeAccesoryPage(pipeAccesory: accesory);
                 }));
               },
               child: this.accesory?.id != null
-                  ? Text("${accesory.brand} ${accesory.name}",
-                      style: Theme.of(context).textTheme.bodyText2)
-                  : Text(
-                      AppTranslations.of(context).text('smoke_session.no_data'),
+                  ? Text("${accesory!.brand} ${accesory!.name}", style: Theme.of(context).textTheme.bodyText2)
+                  : Text(AppTranslations.of(context)!.text('smoke_session.no_data'),
                       style: Theme.of(context).textTheme.bodyText2),
             ),
             flex: 2,

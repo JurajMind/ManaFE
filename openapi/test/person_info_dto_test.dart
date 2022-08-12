@@ -1,20 +1,12 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'package:openapi/api.dart';
 import 'package:test/test.dart';
+import 'package:openapi/openapi.dart';
 
 // tests for PersonInfoDto
 void main() {
-  final instance = PersonInfoDto();
+  final PersonInfoDto? instance = /* PersonInfoDto(...) */ null;
+  // TODO add properties to the entity
 
-  group('test PersonInfoDto', () {
+  group(PersonInfoDto, () {
     // String displayName
     test('to test the property `displayName`', () async {
       // TODO
@@ -25,12 +17,12 @@ void main() {
       // TODO
     });
 
-    // List<PlaceSimpleDto> managedPlaces (default value: const [])
+    // List<PlaceSimpleDto> managedPlaces
     test('to test the property `managedPlaces`', () async {
       // TODO
     });
 
-    // List<String> roles (default value: const [])
+    // List<String> roles
     test('to test the property `roles`', () async {
       // TODO
     });
@@ -40,7 +32,5 @@ void main() {
       // TODO
     });
 
-
   });
-
 }

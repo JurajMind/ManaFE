@@ -1,7 +1,7 @@
 class DevicePreset {
-  final int id;
-  final String name;
-  final int personId;
+  final int? id;
+  final String? name;
+  final int? personId;
 
   DevicePreset(this.id, this.name, this.personId);
 

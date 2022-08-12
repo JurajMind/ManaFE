@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **author** | **String** |  | [optional] 
 **publishDate** | [**DateTime**](DateTime.md) |  | [optional] 
 **tobaccoReview** | [**GearTobaccoReviewDto**](GearTobaccoReviewDto.md) |  | [optional] 
-**medias** | [**List<MediaDto>**](MediaDto.md) |  | [optional] [default to const []]
+**medias** | [**List&lt;MediaDto&gt;**](MediaDto.md) |  | [optional] 
 **smokeSessionId** | **int** |  | [optional] 
 **smokeSession** | [**SmokeSessionSimpleDto**](SmokeSessionSimpleDto.md) |  | [optional] 
 

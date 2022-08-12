@@ -1,16 +1,16 @@
 import 'dart:convert';
 
 class NegotiateResponse {
-  final String Url;
-  final String ConnectionToken;
-  final String ConnectionId;
-  final double KeepAliveTimeout;
-  final double DisconnectTimeout;
-  final double ConnectionTimeout;
-  final bool TryWebSockets;
-  final String ProtocolVersion;
-  final double TransportConnectTimeout;
-  final double LongPollDelay;
+  final String? Url;
+  final String? ConnectionToken;
+  final String? ConnectionId;
+  final double? KeepAliveTimeout;
+  final double? DisconnectTimeout;
+  final double? ConnectionTimeout;
+  final bool? TryWebSockets;
+  final String? ProtocolVersion;
+  final double? TransportConnectTimeout;
+  final double? LongPollDelay;
 
   NegotiateResponse(
       {this.Url,
@@ -42,8 +42,8 @@ class NegotiateResponse {
 class ServerCall {
   final String H;
   final int I;
-  String M;
-  List<String> A;
+  String? M;
+  List<String?>? A;
 
   ServerCall({this.I: 0, this.H = "smokesessionhub", this.A, this.M});
 
@@ -61,15 +61,15 @@ class ServerCall {
 }
 
 class ClientCall {
-  final String MessageId;
-  final List<ClientMethod> Data;
-  final int Init;
-  final String GroupToken;
+  final String? MessageId;
+  final List<ClientMethod>? Data;
+  final int? Init;
+  final String? GroupToken;
 
   ClientCall({this.MessageId, this.Data, this.Init, this.GroupToken});
 
   factory ClientCall.fromJson(Map<String, dynamic> json) {
-    var data = json["M"] as List<dynamic>;
+    var data = json["M"] as List<dynamic>?;
 
     return ClientCall(
         MessageId: json['C'],
@@ -80,9 +80,9 @@ class ClientCall {
 }
 
 class ClientMethod {
-  final String Hub;
-  final String Method;
-  final List<dynamic> Data;
+  final String? Hub;
+  final String? Method;
+  final List<dynamic>? Data;
 
   ClientMethod({this.Hub, this.Method, this.Data});
 

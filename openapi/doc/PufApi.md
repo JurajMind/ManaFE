@@ -18,17 +18,17 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PufApi();
-final id = id_example; // String | 
+final api = Openapi().getPufApi();
+final String id = id_example; // String | 
 
-try { 
-    final result = api_instance.pufDefaultAction(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.pufDefaultAction(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PufApi->pufDefaultAction: $e\n');
 }
 ```
@@ -59,17 +59,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PufApi();
-final id = id_example; // String | 
+final api = Openapi().getPufApi();
+final String id = id_example; // String | 
 
-try { 
-    final result = api_instance.pufLag(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.pufLag(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PufApi->pufLag: $e\n');
 }
 ```

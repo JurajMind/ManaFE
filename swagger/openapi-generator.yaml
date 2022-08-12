@@ -1,0 +1,8 @@
+# Unrelated fields like author omitted
+pubName: openapi
+pubLibrary: "openapi"
+legacyDiscriminatorBehavior: true
+# disallowAdditionalPropertiesIfNotPresent: false
+useEnumExtension: true
+serializationLibrary: json_serializable
+finalProperties: false

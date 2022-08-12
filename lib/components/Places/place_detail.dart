@@ -3,24 +3,24 @@ import 'package:app/components/Common/leading_icon.dart';
 import 'package:app/components/Places/open_dropdown.dart';
 import 'package:app/components/Socials/socials_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PlaceInfo extends StatefulWidget {
-  final PlaceSimpleDto place;
-  final PlaceDto placeInfo;
-  const PlaceInfo({Key key, this.place, this.placeInfo}) : super(key: key);
+  final PlaceSimpleDto? place;
+  final PlaceDto? placeInfo;
+  const PlaceInfo({Key? key, this.place, this.placeInfo}) : super(key: key);
 
   @override
   _PlaceInfoState createState() => _PlaceInfoState();
 }
 
 class _PlaceInfoState extends State<PlaceInfo> {
-  bool isOpen = false;
+  bool? isOpen = false;
 
   @override
   void initState() {
-    isOpen = PlaceHelpers.isOpen(widget.place);
+    isOpen = PlaceHelpers.isOpen(widget.place!);
     super.initState();
   }
 
@@ -43,14 +43,14 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     place: widget.place,
                     dark: false,
                   )),
-              widget.place.phoneNumber != null
+              widget.place!.phoneNumber != null
                   ? InkWell(
-                      onTap: () => launch('tel://${widget.place.phoneNumber}'),
+                      onTap: () => launch('tel://${widget.place!.phoneNumber}'),
                       child: new LeadingIcon(
                         icon: Icons.phone,
                         child: Text(
-                          widget.place.phoneNumber,
-                          style: Theme.of(context).textTheme.bodyText2.apply(color: Colors.black),
+                          widget.place!.phoneNumber!,
+                          style: Theme.of(context).textTheme.bodyText2!.apply(color: Colors.black),
                         ),
                       ),
                     )
@@ -64,6 +64,6 @@ class _PlaceInfoState extends State<PlaceInfo> {
     if (isOpen == null) {
       return Colors.grey;
     }
-    return isOpen ? Colors.green : Colors.red;
+    return isOpen! ? Colors.green : Colors.red;
   }
 }

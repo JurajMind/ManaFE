@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {
-  final String buttonName;
-  final VoidCallback onTap;
+  final String? buttonName;
+  final VoidCallback? onTap;
 
-  final double height;
-  final double width;
-  final double bottomMargin;
-  final double borderWidth;
-  final Color buttonColor;
-  final Color textColor;
-  final Widget child;
+  final double? height;
+  final double? width;
+  final double? bottomMargin;
+  final double? borderWidth;
+  final Color? buttonColor;
+  final Color? textColor;
+  final Widget? child;
   final TextStyle textStyle = const TextStyle(
       color: const Color(0XFFFFFFFF),
       fontSize: 16.0,
@@ -46,16 +46,16 @@ class RoundedButton extends StatelessWidget {
         child: new Container(
           width: width,
           height: height,
-          margin: new EdgeInsets.only(bottom: bottomMargin),
+          margin: new EdgeInsets.only(bottom: bottomMargin!),
           alignment: FractionalOffset.center,
           decoration: new BoxDecoration(
               color: buttonColor,
               borderRadius: new BorderRadius.all(const Radius.circular(30.0)),
               border: new Border.all(
                   color: const Color.fromRGBO(221, 221, 221, 1.0),
-                  width: borderWidth)),
+                  width: borderWidth!)),
           child: this.child == null
-              ? Text(buttonName.toUpperCase(), style: _getButtonTextStyle())
+              ? Text(buttonName!.toUpperCase(), style: _getButtonTextStyle())
               : child,
         ),
       ));
@@ -65,13 +65,13 @@ class RoundedButton extends StatelessWidget {
         child: new Container(
           width: width,
           height: height,
-          margin: new EdgeInsets.only(bottom: bottomMargin),
+          margin: new EdgeInsets.only(bottom: bottomMargin!),
           alignment: FractionalOffset.center,
           decoration: new BoxDecoration(
             color: buttonColor,
             borderRadius: new BorderRadius.all(const Radius.circular(30.0)),
           ),
-          child: new Text(buttonName, style: _getButtonTextStyle()),
+          child: new Text(buttonName!, style: _getButtonTextStyle()),
         ),
       ));
   }

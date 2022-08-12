@@ -4,38 +4,24 @@ class PipeAccesorySimple {
   PipeAccesorySimple({this.id, this.name, this.brand, this.type, this.owned});
 
   factory PipeAccesorySimple.fromJson(Map<String, dynamic> json) {
-    if (json == null) {
-      return null;
-    }
     return new PipeAccesorySimple(
-        id: json['Id'],
-        name: json['Name'],
-        brand: json['Brand'],
-        type: json['Type'],
-        owned: json['Owned'] == 1);
+        id: json['Id'], name: json['Name'], brand: json['Brand'], type: json['Type'], owned: json['Owned'] == 1);
   }
 
   factory PipeAccesorySimple.fromAccesory(PipeAccesory accesory) {
-    if (accesory == null) {
-      return null;
-    }
     return new PipeAccesorySimple(
-        id: accesory.id,
-        name: accesory.name,
-        brand: accesory.brand,
-        type: accesory.type,
-        owned: true);
+        id: accesory.id, name: accesory.name, brand: accesory.brand, type: accesory.type, owned: true);
   }
 
-  int id;
+  int? id;
 
-  String name;
+  String? name;
 
-  String brand;
+  String? brand;
 
-  String type;
+  String? type;
 
-  bool owned;
+  bool? owned;
 
   String get fullName {
     return "$brand $name";

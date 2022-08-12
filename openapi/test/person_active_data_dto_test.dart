@@ -1,21 +1,13 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'package:openapi/api.dart';
 import 'package:test/test.dart';
+import 'package:openapi/openapi.dart';
 
 // tests for PersonActiveDataDto
 void main() {
-  final instance = PersonActiveDataDto();
+  final PersonActiveDataDto? instance = /* PersonActiveDataDto(...) */ null;
+  // TODO add properties to the entity
 
-  group('test PersonActiveDataDto', () {
-    // List<DeviceSimpleDto> devices (default value: const [])
+  group(PersonActiveDataDto, () {
+    // List<DeviceSimpleDto> devices
     test('to test the property `devices`', () async {
       // TODO
     });
@@ -25,17 +17,17 @@ void main() {
       // TODO
     });
 
-    // List<SmokeSessionSimpleDto> activeSmokeSessions (default value: const [])
+    // List<SmokeSessionSimpleDto> activeSmokeSessions
     test('to test the property `activeSmokeSessions`', () async {
       // TODO
     });
 
-    // List<PlacesReservationsReservationDto> activeReservations (default value: const [])
+    // List<PlacesReservationsReservationDto> activeReservations
     test('to test the property `activeReservations`', () async {
       // TODO
     });
 
-    // List<HookahOrderDto> activeHookahOrders (default value: const [])
+    // List<HookahOrderDto> activeHookahOrders
     test('to test the property `activeHookahOrders`', () async {
       // TODO
     });
@@ -45,7 +37,5 @@ void main() {
       // TODO
     });
 
-
   });
-
 }

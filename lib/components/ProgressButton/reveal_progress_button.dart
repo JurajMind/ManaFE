@@ -10,8 +10,8 @@ class RevealProgressButton extends StatefulWidget {
 
 class _RevealProgressButtonState extends State<RevealProgressButton>
     with TickerProviderStateMixin {
-  Animation<double> _animation;
-  AnimationController _controller;
+  late Animation<double> _animation;
+  late AnimationController _controller;
   double _fraction = 0.0;
 
   @override

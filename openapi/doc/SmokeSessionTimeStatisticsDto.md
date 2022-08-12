@@ -12,8 +12,8 @@ Name | Type | Description | Notes
 **sessionsDuration** | **String** |  | [optional] 
 **smokeDuration** | **String** |  | [optional] 
 **puffCount** | **int** |  | [optional] 
-**dayOfWeekDistribution** | **Map<String, int>** |  | [optional] [default to const {}]
-**sessionStartTimeDistribution** | **Map<String, int>** |  | [optional] [default to const {}]
+**dayOfWeekDistribution** | **Map&lt;String, int&gt;** |  | [optional] 
+**sessionStartTimeDistribution** | **Map&lt;String, int&gt;** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

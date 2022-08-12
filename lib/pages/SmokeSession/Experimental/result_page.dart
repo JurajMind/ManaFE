@@ -1,20 +1,21 @@
 import 'package:app/app/app.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ResultPage extends StatefulWidget {
-  ResultPage({Key key}) : super(key: key);
+  ResultPage({Key? key}) : super(key: key);
 
   _ResultPageState createState() => _ResultPageState();
 }
 
 class _ResultPageState extends State<ResultPage> {
-  BehaviorSubject<List<SmartHookahModelsRedisCompetitionEntry>> result = new BehaviorSubject<List<SmartHookahModelsRedisCompetitionEntry>>();
+  BehaviorSubject<List<SmartHookahModelsRedisCompetitionEntry>> result =
+      new BehaviorSubject<List<SmartHookahModelsRedisCompetitionEntry>>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
 
   Future<dynamic> loadResult() {
-    return App.http.getCompetitionResult().then((onValue) => result.add(onValue));
+    return App.http!.getCompetitionResult().then((onValue) => result.add(onValue));
   }
 
   @override
@@ -47,7 +48,7 @@ class _ResultPageState extends State<ResultPage> {
               child: ListView.builder(
                 itemCount: snapshot?.data?.length ?? 0,
                 itemBuilder: (context, index) {
-                  var data = snapshot.data[index];
+                  var data = snapshot.data![index];
                   return ListTile(
                       leading: Text((index + 1).toString(), style: Theme.of(context).textTheme.headline6),
                       title: Row(
@@ -55,13 +56,13 @@ class _ResultPageState extends State<ResultPage> {
                           Expanded(
                               flex: 1,
                               child: Text(
-                                data.name,
+                                data.name!,
                                 style: Theme.of(context).textTheme.headline5,
                               )),
                           Expanded(
                               flex: 1,
                               child: Text(
-                                'Time:' + data.time.toStringAsFixed(3),
+                                'Time:' + data.time!.toStringAsFixed(3),
                                 style: Theme.of(context).textTheme.headline5,
                               ))
                         ],

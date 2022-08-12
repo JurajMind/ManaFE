@@ -5,7 +5,7 @@ import 'package:shimmer/shimmer.dart';
 class MixCardExpandedShimmer extends StatelessWidget {
   final bool move;
   const MixCardExpandedShimmer({
-    Key key,
+    Key? key,
     this.move = true,
   }) : super(key: key);
 
@@ -15,7 +15,7 @@ class MixCardExpandedShimmer extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: true
           ? Shimmer.fromColors(
-              baseColor: Colors.grey[400],
+              baseColor: Colors.grey[400]!,
               highlightColor: Colors.white,
               child: new _ShimmerBody(),
             )
@@ -26,7 +26,7 @@ class MixCardExpandedShimmer extends StatelessWidget {
 
 class _ShimmerBody extends StatelessWidget {
   const _ShimmerBody({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

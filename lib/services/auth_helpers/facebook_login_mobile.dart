@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class FacebookLoginHelper {
-  final ValueChanged<bool> onAuthBegin;
+  final ValueChanged<bool>? onAuthBegin;
 
   FacebookLoginHelper(this.onAuthBegin);
   Future facebookLogin(context) async {
@@ -14,13 +14,13 @@ class FacebookLoginHelper {
 // or FacebookAuth.i.login()
     if (result.status == LoginStatus.success) {
       // you are logged
-      final AccessToken accessToken = result.accessToken;
+      final AccessToken accessToken = result.accessToken!;
       var auth = getIt.get<AuthorizeRepository>();
       var tokenResult = await auth.getLocalToken("Facebook", accessToken.token);
       if (tokenResult) {
         AppWidget.restartApp(context);
       } else {
-        onAuthBegin(false);
+        onAuthBegin!(false);
       }
     } else {
       print(result.status);

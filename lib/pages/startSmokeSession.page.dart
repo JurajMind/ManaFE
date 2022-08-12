@@ -12,21 +12,17 @@ import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/pages/enterSmokeSesionCode.page.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 import 'Common/relese_notes.dart';
 
 class MyCustomRoute<T> extends MaterialPageRoute<T> {
-  MyCustomRoute(
-      {WidgetBuilder builder, RouteSettings settings, bool fullscreenDialog})
-      : super(
-            builder: builder,
-            settings: settings,
-            fullscreenDialog: fullscreenDialog);
+  MyCustomRoute({required WidgetBuilder builder, RouteSettings? settings, required bool fullscreenDialog})
+      : super(builder: builder, settings: settings, fullscreenDialog: fullscreenDialog);
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+      BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
     return child;
     // Fades between routes. (If you don't want any animation,
     // just return child.)
@@ -39,7 +35,7 @@ class StartSmokeSessionPage extends StatefulWidget {
 
   StartSmokeSessionPage({this.callback});
 
-  final GlobalKey<NavigatorState> Function(int) callback;
+  final GlobalKey<NavigatorState>? Function(int)? callback;
 
   @override
   StartSmokeSessionPageState createState() {
@@ -47,22 +43,19 @@ class StartSmokeSessionPage extends StatefulWidget {
   }
 }
 
-class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
-    with SingleTickerProviderStateMixin {
+class StartSmokeSessionPageState extends State<StartSmokeSessionPage> with SingleTickerProviderStateMixin {
   StartSmokeSessionPageState({this.callback});
 
-  AnimationController _animationController;
-  Animation _colorTween;
+  late AnimationController _animationController;
+  late Animation _colorTween;
 
-  final GlobalKey<NavigatorState> Function(int) callback;
+  final GlobalKey<NavigatorState>? Function(int)? callback;
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 15000));
-    _colorTween = ColorTween(begin: Colors.indigo[900], end: Colors.blue)
-        .animate(_animationController);
+    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 15000));
+    _colorTween = ColorTween(begin: Colors.indigo[900], end: Colors.blue).animate(_animationController);
     _animationController.forward();
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -73,16 +66,14 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
     });
   }
 
-  Future _openAddEntryDialog(
-      BuildContext context, SmokeSessionBloc smokeSessionBloc) async {
-    final sessionCode =
-        await Navigator.of(context).push(new MyCustomRoute<String>(
-            builder: (BuildContext context) {
-              return new EnterSmokeSessionCode(
-                callback: widget.callback,
-              );
-            },
-            fullscreenDialog: false));
+  Future _openAddEntryDialog(BuildContext context, SmokeSessionBloc smokeSessionBloc) async {
+    final sessionCode = await Navigator.of(context).push(new MyCustomRoute<String>(
+        builder: (BuildContext context) {
+          return new EnterSmokeSessionCode(
+            callback: widget.callback,
+          );
+        },
+        fullscreenDialog: false));
 
     print(sessionCode);
     if (sessionCode == null) {
@@ -96,10 +87,9 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
   }
 
   navigateToPlace(PlaceSimpleDto place) {
-    var navigation = callback(1);
-    navigation.currentState.push(MaterialPageRoute(
-        settings: RouteSettings(),
-        builder: (context) => PlaceDetailPage(place: place)));
+    var navigation = callback!(1)!;
+    navigation.currentState!
+        .push(MaterialPageRoute(settings: RouteSettings(), builder: (context) => PlaceDetailPage(place: place)));
   }
 
   @override
@@ -115,8 +105,7 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
             AnimatedBuilder(
               animation: _colorTween,
               builder: (context, child) => CustomPaint(
-                  painter: CirclePainter(_colorTween.value,
-                      data: MediaQuery.of(context)),
+                  painter: CirclePainter(_colorTween.value, data: MediaQuery.of(context)),
                   child: Container(
                     height: 1000,
                   )),
@@ -143,8 +132,7 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 new Text(
-                                  AppTranslations.of(context)
-                                      .text('home.start'),
+                                  AppTranslations.of(context)!.text('home.start'),
                                   style: Theme.of(context).textTheme.headline3,
                                 ),
                                 new Icon(
@@ -168,15 +156,10 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage>
                             child: Column(
                               children: <Widget>[
                                 Text(
-                                  AppTranslations.of(context)
-                                      .text('home.nearest_place'),
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.green[50]),
+                                  AppTranslations.of(context)!.text('home.nearest_place'),
+                                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green[50]),
                                 ),
-                                Expanded(
-                                    child: Carroussel(
-                                        navigateToDetail: navigateToPlace)),
+                                Expanded(child: Carroussel(navigateToDetail: navigateToPlace)),
                               ],
                             )),
                       ],

@@ -5,7 +5,7 @@ import 'package:uri/uri.dart';
 import 'map_view_type.dart';
 
 class StaticMapProvider {
-  final String googleMapsApiKey;
+  final String? googleMapsApiKey;
   static const int defaultZoomLevel = 4;
   static const int defaultWidth = 600;
   static const int defaultHeight = 400;
@@ -19,14 +19,8 @@ class StaticMapProvider {
   /// Specify a [width] and [height] that you would like the resulting image to be. The default is 600w x 400h
   ///
 
-  Uri getStaticUri(Location center, int zoomLevel,
-      {int width, int height, StaticMapViewType mapType}) {
-    return _buildUrl(
-        null,
-        center,
-        zoomLevel ?? defaultZoomLevel,
-        width ?? defaultWidth,
-        height ?? defaultHeight,
+  Uri getStaticUri(Location center, int zoomLevel, {int? width, int? height, StaticMapViewType? mapType}) {
+    return _buildUrl(null, center, zoomLevel ?? defaultZoomLevel, width ?? defaultWidth, height ?? defaultHeight,
         mapType ?? defaultMaptype);
   }
 
@@ -37,13 +31,9 @@ class StaticMapProvider {
   ///
 
   Uri getStaticUriWithMarkers(List<Marker> markers,
-      {int width,
-      int height,
-      StaticMapViewType maptype,
-      Location center,
-      int zoomLevel}) {
-    return _buildUrl(markers, center, zoomLevel, width ?? defaultWidth,
-        height ?? defaultHeight, maptype ?? defaultMaptype);
+      {int? width, int? height, StaticMapViewType? maptype, Location? center, int? zoomLevel}) {
+    return _buildUrl(
+        markers, center, zoomLevel, width ?? defaultWidth, height ?? defaultHeight, maptype ?? defaultMaptype);
   }
 
   ///
@@ -53,17 +43,13 @@ class StaticMapProvider {
   /// Centers the map on [center] using a zoom of [zoomLevel]
   ///
   Uri getStaticUriWithMarkersAndZoom(List<Marker> markers,
-      {int width,
-      int height,
-      StaticMapViewType maptype,
-      Location center,
-      int zoomLevel}) {
-    return _buildUrl(markers, center, zoomLevel, width ?? defaultWidth,
-        height ?? defaultHeight, maptype ?? defaultMaptype);
+      {int? width, int? height, StaticMapViewType? maptype, Location? center, int? zoomLevel}) {
+    return _buildUrl(
+        markers, center, zoomLevel, width ?? defaultWidth, height ?? defaultHeight, maptype ?? defaultMaptype);
   }
 
-  Uri _buildUrl(List<Marker> locations, Location center, int zoomLevel,
-      int width, int height, StaticMapViewType mapType) {
+  Uri _buildUrl(
+      List<Marker>? locations, Location? center, int? zoomLevel, int width, int height, StaticMapViewType mapType) {
     var finalUri = new UriBuilder()
       ..scheme = 'https'
       ..host = 'maps.googleapis.com'
@@ -80,11 +66,11 @@ class StaticMapProvider {
         'center': '${center.latitude},${center.longitude}',
         'zoom': zoomLevel.toString(),
         'size': '${width ?? defaultWidth}x${height ?? defaultHeight}',
-        'maptype': _getMapTypeQueryParam(mapType),
-        'key': googleMapsApiKey,
+        'maptype': _getMapTypeQueryParam(mapType)!,
+        'key': googleMapsApiKey!,
       };
     } else {
-      List<String> markers = new List();
+      List<String> markers = [];
       locations.forEach((location) {
         num lat = location.latitude;
         num lng = location.longitude;
@@ -94,21 +80,19 @@ class StaticMapProvider {
       String markersString = markers.join('|');
       finalUri.queryParameters = {
         'markers': markersString,
-        'size': '${width ?? defaultWidth}x${height ?? defaultHeight}',
-        'maptype': _getMapTypeQueryParam(mapType),
-        'key': googleMapsApiKey,
+        'size': '${width}x${height}',
+        'maptype': _getMapTypeQueryParam(mapType)!,
+        'key': googleMapsApiKey!,
       };
     }
-    if (center != null)
-      finalUri.queryParameters['center'] =
-          '${center.latitude},${center.longitude}';
+    if (center != null) finalUri.queryParameters['center'] = '${center.latitude},${center.longitude}';
 
     var uri = finalUri.build();
     return uri;
   }
 
-  String _getMapTypeQueryParam(StaticMapViewType maptype) {
-    String mapTypeQueryParam;
+  String? _getMapTypeQueryParam(StaticMapViewType maptype) {
+    String? mapTypeQueryParam;
     switch (maptype) {
       case StaticMapViewType.roadmap:
         mapTypeQueryParam = "roadmap";

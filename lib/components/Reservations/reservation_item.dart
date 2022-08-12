@@ -3,18 +3,18 @@ import 'package:app/components/Common/labeled_value.dart';
 import 'package:app/pages/Places/Reservations/reservation_detail_page.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class ReservationItem extends StatelessWidget {
-  final PlacesReservationsReservationDto reservation;
+  final PlacesReservationsReservationDto? reservation;
 
-  const ReservationItem({Key key, this.reservation}) : super(key: key);
+  const ReservationItem({Key? key, this.reservation}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Hero(
-        tag: 'reservation_${reservation.id.toString()}',
+        tag: 'reservation_${reservation!.id.toString()}',
         child: Container(
           decoration: BoxDecoration(border: Border.all(color: Colors.white), borderRadius: BorderRadius.circular(16.0)),
           child: InkWell(
@@ -45,21 +45,21 @@ class ReservationItem extends StatelessWidget {
                             Expanded(
                                 flex: 2,
                                 child: LabeledValue(
-                                  dateHelper.DateUtils.toStringDate(reservation.time),
+                                  dateHelper.DateUtils.toStringDate(reservation!.time!),
                                   icon: Icon(Icons.calendar_today),
                                   padding: EdgeInsets.only(),
                                 )),
                             Expanded(
                                 flex: 2,
                                 child: LabeledValue(
-                                  dateHelper.DateUtils.toStringShortTime(reservation.time),
+                                  dateHelper.DateUtils.toStringShortTime(reservation!.time!),
                                   icon: Icon(Icons.timer),
                                   padding: EdgeInsets.only(),
                                 )),
                             Expanded(
                                 flex: 2,
                                 child: LabeledValue(
-                                  reservation.duration,
+                                  reservation!.duration,
                                   icon: Icon(Icons.timelapse),
                                   padding: EdgeInsets.only(),
                                 )),
@@ -72,14 +72,14 @@ class ReservationItem extends StatelessWidget {
                             Expanded(
                                 flex: 1,
                                 child: LabeledValue(
-                                  reservation.persons.toString(),
+                                  reservation!.persons.toString(),
                                   icon: Icon(Icons.person),
                                   padding: EdgeInsets.only(),
                                 )),
                             Expanded(
                                 flex: 5,
                                 child: LabeledValue(
-                                  reservation.placeName ?? "",
+                                  reservation!.placeName ?? "",
                                   icon: Icon(Icons.place),
                                 )),
                           ],
@@ -98,42 +98,42 @@ class ReservationItem extends StatelessWidget {
 }
 
 class ReservationStatusIcon extends StatelessWidget {
-  static String stateToText(int reservationState, BuildContext context) {
+  static String stateToText(int? reservationState, BuildContext context) {
     switch (reservationState) {
       case -1:
-        return AppTranslations.of(context).text("reservations.all");
+        return AppTranslations.of(context)!.text("reservations.all");
       // Created
       case 0:
-        return AppTranslations.of(context).text("reservations.created");
+        return AppTranslations.of(context)!.text("reservations.created");
       // Canceled
       case 1:
-        return AppTranslations.of(context).text("reservations.canceled");
+        return AppTranslations.of(context)!.text("reservations.canceled");
       // Denied
       case 2:
-        return AppTranslations.of(context).text("reservations.denied");
+        return AppTranslations.of(context)!.text("reservations.denied");
       // Confirmed
       case 3:
-        return AppTranslations.of(context).text("reservations.confirmed");
+        return AppTranslations.of(context)!.text("reservations.confirmed");
       // ConfirmationRequired
       case 6:
-        return AppTranslations.of(context).text("reservations.confirmation_required");
+        return AppTranslations.of(context)!.text("reservations.confirmation_required");
       default:
         return reservationState.toString();
     }
   }
 
-  final PlacesReservationsReservationDto reservation;
-  final int reservationInt;
+  final PlacesReservationsReservationDto? reservation;
+  final int? reservationInt;
 
   const ReservationStatusIcon({
-    Key key,
+    Key? key,
     this.reservation,
     this.reservationInt,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var status = reservationInt ?? reservation.status;
+    var status = reservationInt ?? reservation!.status;
     switch (status) {
       case -1:
         return Icon(Icons.filter_list, color: Colors.white);

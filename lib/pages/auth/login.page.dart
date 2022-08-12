@@ -20,8 +20,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginData {
-  String email = '';
-  String password = '';
+  String? email = '';
+  String? password = '';
 }
 
 class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
@@ -32,8 +32,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   final FocusNode passwordFocusNode = FocusNode();
   bool showPassword = false;
   void submit(BuildContext context) async {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
 
       print('Printing the submitted data.');
       print('Email: ${data.email}');
@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
       appBar: new AppBar(
         centerTitle: true,
         title: new Text(
-            AppTranslations.of(context).text("login.log_in").toUpperCase()),
+            AppTranslations.of(context)!.text("login.log_in").toUpperCase()),
         backgroundColor: Colors.transparent,
       ),
       body: Center(
@@ -95,9 +95,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                         new BorderSide(color: Colors.white)),
                                 icon: Icon(Icons.mail, color: Colors.white),
                                 hintText: 'your@email.com',
-                                labelText: AppTranslations.of(context)
+                                labelText: AppTranslations.of(context)!
                                     .text("login.email")),
-                            validator: (String value) {
+                            validator: (String? value) {
                               return validate(value, 'E-mail Address', [
                                 new RequiredValidator(),
                                 new EmailValidator(),
@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                               FocusScope.of(context)
                                   .requestFocus(passwordFocusNode);
                             },
-                            onSaved: (String value) {
+                            onSaved: (String? value) {
                               data.email = value;
                             }),
                         new TextFormField(
@@ -138,9 +138,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                     borderSide:
                                         new BorderSide(color: Colors.white)),
                                 icon: Icon(Icons.security, color: Colors.white),
-                                labelText: AppTranslations.of(context)
+                                labelText: AppTranslations.of(context)!
                                     .text("login.password")),
-                            validator: (String value) {
+                            validator: (String? value) {
                               return validate(value, 'Password', [
                                 new RequiredValidator(),
                                 new StringValidator(),
@@ -150,7 +150,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                             onFieldSubmitted: (String value) {
                               this.submit(context);
                             },
-                            onSaved: (String value) {
+                            onSaved: (String? value) {
                               data.password = value;
                             }),
                         new Container(
@@ -169,7 +169,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                   ),
                                 )
                               : new RoundedButton(
-                                  buttonName: AppTranslations.of(context)
+                                  buttonName: AppTranslations.of(context)!
                                       .text("login.log_in")
                                       .toUpperCase(),
                                   onTap: () => this.submit(context),
@@ -185,7 +185,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                           width: screenSize.width,
                           child: new FlatButton(
                             child: new Text(
-                              AppTranslations.of(context)
+                              AppTranslations.of(context)!
                                       .text("login.forgot_password") +
                                   " ?",
                               style: Theme.of(context).textTheme.headline5,

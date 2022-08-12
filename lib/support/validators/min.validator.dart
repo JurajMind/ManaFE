@@ -6,7 +6,7 @@ class MinValidator extends BaseValidator {
   MinValidator(this.min);
 
   @override
-  String validate(Object value, String attribute) {
+  String? validate(Object? value, String attribute) {
     if (value is String && value.toString().length < this.min) {
       return 'The $attribute must be at least ${this.min} characters.';
     }

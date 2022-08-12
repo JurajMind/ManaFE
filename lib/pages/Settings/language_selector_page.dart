@@ -28,7 +28,7 @@ class _LanguageSelectorPageState extends State<LanguageSelectorPage> {
         backgroundColor: Colors.black,
         centerTitle: true,
         title: Text(
-            AppTranslations.of(context)
+            AppTranslations.of(context)!
                 .text("settings.select_language")
                 .toUpperCase(),
             style: theme.appBarStyle),
@@ -56,11 +56,11 @@ class _LanguageSelectorPageState extends State<LanguageSelectorPage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0),
           child: Text(
-            AppTranslations.of(context).text("settings.$language"),
+            AppTranslations.of(context)!.text("settings.$language"),
             style: TextStyle(
                 fontSize: 24.0,
                 color:
-                    AppTranslations.of(context).locale.languageCode == language
+                    AppTranslations.of(context)!.locale.languageCode == language
                         ? AppColors.colors[1]
                         : Colors.white),
           ),

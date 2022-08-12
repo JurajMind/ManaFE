@@ -20,18 +20,18 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = MediaApi();
-final id = 56; // int | 
-final file = BINARY_DATA_HERE; // MultipartFile | A file
+final api = Openapi().getMediaApi();
+final int id = 56; // int | 
+final MultipartFile file = BINARY_DATA_HERE; // MultipartFile | A file
 
-try { 
-    final result = api_instance.mediaAddGearPicture(id, file);
-    print(result);
-} catch (e) {
+try {
+    final response = api.mediaAddGearPicture(id, file);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling MediaApi->mediaAddGearPicture: $e\n');
 }
 ```
@@ -63,18 +63,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = MediaApi();
-final id = 56; // int | 
-final file = BINARY_DATA_HERE; // MultipartFile | A file
+final api = Openapi().getMediaApi();
+final int id = 56; // int | 
+final MultipartFile file = BINARY_DATA_HERE; // MultipartFile | A file
 
-try { 
-    final result = api_instance.mediaAddPlacePicture(id, file);
-    print(result);
-} catch (e) {
+try {
+    final response = api.mediaAddPlacePicture(id, file);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling MediaApi->mediaAddPlacePicture: $e\n');
 }
 ```
@@ -106,18 +106,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = MediaApi();
-final id = 56; // int | 
-final file = BINARY_DATA_HERE; // MultipartFile | A file
+final api = Openapi().getMediaApi();
+final int id = 56; // int | 
+final MultipartFile file = BINARY_DATA_HERE; // MultipartFile | A file
 
-try { 
-    final result = api_instance.mediaAddPlaceReview(id, file);
-    print(result);
-} catch (e) {
+try {
+    final response = api.mediaAddPlaceReview(id, file);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling MediaApi->mediaAddPlaceReview: $e\n');
 }
 ```
@@ -149,18 +149,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = MediaApi();
-final id = 56; // int | 
-final file = BINARY_DATA_HERE; // MultipartFile | A file
+final api = Openapi().getMediaApi();
+final int id = 56; // int | 
+final MultipartFile file = BINARY_DATA_HERE; // MultipartFile | A file
 
-try { 
-    final result = api_instance.mediaAddSessionReview(id, file);
-    print(result);
-} catch (e) {
+try {
+    final response = api.mediaAddSessionReview(id, file);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling MediaApi->mediaAddSessionReview: $e\n');
 }
 ```

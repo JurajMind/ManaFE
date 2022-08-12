@@ -24,17 +24,17 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = SmokeSessionApi();
-final id = id_example; // String | 
+final api = Openapi().getSmokeSessionApi();
+final String id = id_example; // String | 
 
-try { 
-    final result = api_instance.smokeSessionEndSmokeSession(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.smokeSessionEndSmokeSession(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling SmokeSessionApi->smokeSessionEndSmokeSession: $e\n');
 }
 ```
@@ -65,17 +65,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = SmokeSessionApi();
-final id = 56; // int | 
+final api = Openapi().getSmokeSessionApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.smokeSessionGetFinishedData(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.smokeSessionGetFinishedData(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling SmokeSessionApi->smokeSessionGetFinishedData: $e\n');
 }
 ```
@@ -106,17 +106,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = SmokeSessionApi();
-final id = id_example; // String | 
+final api = Openapi().getSmokeSessionApi();
+final String id = id_example; // String | 
 
-try { 
-    final result = api_instance.smokeSessionGetMetaData(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.smokeSessionGetMetaData(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling SmokeSessionApi->smokeSessionGetMetaData: $e\n');
 }
 ```
@@ -147,17 +147,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = SmokeSessionApi();
-final id = 56; // int | 
+final api = Openapi().getSmokeSessionApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.smokeSessionGetPufs(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.smokeSessionGetPufs(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling SmokeSessionApi->smokeSessionGetPufs: $e\n');
 }
 ```
@@ -170,7 +170,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<SmartHookahModelsDbPuf>**](SmartHookahModelsDbPuf.md)
+[**List&lt;SmartHookahModelsDbPuf&gt;**](SmartHookahModelsDbPuf.md)
 
 ### Authorization
 
@@ -188,17 +188,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = SmokeSessionApi();
-final id = id_example; // String | 
+final api = Openapi().getSmokeSessionApi();
+final String id = id_example; // String | 
 
-try { 
-    final result = api_instance.smokeSessionGetSessionCode(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.smokeSessionGetSessionCode(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling SmokeSessionApi->smokeSessionGetSessionCode: $e\n');
 }
 ```
@@ -211,7 +211,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 
@@ -229,17 +229,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = SmokeSessionApi();
-final id = id_example; // String | 
+final api = Openapi().getSmokeSessionApi();
+final String id = id_example; // String | 
 
-try { 
-    final result = api_instance.smokeSessionInitData(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.smokeSessionInitData(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling SmokeSessionApi->smokeSessionInitData: $e\n');
 }
 ```
@@ -270,18 +270,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = SmokeSessionApi();
-final id = id_example; // String | 
-final model = SmokeSessionMetaDataDto(); // SmokeSessionMetaDataDto | 
+final api = Openapi().getSmokeSessionApi();
+final String id = id_example; // String | 
+final SmokeSessionMetaDataDto model = ; // SmokeSessionMetaDataDto | 
 
-try { 
-    final result = api_instance.smokeSessionSaveMetaData(id, model);
-    print(result);
-} catch (e) {
+try {
+    final response = api.smokeSessionSaveMetaData(id, model);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling SmokeSessionApi->smokeSessionSaveMetaData: $e\n');
 }
 ```
@@ -313,17 +313,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = SmokeSessionApi();
-final id = id_example; // String | 
+final api = Openapi().getSmokeSessionApi();
+final String id = id_example; // String | 
 
-try { 
-    final result = api_instance.smokeSessionValidate(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.smokeSessionValidate(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling SmokeSessionApi->smokeSessionValidate: $e\n');
 }
 ```

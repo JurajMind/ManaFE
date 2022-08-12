@@ -1,16 +1,17 @@
 import 'package:app/Helpers/day_helper.dart';
 import 'package:app/utils/translations/app_translations.dart';
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class OpenDropdown extends StatefulWidget {
-  final PlaceSimpleDto place;
-  final List<BusinessHoursDto> hours;
-  final Size size;
+  final PlaceSimpleDto? place;
+  final List<BusinessHoursDto>? hours;
+  final Size? size;
   final bool dark;
 
-  const OpenDropdown({Key key, this.place, this.size, this.hours, this.dark = false}) : super(key: key);
+  const OpenDropdown({Key? key, this.place, this.size, this.hours, this.dark = false}) : super(key: key);
 
   @override
   _OpenDropdownState createState() => _OpenDropdownState();
@@ -18,7 +19,7 @@ class OpenDropdown extends StatefulWidget {
 
 class _OpenDropdownState extends State<OpenDropdown> {
   Map<int, String> days = new Map<int, String>();
-  List<BusinessHoursDto> bh;
+  List<BusinessHoursDto>? bh;
   final DateFormat df = new DateFormat('HH:mm:ss');
   final DateFormat of = new DateFormat('HH:mm');
   @override
@@ -26,9 +27,9 @@ class _OpenDropdownState extends State<OpenDropdown> {
     super.initState();
 
     if (widget.place != null) {
-      bh = widget.place.businessHours;
-      bh.forEach((f) {
-        f.id = f.id;
+      bh = widget.place!.businessHours;
+      bh!.forEach((f) {
+        //TODO f.id = f.id;
       });
     }
 
@@ -41,15 +42,15 @@ class _OpenDropdownState extends State<OpenDropdown> {
     });
   }
 
-  void parseState(List<BusinessHoursDto> hours) {
+  void parseState(List<BusinessHoursDto>? hours) {
     var result = new Map<int, String>();
     for (int i = 1; i < 8; i++) {
-      var day = hours.firstWhere((d) => d.day == (i) % 7, orElse: () => null);
+      var day = hours!.firstWhereOrNull((d) => d.day == (i) % 7);
       if (day == null) {
-        result[i] = "${getShortDayName(i, context)} - ${AppTranslations.of(context).text("place.closed")}";
+        result[i] = "${getShortDayName(i, context)} - ${AppTranslations.of(context)!.text("place.closed")}";
       } else {
-        var open = df.parse(day.openTine);
-        var close = df.parse(day.closeTime);
+        var open = df.parse(day.openTine!);
+        var close = df.parse(day.closeTime!);
 
         result[i] = "${getShortDayName(i, context)} ${of.format(open)}-${of.format(close)}";
       }
@@ -64,7 +65,7 @@ class _OpenDropdownState extends State<OpenDropdown> {
   void didUpdateWidget(OpenDropdown oldWidget) {
     if (oldWidget.hours != widget.hours) {
       if (widget.place != null) {
-        bh = widget.place.businessHours;
+        bh = widget.place!.businessHours;
       }
 
       if (widget.hours != null) {
@@ -77,9 +78,9 @@ class _OpenDropdownState extends State<OpenDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    if (bh == null || bh.length == 0) {
+    if (bh == null || bh!.length == 0) {
       return Text(
-        AppTranslations.of(context).text("place.unknown"),
+        AppTranslations.of(context)!.text("place.unknown"),
         style: TextStyle(color: Colors.black),
       );
     }
@@ -99,7 +100,7 @@ class _OpenDropdownState extends State<OpenDropdown> {
               ),
             );
           }).toList(),
-          onChanged: (_) {},
+          onChanged: (dynamic _) {},
         ),
       ),
     );

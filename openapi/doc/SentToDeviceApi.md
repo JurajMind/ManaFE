@@ -17,18 +17,18 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = SentToDeviceApi();
-final id = id_example; // String | 
-final command = command_example; // String | 
-final data = data_example; // String | 
+final api = Openapi().getSentToDeviceApi();
+final String id = id_example; // String | 
+final String command = command_example; // String | 
+final String data = data_example; // String | 
 
-try { 
-    api_instance.sentToDeviceDefaultAction(id, command, data);
-} catch (e) {
+try {
+    api.sentToDeviceDefaultAction(id, command, data);
+} catch on DioError (e) {
     print('Exception when calling SentToDeviceApi->sentToDeviceDefaultAction: $e\n');
 }
 ```

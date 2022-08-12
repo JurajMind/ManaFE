@@ -17,17 +17,17 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = EndSessionApi();
-final id = id_example; // String | 
+final api = Openapi().getEndSessionApi();
+final String id = id_example; // String | 
 
-try { 
-    final result = api_instance.endSessionDefaultAction(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.endSessionDefaultAction(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling EndSessionApi->endSessionDefaultAction: $e\n');
 }
 ```

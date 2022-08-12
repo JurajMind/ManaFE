@@ -10,8 +10,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **displayName** | **String** |  | [optional] 
 **email** | **String** |  | [optional] 
-**managedPlaces** | [**List<PlaceSimpleDto>**](PlaceSimpleDto.md) |  | [optional] [default to const []]
-**roles** | **List<String>** |  | [optional] [default to const []]
+**managedPlaces** | [**List&lt;PlaceSimpleDto&gt;**](PlaceSimpleDto.md) |  | [optional] 
+**roles** | **List&lt;String&gt;** |  | [optional] 
 **personId** | **int** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

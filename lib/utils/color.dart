@@ -49,7 +49,7 @@ class ColorHelper {
   }
 
   static Offset colorToPosition(
-      HSVColor selectedColor, Size size, Offset position) {
+      HSVColor selectedColor, Size size, Offset? position) {
     var angle = selectedColor.hue  * math.pi / (180);
     var radius = selectedColor.saturation;
     var offset = size.width / 2;

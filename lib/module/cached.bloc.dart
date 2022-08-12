@@ -7,9 +7,9 @@ import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 
 class Cache {
-  Database database;
+  Database? database;
 
-  Completer<Database> _completer;
+  Completer<Database>? _completer;
 
   Cache();
 
@@ -19,17 +19,17 @@ class Cache {
       _completer = Completer();
       _openDatabase();
     }
-    return _completer.future;
+    return _completer!.future;
   }
 
-  Future<Database> _openDatabase() async {
+  Future<Database?> _openDatabase() async {
     final directory = await getApplicationDocumentsDirectory();
     String dbPath = join(directory.path, "sample.db");
     var file = new File(dbPath);
     file.createSync();
 
     database = await databaseFactoryIo.openDatabase(dbPath);
-    _completer.complete(database);
+    _completer!.complete(database);
     print("init db");
     return database;
   }

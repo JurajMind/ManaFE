@@ -2,14 +2,14 @@ import 'package:app/components/SmokeSession/tobacco_widget.dart';
 import 'package:app/pages/SmokeSession/Components/pipe_accesory_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class SessionMetadataDetail extends StatelessWidget {
-  final SmokeSessionMetaDataDto metaData;
+  final SmokeSessionMetaDataDto? metaData;
 
   const SessionMetadataDetail(
     this.metaData, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

@@ -6,10 +6,10 @@ import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
 
 class SmokeRotation extends StatefulWidget {
-  final Widget child;
-  final Widget innerChild;
+  final Widget? child;
+  final Widget? innerChild;
 
-  const SmokeRotation({Key key, this.child, this.innerChild}) : super(key: key);
+  const SmokeRotation({Key? key, this.child, this.innerChild}) : super(key: key);
 
   @override
   _SmokeRotationState createState() => new _SmokeRotationState();
@@ -17,11 +17,11 @@ class SmokeRotation extends StatefulWidget {
 
 class _SmokeRotationState extends State<SmokeRotation>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  late AnimationController animationController;
 
-  SmokeSessionBloc smokeSessionBloc;
+  late SmokeSessionBloc smokeSessionBloc;
 
-  StreamSubscription<int> subscription;
+  late StreamSubscription<int?> subscription;
 
   @override
   void initState() {
@@ -61,7 +61,7 @@ class _SmokeRotationState extends State<SmokeRotation>
       child: AnimatedBuilder(
           animation: animationController,
           child: widget.child,
-          builder: (BuildContext context, Widget _widget) {
+          builder: (BuildContext context, Widget? _widget) {
             return new Transform.rotate(
               angle: animationController.value * 6.3,
               child: _widget,

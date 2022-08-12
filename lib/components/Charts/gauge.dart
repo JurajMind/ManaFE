@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 
 class GaugeChart extends StatelessWidget {
   final List<charts.Series> seriesList;
-  final bool animate;
-  final double value;
-  final int maxValue;
-  final int minValue;
-  final Color handColor;
+  final bool? animate;
+  final double? value;
+  final int? maxValue;
+  final int? minValue;
+  final Color? handColor;
 
   GaugeChart(this.seriesList, {this.animate, this.value, this.maxValue, this.minValue, this.handColor});
 
@@ -72,7 +72,7 @@ class GaugeChart extends StatelessWidget {
         id: 'Segments',
         domainFn: (GaugeSegment segment, _) => segment.segment,
         measureFn: (GaugeSegment segment, _) => segment.size,
-        areaColorFn: (GaugeSegment segment, _) => charts.Color(r: segment.size),
+        areaColorFn: (GaugeSegment segment, _) => charts.Color(r: segment.size, g: 200, b: 200),
         data: data,
       )
     ];
@@ -90,10 +90,10 @@ class GaugeSegment {
 class HandPainter extends CustomPainter {
   static const minAngel = -0.7;
   static const maxAngel = 0.7;
-  final Paint hourHandPaint;
-  int min;
-  int max;
-  double value;
+  final Paint? hourHandPaint;
+  int? min;
+  int? max;
+  double? value;
 
   HandPainter({this.min, this.max, this.value, this.hourHandPaint});
 
@@ -104,8 +104,8 @@ class HandPainter extends CustomPainter {
     canvas.save();
 
     canvas.translate(radius, radius);
-    if (value > 0) {
-      var angel = minAngel + ((1.4) / ((max - min)) * value);
+    if (value! > 0) {
+      var angel = minAngel + ((1.4) / (max! - min!) * value!);
       canvas.rotate(1 * pi * (angel));
     } else {
       canvas.rotate(1 * pi * minAngel);
@@ -122,7 +122,7 @@ class HandPainter extends CustomPainter {
     path.lineTo(1.0, -radius + radius / 4);
     path.close();
 
-    canvas.drawPath(path, hourHandPaint);
+    canvas.drawPath(path, hourHandPaint!);
     canvas.drawShadow(path, Colors.black, 2.0, false);
 
     canvas.restore();

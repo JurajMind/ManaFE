@@ -18,18 +18,18 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlaceAdminApi();
-final id = 56; // int | 
-final newState = 56; // int | 
+final api = Openapi().getPlaceAdminApi();
+final int id = 56; // int | 
+final int newState = 56; // int | 
 
-try { 
-    final result = api_instance.placeAdminChangeState(id, newState);
-    print(result);
-} catch (e) {
+try {
+    final response = api.placeAdminChangeState(id, newState);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlaceAdminApi->placeAdminChangeState: $e\n');
 }
 ```
@@ -61,16 +61,16 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlaceAdminApi();
+final api = Openapi().getPlaceAdminApi();
 
-try { 
-    final result = api_instance.placeAdminGetWaitingPlaces();
-    print(result);
-} catch (e) {
+try {
+    final response = api.placeAdminGetWaitingPlaces();
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlaceAdminApi->placeAdminGetWaitingPlaces: $e\n');
 }
 ```
@@ -80,7 +80,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**List<PlaceSimpleDto>**](PlaceSimpleDto.md)
+[**List&lt;PlaceSimpleDto&gt;**](PlaceSimpleDto.md)
 
 ### Authorization
 

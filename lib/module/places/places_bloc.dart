@@ -3,16 +3,16 @@ import 'dart:async';
 import 'package:app/app/app.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hive/hive.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'dart:convert';
 
 class PlacesBloc {
-  bool serviceEnabled;
-  LocationPermission permission;
-  String error;
-  Box cache;
+  late bool serviceEnabled;
+  LocationPermission? permission;
+  String? error;
+  Box? cache;
 
   BehaviorSubject<List<PlaceSimpleDto>> places = new BehaviorSubject<List<PlaceSimpleDto>>();
   BehaviorSubject<bool> loading = new BehaviorSubject<bool>.seeded(false);
@@ -21,7 +21,7 @@ class PlacesBloc {
 
   BehaviorSubject<Position> location = new BehaviorSubject<Position>();
 
-  StreamSubscription<Position> posSub;
+  StreamSubscription<Position>? posSub;
 
   PlacesBloc() {
     this.loading.add(true);
@@ -74,9 +74,9 @@ class PlacesBloc {
     var lat = location.value.latitude;
     var lng = location.value.longitude;
 
-    App.http.getNearbyPlaces(lat: lat, lng: lng).then((places) async {
+    App.http!.getNearbyPlaces(lat: lat, lng: lng).then((places) async {
       this.places.add(places);
-      cache.put('nearby', places);
+      cache!.put('nearby', places);
       this.loading.add(false);
     });
   }
@@ -86,7 +86,7 @@ class PlacesBloc {
       if (cache == null) {
         cache = await Hive.openBox('places');
       }
-      var fromCache = cache.get('nearby');
+      var fromCache = cache!.get('nearby');
       if (fromCache == null) {
         return;
       }

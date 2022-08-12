@@ -6,14 +6,14 @@ import 'package:app/support/m_platform.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:darq/darq.dart';
 import 'dart:math' as math;
 
 class SessionDayGraph extends StatefulWidget {
-  final Map<String, int> graphData;
+  final Map<String, int>? graphData;
 
-  const SessionDayGraph(this.graphData, {Key key}) : super(key: key);
+  const SessionDayGraph(this.graphData, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => SessionDayGraphState();
@@ -25,17 +25,17 @@ class SessionDayGraphState extends State<SessionDayGraph> {
   final double width = 5;
   int max = 0;
 
-  List<BarChartGroupData> rawBarGroups;
-  List<BarChartGroupData> showingBarGroups;
+  List<BarChartGroupData>? rawBarGroups;
+  List<BarChartGroupData>? showingBarGroups;
 
-  StreamController<BarTouchResponse> barTouchedResultStreamController;
+  late StreamController<BarTouchResponse> barTouchedResultStreamController;
 
-  int touchedGroupIndex;
+  int? touchedGroupIndex;
 
   @override
   void didUpdateWidget(SessionDayGraph oldWidget) {
     if (oldWidget.graphData != widget.graphData) {
-      var items = mapData(widget.graphData);
+      var items = mapData(widget.graphData!);
       setState(() {
         rawBarGroups = items;
         showingBarGroups = rawBarGroups;
@@ -46,7 +46,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
 
   @override
   void didChangeDependencies() {
-    List<BarChartGroupData> items = mapData(widget.graphData);
+    List<BarChartGroupData> items = mapData(widget.graphData!);
 
     setState(() {
       rawBarGroups = items;
@@ -63,7 +63,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
       if (parsedData[i] == null) {
         parsedData[i] = 0;
       } else {
-        max = math.max(max, parsedData[i]);
+        max = math.max(max, parsedData[i]!);
       }
     }
 
@@ -77,14 +77,14 @@ class SessionDayGraphState extends State<SessionDayGraph> {
 
     var cItems = List.from(items);
 
-    return cItems.orderBy((a) => a.x).toList();
+    return cItems.orderBy((a) => a.x).toList() as List<BarChartGroupData>;
   }
 
   @override
   void initState() {
     super.initState();
 
-    List<BarChartGroupData> items = mapData(widget.graphData);
+    List<BarChartGroupData> items = mapData(widget.graphData!);
     rawBarGroups = items;
 
     showingBarGroups = rawBarGroups;
@@ -98,23 +98,23 @@ class SessionDayGraphState extends State<SessionDayGraph> {
       if (response?.spot == null) {
         setState(() {
           touchedGroupIndex = -1;
-          showingBarGroups = List.of(rawBarGroups);
+          showingBarGroups = List.of(rawBarGroups!);
         });
         return;
       }
 
-      touchedGroupIndex = showingBarGroups.indexOf(response.spot.touchedBarGroup);
+      touchedGroupIndex = showingBarGroups!.indexOf(response.spot!.touchedBarGroup);
 
       setState(() {
         if (response is dynamic) {
           touchedGroupIndex = -1;
-          showingBarGroups = List.of(rawBarGroups);
+          showingBarGroups = List.of(rawBarGroups!);
         } else {
-          showingBarGroups = List.of(rawBarGroups);
+          showingBarGroups = List.of(rawBarGroups!);
           if (touchedGroupIndex != -1) {
-            showingBarGroups[touchedGroupIndex] = showingBarGroups[touchedGroupIndex].copyWith(
-              barRods: showingBarGroups[touchedGroupIndex].barRods.map((rod) {
-                return rod.copyWith(colors: [AppColors.colors[3]], y: rod.y + 1);
+            showingBarGroups![touchedGroupIndex!] = showingBarGroups![touchedGroupIndex!].copyWith(
+              barRods: showingBarGroups![touchedGroupIndex!].barRods.map((rod) {
+                return rod.copyWith(color: AppColors.colors[3], fromY: rod.fromY + 1);
               }).toList(),
             );
           }
@@ -152,7 +152,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                     width: 8,
                   ),
                   Text(
-                    AppTranslations.of(context).text('profile.session_times'),
+                    AppTranslations.of(context)!.text('profile.session_times'),
                     style: Theme.of(context).textTheme.headline6,
                   ),
                 ],
@@ -169,9 +169,9 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                   child: BarChart(BarChartData(
                     titlesData: FlTitlesData(
                       show: true,
-                      bottomTitles: SideTitles(
+                      /* bottomTitles: SideTitles(
                           showTitles: true,
-                          margin: 16,
+                        
                           getTitles: (double value) {
                             var intValue = value.toInt();
                             if (intValue % 3 == 0) return intValue.toString();
@@ -209,6 +209,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                           return '';
                         },
                       ),
+                      */
                     ),
                     borderData: FlBorderData(
                       show: false,
@@ -230,10 +231,11 @@ class SessionDayGraphState extends State<SessionDayGraph> {
   BarChartGroupData makeGroupData(int x, double y) {
     return BarChartGroupData(x: x, barRods: [
       BarChartRodData(
-        y: y,
-        colors: [AppColors.colors[2]],
+        fromY: y,
+        toY: y + 1,
+        color: AppColors.colors[2],
         width: width,
-        backDrawRodData: BackgroundBarChartRodData(show: true, y: max == 0 ? 20 : max + 0.0, colors: [Colors.black]),
+        backDrawRodData: BackgroundBarChartRodData(show: true, toY: max == 0 ? 20 : max + 0.0, color: Colors.black),
       ),
     ]);
   }
@@ -247,8 +249,8 @@ class SessionDayGraphState extends State<SessionDayGraph> {
 
 class SessionDayStream extends StatelessWidget {
   const SessionDayStream({
-    Key key,
-    @required this.bloc,
+    Key? key,
+    required this.bloc,
   }) : super(key: key);
 
   final StatisticBloc bloc;
@@ -265,7 +267,7 @@ class SessionDayStream extends StatelessWidget {
                 return Container();
               }
 
-              var seriesList = snapshot.data.timeStatistics.sessionStartTimeDistribution;
+              var seriesList = snapshot.data!.timeStatistics!.sessionStartTimeDistribution;
               return Container(
                   height: 250, child: Padding(padding: const EdgeInsets.all(8.0), child: SessionDayGraph(seriesList)));
             }),

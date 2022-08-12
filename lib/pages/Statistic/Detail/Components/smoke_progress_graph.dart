@@ -3,39 +3,39 @@ import 'dart:async';
 import 'package:app/const/theme.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'dart:math' as math;
 
 import '../detail_page_helper.dart';
 import 'indicator.dart';
 
 class SmokeProgressGraph extends StatefulWidget {
-  final List<SmartHookahModelsDbPuf> data;
+  final List<SmartHookahModelsDbPuf>? data;
 
-  const SmokeProgressGraph(this.data, {Key key}) : super(key: key);
+  const SmokeProgressGraph(this.data, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => SmokeProgressGraphState();
 }
 
 class SmokeProgressGraphState extends State<SmokeProgressGraph> {
-  List<FlSpot> inList;
-  List<FlSpot> outList;
+  List<FlSpot>? inList;
+  List<FlSpot>? outList;
   double maxY = 0;
 
-  StreamController<LineTouchResponse> controller;
+  late StreamController<LineTouchResponse> controller;
   @override
   void initState() {
     super.initState();
-    var processData = DetailPageHelper.createHistogram(widget.data, 300);
+    var processData = DetailPageHelper.createHistogram(widget.data!, 300);
     controller = StreamController();
-    inList = new List<FlSpot>();
-    outList = new List<FlSpot>();
+    inList = <FlSpot>[];
+    outList = <FlSpot>[];
     for (int i = 0; i < processData.length; i++) {
       var intakes = processData[i].where((test) => test.T == 1).length;
       var outTakes = processData[i].where((test) => test.T == 2).length;
-      inList.add(new FlSpot(i + 0.0, intakes + 0.0));
-      outList.add(new FlSpot(i + 0.0, outTakes + 0.0));
+      inList!.add(new FlSpot(i + 0.0, intakes + 0.0));
+      outList!.add(new FlSpot(i + 0.0, outTakes + 0.0));
       var lm = math.max(intakes, outTakes);
       maxY = math.max(maxY, lm + 0.0);
     }
@@ -119,33 +119,6 @@ class SmokeProgressGraphState extends State<SmokeProgressGraph> {
                       gridData: FlGridData(
                         show: false,
                       ),
-                      titlesData: FlTitlesData(
-                        bottomTitles: SideTitles(
-                          showTitles: true,
-                          reservedSize: 22,
-                          margin: 10,
-                          getTitles: (value) {
-                            var cValue = inList.length < 5 ? 3 : 6;
-                            if ((value % cValue) == 0) {
-                              return (value * 5).toStringAsFixed(0) + 'm';
-                            }
-
-                            return '';
-                          },
-                        ),
-                        leftTitles: SideTitles(
-                          showTitles: true,
-                          getTitles: (value) {
-                            if ((value % 3) == 0) {
-                              return value.toStringAsFixed(0);
-                            }
-
-                            return '';
-                          },
-                          margin: 8,
-                          reservedSize: 30,
-                        ),
-                      ),
                       borderData: FlBorderData(
                           show: true,
                           border: Border(
@@ -164,17 +137,15 @@ class SmokeProgressGraphState extends State<SmokeProgressGraph> {
                             ),
                           )),
                       minX: 0,
-                      maxX: inList.length + 0.0,
+                      maxX: inList!.length + 0.0,
                       maxY: maxY * 1.2,
                       minY: 0,
                       lineBarsData: [
-                        if (inList != null && inList.length > 0)
+                        if (inList != null && inList!.length > 0)
                           LineChartBarData(
-                            spots: [...inList],
+                            spots: [...inList!],
                             isCurved: true,
-                            colors: [
-                              AppColors.colors[0],
-                            ],
+                            color: AppColors.colors[0],
                             barWidth: 8,
                             isStrokeCapRound: true,
                             dotData: FlDotData(
@@ -184,13 +155,11 @@ class SmokeProgressGraphState extends State<SmokeProgressGraph> {
                               show: true,
                             ),
                           ),
-                        if (outList != null && outList.length > 0)
+                        if (outList != null && outList!.length > 0)
                           LineChartBarData(
-                            spots: [...outList],
+                            spots: [...outList!],
                             isCurved: true,
-                            colors: [
-                              AppColors.colors[1],
-                            ],
+                            color: AppColors.colors[1],
                             barWidth: 8,
                             isStrokeCapRound: true,
                             dotData: FlDotData(
@@ -240,33 +209,31 @@ class SmokeProgressGraphShimer extends StatelessWidget {
                 )),
             child: Padding(
               padding: EdgeInsets.all(8),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                SizedBox(
+                  height: 4,
+                ),
+                Row(
                   children: <Widget>[
+                    Icon(Icons.multiline_chart),
                     SizedBox(
-                      height: 4,
+                      width: 8,
                     ),
-                    Row(
-                      children: <Widget>[
-                        Icon(Icons.multiline_chart),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text(
-                          "Progress",
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                      ],
+                    Text(
+                      "Progress",
+                      style: Theme.of(context).textTheme.headline6,
                     ),
-                    SizedBox(
-                      height: 4,
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  ]),
+                  ],
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              ]),
             )));
   }
 }

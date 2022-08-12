@@ -65,17 +65,17 @@ class IconButtonTitle extends StatelessWidget {
   /// The [icon] argument must be specified, and is typically either an [Icon]
   /// or an [ImageIcon].
   const IconButtonTitle({
-    Key key,
+    Key? key,
     this.iconSize: 24.0,
     this.padding: const EdgeInsets.all(4.0),
     this.alignment: Alignment.center,
-    @required this.icon,
-    @required this.text,
+    required this.icon,
+    required this.text,
     this.color,
     this.highlightColor,
     this.splashColor,
     this.disabledColor,
-    @required this.onPressed,
+    required this.onPressed,
     this.tooltip
   }) : assert(iconSize != null),
        assert(padding != null),
@@ -140,7 +140,7 @@ class IconButtonTitle extends StatelessWidget {
   ///    icon: Icons.widgets,
   ///  ),
   /// ```
-  final Color color;
+  final Color? color;
 
   /// The primary color of the button when the button is in the down (pressed) state.
   /// The splash is represented as a circular overlay that appears above the
@@ -150,7 +150,7 @@ class IconButtonTitle extends StatelessWidget {
   /// color has transparency then the highlight and button color will show through.
   ///
   /// Defaults to the Theme's splash color, [ThemeData.splashColor].
-  final Color splashColor;
+  final Color? splashColor;
 
   /// The secondary color of the button when the button is in the down (pressed)
   /// state. The highlight color is represented as a solid color that is overlaid over the
@@ -158,7 +158,7 @@ class IconButtonTitle extends StatelessWidget {
   /// will show through. The highlight fades in quickly as the button is held down.
   ///
   /// Defaults to the Theme's highlight color, [ThemeData.highlightColor].
-  final Color highlightColor;
+  final Color? highlightColor;
 
   /// The color to use for the icon inside the button, if the icon is disabled.
   /// Defaults to the [ThemeData.disabledColor] of the current [Theme].
@@ -166,7 +166,7 @@ class IconButtonTitle extends StatelessWidget {
   /// The icon is disabled if [onPressed] is null.
   ///
   /// See also [color].
-  final Color disabledColor;
+  final Color? disabledColor;
 
   /// The callback that is called when the button is tapped or otherwise activated.
   ///
@@ -177,11 +177,11 @@ class IconButtonTitle extends StatelessWidget {
   ///
   /// This text is displayed when the user long-presses on the button and is
   /// used for accessibility.
-  final String tooltip;
+  final String? tooltip;
 
   @override
   Widget build(BuildContext context) {
-      Color currentColor;
+      Color? currentColor;
     if (onPressed != null)
       currentColor = color;
     else

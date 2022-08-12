@@ -28,18 +28,18 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PersonApi();
-final id = 56; // int | 
-final count = 56; // int | 
+final api = Openapi().getPersonApi();
+final int id = 56; // int | 
+final int count = 56; // int | 
 
-try { 
-    final result = api_instance.personAddMyGear(id, count);
-    print(result);
-} catch (e) {
+try {
+    final response = api.personAddMyGear(id, count);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PersonApi->personAddMyGear: $e\n');
 }
 ```
@@ -71,16 +71,16 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PersonApi();
-final token = token_example; // String | 
+final api = Openapi().getPersonApi();
+final String token = token_example; // String | 
 
-try { 
-    api_instance.personAddNotificationToken(token);
-} catch (e) {
+try {
+    api.personAddNotificationToken(token);
+} catch on DioError (e) {
     print('Exception when calling PersonApi->personAddNotificationToken: $e\n');
 }
 ```
@@ -111,17 +111,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PersonApi();
-final id = 56; // int | 
+final api = Openapi().getPersonApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.personAssignSession(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.personAssignSession(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PersonApi->personAssignSession: $e\n');
 }
 ```
@@ -152,18 +152,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PersonApi();
-final id = 56; // int | 
-final count = 56; // int | 
+final api = Openapi().getPersonApi();
+final int id = 56; // int | 
+final int count = 56; // int | 
 
-try { 
-    final result = api_instance.personDeleteMyGear(id, count);
-    print(result);
-} catch (e) {
+try {
+    final response = api.personDeleteMyGear(id, count);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PersonApi->personDeleteMyGear: $e\n');
 }
 ```
@@ -195,16 +195,16 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PersonApi();
+final api = Openapi().getPersonApi();
 
-try { 
-    final result = api_instance.personGetPersonActiveData();
-    print(result);
-} catch (e) {
+try {
+    final response = api.personGetPersonActiveData();
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PersonApi->personGetPersonActiveData: $e\n');
 }
 ```
@@ -232,16 +232,16 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PersonApi();
+final api = Openapi().getPersonApi();
 
-try { 
-    final result = api_instance.personGetPersonDevices();
-    print(result);
-} catch (e) {
+try {
+    final response = api.personGetPersonDevices();
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PersonApi->personGetPersonDevices: $e\n');
 }
 ```
@@ -251,7 +251,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**List<DeviceSimpleDto>**](DeviceSimpleDto.md)
+[**List&lt;DeviceSimpleDto&gt;**](DeviceSimpleDto.md)
 
 ### Authorization
 
@@ -269,16 +269,16 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PersonApi();
+final api = Openapi().getPersonApi();
 
-try { 
-    final result = api_instance.personGetPersonInfo();
-    print(result);
-} catch (e) {
+try {
+    final response = api.personGetPersonInfo();
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PersonApi->personGetPersonInfo: $e\n');
 }
 ```
@@ -306,16 +306,16 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PersonApi();
+final api = Openapi().getPersonApi();
 
-try { 
-    final result = api_instance.personGetPersonSessions();
-    print(result);
-} catch (e) {
+try {
+    final response = api.personGetPersonSessions();
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PersonApi->personGetPersonSessions: $e\n');
 }
 ```
@@ -325,7 +325,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**List<SmokeSessionSimpleDto>**](SmokeSessionSimpleDto.md)
+[**List&lt;SmokeSessionSimpleDto&gt;**](SmokeSessionSimpleDto.md)
 
 ### Authorization
 
@@ -343,17 +343,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PersonApi();
-final sessionCount = 56; // int | 
+final api = Openapi().getPersonApi();
+final int sessionCount = 56; // int | 
 
-try { 
-    final result = api_instance.personGetRecentAccessories(sessionCount);
-    print(result);
-} catch (e) {
+try {
+    final response = api.personGetRecentAccessories(sessionCount);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PersonApi->personGetRecentAccessories: $e\n');
 }
 ```
@@ -366,7 +366,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<PipeAccesorySimpleDto>**](PipeAccesorySimpleDto.md)
+[**List&lt;PipeAccesorySimpleDto&gt;**](PipeAccesorySimpleDto.md)
 
 ### Authorization
 
@@ -384,17 +384,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PersonApi();
-final type = type_example; // String | 
+final api = Openapi().getPersonApi();
+final String type = type_example; // String | 
 
-try { 
-    final result = api_instance.personMyGear(type);
-    print(result);
-} catch (e) {
+try {
+    final response = api.personMyGear(type);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PersonApi->personMyGear: $e\n');
 }
 ```
@@ -407,7 +407,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<PipeAccesorySimpleDto>**](PipeAccesorySimpleDto.md)
+[**List&lt;PipeAccesorySimpleDto&gt;**](PipeAccesorySimpleDto.md)
 
 ### Authorization
 
@@ -425,15 +425,15 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PersonApi();
+final api = Openapi().getPersonApi();
 
-try { 
-    api_instance.personTestNotification();
-} catch (e) {
+try {
+    api.personTestNotification();
+} catch on DioError (e) {
     print('Exception when calling PersonApi->personTestNotification: $e\n');
 }
 ```
@@ -461,17 +461,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PersonApi();
-final id = 56; // int | 
+final api = Openapi().getPersonApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.personUnAssignSession(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.personUnAssignSession(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PersonApi->personUnAssignSession: $e\n');
 }
 ```

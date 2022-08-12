@@ -12,7 +12,7 @@ const double kSectionIndicatorWidth = 32.0;
 
 // The card for a single section. Displays the section's gradient and background image.
 class SectionCard extends StatelessWidget {
-  const SectionCard({Key key, @required this.section})
+  const SectionCard({Key? key, required this.section})
       : assert(section != null),
         super(key: key);
 
@@ -21,7 +21,7 @@ class SectionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: section.title,
+      tag: section.title!,
       child: new Semantics(
         label: section.title,
         button: true,
@@ -35,8 +35,8 @@ class SectionCard extends StatelessWidget {
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                         colors: <Color>[
-                          section.leftColor,
-                          section.rightColor,
+                          section.leftColor!,
+                          section.rightColor!,
                         ],
                       ),
                     ),
@@ -45,7 +45,7 @@ class SectionCard extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 child: RepaintBoundary(
                   child: new Image.asset(
-                    section.backgroundAsset,
+                    section.backgroundAsset!,
                     color: const Color.fromRGBO(255, 255, 255, 0.545),
                     colorBlendMode: BlendMode.modulate,
                     fit: BoxFit.cover,
@@ -59,7 +59,7 @@ class SectionCard extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   child: Center(
                       child: Text(
-                    section.title,
+                    section.title!,
                     style: Theme.of(context).textTheme.headline4,
                   ))),
             ),
@@ -87,10 +87,10 @@ class SectionTitle extends StatelessWidget {
   );
 
   const SectionTitle({
-    Key key,
-    @required this.section,
-    @required this.scale,
-    @required this.opacity,
+    Key? key,
+    required this.section,
+    required this.scale,
+    required this.opacity,
   })  : assert(section != null),
         assert(scale != null),
         assert(opacity != null && opacity >= 0.0 && opacity <= 1.0),
@@ -112,9 +112,9 @@ class SectionTitle extends StatelessWidget {
             children: <Widget>[
               new Positioned(
                 top: 4.0,
-                child: new Text(section.title, style: sectionTitleShadowStyle),
+                child: new Text(section.title!, style: sectionTitleShadowStyle),
               ),
-              new Text(section.title, style: sectionTitleStyle),
+              new Text(section.title!, style: sectionTitleStyle),
             ],
           ),
         ),
@@ -125,7 +125,7 @@ class SectionTitle extends StatelessWidget {
 
 // Small horizontal bar that indicates the selected section.
 class SectionIndicator extends StatelessWidget {
-  const SectionIndicator({Key key, this.opacity = 1.0}) : super(key: key);
+  const SectionIndicator({Key? key, this.opacity = 1.0}) : super(key: key);
 
   final double opacity;
 
@@ -143,7 +143,7 @@ class SectionIndicator extends StatelessWidget {
 
 // Display a single SectionDetail.
 class SectionDetailView extends StatelessWidget {
-  SectionDetailView({Key key, @required this.detail})
+  SectionDetailView({Key? key, required this.detail})
       : assert(detail != null),
         assert((detail.imageAsset ?? detail.title) != null),
         super(key: key);
@@ -169,8 +169,8 @@ class SectionDetailView extends StatelessWidget {
       );
     } else {
       item = new ListTile(
-        title: new Text(detail.title),
-        subtitle: new Text(detail.subtitle),
+        title: new Text(detail.title!),
+        subtitle: new Text(detail.subtitle!),
         leading: new SizedBox(width: 32.0, height: 32.0, child: image),
       );
     }
@@ -183,17 +183,17 @@ class SectionDetailView extends StatelessWidget {
 }
 
 class BrandGroupWidget extends StatelessWidget {
-  final BrandGroup brandGroup;
+  final BrandGroup? brandGroup;
 
-  const BrandGroupWidget({Key key, this.brandGroup}) : super(key: key);
+  const BrandGroupWidget({Key? key, this.brandGroup}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return new DecoratedBox(
         decoration: new BoxDecoration(color: Colors.black),
         child: new ListTile(
-          title: new Text(brandGroup.name),
-          subtitle: new Text(brandGroup.itemCount.toString()),
+          title: new Text(brandGroup!.name!),
+          subtitle: new Text(brandGroup!.itemCount.toString()),
           leading:
               new SizedBox(width: 32.0, height: 32.0, child: Placeholder()),
         ));

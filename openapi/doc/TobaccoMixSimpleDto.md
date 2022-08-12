@@ -8,8 +8,8 @@ import 'package:openapi/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**likes** | [**List<PipeAccesoryLikeDto>**](PipeAccesoryLikeDto.md) |  | [optional] [default to const []]
-**tobaccos** | [**List<TobaccoInMix>**](TobaccoInMix.md) |  | [optional] [default to const []]
+**likes** | [**List&lt;PipeAccesoryLikeDto&gt;**](PipeAccesoryLikeDto.md) |  | [optional] 
+**tobaccos** | [**List&lt;TobaccoInMix&gt;**](TobaccoInMix.md) |  | [optional] 
 **myMix** | **bool** |  | [optional] 
 **id** | **int** |  | [optional] 
 **name** | **String** |  | [optional] 

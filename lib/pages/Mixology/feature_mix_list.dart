@@ -6,18 +6,18 @@ import 'package:app/module/mixology/mix_card_expanded_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'feature_mix_info.dart';
 
 class FeatureMixListView extends StatefulWidget {
   const FeatureMixListView({
-    Key key,
+    Key? key,
     this.mixCreator,
   }) : super(key: key);
 
-  final FeatureMixCreatorSimpleDto mixCreator;
+  final FeatureMixCreatorSimpleDto? mixCreator;
 
   @override
   _FeatureMixListViewState createState() => _FeatureMixListViewState();
@@ -30,19 +30,19 @@ class _FeatureMixListViewState extends State<FeatureMixListView> {
   initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      var mixologyBloc = DataProvider.getData(context).mixologyBloc;
-      mixologyBloc.loadCreatorMixesNextPage(widget.mixCreator.id.toString(), true);
+      var mixologyBloc = DataProvider.getData(context)!.mixologyBloc;
+      mixologyBloc.loadCreatorMixesNextPage(widget.mixCreator!.id.toString(), true);
 
-      App.http.getFeatureCreatorInfo(widget.mixCreator.id).then((info) => creatorInfo.add(info));
+      App.http!.getFeatureCreatorInfo(widget.mixCreator!.id).then((info) => creatorInfo.add(info));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var mixologyBloc = DataProvider.getData(context).mixologyBloc;
+    var mixologyBloc = DataProvider.getData(context)!.mixologyBloc;
     return Container(
-      child: StreamBuilder<List<TobaccoMixSimpleDto>>(
-          stream: mixologyBloc.getCreatorMixes(widget.mixCreator.id.toString()),
+      child: StreamBuilder<List<TobaccoMixSimpleDto?>>(
+          stream: mixologyBloc.getCreatorMixes(widget.mixCreator!.id.toString()),
           initialData: null,
           builder: (context, snapshot) {
             if (snapshot.data == null) {
@@ -53,13 +53,13 @@ class _FeatureMixListViewState extends State<FeatureMixListView> {
 
             var itemCount = 10;
             if (snapshot?.data?.length != null) {
-              itemCount = snapshot.data.length + 2;
+              itemCount = snapshot.data!.length + 2;
             }
             return LazyLoadScrollView(
-              onRefresh: () => mixologyBloc.loadCreatorMixesRefresh(widget.mixCreator.id.toString(), true),
+              onRefresh: () => mixologyBloc.loadCreatorMixesRefresh(widget.mixCreator!.id.toString(), true),
               onEndOfPage: () {
-                if (!snapshot.data.contains(null))
-                  mixologyBloc.loadCreatorMixesNextPage(widget.mixCreator.id.toString(), true);
+                if (!snapshot.data!.contains(null))
+                  mixologyBloc.loadCreatorMixesNextPage(widget.mixCreator!.id.toString(), true);
               },
               child: ListView.builder(
                 itemCount: itemCount ?? 10,
@@ -71,13 +71,13 @@ class _FeatureMixListViewState extends State<FeatureMixListView> {
                     );
                   }
 
-                  if (index == snapshot.data.length + 1) {
+                  if (index == snapshot.data!.length + 1) {
                     return SizedBox(height: 100);
                   }
 
-                  if (snapshot.data != null && snapshot.data[index - 1] != null) {
+                  if (snapshot.data != null && snapshot.data![index - 1] != null) {
                     return Slidable(
-                      child: MixCardExpanded(tobaccoMix: snapshot.data[index - 1]),
+                      child: MixCardExpanded(tobaccoMix: snapshot.data![index - 1]),
                       startActionPane: ActionPane(
                         // A motion is a widget used to control how the pane animates.
                         motion: const ScrollMotion(),

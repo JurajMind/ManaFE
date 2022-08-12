@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class StandSettings {
-  StateSetting blow;
-  StateSetting idle;
-  StateSetting puf;
+  StateSetting? blow;
+  StateSetting? idle;
+  StateSetting? puf;
 
   StandSettings.empty() {
     this.blow = StateSetting.empty();
@@ -22,7 +22,7 @@ class StandSettings {
         StateSetting.fromJson(json['PuffSettings'] as Map<String, dynamic>);
   }
 
-  StateSetting getStateSetting(SmokeState state) {
+  StateSetting? getStateSetting(SmokeState? state) {
     switch (state) {
       case SmokeState.blow:
         return this.blow;
@@ -34,7 +34,7 @@ class StandSettings {
     return null;
   }
 
-  void setStateSetting(SmokeState state, StateSetting stateSetting) {
+  void setStateSetting(SmokeState? state, StateSetting stateSetting) {
     switch (state) {
       case SmokeState.blow:
         this.blow = stateSetting;
@@ -50,10 +50,10 @@ class StandSettings {
 }
 
 class StateSetting {
-  HSVColor color;
-  int animationId;
-  int brightness;
-  int speed;
+  HSVColor? color;
+  int? animationId;
+  int? brightness;
+  int? speed;
 
   StateSetting({this.color, this.animationId, this.brightness, this.speed});
 

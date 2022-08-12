@@ -5,19 +5,18 @@ import 'package:app/utils/Map/static_map_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PlaceMap extends StatelessWidget {
-  final PlaceSimpleDto place;
+  final PlaceSimpleDto? place;
 
-  const PlaceMap({Key key, this.place}) : super(key: key);
+  const PlaceMap({Key? key, this.place}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return new InkWell(
-      onTap: () => _launchMapsUrl(
-          double.parse(place.address.lat), double.parse(place.address.lng)),
+      onTap: () => _launchMapsUrl(double.parse(place!.address!.lat!), double.parse(place!.address!.lng!)),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: new CachedNetworkImage(
@@ -41,12 +40,8 @@ class PlaceMap extends StatelessWidget {
   Uri mapUri() {
     var staticMapProvider = new StaticMapProvider(App.googleApiKeys);
     var mapUri = staticMapProvider.getStaticUri(
-        new Location(
-            double.parse(place.address.lat), double.parse(place.address.lng)),
-        13,
-        width: 450,
-        height: 350,
-        mapType: StaticMapViewType.roadmap);
+        new Location(double.parse(place!.address!.lat!), double.parse(place!.address!.lng!)), 13,
+        width: 450, height: 350, mapType: StaticMapViewType.roadmap);
 
     return mapUri;
   }

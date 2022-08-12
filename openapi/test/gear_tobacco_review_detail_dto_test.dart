@@ -1,20 +1,12 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'package:openapi/api.dart';
 import 'package:test/test.dart';
+import 'package:openapi/openapi.dart';
 
 // tests for GearTobaccoReviewDetailDto
 void main() {
-  final instance = GearTobaccoReviewDetailDto();
+  final GearTobaccoReviewDetailDto? instance = /* GearTobaccoReviewDetailDto(...) */ null;
+  // TODO add properties to the entity
 
-  group('test GearTobaccoReviewDetailDto', () {
+  group(GearTobaccoReviewDetailDto, () {
     // SmartHookahModelsDbSessionDtoSessionReviewDto smokeSessionId
     test('to test the property `smokeSessionId`', () async {
       // TODO
@@ -65,12 +57,10 @@ void main() {
       // TODO
     });
 
-    // List<MediaDto> medias (default value: const [])
+    // List<MediaDto> medias
     test('to test the property `medias`', () async {
       // TODO
     });
 
-
   });
-
 }

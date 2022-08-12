@@ -11,7 +11,7 @@ import '../animation_picker_page.dart';
 
 class SessionControllRow extends StatelessWidget {
   const SessionControllRow({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -33,16 +33,16 @@ class SessionControllRow extends StatelessWidget {
                   child: Icon(Icons.list, color: AppColors.colors[1], size: 50),
                 ),
                 Text(
-                  AppTranslations.of(context).text('smoke_session.animations'),
+                  AppTranslations.of(context)!.text('smoke_session.animations'),
                   style: Theme.of(context)
                       .textTheme
-                      .headline6
+                      .headline6!
                       .apply(color: AppColors.colors[1]),
                 )
               ],
             ),
           ),
-          StreamBuilder<StandSettings>(
+          StreamBuilder<StandSettings?>(
               stream: smokeSessionBloc.standSettings,
               builder: (context, snapshot) {
                 var color = snapshot?.data?.idle?.color?.toColor() ??
@@ -56,15 +56,15 @@ class SessionControllRow extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Icon(Icons.color_lens, color: color, size: 50),
-                      StreamBuilder<StandSettings>(
+                      StreamBuilder<StandSettings?>(
                           stream: smokeSessionBloc.standSettings,
                           builder: (context, snapshot) {
                             return Text(
-                                AppTranslations.of(context)
+                                AppTranslations.of(context)!
                                     .text('smoke_session.colors'),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline6
+                                    .headline6!
                                     .apply(color: color));
                           })
                     ],

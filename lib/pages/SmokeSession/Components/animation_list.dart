@@ -11,12 +11,12 @@ import 'package:app/pages/SmokeSession/preset_picker.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class AnimationsPicker extends StatefulWidget {
-  final Stream<List<SmartHookahHelpersAnimation>> aminations;
+  final Stream<List<SmartHookahHelpersAnimation>>? aminations;
 
-  const AnimationsPicker({Key key, this.aminations}) : super(key: key);
+  const AnimationsPicker({Key? key, this.aminations}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -31,7 +31,7 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
     controller = new PageController(initialPage: 1);
   }
 
-  PageController controller;
+  PageController? controller;
 
   SmokeSessionBloc smokeSessionBloc = getIt.get<SmokeSessionBloc>();
 
@@ -48,24 +48,12 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
             controller: controller,
             children: <Widget>[
               //  devicePresetPickerBuilder(),
-              animationStatePickerBuilder(
-                  smokeSessionBloc.standSettings,
-                  SmokeState.idle,
-                  AppTranslations.of(context).text("smoke_session.idle"),
-                  false,
-                  true),
-              animationStatePickerBuilder(
-                  smokeSessionBloc.standSettings,
-                  SmokeState.puf,
-                  AppTranslations.of(context).text("smoke_session.inhale"),
-                  true,
-                  true),
-              animationStatePickerBuilder(
-                  smokeSessionBloc.standSettings,
-                  SmokeState.blow,
-                  AppTranslations.of(context).text("smoke_session.blow"),
-                  true,
-                  false),
+              animationStatePickerBuilder(smokeSessionBloc.standSettings, SmokeState.idle,
+                  AppTranslations.of(context)!.text("smoke_session.idle"), false, true),
+              animationStatePickerBuilder(smokeSessionBloc.standSettings, SmokeState.puf,
+                  AppTranslations.of(context)!.text("smoke_session.inhale"), true, true),
+              animationStatePickerBuilder(smokeSessionBloc.standSettings, SmokeState.blow,
+                  AppTranslations.of(context)!.text("smoke_session.blow"), true, false),
             ],
           ),
         ],
@@ -73,13 +61,9 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
     );
   }
 
-  StreamBuilder<StandSettings> animationStatePickerBuilder(
-      Stream<StandSettings> stream,
-      SmokeState state,
-      String label,
-      bool left,
-      bool right) {
-    return StreamBuilder<StandSettings>(
+  StreamBuilder<StandSettings?> animationStatePickerBuilder(
+      Stream<StandSettings?> stream, SmokeState state, String label, bool left, bool right) {
+    return StreamBuilder<StandSettings?>(
       initialData: null,
       stream: stream,
       builder: (context, snapshot) => snapshot.data == null
@@ -90,9 +74,8 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
               state: state,
               haveLeftChevron: left,
               haveRightChevron: right,
-              selectedIndex: snapshot.data.getStateSetting(state) == null
-                  ? -1
-                  : snapshot.data.getStateSetting(state).animationId,
+              selectedIndex:
+                  snapshot.data!.getStateSetting(state) == null ? -1 : snapshot.data!.getStateSetting(state)!.animationId,
               onChanged: (int index) {
                 smokeSessionBloc.setAnimation(index, state);
               },
@@ -114,8 +97,7 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
               ));
   }
 
-  void devicePresetSetChanged(
-      DevicePreset newPreset, List<DevicePreset> presets) {
+  void devicePresetSetChanged(DevicePreset newPreset, List<DevicePreset>? presets) {
     smokeSessionBloc.futureDevicePreset.add(newPreset);
   }
 

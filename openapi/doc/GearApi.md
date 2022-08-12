@@ -26,17 +26,17 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = GearApi();
-final accessory = PipeAccesorySimpleDto(); // PipeAccesorySimpleDto | 
+final api = Openapi().getGearApi();
+final PipeAccesorySimpleDto accessory = ; // PipeAccesorySimpleDto | 
 
-try { 
-    final result = api_instance.gearAddGear(accessory);
-    print(result);
-} catch (e) {
+try {
+    final response = api.gearAddGear(accessory);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling GearApi->gearAddGear: $e\n');
 }
 ```
@@ -67,17 +67,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = GearApi();
-final brandName = brandName_example; // String | 
+final api = Openapi().getGearApi();
+final String brandName = brandName_example; // String | 
 
-try { 
-    final result = api_instance.gearGetBrand(brandName);
-    print(result);
-} catch (e) {
+try {
+    final response = api.gearGetBrand(brandName);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling GearApi->gearGetBrand: $e\n');
 }
 ```
@@ -104,20 +104,20 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **gearGetBrands**
-> InlineResponse200 gearGetBrands()
+> GearGetBrands200Response gearGetBrands()
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = GearApi();
+final api = Openapi().getGearApi();
 
-try { 
-    final result = api_instance.gearGetBrands();
-    print(result);
-} catch (e) {
+try {
+    final response = api.gearGetBrands();
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling GearApi->gearGetBrands: $e\n');
 }
 ```
@@ -127,7 +127,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**InlineResponse200**](InlineResponse200.md)
+[**GearGetBrands200Response**](GearGetBrands200Response.md)
 
 ### Authorization
 
@@ -145,17 +145,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = GearApi();
-final prefix = prefix_example; // String | 
+final api = Openapi().getGearApi();
+final String prefix = prefix_example; // String | 
 
-try { 
-    final result = api_instance.gearGetBrandsPrefix(prefix);
-    print(result);
-} catch (e) {
+try {
+    final response = api.gearGetBrandsPrefix(prefix);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling GearApi->gearGetBrandsPrefix: $e\n');
 }
 ```
@@ -168,7 +168,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**List<String>**
+**List&lt;String&gt;**
 
 ### Authorization
 
@@ -186,17 +186,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = GearApi();
-final id = 56; // int | 
+final api = Openapi().getGearApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.gearGetDetails(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.gearGetDetails(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling GearApi->gearGetDetails: $e\n');
 }
 ```
@@ -227,17 +227,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = GearApi();
-final id = 56; // int | 
+final api = Openapi().getGearApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.gearInfo(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.gearInfo(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling GearApi->gearInfo: $e\n');
 }
 ```
@@ -268,18 +268,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = GearApi();
-final targetId = 56; // int | 
-final sourceId = 56; // int | 
+final api = Openapi().getGearApi();
+final int targetId = 56; // int | 
+final int sourceId = 56; // int | 
 
-try { 
-    final result = api_instance.gearMerge(targetId, sourceId);
-    print(result);
-} catch (e) {
+try {
+    final response = api.gearMerge(targetId, sourceId);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling GearApi->gearMerge: $e\n');
 }
 ```
@@ -311,21 +311,21 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = GearApi();
-final search = search_example; // String | 
-final type = type_example; // String | 
-final page = 56; // int | 
-final pageSize = 56; // int | 
-final searchType = searchType_example; // String | 
+final api = Openapi().getGearApi();
+final String search = search_example; // String | 
+final String type = type_example; // String | 
+final int page = 56; // int | 
+final int pageSize = 56; // int | 
+final String searchType = searchType_example; // String | 
 
-try { 
-    final result = api_instance.gearSearch(search, type, page, pageSize, searchType);
-    print(result);
-} catch (e) {
+try {
+    final response = api.gearSearch(search, type, page, pageSize, searchType);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling GearApi->gearSearch: $e\n');
 }
 ```
@@ -342,7 +342,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<SearchPipeAccessory>**](SearchPipeAccessory.md)
+[**List&lt;SearchPipeAccessory&gt;**](SearchPipeAccessory.md)
 
 ### Authorization
 
@@ -360,19 +360,19 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = GearApi();
-final id = 56; // int | 
-final pageSize = 56; // int | 
-final page = 56; // int | 
+final api = Openapi().getGearApi();
+final int id = 56; // int | 
+final int pageSize = 56; // int | 
+final int page = 56; // int | 
 
-try { 
-    final result = api_instance.gearSessions(id, pageSize, page);
-    print(result);
-} catch (e) {
+try {
+    final response = api.gearSessions(id, pageSize, page);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling GearApi->gearSessions: $e\n');
 }
 ```
@@ -387,7 +387,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<SmokeSessionSimpleDto>**](SmokeSessionSimpleDto.md)
+[**List&lt;SmokeSessionSimpleDto&gt;**](SmokeSessionSimpleDto.md)
 
 ### Authorization
 
@@ -405,18 +405,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = GearApi();
-final id = 56; // int | 
-final value = int(); // int | 
+final api = Openapi().getGearApi();
+final int id = 56; // int | 
+final int value = 56; // int | 
 
-try { 
-    final result = api_instance.gearVote(id, value);
-    print(result);
-} catch (e) {
+try {
+    final response = api.gearVote(id, value);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling GearApi->gearVote: $e\n');
 }
 ```
@@ -430,7 +430,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 

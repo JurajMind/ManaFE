@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'theme_data.dart';
 
 class MTheme extends StatelessWidget {
-  final MThemeData themeData;
+  final MThemeData? themeData;
 
   static MThemeData of(BuildContext context, {bool listen = true}) {
     return Provider.of(context, listen: listen);
@@ -14,8 +14,8 @@ class MTheme extends StatelessWidget {
   final Widget child;
 
   const MTheme({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.themeData,
   })  : assert(child != null),
         super(key: key);
@@ -42,31 +42,31 @@ class MTheme extends StatelessWidget {
         appBarTheme: AppBarTheme(color: theme.black),
         primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
         textTheme: TextTheme(
-          headline1: base.textTheme.headline1
+          headline1: base.textTheme.headline1!
               .copyWith(color: theme.white, fontWeight: FontWeight.w700),
-          headline2: base.textTheme.headline2
+          headline2: base.textTheme.headline2!
               .copyWith(color: theme.white, fontWeight: FontWeight.w700),
-          headline3: base.textTheme.headline3
+          headline3: base.textTheme.headline3!
               .copyWith(color: theme.white, fontWeight: FontWeight.w700),
-          headline4: base.textTheme.headline4
+          headline4: base.textTheme.headline4!
               .copyWith(color: theme.white, fontWeight: FontWeight.w700),
-          headline5: base.textTheme.headline5
+          headline5: base.textTheme.headline5!
               .copyWith(color: theme.white, fontWeight: FontWeight.w700),
-          headline6: base.textTheme.headline6
+          headline6: base.textTheme.headline6!
               .copyWith(color: theme.white, fontWeight: FontWeight.w700),
-          subtitle1: base.textTheme.subtitle1
+          subtitle1: base.textTheme.subtitle1!
               .copyWith(color: theme.white, fontWeight: FontWeight.w700),
-          subtitle2: base.textTheme.subtitle2
+          subtitle2: base.textTheme.subtitle2!
               .copyWith(color: theme.white, fontWeight: FontWeight.w700),
-          bodyText1: base.textTheme.bodyText1
+          bodyText1: base.textTheme.bodyText1!
               .copyWith(color: theme.white, fontWeight: FontWeight.w500),
-          bodyText2: base.textTheme.bodyText2
+          bodyText2: base.textTheme.bodyText2!
               .copyWith(color: theme.white, fontWeight: FontWeight.w700),
-          button: base.textTheme.button
+          button: base.textTheme.button!
               .copyWith(color: theme.white, fontWeight: FontWeight.w700),
-          caption: base.textTheme.caption
+          caption: base.textTheme.caption!
               .copyWith(color: theme.white, fontWeight: FontWeight.w700),
-          overline: base.textTheme.overline
+          overline: base.textTheme.overline!
               .copyWith(color: theme.white, fontWeight: FontWeight.w700),
         ), colorScheme: ColorScheme.dark().copyWith(secondary: theme.colors[1]));
   }

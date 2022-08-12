@@ -1,5 +1,5 @@
 import 'package:app/app/app.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:darq/darq.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -13,23 +13,23 @@ class StatisticBloc {
     loadStatistic(now.subtract(new Duration(days: 30)), DateTime.now());
   }
 
-  DateTime from;
-  DateTime to;
+  late DateTime from;
+  late DateTime to;
 
   BehaviorSubject<PersonStatisticsOverallDto> statistic = new BehaviorSubject<PersonStatisticsOverallDto>();
 
   BehaviorSubject<List<StatisticItem>> topGraphData = new BehaviorSubject<List<StatisticItem>>();
 
-  BehaviorSubject<List<SmokeSessionSimpleDto>> smokeSessions = new BehaviorSubject<List<SmokeSessionSimpleDto>>();
+  BehaviorSubject<List<SmokeSessionSimpleDto>?> smokeSessions = new BehaviorSubject<List<SmokeSessionSimpleDto>?>();
 
-  BehaviorSubject<List<PipeAccessoryUsageDto>> gearUsage = new BehaviorSubject<List<PipeAccessoryUsageDto>>();
+  BehaviorSubject<List<PipeAccessoryUsageDto>?> gearUsage = new BehaviorSubject<List<PipeAccessoryUsageDto>?>();
 
   BehaviorSubject<StatisticRecap> recap = new BehaviorSubject<StatisticRecap>();
 
   Future loadStatistic(DateTime from, DateTime to) async {
     this.from = from;
     this.to = to;
-    var result = await App.http.getStatistic(from, to);
+    var result = await App.http!.getStatistic(from, to);
     this.statistic.add(result);
     var month = false;
     if (to.difference(from).inDays > 60) {
@@ -39,21 +39,21 @@ class StatisticBloc {
     var statistic = this.getDisplayStatistic(from, to, result.smokeSessions, month: month);
     topGraphData.add(statistic);
 
-    var recap = this.getStatsRecap(result.smokeSessions);
+    var recap = this.getStatsRecap(result.smokeSessions!);
     this.recap.add(recap);
     this.smokeSessions.add(result.smokeSessions);
     this.gearUsage.add(result.accessoriesUsage);
   }
 
-  List<StatisticItem> getDisplayStatistic(DateTime from, DateTime to, List<SmokeSessionSimpleDto> statistic,
+  List<StatisticItem> getDisplayStatistic(DateTime from, DateTime to, List<SmokeSessionSimpleDto>? statistic,
       {bool month = false}) {
-    var result = new List<StatisticItem>();
+    var result = <StatisticItem>[];
     var curentDate = from;
     while (curentDate.isBefore(to)) {
       var key = curentDate.toString();
 
-      var thisDaySmokeSession = statistic.where((s) {
-        var start = DateTime.fromMillisecondsSinceEpoch(s.statistic.start);
+      var thisDaySmokeSession = statistic!.where((s) {
+        var start = DateTime.fromMillisecondsSinceEpoch(s.statistic!.start!);
         if (month) {
           return start.month == curentDate.month && start.year == curentDate.year;
         }
@@ -64,10 +64,10 @@ class StatisticBloc {
       item.label = key.toString();
       if (thisDaySmokeSession.length > 0) {
         thisDaySmokeSession.forEach((f) {
-          item.pufCount = item.pufCount + f.statistic?.pufCount ?? 0;
-          item.smoking = item.smoking + f.statistic?.smokeDuration ?? 0;
-          item.activity = item.activity + f.statistic?.duration ?? 0;
-          item.smokeSessions = item.smokeSessions + 1;
+          item.pufCount = item.pufCount! + f.statistic!.pufCount!;
+          item.smoking = item.smoking! + f.statistic!.smokeDuration!;
+          item.activity = item.activity! + f.statistic!.duration!;
+          item.smokeSessions = item.smokeSessions! + 1;
         });
       }
       result.add(item);
@@ -90,23 +90,23 @@ class StatisticBloc {
         pufCount: pufCount, smokingTime: smokingTime, activity: activityTyme, sessionCount: sessions.length);
   }
 
-  Future<bool> unAssignSession(int id) async {
-    var session = this.smokeSessions.value;
+  Future<bool> unAssignSession(int? id) async {
+    var session = this.smokeSessions.value!;
     session.removeWhere((a) => a.id == id);
     this.smokeSessions.add(session);
 
-    await App.http.unAssignSession(id);
+    await App.http!.unAssignSession(id);
     this.loadStatistic(from, to);
     return true;
   }
 
-  Future<bool> assignSession(int id) async {
-    var session = await App.http.assignSession(id);
-    var sessions = this.smokeSessions.value;
+  Future<bool> assignSession(int? id) async {
+    var session = await App.http!.assignSession(id);
+    var sessions = this.smokeSessions.value!;
     sessions.add(session);
     this.smokeSessions.add(sessions);
 
-    await App.http.assignSession(id);
+    await App.http!.assignSession(id);
     this.loadStatistic(from, to);
     return true;
   }
@@ -119,25 +119,25 @@ class StatisticItem {
     this.activity = 0;
     this.smokeSessions = 0;
   }
-  String label;
+  String? label;
 
-  int pufCount;
+  int? pufCount;
 
-  int smoking;
+  int? smoking;
 
-  int activity;
+  int? activity;
 
-  int smokeSessions;
+  int? smokeSessions;
 }
 
 class StatisticRecap {
   StatisticRecap({this.sessionCount, this.pufCount, this.smokingTime, this.activity});
 
-  int pufCount;
+  int? pufCount;
 
-  Duration smokingTime;
+  Duration? smokingTime;
 
-  Duration activity;
+  Duration? activity;
 
-  int sessionCount;
+  int? sessionCount;
 }

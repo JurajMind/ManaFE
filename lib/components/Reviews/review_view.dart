@@ -5,13 +5,13 @@ import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class ReviewView extends StatelessWidget {
-  final SmartHookahModelsDbSessionDtoSessionReviewDto review;
-  final PlacesPlaceReviewDto placeReview;
+  final SmartHookahModelsDbSessionDtoSessionReviewDto? review;
+  final PlacesPlaceReviewDto? placeReview;
 
-  const ReviewView({Key key, this.review, this.placeReview}) : super(key: key);
+  const ReviewView({Key? key, this.review, this.placeReview}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +19,17 @@ class ReviewView extends StatelessWidget {
     var id = bloc.info.value.personId;
 
     var pReview = review?.placeReview ?? placeReview;
-    var medias = List<MediaDto>();
+    var medias = <MediaDto>[];
 
     if (review?.medias != null) {
-      medias.addAll(review?.medias);
+      medias.addAll(review!.medias!);
     }
 
     if (placeReview?.medias != null) {
-      medias.addAll(placeReview?.medias);
+      medias.addAll(placeReview!.medias!);
     }
 
-    var authorId = review?.authorId ?? placeReview.authorId;
+    var authorId = review?.authorId ?? placeReview!.authorId;
 
     return Container(
       child: SingleChildScrollView(
@@ -48,22 +48,20 @@ class ReviewView extends StatelessWidget {
               ),
               MStarRating(
                 title: 'Taste',
-                rating: review.taste / 2,
+                rating: review!.taste! / 2,
                 colorIndex: 1,
               ),
               MStarRating(
                 title: 'Smoke',
-                rating: review.smoke / 2,
+                rating: review!.smoke! / 2,
                 colorIndex: 2,
               ),
               MStarRating(
                 title: 'Strength',
-                rating: review.strength / 2,
+                rating: review!.strength! / 2,
                 colorIndex: 0,
               ),
-              Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(review?.tobaccoReview?.text ?? '')),
+              Padding(padding: const EdgeInsets.all(8.0), child: Text(review?.tobaccoReview?.text ?? '')),
               Divider(
                 color: Colors.white,
               ),
@@ -80,17 +78,14 @@ class ReviewView extends StatelessWidget {
               InkWell(
                 onTap: () {
                   var sessionBloc = getIt.get<SmokeSessionBloc>();
-                  sessionBloc
-                      .removeReview(review)
-                      .then((_) => Navigator.of(context).pop());
+                  sessionBloc.removeReview(review!).then((_) => Navigator.of(context).pop());
                 },
                 child: Container(
                   padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                   decoration: BoxDecoration(
                     color: Colors.red,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(32.0),
-                        bottomRight: Radius.circular(32.0)),
+                    borderRadius:
+                        BorderRadius.only(bottomLeft: Radius.circular(32.0), bottomRight: Radius.circular(32.0)),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -126,16 +121,15 @@ class ReviewView extends StatelessWidget {
       ),
       MStarRating(
         title: 'Ambience',
-        rating: pReview.ambience / 2,
+        rating: pReview.ambience! / 2,
         colorIndex: 0,
       ),
       MStarRating(
         title: 'Service',
-        rating: pReview.service / 2,
+        rating: pReview.service! / 2,
         colorIndex: 1,
       ),
-      Padding(
-          padding: const EdgeInsets.all(8.0), child: Text(pReview?.text ?? ''))
+      Padding(padding: const EdgeInsets.all(8.0), child: Text(pReview?.text ?? ''))
     ];
   }
 
@@ -158,7 +152,7 @@ class ReviewView extends StatelessWidget {
             child: medias.length == 1
                 ? Center(
                     child: MediaWidget(
-                    review.medias[0],
+                    review!.medias![0],
                     openOnClick: true,
                   ))
                 : ListView.builder(

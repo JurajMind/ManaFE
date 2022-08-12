@@ -4,10 +4,10 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 
 class BigSelect extends StatelessWidget {
-  final Map<int, String> labels;
-  final int curentView;
-  final ValueChanged<int> onSelected;
-  const BigSelect({Key key, this.labels, this.curentView, this.onSelected}) : super(key: key);
+  final Map<int, String>? labels;
+  final int? curentView;
+  final ValueChanged<int>? onSelected;
+  const BigSelect({Key? key, this.labels, this.curentView, this.onSelected}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class BigSelect extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text(
-            AppTranslations.of(context).text(labels[curentView]),
+            AppTranslations.of(context)!.text(labels![curentView!]),
             style: Theme.of(context).textTheme.headline6,
           ),
           Icon(
@@ -43,7 +43,7 @@ class BigSelect extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      ...labels.map((f, _) {
+                      ...labels!.map((f, _) {
                         return MapEntry(f, mixTypeSelector(context, f));
                       }).values
                     ],
@@ -58,12 +58,12 @@ class BigSelect extends StatelessWidget {
   InkWell mixTypeSelector(BuildContext context, int index) {
     return InkWell(
       onTap: () {
-        onSelected(index);
+        onSelected!(index);
         Navigator.of(context).pop();
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 25.0),
-        child: Text(AppTranslations.of(context).text(labels[index]).toUpperCase(), style: Theme.of(context).textTheme.headline6),
+        child: Text(AppTranslations.of(context)!.text(labels![index]).toUpperCase(), style: Theme.of(context).textTheme.headline6),
       ),
     );
   }

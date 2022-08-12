@@ -3,15 +3,15 @@ import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:app/module/general/gear_bloc.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 import 'brand_select_page.dart';
 
 class AddGearPage extends StatefulWidget {
-  final String selectedType;
-  final String pretypedName;
-  final GearBloc bloc;
-  AddGearPage({Key key, this.selectedType, this.pretypedName, this.bloc}) : super(key: key);
+  final String? selectedType;
+  final String? pretypedName;
+  final GearBloc? bloc;
+  AddGearPage({Key? key, this.selectedType, this.pretypedName, this.bloc}) : super(key: key);
 
   _AddGearPageState createState() => _AddGearPageState();
 }
@@ -30,17 +30,17 @@ class _AddGearPageState extends State<AddGearPage> {
     super.initState();
   }
 
-  BrandGroup selectedBrand;
-  String selectedType = "None";
+  BrandGroup? selectedBrand;
+  String? selectedType = "None";
   var types = ["None", "Tobacco", "Hookah", "Bowl", "HeatManagement", "Coal"];
   String newName = "";
-  TextEditingController controller;
+  TextEditingController? controller;
 
   bool uploading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppTranslations.of(context).text("gear.add_new_gear"))),
+      appBar: AppBar(title: Text(AppTranslations.of(context)!.text("gear.add_new_gear"))),
       body: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,7 +50,7 @@ class _AddGearPageState extends State<AddGearPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    AppTranslations.of(context).text("gear.brand") + " :",
+                    AppTranslations.of(context)!.text("gear.brand") + " :",
                     style: Theme.of(context).textTheme.headline5,
                   ),
                   SizedBox(
@@ -58,7 +58,7 @@ class _AddGearPageState extends State<AddGearPage> {
                   ),
                   InkWell(
                     child: Text(
-                      selectedBrand == null ? 'select brand' : selectedBrand.name,
+                      selectedBrand == null ? 'select brand' : selectedBrand!.name!,
                       style: Theme.of(context).textTheme.headline5,
                     ),
                     onTap: () {
@@ -76,7 +76,7 @@ class _AddGearPageState extends State<AddGearPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  AppTranslations.of(context).text("gear.type") + " :",
+                  AppTranslations.of(context)!.text("gear.type") + " :",
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 SizedBox(
@@ -93,7 +93,7 @@ class _AddGearPageState extends State<AddGearPage> {
                       ),
                     );
                   }).toList(),
-                  onChanged: (value) {
+                  onChanged: (dynamic value) {
                     setState(() {
                       selectedType = value;
                     });
@@ -105,7 +105,7 @@ class _AddGearPageState extends State<AddGearPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  AppTranslations.of(context).text("gear.name") + " :",
+                  AppTranslations.of(context)!.text("gear.name") + " :",
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 SizedBox(
@@ -120,7 +120,9 @@ class _AddGearPageState extends State<AddGearPage> {
                         this.newName = name;
                       });
                     },
-                    decoration: InputDecoration(border: InputBorder.none, hintText: AppTranslations.of(context).text("gear.enter_new_gear_name")),
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: AppTranslations.of(context)!.text("gear.enter_new_gear_name")),
                   ),
                 ),
               ],
@@ -128,7 +130,7 @@ class _AddGearPageState extends State<AddGearPage> {
             MButton(
               icon: Icons.save,
               uploading: uploading,
-              label: AppTranslations.of(context).text('gear.save_and_use_new_gear'),
+              label: AppTranslations.of(context)!.text('gear.save_and_use_new_gear'),
               onPressed: () {
                 if (selectedBrand == null || selectedType == "None" || newName == null) {
                   return;
@@ -140,10 +142,10 @@ class _AddGearPageState extends State<AddGearPage> {
                 var newGear = new PipeAccesorySimpleDto();
                 newGear.name = newName;
                 newGear.type = selectedType;
-                newGear.brand = selectedBrand.name;
-                newGear.brandId = selectedBrand.id;
+                newGear.brand = selectedBrand!.name;
+                newGear.brandId = selectedBrand!.id;
 
-                widget.bloc.addGear(newGear).then((createdGear) {
+                widget.bloc!.addGear(newGear).then((createdGear) {
                   Navigator.of(context).pop(createdGear);
                 });
               },
@@ -155,7 +157,9 @@ class _AddGearPageState extends State<AddGearPage> {
   }
 
   void selectBrand(BuildContext context) {
-    Navigator.of(context).push<BrandGroup>(MaterialPageRoute(builder: (context) => BrandSelectPage(widget.bloc), fullscreenDialog: true)).then((selectedBrand) {
+    Navigator.of(context)
+        .push<BrandGroup>(MaterialPageRoute(builder: (context) => BrandSelectPage(widget.bloc), fullscreenDialog: true))
+        .then((selectedBrand) {
       setState(() {
         this.selectedBrand = selectedBrand;
       });

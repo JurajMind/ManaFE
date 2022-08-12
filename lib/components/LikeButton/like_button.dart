@@ -12,11 +12,11 @@ class LikeButton extends StatefulWidget {
   final DotColor dotColor;
   final Color circleStartColor;
   final Color circleEndColor;
-  final LikeCallback onIconClicked;
+  final LikeCallback? onIconClicked;
 
   const LikeButton({
-    Key key,
-    @required this.width,
+    Key? key,
+    required this.width,
     this.icon = const LikeIcon(
       Icons.favorite,
       iconColor: Colors.red,
@@ -38,11 +38,11 @@ class LikeButton extends StatefulWidget {
 }
 
 class _LikeButtonState extends State<LikeButton> with TickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> outerCircle;
-  Animation<double> innerCircle;
-  Animation<double> scale;
-  Animation<double> dots;
+  late AnimationController _controller;
+  late Animation<double> outerCircle;
+  late Animation<double> innerCircle;
+  late Animation<double> scale;
+  late Animation<double> dots;
 
   bool isLiked = false;
 
@@ -109,7 +109,7 @@ class _LikeButtonState extends State<LikeButton> with TickerProviderStateMixin {
     } else {
       setState(() {});
     }
-    if (widget.onIconClicked != null) widget.onIconClicked(isLiked);
+    if (widget.onIconClicked != null) widget.onIconClicked!(isLiked);
   }
 
   void _initAllAmimations() {

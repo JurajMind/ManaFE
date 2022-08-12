@@ -7,7 +7,7 @@ import 'package:charts_common/common.dart' as chart;
 
 class NicotineIntakeWidget extends StatelessWidget {
   const NicotineIntakeWidget({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -19,13 +19,13 @@ class NicotineIntakeWidget extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Text(
-              AppTranslations.of(context).text('health.nicotine'),
+              AppTranslations.of(context)!.text('health.nicotine'),
               style: Theme.of(context).textTheme.headline6,
             ),
             SizedBox(
               height: 10,
             ),
-            Text(AppTranslations.of(context).text('health.nicotine_text')),
+            Text(AppTranslations.of(context)!.text('health.nicotine_text')),
             Container(
               height: 200,
               child: GaugeChart(_createSampleData(), minValue: 0, value: 3.6, maxValue: 10, handColor: AppColors.colors[0]),
@@ -56,7 +56,7 @@ class NicotineIntakeWidget extends StatelessWidget {
         id: 'Segments',
         domainFn: (GaugeSegment segment, _) => segment.segment,
         measureFn: (GaugeSegment segment, _) => segment.size,
-        colorFn: (GaugeSegment segment, index) => colors[index],
+        colorFn: (GaugeSegment segment, index) => colors[index!],
         data: data,
       )
     ];

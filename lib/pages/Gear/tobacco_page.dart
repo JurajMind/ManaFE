@@ -8,18 +8,17 @@ import 'package:app/services/share.dart';
 import 'package:app/theme/theme_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:share/share.dart';
 
 import 'Tobacco/in_mixes_lazy_list.dart';
 
 class TobaccoPage extends StatefulWidget {
-  final PipeAccesorySimpleDto tobacco;
-  final int pipeAccesoryId;
+  final PipeAccesorySimpleDto? tobacco;
+  final int? pipeAccesoryId;
 
-  const TobaccoPage({Key key, this.tobacco, this.pipeAccesoryId})
-      : super(key: key);
+  const TobaccoPage({Key? key, this.tobacco, this.pipeAccesoryId}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return new _TobaccoPageState();
@@ -27,16 +26,14 @@ class TobaccoPage extends StatefulWidget {
 }
 
 class _TobaccoPageState extends State<TobaccoPage> {
-  PipeAccesorySimpleDto pipeAccesory;
-  BehaviorSubject<TobaccoInformationDto> information =
-      new BehaviorSubject<TobaccoInformationDto>();
+  PipeAccesorySimpleDto? pipeAccesory;
+  BehaviorSubject<TobaccoInformationDto> information = new BehaviorSubject<TobaccoInformationDto>();
 
-  BehaviorSubject<List<TobaccoMixSimpleDto>> inMix =
-      new BehaviorSubject<List<TobaccoMixSimpleDto>>();
+  BehaviorSubject<List<TobaccoMixSimpleDto>> inMix = new BehaviorSubject<List<TobaccoMixSimpleDto>>();
   @override
   void initState() {
     if (widget.tobacco == null) {
-      App.http.getGearInfo(widget.pipeAccesoryId).then((g) => setState(() {
+      App.http!.getGearInfo(widget.pipeAccesoryId).then((g) => setState(() {
             pipeAccesory = g;
           }));
     } else {
@@ -44,8 +41,8 @@ class _TobaccoPageState extends State<TobaccoPage> {
     }
     var id = widget.tobacco?.id ?? widget.pipeAccesoryId;
     Future.delayed(Duration.zero, () {
-      App.http.getTobaccoInfo(id).then((data) => this.information.add(data));
-      App.http.getTobaccoInMix(id).then((data) => this.inMix.add(data));
+      App.http!.getTobaccoInfo(id).then((data) => this.information.add(data));
+      App.http!.getTobaccoInMix(id).then((data) => this.inMix.add(data));
     });
     super.initState();
   }
@@ -71,26 +68,22 @@ class _TobaccoPageState extends State<TobaccoPage> {
                   IconButton(
                       icon: Icon(Icons.share),
                       onPressed: () async {
-                        var url = await ShareService.tobaccoShareLink(
-                            this.pipeAccesory);
+                        var url = await ShareService.tobaccoShareLink(this.pipeAccesory!);
                         Share.share(url.toString());
                       }),
                 ],
                 title: Row(
                   children: <Widget>[
                     Hero(
-                        tag: '${pipeAccesory.id}_name',
-                        child: Container(
-                            width: 50,
-                            height: 50,
-                            child: Extensions.accesoryPicture(pipeAccesory))),
+                        tag: '${pipeAccesory!.id}_name',
+                        child: Container(width: 50, height: 50, child: Extensions.accesoryPicture(pipeAccesory!))),
                     SizedBox(
                       width: 16,
                     ),
                     Container(
                         width: MediaQuery.of(context).size.width - 220,
                         child: AutoSizeText(
-                          "${pipeAccesory.brand} ${pipeAccesory.name}",
+                          "${pipeAccesory!.brand} ${pipeAccesory!.name}",
                           maxLines: 1,
                           style: theme.appBarStyle,
                           minFontSize: 8,
@@ -108,8 +101,7 @@ class _TobaccoPageState extends State<TobaccoPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Center(
                       child: Container(
-                        constraints:
-                            BoxConstraints(maxWidth: theme.maxPageWidth),
+                        constraints: BoxConstraints(maxWidth: theme.maxPageWidth),
                         child: AddRemoveGearButton(
                           gear: pipeAccesory,
                         ),
@@ -150,11 +142,10 @@ class _TobaccoPageState extends State<TobaccoPage> {
                       stream: this.inMix,
                       builder: (context, snapshot) {
                         return InMixList(
-                            sourceTobacco: pipeAccesory.id,
+                            sourceTobacco: pipeAccesory!.id,
                             mixes: snapshot.data,
                             mixCount: 5,
-                            onPressed: () =>
-                                Navigator.of(context).push(MaterialPageRoute(
+                            onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => InMixesLazyList(
                                     initInMixes: snapshot.data,
                                     tobacco: pipeAccesory,

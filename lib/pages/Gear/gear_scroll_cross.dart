@@ -49,11 +49,11 @@ class _GearScrollAlternativeCrossState extends State<GearScrollAlternativeCross>
                         decoration: BoxDecoration(
                             image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: AssetImage(section.backgroundAsset),
+                          image: AssetImage(section.backgroundAsset!),
                         )),
                         child: Center(
                             child: Text(
-                          section.title,
+                          section.title!,
                           style: Theme.of(context).textTheme.headline4,
                         )),
                       ),

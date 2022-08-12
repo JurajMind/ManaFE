@@ -25,15 +25,15 @@ class AppWidget extends StatefulWidget {
 
   static restartApp(BuildContext context) async {
     final _AppWidgetState state =
-        context.findAncestorStateOfType<_AppWidgetState>();
+        context.findAncestorStateOfType<_AppWidgetState>()!;
     state.restartApp();
   }
 }
 
 class _AppWidgetState extends State<AppWidget> {
   var globalNavKey = GlobalKey<NavigatorState>();
-  AppTranslationsDelegate _newLocaleDelegate;
-  Uri deeplink;
+  AppTranslationsDelegate? _newLocaleDelegate;
+  Uri? deeplink;
 
   @override
   void initState() {
@@ -45,9 +45,9 @@ class _AppWidgetState extends State<AppWidget> {
   }
 
   void initDynamicLinks() async {
-    final PendingDynamicLinkData data =
+    final PendingDynamicLinkData? data =
         await FirebaseDynamicLinks.instance.getInitialLink();
-    final Uri _deepLink = data?.link;
+    final Uri? _deepLink = data?.link;
 
     if (_deepLink != null) {
       deeplink = _deepLink;
@@ -77,7 +77,7 @@ class _AppWidgetState extends State<AppWidget> {
         if (!authorized) {
           return MaterialApp(
             localizationsDelegates: [
-              _newLocaleDelegate,
+              _newLocaleDelegate!,
               //provides localised strings
               GlobalMaterialLocalizations.delegate,
               //provides RTL support
@@ -95,7 +95,7 @@ class _AppWidgetState extends State<AppWidget> {
           navigatorKey: getIt.get<Alice>().getNavigatorKey(),
           key: globalNavKey,
           localizationsDelegates: [
-            _newLocaleDelegate,
+            _newLocaleDelegate!,
             //provides localised strings
             GlobalMaterialLocalizations.delegate,
             //provides RTL support

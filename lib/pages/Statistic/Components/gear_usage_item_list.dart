@@ -1,11 +1,11 @@
 import 'package:app/pages/Gear/pipe_accesory_page.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class UsageItemListItem extends StatelessWidget {
   const UsageItemListItem({
-    Key key,
-    @required this.item,
+    Key? key,
+    required this.item,
   }) : super(key: key);
 
   final PipeAccessoryUsageDto item;

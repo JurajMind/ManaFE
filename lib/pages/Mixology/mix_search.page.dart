@@ -7,38 +7,35 @@ import 'package:app/module/mixology/mix_card_expanded_shimmer.dart';
 import 'package:app/module/module.dart';
 import 'package:app/pages/SmokeSession/accesory_search.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MixSearchPage extends StatefulWidget {
-  final List<PipeAccesorySimpleDto> selectedTobacco;
+  final List<PipeAccesorySimpleDto?>? selectedTobacco;
 
-  MixSearchPage({Key key, this.selectedTobacco}) : super(key: key);
+  MixSearchPage({Key? key, this.selectedTobacco}) : super(key: key);
 
   @override
   _MixSearchPageState createState() => _MixSearchPageState();
 }
 
 class _MixSearchPageState extends State<MixSearchPage> {
-  List<PipeAccesorySimpleDto> selectedTobacco =
-      new List<PipeAccesorySimpleDto>();
+  List<PipeAccesorySimpleDto?> selectedTobacco = <PipeAccesorySimpleDto?>[];
 
-  Map<PipeAccesorySimpleDto, Color> indexColor =
-      new Map<PipeAccesorySimpleDto, Color>();
+  Map<PipeAccesorySimpleDto?, Color> indexColor = new Map<PipeAccesorySimpleDto?, Color>();
 
-  BehaviorSubject<List<TobaccoMixSimpleDto>> tobaccoMix =
-      new BehaviorSubject<List<TobaccoMixSimpleDto>>();
+  BehaviorSubject<List<TobaccoMixSimpleDto>> tobaccoMix = new BehaviorSubject<List<TobaccoMixSimpleDto>>();
 
   var loading = false;
-  String searchString;
+  String? searchString;
   var textController = new TextEditingController();
   @override
   void initState() {
-    if (widget.selectedTobacco != null && widget.selectedTobacco.length > 0) {
-      this.selectedTobacco.addAll(widget.selectedTobacco);
+    if (widget.selectedTobacco != null && widget.selectedTobacco!.length > 0) {
+      this.selectedTobacco.addAll(widget.selectedTobacco!);
 
-      for (int i = 0; i < widget.selectedTobacco.length; i++) {
-        indexColor[widget.selectedTobacco[i]] = AppColors.colors[i];
+      for (int i = 0; i < widget.selectedTobacco!.length; i++) {
+        indexColor[widget.selectedTobacco![i]] = AppColors.colors[i];
       }
     }
     searchMixes();
@@ -48,7 +45,7 @@ class _MixSearchPageState extends State<MixSearchPage> {
   @override
   Widget build(BuildContext context) {
     var personBloc = getIt.get<PersonBloc>();
-    var gearBloc = DataProvider.getData(context).gearBloc;
+    var gearBloc = DataProvider.getData(context)!.gearBloc;
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
@@ -103,19 +100,14 @@ class _MixSearchPageState extends State<MixSearchPage> {
                                   searchType: 'Tobacco',
                                   personBloc: personBloc,
                                   gearBloc: gearBloc,
-                                  ownAccesories: personBloc.myGear.value
-                                      .where((s) => s.type == "Tobacco")
-                                      .toList(),
+                                  ownAccesories: personBloc.myGear.value.where((s) => s.type == "Tobacco").toList(),
                                 )),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text('Add item in mix',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText2),
+                                  Text('Add item in mix', style: Theme.of(context).textTheme.bodyText2),
                                   Icon(Icons.add)
                                 ],
                               ),
@@ -130,15 +122,12 @@ class _MixSearchPageState extends State<MixSearchPage> {
                       ),
                     ),
                     if (loading) ...{
-                      if (selectedTobacco.length > 0)
-                        ...List.generate(
-                            10, (index) => MixCardExpandedShimmer())
+                      if (selectedTobacco.length > 0) ...List.generate(10, (index) => MixCardExpandedShimmer())
                     } else ...{
                       if (snapshot.data != null) ...{
-                        ...snapshot.data.map((m) => MixCardExpanded(
+                        ...snapshot.data!.map((m) => MixCardExpanded(
                               tobaccoMix: m,
-                              multiHighlight:
-                                  indexColor.map((f, c) => MapEntry(f.id, c)),
+                              multiHighlight: indexColor.map((f, c) => MapEntry(f!.id, c)),
                             ))
                       } else ...{
                         Center(
@@ -155,11 +144,11 @@ class _MixSearchPageState extends State<MixSearchPage> {
     );
   }
 
-  void showSearchDialog({BuildContext context, Widget child}) {
+  void showSearchDialog({required BuildContext context, Widget? child}) {
     showDialog<PipeAccesorySimpleDto>(
       context: context,
-      builder: (BuildContext context) => child,
-    ).then<void>((PipeAccesorySimpleDto value) {
+      builder: (BuildContext context) => child!,
+    ).then<void>((PipeAccesorySimpleDto? value) {
       if (value != null) {
         setState(() {
           addTobacco(value);
@@ -171,7 +160,7 @@ class _MixSearchPageState extends State<MixSearchPage> {
   void addTobacco(PipeAccesorySimpleDto tobacco) {
     if (selectedTobacco.length == 4) return;
     setState(() {
-      if (selectedTobacco.where((t) => t.id == tobacco.id).length == 0) {
+      if (selectedTobacco.where((t) => t!.id == tobacco.id).length == 0) {
         selectedTobacco.add(tobacco);
         indexColor[tobacco] = AppColors.colors[selectedTobacco.length - 1];
         searchMixes();
@@ -179,7 +168,7 @@ class _MixSearchPageState extends State<MixSearchPage> {
     });
   }
 
-  void removeTobacco(PipeAccesorySimpleDto tobacco) {
+  void removeTobacco(PipeAccesorySimpleDto? tobacco) {
     setState(() {
       selectedTobacco.remove(tobacco);
       indexColor.remove(tobacco);
@@ -191,10 +180,7 @@ class _MixSearchPageState extends State<MixSearchPage> {
     setState(() {
       loading = true;
     });
-    App.http
-        .suggestMix(this.selectedTobacco.map((f) => f.id).toList(),
-            name: searchString)
-        .then((onValue) {
+    App.http!.suggestMix(this.selectedTobacco.map((f) => f!.id).toList(), name: searchString).then((onValue) {
       this.tobaccoMix.add(onValue);
       setState(() {
         loading = false;
@@ -204,12 +190,12 @@ class _MixSearchPageState extends State<MixSearchPage> {
 }
 
 class TobaccoSearchItem extends StatelessWidget {
-  final PipeAccesorySimpleDto t;
-  final Function onPress;
-  final Color color;
+  final PipeAccesorySimpleDto? t;
+  final Function? onPress;
+  final Color? color;
   const TobaccoSearchItem(
     this.t, {
-    Key key,
+    Key? key,
     this.onPress,
     this.color,
   }) : super(key: key);
@@ -219,11 +205,11 @@ class TobaccoSearchItem extends StatelessWidget {
     return ListTile(
       trailing: IconButton(
         icon: Icon(Icons.cancel),
-        onPressed: onPress,
+        onPressed: onPress as void Function()?,
         color: color,
       ),
       title: Text(
-        "${t.brand} ${t.name}",
+        "${t!.brand} ${t!.name}",
         style: Theme.of(context).textTheme.headline5,
       ),
     );

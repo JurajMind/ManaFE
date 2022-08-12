@@ -1,20 +1,12 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'package:openapi/api.dart';
 import 'package:test/test.dart';
+import 'package:openapi/openapi.dart';
 
 // tests for PlaceSimpleDto
 void main() {
-  final instance = PlaceSimpleDto();
+  final PlaceSimpleDto? instance = /* PlaceSimpleDto(...) */ null;
+  // TODO add properties to the entity
 
-  group('test PlaceSimpleDto', () {
+  group(PlaceSimpleDto, () {
     // int id
     test('to test the property `id`', () async {
       // TODO
@@ -25,12 +17,12 @@ void main() {
       // TODO
     });
 
-    // Map<String, String> shortDescriptions (default value: const {})
+    // Map<String, String> shortDescriptions
     test('to test the property `shortDescriptions`', () async {
       // TODO
     });
 
-    // Map<String, String> description (default value: const {})
+    // Map<String, String> description
     test('to test the property `description`', () async {
       // TODO
     });
@@ -65,7 +57,7 @@ void main() {
       // TODO
     });
 
-    // List<BusinessHoursDto> businessHours (default value: const [])
+    // List<BusinessHoursDto> businessHours
     test('to test the property `businessHours`', () async {
       // TODO
     });
@@ -110,7 +102,5 @@ void main() {
       // TODO
     });
 
-
   });
-
 }

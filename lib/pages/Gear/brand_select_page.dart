@@ -1,4 +1,5 @@
 import 'package:app/components/Brands/brand_list_item.dart';
+import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/module/general/gear_bloc.dart';
@@ -7,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:darq/darq.dart';
 
 class BrandSelectPage extends StatefulWidget {
-  final GearBloc bloc;
-  BrandSelectPage(this.bloc, {Key key}) : super(key: key);
+  final GearBloc? bloc;
+  BrandSelectPage(this.bloc, {Key? key}) : super(key: key);
 
   _BrandSelectPageState createState() => _BrandSelectPageState();
 }
@@ -18,7 +19,7 @@ class _BrandSelectPageState extends State<BrandSelectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppTranslations.of(context).text("gear.select_brand").toUpperCase()),
+        title: Text(AppTranslations.of(context)!.text("gear.select_brand").toUpperCase()),
         centerTitle: true,
       ),
       body: PageView(
@@ -65,13 +66,13 @@ class NewBrandTypeSelect extends StatefulWidget {
 }
 
 class _NewBrandTypeSelectState extends State<NewBrandTypeSelect> {
-  String brandName;
+  String? brandName;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppTranslations.of(context).text("gear.add_new_brand").toUpperCase()),
+        title: Text(AppTranslations.of(context)!.text("gear.add_new_brand").toUpperCase()),
         centerTitle: true,
       ),
       body: Center(
@@ -90,7 +91,7 @@ class _NewBrandTypeSelectState extends State<NewBrandTypeSelect> {
                       });
                     },
                     decoration: new InputDecoration(
-                      labelText: AppTranslations.of(context).text("gear.enter_new_brand_name"),
+                      labelText: AppTranslations.of(context)!.text("gear.enter_new_brand_name"),
                       labelStyle: TextStyle(
                         color: Colors.white,
                       ),
@@ -111,13 +112,11 @@ class _NewBrandTypeSelectState extends State<NewBrandTypeSelect> {
             SizedBox(
               height: 16,
             ),
-            OutlineButton.icon(
-              icon: Icon(Icons.save),
-              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-              borderSide: BorderSide(color: Colors.white, width: 1),
-              label: Text(AppTranslations.of(context).text("gear.use_new_brand")),
+            MButton(
+              icon: Icons.save,
+              label: AppTranslations.of(context)!.text("gear.use_new_brand"),
               onPressed: () {
-                if (this.brandName == null || this.brandName.length == 0) {
+                if (this.brandName == null || this.brandName!.length == 0) {
                   return;
                 }
                 var brand = new BrandGroup();
@@ -133,14 +132,14 @@ class _NewBrandTypeSelectState extends State<NewBrandTypeSelect> {
 }
 
 class BrandTypeSelect extends StatefulWidget {
-  final bool left;
-  final bool right;
+  final bool? left;
+  final bool? right;
   final String type;
-  final String displayType;
+  final String? displayType;
   final dynamic bloc;
   const BrandTypeSelect(
     this.type, {
-    Key key,
+    Key? key,
     this.left,
     this.right,
     this.displayType,
@@ -155,7 +154,7 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
   String searchString = "";
   bool searchMode = false;
   var textController = new TextEditingController();
-  String display;
+  String? display;
 
   @override
   initState() {
@@ -192,7 +191,7 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
                     width: 40,
                   ),
                   Text(
-                    AppTranslations.of(context).text("gear.$display"),
+                    AppTranslations.of(context)!.text("gear.$display"),
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   SizedBox(
@@ -251,22 +250,22 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
                   var dataCollection = List.from(data);
                   data = dataCollection
                       .where((a) => a.name.toUpperCase().contains(this.searchString.toUpperCase()))
-                      .toList();
+                      .toList() as List<BrandGroup>?;
                 }
 
-                if (data.length == 0) {
+                if (data!.length == 0) {
                   return Center(
                       child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       RichText(
                         text: TextSpan(
-                          text: AppTranslations.of(context).text("gear.no_result_1"),
+                          text: AppTranslations.of(context)!.text("gear.no_result_1"),
                           style: DefaultTextStyle.of(context).style,
                           children: <TextSpan>[
                             TextSpan(text: searchString, style: TextStyle(fontWeight: FontWeight.bold)),
                             TextSpan(
-                              text: AppTranslations.of(context).text("gear.no_result_2"),
+                              text: AppTranslations.of(context)!.text("gear.no_result_2"),
                             ),
                           ],
                         ),
@@ -283,7 +282,7 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
                           children: <Widget>[
                             RichText(
                               text: TextSpan(
-                                text: AppTranslations.of(context).text("gear.no_result_3"),
+                                text: AppTranslations.of(context)!.text("gear.no_result_3"),
                                 style: DefaultTextStyle.of(context).style,
                                 children: <TextSpan>[
                                   TextSpan(text: searchString, style: TextStyle(fontWeight: FontWeight.bold)),
@@ -308,7 +307,7 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
                 return ListView.builder(
                   itemCount: data.length + 1,
                   itemBuilder: (context, index) {
-                    if (index >= data.length)
+                    if (index >= data!.length)
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ListTile(

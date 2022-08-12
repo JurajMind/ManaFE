@@ -5,7 +5,7 @@ import 'package:app/module/data_provider.dart';
 import 'package:app/module/person/reservations_bloc.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 import 'package:darq/darq.dart';
 
@@ -15,11 +15,11 @@ class ReservationsPage extends StatefulWidget {
 }
 
 class _ReservationsPageState extends State<ReservationsPage> {
-  DateTime _fromDate;
-  DateTime _toDate;
-  ReservationBloc reservationBloc;
-  DateTime _selectedDay;
-  Map<DateTime, List> _events;
+  late DateTime _fromDate;
+  late DateTime _toDate;
+  ReservationBloc? reservationBloc;
+  DateTime? _selectedDay;
+  Map<DateTime, List>? _events;
   int reservationFilter = -1;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
   @override
@@ -32,14 +32,14 @@ class _ReservationsPageState extends State<ReservationsPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (reservationBloc == null) {
-      reservationBloc = DataProvider.getData(context).reservationBloc;
+      reservationBloc = DataProvider.getData(context)!.reservationBloc;
     }
   }
 
   Future loadReservation(DateTime date) {
     _fromDate = DateTime(date.year, date.month, 1);
     _toDate = DateTime(date.year, date.month + 1, 0);
-    return reservationBloc.loadReservations(_fromDate, _toDate);
+    return reservationBloc!.loadReservations(_fromDate, _toDate);
   }
 
   @override
@@ -49,15 +49,15 @@ class _ReservationsPageState extends State<ReservationsPage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
-        title: Text(AppTranslations.of(context).text("reservations.reservations").toUpperCase()),
+        title: Text(AppTranslations.of(context)!.text("reservations.reservations").toUpperCase()),
       ),
       body: Container(
         child: StreamBuilder<List<PlacesReservationsReservationDto>>(
-            stream: reservationBloc.dynamicReservaions,
+            stream: reservationBloc!.dynamicReservaions,
             builder: (context, snapshot) {
               var filteredReservations = _selectedDay == null
                   ? snapshot.data
-                  : snapshot.data.where((d) => compareDate(d.time, _selectedDay) == 0).toList();
+                  : snapshot.data!.where((d) => compareDate(d.time!, _selectedDay!) == 0).toList();
               var childrens = new List<Widget>();
               childrens.add(_buildTableCalendar(snapshot.data));
 
@@ -89,23 +89,23 @@ class _ReservationsPageState extends State<ReservationsPage> {
   }
 
   // Configure the calendar here
-  Widget _buildTableCalendar(List<PlacesReservationsReservationDto> data) {
+  Widget _buildTableCalendar(List<PlacesReservationsReservationDto>? data) {
     _events = new Map<DateTime, List<String>>();
     if (data != null) {
       data.forEach((f) {
-        var date = new DateTime(f.time.year, f.time.month, f.time.day);
-        var dateEvent = _events[date] as List<String>;
+        var date = new DateTime(f.time!.year, f.time!.month, f.time!.day);
+        var dateEvent = _events![date] as List<String>?;
         if (dateEvent == null) {
           dateEvent = new List<String>.from([f.id.toString()]);
         } else {
           dateEvent.add(f.id.toString());
         }
-        _events[date] = dateEvent;
+        _events![date] = dateEvent;
       });
     }
 
     return Calendar(
-        events: _events,
+        events: _events as Map<DateTime, List<String>>?,
         isExpandable: true,
         showTodayAction: false,
         showCalendarPickerIcon: false,
@@ -116,7 +116,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
         dateStyles: TextStyle(color: Colors.red));
   }
 
-  List<Widget> _buildEventList(List<PlacesReservationsReservationDto> data) {
+  List<Widget> _buildEventList(List<PlacesReservationsReservationDto>? data) {
     if (data == null) {
       return List<Widget>.generate(10, (int index) {
         return ReservationItemShimer();
@@ -125,14 +125,14 @@ class _ReservationsPageState extends State<ReservationsPage> {
 
     var reservations = new List.from(data);
     if (reservationFilter != -1) {
-      reservations = reservations.where((p) => p.status == reservationFilter);
+      reservations = reservations.where((p) => p.status == reservationFilter) as List<dynamic>;
     }
     return reservations.reverse().toList().map((r) => ReservationItem(reservation: r)).toList();
   }
 
   void changeDate(DateTime newDate) {
     print(newDate);
-    if (newDate != null && _selectedDay != null && _selectedDay.month != newDate.month) {
+    if (newDate != null && _selectedDay != null && _selectedDay!.month != newDate.month) {
       loadReservation(newDate);
     }
     setState(() {
@@ -142,11 +142,11 @@ class _ReservationsPageState extends State<ReservationsPage> {
 }
 
 class ReservationFilterWidget extends StatelessWidget {
-  final ValueChanged<int> onChanged;
-  final int reservationFilter;
-  static List<int> reservationFilterSet = [-1, 3, 6, 1];
+  final ValueChanged<int?>? onChanged;
+  final int? reservationFilter;
+  static List<int?> reservationFilterSet = [-1, 3, 6, 1];
   const ReservationFilterWidget({
-    Key key,
+    Key? key,
     this.onChanged,
     this.reservationFilter,
   }) : super(key: key);
@@ -172,7 +172,7 @@ class ReservationFilterWidget extends StatelessWidget {
         onTap: () {
           var index = reservationFilterSet.indexOf(reservationFilter);
           index = (index + 1) % reservationFilterSet.length;
-          onChanged(reservationFilterSet[index]);
+          onChanged!(reservationFilterSet[index]);
         },
       ),
     );

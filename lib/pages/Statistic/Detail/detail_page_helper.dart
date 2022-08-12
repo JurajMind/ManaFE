@@ -1,13 +1,13 @@
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:darq/darq.dart';
 
 class DetailPageHelper {
   static List<Duration> getDuration(
       bool Function(SmartHookahModelsDbPuf) predicate, List<SmartHookahModelsDbPuf> pufs) {
-    var result = new List<Duration>();
+    var result = <Duration>[];
     for (var i = 1; i < pufs.length; i++) {
       if (predicate(pufs[i - 1])) {
-        var t = new Duration(milliseconds: ((pufs[i].M - pufs[i - 1].M)));
+        var t = new Duration(milliseconds: pufs[i].M! - pufs[i - 1].M!);
 
         if (predicate(pufs[i - 1]) == predicate(pufs[i])) {}
 

@@ -3,9 +3,9 @@ import 'package:app/components/Common/bg_painter.dart';
 import 'package:flutter/material.dart';
 
 class CirclePainter extends CustomPainter {
-  final Color color;
-  BgPainter bgPainter;
-  CirclePainter(this.color, {MediaQueryData data}) {
+  final Color? color;
+  late BgPainter bgPainter;
+  CirclePainter(this.color, {required MediaQueryData data}) {
     if (isTablet(data)) {
       this.bgPainter = new BgPainter(
           color: this.color,
@@ -19,7 +19,7 @@ class CirclePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint();
-    paint.color = color;
+    paint.color = color!;
     canvas.clipRect(Rect.fromCircle(
       center: Offset(size.width / 2, size.height * 0.3),
       radius: size.width * 1,

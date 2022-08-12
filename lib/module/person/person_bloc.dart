@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:darq/darq.dart';
 
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PersonBloc extends SignalBloc {
@@ -22,44 +22,44 @@ class PersonBloc extends SignalBloc {
   }
 
   @override
-  handleCall(String method, List<dynamic> data) {
+  handleCall(String? method, List<dynamic>? data) {
     switch (method) {
       case 'deviceOnline':
         {
-          handleDeviceOnline(data);
+          handleDeviceOnline(data!);
           break;
         }
     }
   }
 
-  Box cache;
+  Box? cache;
 
-  GlobalKey<NavigatorState> Function(int, Widget) callback;
+  late GlobalKey<NavigatorState> Function(int, Widget) callback;
 
   BehaviorSubject<PersonInfoDto> info = BehaviorSubject<PersonInfoDto>();
 
   BehaviorSubject<List<PipeAccesorySimpleDto>> myGear = new BehaviorSubject<List<PipeAccesorySimpleDto>>();
 
-  BehaviorSubject<List<PlacesReservationsReservationDto>> myReservations =
-      new BehaviorSubject<List<PlacesReservationsReservationDto>>();
+  BehaviorSubject<List<PlacesReservationsReservationDto>?> myReservations =
+      new BehaviorSubject<List<PlacesReservationsReservationDto>?>();
 
-  BehaviorSubject<List<DeviceSimpleDto>> devices =
-      new BehaviorSubject<List<DeviceSimpleDto>>.seeded(<DeviceSimpleDto>[]);
+  BehaviorSubject<List<DeviceSimpleDto>?> devices =
+      new BehaviorSubject<List<DeviceSimpleDto>?>.seeded(<DeviceSimpleDto>[]);
 
   BehaviorSubject<List<SmokeSessionSimpleDto>> smokeSessions =
       new BehaviorSubject<List<SmokeSessionSimpleDto>>.seeded(<SmokeSessionSimpleDto>[]);
 
   BehaviorSubject<List<SmokeSessionSimpleDto>> smokeSessionsCodes = new BehaviorSubject<List<SmokeSessionSimpleDto>>();
   storeGearToCache(List<PipeAccesorySimpleDto> gear) {
-    cache.put('my_gear', gear);
+    cache!.put('my_gear', gear);
   }
 
-  Future<List<PipeAccesorySimpleDto>> loadGearFromCache() async {
+  Future<List<PipeAccesorySimpleDto>?> loadGearFromCache() async {
     try {
       if (cache == null) {
         cache = await Hive.openBox('profile');
       }
-      var fromCache = cache.get('my_gear');
+      var fromCache = cache!.get('my_gear');
       if (fromCache == null) {
         return null;
       }
@@ -80,7 +80,7 @@ class PersonBloc extends SignalBloc {
     loadGearFromCache().then((value) {
       if (value != null) myGear.add(value);
     });
-    var gear = await App.http.getMyGear();
+    var gear = await App.http!.getMyGear();
     storeGearToCache(gear);
     myGear.add(gear);
   }
@@ -100,14 +100,14 @@ class PersonBloc extends SignalBloc {
   }
 
   Future addMyGear(PipeAccesorySimpleDto accesory, int count) async {
-    PipeAccesorySimpleDto addedAccesory = await App.http.addMyGear(accesory.id, count);
+    PipeAccesorySimpleDto addedAccesory = await App.http!.addMyGear(accesory.id, count);
     var oldGear = this.myGear.value;
     oldGear.add(addedAccesory);
     this.myGear.add(oldGear.toSet().toList());
   }
 
   Future removeMyGear(PipeAccesorySimpleDto accesory, int count) async {
-    var removed = await App.http.removeMyGear(accesory.id);
+    var removed = await App.http!.removeMyGear(accesory.id);
     if (!removed) return;
     var oldGear = this.myGear.value;
     oldGear.removeWhere((a) => a.id == accesory.id);
@@ -118,21 +118,21 @@ class PersonBloc extends SignalBloc {
     if (_loadedInit && !reload) return;
     _loadedInit = true;
     smokeSessionsCodes.add(List.generate(4, (index) => SmokeSessionSimpleDto(id: -1)));
-    var init = await App.http.getPersonInitData();
+    var init = await App.http!.getPersonInitData();
 
-    var infoTask = App.http.getPersonInfo();
+    var infoTask = App.http!.getPersonInfo();
     devices.add(init.devices);
-    var sessions = new List.from(init.activeSmokeSessions);
+    var sessions = new List.from(init.activeSmokeSessions!);
     sessions.orderBy((s) => s.device.isOnline ? 0 : 1).thenBy((s) => s.device.name);
-    smokeSessions.add(sessions.toList());
-    smokeSessionsCodes.add(sessions.toList());
+    smokeSessions.add(sessions.toList() as List<SmokeSessionSimpleDto>);
+    smokeSessionsCodes.add(sessions.toList() as List<SmokeSessionSimpleDto>);
     myReservations.add(init.activeReservations);
     var info = await infoTask;
     this.info.add(info);
     _loadedInit = true;
     try {
       var signal = new SignalR();
-      List<String> params = <String>[];
+      List<String?> params = <String?>[];
       var auth = this.authorizeRepository;
       params.add(auth.getUserName());
       signal.callServerFunction(new ServerCallParam(name: 'JoinPerson', params: params));
@@ -146,7 +146,7 @@ class PersonBloc extends SignalBloc {
       var loading = List.generate(4, (index) => SmokeSessionSimpleDto(id: -1));
       smokeSessionsCodes.add(loading);
     }
-    var activeSmokeSessions = await App.http.getPersonSessions();
+    var activeSmokeSessions = await App.http!.getPersonSessions();
     var sessions = new List.from(activeSmokeSessions);
     sessions
         .orderBy(
@@ -155,31 +155,32 @@ class PersonBloc extends SignalBloc {
         .thenBy((s) => s.device.name)
         .reverse();
 
-    this.smokeSessions.add(sessions.toList());
-    this.smokeSessionsCodes.add(sessions.toList());
+    this.smokeSessions.add(sessions.toList() as List<SmokeSessionSimpleDto>);
+    this.smokeSessionsCodes.add(sessions.toList() as List<SmokeSessionSimpleDto>);
     return;
   }
 
   void handleDeviceOnline(List<dynamic> incomingData) {
     var data = new DeviceOnline.fromSignal(incomingData);
-    var smokeSession = new SmokeSessionSimpleDto();
-    smokeSession.device = DeviceSimpleDto();
-    smokeSession.device.name = data.deviceName;
-    smokeSession.sessionId = data.sessionCode;
+    var smokeSession = new SmokeSessionSimpleDto(
+        device: DeviceSimpleDto(
+      name: data.deviceName,
+      code: data.sessionCode,
+    ));
     this.addSmokeSession(smokeSession);
   }
 
   Future<DeviceSimpleDto> addDevice(String id, String code, String newName) async {
-    var addedDevice = await App.http.addDevice(id, newName, code);
-    var oldDevices = this.devices.value;
+    var addedDevice = await App.http!.addDevice(id, newName, code);
+    var oldDevices = this.devices.value!;
     oldDevices.add(addedDevice);
     this.devices.add(oldDevices);
     return addedDevice;
   }
 
-  Future<DeviceSimpleDto> removeDevice(String id) async {
-    var addedDevice = await App.http.removeDevice(id);
-    var oldDevices = this.devices.value;
+  Future<DeviceSimpleDto> removeDevice(String? id) async {
+    var addedDevice = await App.http!.removeDevice(id);
+    var oldDevices = this.devices.value!;
     oldDevices.removeWhere((addedDevice) => addedDevice.code == id);
     this.devices.add(oldDevices);
     return addedDevice;

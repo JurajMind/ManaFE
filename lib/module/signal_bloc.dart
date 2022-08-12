@@ -4,8 +4,8 @@ import 'package:rxdart/rxdart.dart';
 
 class SignalBloc {
   final SignalR _signalR = new SignalR();
-  BehaviorSubject<DateTime> lastPingStream;
-  BehaviorSubject<SignalStatus> connectionStatus;
+  BehaviorSubject<DateTime>? lastPingStream;
+  BehaviorSubject<SignalStatus>? connectionStatus;
   void connect() {
     _signalR.connect().then((value) {
       _signalR.clientCalls.listen((onData) {
@@ -19,10 +19,10 @@ class SignalBloc {
   _proceddCalls(ClientCall onData) {
     if (onData.Data == null) return;
 
-    onData.Data.forEach((f) {
+    onData.Data!.forEach((f) {
       handleCall(f.Method, f.Data);
     });
   }
 
-  handleCall(String method, List<dynamic> data) {}
+  handleCall(String? method, List<dynamic>? data) {}
 }

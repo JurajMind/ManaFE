@@ -1,25 +1,24 @@
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class PipeAccesoryFromTobacco {
   static PipeAccesorySimpleDto tobaccoToSimple(TobaccoSimpleDto tobacco) {
-    var simple = PipeAccesorySimpleDto();
-    simple.id = tobacco.id;
-    simple.name = tobacco.name;
-    simple.picture = tobacco.picture;
-    simple.type = "Tobacco";
-    simple.brand = tobacco.brand;
-    simple.brandId = tobacco.brandId;
-    return simple;
+    return PipeAccesorySimpleDto(
+      id: tobacco.id,
+      name: tobacco.name,
+      picture: tobacco.picture,
+      type: "Tobacco",
+      brand: tobacco.brand,
+      brandId: tobacco.brandId,
+    );
   }
 
   static TobaccoSimpleDto simpleToTobacco(PipeAccesorySimpleDto simple) {
-    var tobacco = new TobaccoSimpleDto();
-    tobacco.id = simple.id;
-    tobacco.name = simple.name;
-    tobacco.type = simple.type;
-    tobacco.brand = simple.brand;
-    tobacco.brandId = simple.brandId;
-
-    return tobacco;
+    return new TobaccoSimpleDto(
+      id: simple.id,
+      name: simple.name,
+      type: simple.type,
+      brand: simple.brand,
+      brandId: simple.brandId,
+    );
   }
 }

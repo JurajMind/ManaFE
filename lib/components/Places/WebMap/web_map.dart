@@ -10,10 +10,10 @@ import 'package:geolocator/geolocator.dart' as geo;
 import './UiFake.dart' if (dart.library.html) 'dart:ui' as ui;
 
 class MapWeb extends StatefulWidget {
-  final Set<googleFlutter.Marker> markers;
-  final GoogleWebMapController controller;
+  final Set<googleFlutter.Marker>? markers;
+  final GoogleWebMapController? controller;
 
-  const MapWeb({Key key, this.markers, this.controller}) : super(key: key);
+  const MapWeb({Key? key, this.markers, this.controller}) : super(key: key);
 
   @override
   _MapWebState createState() => _MapWebState();
@@ -21,10 +21,10 @@ class MapWeb extends StatefulWidget {
 
 class _MapWebState extends State<MapWeb> {
   int htmlIdCount = 0;
-  GMap map;
+  GMap? map;
   @override
   void initState() {
-    widget.controller.map = map;
+    widget.controller!.map = map;
     super.initState();
   }
 
@@ -32,7 +32,7 @@ class _MapWebState extends State<MapWeb> {
   Widget build(BuildContext context) {
     htmlIdCount = widget?.markers?.length ?? -1;
     String htmlId = htmlIdCount.toString();
-    print("map_rebuild ${widget.markers.length}");
+    print("map_rebuild ${widget.markers!.length}");
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(htmlId, (int viewId) {
       var location = getIt.get<PlacesBloc>().location.value;
@@ -55,7 +55,7 @@ class _MapWebState extends State<MapWeb> {
 
       final map = new GMap(elem, mapOptions);
       if (widget.markers != null) {
-        widget.markers.forEach((f) {
+        widget.markers!.forEach((f) {
           var marker = Marker(
             MarkerOptions()
               ..position = LatLng(f.position.latitude, f.position.longitude)
@@ -66,10 +66,10 @@ class _MapWebState extends State<MapWeb> {
 
           marker.onClick.listen((onData) {
             print(f.markerId);
-            f.onTap();
+            f.onTap!();
           });
         });
-        widget.controller.map = map;
+        widget.controller!.map = map;
       }
 
       return elem;
@@ -86,11 +86,11 @@ class _MapWebState extends State<MapWeb> {
 }
 
 class GoogleWebMapController {
-  GMap map;
+  GMap? map;
 
   GoogleWebMapController();
 
-  Future<void> moveToLocation(googleFlutter.LatLng position) {
-    map.center = new LatLng(position.latitude, position.longitude);
+  Future<void> moveToLocation(googleFlutter.LatLng position) async {
+    map!.center = new LatLng(position.latitude, position.longitude);
   }
 }

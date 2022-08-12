@@ -24,17 +24,17 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DevicePresetApi();
-final id = 56; // int | 
+final api = Openapi().getDevicePresetApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.devicePresetDeletePreset(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.devicePresetDeletePreset(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DevicePresetApi->devicePresetDeletePreset: $e\n');
 }
 ```
@@ -47,7 +47,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 
@@ -65,17 +65,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DevicePresetApi();
-final id = 56; // int | 
+final api = Openapi().getDevicePresetApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.devicePresetGetPreset(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.devicePresetGetPreset(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DevicePresetApi->devicePresetGetPreset: $e\n');
 }
 ```
@@ -106,16 +106,16 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DevicePresetApi();
+final api = Openapi().getDevicePresetApi();
 
-try { 
-    final result = api_instance.devicePresetGetUserPresets();
-    print(result);
-} catch (e) {
+try {
+    final response = api.devicePresetGetUserPresets();
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DevicePresetApi->devicePresetGetUserPresets: $e\n');
 }
 ```
@@ -125,7 +125,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**List<DevicePresetDto>**](DevicePresetDto.md)
+[**List&lt;DevicePresetDto&gt;**](DevicePresetDto.md)
 
 ### Authorization
 
@@ -143,20 +143,20 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DevicePresetApi();
-final deviceId = deviceId_example; // String | 
-final name = name_example; // String | 
-final addToPerson = true; // bool | 
-final setDefault = true; // bool | 
+final api = Openapi().getDevicePresetApi();
+final String deviceId = deviceId_example; // String | 
+final String name = name_example; // String | 
+final bool addToPerson = true; // bool | 
+final bool setDefault = true; // bool | 
 
-try { 
-    final result = api_instance.devicePresetSaveDevicePreset(deviceId, name, addToPerson, setDefault);
-    print(result);
-} catch (e) {
+try {
+    final response = api.devicePresetSaveDevicePreset(deviceId, name, addToPerson, setDefault);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DevicePresetApi->devicePresetSaveDevicePreset: $e\n');
 }
 ```
@@ -190,20 +190,20 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DevicePresetApi();
-final sessionCode = sessionCode_example; // String | 
-final name = name_example; // String | 
-final addToPerson = true; // bool | 
-final setDefault = true; // bool | 
+final api = Openapi().getDevicePresetApi();
+final String sessionCode = sessionCode_example; // String | 
+final String name = name_example; // String | 
+final bool addToPerson = true; // bool | 
+final bool setDefault = true; // bool | 
 
-try { 
-    final result = api_instance.devicePresetSaveSessionPreset(sessionCode, name, addToPerson, setDefault);
-    print(result);
-} catch (e) {
+try {
+    final response = api.devicePresetSaveSessionPreset(sessionCode, name, addToPerson, setDefault);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DevicePresetApi->devicePresetSaveSessionPreset: $e\n');
 }
 ```
@@ -237,16 +237,16 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DevicePresetApi();
-final presetId = 56; // int | 
+final api = Openapi().getDevicePresetApi();
+final int presetId = 56; // int | 
 
-try { 
-    api_instance.devicePresetSetDefault(presetId);
-} catch (e) {
+try {
+    api.devicePresetSetDefault(presetId);
+} catch on DioError (e) {
     print('Exception when calling DevicePresetApi->devicePresetSetDefault: $e\n');
 }
 ```
@@ -277,16 +277,16 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DevicePresetApi();
-final sessionId = sessionId_example; // String | 
+final api = Openapi().getDevicePresetApi();
+final String sessionId = sessionId_example; // String | 
 
-try { 
-    api_instance.devicePresetUseDefault(sessionId);
-} catch (e) {
+try {
+    api.devicePresetUseDefault(sessionId);
+} catch on DioError (e) {
     print('Exception when calling DevicePresetApi->devicePresetUseDefault: $e\n');
 }
 ```
@@ -317,17 +317,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DevicePresetApi();
-final sessionId = sessionId_example; // String | 
-final presetId = 56; // int | 
+final api = Openapi().getDevicePresetApi();
+final String sessionId = sessionId_example; // String | 
+final int presetId = 56; // int | 
 
-try { 
-    api_instance.devicePresetUsePreset(sessionId, presetId);
-} catch (e) {
+try {
+    api.devicePresetUsePreset(sessionId, presetId);
+} catch on DioError (e) {
     print('Exception when calling DevicePresetApi->devicePresetUsePreset: $e\n');
 }
 ```

@@ -3,14 +3,14 @@ import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class TobaccoWidget extends StatelessWidget {
-  final PipeAccesorySimpleDto tobacco;
-  final TobaccoMixSimpleDto tobaccoMix;
-  final ValueSetter<BuildContext> onPressed;
+  final PipeAccesorySimpleDto? tobacco;
+  final TobaccoMixSimpleDto? tobaccoMix;
+  final ValueSetter<BuildContext>? onPressed;
 
-  const TobaccoWidget({Key key, this.tobacco, this.tobaccoMix, this.onPressed}) : super(key: key);
+  const TobaccoWidget({Key? key, this.tobacco, this.tobaccoMix, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class TobaccoWidget extends StatelessWidget {
           onPressed == null
               ? Container()
               : Expanded(
-                  child: IconButton(icon: Icon(Icons.add_box), onPressed: () => onPressed(context)),
+                  child: IconButton(icon: Icon(Icons.add_box), onPressed: () => onPressed!(context)),
                   flex: 1,
                 )
         ],
@@ -35,12 +35,12 @@ class TobaccoWidget extends StatelessWidget {
 
   Widget tobacoMixBody(
     BuildContext context,
-    TobaccoMixSimpleDto tobacoMix,
+    TobaccoMixSimpleDto? tobacoMix,
   ) {
     if ((tobacoMix?.tobaccos?.length ?? 0) == 0)
       return Center(
           child: Text(
-        AppTranslations.of(context).text("smoke_session.no_data"),
+        AppTranslations.of(context)!.text("smoke_session.no_data"),
         style: Theme.of(context).textTheme.bodyText2,
       ));
 
@@ -54,21 +54,21 @@ class TobaccoWidget extends StatelessWidget {
     return Column(
       children: <Widget>[
         Text(
-          tobacco.name,
+          tobacco.name!,
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
-        Text(tobacco.brand, style: TextStyle(color: Colors.black, fontSize: 10.0))
+        Text(tobacco.brand!, style: TextStyle(color: Colors.black, fontSize: 10.0))
       ],
     );
   }
 
-  Widget tobacoBody(BuildContext context, PipeAccesorySimpleDto tobacco) {
+  Widget tobacoBody(BuildContext context, PipeAccesorySimpleDto? tobacco) {
     if (tobacco == null || tobacco.id == null || tobacco.name == null) {
       return new Padding(
         padding: EdgeInsets.all(8.0),
         child: Center(
             child: Text(
-          AppTranslations.of(context).text("smoke_session.no_data"),
+          AppTranslations.of(context)!.text("smoke_session.no_data"),
           style: Theme.of(context).textTheme.bodyText2,
         )),
       );
@@ -79,12 +79,12 @@ class TobaccoWidget extends StatelessWidget {
           children: <Widget>[
             Container(padding: EdgeInsets.only(right: 4), height: 30, child: Extensions.defaultTypePicture('Tobacco')),
             Text(
-              tobacco.name,
+              tobacco.name!,
               style: Theme.of(context).textTheme.headline6,
             ),
             Text(
-              ' ' + tobacco.brand,
-              style: Theme.of(context).textTheme.headline6.merge(new TextStyle(fontWeight: FontWeight.normal)),
+              ' ' + tobacco.brand!,
+              style: Theme.of(context).textTheme.headline6!.merge(new TextStyle(fontWeight: FontWeight.normal)),
             )
           ],
         ),

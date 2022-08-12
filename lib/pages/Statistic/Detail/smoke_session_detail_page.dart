@@ -9,7 +9,7 @@ import 'package:app/services/share.dart';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:darq/darq.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:share/share.dart';
@@ -19,10 +19,10 @@ import 'Components/session_statistic_detail.dart';
 import 'Components/smoke_progress_graph.dart';
 
 class SmokeSessioDetailPage extends StatefulWidget {
-  final SmokeSessionSimpleDto session;
-  final int sessionId;
+  final SmokeSessionSimpleDto? session;
+  final int? sessionId;
   SmokeSessioDetailPage({
-    Key key,
+    Key? key,
     this.sessionId,
     this.session,
   }) : super(key: key);
@@ -31,17 +31,17 @@ class SmokeSessioDetailPage extends StatefulWidget {
 }
 
 class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage> with TickerProviderStateMixin {
-  DateTime start;
-  AnimationController animationController;
-  SmokeSessionSimpleDto session;
+  late DateTime start;
+  late AnimationController animationController;
+  SmokeSessionSimpleDto? session;
 
   BehaviorSubject<FinishedSessionDataDto> data = new BehaviorSubject<FinishedSessionDataDto>();
 
   BehaviorSubject<List<SmartHookahModelsDbPuf>> pufs = new BehaviorSubject<List<SmartHookahModelsDbPuf>>();
 
-  List<Duration> inDurations = new List<Duration>();
-  List<Duration> outDurations = new List<Duration>();
-  List<Duration> idleDurations = new List<Duration>();
+  List<Duration> inDurations = <Duration>[];
+  List<Duration> outDurations = <Duration>[];
+  List<Duration> idleDurations = <Duration>[];
 
   @override
   initState() {
@@ -53,19 +53,19 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage> with Tick
     );
     animationController.forward();
 
-    if (widget.session != null) start = new DateTime.fromMillisecondsSinceEpoch(widget.session.statistic.start);
-    App.http.getPufs(id).then((data) {
+    if (widget.session != null) start = new DateTime.fromMillisecondsSinceEpoch(widget.session!.statistic!.start!);
+    App.http!.getPufs(id).then((data) {
       this.pufs.add(data);
       this.inDurations = DetailPageHelper.getDuration((p) => p.T == PufType.IN.index, data);
       this.outDurations = DetailPageHelper.getDuration((p) => p.T == PufType.OUT.index, data);
       this.idleDurations = DetailPageHelper.getDuration((p) => p.T == PufType.IDLE.index, data);
     });
-    App.http.getFinishedData(id).then((data) {
+    App.http!.getFinishedData(id).then((data) {
       this.data.add(data);
       if (session == null) {
         setState(() {
           session = data.data;
-          start = new DateTime.fromMillisecondsSinceEpoch(data.data.statistic.start);
+          start = new DateTime.fromMillisecondsSinceEpoch(data.data!.statistic!.start!);
         });
       }
     });
@@ -89,13 +89,13 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage> with Tick
             IconButton(
               icon: Icon(Icons.share),
               onPressed: () async {
-                var url = await ShareService.sessionShareLink(session);
+                var url = await ShareService.sessionShareLink(session!);
                 Share.share(url.toString());
               },
             )
           ],
           title: Text(
-              "${dateUtils.DateUtils.toStringDate(start)} - ${dateUtils.DateUtils.toStringShortTime(start)} ${session.sessionId}")),
+              "${dateUtils.DateUtils.toStringDate(start)} - ${dateUtils.DateUtils.toStringShortTime(start)} ${session!.sessionId}")),
       body: Center(
         child: Container(
           constraints: BoxConstraints(maxWidth: 800),
@@ -103,7 +103,7 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage> with Tick
             children: <Widget>[
               AnimatedBuilder(
                   animation: animationController,
-                  builder: (BuildContext context, Widget child) {
+                  builder: (BuildContext context, Widget? child) {
                     return FadeTransition(
                       opacity: animationController,
                       child: Transform(
@@ -130,7 +130,7 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage> with Tick
               ),
               AnimatedBuilder(
                   animation: animationController,
-                  builder: (BuildContext context, Widget child) {
+                  builder: (BuildContext context, Widget? child) {
                     return FadeTransition(
                       opacity: animationController,
                       child: Transform(
@@ -157,7 +157,7 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage> with Tick
                   }),
               AnimatedBuilder(
                   animation: animationController,
-                  builder: (BuildContext context, Widget child) {
+                  builder: (BuildContext context, Widget? child) {
                     return FadeTransition(
                       opacity: animationController,
                       child: Transform(
@@ -191,8 +191,8 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage> with Tick
                     return FractionallySizedBox(
                         widthFactor: 0.7,
                         child: LeaveSessionButton(
-                          sessionId: widget.session.id,
-                          assigned: snapshot.data.assigned,
+                          sessionId: widget.session!.id,
+                          assigned: snapshot.data!.assigned,
                           callback: (value) {
                             var old = this.data.value;
                             old.assigned = value;
@@ -237,7 +237,7 @@ class HrWidget extends StatelessWidget {
                   ),
                   Text(
                     haveData ? '${60 + random.nextInt(12)} bpm' : '--- bpm',
-                    style: Theme.of(context).textTheme.headline5.apply(color: Colors.red),
+                    style: Theme.of(context).textTheme.headline5!.apply(color: Colors.red),
                   )
                 ],
               ),
@@ -249,7 +249,7 @@ class HrWidget extends StatelessWidget {
                   ),
                   Text(
                     haveData ? '${80 + random.nextInt(30)} bpm' : '--- bpm',
-                    style: Theme.of(context).textTheme.headline5.apply(color: Colors.red),
+                    style: Theme.of(context).textTheme.headline5!.apply(color: Colors.red),
                   )
                 ],
               )

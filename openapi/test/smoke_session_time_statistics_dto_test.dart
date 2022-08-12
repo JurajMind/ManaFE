@@ -1,20 +1,12 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'package:openapi/api.dart';
 import 'package:test/test.dart';
+import 'package:openapi/openapi.dart';
 
 // tests for SmokeSessionTimeStatisticsDto
 void main() {
-  final instance = SmokeSessionTimeStatisticsDto();
+  final SmokeSessionTimeStatisticsDto? instance = /* SmokeSessionTimeStatisticsDto(...) */ null;
+  // TODO add properties to the entity
 
-  group('test SmokeSessionTimeStatisticsDto', () {
+  group(SmokeSessionTimeStatisticsDto, () {
     // int sessionsCount
     test('to test the property `sessionsCount`', () async {
       // TODO
@@ -35,17 +27,15 @@ void main() {
       // TODO
     });
 
-    // Map<String, int> dayOfWeekDistribution (default value: const {})
+    // Map<String, int> dayOfWeekDistribution
     test('to test the property `dayOfWeekDistribution`', () async {
       // TODO
     });
 
-    // Map<String, int> sessionStartTimeDistribution (default value: const {})
+    // Map<String, int> sessionStartTimeDistribution
     test('to test the property `sessionStartTimeDistribution`', () async {
       // TODO
     });
 
-
   });
-
 }

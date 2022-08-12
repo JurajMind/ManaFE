@@ -9,7 +9,7 @@ import 'package:openapi/api.dart';
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **usedByPerson** | **int** |  | [optional] 
-**usedWith** | [**List<UsedWithDto>**](UsedWithDto.md) |  | [optional] [default to const []]
+**usedWith** | [**List&lt;UsedWithDto&gt;**](UsedWithDto.md) |  | [optional] 
 **ownedByPersons** | **int** |  | [optional] 
 **ownedByPlaces** | **int** |  | [optional] 
 

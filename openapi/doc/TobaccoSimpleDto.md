@@ -8,7 +8,7 @@ import 'package:openapi/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**likes** | [**List<PipeAccesoryLikeDto>**](PipeAccesoryLikeDto.md) |  | [optional] [default to const []]
+**likes** | [**List&lt;PipeAccesoryLikeDto&gt;**](PipeAccesoryLikeDto.md) |  | [optional] 
 **id** | **int** |  | [optional] 
 **name** | **String** |  | [optional] 
 **brand** | **String** |  | [optional] 

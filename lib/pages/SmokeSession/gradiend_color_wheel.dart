@@ -11,10 +11,10 @@ class GradientColorWheel extends StatefulWidget {
       {key, this.defaultColors, this.child, this.size, this.border})
       : super(key: key);
   @required
-  final List<Color> defaultColors;
-  final Widget child;
-  final Size size;
-  final bool border;
+  final List<Color>? defaultColors;
+  final Widget? child;
+  final Size? size;
+  final bool? border;
   @override
   GradientColorWheelState createState() {
     return new GradientColorWheelState();
@@ -22,7 +22,7 @@ class GradientColorWheel extends StatefulWidget {
 }
 
 class GradientColorWheelState extends State<GradientColorWheel> {
-  Offset position;
+  Offset? position;
 
   @override
   void initState() {
@@ -30,12 +30,12 @@ class GradientColorWheelState extends State<GradientColorWheel> {
   }
 
   StreamBuilder<List<Color>> buildCircle(
-      SmokeSessionBloc smokeSessionBloc, Size size) {
+      SmokeSessionBloc smokeSessionBloc, Size? size) {
     return StreamBuilder<List<Color>>(
       stream: smokeSessionBloc.sessionColor,
       initialData: widget.defaultColors,
       builder: (context, snapshot) => Container(
-          height: size.height,
+          height: size!.height,
           width: size.width,
           child: widget.child,
           decoration: BoxDecoration(
@@ -44,8 +44,8 @@ class GradientColorWheelState extends State<GradientColorWheel> {
                   stops: [0.4, 1.0],
                   tileMode: TileMode.clamp,
                   colors: snapshot.data != null
-                      ? snapshot.data
-                      : widget.defaultColors))),
+                      ? snapshot.data!
+                      : widget.defaultColors!))),
     );
   }
 
@@ -53,7 +53,7 @@ class GradientColorWheelState extends State<GradientColorWheel> {
   Widget build(BuildContext context) {
     final smokeSessionBloc = getIt.get<SmokeSessionBloc>();
 
-    Size size = widget.size == null ? MediaQuery.of(context).size : widget.size;
+    Size? size = widget.size == null ? MediaQuery.of(context).size : widget.size;
 
     return Container(
       child: RepaintBoundary(child: buildCircle(smokeSessionBloc, size)),

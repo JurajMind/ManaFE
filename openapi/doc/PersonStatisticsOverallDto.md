@@ -9,8 +9,8 @@ import 'package:openapi/api.dart';
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **timeStatistics** | [**SmokeSessionTimeStatisticsDto**](SmokeSessionTimeStatisticsDto.md) |  | [optional] 
-**accessoriesUsage** | [**List<PipeAccessoryUsageDto>**](PipeAccessoryUsageDto.md) |  | [optional] [default to const []]
-**smokeSessions** | [**List<SmokeSessionSimpleDto>**](SmokeSessionSimpleDto.md) |  | [optional] [default to const []]
+**accessoriesUsage** | [**List&lt;PipeAccessoryUsageDto&gt;**](PipeAccessoryUsageDto.md) |  | [optional] 
+**smokeSessions** | [**List&lt;SmokeSessionSimpleDto&gt;**](SmokeSessionSimpleDto.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

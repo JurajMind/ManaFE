@@ -20,9 +20,9 @@ Name | Type | Description | Notes
 **time** | [**DateTime**](DateTime.md) |  | [optional] 
 **text** | **String** |  | [optional] 
 **name** | **String** |  | [optional] 
-**displayName** | **String** |  | [optional] [readonly] 
+**displayName** | **String** |  | [optional] 
 **status** | **int** |  | [optional] 
-**seats** | **List<int>** |  | [optional] [default to const []]
+**seats** | **List&lt;int&gt;** |  | [optional] 
 **lateDuration** | **int** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

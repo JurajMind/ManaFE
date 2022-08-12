@@ -1,23 +1,23 @@
 import 'package:app/module/data_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:darq/darq.dart';
 
 import 'gear_usage_item.dart';
 
 class GearUsageStat extends StatelessWidget {
   const GearUsageStat({
-    Key key,
-    @required this.controller,
+    Key? key,
+    required this.controller,
   }) : super(key: key);
 
-  final PageController controller;
+  final PageController? controller;
 
   @override
   Widget build(BuildContext context) {
-    var bloc = DataProvider.getData(context).statisticBloc;
+    var bloc = DataProvider.getData(context)!.statisticBloc;
     return Container(
-      child: StreamBuilder<List<PipeAccessoryUsageDto>>(
+      child: StreamBuilder<List<PipeAccessoryUsageDto>?>(
           stream: bloc.gearUsage,
           initialData: null,
           builder: (context, snapshot) {
@@ -44,11 +44,11 @@ class GearUsageStat extends StatelessWidget {
     );
   }
 
-  List<PipeAccessoryUsageDto> getUsageByType(List<PipeAccessoryUsageDto> usage, String type) {
+  List<PipeAccessoryUsageDto>? getUsageByType(List<PipeAccessoryUsageDto>? usage, String type) {
     if (usage == null) {
       return null;
     }
 
-    return List.from(usage).where((f) => f.type == type).orderByDescending((o) => o.used).toList();
+    return List.from(usage).where((f) => f.type == type).orderByDescending((o) => o.used).toList() as List<PipeAccessoryUsageDto>?;
   }
 }

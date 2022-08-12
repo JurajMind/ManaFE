@@ -1,31 +1,21 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'package:openapi/api.dart';
 import 'package:test/test.dart';
+import 'package:openapi/openapi.dart';
 
 // tests for PriceGroupItems
 void main() {
-  final instance = PriceGroupItems();
+  final PriceGroupItems? instance = /* PriceGroupItems(...) */ null;
+  // TODO add properties to the entity
 
-  group('test PriceGroupItems', () {
+  group(PriceGroupItems, () {
     // int groupId
     test('to test the property `groupId`', () async {
       // TODO
     });
 
-    // Map<String, double> price (default value: const {})
+    // Map<String, double> price
     test('to test the property `price`', () async {
       // TODO
     });
 
-
   });
-
 }

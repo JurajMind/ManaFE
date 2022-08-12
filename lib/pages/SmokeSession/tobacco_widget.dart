@@ -6,17 +6,16 @@ import 'package:app/pages/SmokeSession/tobacco_edit.dart';
 import 'package:app/utils/translations/app_translations.dart';
 
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class TobaccoSessionWidget extends StatelessWidget {
-  final PipeAccesorySimpleDto tobacco;
-  final TobaccoMixSimpleDto tobaccoMix;
-  final SmokeSessionBloc smokeSessionBloc;
-  final GlobalKey<NavigatorState> Function(int) callback;
+  final PipeAccesorySimpleDto? tobacco;
+  final TobaccoMixSimpleDto? tobaccoMix;
+  final SmokeSessionBloc? smokeSessionBloc;
+  final GlobalKey<NavigatorState>? Function(int)? callback;
 
-  const TobaccoSessionWidget(
-      {this.tobacco, this.tobaccoMix, this.smokeSessionBloc, this.callback});
+  const TobaccoSessionWidget({this.tobacco, this.tobaccoMix, this.smokeSessionBloc, this.callback});
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +24,8 @@ class TobaccoSessionWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          new StreamBuilder<SmokeStatisticDataModel>(
-            stream: smokeSessionBloc.smokeStatistic,
+          new StreamBuilder<SmokeStatisticDataModel?>(
+            stream: smokeSessionBloc!.smokeStatistic,
             builder: (context, snapShot) {
               double percentage = ((snapShot?.data?.pufCount ?? 0) / 300) * 100;
 
@@ -39,11 +38,8 @@ class TobaccoSessionWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Text(
-                    AppTranslations.of(context)
-                        .text("gear.tobacco")
-                        .toUpperCase(),
-                    style: new TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16.0),
+                    AppTranslations.of(context)!.text("gear.tobacco").toUpperCase(),
+                    style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
                   ),
                   LinearPercentIndicator(
                     width: 200.0,
@@ -68,25 +64,17 @@ class TobaccoSessionWidget extends StatelessWidget {
   }
 
   showTobaccoDialog(BuildContext context) async {
-    TobaccoEditModel tobacco = await Navigator.of(context)
-        .push(new MaterialPageRoute<TobaccoEditModel>(
-            builder: (BuildContext context) {
-              return new TobaccoEditWidget(
-                callback: callback,
-                tobaccoWeight: this
-                    .smokeSessionBloc
-                    .smokeSessionMetaData
-                    .value
-                    .tobaccoWeight
-                    .toInt(),
-                tobacco:
-                    this.smokeSessionBloc.smokeSessionMetaData.value.tobacco,
-                mix:
-                    this.smokeSessionBloc.smokeSessionMetaData.value.tobaccoMix,
-              );
-            },
-            fullscreenDialog: true));
+    TobaccoEditModel? tobacco = await Navigator.of(context).push(new MaterialPageRoute<TobaccoEditModel>(
+        builder: (BuildContext context) {
+          return new TobaccoEditWidget(
+            callback: callback,
+            tobaccoWeight: this.smokeSessionBloc!.smokeSessionMetaData.value!.tobaccoWeight!.toInt(),
+            tobacco: this.smokeSessionBloc!.smokeSessionMetaData.value!.tobacco,
+            mix: this.smokeSessionBloc!.smokeSessionMetaData.value!.tobaccoMix,
+          );
+        },
+        fullscreenDialog: true));
 
-    if (tobacco != null) this.smokeSessionBloc.setTobacco(tobacco);
+    if (tobacco != null) this.smokeSessionBloc!.setTobacco(tobacco);
   }
 }

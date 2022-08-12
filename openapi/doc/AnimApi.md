@@ -17,17 +17,17 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = AnimApi();
-final id = id_example; // String | 
+final api = Openapi().getAnimApi();
+final String id = id_example; // String | 
 
-try { 
-    final result = api_instance.animDefaultAction(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.animDefaultAction(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling AnimApi->animDefaultAction: $e\n');
 }
 ```

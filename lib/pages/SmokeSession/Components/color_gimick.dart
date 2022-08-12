@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 
 class ColorSessionGimick extends StatefulWidget {
   const ColorSessionGimick({
-    Key key,
-    @required this.screenSize,
+    Key? key,
+    required this.screenSize,
   }) : super(key: key);
 
   final Size screenSize;
@@ -27,9 +27,9 @@ class _ColorSessionGimickState extends State<ColorSessionGimick>
     super.dispose();
   }
 
-  AnimationController _controller;
-  StreamSubscription<int> subscription;
-  Animatable<Color> background = TweenSequence<Color>(
+  late AnimationController _controller;
+  late StreamSubscription<int?> subscription;
+  Animatable<Color?> background = TweenSequence<Color?>(
     [
       TweenSequenceItem(
         weight: 1.0,

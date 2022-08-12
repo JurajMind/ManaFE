@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 class SmokeColorWheel extends StatefulWidget {
-  final HSVColor color;
-  final ValueChanged<HSVColor> onColorChanged;
-  final ValueChanged<HSVColor> onColorChanging;
+  final HSVColor? color;
+  final ValueChanged<HSVColor?>? onColorChanged;
+  final ValueChanged<HSVColor?>? onColorChanging;
   const SmokeColorWheel(
-      {Key key, this.color, this.onColorChanged, this.onColorChanging})
+      {Key? key, this.color, this.onColorChanged, this.onColorChanging})
       : super(key: key);
 
   @override
@@ -21,8 +21,8 @@ class SmokeColorWheel extends StatefulWidget {
 }
 
 class SmokeColorWheelState extends State<SmokeColorWheel> {
-  HSVColor selectedColor;
-  Offset position;
+  HSVColor? selectedColor;
+  Offset? position;
 
   @override
   void initState() {
@@ -36,7 +36,7 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
   void didChangeDependencies() {
     Size size = MediaQuery.of(context).size;
     if (position == null)
-      position = ColorHelper.colorToPosition(selectedColor, size, position);
+      position = ColorHelper.colorToPosition(selectedColor!, size, position);
     super.didChangeDependencies();
   }
 
@@ -47,7 +47,7 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
       selectedColor = widget.color != null
           ? widget.color
           : HSVColor.fromColor(Colors.white);
-      position = ColorHelper.colorToPosition(selectedColor, size, position);
+      position = ColorHelper.colorToPosition(selectedColor!, size, position);
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -67,19 +67,19 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
             padding: EdgeInsets.all(10.0),
             child: GestureDetector(
               onTapDown: (TapDownDetails details) {
-                RenderBox getBox = context.findRenderObject();
+                RenderBox getBox = context.findRenderObject() as RenderBox;
                 Offset localOffset = getBox.globalToLocal(details.globalPosition);
                 colorUpdate(localOffset, size);
 
-                widget.onColorChanged(selectedColor);
+                widget.onColorChanged!(selectedColor);
               },
               onPanUpdate: (DragUpdateDetails details) {
-                RenderBox getBox = context.findRenderObject();
+                RenderBox getBox = context.findRenderObject() as RenderBox;
                 Offset localOffset = getBox.globalToLocal(details.globalPosition);
                 colorUpdate(localOffset, size);
               },
               onPanEnd: (DragEndDetails details) {
-                widget.onColorChanged(selectedColor);
+                widget.onColorChanged!(selectedColor);
               },
               child: RepaintBoundary(
                 child: Transform.rotate(
@@ -119,19 +119,19 @@ class SmokeColorWheelState extends State<SmokeColorWheel> {
       position = localOffset;
       selectedColor = ColorHelper.position2color(middle, size.width / 2);
     });
-    if (widget.onColorChanging != null) widget.onColorChanging(selectedColor);
+    if (widget.onColorChanging != null) widget.onColorChanging!(selectedColor);
   }
 }
 
 class ColorCircle extends StatelessWidget {
   const ColorCircle({
-    Key key,
-    @required this.globalOffset,
+    Key? key,
+    required this.globalOffset,
     this.color,
   }) : super(key: key);
 
-  final Offset globalOffset;
-  final HSVColor color;
+  final Offset? globalOffset;
+  final HSVColor? color;
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +145,7 @@ class ColorCircle extends StatelessWidget {
           width: 60.0,
           height: 60.0,
           decoration: BoxDecoration(
-              color: color.toColor(),
+              color: color!.toColor(),
               borderRadius: new BorderRadius.all(Radius.circular(25.0)),
               border: new Border.all(
                   color: const Color.fromRGBO(221, 221, 221, 1.0), width: 4.0)),
@@ -162,7 +162,7 @@ class RainbowPainter extends CustomPainter {
 
   RainbowPainter({this.pick});
 
-  Offset pick;
+  Offset? pick;
 
   @override
   void paint(Canvas canvas, Size size) {

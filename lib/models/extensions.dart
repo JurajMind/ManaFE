@@ -3,10 +3,10 @@ import 'package:app/components/Media/media.widget.dart';
 import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class Extensions {
-  static String getPlaceImage(PlaceSimpleDto place, MediaSize size) {
+  static String getPlaceImage(PlaceSimpleDto? place, MediaSize size) {
     var image = place?.media?.path;
     if (image == null) {
       return 'https://${App.baseUri}/Content/Placeholder/place.jpg';
@@ -14,7 +14,7 @@ class Extensions {
     return 'https://${App.baseUri}$image${MediaWidget.getSize(size)}';
   }
 
-  static String getFullPlaceImage(PlaceDto place, MediaSize size) {
+  static String getFullPlaceImage(PlaceDto? place, MediaSize size) {
     var image = place?.medias?.first?.path;
     if (image == null) {
       return 'https://${App.baseUri}/Content/Placeholder/place.jpg';
@@ -22,7 +22,7 @@ class Extensions {
     return 'https://${App.baseUri}${MediaWidget.getSize(size)}';
   }
 
-  static String adress(AddressDto adress) {
+  static String adress(AddressDto? adress) {
     return '${adress?.street ?? ''} ${adress?.number ?? ''} ${adress?.city ?? ''}';
   }
 
@@ -34,14 +34,13 @@ class Extensions {
           fadeOutDuration: Duration(milliseconds: 0),
           fadeInCurve: Curves.linear,
           imageUrl: 'https://${App.baseUri}${accesory.picture}',
-          errorWidget: (context, url, error) =>
-              defaultAccesoryPicture(accesory),
+          errorWidget: (context, url, error) => defaultAccesoryPicture(accesory),
           placeholder: (context, url) => defaultAccesoryPicture(accesory));
     }
     return defaultAccesoryPicture(accesory);
   }
 
-  static String getAbsoluteurl(String relativeUrl) {
+  static String getAbsoluteurl(String? relativeUrl) {
     if (relativeUrl != null) {
       return 'https://${App.baseUri}$relativeUrl';
     }
@@ -60,7 +59,7 @@ class Extensions {
   }
 
   static Widget defaultAccesoryPicture(PipeAccesorySimpleDto accesory) {
-    return defaultTypePicture(accesory.type);
+    return defaultTypePicture(accesory.type!);
   }
 
   static Widget defaultTypePicture(String type) {
@@ -110,7 +109,7 @@ class Extensions {
     return "$whole.$major.$minor";
   }
 
-  static String devicePicture(DeviceSimpleDtoTypeEnum type) {
+  static String devicePicture(DeviceSimpleDtoTypeEnum? type) {
     switch (type) {
       case DeviceSimpleDtoTypeEnum.number13:
         return 'images/devices/wood.jpg';
@@ -124,7 +123,7 @@ class Extensions {
     return 'images/devices/prototype.jpg';
   }
 
-  static List<Color> deviceAccentColor(DeviceSimpleDtoTypeEnum type) {
+  static List<Color> deviceAccentColor(DeviceSimpleDtoTypeEnum? type) {
     switch (type) {
       case DeviceSimpleDtoTypeEnum.number13:
         return [
@@ -157,12 +156,12 @@ class Extensions {
 
 class Convertor {
   static PipeAccesorySimpleDto getPipeAccesory(TobaccoSimpleDto tobacco) {
-    var result = PipeAccesorySimpleDto();
-    result.brand = tobacco.brand;
-    result.brandId = tobacco.brandId;
-    result.id = tobacco.id;
-    result.name = tobacco.name;
-    result.type = "Tobacco";
-    return result;
+    return PipeAccesorySimpleDto(
+      brand: tobacco.brand,
+      brandId: tobacco.brandId,
+      id: tobacco.id,
+      name: tobacco.name,
+      type: "Tobacco",
+    );
   }
 }

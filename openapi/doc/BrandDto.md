@@ -17,9 +17,9 @@ Name | Type | Description | Notes
 **coal** | **bool** |  | [optional] 
 **heatManagment** | **bool** |  | [optional] 
 **tobaccoMixBrand** | **bool** |  | [optional] 
-**pipeAccessories** | [**List<PipeAccesorySimpleDto>**](PipeAccesorySimpleDto.md) |  | [optional] [default to const []]
-**socialMedias** | [**List<SmartHookahModelsDbSocialMedia>**](SmartHookahModelsDbSocialMedia.md) |  | [optional] [default to const []]
-**medias** | [**List<MediaDto>**](MediaDto.md) |  | [optional] [default to const []]
+**pipeAccessories** | [**List&lt;PipeAccesorySimpleDto&gt;**](PipeAccesorySimpleDto.md) |  | [optional] 
+**socialMedias** | [**List&lt;SmartHookahModelsDbSocialMedia&gt;**](SmartHookahModelsDbSocialMedia.md) |  | [optional] 
+**medias** | [**List&lt;MediaDto&gt;**](MediaDto.md) |  | [optional] 
 **displayName** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

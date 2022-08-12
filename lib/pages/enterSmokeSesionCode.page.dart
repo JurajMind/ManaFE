@@ -20,9 +20,9 @@ import 'package:logger/logger.dart';
 import 'SmokeSession/qr_code_reader_page.dart';
 
 class EnterSmokeSessionCode extends StatefulWidget {
-  final GlobalKey<NavigatorState> Function(int) callback;
+  final GlobalKey<NavigatorState>? Function(int)? callback;
 
-  const EnterSmokeSessionCode({Key key, this.callback}) : super(key: key);
+  const EnterSmokeSessionCode({Key? key, this.callback}) : super(key: key);
   @override
   State<StatefulWidget> createState() => new EnterSmokeSessionCodeState();
 }
@@ -31,7 +31,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
   final double topWidgetHeight = 200.0;
   final _formKey = GlobalKey<FormState>();
   final myController = TextEditingController();
-  final ApiClient apiClient = App.http;
+  final ApiClient? apiClient = App.http;
   bool validating = false;
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -47,7 +47,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
       var sessionBloc = getIt.get<SmokeSessionBloc>();
       setState(() {
         if (sessionBloc.lastSession.hasValue) {
-          myController.text = sessionBloc.lastSession.value;
+          myController.text = sessionBloc.lastSession.value!;
         }
       });
     });
@@ -92,7 +92,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            new Text(AppTranslations.of(context).text('enter_code.enter_session_code'),
+                            new Text(AppTranslations.of(context)!.text('enter_code.enter_session_code'),
                                 textScaleFactor: 2.0, style: Theme.of(context).textTheme.bodyText2),
                             new Form(
                               key: _formKey,
@@ -113,7 +113,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                       textAlign: TextAlign.center,
                                       autocorrect: false,
                                       decoration: new InputDecoration(
-                                        labelText: AppTranslations.of(context).text('enter_code.session_code'),
+                                        labelText: AppTranslations.of(context)!.text('enter_code.session_code'),
                                         labelStyle: TextStyle(
                                           color: Colors.white,
                                         ),
@@ -158,7 +158,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                             width: 180.0,
                                             onTap: () async {
                                               if (validating == true) return;
-                                              if (_formKey.currentState.validate()) {
+                                              if (_formKey.currentState!.validate()) {
                                                 setState(() {
                                                   validating = true;
                                                 });
@@ -166,8 +166,8 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                                               }
                                             },
                                             child: validating
-                                                ? new Text(AppTranslations.of(context).text('enter_code.validating'))
-                                                : new Text(AppTranslations.of(context).text('enter_code.enter')),
+                                                ? new Text(AppTranslations.of(context)!.text('enter_code.validating'))
+                                                : new Text(AppTranslations.of(context)!.text('enter_code.enter')),
                                             buttonColor: Colors.transparent,
                                           ),
                                         ),
@@ -213,7 +213,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                 flex: 2,
                 child: Center(
                   child: Container(
-                    constraints: theme.pageConstrains,
+                    constraints: theme.pageConstrains as BoxConstraints?,
                     child: SmokeSessionCarousel(
                       callback: widget.callback,
                     ),
@@ -226,7 +226,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
   }
 
   Future validateAndGo(BuildContext context, String sessionId) async {
-    var result = await apiClient.validateSessionId(sessionId);
+    var result = await apiClient!.validateSessionId(sessionId);
     setState(() {
       validating = false;
     });
@@ -240,7 +240,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
         },
       ));
     } else {
-      _scaffoldKey.currentState.showSnackBar(new SnackBar(
+      _scaffoldKey.currentState!.showSnackBar(new SnackBar(
         content: new Text("Invalid session code"),
       ));
     }
@@ -260,7 +260,7 @@ class UpperCaseTextFormatter extends TextInputFormatter {
     }
 
     return new TextEditingValue(
-      text: newValue.text?.toUpperCase(),
+      text: newValue.text?.toUpperCase() ?? '',
       selection: newValue.selection,
     );
   }

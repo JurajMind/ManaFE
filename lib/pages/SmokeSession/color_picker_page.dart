@@ -11,15 +11,15 @@ import 'package:flutter_material_color_picker/flutter_material_color_picker.dart
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ColorPickerPage extends StatefulWidget {
-  final StandSettings initData;
-  ColorPickerPage({Key key, this.initData}) : super(key: key);
+  final StandSettings? initData;
+  ColorPickerPage({Key? key, this.initData}) : super(key: key);
 
   _ColorPickerPageState createState() => _ColorPickerPageState();
 }
 
 class _ColorPickerPageState extends State<ColorPickerPage> {
-  PageController mainController;
-  PageController touchController;
+  PageController? mainController;
+  PageController? touchController;
 
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
   }
 
   void _onScroll() {
-    mainController.jumpTo(touchController.offset);
+    mainController!.jumpTo(touchController!.offset);
   }
 
   @override
@@ -45,7 +45,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppTranslations.of(context)
+          AppTranslations.of(context)!
               .text('smoke_session.select_color')
               .toUpperCase(),
         ),
@@ -86,21 +86,21 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
                     BottomControllBar(
                       haveLeftChevron: false,
                       haveRightChevron: true,
-                      label: AppTranslations.of(context)
+                      label: AppTranslations.of(context)!
                           .text("smoke_session.idle"),
                       state: SmokeState.idle,
                     ),
                     BottomControllBar(
                       haveLeftChevron: true,
                       haveRightChevron: true,
-                      label: AppTranslations.of(context)
+                      label: AppTranslations.of(context)!
                           .text("smoke_session.inhale"),
                       state: SmokeState.puf,
                     ),
                     BottomControllBar(
                       haveLeftChevron: true,
                       haveRightChevron: false,
-                      label: AppTranslations.of(context)
+                      label: AppTranslations.of(context)!
                           .text("smoke_session.blow"),
                       state: SmokeState.blow,
                     )
@@ -116,23 +116,23 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
 }
 
 class StateColorPicker extends StatefulWidget {
-  final Color initColor;
-  final SmokeState state;
-  const StateColorPicker({Key key, this.initColor, this.state})
+  final Color? initColor;
+  final SmokeState? state;
+  const StateColorPicker({Key? key, this.initColor, this.state})
       : super(key: key);
   @override
   _StateColorPickerState createState() => _StateColorPickerState();
 }
 
 class _StateColorPickerState extends State<StateColorPicker> {
-  Color color = Colors.white;
+  Color? color = Colors.white;
   @override
   initState() {
     if (widget.initColor != null) color = widget.initColor;
     super.initState();
   }
 
-  Color _tempMainColor;
+  Color? _tempMainColor;
   @override
   Widget build(BuildContext context) {
     var smokeSessionBloc = getIt.get<SmokeSessionBloc>();
@@ -141,7 +141,7 @@ class _StateColorPickerState extends State<StateColorPicker> {
         children: <Widget>[
           Center(
             child: Container(
-              child: StreamBuilder<StandSettings>(
+              child: StreamBuilder<StandSettings?>(
                   stream: smokeSessionBloc.standSettings,
                   builder: (context, snapshot) {
                     if (snapshot.data == null) {
@@ -156,10 +156,10 @@ class _StateColorPickerState extends State<StateColorPicker> {
                         },
                         onColorChanged: (color) {
                           smokeSessionBloc.setColor(
-                              color.toColor(), widget.state);
+                              color.toColor(), widget.state!);
                         },
                         color:
-                            snapshot.data.getStateSetting(widget.state).color,
+                            snapshot.data!.getStateSetting(widget.state)!.color,
                       ),
                     );
                   }),
@@ -224,7 +224,7 @@ class _StateColorPickerState extends State<StateColorPicker> {
               onPressed: () {
                 setState(() => color = _tempMainColor);
                 var bloc = getIt.get<SmokeSessionBloc>();
-                bloc.setColor(_tempMainColor, SmokeState.idle);
+                bloc.setColor(_tempMainColor!, SmokeState.idle);
 
                 Navigator.of(context).pop();
               },

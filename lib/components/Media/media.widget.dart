@@ -1,19 +1,17 @@
 import 'package:app/app/app.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 import 'media_full.dart';
 
 class MediaWidget extends StatelessWidget {
   @required
-  final MediaDto media;
+  final MediaDto? media;
   final MediaSize size;
   final bool openOnClick;
 
-  const MediaWidget(this.media,
-      {Key key, this.size = MediaSize.Large, this.openOnClick = false})
-      : super(key: key);
+  const MediaWidget(this.media, {Key? key, this.size = MediaSize.Large, this.openOnClick = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +30,7 @@ class MediaWidget extends StatelessWidget {
             fadeOutDuration: Duration(milliseconds: 0),
             fadeInCurve: Curves.linear,
             placeholder: (context, url) => CircularProgressIndicator(),
-            imageUrl: 'https://${App.baseUri}${media.path}${getSize(size)}'),
+            imageUrl: 'https://${App.baseUri}${media!.path}${getSize(size)}'),
       ),
     );
   }

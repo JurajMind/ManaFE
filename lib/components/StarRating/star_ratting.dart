@@ -7,11 +7,11 @@ typedef void RatingChangeCallback(double rating);
 class StarRating extends StatelessWidget {
   final int starCount;
   final double rating;
-  final RatingChangeCallback onRatingChanged;
-  final Color color;
-  final Color borderColor;
-  final Color backgraindColor;
-  final double size;
+  final RatingChangeCallback? onRatingChanged;
+  final Color? color;
+  final Color? borderColor;
+  final Color? backgraindColor;
+  final double? size;
   StarRating(
       {this.starCount = 5,
       this.rating = .0,
@@ -44,7 +44,7 @@ class StarRating extends StatelessWidget {
     }
     return new InkResponse(
       onTap:
-          onRatingChanged == null ? null : () => onRatingChanged(index + 1.0),
+          onRatingChanged == null ? null : () => onRatingChanged!(index + 1.0),
       child: icon,
     );
   }

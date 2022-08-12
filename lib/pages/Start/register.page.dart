@@ -9,22 +9,25 @@ import 'package:app/support/validators/required.validator.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key key}) : super(key: key);
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
   _RegistryPageState createState() => _RegistryPageState();
 }
 
 class _RegistryPageState extends State<RegisterPage> {
-  PageController controller;
+  PageController? controller;
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   HSVColor color = HSVColor.fromColor(Colors.orange);
   Offset animOffset = Offset(0.0, 0.0);
   final FocusNode passwordFocusNode = FocusNode();
-  UserModel data = new UserModel();
+  UserModel data = new UserModel(
+    email: '',
+    password: '',
+  );
   String termOfUssage = "";
   bool showPassword = false;
   var _emailAutoValidate = false;
@@ -63,8 +66,8 @@ class _RegistryPageState extends State<RegisterPage> {
                         controller: nameController,
                         keyboardType: TextInputType.text,
                         decoration: new InputDecoration(
-                          hintText: AppTranslations.of(context).text('login.name_hint'),
-                          labelText: AppTranslations.of(context).text('login.name'),
+                          hintText: AppTranslations.of(context)!.text('login.name_hint'),
+                          labelText: AppTranslations.of(context)!.text('login.name'),
                           labelStyle: Theme.of(context).textTheme.bodyText2,
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(40.0)),
@@ -78,7 +81,7 @@ class _RegistryPageState extends State<RegisterPage> {
                         onFieldSubmitted: (String textInput) {
                           data.userName = textInput;
                         },
-                        onSaved: (String value) {
+                        onSaved: (String? value) {
                           data.userName = value;
                         }),
                   ),
@@ -87,14 +90,14 @@ class _RegistryPageState extends State<RegisterPage> {
                     child: new TextFormField(
                         style: Theme.of(context).textTheme.bodyText2,
                         controller: emailController,
-                        validator: (String value) {
+                        validator: (String? value) {
                           return validate(value, 'E-mail Address',
                               [new RequiredValidator(), new EmailValidator(), new MaxValidator(63)]);
                         },
                         keyboardType: TextInputType.emailAddress,
                         decoration: new InputDecoration(
-                          hintText: AppTranslations.of(context).text("login.email"),
-                          labelText: AppTranslations.of(context).text("login.email"),
+                          hintText: AppTranslations.of(context)!.text("login.email"),
+                          labelText: AppTranslations.of(context)!.text("login.email"),
                           labelStyle: Theme.of(context).textTheme.bodyText2,
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(40.0)),
@@ -119,8 +122,8 @@ class _RegistryPageState extends State<RegisterPage> {
                           });
                           data.email = textInput;
                         },
-                        onSaved: (String value) {
-                          data.email = value;
+                        onSaved: (String? value) {
+                          data.email = value!;
                         }),
                   ),
                   Container(
@@ -144,8 +147,8 @@ class _RegistryPageState extends State<RegisterPage> {
                               });
                             },
                           ),
-                          hintText: AppTranslations.of(context).text("login.password"),
-                          labelText: AppTranslations.of(context).text("login.password"),
+                          hintText: AppTranslations.of(context)!.text("login.password"),
+                          labelText: AppTranslations.of(context)!.text("login.password"),
                           labelStyle: Theme.of(context).textTheme.bodyText2,
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(40.0)),
@@ -168,8 +171,8 @@ class _RegistryPageState extends State<RegisterPage> {
                           data.password = textInput;
                         },
                         onEditingComplete: () {},
-                        onSaved: (String value) {
-                          data.password = value;
+                        onSaved: (String? value) {
+                          data.password = value!;
                         }),
                   ),
                   Container(
@@ -193,8 +196,8 @@ class _RegistryPageState extends State<RegisterPage> {
                               });
                             },
                           ),
-                          hintText: AppTranslations.of(context).text("login.confirm_password"),
-                          labelText: AppTranslations.of(context).text("login.confirm_password"),
+                          hintText: AppTranslations.of(context)!.text("login.confirm_password"),
+                          labelText: AppTranslations.of(context)!.text("login.confirm_password"),
                           labelStyle: Theme.of(context).textTheme.bodyText2,
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(40.0)),
@@ -217,8 +220,8 @@ class _RegistryPageState extends State<RegisterPage> {
                           data.password = textInput;
                         },
                         onEditingComplete: () {},
-                        onSaved: (String value) {
-                          data.password = value;
+                        onSaved: (String? value) {
+                          data.password = value!;
                         }),
                   ),
                   Padding(
@@ -227,8 +230,8 @@ class _RegistryPageState extends State<RegisterPage> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                         child: Text(
-                          AppTranslations.of(context).text("Create account"),
-                          style: Theme.of(context).textTheme.headline6.apply(color: Colors.black, fontSizeDelta: -7),
+                          AppTranslations.of(context)!.text("Create account"),
+                          style: Theme.of(context).textTheme.headline6!.apply(color: Colors.black, fontSizeDelta: -7),
                         ),
                       ),
                       onPressed: () => register(context),
@@ -249,8 +252,8 @@ class _RegistryPageState extends State<RegisterPage> {
   }
 
   register(BuildContext context) async {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
     }
     setState(() {
       this.loading = true;

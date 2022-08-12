@@ -25,15 +25,15 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'Components/color_gimick.dart';
 import 'Components/session_control_row.dart';
 import 'Components/stop_watches.dart';
 
 class SmokeSessionPage extends StatefulWidget {
-  final String sessionId;
-  final GlobalKey<NavigatorState> Function(int) callback;
+  final String? sessionId;
+  final GlobalKey<NavigatorState>? Function(int)? callback;
   SmokeSessionPage({this.sessionId, this.callback});
 
   @override
@@ -43,11 +43,11 @@ class SmokeSessionPage extends StatefulWidget {
 }
 
 class _SmokeSessionPage extends State<SmokeSessionPage> {
-  DataProvider dataProvider;
-  StopWatches stopWatches;
+  DataProvider? dataProvider;
+  StopWatches? stopWatches;
   int action = 0;
-  ScrollController scrollController;
-  ScrollPhysics physics;
+  ScrollController? scrollController;
+  ScrollPhysics? physics;
 
   @override
   void initState() {
@@ -70,7 +70,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
       if (msg == AppLifecycleState.resumed.toString()) {
         getIt.get<SmokeSessionBloc>().loadSessionData();
       }
-    });
+    } as Future<String?> Function(String?)?);
   }
 
   @override
@@ -81,8 +81,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
 
   @override
   Widget build(BuildContext context) {
-    StreamBuilder<SmokeSessionMetaDataDto> tobaccoMetaDataBuilder =
-        new StreamBuilder(
+    StreamBuilder<SmokeSessionMetaDataDto?> tobaccoMetaDataBuilder = new StreamBuilder(
       stream: getIt.get<SmokeSessionBloc>().smokeSessionMetaData,
       builder: (context, asyncSnapshot) {
         if (asyncSnapshot.data == null) {
@@ -91,8 +90,8 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         return Column(
           children: <Widget>[
             TobaccoSessionWidget(
-              tobacco: asyncSnapshot.data.tobacco,
-              tobaccoMix: asyncSnapshot.data.tobaccoMix,
+              tobacco: asyncSnapshot.data!.tobacco,
+              tobaccoMix: asyncSnapshot.data!.tobaccoMix,
               smokeSessionBloc: getIt.get<SmokeSessionBloc>(),
               callback: widget.callback,
             )
@@ -101,7 +100,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
       },
     );
 
-    StreamBuilder<SmokeSessionMetaDataDto> metadataBuilder = new StreamBuilder(
+    StreamBuilder<SmokeSessionMetaDataDto?> metadataBuilder = new StreamBuilder(
       stream: getIt.get<SmokeSessionBloc>().smokeSessionMetaData,
       builder: (context, asyncSnapshot) {
         var shortestSide = MediaQuery.of(context).size.shortestSide;
@@ -124,14 +123,11 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                   child: Column(
                     children: <Widget>[
                       PipeAccesoryWidget(
-                        accesory: asyncSnapshot.data.pipe,
+                        accesory: asyncSnapshot.data!.pipe,
                         type: 'pipe',
                         dataProvider: dataProvider,
                       ),
-                      PipeAccesoryWidget(
-                          accesory: asyncSnapshot.data.bowl,
-                          type: 'bowl',
-                          dataProvider: dataProvider),
+                      PipeAccesoryWidget(accesory: asyncSnapshot.data!.bowl, type: 'bowl', dataProvider: dataProvider),
                       // emptyPipeAccesoryWidget(asyncSnapshot.data)
                     ],
                   ),
@@ -141,13 +137,8 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                   child: Column(
                     children: <Widget>[
                       PipeAccesoryWidget(
-                          accesory: asyncSnapshot.data.heatManagement,
-                          type: 'hmd',
-                          dataProvider: dataProvider),
-                      PipeAccesoryWidget(
-                          accesory: asyncSnapshot.data.coal,
-                          type: 'coal',
-                          dataProvider: dataProvider),
+                          accesory: asyncSnapshot.data!.heatManagement, type: 'hmd', dataProvider: dataProvider),
+                      PipeAccesoryWidget(accesory: asyncSnapshot.data!.coal, type: 'coal', dataProvider: dataProvider),
                       // emptyPipeAccesoryWidget(asyncSnapshot.data)
                     ],
                   ),
@@ -160,45 +151,34 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         return Column(
           children: <Widget>[
             PipeAccesoryWidget(
-              accesory: asyncSnapshot.data.pipe,
+              accesory: asyncSnapshot.data!.pipe,
               type: 'pipe',
               dataProvider: dataProvider,
             ),
-            PipeAccesoryWidget(
-                accesory: asyncSnapshot.data.bowl,
-                type: 'bowl',
-                dataProvider: dataProvider),
-            PipeAccesoryWidget(
-                accesory: asyncSnapshot.data.heatManagement,
-                type: 'hmd',
-                dataProvider: dataProvider),
-            PipeAccesoryWidget(
-                accesory: asyncSnapshot.data.coal,
-                type: 'coal',
-                dataProvider: dataProvider),
+            PipeAccesoryWidget(accesory: asyncSnapshot.data!.bowl, type: 'bowl', dataProvider: dataProvider),
+            PipeAccesoryWidget(accesory: asyncSnapshot.data!.heatManagement, type: 'hmd', dataProvider: dataProvider),
+            PipeAccesoryWidget(accesory: asyncSnapshot.data!.coal, type: 'coal', dataProvider: dataProvider),
             // emptyPipeAccesoryWidget(asyncSnapshot.data)
           ],
         );
       },
     );
 
-    StreamBuilder<SmokeStatisticDataModel> statisticBuilder = new StreamBuilder(
+    StreamBuilder<SmokeStatisticDataModel?> statisticBuilder = new StreamBuilder(
       stream: getIt.get<SmokeSessionBloc>().smokeStatistic,
       builder: (context, asyncSnapshot) {
         if (asyncSnapshot.data == null) {
           return CircularProgressIndicator();
         }
 
-        if (asyncSnapshot.data.duration == null) {
+        if (asyncSnapshot.data!.duration == null) {
           return Text('NoData');
         }
-        var durationString = dateUtils.DateUtils.toStringDuration(
-            asyncSnapshot.data.smokeDuration);
+        var durationString = dateUtils.DateUtils.toStringDuration(asyncSnapshot.data!.smokeDuration);
 
-        var longestString =
-            dateUtils.DateUtils.toSecondDuration(asyncSnapshot.data.longestPuf);
+        var longestString = dateUtils.DateUtils.toSecondDuration(asyncSnapshot.data!.longestPuf);
 
-        var start = asyncSnapshot.data.start;
+        var start = asyncSnapshot.data!.start;
         return Container(
           constraints: BoxConstraints(maxWidth: 800),
           decoration: BoxDecoration(
@@ -211,23 +191,16 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     new HeaderItem(
-                      label: AppTranslations.of(context)
-                          .text('smoke_session.puf_count'),
-                      data: asyncSnapshot.data.pufCount.toString(),
+                      label: AppTranslations.of(context)!.text('smoke_session.puf_count'),
+                      data: asyncSnapshot.data!.pufCount.toString(),
                     ),
                     Expanded(
                       child: Column(
                         children: <Widget>[
-                          Text(
-                              AppTranslations.of(context)
-                                  .text('smoke_session.last_puf'),
+                          Text(AppTranslations.of(context)!.text('smoke_session.last_puf'),
                               textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2
-                                  .apply(color: Colors.grey)),
-                          new PuffTimeText(
-                              completeTime: asyncSnapshot.data.toString()),
+                              style: Theme.of(context).textTheme.bodyText2!.apply(color: Colors.grey)),
+                          new PuffTimeText(completeTime: asyncSnapshot.data.toString()),
                           Text(longestString)
                         ],
                       ),
@@ -235,16 +208,11 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                     Expanded(
                       child: Column(
                         children: <Widget>[
-                          Text(
-                              AppTranslations.of(context)
-                                  .text('smoke_session.durations'),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2
-                                  .apply(color: Colors.grey)),
+                          Text(AppTranslations.of(context)!.text('smoke_session.durations'),
+                              style: Theme.of(context).textTheme.bodyText2!.apply(color: Colors.grey)),
                           SinceTimer(
                             start: start,
-                            pufCount: asyncSnapshot.data.pufCount,
+                            pufCount: asyncSnapshot.data!.pufCount,
                             style: Theme.of(context).textTheme.headline4,
                           ),
                           Text(
@@ -281,24 +249,18 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      Hero(
-                          tag: "${widget.sessionId}_session",
-                          child: statisticBuilder),
+                      Hero(tag: "${widget.sessionId}_session", child: statisticBuilder),
                       Container(
                           height: 18,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               begin: Alignment.topCenter,
-                              end: Alignment
-                                  .bottomCenter, // 10% of the width, so there are ten blinds.
+                              end: Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
                               colors: [
-                                Theme.of(context)
-                                    .backgroundColor
-                                    .withAlpha(160),
+                                Theme.of(context).backgroundColor.withAlpha(160),
                                 Theme.of(context).backgroundColor
                               ], // whitish to gray
-                              tileMode: TileMode
-                                  .repeated, // repeats the gradient over the canvas
+                              tileMode: TileMode.repeated, // repeats the gradient over the canvas
                             ),
                           ))
                     ],
@@ -309,8 +271,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                   collapseMode: CollapseMode.parallax,
                   background: Container(
                     constraints: BoxConstraints(maxWidth: 1200),
-                    child: Center(
-                        child: new ColorSessionGimick(screenSize: screenSize)),
+                    child: Center(child: new ColorSessionGimick(screenSize: screenSize)),
                   )),
             ),
             new SliverList(
@@ -324,26 +285,19 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                       metadataBuilder,
                       Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: StreamBuilder<
-                                List<
-                                    SmartHookahModelsDbSessionDtoSessionReviewDto>>(
-                            stream:
-                                getIt.get<SmokeSessionBloc>().sessionReviews,
+                        child: StreamBuilder<List<SmartHookahModelsDbSessionDtoSessionReviewDto>?>(
+                            stream: getIt.get<SmokeSessionBloc>().sessionReviews,
                             builder: (context, snapshot) {
-                              if (snapshot.data == null ||
-                                  snapshot.data.length == 0)
+                              if (snapshot.data == null || snapshot.data!.length == 0)
                                 return new MButton(
                                   width: 200,
-                                  label: AppTranslations.of(context)
-                                      .text('smoke_session.review')
-                                      .toUpperCase(),
+                                  label: AppTranslations.of(context)!.text('smoke_session.review').toUpperCase(),
                                   onPressed: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            fullscreenDialog: true,
-                                            builder: (_) => SessionReview(
-                                                  onReviewSave: () {},
-                                                )));
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                        fullscreenDialog: true,
+                                        builder: (_) => SessionReview(
+                                              onReviewSave: () {},
+                                            )));
                                   },
                                 );
 
@@ -356,9 +310,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                         padding: EdgeInsets.all(8.0),
                         child: new MButton(
                           width: 200,
-                          label: AppTranslations.of(context)
-                              .text('smoke_session.more')
-                              .toUpperCase(),
+                          label: AppTranslations.of(context)!.text('smoke_session.more').toUpperCase(),
                           onPressed: () => showMoreModal(),
                         ),
                       )
@@ -377,10 +329,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
   }
 
   emptyPipeAccesoryWidget(SmokeSessionMetaDataDto md) {
-    if (md.pipe == null ||
-        md.bowl == null ||
-        md.coal == null ||
-        md.heatManagement == null)
+    if (md.pipe == null || md.bowl == null || md.coal == null || md.heatManagement == null)
       return RoundedButton(
         child: Text('Fill metadata'),
         width: 200.0,
@@ -417,32 +366,24 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
               children: <Widget>[
                 new ListTile(
                   leading: new Icon(FontAwesomeIcons.vial),
-                  title: new Text(
-                      AppTranslations.of(context)
-                          .text("smoke_session.experiments"),
+                  title: new Text(AppTranslations.of(context)!.text("smoke_session.experiments"),
                       style: Theme.of(context).textTheme.headline5),
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ExperimentalPage())),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ExperimentalPage())),
                 ),
                 new ListTile(
                   leading: new Icon(Icons.refresh),
-                  title: new Text(
-                      AppTranslations.of(context).text("device.restart"),
+                  title: new Text(AppTranslations.of(context)!.text("device.restart"),
                       style: Theme.of(context).textTheme.headline5),
                   onTap: () => _restartDialog(code),
                 ),
                 new ListTile(
                     leading: new Icon(FontAwesomeIcons.powerOff),
-                    title: new Text(
-                        AppTranslations.of(context)
-                            .text("smoke_session.end_session"),
+                    title: new Text(AppTranslations.of(context)!.text("smoke_session.end_session"),
                         style: Theme.of(context).textTheme.headline5),
                     onTap: () => _endDialog(context)),
                 new ListTile(
                     leading: new Icon(FontAwesomeIcons.reply),
-                    title: new Text(
-                        AppTranslations.of(context)
-                            .text("smoke_session.leave_session"),
+                    title: new Text(AppTranslations.of(context)!.text("smoke_session.leave_session"),
                         style: Theme.of(context).textTheme.headline5),
                     onTap: () {
                       var bloc = getIt.get<SmokeSessionBloc>();
@@ -464,35 +405,22 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text(
-              AppTranslations.of(context).text("smoke_session.end_session") +
-                  " ?"),
-          content: new Text(AppTranslations.of(context)
-              .text("smoke_session.end_session_confirm")),
+          title: new Text(AppTranslations.of(context)!.text("smoke_session.end_session") + " ?"),
+          content: new Text(AppTranslations.of(context)!.text("smoke_session.end_session_confirm")),
           actions: <Widget>[
-            new OutlineButton.icon(
-              borderSide: BorderSide(color: Colors.white, width: 1),
-              shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30.0)),
-              textColor: Colors.green,
-              label: new Text(
-                AppTranslations.of(context).text("common.yes"),
-              ),
-              icon: Icon(Icons.check, color: Colors.green),
+            MButton(
+              label: AppTranslations.of(context)!.text("common.yes"),
+              iconColor: Colors.green,
+              icon: Icons.check,
               onPressed: () {
                 Navigator.of(context).pop(true);
               },
             ),
             // usually buttons at the bottom of the dialog
-            new OutlineButton.icon(
-              icon: Icon(Icons.cancel, color: Colors.red),
-              borderSide: BorderSide(color: Colors.white, width: 1),
-              shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30.0)),
-              textColor: Colors.red,
-              label: new Text(
-                AppTranslations.of(context).text("common.no"),
-              ),
+            new MButton(
+              iconColor: Colors.red,
+              icon: Icons.cancel,
+              label: AppTranslations.of(context)!.text("common.no"),
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
@@ -501,16 +429,15 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         );
       },
     ).then((value) {
-      if (value) {
+      if (value!) {
         ProgressDialog pr = showEndingProgress();
 
         var sessionBloc = getIt.get<SmokeSessionBloc>();
         sessionBloc.endSession().then((value) {
           pr.hide();
           Navigator.of(context).pop();
-          widget.callback(4);
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => SmokeSessioDetailPage(session: value)));
+          widget.callback!(4);
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => SmokeSessioDetailPage(session: value)));
         });
       }
     });
@@ -523,7 +450,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
     return pr;
   }
 
-  void _restartDialog(String code) {
+  void _restartDialog(String? code) {
     // flutter defined function
     showDialog<bool>(
       context: context,
@@ -552,30 +479,26 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
         );
       },
     ).then((value) {
-      if (value) {
-        App.http.restartDevice(code);
+      if (value!) {
+        App.http!.restartDevice(code);
       }
     });
   }
 }
 
 class HeaderItem extends StatelessWidget {
-  final String label;
-  final String data;
-  const HeaderItem({Key key, this.label, this.data}) : super(key: key);
+  final String? label;
+  final String? data;
+  const HeaderItem({Key? key, this.label, this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: new Column(
         children: <Widget>[
-          Text(label,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText2
-                  .apply(color: Colors.grey)),
+          Text(label!, style: Theme.of(context).textTheme.bodyText2!.apply(color: Colors.grey)),
           Text(
-            data,
+            data!,
             style: Theme.of(context).textTheme.headline4,
           ),
         ],

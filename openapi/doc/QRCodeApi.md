@@ -17,17 +17,17 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = QRCodeApi();
-final id = id_example; // String | 
+final api = Openapi().getQRCodeApi();
+final String id = id_example; // String | 
 
-try { 
-    final result = api_instance.qRCodeDefaultAction(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.qRCodeDefaultAction(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling QRCodeApi->qRCodeDefaultAction: $e\n');
 }
 ```
@@ -40,7 +40,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 

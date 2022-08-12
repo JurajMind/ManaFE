@@ -12,12 +12,12 @@ import 'package:app/utils/translations/app_translations.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class Devices extends StatelessWidget {
   final Section section;
-  final PageController controller;
-  Devices(this.section, {Key key, this.controller}) : super(key: key);
+  final PageController? controller;
+  Devices(this.section, {Key? key, this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,60 +42,49 @@ class Devices extends StatelessWidget {
               background: Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage(section.backgroundAsset),
+                        image: AssetImage(section.backgroundAsset!),
                         colorFilter: MPlatform.isWeb
                             ? null
-                            : ColorFilter.mode(
-                                const Color.fromRGBO(255, 255, 255, 0.545),
-                                BlendMode.modulate),
+                            : ColorFilter.mode(const Color.fromRGBO(255, 255, 255, 0.545), BlendMode.modulate),
                         fit: BoxFit.cover)),
               )),
         ),
-        StreamBuilder<List<DeviceSimpleDto>>(
+        StreamBuilder<List<DeviceSimpleDto>?>(
           stream: personBloc.devices,
           initialData: null,
           builder: (context, snapshot) {
             if (useTabletLayout) {
               return SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
-                if (snapshot.data.length == index) {
+                if (snapshot.data!.length == index) {
                   return Container(
                     margin: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                        color: Colors.black45,
-                        borderRadius: BorderRadius.circular(20.0)),
+                    decoration: BoxDecoration(color: Colors.black45, borderRadius: BorderRadius.circular(20.0)),
                     child: ListTile(
-                        onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                settings: RouteSettings(),
-                                builder: (context) => AddDevicePage())),
-                        leading: Container(
-                            width: 60, child: Center(child: Icon(Icons.add))),
+                        onTap: () => Navigator.of(context)
+                            .push(MaterialPageRoute(settings: RouteSettings(), builder: (context) => AddDevicePage())),
+                        leading: Container(width: 60, child: Center(child: Icon(Icons.add))),
                         title: Text(
-                          AppTranslations.of(context).text("device.add_device"),
+                          AppTranslations.of(context)!.text("device.add_device"),
                           style: Theme.of(context).textTheme.headline6,
                         )),
                   );
                 }
-                var device = snapshot.data[index];
+                var device = snapshot.data![index];
 
                 return Container(
                   margin: EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                      color: Colors.black45,
-                      borderRadius: BorderRadius.circular(20.0)),
+                  decoration: BoxDecoration(color: Colors.black45, borderRadius: BorderRadius.circular(20.0)),
                   child: ListTile(
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        settings: RouteSettings(),
-                        builder: (context) =>
-                            DeviceDetailPage(device: device))),
+                        settings: RouteSettings(), builder: (context) => DeviceDetailPage(device: device))),
                     leading: Hero(
                       tag: "${device.code}_hero",
                       child: Image.asset(Extensions.devicePicture(device.type)),
                     ),
                     trailing: DeviceOnlineDot(device.isOnline),
                     title: Text(
-                      device.name,
+                      device.name!,
                       style: Theme.of(context).textTheme.headline6,
                     ),
                   ),
@@ -104,18 +93,17 @@ class Devices extends StatelessWidget {
             }
 
             return SliverGrid(
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
                   if (snapshot.data == null) {
                     return Container();
                   }
-                  if (snapshot.data.length == index) {
+                  if (snapshot.data!.length == index) {
                     return AddDeviceGridItem();
                   }
 
-                  var device = snapshot.data[index];
+                  var device = snapshot.data![index];
                   return DeviceGridItem(device: device);
                 },
                 childCount: (snapshot.data?.length ?? 0) + 1,
@@ -135,8 +123,8 @@ class Devices extends StatelessWidget {
 
 class DeviceGridItem extends StatelessWidget {
   const DeviceGridItem({
-    Key key,
-    @required this.device,
+    Key? key,
+    required this.device,
   }) : super(key: key);
 
   final DeviceSimpleDto device;
@@ -146,9 +134,8 @@ class DeviceGridItem extends StatelessWidget {
     return Hero(
       tag: "${device.code}_hero",
       child: InkWell(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            settings: RouteSettings(),
-            builder: (context) => DeviceDetailPage(device: device))),
+        onTap: () => Navigator.of(context)
+            .push(MaterialPageRoute(settings: RouteSettings(), builder: (context) => DeviceDetailPage(device: device))),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Card(
@@ -170,12 +157,9 @@ class DeviceGridItem extends StatelessWidget {
                         ),
                         Center(
                           child: Text(
-                            device.name,
+                            device.name!,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black,
-                                fontSize: 20.0),
+                            style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 20.0),
                           ),
                         ),
                       ],
@@ -183,13 +167,10 @@ class DeviceGridItem extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
                         image: DecorationImage(
-                            image: AssetImage(
-                                Extensions.devicePicture(device.type)),
+                            image: AssetImage(Extensions.devicePicture(device.type)),
                             colorFilter: MPlatform.isWeb
                                 ? null
-                                : ColorFilter.mode(
-                                    const Color.fromRGBO(255, 255, 255, 0.545),
-                                    BlendMode.modulate),
+                                : ColorFilter.mode(const Color.fromRGBO(255, 255, 255, 0.545), BlendMode.modulate),
                             fit: BoxFit.cover)),
                   )),
             ),
@@ -202,14 +183,14 @@ class DeviceGridItem extends StatelessWidget {
 
 class AddDeviceGridItem extends StatelessWidget {
   const AddDeviceGridItem({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          settings: RouteSettings(), builder: (context) => AddDevicePage())),
+      onTap: () => Navigator.of(context)
+          .push(MaterialPageRoute(settings: RouteSettings(), builder: (context) => AddDevicePage())),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Card(
@@ -226,12 +207,9 @@ class AddDeviceGridItem extends StatelessWidget {
               children: <Widget>[
                 Container(
                   child: Text(
-                    AppTranslations.of(context).text("device.add_device"),
+                    AppTranslations.of(context)!.text("device.add_device"),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                        fontSize: 20.0),
+                    style: TextStyle(fontWeight: FontWeight.w700, color: Colors.white, fontSize: 20.0),
                   ),
                 ),
                 Icon(

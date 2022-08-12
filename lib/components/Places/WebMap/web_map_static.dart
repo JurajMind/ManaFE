@@ -4,12 +4,12 @@ import 'package:app/utils/Map/map_view_type.dart';
 import 'package:app/utils/Map/marker.dart';
 import 'package:app/utils/Map/static_map_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class MapTest extends StatefulWidget {
-  final List<PlaceSimpleDto> places;
+  final List<PlaceSimpleDto>? places;
 
-  const MapTest({Key key, this.places}) : super(key: key);
+  const MapTest({Key? key, this.places}) : super(key: key);
 
   @override
   _MapTestState createState() => _MapTestState();
@@ -42,11 +42,13 @@ class _MapTestState extends State<MapTest> {
 
   Uri mapUri() {
     var staticMapProvider = new StaticMapProvider(App.googleApiKeys);
-    var markers = widget.places.map((place) {
-      return Marker(place.id.toString(), place.name, double.parse(place.address.lat), double.parse(place.address.lng));
+    var markers = widget.places!.map((place) {
+      return Marker(
+          place.id.toString(), place.name, double.parse(place.address!.lat!), double.parse(place.address!.lng!));
     }).toList();
-    var mapUri = staticMapProvider.getStaticUriWithMarkersAndZoom(markers ?? new List<Marker>(),
-        center: new Location(double.parse(widget.places.first.address.lat), double.parse(widget.places.first.address.lng)),
+    var mapUri = staticMapProvider.getStaticUriWithMarkersAndZoom(markers,
+        center: new Location(
+            double.parse(widget.places!.first.address!.lat!), double.parse(widget.places!.first.address!.lng!)),
         zoomLevel: 13,
         width: 650,
         height: 650,

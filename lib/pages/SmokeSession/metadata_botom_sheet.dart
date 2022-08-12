@@ -6,17 +6,17 @@ import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/theme/theme_widget.dart';
 
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 import 'Components/metadata_item.dart';
 
 class MetadataBottomSheet extends StatelessWidget {
   const MetadataBottomSheet({
-    Key key,
-    @required this.dataProvider,
+    Key? key,
+    required this.dataProvider,
   }) : super(key: key);
 
-  final DataProvider dataProvider;
+  final DataProvider? dataProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class MetadataBottomSheet extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-          constraints: theme.pageConstrains,
+          constraints: theme.pageConstrains as BoxConstraints?,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: new ListView(
@@ -41,9 +41,7 @@ class MetadataBottomSheet extends StatelessWidget {
                     type: "Pipe",
                     searchType: 'Hookah',
                     ownedAccesory: personBloc.myGear.value != null
-                        ? personBloc.myGear.value
-                            .where((a) => a.type == 'Hookah')
-                            .toList()
+                        ? personBloc.myGear.value.where((a) => a.type == 'Hookah').toList()
                         : new List<PipeAccesorySimpleDto>(),
                     selectFunction: (a) => a.pipe),
                 Divider(),
@@ -52,9 +50,7 @@ class MetadataBottomSheet extends StatelessWidget {
                     type: "Bowl",
                     searchType: 'Bowl',
                     ownedAccesory: personBloc.myGear.value != null
-                        ? personBloc.myGear.value
-                            .where((a) => a.type == 'Bowl')
-                            .toList()
+                        ? personBloc.myGear.value.where((a) => a.type == 'Bowl').toList()
                         : new List<PipeAccesorySimpleDto>(),
                     selectFunction: (a) => a.bowl),
                 Divider(),
@@ -63,9 +59,7 @@ class MetadataBottomSheet extends StatelessWidget {
                     type: "hmd",
                     searchType: 'heatmanagement',
                     ownedAccesory: personBloc.myGear.value != null
-                        ? personBloc.myGear.value
-                            .where((a) => a.type == 'HeatManagement')
-                            .toList()
+                        ? personBloc.myGear.value.where((a) => a.type == 'HeatManagement').toList()
                         : new List<PipeAccesorySimpleDto>(),
                     selectFunction: (a) => a.heatManagement),
                 Divider(),
@@ -74,9 +68,7 @@ class MetadataBottomSheet extends StatelessWidget {
                     type: "Coals",
                     searchType: 'coal',
                     ownedAccesory: personBloc.myGear.value != null
-                        ? personBloc.myGear.value
-                            .where((a) => a.type == 'Coal')
-                            .toList()
+                        ? personBloc.myGear.value.where((a) => a.type == 'Coal').toList()
                         : new List<PipeAccesorySimpleDto>(),
                     selectFunction: (a) => a.coal),
                 Divider(),
@@ -119,41 +111,39 @@ class MetadataBottomSheet extends StatelessWidget {
     );
   }
 
-  StreamBuilder<SmokeSessionMetaDataDto> buildCoalsCountItem(
+  StreamBuilder<SmokeSessionMetaDataDto?> buildCoalsCountItem(
     SmokeSessionBloc bloc,
   ) {
-    return StreamBuilder<SmokeSessionMetaDataDto>(
+    return StreamBuilder<SmokeSessionMetaDataDto?>(
         initialData: null,
         stream: bloc.smokeSessionMetaData,
         builder: (context, snapshot) => snapshot.data == null
             ? new Container()
             : Row(
-                children: <Widget>[
-                  ...List.generate(10, (a) => Text(a.toString()))
-                ],
+                children: <Widget>[...List.generate(10, (a) => Text(a.toString()))],
               ));
   }
 }
 
 class StreamMetadataItem extends StatelessWidget {
   const StreamMetadataItem({
-    Key key,
-    @required this.bloc,
-    @required this.type,
-    @required this.searchType,
-    @required this.ownedAccesory,
-    @required this.selectFunction,
+    Key? key,
+    required this.bloc,
+    required this.type,
+    required this.searchType,
+    required this.ownedAccesory,
+    required this.selectFunction,
   }) : super(key: key);
 
   final SmokeSessionBloc bloc;
   final String type;
   final String searchType;
   final List<PipeAccesorySimpleDto> ownedAccesory;
-  final Function(SmokeSessionMetaDataDto) selectFunction;
+  final Function(SmokeSessionMetaDataDto?) selectFunction;
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<SmokeSessionMetaDataDto>(
+    return StreamBuilder<SmokeSessionMetaDataDto?>(
       initialData: null,
       stream: bloc.smokeSessionMetaData,
       builder: (context, snapshot) => snapshot.data == null

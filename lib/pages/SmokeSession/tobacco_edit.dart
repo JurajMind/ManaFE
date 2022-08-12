@@ -12,19 +12,21 @@ import 'package:app/pages/SmokeSession/accesory_search.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:shake/shake.dart';
 
+import '../../components/Buttons/m_outlineButton.dart';
+
 class TobaccoEditWidget extends StatefulWidget {
-  final ValueChanged<TobaccoEditModel> onSave;
-  final GlobalKey<NavigatorState> Function(int) callback;
-  final String type;
-  final PipeAccesorySimpleDto tobacco;
-  final int tobaccoWeight;
-  final TobaccoMixSimpleDto mix;
+  final ValueChanged<TobaccoEditModel>? onSave;
+  final GlobalKey<NavigatorState>? Function(int)? callback;
+  final String? type;
+  final PipeAccesorySimpleDto? tobacco;
+  final int? tobaccoWeight;
+  final TobaccoMixSimpleDto? mix;
   const TobaccoEditWidget({
     this.tobacco,
-    Key key,
+    Key? key,
     this.type,
     this.mix,
     this.tobaccoWeight,
@@ -40,11 +42,11 @@ class TobaccoEditWidget extends StatefulWidget {
 
 class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
   bool loading = false;
-  ShakeDetector detector;
-  List<PipeAccesorySimpleDto> selectedTobacco;
-  List<PipeAccesorySimpleDto> tobaccoList = new List<PipeAccesorySimpleDto>();
-  Map<int, double> tobaccoWeight = new Map<int, double>();
-  TextEditingController controller;
+  late ShakeDetector detector;
+  List<PipeAccesorySimpleDto>? selectedTobacco;
+  List<PipeAccesorySimpleDto?> tobaccoList = <PipeAccesorySimpleDto?>[];
+  Map<int?, double> tobaccoWeight = new Map<int?, double>();
+  TextEditingController? controller;
 
   @override
   void initState() {
@@ -52,8 +54,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
     controller = new TextEditingController(text: widget?.mix?.name ?? null);
     new Future.delayed(Duration.zero, () {
       var personBloc = getIt.get<PersonBloc>();
-      var ownedTobacco =
-          personBloc.myGear.value.where((s) => s.type == "Tobacco").toList();
+      var ownedTobacco = personBloc.myGear.value.where((s) => s.type == "Tobacco").toList();
 
       detector = ShakeDetector.waitForStart(onPhoneShake: () {
         randomTobacco(ownedTobacco);
@@ -62,17 +63,14 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
       detector.startListening();
     });
     if (widget?.mix?.tobaccos != null) {
-      for (var tobacco in widget.mix.tobaccos) {
-        this.addTobacco(
-            PipeAccesoryFromTobacco.tobaccoToSimple(tobacco.tobacco),
-            tobacco.fraction.toDouble());
+      for (var tobacco in widget.mix!.tobaccos!) {
+        this.addTobacco(PipeAccesoryFromTobacco.tobaccoToSimple(tobacco.tobacco!), tobacco.fraction!.toDouble());
       }
     }
 
     selectedTobacco = new List<PipeAccesorySimpleDto>();
-    if (widget.tobacco?.id != null &&
-        ((widget?.mix?.tobaccos?.length ?? 0) != 0)) {
-      var weight = widget.tobaccoWeight.toDouble();
+    if (widget.tobacco?.id != null && ((widget?.mix?.tobaccos?.length ?? 0) != 0)) {
+      var weight = widget.tobaccoWeight!.toDouble();
       if (weight == 0) {
         weight = 15;
       }
@@ -80,11 +78,11 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
     }
   }
 
-  void showSearchDialog({BuildContext context, Widget child}) {
+  void showSearchDialog({required BuildContext context, Widget? child}) {
     showDialog<PipeAccesorySimpleDto>(
       context: context,
-      builder: (BuildContext context) => child,
-    ).then<void>((PipeAccesorySimpleDto value) {
+      builder: (BuildContext context) => child!,
+    ).then<void>((PipeAccesorySimpleDto? value) {
       if (value != null) {
         setState(() {
           addTobacco(value, 5);
@@ -96,30 +94,30 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
   @override
   void dispose() {
     super.dispose();
-    controller.dispose();
+    controller!.dispose();
   }
 
   TobaccoEditModel createSaveModel() {
     var result = new TobaccoEditModel();
     if (tobaccoList.length == 1) {
       result.tobacco = tobaccoList[0];
-      result.weight = tobaccoWeight[result.tobacco.id].toInt();
+      result.weight = tobaccoWeight[result.tobacco!.id]!.toInt();
       return result;
     }
 
-    var mix = new TobaccoMixSimpleDto();
+    TobaccoMixSimpleDto? mix = new TobaccoMixSimpleDto();
     if (widget?.mix?.id != null) {
       mix = widget.mix;
     }
 
-    if (controller.text != null || controller.text != '') {
-      mix.name = controller.text;
+    if (controller!.text != null || controller!.text != '') {
+      mix!.name = controller!.text;
     }
 
-    mix.tobaccos = tobaccoList.map((mix) {
+    mix!.tobaccos = tobaccoList.map((mix) {
       var tobaccoInMix = new TobaccoInMix();
-      tobaccoInMix.tobacco = PipeAccesoryFromTobacco.simpleToTobacco(mix);
-      tobaccoInMix.fraction = tobaccoWeight[mix.id].toInt();
+      tobaccoInMix.tobacco = PipeAccesoryFromTobacco.simpleToTobacco(mix!);
+      tobaccoInMix.fraction = tobaccoWeight[mix.id]!.toInt();
       return tobaccoInMix;
     }).toList();
 
@@ -129,13 +127,10 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var personBloc =  getIt.get<PersonBloc>();
-    var ownedTobacco =
-        personBloc.myGear.value.where((s) => s.type == "Tobacco").toList();
+    var personBloc = getIt.get<PersonBloc>();
+    var ownedTobacco = personBloc.myGear.value.where((s) => s.type == "Tobacco").toList();
 
-    var sugestedTobacco = ownedTobacco
-        .where((t) => tobaccoList.where((d) => t.id == d.id).length == 0)
-        .toList();
+    var sugestedTobacco = ownedTobacco.where((t) => tobaccoList.where((d) => t.id == d!.id).length == 0).toList();
 
     var tobaccoWidgetList = this.tobaccoList.map((item) {
       return Column(
@@ -148,19 +143,16 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                         removeTobacco(item);
                       })),
               Text(
-                item.name ?? '',
+                item!.name ?? '',
                 style: Theme.of(context).textTheme.headline5,
               ),
-              Text(' ' + item.brand)
+              Text(' ' + item.brand!)
             ],
           ),
           FatSlider(
             sliderColor: AppColors.colors[tobaccoList.indexOf(item)],
-            valueTextStyle: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .apply(color: Colors.white),
-            value: tobaccoWeight[item.id],
+            valueTextStyle: Theme.of(context).textTheme.bodyText2!.apply(color: Colors.white),
+            value: tobaccoWeight[item.id]!,
             onChanged: (double newValue) {
               setState(() {
                 tobaccoWeight[item.id] = newValue;
@@ -173,7 +165,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
       );
     });
 
-    var listWidgets = new List<Widget>();
+    var listWidgets = <Widget>[];
     listWidgets.addAll(tobaccoWidgetList);
     if (tobaccoList.length < 4)
       listWidgets.add(Column(
@@ -181,7 +173,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              AppTranslations.of(context).text('gear.suggestion'),
+              AppTranslations.of(context)!.text('gear.suggestion'),
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
@@ -219,7 +211,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                           searchType: 'Tobacco',
                           ownAccesories: ownedTobacco,
                           personBloc: personBloc,
-                          gearBloc: DataProvider.getData(context).gearBloc,
+                          gearBloc: DataProvider.getData(context)!.gearBloc,
                         )),
                   ),
                 )
@@ -233,16 +225,12 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
         child: Row(
-          mainAxisAlignment: widget.callback == null
-              ? MainAxisAlignment.center
-              : MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: widget.callback == null ? MainAxisAlignment.center : MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             widget.callback == null
                 ? Container()
-                : new OutlineButton.icon(
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-                    label:
-                        Text(AppTranslations.of(context).text('gear.find_mix')),
+                : new MButton(
+                    label: AppTranslations.of(context)!.text('gear.find_mix'),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => MixSearchPage(
@@ -250,11 +238,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                         ),
                       ));
                     },
-                    icon: Icon(Icons.search),
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0)),
-                    borderSide: BorderSide(color: Colors.white, width: 1),
-                  ),
+                    icon: Icons.search),
           ],
         ),
       ),
@@ -264,17 +248,12 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: Center(
-          child: new OutlineButton.icon(
-            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-            label: Text(AppTranslations.of(context).text("common.save")),
-            onPressed: () {
-              Navigator.pop(context, createSaveModel());
-            },
-            icon: Icon(Icons.save),
-            shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(30.0)),
-            borderSide: BorderSide(color: Colors.white, width: 1),
-          ),
+          child: MButton(
+              label: AppTranslations.of(context)!.text("common.save"),
+              onPressed: () {
+                Navigator.pop(context, createSaveModel());
+              },
+              icon: Icons.save),
         ),
       ),
     );
@@ -293,9 +272,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                             icon: Icon(Icons.refresh),
                             onPressed: () => randomTobacco(ownedTobacco),
                           )
-                        : IconButton(
-                            icon: Icon(Icons.delete),
-                            onPressed: () => cleanTobacco())
+                        : IconButton(icon: Icon(Icons.delete), onPressed: () => cleanTobacco())
                   ],
                 )
               : AppBar(
@@ -304,10 +281,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                   title: TextField(
                     decoration: InputDecoration(
                         labelText: 'Mix name',
-                        labelStyle: Theme.of(context)
-                            .textTheme
-                            .headline5
-                            .apply(color: Colors.grey)),
+                        labelStyle: Theme.of(context).textTheme.headline5!.apply(color: Colors.grey)),
                     controller: controller,
                   ),
                   actions: <Widget>[
@@ -316,9 +290,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                             icon: Icon(Icons.refresh),
                             onPressed: () => randomTobacco(ownedTobacco),
                           )
-                        : IconButton(
-                            icon: Icon(Icons.delete),
-                            onPressed: () => cleanTobacco())
+                        : IconButton(icon: Icon(Icons.delete), onPressed: () => cleanTobacco())
                   ],
                 ),
           Expanded(
@@ -336,21 +308,21 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
     );
   }
 
-  void addTobacco(PipeAccesorySimpleDto tobacco, double weight) {
+  void addTobacco(PipeAccesorySimpleDto? tobacco, double weight) {
     if (tobaccoList.length == 4) return;
     setState(() {
-      if (tobaccoList.where((t) => t.id == tobacco.id).length == 0) {
+      if (tobaccoList.where((t) => t!.id == tobacco!.id).length == 0) {
         tobaccoList.add(tobacco);
-        tobaccoWeight[tobacco.id] = weight ?? 5;
+        tobaccoWeight[tobacco!.id] = weight ?? 5;
       }
     });
   }
 
-  void removeTobacco(PipeAccesorySimpleDto tobacco) {
+  void removeTobacco(PipeAccesorySimpleDto? tobacco) {
     setState(() {
-      if (tobaccoList.where((t) => t.id == tobacco.id).length != 0) {
+      if (tobaccoList.where((t) => t!.id == tobacco!.id).length != 0) {
         tobaccoList.remove(tobacco);
-        tobaccoWeight.remove(tobacco.id);
+        tobaccoWeight.remove(tobacco!.id);
       }
     });
   }
@@ -371,18 +343,18 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
 
   void cleanTobacco() {
     setState(() {
-      tobaccoList = new List<PipeAccesorySimpleDto>();
-      tobaccoWeight = new Map<int, double>();
+      tobaccoList = new List<PipeAccesorySimpleDto?>();
+      tobaccoWeight = new Map<int?, double>();
       controller = new TextEditingController();
     });
   }
 }
 
 class SuggestedTobacco extends StatelessWidget {
-  final PipeAccesorySimpleDto tobacco;
-  final VoidCallback onPressed;
+  final PipeAccesorySimpleDto? tobacco;
+  final VoidCallback? onPressed;
   const SuggestedTobacco({
-    Key key,
+    Key? key,
     this.tobacco,
     this.onPressed,
   }) : super(key: key);
@@ -413,12 +385,10 @@ class SuggestedTobacco extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(tobacco.name,
-                          style: Theme.of(context).textTheme.bodyText2,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis),
+                      child: Text(tobacco!.name!,
+                          style: Theme.of(context).textTheme.bodyText2, maxLines: 1, overflow: TextOverflow.ellipsis),
                     ),
-                    Text(tobacco.brand)
+                    Text(tobacco!.brand!)
                   ],
                 ),
               ),

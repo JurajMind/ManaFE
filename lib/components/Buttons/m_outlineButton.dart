@@ -2,15 +2,16 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 
 class MButton extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
+
   final Color iconColor;
-  final String label;
-  final VoidCallback onPressed;
-  final bool uploading;
-  final double width;
-  final double maxWidth;
+  final String? label;
+  final VoidCallback? onPressed;
+  final bool? uploading;
+  final double? width;
+  final double? maxWidth;
   const MButton({
-    Key key,
+    Key? key,
     this.icon,
     this.label,
     this.onPressed,
@@ -26,20 +27,21 @@ class MButton extends StatelessWidget {
     var side = BorderSide(color: onPressed != null ? Colors.white : Colors.grey, width: 2);
 
     if (uploading ?? false)
-      return OutlineButton(
-          shape: shape, borderSide: side, onPressed: onPressed, child: Padding(padding: const EdgeInsets.all(8.0), child: CircularProgressIndicator()));
+      return OutlinedButton(
+          style: OutlinedButton.styleFrom(shape: shape, side: side),
+          onPressed: onPressed,
+          child: Padding(padding: const EdgeInsets.all(8.0), child: CircularProgressIndicator()));
 
     if (icon == null)
-      return OutlineButton(
-          shape: shape,
-          borderSide: side,
+      return OutlinedButton(
+          style: OutlinedButton.styleFrom(shape: shape, side: side),
           onPressed: onPressed,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
               constraints: BoxConstraints(minWidth: width ?? 0, maxWidth: maxWidth ?? double.infinity),
               child: Text(
-                AppTranslations.of(context).text(label),
+                AppTranslations.of(context)!.text(label),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyText2,
               ),
@@ -47,9 +49,8 @@ class MButton extends StatelessWidget {
           ));
 
     return Container(
-      child: OutlineButton.icon(
-        shape: shape,
-        borderSide: side,
+      child: OutlinedButton.icon(
+        style: OutlinedButton.styleFrom(shape: shape, side: side),
         icon: Icon(
           icon,
           color: iconColor,
@@ -59,7 +60,7 @@ class MButton extends StatelessWidget {
           child: Container(
             constraints: BoxConstraints(minWidth: width ?? 0, maxWidth: maxWidth ?? double.infinity),
             child: Text(
-              AppTranslations.of(context).text(label),
+              AppTranslations.of(context)!.text(label),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyText2,
             ),

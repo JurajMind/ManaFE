@@ -1,20 +1,12 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'package:openapi/api.dart';
 import 'package:test/test.dart';
+import 'package:openapi/openapi.dart';
 
 // tests for PlaceDto
 void main() {
-  final instance = PlaceDto();
+  final PlaceDto? instance = /* PlaceDto(...) */ null;
+  // TODO add properties to the entity
 
-  group('test PlaceDto', () {
+  group(PlaceDto, () {
     // String url
     test('to test the property `url`', () async {
       // TODO
@@ -35,17 +27,17 @@ void main() {
       // TODO
     });
 
-    // List<SeatDto> seats (default value: const [])
+    // List<SeatDto> seats
     test('to test the property `seats`', () async {
       // TODO
     });
 
-    // List<PlacesPlaceReviewDto> placeReviews (default value: const [])
+    // List<PlacesPlaceReviewDto> placeReviews
     test('to test the property `placeReviews`', () async {
       // TODO
     });
 
-    // List<MediaDto> medias (default value: const [])
+    // List<MediaDto> medias
     test('to test the property `medias`', () async {
       // TODO
     });
@@ -70,12 +62,12 @@ void main() {
       // TODO
     });
 
-    // List<String> flags (default value: const [])
+    // List<String> flags
     test('to test the property `flags`', () async {
       // TODO
     });
 
-    // List<SmartHookahModelsDbSocialMedia> socialMedias (default value: const [])
+    // List<SmartHookahModelsDbSocialMedia> socialMedias
     test('to test the property `socialMedias`', () async {
       // TODO
     });
@@ -90,12 +82,12 @@ void main() {
       // TODO
     });
 
-    // Map<String, String> shortDescriptions (default value: const {})
+    // Map<String, String> shortDescriptions
     test('to test the property `shortDescriptions`', () async {
       // TODO
     });
 
-    // Map<String, String> description (default value: const {})
+    // Map<String, String> description
     test('to test the property `description`', () async {
       // TODO
     });
@@ -125,7 +117,7 @@ void main() {
       // TODO
     });
 
-    // List<BusinessHoursDto> businessHours (default value: const [])
+    // List<BusinessHoursDto> businessHours
     test('to test the property `businessHours`', () async {
       // TODO
     });
@@ -165,7 +157,5 @@ void main() {
       // TODO
     });
 
-
   });
-
 }

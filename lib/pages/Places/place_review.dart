@@ -5,11 +5,11 @@ import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class PlaceReview extends StatefulWidget {
-  final PlaceSimpleDto place;
-  PlaceReview({Key key, this.place}) : super(key: key);
+  final PlaceSimpleDto? place;
+  PlaceReview({Key? key, this.place}) : super(key: key);
 
   _PlaceReviewState createState() => _PlaceReviewState();
 }
@@ -19,7 +19,7 @@ class _PlaceReviewState extends State<PlaceReview> {
   double service = 2.5;
   double overall = 2.5;
   bool posting = false;
-  TextEditingController controller;
+  TextEditingController? controller;
 
   @override
   initState() {
@@ -32,7 +32,7 @@ class _PlaceReviewState extends State<PlaceReview> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppTranslations.of(context).text("review.place_review"),
+          AppTranslations.of(context)!.text("review.place_review"),
         ),
         centerTitle: true,
       ),
@@ -71,10 +71,8 @@ class _PlaceReviewState extends State<PlaceReview> {
                     hintText: 'Place note',
                     labelText: 'Place note',
                     labelStyle: Theme.of(context).textTheme.headline5,
-                    enabledBorder: new UnderlineInputBorder(
-                        borderSide: new BorderSide(color: Colors.white)),
-                    focusedBorder: new UnderlineInputBorder(
-                        borderSide: new BorderSide(color: Colors.white)),
+                    enabledBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
+                    focusedBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
                     icon: Icon(Icons.edit, color: Colors.white)),
               ),
             ),
@@ -90,15 +88,15 @@ class _PlaceReviewState extends State<PlaceReview> {
                       var bloc = getIt.get<PlaceBloc>();
 
                       var review = new PlacesPlaceReviewDto();
-                      review.placeId = widget.place.id;
+                      review.placeId = widget.place!.id;
                       review.ambience = (ambience * 2).toInt();
                       review.service = (service * 2).toInt();
                       review.overall = (overall * 2).toInt();
-                      review.text = controller.text;
+                      review.text = controller!.text;
                       setState(() {
                         posting = true;
                       });
-                      await bloc.addReview(widget.place.id, review).then((_) {
+                      await bloc.addReview(widget.place!.id, review).then((_) {
                         Navigator.of(context).pop();
                       });
                     },

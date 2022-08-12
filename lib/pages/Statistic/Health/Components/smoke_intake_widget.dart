@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class SmokeIntakeWidget extends StatelessWidget {
   const SmokeIntakeWidget({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -15,13 +15,13 @@ class SmokeIntakeWidget extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Text(
-              AppTranslations.of(context).text('health.gas'),
+              AppTranslations.of(context)!.text('health.gas'),
               style: Theme.of(context).textTheme.headline6,
             ),
             SizedBox(
               height: 10,
             ),
-            Text(AppTranslations.of(context).text('health.gas_text')),
+            Text(AppTranslations.of(context)!.text('health.gas_text')),
           ],
         ),
       ),

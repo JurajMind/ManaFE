@@ -25,17 +25,17 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = MixologyApi();
-final newMix = TobaccoMixSimpleDto(); // TobaccoMixSimpleDto | 
+final api = Openapi().getMixologyApi();
+final TobaccoMixSimpleDto newMix = ; // TobaccoMixSimpleDto | 
 
-try { 
-    final result = api_instance.mixologyAddToMix(newMix);
-    print(result);
-} catch (e) {
+try {
+    final response = api.mixologyAddToMix(newMix);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling MixologyApi->mixologyAddToMix: $e\n');
 }
 ```
@@ -66,20 +66,20 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = MixologyApi();
-final ids = []; // List<int> | 
-final pageSize = 56; // int | 
-final page = 56; // int | 
-final own = true; // bool | 
+final api = Openapi().getMixologyApi();
+final List<int> ids = ; // List<int> | 
+final int pageSize = 56; // int | 
+final int page = 56; // int | 
+final bool own = true; // bool | 
 
-try { 
-    final result = api_instance.mixologyGetMiFromTobaccos(ids, pageSize, page, own);
-    print(result);
-} catch (e) {
+try {
+    final response = api.mixologyGetMiFromTobaccos(ids, pageSize, page, own);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling MixologyApi->mixologyGetMiFromTobaccos: $e\n');
 }
 ```
@@ -88,14 +88,14 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ids** | [**List<int>**](int.md)|  | [default to const []]
+ **ids** | [**List&lt;int&gt;**](int.md)|  | 
  **pageSize** | **int**|  | [optional] 
  **page** | **int**|  | [optional] 
  **own** | **bool**|  | [optional] 
 
 ### Return type
 
-[**List<TobaccoMixSimpleDto>**](TobaccoMixSimpleDto.md)
+[**List&lt;TobaccoMixSimpleDto&gt;**](TobaccoMixSimpleDto.md)
 
 ### Authorization
 
@@ -113,21 +113,21 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = MixologyApi();
-final page = 56; // int | 
-final pageSize = 56; // int | 
-final author = author_example; // String | 
-final orderBy = orderBy_example; // String | 
-final order = order_example; // String | 
+final api = Openapi().getMixologyApi();
+final int page = 56; // int | 
+final int pageSize = 56; // int | 
+final String author = author_example; // String | 
+final String orderBy = orderBy_example; // String | 
+final String order = order_example; // String | 
 
-try { 
-    final result = api_instance.mixologyGetMixes(page, pageSize, author, orderBy, order);
-    print(result);
-} catch (e) {
+try {
+    final response = api.mixologyGetMixes(page, pageSize, author, orderBy, order);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling MixologyApi->mixologyGetMixes: $e\n');
 }
 ```
@@ -144,7 +144,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<TobaccoMixSimpleDto>**](TobaccoMixSimpleDto.md)
+[**List&lt;TobaccoMixSimpleDto&gt;**](TobaccoMixSimpleDto.md)
 
 ### Authorization
 
@@ -162,17 +162,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = MixologyApi();
-final id = 56; // int | 
+final api = Openapi().getMixologyApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.mixologyGetTobaccoMix(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.mixologyGetTobaccoMix(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling MixologyApi->mixologyGetTobaccoMix: $e\n');
 }
 ```
@@ -203,17 +203,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = MixologyApi();
-final id = 56; // int | 
+final api = Openapi().getMixologyApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.mixologyGetTobaccoMixTastes(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.mixologyGetTobaccoMixTastes(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling MixologyApi->mixologyGetTobaccoMixTastes: $e\n');
 }
 ```
@@ -226,7 +226,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Map<String, List<TobaccoTasteDto>>**](List.md)
+[**Map&lt;String, List&lt;TobaccoTasteDto&gt;&gt;**](List.md)
 
 ### Authorization
 
@@ -244,17 +244,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = MixologyApi();
-final mixId = 56; // int | 
+final api = Openapi().getMixologyApi();
+final int mixId = 56; // int | 
 
-try { 
-    final result = api_instance.mixologyRemoveMix(mixId);
-    print(result);
-} catch (e) {
+try {
+    final response = api.mixologyRemoveMix(mixId);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling MixologyApi->mixologyRemoveMix: $e\n');
 }
 ```
@@ -285,18 +285,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = MixologyApi();
-final id = 56; // int | 
-final newName = newName_example; // String | 
+final api = Openapi().getMixologyApi();
+final int id = 56; // int | 
+final String newName = newName_example; // String | 
 
-try { 
-    final result = api_instance.mixologyRenameMix(id, newName);
-    print(result);
-} catch (e) {
+try {
+    final response = api.mixologyRenameMix(id, newName);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling MixologyApi->mixologyRenameMix: $e\n');
 }
 ```
@@ -328,20 +328,20 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = MixologyApi();
-final ids = []; // List<int> | 
-final pageSize = 56; // int | 
-final page = 56; // int | 
-final own = true; // bool | 
+final api = Openapi().getMixologyApi();
+final List<int> ids = ; // List<int> | 
+final int pageSize = 56; // int | 
+final int page = 56; // int | 
+final bool own = true; // bool | 
 
-try { 
-    final result = api_instance.mixologySuggestMixTobacco(ids, pageSize, page, own);
-    print(result);
-} catch (e) {
+try {
+    final response = api.mixologySuggestMixTobacco(ids, pageSize, page, own);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling MixologyApi->mixologySuggestMixTobacco: $e\n');
 }
 ```
@@ -350,14 +350,14 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ids** | [**List<int>**](int.md)|  | [default to const []]
+ **ids** | [**List&lt;int&gt;**](int.md)|  | 
  **pageSize** | **int**|  | [optional] 
  **page** | **int**|  | [optional] 
  **own** | **bool**|  | [optional] 
 
 ### Return type
 
-[**List<TobaccoSimpleDto>**](TobaccoSimpleDto.md)
+[**List&lt;TobaccoSimpleDto&gt;**](TobaccoSimpleDto.md)
 
 ### Authorization
 
@@ -375,18 +375,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = MixologyApi();
-final id = 56; // int | 
-final value = int(); // int | 
+final api = Openapi().getMixologyApi();
+final int id = 56; // int | 
+final int value = 56; // int | 
 
-try { 
-    final result = api_instance.mixologyVote(id, value);
-    print(result);
-} catch (e) {
+try {
+    final response = api.mixologyVote(id, value);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling MixologyApi->mixologyVote: $e\n');
 }
 ```
@@ -400,7 +400,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 

@@ -5,14 +5,16 @@ import 'package:app/models/extensions.dart';
 import 'package:app/theme/theme_widget.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:shimmer/shimmer.dart';
 
-class DeviceUpdatePage extends StatefulWidget {
-  final DeviceSimpleDto device;
+import '../../components/Buttons/m_outlineButton.dart';
 
-  DeviceUpdatePage({Key key, this.device}) : super(key: key);
+class DeviceUpdatePage extends StatefulWidget {
+  final DeviceSimpleDto? device;
+
+  DeviceUpdatePage({Key? key, this.device}) : super(key: key);
 
   _DeviceUpdatePageState createState() => _DeviceUpdatePageState();
 }
@@ -22,7 +24,7 @@ class _DeviceUpdatePageState extends State<DeviceUpdatePage> {
 
   @override
   void initState() {
-    App.http.getUpdates().then((data) => updates.add(data.reversed.toList()));
+    App.http!.getUpdates().then((data) => updates.add(data.reversed.toList()));
     super.initState();
   }
 
@@ -34,7 +36,7 @@ class _DeviceUpdatePageState extends State<DeviceUpdatePage> {
         height: 55,
       ),
       appBar: AppBar(
-        title: Text(AppTranslations.of(context).text("device.update_device"), style: theme.appBarStyle),
+        title: Text(AppTranslations.of(context)!.text("device.update_device"), style: theme.appBarStyle),
         centerTitle: true,
         backgroundColor: AppColors.black,
       ),
@@ -45,9 +47,9 @@ class _DeviceUpdatePageState extends State<DeviceUpdatePage> {
               return ListView.builder(
                 itemCount: snapshot?.data?.length ?? 10,
                 itemBuilder: (context, index) {
-                  DeviceUpdateDto update;
+                  DeviceUpdateDto? update;
                   if (snapshot.data != null) {
-                    update = snapshot.data[index];
+                    update = snapshot.data![index];
                   }
                   return DeviceUpdateListItem(update: update, device: widget.device);
                 },
@@ -59,15 +61,15 @@ class _DeviceUpdatePageState extends State<DeviceUpdatePage> {
 }
 
 class DeviceUpdateListItem extends StatelessWidget {
-  final DeviceUpdateDto update;
-  final DeviceSimpleDto device;
-  const DeviceUpdateListItem({Key key, this.update, this.device}) : super(key: key);
+  final DeviceUpdateDto? update;
+  final DeviceSimpleDto? device;
+  const DeviceUpdateListItem({Key? key, this.update, this.device}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (update == null) {
       return Shimmer.fromColors(
-        baseColor: Colors.grey[400],
+        baseColor: Colors.grey[400]!,
         highlightColor: Colors.white,
         child: ListTile(
           trailing: Icon(Icons.file_download),
@@ -114,11 +116,14 @@ class DeviceUpdateListItem extends StatelessWidget {
             onTap: () => promptUpdate(context),
             trailing: Icon(Icons.file_download),
             leading: Text(
-              'v ${Extensions.deviceVersion(update.version)}',
-              style: Theme.of(context).textTheme.headline5.apply(color: device.version >= update.version ? Colors.white : Colors.green),
+              'v ${Extensions.deviceVersion(update!.version!)}',
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5!
+                  .apply(color: device!.version! >= update!.version! ? Colors.white : Colors.green),
             ),
-            title: Text(update.releseNote),
-            subtitle: Text(dateUtils.DateUtils.toStringDate(update.releseDate)),
+            title: Text(update!.releseNote!),
+            subtitle: Text(dateUtils.DateUtils.toStringDate(update!.releseDate!)),
           ),
         ),
       ),
@@ -138,23 +143,11 @@ class DeviceUpdateListItem extends StatelessWidget {
             maxLines: 5,
           ),
           actions: <Widget>[
-            OutlineButton.icon(
-                shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-                borderSide: BorderSide(color: Colors.white, width: 1),
-                icon: Icon(Icons.cancel, color: Colors.red),
-                label: Text(
-                  'Cancel',
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
-                onPressed: () => Navigator.of(context).pop(false)),
-            OutlineButton.icon(
-              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-              borderSide: BorderSide(color: Colors.white, width: 1),
-              icon: Icon(Icons.file_download, color: Colors.green),
-              label: Text(
-                'Update',
-                style: Theme.of(context).textTheme.headline5,
-              ),
+            MButton(icon: Icons.cancel, label: 'Cancel', onPressed: () => Navigator.of(context).pop(false)),
+            MButton(
+              icon: Icons.file_download,
+              iconColor: Colors.green,
+              label: 'Update',
               onPressed: () => Navigator.of(context).pop(true),
             ),
             // usually buttons at the bottom of the dialog
@@ -167,7 +160,7 @@ class DeviceUpdateListItem extends StatelessWidget {
       }
 
       if (doUpdate) {
-        var result = await App.http.pushUpdate(device.id, update.id);
+        var result = await App.http!.pushUpdate(device!.id, update!.id);
       }
     });
   }

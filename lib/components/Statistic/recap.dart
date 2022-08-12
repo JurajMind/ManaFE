@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class StatisticRecapWidget extends StatelessWidget {
-  final Color ballColor;
-  final String label;
-  final String value;
-  final Duration duration;
+  final Color? ballColor;
+  final String? label;
+  final String? value;
+  final Duration? duration;
 
   const StatisticRecapWidget({
-    Key key,
+    Key? key,
     this.ballColor,
     this.label,
     this.value,
@@ -45,10 +45,10 @@ class StatisticRecapWidget extends StatelessWidget {
     );
   }
 
-  Widget buildSecondLine(Tuple2<String, String> lines, BuildContext context) {
+  Widget buildSecondLine(Tuple2<String, String>? lines, BuildContext context) {
     if (value == null && duration == null)
       return Shimmer.fromColors(
-        baseColor: Colors.grey[400],
+        baseColor: Colors.grey[400]!,
         highlightColor: Colors.white,
         child: Text(' Loading', style: Theme.of(context).textTheme.headline6),
       );
@@ -56,26 +56,26 @@ class StatisticRecapWidget extends StatelessWidget {
     if (duration == null)
       return Text(' $value', style: Theme.of(context).textTheme.headline6);
 
-    return Text(lines.value1, style: Theme.of(context).textTheme.bodyText1);
+    return Text(lines!.value1, style: Theme.of(context).textTheme.bodyText1);
   }
 
-  Widget buildThirdLine(Tuple2<String, String> lines, BuildContext context) {
+  Widget buildThirdLine(Tuple2<String, String>? lines, BuildContext context) {
     if (value == null && duration == null) return Container(height: 16);
 
     if (duration == null) return Container(height: 16);
 
-    return Text(lines.value2, style: Theme.of(context).textTheme.bodyText2);
+    return Text(lines!.value2, style: Theme.of(context).textTheme.bodyText2);
   }
 
-  Tuple2<String, String> timeDuration() {
+  Tuple2<String, String>? timeDuration() {
     if (duration == null) return null;
-    if (duration.inDays > 0) {
-      var first = " ${duration.inDays.toString()} days";
-      var second = " ${(duration.inHours % 24).toString()} hours";
+    if (duration!.inDays > 0) {
+      var first = " ${duration!.inDays.toString()} days";
+      var second = " ${(duration!.inHours % 24).toString()} hours";
       return new Tuple2(first, second);
     } else {
-      var first = " ${(duration.inHours % 60).toString()} hours";
-      var second = " ${(duration.inMinutes % 60).toString()} minutes";
+      var first = " ${(duration!.inHours % 60).toString()} hours";
+      var second = " ${(duration!.inMinutes % 60).toString()} minutes";
       return new Tuple2(first, second);
     }
   }

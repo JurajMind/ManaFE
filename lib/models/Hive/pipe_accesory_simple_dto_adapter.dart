@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:hive/hive.dart';
 
 class PipeAccesorySimpleDtoAdapter extends TypeAdapter<PipeAccesorySimpleDto> {

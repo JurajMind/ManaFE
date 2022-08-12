@@ -2,15 +2,15 @@ import 'package:app/Helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 class CalendarTile extends StatelessWidget {
-  final VoidCallback onDateSelected;
-  final DateTime date;
-  final String dayOfWeek;
+  final VoidCallback? onDateSelected;
+  final DateTime? date;
+  final String? dayOfWeek;
   final bool isDayOfWeek;
   final bool isSelected;
-  final TextStyle dayOfWeekStyles;
-  final TextStyle dateStyles;
-  final Widget child;
-  final int eventCount;
+  final TextStyle? dayOfWeekStyles;
+  final TextStyle? dateStyles;
+  final Widget? child;
+  final int? eventCount;
   final doubleToNull;
 
   final bool isTodayhighlighted;
@@ -36,7 +36,7 @@ class CalendarTile extends StatelessWidget {
       );
     }
 
-    if (isTodayhighlighted && compareDate(date, DateTime.now()) == 0) {
+    if (isTodayhighlighted && compareDate(date!, DateTime.now()) == 0) {
       var color = Theme.of(context).primaryColor.withAlpha(100);
       return new BoxDecoration(shape: BoxShape.circle, color: color);
     }
@@ -50,7 +50,7 @@ class CalendarTile extends StatelessWidget {
         child: new Container(
           alignment: Alignment.center,
           child: new Text(
-            dayOfWeek,
+            dayOfWeek!,
             style: dayOfWeekStyles,
           ),
         ),
@@ -84,7 +84,7 @@ class CalendarTile extends StatelessWidget {
     }
   }
 
-  Widget buildEventCount(int eventCount) {
+  Widget buildEventCount(int? eventCount) {
     if (eventCount == null || eventCount == 0) return Container();
 
     return Container(
@@ -96,7 +96,7 @@ class CalendarTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (child != null) {
-      return child;
+      return child!;
     }
     return new Container(
       decoration: new BoxDecoration(),

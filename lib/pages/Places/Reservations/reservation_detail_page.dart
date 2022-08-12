@@ -1,6 +1,7 @@
 import 'package:app/Helpers/date_utils.dart' as dateUtils;
 import 'package:app/Helpers/type_helper.dart';
 import 'package:app/app/app.dart';
+import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/components/Common/labeled_value.dart';
 import 'package:app/components/Media/media.widget.dart';
 import 'package:app/components/Places/navigate_button.dart';
@@ -11,29 +12,30 @@ import 'package:app/models/extensions.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ReservationDetailPage extends StatefulWidget {
-  final PlacesReservationsReservationDto reservation;
+  final PlacesReservationsReservationDto? reservation;
 
-  const ReservationDetailPage({Key key, this.reservation}) : super(key: key);
+  const ReservationDetailPage({Key? key, this.reservation}) : super(key: key);
 
   @override
   State<ReservationDetailPage> createState() => _ReservationDetailState();
 }
 
 class _ReservationDetailState extends State<ReservationDetailPage> {
-  BehaviorSubject<PlacesReservationsReservationDetailDto> reservationDetail = new BehaviorSubject<PlacesReservationsReservationDetailDto>();
+  BehaviorSubject<PlacesReservationsReservationDetailDto> reservationDetail =
+      new BehaviorSubject<PlacesReservationsReservationDetailDto>();
 
-  ScrollController controller;
+  ScrollController? controller;
   bool lateReservationLoading = false;
   final double _appBarHeight = 150.0;
   @override
   void initState() {
     super.initState();
     controller = new ScrollController();
-    App.http.reservationDetail(widget.reservation.id).then((data) => this.reservationDetail.add(data));
+    App.http!.reservationDetail(widget.reservation!.id).then((data) => this.reservationDetail.add(data));
   }
 
   @override
@@ -52,7 +54,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                   centerTitle: true,
                   expandedHeight: _appBarHeight,
                   flexibleSpace: new FlexibleSpaceBar(
-                    title: Text(widget.reservation.name),
+                    title: Text(widget.reservation!.name!),
                     centerTitle: true,
                     background: new Stack(
                       fit: StackFit.expand,
@@ -65,7 +67,8 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                       height: _appBarHeight,
                                     )
                                   : new Image(
-                                      image: new CachedNetworkImageProvider(Extensions.getFullPlaceImage(snapshot.data.place, MediaSize.Large)),
+                                      image: new CachedNetworkImageProvider(
+                                          Extensions.getFullPlaceImage(snapshot.data!.place, MediaSize.Large)),
                                       fit: BoxFit.cover,
                                       height: _appBarHeight,
                                     );
@@ -80,7 +83,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                       height: 25,
                     ),
                     Hero(
-                      tag: 'reservation_${widget.reservation.id.toString()}',
+                      tag: 'reservation_${widget.reservation!.id.toString()}',
                       child: Center(
                         child: Column(
                           children: <Widget>[
@@ -98,14 +101,14 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: <Widget>[
                                       LabeledValue(
-                                        dateUtils.DateUtils.toStringDate(widget.reservation.time),
+                                        dateUtils.DateUtils.toStringDate(widget.reservation!.time!),
                                         icon: Icon(Icons.calendar_today),
-                                        label: AppTranslations.of(context).text("reservations.date") + " : ",
+                                        label: AppTranslations.of(context)!.text("reservations.date") + " : ",
                                       ),
                                       LabeledValue(
-                                        dateUtils.DateUtils.toStringShortTime(widget.reservation.time),
+                                        dateUtils.DateUtils.toStringShortTime(widget.reservation!.time!),
                                         icon: Icon(Icons.timer),
-                                        label: AppTranslations.of(context).text("reservations.time") + " : ",
+                                        label: AppTranslations.of(context)!.text("reservations.time") + " : ",
                                       ),
                                     ],
                                   ),
@@ -113,44 +116,43 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      LabeledValue(widget.reservation.duration,
-                                          icon: Icon(Icons.timelapse), label: AppTranslations.of(context).text("reservations.duration") + " : "),
+                                      LabeledValue(widget.reservation!.duration,
+                                          icon: Icon(Icons.timelapse),
+                                          label: AppTranslations.of(context)!.text("reservations.duration") + " : "),
                                       LabeledValue(
-                                        widget.reservation.persons.toString(),
+                                        widget.reservation!.persons.toString(),
                                         icon: Icon(Icons.person),
-                                        label: AppTranslations.of(context).text("reservations.persons") + " : ",
+                                        label: AppTranslations.of(context)!.text("reservations.persons") + " : ",
                                       ),
                                     ],
                                   ),
-                                  widget.reservation.text == null
+                                  widget.reservation!.text == null
                                       ? Container()
                                       : Row(
-                                          children: <Widget>[Text(widget.reservation.text)],
+                                          children: <Widget>[Text(widget.reservation!.text!)],
                                         ),
                                   Row(
                                     mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: widget.reservation.status != 1 ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+                                    mainAxisAlignment: widget.reservation!.status != 1
+                                        ? MainAxisAlignment.spaceAround
+                                        : MainAxisAlignment.center,
                                     children: <Widget>[
                                       Flex(
                                         direction: Axis.horizontal,
                                         children: <Widget>[
                                           new ReservationStatusIcon(reservation: widget.reservation),
                                           Text(
-                                            ReservationStatusIcon.stateToText(widget.reservation.status, context),
+                                            ReservationStatusIcon.stateToText(widget.reservation!.status, context),
                                             style: Theme.of(context).textTheme.headline5,
                                           )
                                         ],
                                       ),
-                                      widget.reservation.status == 1
+                                      widget.reservation!.status == 1
                                           ? Container()
-                                          : OutlineButton.icon(
-                                              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-                                              borderSide: BorderSide(color: Colors.white, width: 1),
-                                              icon: Icon(Icons.cancel, color: Colors.red),
-                                              label: Text(
-                                                AppTranslations.of(context).text("common.cancel"),
-                                                style: Theme.of(context).textTheme.headline5,
-                                              ),
+                                          : MButton(
+                                              icon: Icons.cancel,
+                                              iconColor: Colors.red,
+                                              label: AppTranslations.of(context)!.text("common.cancel"),
                                               onPressed: () => _showDialog(),
                                             )
                                     ],
@@ -176,9 +178,16 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                             padding: EdgeInsets.all(8.0),
                                             child: Column(
                                               children: <Widget>[
-                                                Text(simplePlace.name, style: Theme.of(context).textTheme.headline6.merge(TextStyle(color: Colors.black))),
+                                                Text(simplePlace.name!,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline6!
+                                                        .merge(TextStyle(color: Colors.black))),
                                                 Text(Extensions.adress(simplePlace.address),
-                                                    style: Theme.of(context).textTheme.headline5.merge(TextStyle(color: Colors.black))),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline5!
+                                                        .merge(TextStyle(color: Colors.black))),
                                                 new Row(
                                                   children: <Widget>[
                                                     Expanded(
@@ -206,7 +215,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    if (widget.reservation.status != 1)
+                    if (widget.reservation!.status != 1)
                       Container(
                         decoration: BoxDecoration(
                           border: new Border.all(color: Colors.white),
@@ -215,10 +224,12 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                         child: ExpansionTile(
                           title: Center(
                               child: Text(
-                            '${AppTranslations.of(context).text("reservations.i_will_be_late")} ${(widget.reservation.lateDuration != 0 && widget.reservation.lateDuration != null) ? widget.reservation.lateDuration.toString() + ' minutes' : ''}',
+                            '${AppTranslations.of(context)!.text("reservations.i_will_be_late")} ${(widget.reservation!.lateDuration != 0 && widget.reservation!.lateDuration != null) ? widget.reservation!.lateDuration.toString() + ' minutes' : ''}',
                             style: Theme.of(context).textTheme.headline5,
                           )),
-                          leading: !lateReservationLoading ? Icon(Icons.watch_later, color: Colors.white) : CircularProgressIndicator(),
+                          leading: !lateReservationLoading
+                              ? Icon(Icons.watch_later, color: Colors.white)
+                              : CircularProgressIndicator(),
                           onExpansionChanged: (expansion) {},
                           children: <Widget>[
                             Row(
@@ -227,17 +238,17 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                               children: <Widget>[
                                 new LateTimeButton(
                                   time: 10,
-                                  selectedTime: widget.reservation.lateDuration,
+                                  selectedTime: widget.reservation!.lateDuration,
                                   onChanged: (time) => setLateTime(time),
                                 ),
                                 new LateTimeButton(
                                   time: 15,
-                                  selectedTime: widget.reservation.lateDuration,
+                                  selectedTime: widget.reservation!.lateDuration,
                                   onChanged: (time) => setLateTime(time),
                                 ),
                                 new LateTimeButton(
                                   time: 30,
-                                  selectedTime: widget.reservation.lateDuration,
+                                  selectedTime: widget.reservation!.lateDuration,
                                   onChanged: (time) => setLateTime(time),
                                 )
                               ],
@@ -254,13 +265,13 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
     );
   }
 
-  setLateTime(int time) {
+  setLateTime(int? time) {
     setState(() {
       lateReservationLoading = true;
     });
-    App.http.addLateReservation(widget.reservation.id, time).then((onValue) {
+    App.http!.addLateReservation(widget.reservation!.id, time ?? 0).then((onValue) {
       setState(() {
-        widget.reservation.lateDuration = onValue.lateDuration;
+        widget.reservation!.lateDuration = onValue.lateDuration;
         lateReservationLoading = false;
       });
     });
@@ -274,33 +285,25 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: Center(child: new Text(AppTranslations.of(context).text("common.cancel"))),
-          content: new Text(AppTranslations.of(context).text("reservations.cancel_reservation_confirm")),
+          title: Center(child: new Text(AppTranslations.of(context)!.text("common.cancel"))),
+          content: new Text(AppTranslations.of(context)!.text("reservations.cancel_reservation_confirm")),
           actions: <Widget>[
-            OutlineButton.icon(
-              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-              borderSide: BorderSide(color: Colors.white, width: 1),
-              icon: Icon(Icons.cancel, color: Colors.red),
-              label: Text(
-                AppTranslations.of(context).text("common.cancel"),
-                style: Theme.of(context).textTheme.headline5,
-              ),
+            MButton(
+              iconColor: Colors.red,
+              icon: Icons.cancel,
+              label: AppTranslations.of(context)!.text("common.cancel"),
               onPressed: () async {
                 setState(() {
-                  widget.reservation.status = 1;
+                  widget.reservation!.status = 1;
                 });
-                await App.http.cancelReservation(widget.reservation.id);
+                await App.http!.cancelReservation(widget.reservation!.id);
                 Navigator.of(context).pop();
               },
             ),
-            OutlineButton.icon(
-              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-              borderSide: BorderSide(color: Colors.white, width: 1),
-              icon: Icon(Icons.check, color: Colors.green),
-              label: Text(
-                AppTranslations.of(context).text("common.keep"),
-                style: Theme.of(context).textTheme.headline5,
-              ),
+            MButton(
+              icon: Icons.check,
+              iconColor: Colors.green,
+              label: AppTranslations.of(context)!.text("common.keep"),
               onPressed: () => Navigator.of(context).pop(),
             ),
             // usually buttons at the bottom of the dialog
@@ -312,11 +315,11 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
 }
 
 class LateTimeButton extends StatelessWidget {
-  final int time;
-  final int selectedTime;
-  final ValueChanged<int> onChanged;
+  final int? time;
+  final int? selectedTime;
+  final ValueChanged<int?>? onChanged;
   const LateTimeButton({
-    Key key,
+    Key? key,
     this.time,
     this.selectedTime,
     this.onChanged,
@@ -325,14 +328,6 @@ class LateTimeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var color = time == selectedTime ? Colors.red : Colors.white;
-    return OutlineButton(
-        color: Colors.red,
-        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-        borderSide: BorderSide(color: color, width: 1),
-        child: Text(
-          "${time.toString()} min",
-          style: Theme.of(context).textTheme.headline5.apply(color: color),
-        ),
-        onPressed: () => time != selectedTime ? onChanged(time) : ({}));
+    return MButton(label: "${time.toString()} min", onPressed: () => time != selectedTime ? onChanged!(time) : ({}));
   }
 }

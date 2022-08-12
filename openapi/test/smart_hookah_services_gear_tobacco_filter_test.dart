@@ -1,21 +1,13 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'package:openapi/api.dart';
 import 'package:test/test.dart';
+import 'package:openapi/openapi.dart';
 
 // tests for SmartHookahServicesGearTobaccoFilter
 void main() {
-  final instance = SmartHookahServicesGearTobaccoFilter();
+  final SmartHookahServicesGearTobaccoFilter? instance = /* SmartHookahServicesGearTobaccoFilter(...) */ null;
+  // TODO add properties to the entity
 
-  group('test SmartHookahServicesGearTobaccoFilter', () {
-    // List<int> tastes (default value: const [])
+  group(SmartHookahServicesGearTobaccoFilter, () {
+    // List<int> tastes
     test('to test the property `tastes`', () async {
       // TODO
     });
@@ -45,7 +37,5 @@ void main() {
       // TODO
     });
 
-
   });
-
 }

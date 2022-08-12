@@ -25,17 +25,17 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlaceCalendarApi();
-final url = url_example; // String | 
+final api = Openapi().getPlaceCalendarApi();
+final String url = url_example; // String | 
 
-try { 
-    final result = api_instance.placeCalendarCreatePlaceEventFromFacebook(url);
-    print(result);
-} catch (e) {
+try {
+    final response = api.placeCalendarCreatePlaceEventFromFacebook(url);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlaceCalendarApi->placeCalendarCreatePlaceEventFromFacebook: $e\n');
 }
 ```
@@ -66,17 +66,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlaceCalendarApi();
-final dayId = 56; // int | 
+final api = Openapi().getPlaceCalendarApi();
+final int dayId = 56; // int | 
 
-try { 
-    final result = api_instance.placeCalendarDeletePlaceDay(dayId);
-    print(result);
-} catch (e) {
+try {
+    final response = api.placeCalendarDeletePlaceDay(dayId);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlaceCalendarApi->placeCalendarDeletePlaceDay: $e\n');
 }
 ```
@@ -107,17 +107,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlaceCalendarApi();
-final eventId = 56; // int | 
+final api = Openapi().getPlaceCalendarApi();
+final int eventId = 56; // int | 
 
-try { 
-    final result = api_instance.placeCalendarDeletePlaceEvent(eventId);
-    print(result);
-} catch (e) {
+try {
+    final response = api.placeCalendarDeletePlaceEvent(eventId);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlaceCalendarApi->placeCalendarDeletePlaceEvent: $e\n');
 }
 ```
@@ -148,20 +148,20 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlaceCalendarApi();
-final placeId = 56; // int | 
-final startsAfter = 2013-10-20T19:20:30+01:00; // DateTime | 
-final endsBefore = 2013-10-20T19:20:30+01:00; // DateTime | 
-final privacyType = privacyType_example; // String | 
+final api = Openapi().getPlaceCalendarApi();
+final int placeId = 56; // int | 
+final DateTime startsAfter = 2013-10-20T19:20:30+01:00; // DateTime | 
+final DateTime endsBefore = 2013-10-20T19:20:30+01:00; // DateTime | 
+final String privacyType = privacyType_example; // String | 
 
-try { 
-    final result = api_instance.placeCalendarFindEventsBy(placeId, startsAfter, endsBefore, privacyType);
-    print(result);
-} catch (e) {
+try {
+    final response = api.placeCalendarFindEventsBy(placeId, startsAfter, endsBefore, privacyType);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlaceCalendarApi->placeCalendarFindEventsBy: $e\n');
 }
 ```
@@ -195,18 +195,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlaceCalendarApi();
-final placeId = 56; // int | 
-final privacyType = privacyType_example; // String | 
+final api = Openapi().getPlaceCalendarApi();
+final int placeId = 56; // int | 
+final String privacyType = privacyType_example; // String | 
 
-try { 
-    final result = api_instance.placeCalendarGetPlaceCalendar(placeId, privacyType);
-    print(result);
-} catch (e) {
+try {
+    final response = api.placeCalendarGetPlaceCalendar(placeId, privacyType);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlaceCalendarApi->placeCalendarGetPlaceCalendar: $e\n');
 }
 ```
@@ -238,20 +238,20 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlaceCalendarApi();
-final placeId = 56; // int | 
-final dayId = 56; // int | 
-final dayDate = 2013-10-20T19:20:30+01:00; // DateTime | 
-final privacyType = privacyType_example; // String | 
+final api = Openapi().getPlaceCalendarApi();
+final int placeId = 56; // int | 
+final int dayId = 56; // int | 
+final DateTime dayDate = 2013-10-20T19:20:30+01:00; // DateTime | 
+final String privacyType = privacyType_example; // String | 
 
-try { 
-    final result = api_instance.placeCalendarGetPlaceDay(placeId, dayId, dayDate, privacyType);
-    print(result);
-} catch (e) {
+try {
+    final response = api.placeCalendarGetPlaceDay(placeId, dayId, dayDate, privacyType);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlaceCalendarApi->placeCalendarGetPlaceDay: $e\n');
 }
 ```
@@ -285,17 +285,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlaceCalendarApi();
-final eventId = 56; // int | 
+final api = Openapi().getPlaceCalendarApi();
+final int eventId = 56; // int | 
 
-try { 
-    final result = api_instance.placeCalendarGetPlaceEvent(eventId);
-    print(result);
-} catch (e) {
+try {
+    final response = api.placeCalendarGetPlaceEvent(eventId);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlaceCalendarApi->placeCalendarGetPlaceEvent: $e\n');
 }
 ```
@@ -326,17 +326,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlaceCalendarApi();
-final placeDay = PlaceDay(); // PlaceDay | 
+final api = Openapi().getPlaceCalendarApi();
+final PlaceDay placeDay = ; // PlaceDay | 
 
-try { 
-    final result = api_instance.placeCalendarSavePlaceDay(placeDay);
-    print(result);
-} catch (e) {
+try {
+    final response = api.placeCalendarSavePlaceDay(placeDay);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlaceCalendarApi->placeCalendarSavePlaceDay: $e\n');
 }
 ```
@@ -367,17 +367,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PlaceCalendarApi();
-final placeEvent = PlaceEvent(); // PlaceEvent | 
+final api = Openapi().getPlaceCalendarApi();
+final PlaceEvent placeEvent = ; // PlaceEvent | 
 
-try { 
-    final result = api_instance.placeCalendarSavePlaceEvent(placeEvent);
-    print(result);
-} catch (e) {
+try {
+    final response = api.placeCalendarSavePlaceEvent(placeEvent);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PlaceCalendarApi->placeCalendarSavePlaceEvent: $e\n');
 }
 ```

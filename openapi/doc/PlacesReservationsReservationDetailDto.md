@@ -10,8 +10,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **reservation** | [**PlacesReservationsReservationDto**](PlacesReservationsReservationDto.md) |  | [optional] 
 **place** | [**PlaceDto**](PlaceDto.md) |  | [optional] 
-**smokeSessions** | [**List<SmokeSessionSimpleDto>**](SmokeSessionSimpleDto.md) |  | [optional] [default to const []]
-**orders** | [**List<HookahOrderDto>**](HookahOrderDto.md) |  | [optional] [default to const []]
+**smokeSessions** | [**List&lt;SmokeSessionSimpleDto&gt;**](SmokeSessionSimpleDto.md) |  | [optional] 
+**orders** | [**List&lt;HookahOrderDto&gt;**](HookahOrderDto.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

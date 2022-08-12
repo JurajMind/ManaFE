@@ -62,8 +62,8 @@ enum PointsMode {
 class Sparkline extends StatelessWidget {
   /// Creates a widget that represents provided [data] in a Sparkline chart.
   Sparkline({
-    Key key,
-    @required this.data,
+    Key? key,
+    required this.data,
     this.lineWidth = 2.0,
     this.lineColor = Colors.lightBlue,
     this.lineGradient,
@@ -122,7 +122,7 @@ class Sparkline extends StatelessWidget {
   /// A gradient to use when coloring the sparkline.
   ///
   /// If this is specified, [lineColor] has no effect.
-  final Gradient lineGradient;
+  final Gradient? lineGradient;
 
   /// Determines how individual data points should be drawn over the sparkline.
   ///
@@ -174,7 +174,7 @@ class Sparkline extends StatelessWidget {
   /// A gradient to use when filling the chart, as determined by [fillMode].
   ///
   /// If this is specified, [fillColor] has no effect.
-  final Gradient fillGradient;
+  final Gradient? fillGradient;
 
   /// The width to use when the sparkline is in a situation with an unbounded
   /// width.
@@ -210,11 +210,11 @@ class Sparkline extends StatelessWidget {
 
   /// The maximum value for the rendering box. Will default to the largest
   /// value in [data].
-  final double max;
+  final double? max;
 
   /// The minimum value for the rendering box. Will default to the largest
   /// value in [data].
-  final double min;
+  final double? min;
 
   @override
   Widget build(BuildContext context) {
@@ -254,26 +254,26 @@ class Sparkline extends StatelessWidget {
 class _SparklinePainter extends CustomPainter {
   _SparklinePainter(
     this.dataPoints, {
-    @required this.lineWidth,
-    @required this.lineColor,
+    required this.lineWidth,
+    required this.lineColor,
     this.lineGradient,
-    @required this.sharpCorners,
-    @required this.useCubicSmoothing,
-    @required this.cubicSmoothingFactor,
-    @required this.fillMode,
-    @required this.fillColor,
+    required this.sharpCorners,
+    required this.useCubicSmoothing,
+    required this.cubicSmoothingFactor,
+    required this.fillMode,
+    required this.fillColor,
     this.fillGradient,
-    @required this.pointsMode,
-    @required this.pointSize,
-    @required this.pointColor,
-    @required this.enableGridLines,
-    @required this.gridLineColor,
-    @required this.gridLineAmount,
-    @required this.gridLineWidth,
-    @required this.gridLineLabelColor,
-    @required this.labelPrefix,
-    double max,
-    double min,
+    required this.pointsMode,
+    required this.pointSize,
+    required this.pointColor,
+    required this.enableGridLines,
+    required this.gridLineColor,
+    required this.gridLineAmount,
+    required this.gridLineWidth,
+    required this.gridLineLabelColor,
+    required this.labelPrefix,
+    double? max,
+    double? min,
   })  : _max = max != null ? max : dataPoints.reduce(math.max),
         _min = min != null ? min : dataPoints.reduce(math.min);
 
@@ -281,7 +281,7 @@ class _SparklinePainter extends CustomPainter {
 
   final double lineWidth;
   final Color lineColor;
-  final Gradient lineGradient;
+  final Gradient? lineGradient;
 
   final bool sharpCorners;
   final bool useCubicSmoothing;
@@ -289,7 +289,7 @@ class _SparklinePainter extends CustomPainter {
 
   final FillMode fillMode;
   final Color fillColor;
-  final Gradient fillGradient;
+  final Gradient? fillGradient;
 
   final PointsMode pointsMode;
   final double pointSize;
@@ -409,7 +409,7 @@ class _SparklinePainter extends CustomPainter {
 
     if (lineGradient != null) {
       final Rect lineRect = new Rect.fromLTWH(0.0, 0.0, width, height);
-      paint.shader = lineGradient.createShader(lineRect);
+      paint.shader = lineGradient!.createShader(lineRect);
     }
 
     if (fillMode != FillMode.none) {
@@ -434,7 +434,7 @@ class _SparklinePainter extends CustomPainter {
 
       if (fillGradient != null) {
         final Rect fillRect = new Rect.fromLTWH(0.0, 0.0, width, height);
-        fillPaint.shader = fillGradient.createShader(fillRect);
+        fillPaint.shader = fillGradient!.createShader(fillRect);
       }
       canvas.drawPath(fillPath, fillPaint);
     }

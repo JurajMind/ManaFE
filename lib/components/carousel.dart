@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'dart:math' as math;
 
 import 'Places/distance_widget.dart';
@@ -20,21 +20,20 @@ import 'Places/distance_widget.dart';
 class Carroussel extends StatefulWidget {
   Carroussel({this.navigateToDetail});
 
-  final void Function(PlaceSimpleDto) navigateToDetail;
+  final void Function(PlaceSimpleDto)? navigateToDetail;
 
   @override
-  _CarrousselState createState() =>
-      new _CarrousselState(navigateToDetail: navigateToDetail);
+  _CarrousselState createState() => new _CarrousselState(navigateToDetail: navigateToDetail);
 }
 
 class _CarrousselState extends State<Carroussel> {
-  final void Function(PlaceSimpleDto) navigateToDetail;
+  final void Function(PlaceSimpleDto)? navigateToDetail;
 
   PlacesBloc placeBloc = getIt.get<PlacesBloc>();
 
   _CarrousselState({this.navigateToDetail});
 
-  PageController controller;
+  PageController? controller;
   int currentpage = 0;
   bool loading = true;
   @override
@@ -57,7 +56,7 @@ class _CarrousselState extends State<Carroussel> {
 
   @override
   dispose() {
-    controller.dispose();
+    controller!.dispose();
     super.dispose();
   }
 
@@ -78,17 +77,15 @@ class _CarrousselState extends State<Carroussel> {
             return Center(child: CircularProgressIndicator());
           }
 
-          if (snapshot.data.length == 0) {
+          if (snapshot.data!.length == 0) {
             return Container(height: 100, child: buildAdd());
           }
           return StreamBuilder<Position>(
               stream: bloc.location,
               builder: (context, position) {
-                Map<int, double> positions = new Map<int, double>.fromIterable(
-                    snapshot.data,
+                Map<int?, double?> positions = new Map<int?, double?>.fromIterable(snapshot.data!,
                     key: (v) => v.id,
-                    value: (v) => PlaceHelpers.calculateDistanceFromAddress(
-                        v.address, position.data));
+                    value: (v) => PlaceHelpers.calculateDistanceFromAddress(v.address, position.data));
                 return PageView.builder(
                   onPageChanged: (value) {
                     setState(() {
@@ -96,11 +93,8 @@ class _CarrousselState extends State<Carroussel> {
                     });
                   },
                   controller: controller,
-                  itemCount: snapshot.data != null
-                      ? math.min(snapshot.data.length, 5)
-                      : 0,
-                  itemBuilder: (context, index) =>
-                      builder(index, snapshot.data[index], positions),
+                  itemCount: snapshot.data != null ? math.min(snapshot.data!.length, 5) : 0,
+                  itemBuilder: (context, index) => builder(index, snapshot.data![index], positions),
                 );
               });
         });
@@ -109,14 +103,14 @@ class _CarrousselState extends State<Carroussel> {
   builder(
     int index,
     PlaceSimpleDto place,
-    Map<int, double> positions,
+    Map<int?, double?> positions,
   ) {
     return new AnimatedBuilder(
-        animation: controller,
+        animation: controller!,
         builder: (context, child) {
           double value = 1.0;
-          if (controller.position.haveDimensions) {
-            value = controller.page - index;
+          if (controller!.position.haveDimensions) {
+            value = controller!.page! - index;
             value = (1 - (value.abs() * 0.3)).clamp(0.0, 1.0);
           }
 
@@ -134,8 +128,7 @@ class _CarrousselState extends State<Carroussel> {
   Widget buildAdd() {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => Placeholder(), fullscreenDialog: true));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Placeholder(), fullscreenDialog: true));
       },
       child: Padding(
           padding: const EdgeInsets.all(4.0),
@@ -152,8 +145,7 @@ class _CarrousselState extends State<Carroussel> {
                   Hero(
                     tag: 'add_new_place_label',
                     child: Text(
-                      AppTranslations.of(context)
-                          .text("reservations.add_new_place"),
+                      AppTranslations.of(context)!.text("reservations.add_new_place"),
                       style: Theme.of(context).textTheme.headline6,
                       textAlign: TextAlign.center,
                     ),
@@ -163,24 +155,22 @@ class _CarrousselState extends State<Carroussel> {
     );
   }
 
-  InkWell buildPlaceInkWell(int index, PlaceSimpleDto place, double distance) {
+  InkWell buildPlaceInkWell(int index, PlaceSimpleDto place, double? distance) {
     return new InkWell(
       onTap: () {
         print('curent');
-        var curentIndex = controller.page.round();
+        var curentIndex = controller!.page!.round();
 
         if (curentIndex > index) {
-          controller.previousPage(
-              duration: Duration(milliseconds: 500), curve: Curves.ease);
+          controller!.previousPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
         }
 
         if (curentIndex < index) {
-          controller.nextPage(
-              duration: Duration(milliseconds: 500), curve: Curves.ease);
+          controller!.nextPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
         }
 
         if (curentIndex == index) {
-          navigateToDetail(place);
+          navigateToDetail!(place);
         }
       },
       child: Padding(
@@ -190,11 +180,9 @@ class _CarrousselState extends State<Carroussel> {
                 borderRadius: new BorderRadius.circular(10.0),
                 color: Colors.grey[300],
                 image: DecorationImage(
-                    image: MPlatform.isWeb
-                        ? NetworkImage(
-                            Extensions.getPlaceImage(place, MediaSize.Medium))
-                        : CachedNetworkImageProvider(
-                            Extensions.getPlaceImage(place, MediaSize.Medium)),
+                    image: (MPlatform.isWeb
+                        ? NetworkImage(Extensions.getPlaceImage(place, MediaSize.Medium))
+                        : CachedNetworkImageProvider(Extensions.getPlaceImage(place, MediaSize.Medium))) as ImageProvider<Object>,
                     fit: BoxFit.cover)),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -202,8 +190,8 @@ class _CarrousselState extends State<Carroussel> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  new Text(place.name,
-                      style: Theme.of(context).textTheme.headline6.merge(
+                  new Text(place.name!,
+                      style: Theme.of(context).textTheme.headline6!.merge(
                             TextStyle(
                               shadows: [
                                 Shadow(
@@ -226,7 +214,7 @@ class _CarrousselState extends State<Carroussel> {
                             ),
                           )),
                   new Text(Extensions.adress(place.address),
-                      style: Theme.of(context).textTheme.subtitle1.merge(
+                      style: Theme.of(context).textTheme.subtitle1!.merge(
                             TextStyle(
                               shadows: [
                                 Shadow(
@@ -254,10 +242,7 @@ class _CarrousselState extends State<Carroussel> {
                     children: <Widget>[
                       new Flex(
                         direction: Axis.horizontal,
-                        children: <Widget>[
-                          new Icon(FontAwesomeIcons.walking),
-                          DistanceWidget(distance)
-                        ],
+                        children: <Widget>[new Icon(FontAwesomeIcons.walking), DistanceWidget(distance)],
                       ),
                       new OpenIndicator(
                         place: place,

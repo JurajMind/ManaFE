@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class DevicePictureItem extends StatelessWidget {
-  final String inlinePicture;
-  final bool selected;
+  final String? inlinePicture;
+  final bool? selected;
 
-  const DevicePictureItem( this.inlinePicture,{Key key, this.selected,}) : super(key: key);
+  const DevicePictureItem( this.inlinePicture,{Key? key, this.selected,}) : super(key: key);
   @override
   Widget build(BuildContext context) {
 
       if(inlinePicture == null){
             return Shimmer.fromColors(
-      baseColor: Colors.grey[400],
+      baseColor: Colors.grey[400]!,
       highlightColor: Colors.white,
       child: Container(
       decoration: BoxDecoration(
@@ -43,7 +43,7 @@ class DevicePictureItem extends StatelessWidget {
        
         child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: PictureHelper.imageFromBase64String(inlinePicture),
+        child: PictureHelper.imageFromBase64String(inlinePicture!),
       )),
     );
   }

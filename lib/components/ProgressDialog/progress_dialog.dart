@@ -1,18 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-String _dialogMessage = "Loading...";
+String? _dialogMessage = "Loading...";
+
 enum ProgressDialogType { Normal, Download }
 
 ProgressDialogType _progressDialogType = ProgressDialogType.Normal;
-double _progress = 0.0;
+double? _progress = 0.0;
 
 bool _isShowing = false;
 
 class ProgressDialog {
-  _MyDialog _dialog;
+  _MyDialog? _dialog;
 
-  BuildContext _buildContext, _context;
+  BuildContext? _buildContext, _context;
 
   ProgressDialog(BuildContext buildContext, ProgressDialogType progressDialogtype) {
     _buildContext = buildContext;
@@ -25,7 +26,7 @@ class ProgressDialog {
     debugPrint("ProgressDialog message changed: $mess");
   }
 
-  void update({double progress, String message}) {
+  void update({double? progress, String? message}) {
     debugPrint("ProgressDialog message changed: ");
     if (_progressDialogType == ProgressDialogType.Download) {
       debugPrint("Old Progress: $_progress, New Progress: $progress");
@@ -33,7 +34,7 @@ class ProgressDialog {
     }
     debugPrint("Old message: $_dialogMessage, New Message: $message");
     _dialogMessage = message;
-    _dialog.update();
+    _dialog!.update();
   }
 
   bool isShowing() {
@@ -43,7 +44,7 @@ class ProgressDialog {
   void hide() {
     if (_isShowing) {
       _isShowing = false;
-      Navigator.of(_context).pop();
+      Navigator.of(_context!).pop();
       debugPrint('ProgressDialog dismissed');
     }
   }
@@ -54,7 +55,7 @@ class ProgressDialog {
       _isShowing = true;
       debugPrint('ProgressDialog shown');
       showDialog<dynamic>(
-        context: _buildContext,
+        context: _buildContext!,
         barrierDismissible: false,
         builder: (BuildContext context) {
           _context = context;
@@ -111,15 +112,16 @@ class _MyDialogState extends State<_MyDialog> {
           const SizedBox(width: 15.0),
           Expanded(
             child: _progressDialogType == ProgressDialogType.Normal
-                ? Text(_dialogMessage, textAlign: TextAlign.justify, style: Theme.of(context).textTheme.headline5)
+                ? Text(_dialogMessage!, textAlign: TextAlign.justify, style: Theme.of(context).textTheme.headline5)
                 : Stack(
                     children: <Widget>[
                       Positioned(
-                        child: Text(_dialogMessage, style: Theme.of(context).textTheme.headline5),
+                        child: Text(_dialogMessage!, style: Theme.of(context).textTheme.headline5),
                         top: 35.0,
                       ),
                       Positioned(
-                        child: Text("$_progress/100", style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w400)),
+                        child: Text("$_progress/100",
+                            style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w400)),
                         bottom: 15.0,
                         right: 15.0,
                       ),
@@ -140,7 +142,7 @@ class MessageBox {
     _showDialog();
   }
 
-  Future _showDialog() {
+  Future? _showDialog() {
     showDialog(
       context: buildContext,
       barrierDismissible: false,

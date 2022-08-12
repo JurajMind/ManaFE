@@ -3,19 +3,19 @@ import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:clickable_list_wheel_view/clickable_list_wheel_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:flutter/services.dart';
 
 import 'bottom_controll_bar.dart';
 
 class AnimationStatePicker extends StatefulWidget {
-  final SmokeSessionBloc smokeSessionBloc;
-  final int selectedIndex;
-  final String label;
-  final SmokeState state;
-  final ValueChanged<int> onChanged;
-  final bool haveRightChevron;
-  final bool haveLeftChevron;
+  final SmokeSessionBloc? smokeSessionBloc;
+  final int? selectedIndex;
+  final String? label;
+  final SmokeState? state;
+  final ValueChanged<int>? onChanged;
+  final bool? haveRightChevron;
+  final bool? haveLeftChevron;
   AnimationStatePicker(
       {this.smokeSessionBloc,
       this.selectedIndex,
@@ -32,10 +32,10 @@ class AnimationStatePicker extends StatefulWidget {
 }
 
 class AnimationStatePickerState extends State<AnimationStatePicker> {
-  int _focusIndex;
+  int? _focusIndex;
   bool _init = false;
 
-  FixedExtentScrollController scrollController;
+  FixedExtentScrollController? scrollController;
 
   @override
   void initState() {
@@ -48,14 +48,14 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
 
   @override
   void didChangeDependencies() {
-    scrollController.jumpToItem(widget.selectedIndex);
+    scrollController!.jumpToItem(widget.selectedIndex!);
     super.didChangeDependencies();
   }
 
   @override
   void didUpdateWidget(AnimationStatePicker oldWidget) {
     if (oldWidget.selectedIndex != widget.selectedIndex) {
-      scrollController.animateToItem(widget.selectedIndex,
+      scrollController!.animateToItem(widget.selectedIndex!,
           curve: Curves.easeIn, duration: const Duration(milliseconds: 300));
     }
     super.didUpdateWidget(oldWidget);
@@ -92,17 +92,17 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
     );
   }
 
-  StreamBuilder<List<SmartHookahHelpersAnimation>> buildAnimationList() {
-    return StreamBuilder<List<SmartHookahHelpersAnimation>>(
-        stream: widget.smokeSessionBloc.animations,
+  StreamBuilder<List<SmartHookahHelpersAnimation>?> buildAnimationList() {
+    return StreamBuilder<List<SmartHookahHelpersAnimation>?>(
+        stream: widget.smokeSessionBloc!.animations,
         initialData: <SmartHookahHelpersAnimation>[],
         builder: (context, snapshot) {
           return snapshot?.data?.length == 0
               ? Container()
               : ClickableListWheelScrollView(
-                  scrollController: scrollController,
+                  scrollController: scrollController!,
                   itemHeight: 70,
-                  itemCount: snapshot.data.length,
+                  itemCount: snapshot.data!.length,
                   onItemTapCallback: (index) {
                     print("onItemTapCallback index: $index");
                   },
@@ -117,7 +117,7 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
                       if (index == 0) {
                         print('fake');
                       }
-                      widget.onChanged(index);
+                      widget.onChanged!(index);
                       setState(() {
                         _focusIndex = index;
                         //Vibration.vibrate(duration: 2);
@@ -125,9 +125,9 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
                       });
                     },
                     childDelegate: ListWheelChildBuilderDelegate(
-                      builder: (context, index) => _createAnimation(index,
-                          snapshot.data[index], context, widget.selectedIndex),
-                      childCount: snapshot.data.length,
+                      builder: (context, index) =>
+                          _createAnimation(index, snapshot.data![index], context, widget.selectedIndex),
+                      childCount: snapshot.data!.length,
                     ),
                   ));
 
@@ -143,39 +143,35 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
                     if (index == 0) {
                       print('fake');
                     }
-                    widget.onChanged(index);
+                    widget.onChanged!(index);
                     setState(() {
                       _focusIndex = index;
                       //Vibration.vibrate(duration: 2);
                       HapticFeedback.selectionClick();
                     });
                   },
-                  children: List.generate(
-                      snapshot.data.length,
-                      (int index) => _createAnimation(index,
-                          snapshot.data[index], context, widget.selectedIndex)),
+                  children: List.generate(snapshot.data!.length,
+                      (int index) => _createAnimation(index, snapshot.data![index], context, widget.selectedIndex)),
                 );
         });
   }
 
-  _createAnimation(int index, SmartHookahHelpersAnimation data,
-      BuildContext context, int selected) {
+  _createAnimation(int index, SmartHookahHelpersAnimation data, BuildContext context, int? selected) {
     if (!_init && data.id == selected) {
       _init = true;
-      scrollController.jumpToItem(index);
+      scrollController!.jumpToItem(index);
       _focusIndex = index;
     }
     return GestureDetector(
       onTap: () {
-        scrollController.animateToItem(index,
-            duration: Duration(microseconds: 500), curve: Curves.easeIn);
+        scrollController!.animateToItem(index, duration: Duration(microseconds: 500), curve: Curves.easeIn);
         _focusIndex = index;
       },
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Container(
           child: Center(
-            child: Text(data.displayName,
+            child: Text(data.displayName!,
                 style: TextStyle(
                   color: index == selected ? Colors.white : Colors.grey,
                   fontWeight: FontWeight.bold,

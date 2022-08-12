@@ -2,7 +2,7 @@ import 'dart:ui';
 
 class Marker {
   final String id;
-  final String title;
+  final String? title;
   final double latitude;
   final double longitude;
 
@@ -10,7 +10,7 @@ class Marker {
   ///
   ///Setting this value replaces the attribute color.
   ///If the image can't be set, the color will be used with the default marker.
-  final MarkerIcon markerIcon;
+  final MarkerIcon? markerIcon;
 
   ///The rotation of the marker in degrees clockwise from the default position.
   final double rotation;
@@ -59,7 +59,7 @@ class Marker {
       }
     };
     if (markerIcon != null)
-      map.putIfAbsent("markerIcon", () => markerIcon.toMap());
+      map.putIfAbsent("markerIcon", () => markerIcon!.toMap());
     return map;
   }
 }

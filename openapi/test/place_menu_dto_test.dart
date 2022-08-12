@@ -1,31 +1,23 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'package:openapi/api.dart';
 import 'package:test/test.dart';
+import 'package:openapi/openapi.dart';
 
 // tests for PlaceMenuDto
 void main() {
-  final instance = PlaceMenuDto();
+  final PlaceMenuDto? instance = /* PlaceMenuDto(...) */ null;
+  // TODO add properties to the entity
 
-  group('test PlaceMenuDto', () {
-    // List<PipeAccesorySimpleDto> accessories (default value: const [])
+  group(PlaceMenuDto, () {
+    // List<PipeAccesorySimpleDto> accessories
     test('to test the property `accessories`', () async {
       // TODO
     });
 
-    // List<TobaccoMixSimpleDto> tobaccoMixes (default value: const [])
+    // List<TobaccoMixSimpleDto> tobaccoMixes
     test('to test the property `tobaccoMixes`', () async {
       // TODO
     });
 
-    // List<SmartHookahModelsOrderExtraDto> orderExtras (default value: const [])
+    // List<SmartHookahModelsOrderExtraDto> orderExtras
     test('to test the property `orderExtras`', () async {
       // TODO
     });
@@ -40,17 +32,15 @@ void main() {
       // TODO
     });
 
-    // List<SmartHookahControllersPriceGroupDto> priceGroup (default value: const [])
+    // List<SmartHookahControllersPriceGroupDto> priceGroup
     test('to test the property `priceGroup`', () async {
       // TODO
     });
 
-    // List<PriceGroupItems> prices (default value: const [])
+    // List<PriceGroupItems> prices
     test('to test the property `prices`', () async {
       // TODO
     });
 
-
   });
-
 }

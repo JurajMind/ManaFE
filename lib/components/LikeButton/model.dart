@@ -3,25 +3,25 @@ import 'package:flutter/material.dart';
 class DotColor {
   final Color dotPrimaryColor;
   final Color dotSecondaryColor;
-  final Color dotThirdColor;
-  final Color dotLastColor;
+  final Color? dotThirdColor;
+  final Color? dotLastColor;
 
   const DotColor({
-    @required this.dotPrimaryColor,
-    @required this.dotSecondaryColor,
+    required this.dotPrimaryColor,
+    required this.dotSecondaryColor,
     this.dotThirdColor,
     this.dotLastColor,
   });
 
-  Color get dotThirdColorReal =>
+  Color? get dotThirdColorReal =>
       dotThirdColor == null ? dotPrimaryColor : dotThirdColor;
 
-  Color get dotLastColorReal =>
+  Color? get dotLastColorReal =>
       dotLastColor == null ? dotSecondaryColor : dotLastColor;
 }
 
 class LikeIcon extends Icon {
-  final Color iconColor;
+  final Color? iconColor;
 
   const LikeIcon(
     IconData icon, {
@@ -29,7 +29,7 @@ class LikeIcon extends Icon {
   }) : super(icon);
 
   @override
-  Color get color => this.iconColor;
+  Color? get color => this.iconColor;
 }
 
 class OvershootCurve extends Curve {

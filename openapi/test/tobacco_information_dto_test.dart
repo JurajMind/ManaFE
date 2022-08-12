@@ -1,26 +1,18 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'package:openapi/api.dart';
 import 'package:test/test.dart';
+import 'package:openapi/openapi.dart';
 
 // tests for TobaccoInformationDto
 void main() {
-  final instance = TobaccoInformationDto();
+  final TobaccoInformationDto? instance = /* TobaccoInformationDto(...) */ null;
+  // TODO add properties to the entity
 
-  group('test TobaccoInformationDto', () {
+  group(TobaccoInformationDto, () {
     // TobaccoSimpleDto tobacco
     test('to test the property `tobacco`', () async {
       // TODO
     });
 
-    // List<TobaccoTasteDto> tobaccoTastes (default value: const [])
+    // List<TobaccoTasteDto> tobaccoTastes
     test('to test the property `tobaccoTastes`', () async {
       // TODO
     });
@@ -35,17 +27,15 @@ void main() {
       // TODO
     });
 
-    // List<SmokeSessionSimpleDto> smokeSessions (default value: const [])
+    // List<SmokeSessionSimpleDto> smokeSessions
     test('to test the property `smokeSessions`', () async {
       // TODO
     });
 
-    // List<GearTobaccoReviewDto> reviews (default value: const [])
+    // List<GearTobaccoReviewDto> reviews
     test('to test the property `reviews`', () async {
       // TODO
     });
 
-
   });
-
 }

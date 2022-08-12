@@ -11,19 +11,19 @@ import '../sections.dart';
 
 class BrandList extends StatefulWidget {
   const BrandList({
-    Key key,
-    @required this.type,
-    @required this.brandFilter,
-    @required this.currentView,
-    @required this.onViewChanged,
+    Key? key,
+    required this.type,
+    required this.brandFilter,
+    required this.currentView,
+    required this.onViewChanged,
     this.section,
   }) : super(key: key);
 
-  final String type;
-  final String brandFilter;
-  final int currentView;
-  final ValueChanged<int> onViewChanged;
-  final Section section;
+  final String? type;
+  final String? brandFilter;
+  final int? currentView;
+  final ValueChanged<int>? onViewChanged;
+  final Section? section;
 
   @override
   _BrandListState createState() => _BrandListState();
@@ -32,18 +32,18 @@ class BrandList extends StatefulWidget {
 class _BrandListState extends State<BrandList> {
   var textController = new TextEditingController();
   bool searchMode = false;
-  String searchString;
+  String? searchString;
 
   @override
   Widget build(BuildContext context) {
-    var data = DataProvider.getData(context).gearBloc;
+    var data = DataProvider.getData(context)!.gearBloc;
     return Column(
       children: <Widget>[
         SizedBox(
           height: 50,
         ),
         Text(
-          widget.section.title,
+          widget.section!.title!,
           style: Theme.of(context).textTheme.headline3,
         ),
         !searchMode
@@ -107,7 +107,7 @@ class _BrandListState extends State<BrandList> {
                 ],
               ),
         Expanded(
-          child: StreamBuilder<List<BrandGroup>>(
+          child: StreamBuilder<List<BrandGroup>?>(
             stream: data.getBrandsByType(widget.type),
             initialData: null,
             builder: (context, snapshot) {
@@ -119,7 +119,7 @@ class _BrandListState extends State<BrandList> {
                     });
               }
 
-              if (snapshot.data.length == 0) {
+              if (snapshot.data!.length == 0) {
                 return Center(
                   child: Text('No ${widget.type} brand'),
                 );
@@ -128,14 +128,14 @@ class _BrandListState extends State<BrandList> {
               var data = snapshot.data;
 
               if (this.searchString != null) {
-                data = data.where((test) => test.name.toLowerCase().contains(this.searchString.toLowerCase())).toList();
+                data = data!.where((test) => test.name!.toLowerCase().contains(this.searchString!.toLowerCase())).toList();
               }
 
               return ListView.builder(
                   physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: data.length + 1,
+                  itemCount: data!.length + 1,
                   itemBuilder: (context, index) {
-                    if (index == data.length) {
+                    if (index == data!.length) {
                       return SizedBox(
                         height: 55,
                       );

@@ -20,18 +20,18 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = AccountApi();
-final userId = userId_example; // String | 
-final code = code_example; // String | 
+final api = Openapi().getAccountApi();
+final String userId = userId_example; // String | 
+final String code = code_example; // String | 
 
-try { 
-    final result = api_instance.accountConfirmEmail(userId, code);
-    print(result);
-} catch (e) {
+try {
+    final response = api.accountConfirmEmail(userId, code);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling AccountApi->accountConfirmEmail: $e\n');
 }
 ```
@@ -45,7 +45,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 
@@ -63,17 +63,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = AccountApi();
-final model = SmartHookahModelsForgotPasswordViewModel(); // SmartHookahModelsForgotPasswordViewModel | 
+final api = Openapi().getAccountApi();
+final SmartHookahModelsForgotPasswordViewModel model = ; // SmartHookahModelsForgotPasswordViewModel | 
 
-try { 
-    final result = api_instance.accountForgotPassword(model);
-    print(result);
-} catch (e) {
+try {
+    final response = api.accountForgotPassword(model);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling AccountApi->accountForgotPassword: $e\n');
 }
 ```
@@ -86,7 +86,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 
@@ -104,17 +104,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = AccountApi();
-final userModel = UserModel(); // UserModel | 
+final api = Openapi().getAccountApi();
+final UserModel userModel = ; // UserModel | 
 
-try { 
-    final result = api_instance.accountRegister(userModel);
-    print(result);
-} catch (e) {
+try {
+    final response = api.accountRegister(userModel);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling AccountApi->accountRegister: $e\n');
 }
 ```
@@ -127,7 +127,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 
@@ -145,18 +145,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = AccountApi();
-final userId = userId_example; // String | 
-final code = code_example; // String | 
+final api = Openapi().getAccountApi();
+final String userId = userId_example; // String | 
+final String code = code_example; // String | 
 
-try { 
-    final result = api_instance.accountResetPassword(userId, code);
-    print(result);
-} catch (e) {
+try {
+    final response = api.accountResetPassword(userId, code);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling AccountApi->accountResetPassword: $e\n');
 }
 ```
@@ -170,7 +170,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 

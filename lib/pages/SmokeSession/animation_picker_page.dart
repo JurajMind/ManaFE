@@ -14,7 +14,7 @@ class _AnimationPickerPageState extends State<AnimationPickerPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppTranslations.of(context)
+          AppTranslations.of(context)!
               .text("smoke_session.animation")
               .toUpperCase(),
         ),

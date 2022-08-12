@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SettingPage extends StatefulWidget {
-  SettingPage({Key key}) : super(key: key);
+  SettingPage({Key? key}) : super(key: key);
 
   _SettingPageState createState() => _SettingPageState();
 }
@@ -26,7 +26,7 @@ class _SettingPageState extends State<SettingPage> {
       ),
       body: Center(
         child: Container(
-          constraints: theme.pageConstrains,
+          constraints: theme.pageConstrains as BoxConstraints?,
           child: ListView(
             children: <Widget>[
               const SizedBox(
@@ -39,7 +39,7 @@ class _SettingPageState extends State<SettingPage> {
                         child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        'Language: ${AppTranslations.of(context).locale.languageCode}',
+                        'Language: ${AppTranslations.of(context)!.locale.languageCode}',
                         style: Theme.of(context).textTheme.headline6,
                       ),
                     ))),

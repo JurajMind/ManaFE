@@ -1,20 +1,12 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'package:openapi/api.dart';
 import 'package:test/test.dart';
+import 'package:openapi/openapi.dart';
 
 // tests for PlacesReservationsReservationDto
 void main() {
-  final instance = PlacesReservationsReservationDto();
+  final PlacesReservationsReservationDto? instance = /* PlacesReservationsReservationDto(...) */ null;
+  // TODO add properties to the entity
 
-  group('test PlacesReservationsReservationDto', () {
+  group(PlacesReservationsReservationDto, () {
     // int id
     test('to test the property `id`', () async {
       // TODO
@@ -85,7 +77,7 @@ void main() {
       // TODO
     });
 
-    // List<int> seats (default value: const [])
+    // List<int> seats
     test('to test the property `seats`', () async {
       // TODO
     });
@@ -95,7 +87,5 @@ void main() {
       // TODO
     });
 
-
   });
-
 }

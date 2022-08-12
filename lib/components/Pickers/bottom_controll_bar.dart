@@ -10,13 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BottomControllBar extends StatelessWidget {
-  final SmokeState state;
-  final bool haveLeftChevron;
-  final bool haveRightChevron;
-  final String label;
+  final SmokeState? state;
+  final bool? haveLeftChevron;
+  final bool? haveRightChevron;
+  final String? label;
 
   const BottomControllBar({
-    Key key,
+    Key? key,
     this.state,
     this.haveLeftChevron,
     this.haveRightChevron,
@@ -26,11 +26,11 @@ class BottomControllBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var sessionBlock = getIt.get<SmokeSessionBloc>();
-    return StreamBuilder<StandSettings>(
+    return StreamBuilder<StandSettings?>(
         stream: sessionBlock.standSettings,
         initialData: StandSettings.empty(),
         builder: (context, snapshot) {
-          var setting = snapshot.data.getStateSetting(state);
+          var setting = snapshot.data!.getStateSetting(state);
           return new Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -49,7 +49,7 @@ class BottomControllBar extends StatelessWidget {
                 ),
               ),
               Text(
-                label,
+                label!,
                 style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w700),
               ),
               InkWell(
@@ -72,7 +72,7 @@ class BottomControllBar extends StatelessWidget {
   }
 
   Future<void> showSpeedDialog(
-      BuildContext context, StateSetting setting, SmokeSessionBloc bloc) {
+      BuildContext context, StateSetting? setting, SmokeSessionBloc bloc) {
     return showDialog<void>(
         context: context,
         builder: (BuildContext context) => new SizedBox(
@@ -83,7 +83,7 @@ class BottomControllBar extends StatelessWidget {
               backgroundColor: Colors.transparent,
               title: Center(
                   child: Text(
-                      AppTranslations.of(context).text("smoke_session.speed"))),
+                      AppTranslations.of(context)!.text("smoke_session.speed"))),
               children: <Widget>[
                 SizedBox(
                   height: 400.0,
@@ -96,7 +96,7 @@ class BottomControllBar extends StatelessWidget {
                     negativeIcon: Icons.fast_forward,
                     minValue: 0.0,
                     maxValue: 255.0,
-                    initValue: 255.0 - setting.speed,
+                    initValue: 255.0 - setting!.speed!,
                     onChanged: (value) =>
                         bloc.setSpeed(255 - value.round(), state),
                   ),
@@ -106,7 +106,7 @@ class BottomControllBar extends StatelessWidget {
   }
 
   Future<void> showBrDialog(
-      BuildContext context, StateSetting setting, SmokeSessionBloc bloc) {
+      BuildContext context, StateSetting? setting, SmokeSessionBloc bloc) {
     return showDialog<void>(
         context: context,
         builder: (BuildContext context) => new SizedBox(
@@ -114,7 +114,7 @@ class BottomControllBar extends StatelessWidget {
             height: MediaQuery.of(context).size.height - 80,
             child: SimpleDialog(
               title: Center(
-                  child: Text(AppTranslations.of(context)
+                  child: Text(AppTranslations.of(context)!
                       .text("smoke_session.brightness"))),
               backgroundColor: Colors.transparent,
               children: <Widget>[
@@ -129,7 +129,7 @@ class BottomControllBar extends StatelessWidget {
                     negativeIcon: FontAwesomeIcons.sun,
                     minValue: 0.0,
                     maxValue: 255.0,
-                    initValue: setting.brightness + 0.0,
+                    initValue: setting!.brightness! + 0.0,
                     onChanged: (value) =>
                         bloc.setBrigtness(value.round(), state),
                   ),

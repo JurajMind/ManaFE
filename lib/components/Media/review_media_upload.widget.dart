@@ -4,20 +4,20 @@ import 'package:app/pages/Common/upload_picture.page.dart';
 import 'package:flutter/material.dart';
 
 class ReviewMediaUpload extends StatefulWidget {
-  final List<File> files;
+  final List<File>? files;
 
-  ReviewMediaUpload({Key key, this.files}) : super(key: key);
+  ReviewMediaUpload({Key? key, this.files}) : super(key: key);
 
   @override
   _ReviewMediaUploadState createState() => _ReviewMediaUploadState();
 }
 
 class _ReviewMediaUploadState extends State<ReviewMediaUpload> {
-  List<File> files;
+  late List<File> files;
 
   @override
   void initState() {
-    files = widget.files ?? new List<File>();
+    files = widget.files ?? <File>[];
     super.initState();
   }
 
@@ -35,7 +35,7 @@ class _ReviewMediaUploadState extends State<ReviewMediaUpload> {
           ),
           Container(
             height: 150,
-            child: widget.files.length == 0
+            child: widget.files!.length == 0
                 ? Center(
                     child: buildAdd(context),
                   )
@@ -50,7 +50,9 @@ class _ReviewMediaUploadState extends State<ReviewMediaUpload> {
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           decoration: BoxDecoration(
-                              borderRadius: new BorderRadius.circular(10.0), border: new Border.all(color: Colors.white, width: 2), color: Colors.transparent),
+                              borderRadius: new BorderRadius.circular(10.0),
+                              border: new Border.all(color: Colors.white, width: 2),
+                              color: Colors.transparent),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
@@ -108,8 +110,10 @@ class _ReviewMediaUploadState extends State<ReviewMediaUpload> {
       child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Container(
-            decoration:
-                BoxDecoration(borderRadius: new BorderRadius.circular(10.0), border: new Border.all(color: Colors.white, width: 2), color: Colors.transparent),
+            decoration: BoxDecoration(
+                borderRadius: new BorderRadius.circular(10.0),
+                border: new Border.all(color: Colors.white, width: 2),
+                color: Colors.transparent),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Icon(Icons.add_a_photo),

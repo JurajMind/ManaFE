@@ -8,10 +8,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class ExternalAuthWidget extends StatelessWidget {
-  final ValueChanged<bool> onAuthBegin;
+  final ValueChanged<bool>? onAuthBegin;
 
   ExternalAuthWidget({
-    Key key,
+    Key? key,
     this.onAuthBegin,
   }) : super(key: key);
 
@@ -74,7 +74,7 @@ class ExternalAuthWidget extends StatelessWidget {
 
   Future googleLogin(context) async {
     try {
-      var result = await _googleSignIn.signIn();
+      var result = await (_googleSignIn.signIn() as FutureOr<GoogleSignInAccount>);
       var auth = getIt.get<AuthorizeRepository>();
       var authToken = await result.authentication;
       var tokenResult =
@@ -82,7 +82,7 @@ class ExternalAuthWidget extends StatelessWidget {
       if (tokenResult) {
         AppWidget.restartApp(context);
       } else {
-        onAuthBegin(false);
+        onAuthBegin!(false);
       }
     } catch (error) {
       print(error);

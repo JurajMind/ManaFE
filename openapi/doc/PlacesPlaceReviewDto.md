@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **overall** | **int** |  | [optional] 
 **placeId** | **int** |  | [optional] 
 **sessionReview** | [**SmartHookahModelsDbSessionDtoSessionPlaceReviewDto**](SmartHookahModelsDbSessionDtoSessionPlaceReviewDto.md) |  | [optional] 
-**medias** | [**List<MediaDto>**](MediaDto.md) |  | [optional] [default to const []]
+**medias** | [**List&lt;MediaDto&gt;**](MediaDto.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

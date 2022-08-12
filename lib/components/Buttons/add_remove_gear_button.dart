@@ -4,12 +4,12 @@ import 'package:app/main.dart';
 
 import 'package:app/module/module.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class AddRemoveGearButton extends StatelessWidget {
-  final PipeAccesorySimpleDto gear;
+  final PipeAccesorySimpleDto? gear;
 
-  const AddRemoveGearButton({Key key, this.gear}) : super(key: key);
+  const AddRemoveGearButton({Key? key, this.gear}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     var bloc = getIt.get<PersonBloc>();
@@ -24,7 +24,7 @@ class AddRemoveGearButton extends StatelessWidget {
               iconColor: Colors.red,
               label: "gear.remove_from_my_gear",
               onPressed: () async {
-                bloc.removeMyGear(gear, 1000);
+                bloc.removeMyGear(gear!, 1000);
               },
             );
           }
@@ -38,13 +38,13 @@ class AddRemoveGearButton extends StatelessWidget {
             iconColor: AppColors.colors[1],
             label: "gear.add_to_my_gear",
             onPressed: () async {
-              bloc.addMyGear(gear, 1000);
+              bloc.addMyGear(gear!, 1000);
             },
           );
         });
   }
 
   bool matchAccessory(AsyncSnapshot<List<PipeAccesorySimpleDto>> snapshot) {
-    return (snapshot?.data?.indexWhere((a) => a.id == gear.id) ?? 0) != -1;
+    return (snapshot?.data?.indexWhere((a) => a.id == gear!.id) ?? 0) != -1;
   }
 }

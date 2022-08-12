@@ -7,7 +7,7 @@ import 'package:app/app/app.widget.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,17 +21,12 @@ class AuthorizeRepository {
 
   String url = 'https://${App.baseUri}/token';
 
-  AuthorizeRepository({@required this.sharedPreferences});
+  AuthorizeRepository({required this.sharedPreferences});
 
-  Future<String> authorize(String userName, String password) async {
+  Future<String?> authorize(String? userName, String? password) async {
     final response = await http.post(
       Uri.parse(url),
-      body: {
-        "grant_type": "password",
-        "username": userName,
-        "password": password,
-        "client_id": "test"
-      },
+      body: {"grant_type": "password", "username": userName, "password": password, "client_id": "test"},
     );
 
     if (response.statusCode != 200) {
@@ -41,20 +36,20 @@ class AuthorizeRepository {
     final responseJson = json.decode(response.body);
     var sucess = await writeToken(responseJson);
     if (sucess != null) {
-      await sharedPreferences.setString(_password, password);
+      await sharedPreferences.setString(_password, password!);
     }
     return sucess;
   }
 
-  String getToken() {
+  String? getToken() {
     return sharedPreferences.getString(_accessToken);
   }
 
-  String getUserName() {
+  String? getUserName() {
     return sharedPreferences.getString(_usernName);
   }
 
-  Future<bool> getLocalToken(String provider, String externalToken) async {
+  Future<bool> getLocalToken(String provider, String? externalToken) async {
     var response = await http.get(Uri.parse(
         "https://${App.baseUri}/Account/ObtainLocalAccessToken?provider=$provider&externalAccessToken=$externalToken"));
     final responseJson = json.decode(response.body);
@@ -76,18 +71,14 @@ class AuthorizeRepository {
     await sharedPreferences.setString(_accessToken, 'token');
   }
 
-  Future<String> refreshToken() async {
+  Future<String?> refreshToken() async {
     var refreshToken = sharedPreferences.getString(_refreshToken);
     // await _storage.delete(key: 'accessToken');
     // await _storage.delete(key: 'refreshToken');
 
     final response = await http.post(
       Uri.parse(url),
-      body: {
-        "grant_type": "refresh_token",
-        "refresh_token": refreshToken,
-        "client_id": "test"
-      },
+      body: {"grant_type": "refresh_token", "refresh_token": refreshToken, "client_id": "test"},
     );
     final responseJson = json.decode(response.body);
     if (responseJson['error'] != null) {
@@ -100,7 +91,7 @@ class AuthorizeRepository {
 
       await sharedPreferences.remove(_refreshToken);
       await sharedPreferences.remove(_accessToken);
-      AppWidget.restartApp(scaffoldKey.currentContext);
+      AppWidget.restartApp(scaffoldKey.currentContext!);
     }
 
     var success = await writeToken(responseJson);
@@ -108,11 +99,11 @@ class AuthorizeRepository {
       return success;
     }
 
-    AppWidget.restartApp(scaffoldKey.currentContext);
+    AppWidget.restartApp(scaffoldKey.currentContext!);
     return null;
   }
 
-  Future<String> register(UserModel userData) async {
+  Future<String?> register(UserModel userData) async {
     final response = await http.post(
       Uri.parse('https://${App.baseUri}/api/Account/Register'),
       body: {
@@ -131,7 +122,7 @@ class AuthorizeRepository {
     return "ERROR";
   }
 
-  Future<bool> forgotPassword(String email) async {
+  Future<bool> forgotPassword(String? email) async {
     final response = await http.post(
       Uri.parse('https://${App.baseUri}/api/Account/ForgotPassword'),
       body: {"Email": email},
@@ -142,15 +133,13 @@ class AuthorizeRepository {
     return false;
   }
 
-  Future<String> writeToken(dynamic responseJson) async {
+  Future<String?> writeToken(dynamic responseJson) async {
     var token = TokenResponse.fromJson(responseJson as Map<String, dynamic>);
     if (token.accessToken != null) {
-      await sharedPreferences.setString(_accessToken, token.accessToken);
-      if (token.refreshToken != null)
-        await sharedPreferences.setString(_refreshToken, token.refreshToken);
+      await sharedPreferences.setString(_accessToken, token.accessToken!);
+      if (token.refreshToken != null) await sharedPreferences.setString(_refreshToken, token.refreshToken!);
 
-      await sharedPreferences.setString(
-          _usernName, token.userName ?? 'No user name');
+      await sharedPreferences.setString(_usernName, token.userName ?? 'No user name');
 
       return token.accessToken;
     }
@@ -164,25 +153,20 @@ class AuthorizeRepository {
 }
 
 class AuthorizationPost {
-  final String username;
-  final String password;
+  final String? username;
+  final String? password;
 
   AuthorizationPost({this.username, this.password});
 }
 
 class TokenResponse {
-  String accessToken;
-  String tokenTtype;
-  int expiresIn;
-  String refreshToken;
-  String userName;
+  String? accessToken;
+  String? tokenTtype;
+  int? expiresIn;
+  String? refreshToken;
+  String? userName;
 
-  TokenResponse(
-      {this.accessToken,
-      this.tokenTtype,
-      this.expiresIn,
-      this.refreshToken,
-      this.userName});
+  TokenResponse({this.accessToken, this.tokenTtype, this.expiresIn, this.refreshToken, this.userName});
 
   factory TokenResponse.fromJson(Map<String, dynamic> json) {
     return TokenResponse(

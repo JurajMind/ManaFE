@@ -7,31 +7,29 @@ import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 import '../../place_detail_page.dart';
 
 class AboutPlaceWidget extends StatelessWidget {
-  final PlaceSimpleDto place;
+  final PlaceSimpleDto? place;
 
-  const AboutPlaceWidget({Key key, this.place}) : super(key: key);
+  const AboutPlaceWidget({Key? key, this.place}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     var placeBloc = getIt.get<PlaceBloc>();
     return Column(
       children: <Widget>[
-        StreamBuilder<PlaceDto>(
+        StreamBuilder<PlaceDto?>(
             stream: placeBloc.placeInfo,
             builder: (context, snapshot) {
-              var lang = AppTranslations.of(context).currentLanguage;
+              var lang = AppTranslations.of(context)!.currentLanguage;
               if (snapshot.data == null) {
                 return Container();
               }
               return Column(children: <Widget>[
                 Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.0)),
+                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20.0)),
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: FractionallySizedBox(
@@ -47,12 +45,8 @@ class AboutPlaceWidget extends StatelessWidget {
                             Expanded(
                               child: Center(
                                 child: Text(
-                                  snapshot.data.shortDescriptions[lang] ??
-                                      'No description',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline5
-                                      .apply(color: Colors.black),
+                                  snapshot.data!.shortDescriptions![lang] ?? 'No description',
+                                  style: Theme.of(context).textTheme.headline5!.apply(color: Colors.black),
                                 ),
                               ),
                             ),
@@ -66,14 +60,13 @@ class AboutPlaceWidget extends StatelessWidget {
           height: 16,
         ),
         Container(
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(20.0)),
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20.0)),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               new Row(
                 children: <Widget>[
-                  StreamBuilder<PlaceDto>(
+                  StreamBuilder<PlaceDto?>(
                       stream: placeBloc.placeInfo,
                       builder: (context, snapshot) {
                         return Expanded(
@@ -104,8 +97,7 @@ class AboutPlaceWidget extends StatelessWidget {
           height: 20,
         ),
         Container(
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(20.0)),
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20.0)),
           child: new BookMenuWidget(
             placeBloc: placeBloc,
             place: place,
@@ -115,8 +107,7 @@ class AboutPlaceWidget extends StatelessWidget {
           height: 20,
         ),
         Container(
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(20.0)),
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20.0)),
           child: new Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

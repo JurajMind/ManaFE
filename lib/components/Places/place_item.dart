@@ -8,13 +8,13 @@ import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/support/m_platform.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:shimmer/shimmer.dart';
 
 class PlaceItem extends StatelessWidget {
   const PlaceItem({
-    Key key,
-    @required this.place,
+    Key? key,
+    required this.place,
   }) : super(key: key);
 
   final PlaceSimpleDto place;
@@ -25,9 +25,8 @@ class PlaceItem extends StatelessWidget {
     return ListTile(
       onTap: () {
         placeBloc.loadPlace(place: place);
-        Navigator.of(context).push(MaterialPageRoute(
-            settings: RouteSettings(),
-            builder: (context) => PlaceDetailPage(place: place)));
+        Navigator.of(context)
+            .push(MaterialPageRoute(settings: RouteSettings(), builder: (context) => PlaceDetailPage(place: place)));
       },
       leading: SizedBox(
           height: 60.0,
@@ -35,11 +34,9 @@ class PlaceItem extends StatelessWidget {
           child: Hero(
             tag: '${place.friendlyUrl}_place',
             child: new Image(
-              image: MPlatform.isWeb
-                  ? NetworkImage(
-                      Extensions.getPlaceImage(place, MediaSize.Small))
-                  : new CachedNetworkImageProvider(
-                      Extensions.getPlaceImage(place, MediaSize.Small)),
+              image: (MPlatform.isWeb
+                  ? NetworkImage(Extensions.getPlaceImage(place, MediaSize.Small))
+                  : new CachedNetworkImageProvider(Extensions.getPlaceImage(place, MediaSize.Small))) as ImageProvider<Object>,
               fit: BoxFit.cover,
             ),
           )),
@@ -48,7 +45,7 @@ class PlaceItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(
-            place.name,
+            place.name!,
             style: Theme.of(context).textTheme.headline5,
           ),
           OpenIndicator(
@@ -64,13 +61,13 @@ class PlaceItem extends StatelessWidget {
 
 class PlaceItemShimer extends StatelessWidget {
   const PlaceItemShimer({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey[400],
+      baseColor: Colors.grey[400]!,
       highlightColor: Colors.white,
       child: ListTile(
         leading: SizedBox(
@@ -93,8 +90,7 @@ class PlaceItemShimer extends StatelessWidget {
             Container(
               height: 15,
               width: 15,
-              decoration:
-                  BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+              decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
             ),
           ],
         ),

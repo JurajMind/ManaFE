@@ -4,13 +4,13 @@ import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class TobaccoReviewItem extends StatelessWidget {
-  final GearTobaccoReviewDto review;
+  final GearTobaccoReviewDto? review;
 
-  const TobaccoReviewItem({Key key, this.review}) : super(key: key);
+  const TobaccoReviewItem({Key? key, this.review}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class TobaccoReviewItem extends StatelessWidget {
                         SmoothStarRating(
                             allowHalfRating: true,
                             starCount: 5,
-                            rating: review.taste / 2,
+                            rating: review!.taste! / 2,
                             size: 16.0,
                             color: AppColors.colors[1],
                             borderColor: AppColors.colors[1],
@@ -44,7 +44,7 @@ class TobaccoReviewItem extends StatelessWidget {
                         SmoothStarRating(
                             allowHalfRating: true,
                             starCount: 5,
-                            rating: review.smoke / 2,
+                            rating: review!.smoke! / 2,
                             size: 16.0,
                             color: AppColors.colors[2],
                             borderColor: AppColors.colors[2],
@@ -64,7 +64,7 @@ class TobaccoReviewItem extends StatelessWidget {
                         SmoothStarRating(
                             allowHalfRating: true,
                             starCount: 5,
-                            rating: review.strength / 2,
+                            rating: review!.strength! / 2,
                             size: 18.0,
                             color: AppColors.colors[0],
                             borderColor: AppColors.colors[0],
@@ -77,7 +77,7 @@ class TobaccoReviewItem extends StatelessWidget {
                     child: Row(
                       children: <Widget>[
                         Icon(Icons.edit),
-                        Text(review.text),
+                        Text(review!.text!),
                       ],
                     ),
                   )
@@ -93,8 +93,7 @@ class TobaccoReviewItem extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(32.0))),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(32.0))),
               contentPadding: EdgeInsets.only(top: 10.0),
               content: Container(
                   width: size.width * 0.9,

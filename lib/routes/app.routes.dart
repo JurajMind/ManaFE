@@ -8,22 +8,22 @@ import 'package:flutter/material.dart';
 class AppRoutes {
   AppRoutes(FluroRouter router) {
     router.define('home', handler: new Handler(
-        handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+        handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
       return new HomePage();
     }));
 
     router.define('session/start', handler: new Handler(
-        handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+        handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
       return new EnterSmokeSessionCode();
     }));
 
     router.define('smokeSession', handler: new Handler(
-        handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+        handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
       return new SmokeSessionPage();
     }));
 
     router.define('mix', handler: new Handler(
-        handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+        handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
       return new MixDetailPage();
     }));
   }

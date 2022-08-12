@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 class AppTranslations {
-  Locale locale;
-  static Map<dynamic, dynamic> _sentence;
+  late Locale locale;
+  static Map<dynamic, dynamic>? _sentence;
 
   AppTranslations(Locale locale) {
     this.locale = locale;
     _sentence = null;
   }
 
-  static AppTranslations of(BuildContext context) {
+  static AppTranslations? of(BuildContext context) {
     return Localizations.of<AppTranslations>(context, AppTranslations);
   }
 
@@ -26,7 +26,7 @@ class AppTranslations {
 
     _sentence = new Map();
     _result.forEach((String key, dynamic value) {
-      _sentence[key] = value;
+      _sentence![key] = value;
     });
 
     return appTranslations;
@@ -34,19 +34,19 @@ class AppTranslations {
 
   String get currentLanguage => locale.languageCode;
 
-  String text(String key) {
+  String text(String? key) {
     if (_sentence == null) {
       return "";
     }
-    return this._resolve(key, _sentence);
+    return this._resolve(key!, _sentence);
   }
 
-  String dbText(Map<String, String> texts) {
-    var text = texts[locale.countryCode];
+  String? dbText(Map<String, String> texts) {
+    var text = texts[locale.countryCode!];
     return text;
   }
 
-  String tr(String key, {List<String> args}) {
+  String tr(String key, {List<String>? args}) {
     String res = this._resolve(key, _sentence);
     if (args != null) {
       args.forEach((String str) {

@@ -63,12 +63,12 @@ class FatSlider extends StatefulWidget {
   /// )
   /// ```
   ///
-  final Widget start;
+  final Widget? start;
 
   ///The widget to be displayed as the max label. For eg: an Icon can be displayed.
   ///
   ///If not provided the [max] value is displayed as text.
-  final Widget end;
+  final Widget? end;
 
   /// Called during a drag when the user is selecting a new value for the slider
   /// by dragging.
@@ -85,40 +85,40 @@ class FatSlider extends StatefulWidget {
   ///
   /// The value passed will be the last [value] that the slider had before the
   /// change began.
-  final ValueChanged<double> onChangeStart;
+  final ValueChanged<double>? onChangeStart;
 
   /// Called when the user is done selecting a new value for the slider.
-  final ValueChanged<double> onChangeEnd;
+  final ValueChanged<double>? onChangeEnd;
 
   ///The styling of the min and max text that gets displayed on the slider
   ///
   ///If not provided the ancestor [Theme]'s [accentTextTheme] text style will be applied.
-  final TextStyle labelsTextStyle;
+  final TextStyle? labelsTextStyle;
 
   ///The styling of the current value text that gets displayed on the slider
   ///
   ///If not provided the ancestor [Theme]'s [textTheme.title] text style
   ///with bold will be applied .
-  final TextStyle valueTextStyle;
+  final TextStyle? valueTextStyle;
 
   ///The color of the slider.
   ///
   ///If not provided the ancestor [Theme]'s [primaryColor] will be applied.
-  final Color sliderColor;
+  final Color? sliderColor;
 
   ///The color of the thumb.
   ///
   ///If not provided the [Colors.white] will be applied.
-  final Color thumbColor;
+  final Color? thumbColor;
 
   const FatSlider({
-    Key key,
-    @required this.value,
+    Key? key,
+    required this.value,
     this.min = 0.0,
     this.max = 1.0,
     this.start,
     this.end,
-    @required this.onChanged,
+    required this.onChanged,
     this.labelsTextStyle,
     this.valueTextStyle,
     this.onChangeStart,
@@ -136,10 +136,10 @@ class FatSlider extends StatefulWidget {
 }
 
 class _FatSliderState extends State<FatSlider> with SingleTickerProviderStateMixin {
-  double _sliderWidth;
+  double? _sliderWidth;
   double _currX = 0.0;
-  AnimationController _animationController;
-  CurvedAnimation _thumbAnimation;
+  AnimationController? _animationController;
+  late CurvedAnimation _thumbAnimation;
 
   @override
   initState() {
@@ -151,13 +151,13 @@ class _FatSliderState extends State<FatSlider> with SingleTickerProviderStateMix
 
     _thumbAnimation = CurvedAnimation(
       curve: Curves.bounceOut,
-      parent: _animationController,
+      parent: _animationController!,
     );
   }
 
   @override
   dispose() {
-    _animationController.dispose();
+    _animationController!.dispose();
     super.dispose();
   }
 
@@ -168,13 +168,13 @@ class _FatSliderState extends State<FatSlider> with SingleTickerProviderStateMix
 
   void _onHorizontalDragDown(DragDownDetails details) {
     if (_isInteractive) {
-      _animationController.forward();
+      _animationController!.forward();
     }
   }
 
   void _onHorizontalDragCancel() {
     if (_isInteractive) {
-      _animationController.reverse();
+      _animationController!.reverse();
     }
   }
 
@@ -183,13 +183,13 @@ class _FatSliderState extends State<FatSlider> with SingleTickerProviderStateMix
       if (widget.onChangeStart != null) {
         _handleDragStart(widget.value);
       }
-      _currX = _getGlobalToLocal(details.globalPosition).dx / _sliderWidth;
+      _currX = _getGlobalToLocal(details.globalPosition).dx / _sliderWidth!;
     }
   }
 
   void _onHorizontalDragUpdate(DragUpdateDetails details) {
     if (_isInteractive) {
-      final double valueDelta = details.primaryDelta / _sliderWidth;
+      final double valueDelta = details.primaryDelta! / _sliderWidth!;
       _currX += valueDelta;
 
       _handleChanged(_clamp(_currX));
@@ -201,7 +201,7 @@ class _FatSliderState extends State<FatSlider> with SingleTickerProviderStateMix
       _handleDragEnd(_clamp(_currX));
     }
     _currX = 0.0;
-    _animationController.reverse();
+    _animationController!.reverse();
   }
 
   double _clamp(double value) {
@@ -218,12 +218,12 @@ class _FatSliderState extends State<FatSlider> with SingleTickerProviderStateMix
 
   void _handleDragStart(double value) {
     assert(widget.onChangeStart != null);
-    widget.onChangeStart((value));
+    widget.onChangeStart!((value));
   }
 
   void _handleDragEnd(double value) {
     assert(widget.onChangeEnd != null);
-    widget.onChangeEnd((_lerp(value)));
+    widget.onChangeEnd!((_lerp(value)));
   }
 
   // Returns a number between min and max, proportional to value, which must
@@ -251,7 +251,7 @@ class _FatSliderState extends State<FatSlider> with SingleTickerProviderStateMix
 
   bool get _isInteractive => widget.onChanged != null;
 
-  Widget _buildBackgraund(BuildContext context, {double value, Alignment alignment, EdgeInsets padding}) {
+  Widget _buildBackgraund(BuildContext context, {double? value, Alignment? alignment, required EdgeInsets padding}) {
     return Padding(
       padding: padding,
       child: Container(),
@@ -259,7 +259,7 @@ class _FatSliderState extends State<FatSlider> with SingleTickerProviderStateMix
   }
 
   TextStyle _currentValTextStyle(BuildContext context) {
-    return widget.valueTextStyle ?? Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10.0);
+    return widget.valueTextStyle ?? Theme.of(context).textTheme.subtitle1!.copyWith(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10.0);
   }
 
   @override
@@ -280,13 +280,13 @@ class _FatSliderState extends State<FatSlider> with SingleTickerProviderStateMix
         _sliderWidth = constraints.hasBoundedWidth ? constraints.maxWidth : 200.0;
 
         //The width remaining for the thumb to be dragged upto.
-        remainingWidth = _sliderWidth - thumbDiameter - 2 * thumbPadding;
+        remainingWidth = _sliderWidth! - thumbDiameter - 2 * thumbPadding;
 
         //The position of the thumb control of the slider from max value.
-        final double thumbPositionLeft = lerpDouble(thumbPadding, remainingWidth, thumbPosFactor);
+        final double thumbPositionLeft = lerpDouble(thumbPadding, remainingWidth, thumbPosFactor)!;
 
         //The position of the thumb control of the slider from min value.
-        final double thumbPositionRight = lerpDouble(remainingWidth, thumbPadding, thumbPosFactor);
+        final double thumbPositionRight = lerpDouble(remainingWidth, thumbPadding, thumbPosFactor)!;
 
         //Start position of slider thumb.
         final RelativeRect beginRect = RelativeRect.fromLTRB(thumbPositionLeft, 0.00, thumbPositionRight, 0.0);
@@ -318,7 +318,7 @@ class _FatSliderState extends State<FatSlider> with SingleTickerProviderStateMix
             clipBehavior: Clip.none, children: <Widget>[
               CustomPaint(
                 painter: SliderPainter(
-                    thumbDiameter: thumbDiameter, splashColor: widget.sliderColor, width: lerpDouble(thumbPadding, remainingWidth, thumbPosFactor) + 45),
+                    thumbDiameter: thumbDiameter, splashColor: widget.sliderColor, width: lerpDouble(thumbPadding, remainingWidth, thumbPosFactor)! + 45),
               ),
               PositionedTransition(
                 rect: thumbPosition,
@@ -370,18 +370,18 @@ class _FatSliderState extends State<FatSlider> with SingleTickerProviderStateMix
 }
 
 class ThumbSplashPainter extends CustomPainter {
-  final Animation showContact;
+  final Animation? showContact;
   //This is passed to calculate and compensate the value
   //of x for drawing the sticky fluid
   final thumbPadding;
-  final Color splashColor;
+  final Color? splashColor;
 
   ThumbSplashPainter({this.thumbPadding, this.showContact, this.splashColor});
 
   @override
   void paint(Canvas canvas, Size size) {
     // print(size);
-    if (showContact.value >= 0.5) {
+    if (showContact!.value >= 0.5) {
       final Offset center = Offset(size.width / 2, size.height / 2);
 
       final Path path = Path();
@@ -390,7 +390,7 @@ class ThumbSplashPainter extends CustomPainter {
       path.lineTo(size.width - thumbPadding / 2, center.dy);
 
       path.close();
-      canvas.drawPath(path, Paint()..color = splashColor);
+      canvas.drawPath(path, Paint()..color = splashColor!);
     }
   }
 
@@ -399,18 +399,18 @@ class ThumbSplashPainter extends CustomPainter {
 }
 
 class SliderPainter extends CustomPainter {
-  final Color splashColor;
-  final double width;
-  final double thumbDiameter;
+  final Color? splashColor;
+  final double? width;
+  final double? thumbDiameter;
 
   SliderPainter({this.splashColor, this.width, this.thumbDiameter});
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawCircle(Offset(thumbDiameter / 2, thumbDiameter / 2), thumbDiameter / 2, Paint()..color = splashColor);
+    canvas.drawCircle(Offset(thumbDiameter! / 2, thumbDiameter! / 2), thumbDiameter! / 2, Paint()..color = splashColor!);
 
-    canvas.drawRect(Rect.fromLTWH(thumbDiameter / 2, 0, width - (thumbDiameter / 2) - 10, thumbDiameter), Paint()..color = splashColor);
+    canvas.drawRect(Rect.fromLTWH(thumbDiameter! / 2, 0, width! - (thumbDiameter! / 2) - 10, thumbDiameter!), Paint()..color = splashColor!);
 
-    canvas.drawCircle(Offset(width - 6, thumbDiameter / 2), thumbDiameter / 2, Paint()..color = splashColor);
+    canvas.drawCircle(Offset(width! - 6, thumbDiameter! / 2), thumbDiameter! / 2, Paint()..color = splashColor!);
   }
 
   @override

@@ -1,21 +1,12 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'package:openapi/api.dart';
 import 'package:test/test.dart';
+import 'package:openapi/openapi.dart';
 
 
 /// tests for ReviewApi
 void main() {
-  final instance = ReviewApi();
+  final instance = Openapi().getReviewApi();
 
-  group('tests for ReviewApi', () {
+  group(ReviewApi, () {
     //Future<PlacesPlaceReviewDto> reviewAddPlaceReview(String id, PlacesPlaceReviewDto reviewDto) async
     test('test reviewAddPlaceReview', () async {
       // TODO

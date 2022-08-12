@@ -5,20 +5,20 @@ import 'package:flutter/material.dart';
 import 'devices.dart';
 
 class GearScrollAlternative extends StatefulWidget {
-  final List<Section> allSections;
-  final int sectionIndex;
+  final List<Section>? allSections;
+  final int? sectionIndex;
 
-  const GearScrollAlternative({Key key, this.allSections, this.sectionIndex})
+  const GearScrollAlternative({Key? key, this.allSections, this.sectionIndex})
       : super(key: key);
   @override
   _GearScrollAlternativeState createState() => _GearScrollAlternativeState();
 }
 
 class _GearScrollAlternativeState extends State<GearScrollAlternative> {
-  PageController controller;
-  final _currentPageNotifier = ValueNotifier<int>(0);
-  int pageIndex;
-  List<Section> allSections;
+  PageController? controller;
+  final _currentPageNotifier = ValueNotifier<int?>(0);
+  int? pageIndex;
+  List<Section>? allSections;
   int currentView = 0;
 
   @override
@@ -58,7 +58,7 @@ class _GearScrollAlternativeState extends State<GearScrollAlternative> {
             pageIndex = value;
           });
         },
-        children: allSections.map((Section section) {
+        children: allSections!.map((Section section) {
           return section.type == "Device"
               ? Devices(
                   section,
@@ -69,7 +69,7 @@ class _GearScrollAlternativeState extends State<GearScrollAlternative> {
                   currentView: currentView,
                   onViewChanged: onViewChanged,
                   pageController: controller,
-                  position: allSections.indexOf(section),
+                  position: allSections!.indexOf(section),
                 );
         }).toList(),
       ),

@@ -12,15 +12,15 @@ import 'package:app/services/share.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:app/support/m_platform.dart';
 
 class PlaceDetailPage extends StatefulWidget {
-  final PlaceSimpleDto place;
-  final PlaceBloc placeBloc;
-  final int placeId;
+  final PlaceSimpleDto? place;
+  final PlaceBloc? placeBloc;
+  final int? placeId;
 
   PlaceDetailPage({this.place, this.placeBloc, this.placeId});
 
@@ -31,7 +31,7 @@ class PlaceDetailPage extends StatefulWidget {
 }
 
 class _PlaceDetailState extends State<PlaceDetailPage> {
-  PlaceSimpleDto place;
+  PlaceSimpleDto? place;
   @override
   Future didChangeDependencies() async {
     super.didChangeDependencies();
@@ -39,9 +39,9 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
       placeBloc = placeBloc = getIt.get<PlaceBloc>();
     }
     if (this.place != null)
-      placeBloc.loadPlace(place: this.place);
+      placeBloc!.loadPlace(place: this.place);
     else {
-      var newPlace = await placeBloc.loadPlace(placeId: widget.placeId);
+      var newPlace = await placeBloc!.loadPlace(placeId: widget.placeId);
       setState(() {
         place = newPlace;
       });
@@ -55,7 +55,7 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
   }
 
   final double _appBarHeight = 256.0;
-  PlaceBloc placeBloc;
+  PlaceBloc? placeBloc;
   _PlaceDetailState(this.place, this.placeBloc);
 
   @override
@@ -79,7 +79,7 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(Extensions.adress(place.address), style: Theme.of(context).textTheme.headline5),
+                    Text(Extensions.adress(place!.address), style: Theme.of(context).textTheme.headline5),
                     new StarRating(
                       size: 25.0,
                       rating: 2.0,
@@ -97,23 +97,24 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
             IconButton(
                 icon: Icon(Icons.share),
                 onPressed: () async {
-                  var url = await ShareService.placeShareLink(place);
+                  var url = await ShareService.placeShareLink(place!);
                   Share.share(url.toString());
                 }),
             IconButton(
                 icon: Icon(Icons.photo_size_select_small),
-                onPressed: () => Navigator.of(context)
-                    .push(MaterialPageRoute(settings: RouteSettings(), builder: (context) => PlacePicturesPage(place: placeBloc.placeInfo.value)))),
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                    settings: RouteSettings(),
+                    builder: (context) => PlacePicturesPage(place: placeBloc!.placeInfo.value)))),
           ],
           flexibleSpace: new FlexibleSpaceBar(
             title: SizedBox(
               width: 250.0,
               child: Text(
-                place.name,
+                place!.name!,
                 maxLines: 2,
                 overflow: TextOverflow.fade,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline6.merge(TextStyle(
+                style: Theme.of(context).textTheme.headline6!.merge(TextStyle(
                       shadows: [
                         Shadow(
                             // bottomLeft
@@ -140,11 +141,11 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
               fit: StackFit.expand,
               children: <Widget>[
                 Hero(
-                  tag: '${place.friendlyUrl}_place',
+                  tag: '${place!.friendlyUrl}_place',
                   child: new Image(
-                    image: MPlatform.isWeb
+                    image: (MPlatform.isWeb
                         ? NetworkImage(Extensions.getPlaceImage(place, MediaSize.Large))
-                        : new CachedNetworkImageProvider(Extensions.getPlaceImage(place, MediaSize.Large)),
+                        : new CachedNetworkImageProvider(Extensions.getPlaceImage(place, MediaSize.Large))) as ImageProvider<Object>,
                     fit: BoxFit.cover,
                     height: _appBarHeight,
                   ),
@@ -156,7 +157,7 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
         new SliverList(
           delegate: new SliverChildListDelegate(<Widget>[
             Hero(
-              tag: "${place.friendlyUrl}_reservation",
+              tag: "${place!.friendlyUrl}_reservation",
               child: Center(
                 child: Container(
                   constraints: BoxConstraints(maxWidth: 800),
@@ -193,13 +194,13 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
 
 class BookMenuWidget extends StatelessWidget {
   const BookMenuWidget({
-    Key key,
-    @required this.placeBloc,
-    @required this.place,
+    Key? key,
+    required this.placeBloc,
+    required this.place,
   }) : super(key: key);
 
   final PlaceBloc placeBloc;
-  final PlaceSimpleDto place;
+  final PlaceSimpleDto? place;
 
   @override
   Widget build(BuildContext context) {
@@ -210,8 +211,10 @@ class BookMenuWidget extends StatelessWidget {
   }
 
   Widget buildMenu(BuildContext context) {
-    if (!(place.haveReservation ?? false)) {
-      if (!place.haveMenu) return Container(width: MediaQuery.of(context).size.width * 0.7, child: BookButton(place: place, placeBloc: placeBloc));
+    if (!(place!.haveReservation ?? false)) {
+      if (!place!.haveMenu!)
+        return Container(
+            width: MediaQuery.of(context).size.width * 0.7, child: BookButton(place: place, placeBloc: placeBloc));
     }
 
     return new Row(
@@ -228,11 +231,12 @@ class BookMenuWidget extends StatelessWidget {
           flex: 1,
           child: FlatButton(
             child: Text(
-              AppTranslations.of(context).text("place.menu").toUpperCase(),
+              AppTranslations.of(context)!.text("place.menu").toUpperCase(),
               style: TextStyle(color: Colors.black),
             ),
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(settings: RouteSettings(), builder: (context) => MenuPage(place: place)));
+              Navigator.of(context)
+                  .push(MaterialPageRoute(settings: RouteSettings(), builder: (context) => MenuPage(place: place)));
             },
           ),
         )
@@ -247,7 +251,7 @@ class DisabledChip extends StatelessWidget {
   const DisabledChip(
     this.icon,
     this.enable, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -266,10 +270,10 @@ class DisabledChip extends StatelessWidget {
 }
 
 class IconUrlButton extends StatelessWidget {
-  const IconUrlButton({Key key, @required this.url, this.icon, this.color = Colors.black}) : super(key: key);
+  const IconUrlButton({Key? key, required this.url, this.icon, this.color = Colors.black}) : super(key: key);
 
   final String url;
-  final IconData icon;
+  final IconData? icon;
   final Color color;
 
   @override
@@ -286,13 +290,13 @@ class IconUrlButton extends StatelessWidget {
 }
 
 class BookButton extends StatelessWidget {
-  final PlaceBloc placeBloc;
-  final PlaceSimpleDto place;
-  const BookButton({Key key, this.placeBloc, this.place}) : super(key: key);
+  final PlaceBloc? placeBloc;
+  final PlaceSimpleDto? place;
+  const BookButton({Key? key, this.placeBloc, this.place}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (place.haveReservation ?? false) {
+    if (place!.haveReservation ?? false) {
       return FlatButton(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -302,7 +306,7 @@ class BookButton extends StatelessWidget {
                 color: Colors.black,
               ),
               Text(
-                AppTranslations.of(context).text("place.reserve").toUpperCase(),
+                AppTranslations.of(context)!.text("place.reserve").toUpperCase(),
                 style: TextStyle(color: Colors.black),
               ),
             ],
@@ -314,7 +318,7 @@ class BookButton extends StatelessWidget {
   }
 
   void _openBookingDialog(BuildContext context) {
-    placeBloc.loadReservationInfo(DateTime.now());
+    placeBloc!.loadReservationInfo(DateTime.now());
     Navigator.of(context).push(new MaterialPageRoute<Null>(
         builder: (BuildContext context) {
           return new ReservationPage(

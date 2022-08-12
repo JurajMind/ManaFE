@@ -17,17 +17,17 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = StandPictureApi();
-final id = id_example; // String | 
+final api = Openapi().getStandPictureApi();
+final String id = id_example; // String | 
 
-try { 
-    final result = api_instance.standPictureDefaultAction(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.standPictureDefaultAction(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling StandPictureApi->standPictureDefaultAction: $e\n');
 }
 ```
@@ -40,7 +40,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 

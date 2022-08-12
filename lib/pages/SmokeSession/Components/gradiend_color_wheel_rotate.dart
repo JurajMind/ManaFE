@@ -12,10 +12,10 @@ class GradientColorWheelRotate extends StatefulWidget {
       {key, this.defaultColors, this.child, this.size, this.border})
       : super(key: key);
   @required
-  final List<Color> defaultColors;
-  final Widget child;
-  final Size size;
-  final bool border;
+  final List<Color>? defaultColors;
+  final Widget? child;
+  final Size? size;
+  final bool? border;
   @override
   GradientColorWheelRotateState createState() {
     return new GradientColorWheelRotateState();
@@ -23,7 +23,7 @@ class GradientColorWheelRotate extends StatefulWidget {
 }
 
 class GradientColorWheelRotateState extends State<GradientColorWheelRotate> {
-  Offset position;
+  Offset? position;
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class GradientColorWheelRotateState extends State<GradientColorWheelRotate> {
   Widget build(BuildContext context) {
     final smokeSessionBloc = getIt.get<SmokeSessionBloc>();
 
-    Size size = widget.size == null ? MediaQuery.of(context).size : widget.size;
+    Size size = widget.size == null ? MediaQuery.of(context).size : widget.size!;
 
     return Stack(
       children: <Widget>[
@@ -54,8 +54,8 @@ class GradientColorWheelRotateState extends State<GradientColorWheelRotate> {
                           stops: [0.4, 1.0],
                           tileMode: TileMode.clamp,
                           colors: snapshot.data != null
-                              ? snapshot.data
-                              : widget.defaultColors))),
+                              ? snapshot.data!
+                              : widget.defaultColors!))),
             )),
           ),
         ),

@@ -10,16 +10,16 @@ enum UploadType { Place, Gear, Review }
 typedef void FileUploaded(File file);
 
 class UploadPicturePage extends StatefulWidget {
-  final FileUploaded onFileUploaded;
+  final FileUploaded? onFileUploaded;
 
-  const UploadPicturePage({Key key, this.onFileUploaded}) : super(key: key);
+  const UploadPicturePage({Key? key, this.onFileUploaded}) : super(key: key);
 
   @override
   _UploadPicturePageState createState() => _UploadPicturePageState();
 }
 
 class _UploadPicturePageState extends State<UploadPicturePage> {
-  File _image;
+  File? _image;
   bool _uploading = false;
   bool done = false;
   double uploadProgress = 0;
@@ -51,7 +51,7 @@ class _UploadPicturePageState extends State<UploadPicturePage> {
                             : Container(
                                 height: 280,
                                 child: Image.file(
-                                  _image,
+                                  _image!,
                                   fit: BoxFit.fitHeight,
                                 )),
                       ),
@@ -69,16 +69,14 @@ class _UploadPicturePageState extends State<UploadPicturePage> {
                       flex: 1,
                       child: Container(
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white),
-                            borderRadius: BorderRadius.circular(16.0)),
+                            border: Border.all(color: Colors.white), borderRadius: BorderRadius.circular(16.0)),
                         child: IconButton(
                           icon: Icon(Icons.photo_library),
                           onPressed: () async {
-                            var image = await ImagePicker()
-                                .getImage(source: ImageSource.gallery);
+                            var image = await ImagePicker().getImage(source: ImageSource.gallery);
 
                             setState(() {
-                              _image = File(image.path);
+                              _image = File(image!.path);
                             });
                           },
                         ),
@@ -90,18 +88,15 @@ class _UploadPicturePageState extends State<UploadPicturePage> {
                       flex: 1,
                       child: Container(
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white),
-                            borderRadius: BorderRadius.circular(16.0)),
+                            border: Border.all(color: Colors.white), borderRadius: BorderRadius.circular(16.0)),
                         child: IconButton(
                           icon: Icon(Icons.camera_enhance),
                           onPressed: () async {
-                            var image = await ImagePicker().getImage(
-                                maxHeight: 1600,
-                                imageQuality: 50,
-                                source: ImageSource.camera);
+                            var image = await ImagePicker()
+                                .getImage(maxHeight: 1600, imageQuality: 50, source: ImageSource.camera);
 
                             setState(() {
-                              _image = File(image.path);
+                              _image = File(image!.path);
                             });
                           },
                         ),
@@ -129,7 +124,7 @@ class _UploadPicturePageState extends State<UploadPicturePage> {
       _uploading = true;
     });
 
-    widget.onFileUploaded(this._image);
+    widget.onFileUploaded!(this._image!);
     Navigator.of(context).pop();
   }
 

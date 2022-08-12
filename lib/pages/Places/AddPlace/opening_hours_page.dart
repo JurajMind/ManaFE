@@ -1,19 +1,20 @@
 import 'package:app/Helpers/day_helper.dart';
+import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class EditablkeBusinessHour extends BusinessHoursDto {
   static DateFormat df = new DateFormat('HH:mm:ss');
   static DateFormat of = new DateFormat('HH:mm');
 
   @override
-  String get openTine => this.open != null ? EditablkeBusinessHour.df.format(this.open) : 'Closed';
+  String get openTine => this.open != null ? EditablkeBusinessHour.df.format(this.open!) : 'Closed';
   @override
-  String get closeTime => this.close != null ? EditablkeBusinessHour.df.format(this.close) : 'Closed';
+  String get closeTime => this.close != null ? EditablkeBusinessHour.df.format(this.close!) : 'Closed';
 
-  DateTime open;
-  DateTime close;
+  DateTime? open;
+  DateTime? close;
 
   EditablkeBusinessHour(int day, this.open, this.close) {
     super.id = day;
@@ -21,22 +22,22 @@ class EditablkeBusinessHour extends BusinessHoursDto {
   }
 
   EditablkeBusinessHour.fromDto(BusinessHoursDto bh) {
-    this.open = df.parse(bh.openTine);
-    this.close = df.parse(bh.closeTime);
+    this.open = df.parse(bh.openTine!);
+    this.close = df.parse(bh.closeTime!);
     super.day = bh.day;
     super.id = day;
   }
 }
 
 class OpeningHoursPage extends StatefulWidget {
-  final List<EditablkeBusinessHour> businessHours;
-  OpeningHoursPage({Key key, this.businessHours}) : super(key: key);
+  final List<EditablkeBusinessHour>? businessHours;
+  OpeningHoursPage({Key? key, this.businessHours}) : super(key: key);
 
   _OpeningHoursPageState createState() => _OpeningHoursPageState();
 }
 
 class _OpeningHoursPageState extends State<OpeningHoursPage> {
-  List<EditablkeBusinessHour> result;
+  List<EditablkeBusinessHour>? result;
 
   @override
   void initState() {
@@ -46,8 +47,8 @@ class _OpeningHoursPageState extends State<OpeningHoursPage> {
         return bh;
       });
 
-      widget.businessHours.forEach((f) {
-        result[f.id] = f;
+      widget.businessHours!.forEach((f) {
+        result![f.id!] = f;
       });
     } else {
       result = List.generate(7, (index) {
@@ -73,7 +74,7 @@ class _OpeningHoursPageState extends State<OpeningHoursPage> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            ...result.map((
+            ...result!.map((
               f,
             ) {
               return Row(
@@ -84,7 +85,7 @@ class _OpeningHoursPageState extends State<OpeningHoursPage> {
                       f,
                       onTimePicke: (value) {
                         setState(() {
-                          result[f.id] = value;
+                          result![f.id!] = value;
                         });
                       },
                     ),
@@ -99,19 +100,19 @@ class _OpeningHoursPageState extends State<OpeningHoursPage> {
                       ),
                       IconButton(
                         icon: Icon(Icons.arrow_downward),
-                        onPressed: () => f.id < 7
+                        onPressed: () => f.id! < 7
                             ? setState(() {
-                                result[f.id + 1].open = result[f.id].open;
-                                result[f.id + 1].close = result[f.id].close;
+                                result![f.id! + 1].open = result![f.id!].open;
+                                result![f.id! + 1].close = result![f.id!].close;
                               })
                             : null,
                       ),
                       IconButton(
                         icon: Icon(Icons.delete),
-                        onPressed: () => f.id > 1
+                        onPressed: () => f.id! > 1
                             ? setState(() {
-                                result[f.id].open = null;
-                                result[f.id].close = null;
+                                result![f.id!].open = null;
+                                result![f.id!].close = null;
                               })
                             : null,
                       ),
@@ -126,12 +127,11 @@ class _OpeningHoursPageState extends State<OpeningHoursPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                OutlineButton(
-                    color: Colors.green,
-                    child: Text("Submit"),
+                MButton(
+                    label: "Submit",
                     onPressed: () {
-                      var popResult = List<EditablkeBusinessHour>();
-                      result.forEach((f) {
+                      var popResult = [];
+                      result!.forEach((f) {
                         if (f.close != null && f.open != null) {
                           popResult.add(f);
                         }
@@ -156,11 +156,11 @@ class _OpeningHoursPageState extends State<OpeningHoursPage> {
 }
 
 class DayEdit extends StatelessWidget {
-  final ValueChanged<EditablkeBusinessHour> onTimePicke;
+  final ValueChanged<EditablkeBusinessHour>? onTimePicke;
   final EditablkeBusinessHour bh;
   const DayEdit(
     this.bh, {
-    Key key,
+    Key? key,
     this.onTimePicke,
   }) : super(key: key);
 
@@ -170,7 +170,7 @@ class DayEdit extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(getLongDayName(bh.id + 1, context), style: Theme.of(context).textTheme.headline6),
+          Text(getLongDayName(bh.id! + 1, context), style: Theme.of(context).textTheme.headline6),
           SizedBox(
             height: 8,
           ),
@@ -185,7 +185,7 @@ class DayEdit extends StatelessWidget {
                   onTimePicke: (value) {
                     this.bh.open = value;
                     if (this.onTimePicke != null) {
-                      onTimePicke(bh);
+                      onTimePicke!(bh);
                     }
                   },
                 ),
@@ -198,7 +198,7 @@ class DayEdit extends StatelessWidget {
                   onTimePicke: (value) {
                     this.bh.close = value;
                     if (this.onTimePicke != null) {
-                      onTimePicke(bh);
+                      onTimePicke!(bh);
                     }
                   },
                 ),
@@ -216,9 +216,9 @@ class DayEdit extends StatelessWidget {
 
 class TimeEdit extends StatelessWidget {
   final bool open;
-  final DateTime time;
-  final ValueChanged<DateTime> onTimePicke;
-  const TimeEdit(this.open, this.time, {Key key, this.onTimePicke}) : super(key: key);
+  final DateTime? time;
+  final ValueChanged<DateTime>? onTimePicke;
+  const TimeEdit(this.open, this.time, {Key? key, this.onTimePicke}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -229,16 +229,16 @@ class TimeEdit extends StatelessWidget {
           context: context,
         ).then((value) {
           if (this.onTimePicke != null) {
-            var dt = new DateTime(1000, 1, 1, value.hour, value.minute);
-            this.onTimePicke(dt);
+            var dt = new DateTime(1000, 1, 1, value!.hour, value.minute);
+            this.onTimePicke!(dt);
           }
-        });
+        } as FutureOr<TimeOfDay> Function(TimeOfDay?));
       },
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Text(open ? 'Open: ' : 'Close: ', style: Theme.of(context).textTheme.headline5),
-          Text(time != null ? EditablkeBusinessHour.of.format(time) : 'Closed'),
+          Text(time != null ? EditablkeBusinessHour.of.format(time!) : 'Closed'),
           Icon(Icons.edit)
         ],
       ),

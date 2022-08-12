@@ -1,18 +1,20 @@
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
-PlaceSimpleDto toSimpePlace(PlaceDto place) {
+PlaceSimpleDto? toSimpePlace(PlaceDto? place) {
   if (place == null) {
     return null;
   }
-  var result = new PlaceSimpleDto();
-  result.name = place.name;
-  result.friendlyUrl = place.friendlyUrl;
-  result.facebook = place.facebook;
-  result.phoneNumber = place.phoneNumber;
-  result.businessHours = place.businessHours;
-  result.address = place.address;
-  result.haveMana = place.haveMana;
-  result.haveMenu = place.haveMenu;
-  result.haveOrders = place.haveOrders;
+  var result = new PlaceSimpleDto(
+    name: place.name,
+    friendlyUrl: place.friendlyUrl,
+    facebook: place.facebook,
+    phoneNumber: place.phoneNumber,
+    businessHours: place.businessHours,
+    address: place.address,
+    haveMana: place.haveMana,
+    haveMenu: place.haveMenu,
+    haveOrders: place.haveOrders,
+  );
+
   return result;
 }

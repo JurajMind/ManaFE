@@ -4,17 +4,17 @@ import 'package:app/Helpers/date_utils.dart' as dayHelper;
 import 'package:flutter/material.dart';
 
 class SinceTimer extends StatefulWidget {
-  final DateTime start;
-  final int pufCount;
-  final TextStyle style;
+  final DateTime? start;
+  final int? pufCount;
+  final TextStyle? style;
 
-  const SinceTimer({Key key, this.start, this.pufCount, this.style}) : super(key: key);
+  const SinceTimer({Key? key, this.start, this.pufCount, this.style}) : super(key: key);
   @override
   _SinceTimerState createState() => new _SinceTimerState();
 }
 
 class _SinceTimerState extends State<SinceTimer> {
-  Timer _timer;
+  late Timer _timer;
   String text = "";
 
   @override

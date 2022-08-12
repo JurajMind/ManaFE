@@ -5,20 +5,20 @@ import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class UseMixButton extends StatelessWidget {
-  final TobaccoMixSimpleDto mix;
+  final TobaccoMixSimpleDto? mix;
 
-  const UseMixButton({Key key, this.mix}) : super(key: key);
+  const UseMixButton({Key? key, this.mix}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     var bloc = getIt.get<SmokeSessionBloc>();
 
-    return StreamBuilder<SmokeSessionMetaDataDto>(
+    return StreamBuilder<SmokeSessionMetaDataDto?>(
         stream: bloc.smokeSessionMetaData,
         builder: (context, snapshot) {
-          if (snapshot?.data?.tobaccoMix?.id == mix.id) {
+          if (snapshot?.data?.tobaccoMix?.id == mix!.id) {
             return MButton(
               icon: Icons.delete,
               iconColor: Colors.red,

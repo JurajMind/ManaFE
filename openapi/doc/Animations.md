@@ -8,7 +8,7 @@ import 'package:openapi/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**animations** | [**List<SmartHookahHelpersAnimation>**](SmartHookahHelpersAnimation.md) |  | [optional] [default to const []]
+**animations** | [**List&lt;SmartHookahHelpersAnimation&gt;**](SmartHookahHelpersAnimation.md) |  | [optional] 
 **success** | **bool** |  | [optional] 
 **message** | **String** |  | [optional] 
 **httpResponseCode** | **int** |  | [optional] 

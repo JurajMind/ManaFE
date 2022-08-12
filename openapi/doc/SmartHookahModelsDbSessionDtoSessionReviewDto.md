@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **tobaccoReview** | [**GearTobaccoReviewDto**](GearTobaccoReviewDto.md) |  | [optional] 
 **placeReviewId** | **int** |  | [optional] 
 **placeReview** | [**PlacesPlaceReviewDto**](PlacesPlaceReviewDto.md) |  | [optional] 
-**medias** | [**List<MediaDto>**](MediaDto.md) |  | [optional] [default to const []]
+**medias** | [**List&lt;MediaDto&gt;**](MediaDto.md) |  | [optional] 
 **smokeSessionId** | **int** |  | [optional] 
 **taste** | **int** |  | [optional] 
 **smoke** | **int** |  | [optional] 

@@ -8,7 +8,7 @@ import 'package:openapi/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**placeDays** | [**List<PlaceDay>**](PlaceDay.md) |  | [optional] [default to const []]
+**placeDays** | [**List&lt;PlaceDay&gt;**](PlaceDay.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

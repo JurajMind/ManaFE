@@ -17,11 +17,11 @@ class WheelPicker extends StatelessWidget {
 
   ///constructor for integer number picker
   WheelPicker.integer({
-    Key key,
-    @required int initialValue,
-    @required this.minValue,
-    @required this.maxValue,
-    @required this.onChanged,
+    Key? key,
+    required int initialValue,
+    required this.minValue,
+    required this.maxValue,
+    required this.onChanged,
     this.itemExtent = DEFAULT_ITEM_EXTENT,
     this.listViewWidth = DEFAULT_LISTVIEW_WIDTH,
     this.step = 1,
@@ -46,10 +46,10 @@ class WheelPicker extends StatelessWidget {
         super(key: key);
 
   WheelPicker.string({
-    Key key,
-    @required int initialValue,
-    @required this.onChanged,
-    @required this.stringItems,
+    Key? key,
+    required int initialValue,
+    required this.onChanged,
+    required List<String?> this.stringItems,
     this.itemExtent = DEFAULT_ITEM_EXTENT,
     this.listViewWidth = DEFAULT_LISTVIEW_WIDTH,
     this.disableItems,
@@ -71,11 +71,11 @@ class WheelPicker extends StatelessWidget {
 
   ///constructor for decimal number picker
   WheelPicker.decimal({
-    Key key,
-    @required double initialValue,
-    @required this.minValue,
-    @required this.maxValue,
-    @required this.onChanged,
+    Key? key,
+    required double initialValue,
+    required this.minValue,
+    required this.maxValue,
+    required this.onChanged,
     this.decimalPlaces = 1,
     this.itemExtent = DEFAULT_ITEM_EXTENT,
     this.listViewWidth = DEFAULT_LISTVIEW_WIDTH,
@@ -115,11 +115,11 @@ class WheelPicker extends StatelessWidget {
   ///max value user can pick
   final int maxValue;
 
-  final List<String> stringItems;
+  final List<String?>? stringItems;
 
-  final List<String> disableItems;
+  final List<String?>? disableItems;
 
-  final List<Tuple2<String, bool>> tupleItems;
+  final List<Tuple2<String, bool>>? tupleItems;
 
   ///inidcates how many decimal places to show
   /// e.g. 0=>[1,2,3...], 1=>[1.0, 1.1, 1.2...]  2=>[1.00, 1.01, 1.02...]
@@ -138,10 +138,10 @@ class WheelPicker extends StatelessWidget {
   final ScrollController intScrollController;
 
   ///ScrollController used for decimal list
-  final ScrollController decimalScrollController;
+  final ScrollController? decimalScrollController;
 
   ///ScrollController used for decimal list
-  final ScrollController stringScrollController;
+  final ScrollController? stringScrollController;
 
   ///Currently selected integer value
   final int selectedIntValue;
@@ -167,7 +167,7 @@ class WheelPicker extends StatelessWidget {
   }
 
   animateDecimal(int decimalValue) {
-    _animate(decimalScrollController, decimalValue * itemExtent);
+    _animate(decimalScrollController!, decimalValue * itemExtent);
   }
 
   animateDecimalAndInteger(double valueToSelect) {
@@ -196,11 +196,11 @@ class WheelPicker extends StatelessWidget {
   }
 
   Widget _stringListView(ThemeData themeData) {
-    TextStyle defaultStyle = themeData.textTheme.bodyText2;
+    TextStyle? defaultStyle = themeData.textTheme.bodyText2;
     TextStyle selectedStyle =
-        themeData.textTheme.headline6.copyWith(color: themeData.colorScheme.secondary);
+        themeData.textTheme.headline6!.copyWith(color: themeData.colorScheme.secondary);
 
-    int itemCount = stringItems.length + 3;
+    int itemCount = stringItems!.length + 3;
 
     return new NotificationListener(
       child: new Container(
@@ -215,21 +215,21 @@ class WheelPicker extends StatelessWidget {
             final int value = _intValueFromIndex(index);
 
             //define special style for selected (middle) element
-            TextStyle itemStyle =
+            TextStyle? itemStyle =
                 value == selectedIntValue ? selectedStyle : defaultStyle;
 
             var isDisabled = this.disableItems != null &&
                 this.stringItems != null &&
-                this.stringItems.length > value &&
+                this.stringItems!.length > value &&
                 value >= 0 &&
-                disableItems.contains(this.stringItems[value]);
+                disableItems!.contains(this.stringItems![value]);
 
             // Item is disabled
             if (isDisabled) {
               itemStyle =
-                  itemStyle.copyWith(decoration: TextDecoration.lineThrough);
+                  itemStyle!.copyWith(decoration: TextDecoration.lineThrough);
             }
-            bool isExtra = index == 0 || value > stringItems.length - 1;
+            bool isExtra = index == 0 || value > stringItems!.length - 1;
 
             return isExtra
                 ? new Container() //empty first and last element
@@ -237,7 +237,7 @@ class WheelPicker extends StatelessWidget {
                     child: new Text(
                         stringItems == null
                             ? value.toString()
-                            : stringItems[value],
+                            : stringItems![value]!,
                         style: itemStyle),
                   );
           },
@@ -248,9 +248,9 @@ class WheelPicker extends StatelessWidget {
   }
 
   Widget _integerListView(ThemeData themeData) {
-    TextStyle defaultStyle = themeData.textTheme.bodyText2;
+    TextStyle? defaultStyle = themeData.textTheme.bodyText2;
     TextStyle selectedStyle =
-        themeData.textTheme.headline6.copyWith(color: themeData.colorScheme.secondary);
+        themeData.textTheme.headline6!.copyWith(color: themeData.colorScheme.secondary);
 
     int itemCount = (maxValue - minValue) ~/ step + 3;
 
@@ -267,15 +267,15 @@ class WheelPicker extends StatelessWidget {
             final int value = _intValueFromIndex(index);
 
             //define special style for selected (middle) element
-            TextStyle itemStyle =
+            TextStyle? itemStyle =
                 value == selectedIntValue ? selectedStyle : defaultStyle;
 
             // Item is disabled
             if (this.disableItems != null &&
                 this.stringItems != null &&
-                disableItems.contains(this.stringItems[0])) {
+                disableItems!.contains(this.stringItems![0])) {
               itemStyle =
-                  itemStyle.copyWith(decoration: TextDecoration.lineThrough);
+                  itemStyle!.copyWith(decoration: TextDecoration.lineThrough);
             }
             bool isExtra = index == 0 || index == itemCount - 1;
 
@@ -285,7 +285,7 @@ class WheelPicker extends StatelessWidget {
                     child: new Text(
                         stringItems == null
                             ? value.toString()
-                            : stringItems[value],
+                            : stringItems![value]!,
                         style: itemStyle),
                   );
           },
@@ -367,11 +367,11 @@ class WheelPicker extends StatelessWidget {
             newValue = ((intValueInTheMiddle + decimalPart).toDouble());
           }
         }
-        if (newValue >= stringItems.length) {
-          animateInt(stringItems.length - 1);
+        if (newValue >= stringItems!.length) {
+          animateInt(stringItems!.length - 1);
         }
 
-        if (newValue < stringItems.length) onChanged(newValue);
+        if (newValue < stringItems!.length) onChanged(newValue);
       }
     }
     return true;

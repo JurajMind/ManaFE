@@ -35,19 +35,19 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
-final id = id_example; // String | 
-final code = code_example; // String | 
-final newName = newName_example; // String | 
+final api = Openapi().getDeviceApi();
+final String id = id_example; // String | 
+final String code = code_example; // String | 
+final String newName = newName_example; // String | 
 
-try { 
-    final result = api_instance.deviceAddDevice(id, code, newName);
-    print(result);
-} catch (e) {
+try {
+    final response = api.deviceAddDevice(id, code, newName);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->deviceAddDevice: $e\n');
 }
 ```
@@ -80,18 +80,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
-final id = id_example; // String | 
-final model = SmartHookahModelsParameterObjectsChangeAnimation(); // SmartHookahModelsParameterObjectsChangeAnimation | 
+final api = Openapi().getDeviceApi();
+final String id = id_example; // String | 
+final SmartHookahModelsParameterObjectsChangeAnimation model = ; // SmartHookahModelsParameterObjectsChangeAnimation | 
 
-try { 
-    final result = api_instance.deviceChangeAnimation(id, model);
-    print(result);
-} catch (e) {
+try {
+    final response = api.deviceChangeAnimation(id, model);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->deviceChangeAnimation: $e\n');
 }
 ```
@@ -105,7 +105,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 
@@ -123,18 +123,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
-final id = id_example; // String | 
-final model = SmartHookahModelsParameterObjectsChangeBrightness(); // SmartHookahModelsParameterObjectsChangeBrightness | 
+final api = Openapi().getDeviceApi();
+final String id = id_example; // String | 
+final SmartHookahModelsParameterObjectsChangeBrightness model = ; // SmartHookahModelsParameterObjectsChangeBrightness | 
 
-try { 
-    final result = api_instance.deviceChangeBrightness(id, model);
-    print(result);
-} catch (e) {
+try {
+    final response = api.deviceChangeBrightness(id, model);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->deviceChangeBrightness: $e\n');
 }
 ```
@@ -148,7 +148,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 
@@ -166,18 +166,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
-final id = id_example; // String | 
-final model = SmartHookahModelsParameterObjectsChangeColor(); // SmartHookahModelsParameterObjectsChangeColor | 
+final api = Openapi().getDeviceApi();
+final String id = id_example; // String | 
+final SmartHookahModelsParameterObjectsChangeColor model = ; // SmartHookahModelsParameterObjectsChangeColor | 
 
-try { 
-    final result = api_instance.deviceChangeColor(id, model);
-    print(result);
-} catch (e) {
+try {
+    final response = api.deviceChangeColor(id, model);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->deviceChangeColor: $e\n');
 }
 ```
@@ -191,7 +191,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 
@@ -209,18 +209,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
-final id = id_example; // String | 
-final mode = int(); // int | 
+final api = Openapi().getDeviceApi();
+final String id = id_example; // String | 
+final int mode = 56; // int | 
 
-try { 
-    final result = api_instance.deviceChangeMode(id, mode);
-    print(result);
-} catch (e) {
+try {
+    final response = api.deviceChangeMode(id, mode);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->deviceChangeMode: $e\n');
 }
 ```
@@ -234,7 +234,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 
@@ -252,18 +252,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
-final id = id_example; // String | 
-final newName = newName_example; // String | 
+final api = Openapi().getDeviceApi();
+final String id = id_example; // String | 
+final String newName = newName_example; // String | 
 
-try { 
-    final result = api_instance.deviceChangeName(id, newName);
-    print(result);
-} catch (e) {
+try {
+    final response = api.deviceChangeName(id, newName);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->deviceChangeName: $e\n');
 }
 ```
@@ -295,18 +295,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
-final id = id_example; // String | 
-final model = SmartHookahModelsParameterObjectsChangeSpeed(); // SmartHookahModelsParameterObjectsChangeSpeed | 
+final api = Openapi().getDeviceApi();
+final String id = id_example; // String | 
+final SmartHookahModelsParameterObjectsChangeSpeed model = ; // SmartHookahModelsParameterObjectsChangeSpeed | 
 
-try { 
-    final result = api_instance.deviceChangeSpeed(id, model);
-    print(result);
-} catch (e) {
+try {
+    final response = api.deviceChangeSpeed(id, model);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->deviceChangeSpeed: $e\n');
 }
 ```
@@ -320,7 +320,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 
@@ -338,19 +338,19 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
-final id = 56; // int | 
-final pageSize = 56; // int | 
-final page = 56; // int | 
+final api = Openapi().getDeviceApi();
+final int id = 56; // int | 
+final int pageSize = 56; // int | 
+final int page = 56; // int | 
 
-try { 
-    final result = api_instance.deviceGetDeviceSessions(id, pageSize, page);
-    print(result);
-} catch (e) {
+try {
+    final response = api.deviceGetDeviceSessions(id, pageSize, page);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->deviceGetDeviceSessions: $e\n');
 }
 ```
@@ -365,7 +365,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<SmokeSessionSimpleDto>**](SmokeSessionSimpleDto.md)
+[**List&lt;SmokeSessionSimpleDto&gt;**](SmokeSessionSimpleDto.md)
 
 ### Authorization
 
@@ -383,16 +383,16 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
+final api = Openapi().getDeviceApi();
 
-try { 
-    final result = api_instance.deviceGetPictures();
-    print(result);
-} catch (e) {
+try {
+    final response = api.deviceGetPictures();
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->deviceGetPictures: $e\n');
 }
 ```
@@ -402,7 +402,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**List<DeviceDevicePictureDto>**](DeviceDevicePictureDto.md)
+[**List&lt;DeviceDevicePictureDto&gt;**](DeviceDevicePictureDto.md)
 
 ### Authorization
 
@@ -420,17 +420,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
-final id = id_example; // String | 
+final api = Openapi().getDeviceApi();
+final String id = id_example; // String | 
 
-try { 
-    final result = api_instance.deviceGetSetting(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.deviceGetSetting(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->deviceGetSetting: $e\n');
 }
 ```
@@ -461,17 +461,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
-final id = 56; // int | 
+final api = Openapi().getDeviceApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.deviceInfo(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.deviceInfo(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->deviceInfo: $e\n');
 }
 ```
@@ -502,17 +502,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
-final id = id_example; // String | 
+final api = Openapi().getDeviceApi();
+final String id = id_example; // String | 
 
-try { 
-    final result = api_instance.devicePing(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.devicePing(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->devicePing: $e\n');
 }
 ```
@@ -525,7 +525,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 
@@ -543,18 +543,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
-final id = 56; // int | 
-final updateId = 56; // int | 
+final api = Openapi().getDeviceApi();
+final int id = 56; // int | 
+final int updateId = 56; // int | 
 
-try { 
-    final result = api_instance.devicePromptUpdate(id, updateId);
-    print(result);
-} catch (e) {
+try {
+    final response = api.devicePromptUpdate(id, updateId);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->devicePromptUpdate: $e\n');
 }
 ```
@@ -586,17 +586,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
-final id = id_example; // String | 
+final api = Openapi().getDeviceApi();
+final String id = id_example; // String | 
 
-try { 
-    final result = api_instance.deviceRemoveDevice(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.deviceRemoveDevice(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->deviceRemoveDevice: $e\n');
 }
 ```
@@ -627,17 +627,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
-final id = id_example; // String | 
+final api = Openapi().getDeviceApi();
+final String id = id_example; // String | 
 
-try { 
-    final result = api_instance.deviceRestart(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.deviceRestart(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->deviceRestart: $e\n');
 }
 ```
@@ -650,7 +650,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 
@@ -668,18 +668,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
-final id = 56; // int | 
-final pictureId = int(); // int | 
+final api = Openapi().getDeviceApi();
+final int id = 56; // int | 
+final int pictureId = 56; // int | 
 
-try { 
-    final result = api_instance.deviceSetPicture(id, pictureId);
-    print(result);
-} catch (e) {
+try {
+    final response = api.deviceSetPicture(id, pictureId);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->deviceSetPicture: $e\n');
 }
 ```
@@ -711,17 +711,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
-final id = id_example; // String | 
+final api = Openapi().getDeviceApi();
+final String id = id_example; // String | 
 
-try { 
-    final result = api_instance.deviceShowQrCode(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.deviceShowQrCode(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->deviceShowQrCode: $e\n');
 }
 ```
@@ -734,7 +734,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 
@@ -752,17 +752,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
-final id = id_example; // String | 
+final api = Openapi().getDeviceApi();
+final String id = id_example; // String | 
 
-try { 
-    final result = api_instance.deviceSleep(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.deviceSleep(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->deviceSleep: $e\n');
 }
 ```
@@ -775,7 +775,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**Object**
 
 ### Authorization
 
@@ -793,16 +793,16 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = DeviceApi();
+final api = Openapi().getDeviceApi();
 
-try { 
-    final result = api_instance.deviceUpdates();
-    print(result);
-} catch (e) {
+try {
+    final response = api.deviceUpdates();
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DeviceApi->deviceUpdates: $e\n');
 }
 ```
@@ -812,7 +812,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**List<DeviceUpdateDto>**](DeviceUpdateDto.md)
+[**List&lt;DeviceUpdateDto&gt;**](DeviceUpdateDto.md)
 
 ### Authorization
 

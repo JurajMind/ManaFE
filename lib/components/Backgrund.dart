@@ -29,7 +29,7 @@ class LogoPainter extends CustomPainter {
 
     canvas.drawPath(quadPath, paint);
 
-    paint.color = Colors.blue[200];
+    paint.color = Colors.blue[200]!;
     canvas.drawCircle(new Offset(123.4, 56.7), 12.0, paint);
        canvas.drawCircle(new Offset(123.4, 56.7), 15.0, paint);
   }

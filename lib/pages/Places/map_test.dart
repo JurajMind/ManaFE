@@ -50,7 +50,7 @@ class MapUiBodyState extends State<MapUiBody> {
   bool _indoorViewEnabled = true;
   bool _myLocationEnabled = true;
   bool _myLocationButtonEnabled = true;
-  GoogleMapController _controller;
+  late GoogleMapController _controller;
   bool _nightMode = false;
 
   @override
@@ -220,7 +220,7 @@ class MapUiBodyState extends State<MapUiBody> {
     });
   }
 
-  Widget _nightModeToggler() {
+  Widget? _nightModeToggler() {
     if (!_isMapCreated) {
       return null;
     }
@@ -296,7 +296,7 @@ class MapUiBodyState extends State<MapUiBody> {
               _indoorViewToggler(),
               _myLocationToggler(),
               _myLocationButtonToggler(),
-              _nightModeToggler(),
+              _nightModeToggler()!,
             ],
           ),
         ),

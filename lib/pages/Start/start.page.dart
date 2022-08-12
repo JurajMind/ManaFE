@@ -54,10 +54,10 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
                   child: Text(
-                    AppTranslations.of(context).text("Start").toUpperCase(),
+                    AppTranslations.of(context)!.text("Start").toUpperCase(),
                     style: Theme.of(context)
                         .textTheme
-                        .headline4
+                        .headline4!
                         .apply(color: Colors.black, fontSizeDelta: -7),
                   ),
                 ),
@@ -84,12 +84,12 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                       'Already have an account? ',
                       style: Theme.of(context)
                           .textTheme
-                          .headline5
+                          .headline5!
                           .apply(fontWeightDelta: 0),
                     ),
                     Text(
                       'SIGN IN',
-                      style: Theme.of(context).textTheme.headline5.apply(
+                      style: Theme.of(context).textTheme.headline5!.apply(
                           fontWeightDelta: 10,
                           color: AppColors.colors[3],
                           decoration: TextDecoration.underline),
@@ -103,7 +103,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
               alignment: Alignment.bottomCenter,
               child: new TextButton(
                 child: new Text(
-                  AppTranslations.of(context)
+                  AppTranslations.of(context)!
                       .currentLanguage
                       .toString()
                       .toUpperCase(),
@@ -123,7 +123,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
 
 class ManaLogoW extends StatefulWidget {
   const ManaLogoW({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

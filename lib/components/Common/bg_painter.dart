@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BgPainter extends CustomPainter {
-  final Color color;
+  final Color? color;
   final Offset startPoint;
 
   static const List<Offset> logoPoints = [
@@ -58,7 +58,7 @@ class BgPainter extends CustomPainter {
     final height = size.height;
     final width = size.width;
     Paint paint = Paint();
-    paint.color = color;
+    paint.color = color!;
 
     Path mainBackground = Path();
     mainBackground.addRect(Rect.fromLTRB(0, 0, width, height));
@@ -78,7 +78,7 @@ class BgPainter extends CustomPainter {
           hsv.saturation,
           hsv.lightness);
       paint.color = rotated.toColor();
-      canvas.drawCircle(offsetPoint, (_diameter * logoSize), paint);
+      canvas.drawCircle(offsetPoint, _diameter * logoSize as double, paint);
       index++;
     }
   }

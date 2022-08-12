@@ -1,20 +1,12 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'package:openapi/api.dart';
 import 'package:test/test.dart';
+import 'package:openapi/openapi.dart';
 
 // tests for ReservationsTimeSlot
 void main() {
-  final instance = ReservationsTimeSlot();
+  final ReservationsTimeSlot? instance = /* ReservationsTimeSlot(...) */ null;
+  // TODO add properties to the entity
 
-  group('test ReservationsTimeSlot', () {
+  group(ReservationsTimeSlot, () {
     // int value
     test('to test the property `value`', () async {
       // TODO
@@ -55,7 +47,5 @@ void main() {
       // TODO
     });
 
-
   });
-
 }

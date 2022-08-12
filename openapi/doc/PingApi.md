@@ -17,18 +17,18 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PingApi();
-final id = id_example; // String | 
-final version = version_example; // String | 
+final api = Openapi().getPingApi();
+final String id = id_example; // String | 
+final String version = version_example; // String | 
 
-try { 
-    final result = api_instance.pingDefaultAction(id, version);
-    print(result);
-} catch (e) {
+try {
+    final response = api.pingDefaultAction(id, version);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PingApi->pingDefaultAction: $e\n');
 }
 ```

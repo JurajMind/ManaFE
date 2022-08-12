@@ -5,18 +5,18 @@ import 'package:app/components/Places/place_map.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/models/extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class AddPlaceSubmitPage extends StatefulWidget {
-  final PlaceDto createdPlace;
-  const AddPlaceSubmitPage({Key key, this.createdPlace}) : super(key: key);
+  final PlaceDto? createdPlace;
+  const AddPlaceSubmitPage({Key? key, this.createdPlace}) : super(key: key);
 
   @override
   _AddPlaceSubmitPageState createState() => _AddPlaceSubmitPageState();
 }
 
 class _AddPlaceSubmitPageState extends State<AddPlaceSubmitPage> {
-  PlaceSimpleDto simplePlace;
+  PlaceSimpleDto? simplePlace;
   @override
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _AddPlaceSubmitPageState extends State<AddPlaceSubmitPage> {
               style: Theme.of(context).textTheme.subtitle1,
             ),
             Text(
-              '${widget.createdPlace.name} will be added to database after our review',
+              '${widget.createdPlace!.name} will be added to database after our review',
               style: Theme.of(context).textTheme.bodyText2,
             ),
             SizedBox(
@@ -56,8 +56,10 @@ class _AddPlaceSubmitPageState extends State<AddPlaceSubmitPage> {
                 padding: EdgeInsets.all(8.0),
                 child: Column(
                   children: <Widget>[
-                    Text(simplePlace.name, style: Theme.of(context).textTheme.headline6.merge(TextStyle(color: Colors.black))),
-                    Text(Extensions.adress(simplePlace.address), style: Theme.of(context).textTheme.headline5.merge(TextStyle(color: Colors.black))),
+                    Text(simplePlace!.name!,
+                        style: Theme.of(context).textTheme.headline6!.merge(TextStyle(color: Colors.black))),
+                    Text(Extensions.adress(simplePlace!.address),
+                        style: Theme.of(context).textTheme.headline5!.merge(TextStyle(color: Colors.black))),
                     new Row(
                       children: <Widget>[
                         Expanded(

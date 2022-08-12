@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 import 'manage_place.page.dart';
 
 class ManagePlaceCrossPage extends StatefulWidget {
-  final List<PlaceSimpleDto> managedPlaces;
-  ManagePlaceCrossPage({Key key, this.managedPlaces}) : super(key: key);
+  final List<PlaceSimpleDto>? managedPlaces;
+  ManagePlaceCrossPage({Key? key, this.managedPlaces}) : super(key: key);
 
   @override
   _ManagePlaceCrossPageState createState() => _ManagePlaceCrossPageState();
@@ -22,11 +22,10 @@ class _ManagePlaceCrossPageState extends State<ManagePlaceCrossPage> {
         body: Center(
             child: Container(
                 child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3),
-                    itemCount: widget.managedPlaces.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+                    itemCount: widget.managedPlaces!.length,
                     itemBuilder: (context, index) {
-                      var place = widget.managedPlaces[index];
+                      var place = widget.managedPlaces![index];
                       return InkWell(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
@@ -36,7 +35,7 @@ class _ManagePlaceCrossPageState extends State<ManagePlaceCrossPage> {
                         },
                         child: Container(
                           child: Center(
-                            child: Text(place.name),
+                            child: Text(place.name!),
                           ),
                         ),
                       );

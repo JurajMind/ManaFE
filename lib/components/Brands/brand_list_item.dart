@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class BrandListItem extends StatelessWidget {
-  final BrandGroup brand;
-  final String brandType;
-  final void Function() ontap;
+  final BrandGroup? brand;
+  final String? brandType;
+  final void Function()? ontap;
   const BrandListItem({
-    Key key,
+    Key? key,
     this.brand,
     this.brandType,
     this.ontap,
@@ -24,12 +24,12 @@ class BrandListItem extends StatelessWidget {
       child: ListTile(
         onTap: () {
           if (ontap != null) {
-            ontap();
+            ontap!();
             return;
           }
 
-          final gearBloc = DataProvider.getData(context).gearBloc;
-          gearBloc.loadBrandAccesory(brand.name, brandType ?? "Tobacco");
+          final gearBloc = DataProvider.getData(context)!.gearBloc;
+          gearBloc.loadBrandAccesory(brand!.name!, brandType ?? "Tobacco");
           Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
             return new BrandPage(
               brand: brand,
@@ -38,9 +38,9 @@ class BrandListItem extends StatelessWidget {
           }));
         },
         trailing: Icon(Icons.chevron_right),
-        leading: SizedBox(height: 60.0, width: 60.0, child: Hero(tag: '${brand.name}_${brandType}_brand_picture', child: Extensions.brandPicture(brand))),
-        title: Text(this.brand.name, style: Theme.of(context).textTheme.headline5),
-        subtitle: Text('Item count: ' + brand.itemCount.toString(), style: Theme.of(context).textTheme.bodyText2),
+        leading: SizedBox(height: 60.0, width: 60.0, child: Hero(tag: '${brand!.name}_${brandType}_brand_picture', child: Extensions.brandPicture(brand!))),
+        title: Text(this.brand!.name!, style: Theme.of(context).textTheme.headline5),
+        subtitle: Text('Item count: ' + brand!.itemCount.toString(), style: Theme.of(context).textTheme.bodyText2),
       ),
     );
   }
@@ -50,7 +50,7 @@ class BrandListItemShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey[400],
+      baseColor: Colors.grey[400]!,
       highlightColor: Colors.white,
       child: Container(
         margin: EdgeInsets.all(8.0),

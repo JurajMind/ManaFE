@@ -8,7 +8,7 @@ import 'package:openapi/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**nearbyPlaces** | [**List<PlaceSimpleDto>**](PlaceSimpleDto.md) |  | [optional] [default to const []]
+**nearbyPlaces** | [**List&lt;PlaceSimpleDto&gt;**](PlaceSimpleDto.md) |  | [optional] 
 **success** | **bool** |  | [optional] 
 **message** | **String** |  | [optional] 
 **httpResponseCode** | **int** |  | [optional] 

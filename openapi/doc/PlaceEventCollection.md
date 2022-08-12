@@ -8,7 +8,7 @@ import 'package:openapi/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**eventCollection** | [**List<PlaceEvent>**](PlaceEvent.md) |  | [optional] [default to const []]
+**eventCollection** | [**List&lt;PlaceEvent&gt;**](PlaceEvent.md) |  | [optional] 
 **success** | **bool** |  | [optional] 
 **message** | **String** |  | [optional] 
 **httpResponseCode** | **int** |  | [optional] 

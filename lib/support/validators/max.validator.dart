@@ -6,7 +6,7 @@ class MaxValidator extends BaseValidator {
   MaxValidator(this.max);
 
   @override
-  String validate(Object value, String attribute) {
+  String? validate(Object? value, String attribute) {
     if (value is String && value.length > this.max) {
       return 'The $attribute may not be greater than ${this.max} characters.';
     }

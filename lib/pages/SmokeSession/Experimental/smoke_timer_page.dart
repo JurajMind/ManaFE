@@ -25,15 +25,15 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
   double height = 10;
   double lastPuf = 0;
   static const double maxHeight = 600;
-  DataProvider dataProvider;
-  StopWatches stopWatches;
-  Duration animationDuration;
-  StreamSubscription<int> subscription;
-  List<double> charts;
+  DataProvider? dataProvider;
+  StopWatches? stopWatches;
+  Duration? animationDuration;
+  late StreamSubscription<int?> subscription;
+  late List<double> charts;
   @override
   void initState() {
     stopWatches = new StopWatches(new Stopwatch(), new Stopwatch());
-    charts = new List<double>();
+    charts = <double>[];
     super.initState();
   }
 
@@ -56,12 +56,12 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
     });
 
     getIt.get<SmokeSessionBloc>().smokeStatistic.listen((data) {
-      if (data.lastPuf > 2) {
+      if (data!.lastPuf > 2) {
         lastPuf = data.lastPuf;
       }
 
       charts.add(data.lastPuf);
-      charts = List.from(charts).orderByDescending((f) => f).distinct().take(5).toList();
+      charts = List.from(charts).orderByDescending((f) => f).distinct().take(5).toList() as List<double>;
     });
   }
 
@@ -91,7 +91,7 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
                 },
               ),
               new FlatButton(
-                child: new Text(AppTranslations.of(context).text("common.save").toUpperCase()),
+                child: new Text(AppTranslations.of(context)!.text("common.save").toUpperCase()),
                 textColor: Colors.green,
                 onPressed: () {
                   Navigator.of(context).pop(true);
@@ -100,8 +100,8 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
             ],
           );
         }).then((result) {
-      if (!result) return;
-      App.http.addCompetitionEntry(_textFieldController.text, lastPuf).then((onValue) {
+      if (!result!) return;
+      App.http!.addCompetitionEntry(_textFieldController.text, lastPuf).then((onValue) {
         HapticFeedback.selectionClick();
         setState(() {
           _textFieldController.text = '';
@@ -119,7 +119,7 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
         backgroundColor: Colors.black,
       ),
       body: Container(
-        child: StreamBuilder<SmokeStatisticDataModel>(
+        child: StreamBuilder<SmokeStatisticDataModel?>(
             stream: getIt.get<SmokeSessionBloc>().smokeStatistic,
             builder: (context, snapshot) {
               return Column(
@@ -149,9 +149,9 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
                     child: Align(
                         alignment: Alignment.bottomCenter,
                         child: AnimatedContainer(
-                          duration: snapshot.data.longestPuf == new Duration()
+                          duration: snapshot.data!.longestPuf == new Duration()
                               ? new Duration(seconds: 4)
-                              : snapshot.data.longestPuf,
+                              : snapshot.data!.longestPuf,
                           width: 200,
                           height: height,
                           child: WaveWidget(
@@ -179,7 +179,7 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          "TOP: ${dateUtils.DateUtils.toSecondDuration(snapshot.data.longestPuf)}",
+                          "TOP: ${dateUtils.DateUtils.toSecondDuration(snapshot.data!.longestPuf)}",
                           style: Theme.of(context).textTheme.headline6,
                         ),
                         Expanded(

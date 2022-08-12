@@ -1,11 +1,11 @@
 import 'package:app/const/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class SocialsList extends StatelessWidget {
-  final List<SmartHookahModelsDbSocialMedia> socials;
-  const SocialsList({Key key, this.socials}) : super(key: key);
+  final List<SmartHookahModelsDbSocialMedia>? socials;
+  const SocialsList({Key? key, this.socials}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class SocialsList extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            ...socials.map((f) {
+            ...socials!.map((f) {
               return this.socialWidget(f, context);
             }).toList()
           ],
@@ -41,15 +41,12 @@ class SocialsList extends StatelessWidget {
       case "IG":
         {
           icon = FontAwesomeIcons.instagram;
-          gradient = const LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                const Color.fromRGBO(64, 93, 230, 1),
-                const Color.fromRGBO(88, 81, 219, 1),
-                const Color.fromRGBO(253, 29, 29, 1),
-                const Color.fromRGBO(255, 220, 128, 1)
-              ]);
+          gradient = const LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [
+            const Color.fromRGBO(64, 93, 230, 1),
+            const Color.fromRGBO(88, 81, 219, 1),
+            const Color.fromRGBO(253, 29, 29, 1),
+            const Color.fromRGBO(255, 220, 128, 1)
+          ]);
           break;
         }
       case "URL":

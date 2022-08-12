@@ -1,21 +1,13 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'package:openapi/api.dart';
 import 'package:test/test.dart';
+import 'package:openapi/openapi.dart';
 
 // tests for NearbyPlacesDto
 void main() {
-  final instance = NearbyPlacesDto();
+  final NearbyPlacesDto? instance = /* NearbyPlacesDto(...) */ null;
+  // TODO add properties to the entity
 
-  group('test NearbyPlacesDto', () {
-    // List<PlaceSimpleDto> nearbyPlaces (default value: const [])
+  group(NearbyPlacesDto, () {
+    // List<PlaceSimpleDto> nearbyPlaces
     test('to test the property `nearbyPlaces`', () async {
       // TODO
     });
@@ -35,7 +27,5 @@ void main() {
       // TODO
     });
 
-
   });
-
 }

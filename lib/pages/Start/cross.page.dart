@@ -3,8 +3,10 @@ import 'package:app/pages/Start/external_auth_widget.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/Buttons/m_outlineButton.dart';
+
 class CrossPage extends StatelessWidget {
-  const CrossPage({Key key}) : super(key: key);
+  const CrossPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +46,8 @@ class CrossPage extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
                   child: Text(
-                    AppTranslations.of(context).text("Sign up"),
-                    style: Theme.of(context).textTheme.headline4.apply(color: Colors.black, fontSizeDelta: -15),
+                    AppTranslations.of(context)!.text("Sign up"),
+                    style: Theme.of(context).textTheme.headline4!.apply(color: Colors.black, fontSizeDelta: -15),
                   ),
                 ),
                 onPressed: () => navigate(context, 'auth/register'),
@@ -55,23 +57,14 @@ class CrossPage extends StatelessWidget {
               ),
             ),
             new Container(
-              child: OutlineButton(
-                borderSide: BorderSide(color: Colors.white, width: 1),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
-                  child: Text(
-                    AppTranslations.of(context).text(" Log in "),
-                    style: Theme.of(context).textTheme.headline4.apply(fontSizeDelta: -15),
-                  ),
-                ),
+              child: MButton(
+                label: AppTranslations.of(context)!.text(" Log in "),
                 onPressed: () => navigate(context, 'auth/login'),
-                color: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(24.0)),
-                textColor: Colors.black,
               ),
             ),
             Expanded(flex: 1, child: Container()),
-            Expanded(flex: 1, child: Container(child: Align(alignment: Alignment.bottomCenter, child: ExternalAuthWidget())))
+            Expanded(
+                flex: 1, child: Container(child: Align(alignment: Alignment.bottomCenter, child: ExternalAuthWidget())))
           ],
         ),
       ),

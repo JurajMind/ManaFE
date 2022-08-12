@@ -2,7 +2,7 @@ import 'package:app/Helpers/date_utils.dart' as dateUtils;
 import 'package:app/pages/Statistic/Detail/Components/smoke_duration_grap.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:darq/darq.dart';
 
@@ -16,7 +16,7 @@ class SessionStatisticDetail extends StatelessWidget {
     this.outDurations,
     this.idleDurations,
     this.data, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -53,7 +53,7 @@ class SessionStatisticDetail extends StatelessWidget {
                           flex: 1,
                           child: Text(
                               snapshot.data != null
-                                  ? '${dateUtils.DateUtils.toStringDate(snapshot.data.statistics.start)} ${dateUtils.DateUtils.toStringShortTime(snapshot.data.statistics.start)}'
+                                  ? '${dateUtils.DateUtils.toStringDate(snapshot.data!.statistics!.start!)} ${dateUtils.DateUtils.toStringShortTime(snapshot.data!.statistics!.start!)}'
                                   : '...',
                               style: Theme.of(context).textTheme.headline6),
                         ),
@@ -68,7 +68,7 @@ class SessionStatisticDetail extends StatelessWidget {
                           flex: 1,
                           child: Text(
                               snapshot.data != null
-                                  ? '${dateUtils.DateUtils.toStringDuration(dateUtils.DateUtils.parseDuration(snapshot.data.statistics.sessionDuration))}'
+                                  ? '${dateUtils.DateUtils.toStringDuration(dateUtils.DateUtils.parseDuration(snapshot.data!.statistics!.sessionDuration!))}'
                                   : '...',
                               style: Theme.of(context).textTheme.headline6),
                         ),

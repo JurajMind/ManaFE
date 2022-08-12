@@ -1,20 +1,12 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'package:openapi/api.dart';
 import 'package:test/test.dart';
+import 'package:openapi/openapi.dart';
 
 // tests for PlaceDay
 void main() {
-  final instance = PlaceDay();
+  final PlaceDay? instance = /* PlaceDay(...) */ null;
+  // TODO add properties to the entity
 
-  group('test PlaceDay', () {
+  group(PlaceDay, () {
     // int id
     test('to test the property `id`', () async {
       // TODO
@@ -40,12 +32,10 @@ void main() {
       // TODO
     });
 
-    // List<PlaceEvent> placeEvents (default value: const [])
+    // List<PlaceEvent> placeEvents
     test('to test the property `placeEvents`', () async {
       // TODO
     });
 
-
   });
-
 }

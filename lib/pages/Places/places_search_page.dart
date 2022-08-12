@@ -10,22 +10,22 @@ import 'package:app/module/module.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_webservice/places.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:darq/darq.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PlacesSearchResult {
-  LatLng position;
-  List<PlaceSimpleDto> places;
-  String label;
+  LatLng? position;
+  List<PlaceSimpleDto>? places;
+  String? label;
 }
 
 class PlacesSearchPage extends StatefulWidget {
-  final List<PlaceSimpleDto> places;
+  final List<PlaceSimpleDto>? places;
   final bool returnToMap;
-  final String searchLabel;
-  PlacesSearchPage({Key key, this.places, this.returnToMap = false, this.searchLabel}) : super(key: key);
+  final String? searchLabel;
+  PlacesSearchPage({Key? key, this.places, this.returnToMap = false, this.searchLabel}) : super(key: key);
 
   _PlacesSearchPageState createState() => _PlacesSearchPageState();
 }
@@ -33,12 +33,12 @@ class PlacesSearchPage extends StatefulWidget {
 // to get places detail (lat/lng)
 
 class _PlacesSearchPageState extends State<PlacesSearchPage> {
-  BehaviorSubject<List<PlaceSimpleDto>> places;
+  BehaviorSubject<List<PlaceSimpleDto>?>? places;
   PlacesBloc placesBloc = getIt.get<PlacesBloc>();
   GoogleMapsPlaces _places = GoogleMapsPlaces(baseUrl: "https://${App.baseUri}/api/Places/GoogleProxy");
   Mode _mode = Mode.overlay;
-  String currentLocation;
-  LatLng currentCitiLocation;
+  String? currentLocation;
+  LatLng? currentCitiLocation;
   String searchString = "";
   String session = "";
   @override
@@ -53,7 +53,7 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
     // show input autocomplete with selected mode
     // then get the Prediction selected
 
-    Prediction p = await PlacesAutocomplete.show(
+    Prediction? p = await PlacesAutocomplete.show(
         sessionToken: session,
         context: context,
         apiKey: '',
@@ -67,17 +67,17 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
 
   void onError(PlacesAutocompleteResponse response) {}
 
-  Future<Null> displayPrediction(Prediction p) async {
+  Future<Null> displayPrediction(Prediction? p) async {
     if (p != null) {
       // get detail (lat/lng)
-      PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(p.placeId);
+      PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(p.placeId!);
       setState(() {
         this.currentLocation = detail.result.name;
       });
-      final lat = detail.result.geometry.location.lat;
-      final lng = detail.result.geometry.location.lng;
-      App.http.getNearbyPlaces(lat: lat, lng: lng).then((value) {
-        places.add(value);
+      final lat = detail.result.geometry!.location.lat;
+      final lng = detail.result.geometry!.location.lng;
+      App.http!.getNearbyPlaces(lat: lat, lng: lng).then((value) {
+        places!.add(value);
       });
       currentCitiLocation = new LatLng(lat, lng);
     }
@@ -153,10 +153,10 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                                                 this.currentLocation = "Current location";
                                               });
                                               var location = this.placesBloc.location.value;
-                                              App.http
+                                              App.http!
                                                   .getNearbyPlaces(lat: location.latitude, lng: location.longitude)
                                                   .then((value) {
-                                                places.add(value);
+                                                places!.add(value);
                                                 currentCitiLocation = new LatLng(location.latitude, location.longitude);
                                               });
                                             },
@@ -170,7 +170,7 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                                               onTap: () => _handlePressButton(),
                                               child: Padding(
                                                 padding: const EdgeInsets.only(left: 4.0),
-                                                child: Text(this.currentLocation,
+                                                child: Text(this.currentLocation!,
                                                     style: Theme.of(context).textTheme.headline5),
                                               ),
                                             )),
@@ -186,7 +186,7 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                 ),
                 Expanded(
                   flex: 11,
-                  child: StreamBuilder<List<PlaceSimpleDto>>(
+                  child: StreamBuilder<List<PlaceSimpleDto>?>(
                       stream: this.places,
                       builder: (context, snapshot) {
                         var data = snapshot.data;
@@ -194,15 +194,15 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                           var dataCollection = List.from(data);
                           data = dataCollection
                               .where((a) => a.name.toUpperCase().contains(this.searchString.toUpperCase()))
-                              .toList();
+                              .toList() as List<PlaceSimpleDto>?;
                         }
 
                         return snapshot.data == null
                             ? CircularProgressIndicator()
                             : ListView.builder(
-                                itemCount: data.length,
+                                itemCount: data!.length,
                                 itemBuilder: (context, index) {
-                                  var place = data[index];
+                                  var place = data![index];
                                   return new PlaceItem(place: place);
                                 },
                               );
@@ -224,7 +224,7 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                   onPressed: () {
                     var result = new PlacesSearchResult();
                     result.position = this.currentCitiLocation;
-                    result.places = this.places.value;
+                    result.places = this.places!.value;
                     result.label = this.currentLocation;
                     Navigator.of(context).pop(result);
                   },

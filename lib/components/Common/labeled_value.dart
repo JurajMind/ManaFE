@@ -2,12 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class LabeledValue extends StatelessWidget {
-  final String label;
-  final String value;
-  final Icon icon;
-  final EdgeInsetsGeometry padding;
+  final String? label;
+  final String? value;
+  final Icon? icon;
+  final EdgeInsetsGeometry? padding;
 
-  const LabeledValue(this.value, {Key key, this.label, this.icon, this.padding}) : super(key: key);
+  const LabeledValue(this.value, {Key? key, this.label, this.icon, this.padding}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(

@@ -8,16 +8,15 @@ import 'package:app/services/share.dart';
 import 'package:app/theme/theme_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:share/share.dart';
 
 class PipeAccesoryPage extends StatefulWidget {
-  final PipeAccesorySimpleDto pipeAccesory;
-  final int pipeAccesoryId;
+  final PipeAccesorySimpleDto? pipeAccesory;
+  final int? pipeAccesoryId;
 
-  const PipeAccesoryPage({Key key, this.pipeAccesory, this.pipeAccesoryId})
-      : super(key: key);
+  const PipeAccesoryPage({Key? key, this.pipeAccesory, this.pipeAccesoryId}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return new _PipeAccesoryPageState();
@@ -25,16 +24,15 @@ class PipeAccesoryPage extends StatefulWidget {
 }
 
 class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
-  PipeAccesorySimpleDto pipeAccesory;
-  BehaviorSubject<List<SmokeSessionSimpleDto>> smokeSessions =
-      new BehaviorSubject<List<SmokeSessionSimpleDto>>();
+  PipeAccesorySimpleDto? pipeAccesory;
+  BehaviorSubject<List<SmokeSessionSimpleDto>> smokeSessions = new BehaviorSubject<List<SmokeSessionSimpleDto>>();
 
   @override
   void initState() {
     if (widget.pipeAccesory == null) {
-      App.http.getGearInfo(widget.pipeAccesoryId).then((g) => setState(() {
+      App.http!.getGearInfo(widget.pipeAccesoryId).then((g) => setState(() {
             pipeAccesory = g;
-            if (pipeAccesory.type == "Tobacco") {
+            if (pipeAccesory!.type == "Tobacco") {
               Route route = MaterialPageRoute(
                   builder: (context) => TobaccoPage(
                         tobacco: pipeAccesory,
@@ -44,7 +42,7 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
           }));
     } else {
       pipeAccesory = widget.pipeAccesory;
-      if (widget.pipeAccesory.type == "Tobacco") {
+      if (widget.pipeAccesory!.type == "Tobacco") {
         Route route = MaterialPageRoute(
             builder: (context) => TobaccoPage(
                   tobacco: widget.pipeAccesory,
@@ -53,9 +51,8 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
       }
     }
 
-    App.http
-        .getGearSession(widget?.pipeAccesoryId ?? widget.pipeAccesory.id,
-            pageSize: 6)
+    App.http!
+        .getGearSession(widget?.pipeAccesoryId ?? widget.pipeAccesory!.id, pageSize: 6)
         .then((sessions) => this.smokeSessions.add(sessions));
     super.initState();
   }
@@ -79,26 +76,22 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
                 IconButton(
                     icon: Icon(Icons.share),
                     onPressed: () async {
-                      var url =
-                          await ShareService.gearShareLink(this.pipeAccesory);
+                      var url = await ShareService.gearShareLink(this.pipeAccesory!);
                       Share.share(url.toString());
                     }),
               ],
               title: Row(
                 children: <Widget>[
                   Hero(
-                      tag: '${pipeAccesory.id}_name',
-                      child: Container(
-                          height: 50,
-                          width: 50,
-                          child: Extensions.accesoryPicture(pipeAccesory))),
+                      tag: '${pipeAccesory!.id}_name',
+                      child: Container(height: 50, width: 50, child: Extensions.accesoryPicture(pipeAccesory!))),
                   SizedBox(
                     width: 16,
                   ),
                   Container(
                       width: MediaQuery.of(context).size.width - 220,
                       child: AutoSizeText(
-                        "${pipeAccesory.brand} ${pipeAccesory.name}",
+                        "${pipeAccesory!.brand} ${pipeAccesory!.name}",
                         maxLines: 1,
                         style: theme.appBarStyle,
                         minFontSize: 8,

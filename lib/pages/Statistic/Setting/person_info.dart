@@ -3,11 +3,11 @@ import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class PersonInfo extends StatelessWidget {
   const PersonInfo({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -31,8 +31,7 @@ class PersonInfo extends StatelessWidget {
                         const SizedBox(
                           width: 8,
                         ),
-                        Text('Person info',
-                            style: Theme.of(context).textTheme.headline6),
+                        Text('Person info', style: Theme.of(context).textTheme.headline6),
                       ],
                     ),
                     const SizedBox(

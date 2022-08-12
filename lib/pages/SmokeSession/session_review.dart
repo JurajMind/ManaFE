@@ -8,11 +8,11 @@ import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 class SessionReview extends StatefulWidget {
-  final VoidCallback onReviewSave;
-  SessionReview({Key key, this.onReviewSave}) : super(key: key);
+  final VoidCallback? onReviewSave;
+  SessionReview({Key? key, this.onReviewSave}) : super(key: key);
 
   _SessionReviewState createState() => _SessionReviewState();
 }
@@ -24,11 +24,11 @@ class _SessionReviewState extends State<SessionReview> {
   double ambience = 2.5;
   double service = 2.5;
   double speed = 2.5;
-  List<File> files = new List<File>();
+  List<File> files = <File>[];
   bool posting = false;
 
-  TextEditingController placeText;
-  TextEditingController sessionText;
+  TextEditingController? placeText;
+  TextEditingController? sessionText;
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class _SessionReviewState extends State<SessionReview> {
   @override
   Widget build(BuildContext context) {
     var bloc = getIt.get<SmokeSessionBloc>();
-    var placeSession = bloc.smokeSession.value.placeId != null;
+    var placeSession = bloc.smokeSession.value!.placeId != null;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -54,8 +54,8 @@ class _SessionReviewState extends State<SessionReview> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   AppBar(),
-                  if (bloc.smokeSessionMetaData.value.tobacco == null &&
-                      bloc.smokeSessionMetaData.value.tobaccoMix == null) ...{
+                  if (bloc.smokeSessionMetaData.value!.tobacco == null &&
+                      bloc.smokeSessionMetaData.value!.tobaccoMix == null) ...{
                     Text(
                       'Tobacco not filled, please fill tobacco metadata for precision data:',
                       textAlign: TextAlign.center,
@@ -117,10 +117,7 @@ class _SessionReviewState extends State<SessionReview> {
                             child: CircularProgressIndicator(),
                           ),
                         )
-                      : MButton(
-                          label: "common.save",
-                          icon: Icons.save,
-                          onPressed: () => saveReview(placeSession)),
+                      : MButton(label: "common.save", icon: Icons.save, onPressed: () => saveReview(placeSession)),
                   SizedBox(
                     height: 100,
                   )
@@ -140,25 +137,25 @@ class _SessionReviewState extends State<SessionReview> {
     var bloc = getIt.get<SmokeSessionBloc>();
 
     var review = new SmartHookahModelsDbSessionDtoSessionReviewDto();
-    review.smokeSessionId = bloc.smokeSession.value.id;
+    review.smokeSessionId = bloc.smokeSession.value!.id;
     if (placeSession) {
       var placeReview = new PlacesPlaceReviewDto();
       placeReview.ambience = (ambience * 2).toInt();
       placeReview.service = (service * 2).toInt();
-      placeReview.text = placeText.text;
+      placeReview.text = placeText!.text;
       review.placeReview = placeReview;
     }
     var tobaccoReview = new GearTobaccoReviewDto();
     tobaccoReview.taste = (taste * 2).toInt();
     tobaccoReview.smoke = (taste * 2).toInt();
     tobaccoReview.strength = (taste * 2).toInt();
-    tobaccoReview.text = sessionText.text;
+    tobaccoReview.text = sessionText!.text;
 
     review.tobaccoReview = tobaccoReview;
 
     bloc.saveReview(review, files).then((_) {
       if (widget.onReviewSave != null) {
-        widget.onReviewSave();
+        widget.onReviewSave!();
       }
     });
     Navigator.of(context).pop();

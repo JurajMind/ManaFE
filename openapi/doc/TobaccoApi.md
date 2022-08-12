@@ -23,17 +23,17 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = TobaccoApi();
-final id = 56; // int | 
+final api = Openapi().getTobaccoApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.tobaccoGetTobacco(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.tobaccoGetTobacco(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling TobaccoApi->tobaccoGetTobacco: $e\n');
 }
 ```
@@ -64,19 +64,19 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = TobaccoApi();
-final id = 56; // int | 
-final pageSize = 56; // int | 
-final page = 56; // int | 
+final api = Openapi().getTobaccoApi();
+final int id = 56; // int | 
+final int pageSize = 56; // int | 
+final int page = 56; // int | 
 
-try { 
-    final result = api_instance.tobaccoGetTobaccoInMixes(id, pageSize, page);
-    print(result);
-} catch (e) {
+try {
+    final response = api.tobaccoGetTobaccoInMixes(id, pageSize, page);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling TobaccoApi->tobaccoGetTobaccoInMixes: $e\n');
 }
 ```
@@ -91,7 +91,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<TobaccoMixSimpleDto>**](TobaccoMixSimpleDto.md)
+[**List&lt;TobaccoMixSimpleDto&gt;**](TobaccoMixSimpleDto.md)
 
 ### Authorization
 
@@ -109,17 +109,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = TobaccoApi();
-final id = 56; // int | 
+final api = Openapi().getTobaccoApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.tobaccoGetTobaccoInfo(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.tobaccoGetTobaccoInfo(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling TobaccoApi->tobaccoGetTobaccoInfo: $e\n');
 }
 ```
@@ -150,17 +150,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = TobaccoApi();
-final id = 56; // int | 
+final api = Openapi().getTobaccoApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.tobaccoGetTobaccoSatistics(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.tobaccoGetTobaccoSatistics(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling TobaccoApi->tobaccoGetTobaccoSatistics: $e\n');
 }
 ```
@@ -191,19 +191,19 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = TobaccoApi();
-final id = 56; // int | 
-final pageSize = 56; // int | 
-final page = 56; // int | 
+final api = Openapi().getTobaccoApi();
+final int id = 56; // int | 
+final int pageSize = 56; // int | 
+final int page = 56; // int | 
 
-try { 
-    final result = api_instance.tobaccoGetTobaccoSessions(id, pageSize, page);
-    print(result);
-} catch (e) {
+try {
+    final response = api.tobaccoGetTobaccoSessions(id, pageSize, page);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling TobaccoApi->tobaccoGetTobaccoSessions: $e\n');
 }
 ```
@@ -218,7 +218,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<SmokeSessionSimpleDto>**](SmokeSessionSimpleDto.md)
+[**List&lt;SmokeSessionSimpleDto&gt;**](SmokeSessionSimpleDto.md)
 
 ### Authorization
 
@@ -236,17 +236,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = TobaccoApi();
-final id = 56; // int | 
+final api = Openapi().getTobaccoApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.tobaccoGetTobaccoTaste(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.tobaccoGetTobaccoTaste(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling TobaccoApi->tobaccoGetTobaccoTaste: $e\n');
 }
 ```
@@ -259,7 +259,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<TobaccoTasteDto>**](TobaccoTasteDto.md)
+[**List&lt;TobaccoTasteDto&gt;**](TobaccoTasteDto.md)
 
 ### Authorization
 
@@ -277,24 +277,24 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = TobaccoApi();
-final page = 56; // int | 
-final pageSize = 56; // int | 
-final filterPeriodTastes = []; // List<int> | 
-final filterPeriodSortBy = 56; // int | 
-final filterPeriodBrand = filterPeriodBrand_example; // String | 
-final filterPeriodOwned = true; // bool | 
-final filterPeriodSmoked = true; // bool | 
-final filterPeriodSortDirection = 56; // int | 
+final api = Openapi().getTobaccoApi();
+final int page = 56; // int | 
+final int pageSize = 56; // int | 
+final List<int> filterPeriodTastes = ; // List<int> | 
+final int filterPeriodSortBy = 56; // int | 
+final String filterPeriodBrand = filterPeriodBrand_example; // String | 
+final bool filterPeriodOwned = true; // bool | 
+final bool filterPeriodSmoked = true; // bool | 
+final int filterPeriodSortDirection = 56; // int | 
 
-try { 
-    final result = api_instance.tobaccoSearch(page, pageSize, filterPeriodTastes, filterPeriodSortBy, filterPeriodBrand, filterPeriodOwned, filterPeriodSmoked, filterPeriodSortDirection);
-    print(result);
-} catch (e) {
+try {
+    final response = api.tobaccoSearch(page, pageSize, filterPeriodTastes, filterPeriodSortBy, filterPeriodBrand, filterPeriodOwned, filterPeriodSmoked, filterPeriodSortDirection);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling TobaccoApi->tobaccoSearch: $e\n');
 }
 ```
@@ -305,7 +305,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **page** | **int**|  | 
  **pageSize** | **int**|  | 
- **filterPeriodTastes** | [**List<int>**](int.md)|  | [optional] [default to const []]
+ **filterPeriodTastes** | [**List&lt;int&gt;**](int.md)|  | [optional] 
  **filterPeriodSortBy** | **int**|  | [optional] 
  **filterPeriodBrand** | **String**|  | [optional] 
  **filterPeriodOwned** | **bool**|  | [optional] 
@@ -314,7 +314,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<TobaccoDto>**](TobaccoDto.md)
+[**List&lt;TobaccoDto&gt;**](TobaccoDto.md)
 
 ### Authorization
 

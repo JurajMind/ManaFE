@@ -153,13 +153,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
 }
 
 class AchievementItem extends StatelessWidget {
-  final String text;
-  final String date;
-  final String subText;
-  final IconData icon;
+  final String? text;
+  final String? date;
+  final String? subText;
+  final IconData? icon;
   final bool have;
 
-  const AchievementItem({Key key, this.text, this.date, this.subText, this.icon, this.have = true}) : super(key: key);
+  const AchievementItem({Key? key, this.text, this.date, this.subText, this.icon, this.have = true}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     var rng = new Random();
@@ -179,12 +179,12 @@ class AchievementItem extends StatelessWidget {
           ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[Text(text), Text(date ?? '')],
+            children: <Widget>[Text(text!), Text(date ?? '')],
           ),
           subtitle: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              Text(subText),
+              Text(subText!),
               Text("${rng.nextInt(20)} exp / ${rng.nextInt(20)} c."),
             ],
           ),

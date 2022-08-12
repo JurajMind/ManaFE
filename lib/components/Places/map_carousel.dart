@@ -15,12 +15,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:app/support/m_platform.dart';
 
 class MapCarousel extends StatefulWidget {
-  final PlaceSimpleDto selectedPlace;
+  final PlaceSimpleDto? selectedPlace;
 
   MapCarousel(
       {this.nearbyPlaces,
@@ -28,9 +28,9 @@ class MapCarousel extends StatefulWidget {
       this.selectedPlace,
       this.direction = Axis.horizontal,
       this.webMapController});
-  final Completer<GoogleMapController> mapController;
-  final GoogleWebMapController webMapController;
-  final BehaviorSubject<List<PlaceSimpleDto>> nearbyPlaces;
+  final Completer<GoogleMapController>? mapController;
+  final GoogleWebMapController? webMapController;
+  final BehaviorSubject<List<PlaceSimpleDto?>?>? nearbyPlaces;
   final Axis direction;
   @override
   _CarrousselState createState() => new _CarrousselState();
@@ -39,24 +39,24 @@ class MapCarousel extends StatefulWidget {
 class _CarrousselState extends State<MapCarousel> {
   _CarrousselState();
 
-  PageController controller;
+  PageController? controller;
   int currentpage = 0;
   bool loading = true;
   int clickedIndex = 1;
-  int selectPlaceId = 0;
-  BehaviorSubject<List<PlaceSimpleDto>> nearbyPlaces;
-  StreamSubscription<List<PlaceSimpleDto>> subscription;
+  int? selectPlaceId = 0;
+  BehaviorSubject<List<PlaceSimpleDto?>?>? nearbyPlaces;
+  late StreamSubscription<List<PlaceSimpleDto?>?> subscription;
   @override
   initState() {
     super.initState();
 
     if (widget.selectedPlace != null) {
-      selectPlaceId = widget.selectedPlace.id;
+      selectPlaceId = widget.selectedPlace!.id;
       nearbyPlaces = widget.nearbyPlaces;
-      currentpage = nearbyPlaces.value.indexOf(widget.selectedPlace);
-      subscription = nearbyPlaces.listen((onData) {
-        var index = onData.indexOf(widget.selectedPlace);
-        controller.jumpToPage(index + 1);
+      currentpage = nearbyPlaces!.value!.indexOf(widget.selectedPlace);
+      subscription = nearbyPlaces!.listen((onData) {
+        var index = onData!.indexOf(widget.selectedPlace);
+        controller!.jumpToPage(index + 1);
       });
     }
 
@@ -65,14 +65,14 @@ class _CarrousselState extends State<MapCarousel> {
       keepPage: false,
       viewportFraction: 0.4,
     );
-    controller.addListener(() {
-      if (controller.page % 1 == 0) {}
+    controller!.addListener(() {
+      if (controller!.page! % 1 == 0) {}
     });
   }
 
   @override
   dispose() {
-    controller.dispose();
+    controller!.dispose();
     subscription.cancel();
     super.dispose();
   }
@@ -82,23 +82,18 @@ class _CarrousselState extends State<MapCarousel> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget?.selectedPlace?.id != this.widget?.selectedPlace?.id) {
       selectPlaceId = widget?.selectedPlace?.id;
-      var pageIndex =
-          this.widget.nearbyPlaces.value.indexOf(this.widget.selectedPlace);
-      controller.jumpToPage(pageIndex + 1);
+      var pageIndex = this.widget.nearbyPlaces!.value!.indexOf(this.widget.selectedPlace);
+      controller!.jumpToPage(pageIndex + 1);
       // controller.animateToPage(pageIndex + 1,
       //     curve: Curves.easeIn, duration: const Duration(milliseconds: 500));
 
     }
     if (oldWidget.selectedPlace == null && this.widget.selectedPlace == null) {
-      if (widget.nearbyPlaces.value == null) return;
-      var newPageIndex = this
-          .widget
-          .nearbyPlaces
-          .value
-          .indexWhere((s) => s.id == this.selectPlaceId);
+      if (widget.nearbyPlaces!.value == null) return;
+      var newPageIndex = this.widget.nearbyPlaces!.value!.indexWhere((s) => s!.id == this.selectPlaceId);
       if (newPageIndex == -1) return;
       if (currentpage != newPageIndex) {
-        controller.jumpToPage(newPageIndex + 1);
+        controller!.jumpToPage(newPageIndex + 1);
       }
     }
   }
@@ -111,9 +106,8 @@ class _CarrousselState extends State<MapCarousel> {
     ));
   }
 
-  StreamBuilder<List<PlaceSimpleDto>> buildPlacePages(
-      BehaviorSubject<List<PlaceSimpleDto>> bloc) {
-    return StreamBuilder<List<PlaceSimpleDto>>(
+  StreamBuilder<List<PlaceSimpleDto?>?> buildPlacePages(BehaviorSubject<List<PlaceSimpleDto?>?>? bloc) {
+    return StreamBuilder<List<PlaceSimpleDto?>?>(
         initialData: null,
         stream: bloc,
         builder: (context, snapshot) {
@@ -121,7 +115,7 @@ class _CarrousselState extends State<MapCarousel> {
             return CircularProgressIndicator();
           }
 
-          if (snapshot.data.length == 0) {
+          if (snapshot.data!.length == 0) {
             return buildAdd();
           }
           return PageView.builder(
@@ -133,8 +127,7 @@ class _CarrousselState extends State<MapCarousel> {
                   if (currentpage == -1 || currentpage == 0) {
                     return;
                   }
-                  this.selectPlaceId =
-                      widget.nearbyPlaces.value[currentpage - 1].id;
+                  this.selectPlaceId = widget.nearbyPlaces!.value![currentpage - 1]!.id;
                 });
 
                 // go back for add page
@@ -146,37 +139,34 @@ class _CarrousselState extends State<MapCarousel> {
                   );
                   await moveToLocation(loc);
                 }
-                var place = snapshot.data[value - 1];
-                var loc = LatLng(double.parse(place.address.lat),
-                    double.parse(place.address.lng));
+                var place = snapshot.data![value - 1]!;
+                var loc = LatLng(double.parse(place.address!.lat!), double.parse(place.address!.lng!));
                 await moveToLocation(loc);
               },
-              itemCount: snapshot.data != null ? snapshot.data.length + 1 : 0,
+              itemCount: snapshot.data != null ? snapshot.data!.length + 1 : 0,
               itemBuilder: (context, index) {
                 if (index == 0) {
                   return buildAdd();
                 }
-                return buildInkWell(index, snapshot.data[index - 1]);
+                return buildInkWell(index, snapshot.data![index - 1]!);
               });
         });
   }
 
   Future<void> moveToLocation(LatLng loc) async {
     if (!MPlatform.isWeb) {
-      final GoogleMapController controller = await widget.mapController.future;
-      await controller.animateCamera(CameraUpdate.newCameraPosition(
-          CameraPosition(
-              bearing: 0, target: loc, tilt: 0, zoom: 15.151926040649414)));
+      final GoogleMapController controller = await widget.mapController!.future;
+      await controller.animateCamera(
+          CameraUpdate.newCameraPosition(CameraPosition(bearing: 0, target: loc, tilt: 0, zoom: 15.151926040649414)));
     } else {
-      widget.webMapController.moveToLocation(loc);
+      widget.webMapController!.moveToLocation(loc);
     }
   }
 
   Widget buildAdd() {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => Placeholder(), fullscreenDialog: true));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Placeholder(), fullscreenDialog: true));
       },
       child: Padding(
           padding: const EdgeInsets.all(4.0),
@@ -194,8 +184,7 @@ class _CarrousselState extends State<MapCarousel> {
                     tag: 'add_new_place_label',
                     child: Center(
                       child: Text(
-                        AppTranslations.of(context)
-                            .text("reservations.add_new_place"),
+                        AppTranslations.of(context)!.text("reservations.add_new_place"),
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.headline6,
                       ),
@@ -217,30 +206,24 @@ class _CarrousselState extends State<MapCarousel> {
     return new InkWell(
       onTap: () async {
         if (currentpage > index) {
-          controller.previousPage(
-              duration: Duration(milliseconds: 500), curve: Curves.ease);
+          controller!.previousPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
         }
 
         if (currentpage < index) {
-          controller.nextPage(
-              duration: Duration(milliseconds: 500), curve: Curves.ease);
+          controller!.nextPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
         }
 
         if (currentpage == index) {
           if (true) {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => PlaceDetailPage(place: place)));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => PlaceDetailPage(place: place)));
           }
           clickedIndex = index;
-          final GoogleMapController controller =
-              await widget.mapController.future;
-          await controller.animateCamera(CameraUpdate.newCameraPosition(
-              CameraPosition(
-                  bearing: 0,
-                  target: LatLng(double.parse(place.address.lat),
-                      double.parse(place.address.lng)),
-                  tilt: 0,
-                  zoom: 15.151926040649414)));
+          final GoogleMapController controller = await widget.mapController!.future;
+          await controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+              bearing: 0,
+              target: LatLng(double.parse(place.address!.lat!), double.parse(place.address!.lng!)),
+              tilt: 0,
+              zoom: 15.151926040649414)));
         }
       },
       child: Hero(
@@ -251,18 +234,13 @@ class _CarrousselState extends State<MapCarousel> {
               width: MediaQuery.of(context).size.width * 0.4,
               decoration: BoxDecoration(
                   borderRadius: new BorderRadius.circular(10.0),
-                  border: new Border.all(
-                      color: currentpage == index
-                          ? AppColors.colors[1]
-                          : Colors.transparent,
-                      width: 2),
+                  border:
+                      new Border.all(color: currentpage == index ? AppColors.colors[1] : Colors.transparent, width: 2),
                   color: Colors.grey[300],
                   image: DecorationImage(
-                      image: MPlatform.isWeb
-                          ? NetworkImage(
-                              Extensions.getPlaceImage(place, MediaSize.Medium))
-                          : CachedNetworkImageProvider(Extensions.getPlaceImage(
-                              place, MediaSize.Medium)),
+                      image: (MPlatform.isWeb
+                          ? NetworkImage(Extensions.getPlaceImage(place, MediaSize.Medium))
+                          : CachedNetworkImageProvider(Extensions.getPlaceImage(place, MediaSize.Medium))) as ImageProvider<Object>,
                       fit: BoxFit.cover)),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -276,15 +254,12 @@ class _CarrousselState extends State<MapCarousel> {
                           flex: 4,
                           child: Container(
                             child: new AutoSizeText(
-                              place.name,
+                              place.name!,
                               minFontSize: 12,
                               maxLines: 3,
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6
-                                  .merge(TextStyle(
+                              style: Theme.of(context).textTheme.headline6!.merge(TextStyle(
                                     color: textColor,
                                     shadows: [
                                       Shadow(

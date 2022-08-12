@@ -12,7 +12,7 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 
 import 'AddPlace/opening_hours_page.dart';
 import 'add_place_submit_page.dart';

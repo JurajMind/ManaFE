@@ -5,14 +5,14 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 typedef void RatingChangeCallback(double rating);
 
 class MStarRating extends StatelessWidget {
-  final double rating;
-  final String title;
+  final double? rating;
+  final String? title;
   final int colorIndex;
-  final RatingChangeCallback onRatingChanged;
+  final RatingChangeCallback? onRatingChanged;
   final int starSize;
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
   const MStarRating(
-      {Key key, this.rating, this.title, this.colorIndex = 0, this.onRatingChanged, this.starSize = 30, this.textStyle})
+      {Key? key, this.rating, this.title, this.colorIndex = 0, this.onRatingChanged, this.starSize = 30, this.textStyle})
       : super(key: key);
 
   @override
@@ -36,7 +36,7 @@ class MStarRating extends StatelessWidget {
                   allowHalfRating: true,
                   onRatingChanged: onRatingChanged,
                   starCount: 5,
-                  rating: rating,
+                  rating: rating!,
                   size: starSize + 0.0,
                   color: AppColors.colors[colorIndex],
                   borderColor: AppColors.colors[colorIndex],

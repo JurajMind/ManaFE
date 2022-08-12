@@ -3,8 +3,8 @@ import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
 
 class PresetPicker extends StatefulWidget {
-  final SmokeSessionBloc presetBloc;
-  final ValueChanged<DevicePreset> onChanged;
+  final SmokeSessionBloc? presetBloc;
+  final ValueChanged<DevicePreset>? onChanged;
   PresetPicker({this.presetBloc, this.onChanged});
 
   @override
@@ -14,10 +14,10 @@ class PresetPicker extends StatefulWidget {
 }
 
 class PresetPickerState extends State<PresetPicker> {
-  int _focusIndex;
+  int? _focusIndex;
   bool _init = false;
 
-  FixedExtentScrollController scrollController;
+  FixedExtentScrollController? scrollController;
 
   @override
   void initState() {
@@ -53,9 +53,9 @@ class PresetPickerState extends State<PresetPicker> {
 
   StreamBuilder<List<DevicePreset>> buildAnimationList() {
     return StreamBuilder<List<DevicePreset>>(
-        stream: widget.presetBloc.devicePresets,
-        initialData: List<DevicePreset>(),
-        builder: (context, snapshot) => snapshot.data.length == 0
+        stream: widget.presetBloc!.devicePresets,
+        initialData: <DevicePreset>[],
+        builder: (context, snapshot) => snapshot.data!.length == 0
             ? Container()
             : ListWheelScrollView(
                 itemExtent: 70.0,
@@ -67,14 +67,12 @@ class PresetPickerState extends State<PresetPicker> {
                   if (index == 0) {
                     print('fake');
                   }
-                  widget.onChanged(index == 0
-                      ? DevicePreset.empty()
-                      : snapshot.data[index - 1]);
+                  widget.onChanged!(index == 0 ? DevicePreset.empty() : snapshot.data![index - 1]);
                   setState(() {
                     _focusIndex = index;
                   });
                 },
-                children: createAnimationList(snapshot.data, widget.presetBloc),
+                children: createAnimationList(snapshot.data!, widget.presetBloc!),
               ));
   }
 
@@ -82,19 +80,16 @@ class PresetPickerState extends State<PresetPicker> {
     List<DevicePreset> presets,
     SmokeSessionBloc presetBloc,
   ) {
-    var children = List.generate(
-        presets.length,
-        (int index) =>
-            _createPreset(index, presets[index], context, presetBloc));
-    children.insert(
-        0, _createPreset(-1, DevicePreset(-1, ' ', -1), context, presetBloc));
+    var children =
+        List.generate(presets.length, (int index) => _createPreset(index, presets[index], context, presetBloc));
+    children.insert(0, _createPreset(-1, DevicePreset(-1, ' ', -1), context, presetBloc));
 
     return children;
   }
 
   StreamBuilder<List<DevicePreset>> buildBottomBar() {
     return StreamBuilder<List<DevicePreset>>(
-        stream: widget.presetBloc.devicePresets,
+        stream: widget.presetBloc!.devicePresets,
         initialData: null,
         builder: (context, snapshot) {
           return new Row(
@@ -113,19 +108,19 @@ class PresetPickerState extends State<PresetPicker> {
         });
   }
 
-  StreamBuilder<DevicePreset> _createPreset(int index, DevicePreset data,
-      BuildContext context, SmokeSessionBloc presetBloc) {
+  StreamBuilder<DevicePreset> _createPreset(
+      int index, DevicePreset data, BuildContext context, SmokeSessionBloc presetBloc) {
     return StreamBuilder<DevicePreset>(
       initialData: DevicePreset.empty(),
       stream: presetBloc.selectedPreset,
       builder: (context, snapshop) {
-        var selected = snapshop.data.id == data.id;
+        var selected = snapshop.data!.id == data.id;
 
         return Padding(
           padding: const EdgeInsets.all(20.0),
           child: Container(
             child: Center(
-              child: Text(data.name,
+              child: Text(data.name!,
                   style: TextStyle(
                     color: selected ? Colors.white : Colors.grey,
                     fontWeight: FontWeight.bold,

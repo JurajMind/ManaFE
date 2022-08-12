@@ -11,7 +11,6 @@ class Tobacco extends PipeAccesory {
   }
 
   factory Tobacco.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
     var pipeAccespry = PipeAccesory.fromJson(json);
     var result = Tobacco(pipeAccespry);
     return result;

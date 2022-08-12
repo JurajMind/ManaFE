@@ -2,13 +2,13 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 
 class NumberDialog extends StatefulWidget {
-  final String label;
-  final int initCount;
-  final int step;
-  final String stepLabel;
+  final String? label;
+  final int? initCount;
+  final int? step;
+  final String? stepLabel;
 
   const NumberDialog(
-      {Key key, this.label, this.initCount, this.step, this.stepLabel})
+      {Key? key, this.label, this.initCount, this.step, this.stepLabel})
       : super(key: key);
 
   @override
@@ -16,8 +16,8 @@ class NumberDialog extends StatefulWidget {
 }
 
 class _NumberDialogState extends State<NumberDialog> {
-  int count;
-  String stepLabel;
+  int? count;
+  String? stepLabel;
   @override
   void initState() {
     stepLabel = "${widget.step} ${widget.stepLabel}";
@@ -26,14 +26,14 @@ class _NumberDialogState extends State<NumberDialog> {
     controller = TextEditingController(text: count.toString());
   }
 
-  TextEditingController controller;
+  TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return new AlertDialog(
       content: Container(
         child: Column(
           children: <Widget>[
-            Text(widget.label),
+            Text(widget.label!),
             TextField(
               autofocus: true,
               keyboardType: TextInputType.number,
@@ -44,11 +44,11 @@ class _NumberDialogState extends State<NumberDialog> {
               children: <Widget>[
                 new FlatButton(
                   child: Text('- $stepLabel'),
-                  onPressed: () => setCount(widget.step * -1),
+                  onPressed: () => setCount(widget.step! * -1),
                 ),
                 new FlatButton(
                   child: Text('+ $stepLabel'),
-                  onPressed: () => setCount(widget.step),
+                  onPressed: () => setCount(widget.step!),
                 )
               ],
             )
@@ -58,12 +58,12 @@ class _NumberDialogState extends State<NumberDialog> {
       actions: <Widget>[
         new FlatButton(
           child: Text(
-              AppTranslations.of(context).text("common.save").toUpperCase()),
+              AppTranslations.of(context)!.text("common.save").toUpperCase()),
           onPressed: () => Navigator.of(context).pop(count),
         ),
         new FlatButton(
           child: Text(
-              AppTranslations.of(context).text("common.cancel").toUpperCase()),
+              AppTranslations.of(context)!.text("common.cancel").toUpperCase()),
           onPressed: () => Navigator.of(context).pop(-1),
         )
       ],
@@ -71,13 +71,13 @@ class _NumberDialogState extends State<NumberDialog> {
   }
 
   void setCount(int addition) {
-    var newCount = count + addition;
+    var newCount = count! + addition;
     if (newCount <= 0) {
       newCount = 0;
     }
     return setState(() {
       count = newCount;
-      controller.text = newCount.toString();
+      controller!.text = newCount.toString();
     });
   }
 }

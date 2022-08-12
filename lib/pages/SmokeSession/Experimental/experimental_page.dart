@@ -43,12 +43,12 @@ class ExperimentalPage extends StatelessWidget {
 }
 
 class ExperimentItem extends StatelessWidget {
-  final Color bgColor;
-  final String text;
-  final IconData icon;
-  final Widget pageWidget;
+  final Color? bgColor;
+  final String? text;
+  final IconData? icon;
+  final Widget? pageWidget;
   const ExperimentItem({
-    Key key,
+    Key? key,
     this.bgColor,
     this.text,
     this.icon,
@@ -60,7 +60,7 @@ class ExperimentItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: () => pageWidget == null ? {} : Navigator.of(context).push(MaterialPageRoute(builder: (context) => pageWidget)),
+        onTap: () => pageWidget == null ? {} : Navigator.of(context).push(MaterialPageRoute(builder: (context) => pageWidget!)),
         child: Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(30.0), color: bgColor, boxShadow: [
             new BoxShadow(
@@ -77,7 +77,7 @@ class ExperimentItem extends StatelessWidget {
                 size: 40,
               ),
               Text(
-                text,
+                text!,
                 style: Theme.of(context).textTheme.headline6,
               )
             ],

@@ -6,13 +6,13 @@ import 'package:app/module/module.dart';
 import 'package:app/pages/SmokeSession/session_review.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class ReviewsSmall extends StatelessWidget {
-  final List<SmartHookahModelsDbSessionDtoSessionReviewDto> reviews;
+  final List<SmartHookahModelsDbSessionDtoSessionReviewDto>? reviews;
 
-  const ReviewsSmall({Key key, this.reviews}) : super(key: key);
+  const ReviewsSmall({Key? key, this.reviews}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +22,12 @@ class ReviewsSmall extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Text(AppTranslations.of(context).text('smoke_session.review'),
+            Text(AppTranslations.of(context)!.text('smoke_session.review'),
                 style: Theme.of(context).textTheme.headline6),
-            IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () => addSessionReview(context))
+            IconButton(icon: Icon(Icons.add), onPressed: () => addSessionReview(context))
           ],
         ),
-        ...reviews.map((f) {
+        ...reviews!.map((f) {
           return Padding(
               padding: const EdgeInsets.all(8.0),
               child: ReviewSmallItem(
@@ -41,15 +39,14 @@ class ReviewsSmall extends StatelessWidget {
   }
 
   addSessionReview(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-        fullscreenDialog: true, builder: (context) => SessionReview()));
+    Navigator.of(context).push(MaterialPageRoute(fullscreenDialog: true, builder: (context) => SessionReview()));
   }
 }
 
 class ReviewSmallItem extends StatelessWidget {
-  final SmartHookahModelsDbSessionDtoSessionReviewDto review;
+  final SmartHookahModelsDbSessionDtoSessionReviewDto? review;
 
-  const ReviewSmallItem({Key key, this.review}) : super(key: key);
+  const ReviewSmallItem({Key? key, this.review}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +64,7 @@ class ReviewSmallItem extends StatelessWidget {
                         SmoothStarRating(
                             allowHalfRating: true,
                             starCount: 5,
-                            rating: review.taste / 2,
+                            rating: review!.taste! / 2,
                             size: 16.0,
                             color: AppColors.colors[1],
                             borderColor: AppColors.colors[1],
@@ -83,7 +80,7 @@ class ReviewSmallItem extends StatelessWidget {
                         SmoothStarRating(
                             allowHalfRating: true,
                             starCount: 5,
-                            rating: review.smoke / 2,
+                            rating: review!.smoke! / 2,
                             size: 16.0,
                             color: AppColors.colors[2],
                             borderColor: AppColors.colors[2],
@@ -103,7 +100,7 @@ class ReviewSmallItem extends StatelessWidget {
                         SmoothStarRating(
                             allowHalfRating: true,
                             starCount: 5,
-                            rating: review.strength / 2,
+                            rating: review!.strength! / 2,
                             size: 18.0,
                             color: AppColors.colors[0],
                             borderColor: AppColors.colors[0],
@@ -116,7 +113,7 @@ class ReviewSmallItem extends StatelessWidget {
                     child: Row(
                       children: <Widget>[
                         Icon(Icons.edit),
-                        Text(review.tobaccoReview?.text ?? ''),
+                        Text(review!.tobaccoReview?.text ?? ''),
                       ],
                     ),
                   )
@@ -132,8 +129,7 @@ class ReviewSmallItem extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(32.0))),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(32.0))),
             contentPadding: EdgeInsets.only(top: 10.0),
             content: Container(
                 width: size.width * 0.9,

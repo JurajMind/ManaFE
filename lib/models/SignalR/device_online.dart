@@ -1,8 +1,8 @@
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 
 class DeviceOnline extends SignalData {
-  String deviceName;
-  String sessionCode;
+  String? deviceName;
+  String? sessionCode;
   DeviceOnline(List data) : super(data);
 
   DeviceOnline.fromSignal(List data) : super(data) {

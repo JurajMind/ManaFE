@@ -23,16 +23,16 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = FeatureMixApi();
-final id = 56; // int | 
+final api = Openapi().getFeatureMixApi();
+final int id = 56; // int | 
 
-try { 
-    api_instance.featureMixAddFollow(id);
-} catch (e) {
+try {
+    api.featureMixAddFollow(id);
+} catch on DioError (e) {
     print('Exception when calling FeatureMixApi->featureMixAddFollow: $e\n');
 }
 ```
@@ -63,15 +63,15 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = FeatureMixApi();
+final api = Openapi().getFeatureMixApi();
 
-try { 
-    api_instance.featureMixFix();
-} catch (e) {
+try {
+    api.featureMixFix();
+} catch on DioError (e) {
     print('Exception when calling FeatureMixApi->featureMixFix: $e\n');
 }
 ```
@@ -99,17 +99,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = FeatureMixApi();
-final id = 56; // int | 
+final api = Openapi().getFeatureMixApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.featureMixGetFeatureMixCreator(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.featureMixGetFeatureMixCreator(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling FeatureMixApi->featureMixGetFeatureMixCreator: $e\n');
 }
 ```
@@ -140,20 +140,20 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = FeatureMixApi();
-final page = 56; // int | 
-final pageSize = 56; // int | 
-final orderBy = orderBy_example; // String | 
-final order = order_example; // String | 
+final api = Openapi().getFeatureMixApi();
+final int page = 56; // int | 
+final int pageSize = 56; // int | 
+final String orderBy = orderBy_example; // String | 
+final String order = order_example; // String | 
 
-try { 
-    final result = api_instance.featureMixGetFeatureMixCreators(page, pageSize, orderBy, order);
-    print(result);
-} catch (e) {
+try {
+    final response = api.featureMixGetFeatureMixCreators(page, pageSize, orderBy, order);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling FeatureMixApi->featureMixGetFeatureMixCreators: $e\n');
 }
 ```
@@ -169,7 +169,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<FeatureMixCreatorSimpleDto>**](FeatureMixCreatorSimpleDto.md)
+[**List&lt;FeatureMixCreatorSimpleDto&gt;**](FeatureMixCreatorSimpleDto.md)
 
 ### Authorization
 
@@ -187,16 +187,16 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = FeatureMixApi();
+final api = Openapi().getFeatureMixApi();
 
-try { 
-    final result = api_instance.featureMixGetFollowedCreators();
-    print(result);
-} catch (e) {
+try {
+    final response = api.featureMixGetFollowedCreators();
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling FeatureMixApi->featureMixGetFollowedCreators: $e\n');
 }
 ```
@@ -206,7 +206,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**List<FeatureMixCreatorSimpleDto>**](FeatureMixCreatorSimpleDto.md)
+[**List&lt;FeatureMixCreatorSimpleDto&gt;**](FeatureMixCreatorSimpleDto.md)
 
 ### Authorization
 
@@ -224,21 +224,21 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = FeatureMixApi();
-final id = 56; // int | 
-final page = 56; // int | 
-final pageSize = 56; // int | 
-final orderBy = orderBy_example; // String | 
-final order = order_example; // String | 
+final api = Openapi().getFeatureMixApi();
+final int id = 56; // int | 
+final int page = 56; // int | 
+final int pageSize = 56; // int | 
+final String orderBy = orderBy_example; // String | 
+final String order = order_example; // String | 
 
-try { 
-    final result = api_instance.featureMixGetMixes(id, page, pageSize, orderBy, order);
-    print(result);
-} catch (e) {
+try {
+    final response = api.featureMixGetMixes(id, page, pageSize, orderBy, order);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling FeatureMixApi->featureMixGetMixes: $e\n');
 }
 ```
@@ -255,7 +255,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<TobaccoMixSimpleDto>**](TobaccoMixSimpleDto.md)
+[**List&lt;TobaccoMixSimpleDto&gt;**](TobaccoMixSimpleDto.md)
 
 ### Authorization
 
@@ -273,16 +273,16 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = FeatureMixApi();
-final id = 56; // int | 
+final api = Openapi().getFeatureMixApi();
+final int id = 56; // int | 
 
-try { 
-    api_instance.featureMixRemoveFollow(id);
-} catch (e) {
+try {
+    api.featureMixRemoveFollow(id);
+} catch on DioError (e) {
     print('Exception when calling FeatureMixApi->featureMixRemoveFollow: $e\n');
 }
 ```

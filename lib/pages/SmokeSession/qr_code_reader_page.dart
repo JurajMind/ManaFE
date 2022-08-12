@@ -12,8 +12,8 @@ class QrCodeReader extends StatefulWidget {
 
 class _QrCodeReaderState extends State<QrCodeReader> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  QRViewController controller;
-  StreamSubscription<Barcode> _subscription;
+  late QRViewController controller;
+  StreamSubscription<Barcode>? _subscription;
 
   @override
   Widget build(BuildContext context) {

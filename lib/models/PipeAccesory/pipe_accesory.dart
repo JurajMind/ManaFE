@@ -1,11 +1,7 @@
 class PipeAccesory {
-  PipeAccesory(
-      {this.id, this.name, this.brand, this.brandId, this.picture, this.type});
+  PipeAccesory({this.id, this.name, this.brand, this.brandId, this.picture, this.type});
 
   factory PipeAccesory.fromJson(Map<String, dynamic> json) {
-    if (json == null) {
-      return null;
-    }
     return new PipeAccesory(
         id: json['Id'],
         name: json['Name'],
@@ -15,17 +11,17 @@ class PipeAccesory {
         type: json['Type']);
   }
 
-  int id;
+  int? id;
 
-  String name;
+  String? name;
 
-  String brand;
+  String? brand;
 
-  String brandId;
+  String? brandId;
 
-  String picture;
+  String? picture;
 
-  String type;
+  String? type;
 
   String get fullName {
     return "$brand $name";

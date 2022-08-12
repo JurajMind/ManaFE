@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 
 class SnapScrollPhysic extends ScrollPhysics {
-  final List<double> snaps;
+  final List<double>? snaps;
 
   /// Creates physics for a [PageView].
-  const SnapScrollPhysic({ScrollPhysics parent, this.snaps})
+  const SnapScrollPhysic({ScrollPhysics? parent, this.snaps})
       : super(parent: parent);
 
   @override
-  SnapScrollPhysic applyTo(ScrollPhysics ancestor) {
+  SnapScrollPhysic applyTo(ScrollPhysics? ancestor) {
     return new SnapScrollPhysic(
         parent: buildParent(ancestor), snaps: this.snaps);
   }
@@ -23,7 +23,7 @@ class SnapScrollPhysic extends ScrollPhysics {
     }
     var result = 0.0;
     for (var i = 0; i < position; i++) {
-      result += snaps[i];
+      result += snaps![i];
     }
 
     return result;
@@ -33,15 +33,15 @@ class SnapScrollPhysic extends ScrollPhysics {
     if (position == 0) {
       return 0.0;
     }
-    if (position == snaps.length) {
+    if (position == snaps!.length) {
       return 1000.0;
     }
 
     double result = 0.0;
     for (var i = 0; i < position; i++) {
-      result += snaps[i];
+      result += snaps![i];
     }
-    result -= snaps[position] / 4;
+    result -= snaps![position] / 4;
     return result;
   }
 
@@ -52,7 +52,7 @@ class SnapScrollPhysic extends ScrollPhysics {
   double _getClosestSnap(
       ScrollPosition position, Tolerance tolerance, double velocity) {
     print("position:${position.pixels}");
-    for (var i = 0; i < snaps.length; i++) {
+    for (var i = 0; i < snaps!.length; i++) {
       var snapPosition = _snapPosition(i);
       if (position.pixels <= snapPosition) {
         print("snapPosition:$i");
@@ -72,7 +72,7 @@ class SnapScrollPhysic extends ScrollPhysics {
   }
 
   @override
-  Simulation createBallisticSimulation(
+  Simulation? createBallisticSimulation(
       ScrollMetrics position, double velocity) {
     // If we're out of range and not headed back in range, defer to the parent
     // ballistics, which should put us back in range at a page boundary.
@@ -80,7 +80,7 @@ class SnapScrollPhysic extends ScrollPhysics {
         (velocity >= 0.0 && position.pixels >= position.maxScrollExtent))
       return super.createBallisticSimulation(position, velocity);
     final Tolerance tolerance = this.tolerance;
-    final double target = _getClosestSnap(position, tolerance, velocity);
+    final double target = _getClosestSnap(position as ScrollPosition, tolerance, velocity);
     if (target != position.pixels)
       return new ScrollSpringSimulation(
           spring, position.pixels, target, velocity,

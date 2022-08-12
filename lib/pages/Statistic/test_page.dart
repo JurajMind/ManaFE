@@ -10,6 +10,8 @@ import 'package:app/services/signal_r.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
+import '../../components/Buttons/m_outlineButton.dart';
+
 class TestPage extends StatefulWidget {
   @override
   State<TestPage> createState() => new _TestPageState();
@@ -34,8 +36,7 @@ class _TestPageState extends State<TestPage> {
               initialData: null,
               builder: (BuildContext context, snapshot) {
                 return Container(
-                  child: Text(
-                      snapshot.data?.latitude?.toString() ?? 'NO LOCATION'),
+                  child: Text(snapshot.data?.latitude?.toString() ?? 'NO LOCATION'),
                 );
               },
             ),
@@ -57,121 +58,82 @@ class _TestPageState extends State<TestPage> {
                 );
               },
             ),
-            OutlineButton.icon(
-              borderSide: BorderSide(color: Colors.white),
-              icon: Icon(
-                Icons.cloud,
-                color: Colors.red,
-              ),
-              label: Text('Signal reconect'),
+            MButton(
+              icon: Icons.cloud,
+              label: 'Signal reconect',
               onPressed: () async {
                 var signal = new SignalR();
                 signal.restartConnection();
               },
             ),
-            OutlineButton.icon(
-              borderSide: BorderSide(color: Colors.white),
-              icon: Icon(
-                Icons.cloud_off,
-                color: Colors.red,
-              ),
-              label: Text('Signal restart connection'),
+            MButton(
+              icon: Icons.cloud_off,
+              label: 'Signal restart connection',
               onPressed: () async {
                 var signal = new SignalR();
                 await signal.disconnect();
                 await signal.connect(force: true);
               },
             ),
-            OutlineButton.icon(
-              borderSide: BorderSide(color: Colors.white),
-              icon: Icon(Icons.directions_boat, color: Colors.greenAccent),
-              label: Text('Signal disconect'),
+            MButton(
+              icon: Icons.directions_boat,
+              label: 'Signal disconect',
               onPressed: () async {
                 var signal = new SignalR();
                 await signal.disconnect();
               },
             ),
-            OutlineButton.icon(
-              borderSide: BorderSide(color: Colors.white),
-              icon: Icon(
-                Icons.delete_sweep,
-                color: Colors.red,
-              ),
-              label: Text('Test date format'),
+            MButton(
+              icon: Icons.delete_sweep,
+              label: 'Test date format',
               onPressed: () async {
                 var date = '2019-08-19T15:51:12.9241371Z';
                 var a = DateTime.parse(date);
                 print(a.toIso8601String());
               },
             ),
-            OutlineButton.icon(
-              borderSide: BorderSide(color: Colors.white),
-              icon: Icon(
-                Icons.delete_sweep,
-                color: Colors.red,
-              ),
-              label: Text('Test token recovery'),
+            MButton(
+              icon: Icons.delete_sweep,
+              label: 'Test token recovery',
               onPressed: () async {
                 var auth = getIt.get<AuthorizeRepository>();
                 auth.messToken();
 
-                var request = App.http
-                    .getPersonInitData()
-                    .then((v) => debugPrint('refreshed'));
+                var request = App.http!.getPersonInitData().then((v) => debugPrint('refreshed'));
               },
             ),
-            OutlineButton.icon(
-              borderSide: BorderSide(color: Colors.white),
-              icon: Icon(
-                Icons.notifications,
-                color: Colors.red,
-              ),
-              label: Text('Test notification'),
+            MButton(
+              icon: Icons.notifications,
+              label: 'Test notification',
               onPressed: () async {
-                App.http.testNotification();
+                App.http!.testNotification();
               },
             ),
-            OutlineButton.icon(
-              borderSide: BorderSide(color: Colors.white),
-              icon: Icon(
-                Icons.delete_sweep,
-                color: Colors.red,
-              ),
-              label: Text('Corupt tokken'),
+            MButton(
+              icon: Icons.delete_sweep,
+              label: 'Corupt tokken',
               onPressed: () async {
                 var auth = getIt.get<AuthorizeRepository>();
                 await auth.messToken();
               },
             ),
-            OutlineButton.icon(
-              borderSide: BorderSide(color: Colors.white),
-              icon: Icon(
-                Icons.graphic_eq,
-                color: Colors.blue,
-              ),
-              label: Text('Hard jump'),
+            MButton(
+              icon: Icons.graphic_eq,
+              label: 'Hard jump',
               onPressed: () async {
                 service.callback(1, TestPage());
               },
             ),
-            OutlineButton.icon(
-              borderSide: BorderSide(color: Colors.white),
-              icon: Icon(
-                Icons.restart_alt,
-                color: Colors.blue,
-              ),
-              label: Text('Restart app'),
+            MButton(
+              icon: Icons.restart_alt,
+              label: 'Restart app',
               onPressed: () async {
                 AppWidget.restartApp(context);
               },
             ),
-            OutlineButton.icon(
-              borderSide: BorderSide(color: Colors.white),
-              icon: Icon(
-                Icons.restart_alt,
-                color: Colors.blue,
-              ),
-              label: Text('Alice'),
+            MButton(
+              icon: Icons.restart_alt,
+              label: 'Alice',
               onPressed: () async {
                 getIt.get<Alice>().showInspector();
               },
@@ -180,8 +142,7 @@ class _TestPageState extends State<TestPage> {
               tag: "DemoTag",
               child: IconButton(
                   icon: Icon(Icons.add, size: 70),
-                  onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => Placeholder()))),
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Placeholder()))),
             ),
           ],
         ),

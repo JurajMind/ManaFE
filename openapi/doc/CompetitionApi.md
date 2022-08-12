@@ -19,18 +19,18 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = CompetitionApi();
-final name = name_example; // String | 
-final time = 1.2; // double | 
+final api = Openapi().getCompetitionApi();
+final String name = name_example; // String | 
+final double time = 1.2; // double | 
 
-try { 
-    final result = api_instance.competitionAddEntry(name, time);
-    print(result);
-} catch (e) {
+try {
+    final response = api.competitionAddEntry(name, time);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling CompetitionApi->competitionAddEntry: $e\n');
 }
 ```
@@ -62,16 +62,16 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = CompetitionApi();
+final api = Openapi().getCompetitionApi();
 
-try { 
-    final result = api_instance.competitionClean();
-    print(result);
-} catch (e) {
+try {
+    final response = api.competitionClean();
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling CompetitionApi->competitionClean: $e\n');
 }
 ```
@@ -99,16 +99,16 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = CompetitionApi();
+final api = Openapi().getCompetitionApi();
 
-try { 
-    final result = api_instance.competitionGetResults();
-    print(result);
-} catch (e) {
+try {
+    final response = api.competitionGetResults();
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling CompetitionApi->competitionGetResults: $e\n');
 }
 ```
@@ -118,7 +118,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**List<SmartHookahModelsRedisCompetitionEntry>**](SmartHookahModelsRedisCompetitionEntry.md)
+[**List&lt;SmartHookahModelsRedisCompetitionEntry&gt;**](SmartHookahModelsRedisCompetitionEntry.md)
 
 ### Authorization
 

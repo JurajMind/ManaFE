@@ -26,18 +26,18 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReviewApi();
-final id = id_example; // String | 
-final reviewDto = PlacesPlaceReviewDto(); // PlacesPlaceReviewDto | 
+final api = Openapi().getReviewApi();
+final String id = id_example; // String | 
+final PlacesPlaceReviewDto reviewDto = ; // PlacesPlaceReviewDto | 
 
-try { 
-    final result = api_instance.reviewAddPlaceReview(id, reviewDto);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reviewAddPlaceReview(id, reviewDto);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReviewApi->reviewAddPlaceReview: $e\n');
 }
 ```
@@ -69,18 +69,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReviewApi();
-final id = 56; // int | 
-final reviewDto = SmartHookahModelsDbSessionDtoSessionReviewDto(); // SmartHookahModelsDbSessionDtoSessionReviewDto | 
+final api = Openapi().getReviewApi();
+final int id = 56; // int | 
+final SmartHookahModelsDbSessionDtoSessionReviewDto reviewDto = ; // SmartHookahModelsDbSessionDtoSessionReviewDto | 
 
-try { 
-    final result = api_instance.reviewAddSessionReview(id, reviewDto);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reviewAddSessionReview(id, reviewDto);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReviewApi->reviewAddSessionReview: $e\n');
 }
 ```
@@ -112,18 +112,18 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReviewApi();
-final id = id_example; // String | 
-final reviewDto = GearTobaccoReviewDto(); // GearTobaccoReviewDto | 
+final api = Openapi().getReviewApi();
+final String id = id_example; // String | 
+final GearTobaccoReviewDto reviewDto = ; // GearTobaccoReviewDto | 
 
-try { 
-    final result = api_instance.reviewAddTobaccoReview(id, reviewDto);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reviewAddTobaccoReview(id, reviewDto);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReviewApi->reviewAddTobaccoReview: $e\n');
 }
 ```
@@ -155,19 +155,19 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReviewApi();
-final id = 56; // int | 
-final pageSize = 56; // int | 
-final page = 56; // int | 
+final api = Openapi().getReviewApi();
+final int id = 56; // int | 
+final int pageSize = 56; // int | 
+final int page = 56; // int | 
 
-try { 
-    final result = api_instance.reviewGetPlaceReviews(id, pageSize, page);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reviewGetPlaceReviews(id, pageSize, page);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReviewApi->reviewGetPlaceReviews: $e\n');
 }
 ```
@@ -182,7 +182,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<PlacesPlaceReviewDto>**](PlacesPlaceReviewDto.md)
+[**List&lt;PlacesPlaceReviewDto&gt;**](PlacesPlaceReviewDto.md)
 
 ### Authorization
 
@@ -200,19 +200,19 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReviewApi();
-final id = 56; // int | 
-final pageSize = 56; // int | 
-final page = 56; // int | 
+final api = Openapi().getReviewApi();
+final int id = 56; // int | 
+final int pageSize = 56; // int | 
+final int page = 56; // int | 
 
-try { 
-    final result = api_instance.reviewGetSessionReview(id, pageSize, page);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reviewGetSessionReview(id, pageSize, page);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReviewApi->reviewGetSessionReview: $e\n');
 }
 ```
@@ -227,7 +227,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<SmartHookahModelsDbSessionDtoSessionReviewDto>**](SmartHookahModelsDbSessionDtoSessionReviewDto.md)
+[**List&lt;SmartHookahModelsDbSessionDtoSessionReviewDto&gt;**](SmartHookahModelsDbSessionDtoSessionReviewDto.md)
 
 ### Authorization
 
@@ -245,19 +245,19 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReviewApi();
-final id = 56; // int | 
-final pageSize = 56; // int | 
-final page = 56; // int | 
+final api = Openapi().getReviewApi();
+final int id = 56; // int | 
+final int pageSize = 56; // int | 
+final int page = 56; // int | 
 
-try { 
-    final result = api_instance.reviewGetTobaccoReview(id, pageSize, page);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reviewGetTobaccoReview(id, pageSize, page);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReviewApi->reviewGetTobaccoReview: $e\n');
 }
 ```
@@ -272,7 +272,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<GearTobaccoReviewDto>**](GearTobaccoReviewDto.md)
+[**List&lt;GearTobaccoReviewDto&gt;**](GearTobaccoReviewDto.md)
 
 ### Authorization
 
@@ -290,17 +290,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReviewApi();
-final id = 56; // int | 
+final api = Openapi().getReviewApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.reviewRemovePlaceReview(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reviewRemovePlaceReview(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReviewApi->reviewRemovePlaceReview: $e\n');
 }
 ```
@@ -331,17 +331,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReviewApi();
-final id = 56; // int | 
+final api = Openapi().getReviewApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.reviewRemoveSessionReview(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reviewRemoveSessionReview(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReviewApi->reviewRemoveSessionReview: $e\n');
 }
 ```
@@ -372,17 +372,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReviewApi();
-final id = 56; // int | 
+final api = Openapi().getReviewApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.reviewRemoveTobaccoReview(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reviewRemoveTobaccoReview(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReviewApi->reviewRemoveTobaccoReview: $e\n');
 }
 ```
@@ -413,17 +413,17 @@ No authorization required
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = ReviewApi();
-final id = 56; // int | 
+final api = Openapi().getReviewApi();
+final int id = 56; // int | 
 
-try { 
-    final result = api_instance.reviewTobaccoReviewDetail(id);
-    print(result);
-} catch (e) {
+try {
+    final response = api.reviewTobaccoReviewDetail(id);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling ReviewApi->reviewTobaccoReviewDetail: $e\n');
 }
 ```

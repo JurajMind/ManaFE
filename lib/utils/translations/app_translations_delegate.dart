@@ -5,7 +5,7 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 
 class AppTranslationsDelegate extends LocalizationsDelegate<AppTranslations> {
-  final Locale newLocale;
+  final Locale? newLocale;
 
   const AppTranslationsDelegate({this.newLocale});
 

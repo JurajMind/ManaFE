@@ -3,11 +3,11 @@ import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/menu_bloc.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/api.dart';
+import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MenuPage extends StatefulWidget {
-  final PlaceSimpleDto place;
+  final PlaceSimpleDto? place;
   MenuPage({this.place});
 
   @override
@@ -17,8 +17,8 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-  MenuBloc menuBloc;
-  PageController _pageController;
+  MenuBloc? menuBloc;
+  PageController? _pageController;
 
   @override
   void initState() {
@@ -30,67 +30,44 @@ class _MenuPageState extends State<MenuPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (menuBloc == null) {
-      menuBloc = DataProvider.getData(context).menuBloc;
+      menuBloc = DataProvider.getData(context)!.menuBloc;
     }
-    menuBloc.loadMenu(widget.place.id);
+    menuBloc!.loadMenu(widget.place!.id);
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: PageView(
-            pageSnapping: true,
-            controller: _pageController,
+        body: PageView(pageSnapping: true, controller: _pageController, children: <Widget>[
+          Column(
             children: <Widget>[
-              Column(
-                children: <Widget>[
-                  this.header(
-                      context,
-                      AppTranslations.of(context)
-                          .text("gear.tobacco")
-                          .toUpperCase(),
-                      0),
-                  Expanded(
-                    child:
-                        new StreamAccessoryList(accesorries: menuBloc.tobacco),
-                  ),
-                ],
+              this.header(context, AppTranslations.of(context)!.text("gear.tobacco").toUpperCase(), 0),
+              Expanded(
+                child: new StreamAccessoryList(accesorries: menuBloc!.tobacco),
               ),
-              Column(
-                children: <Widget>[
-                  this.header(
-                      context,
-                      AppTranslations.of(context)
-                          .text("gear.pipes")
-                          .toUpperCase(),
-                      1),
-                  Expanded(
-                    child:
-                        new StreamAccessoryList(accesorries: menuBloc.hookahs),
-                  )
-                ],
-              ),
-              Column(
-                children: <Widget>[
-                  this.header(
-                      context,
-                      AppTranslations.of(context)
-                          .text("gear.bowls")
-                          .toUpperCase(),
-                      2),
-                  Expanded(
-                    child: new StreamAccessoryList(accesorries: menuBloc.bowls),
-                  )
-                ],
-              ),
-              Column(
-                children: <Widget>[
-                  this.header(context, "EXTRA", 3),
-                  Expanded(child: extraBuilder(menuBloc.extra))
-                ],
-              ),
-            ]),
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              this.header(context, AppTranslations.of(context)!.text("gear.pipes").toUpperCase(), 1),
+              Expanded(
+                child: new StreamAccessoryList(accesorries: menuBloc!.hookahs),
+              )
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              this.header(context, AppTranslations.of(context)!.text("gear.bowls").toUpperCase(), 2),
+              Expanded(
+                child: new StreamAccessoryList(accesorries: menuBloc!.bowls),
+              )
+            ],
+          ),
+          Column(
+            children: <Widget>[this.header(context, "EXTRA", 3), Expanded(child: extraBuilder(menuBloc!.extra))],
+          ),
+        ]),
       ),
     );
   }
@@ -102,8 +79,7 @@ class _MenuPageState extends State<MenuPage> {
       backgroundColor: Colors.black,
       leading: IconButton(
         onPressed: () => page > 0
-            ? _pageController.previousPage(
-                duration: duration, curve: Curves.easeOut)
+            ? _pageController!.previousPage(duration: duration, curve: Curves.easeOut)
             : Navigator.pop(context),
         icon: Icon(
           Icons.chevron_left,
@@ -117,8 +93,7 @@ class _MenuPageState extends State<MenuPage> {
       centerTitle: false,
       actions: <Widget>[
         IconButton(
-            onPressed: () => _pageController.nextPage(
-                duration: duration, curve: Curves.easeOut),
+            onPressed: () => _pageController!.nextPage(duration: duration, curve: Curves.easeOut),
             icon: Icon(
               Icons.chevron_right,
               size: 40.0,
@@ -127,23 +102,21 @@ class _MenuPageState extends State<MenuPage> {
     );
   }
 
-  Widget extraBuilder(
-      BehaviorSubject<List<SmartHookahModelsOrderExtraDto>> accesorries) {
-    return StreamBuilder(
+  Widget extraBuilder(BehaviorSubject<List<SmartHookahModelsOrderExtraDto>> accesorries) {
+    return StreamBuilder<List<SmartHookahModelsOrderExtraDto>>(
         stream: accesorries,
         initialData: null,
         builder: (context, snapshot) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: GridView.builder(
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               itemBuilder: (context, index) {
                 return Card(
-                  child: Center(child: Text(snapshot.data[index].name)),
+                  child: Center(child: Text(snapshot.data![index].name!)),
                 );
               },
-              itemCount: snapshot.data == null ? 0 : snapshot.data.length,
+              itemCount: snapshot.data == null ? 0 : snapshot.data!.length,
             ),
           );
         });
@@ -152,11 +125,11 @@ class _MenuPageState extends State<MenuPage> {
 
 class StreamAccessoryList extends StatelessWidget {
   const StreamAccessoryList({
-    Key key,
-    @required this.accesorries,
+    Key? key,
+    required this.accesorries,
   }) : super(key: key);
 
-  final BehaviorSubject<List<PipeAccesorySimpleDto>> accesorries;
+  final BehaviorSubject<List<PipeAccesorySimpleDto>?> accesorries;
 
   @override
   Widget build(BuildContext context) {
@@ -176,11 +149,9 @@ class StreamAccessoryList extends StatelessWidget {
                     if (index >= snapshot.data.length) {
                       return SizedBox(height: 100);
                     }
-                    return PipeAccesoryListItem(
-                        pipeAccesory: snapshot.data[index]);
+                    return PipeAccesoryListItem(pipeAccesory: snapshot.data[index]);
                   },
-                  itemCount:
-                      snapshot.data == null ? 0 : snapshot.data.length + 1,
+                  itemCount: snapshot.data == null ? 0 : snapshot.data.length + 1,
                 );
         });
   }

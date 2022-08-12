@@ -3,20 +3,16 @@ class BrandGroup {
 
   factory BrandGroup.fromJson(Map<String, dynamic> json) {
     if (json == null) {
-      return null;
+      return BrandGroup();
     }
-    return new BrandGroup(
-        id: json['Id'],
-        name: json['Name'],
-        picture: json['Picture'],
-        itemCount: json['ItemCount']);
+    return new BrandGroup(id: json['Id'], name: json['Name'], picture: json['Picture'], itemCount: json['ItemCount']);
   }
 
-  String id;
+  String? id;
 
-  String name;
+  String? name;
 
-  String picture;
+  String? picture;
 
-  int itemCount;
+  int? itemCount;
 }

@@ -20,8 +20,8 @@ class DataProvider extends InheritedWidget {
   final AppBloc appBloc;
 
   DataProvider({
-    Key key,
-    Widget child,
+    Key? key,
+    required Widget child,
   })  : mixologyBloc = new MixologyBloc(),
         gearBloc = new GearBloc(),
         menuBloc = new MenuBloc(),
@@ -34,8 +34,8 @@ class DataProvider extends InheritedWidget {
   bool updateShouldNotify(InheritedWidget oldWidget) => true;
 
   static MixologyBloc getMixology(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<DataProvider>().mixologyBloc;
+      context.dependOnInheritedWidgetOfExactType<DataProvider>()!.mixologyBloc;
 
-  static DataProvider getData(BuildContext context) =>
+  static DataProvider? getData(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<DataProvider>();
 }

@@ -17,18 +17,18 @@ Method | HTTP request | Description
 
 
 
-### Example 
+### Example
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = StatisticsApi();
-final from = 2013-10-20T19:20:30+01:00; // DateTime | 
-final to = 2013-10-20T19:20:30+01:00; // DateTime | 
+final api = Openapi().getStatisticsApi();
+final DateTime from = 2013-10-20T19:20:30+01:00; // DateTime | 
+final DateTime to = 2013-10-20T19:20:30+01:00; // DateTime | 
 
-try { 
-    final result = api_instance.statisticsGetStatistics(from, to);
-    print(result);
-} catch (e) {
+try {
+    final response = api.statisticsGetStatistics(from, to);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling StatisticsApi->statisticsGetStatistics: $e\n');
 }
 ```

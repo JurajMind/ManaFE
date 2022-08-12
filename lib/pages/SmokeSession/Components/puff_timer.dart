@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class PuffTimeText extends StatelessWidget {
   PuffTimeText({this.completeTime});
-  final String completeTime;
+  final String? completeTime;
   @override
   @override
   Widget build(BuildContext context) {
@@ -47,9 +47,9 @@ class PuffTimeText extends StatelessWidget {
 }
 
 class ElapsedTime {
-  final int hundreds;
-  final int seconds;
-  final int minutes;
+  final int? hundreds;
+  final int? seconds;
+  final int? minutes;
 
   ElapsedTime({
     this.hundreds,
@@ -60,20 +60,20 @@ class ElapsedTime {
 
 class Hundreds extends StatefulWidget {
   Hundreds({this.dependencies});
-  final PufTimerDependencies dependencies;
+  final PufTimerDependencies? dependencies;
 
   HundredsState createState() => new HundredsState(dependencies: dependencies);
 }
 
 class HundredsState extends State<Hundreds> {
   HundredsState({this.dependencies});
-  final PufTimerDependencies dependencies;
+  final PufTimerDependencies? dependencies;
 
-  int hundreds = 0;
+  int? hundreds = 0;
 
   @override
   void initState() {
-    dependencies.timerListeners.add(onTick);
+    dependencies!.timerListeners.add(onTick);
     super.initState();
   }
 
@@ -87,20 +87,20 @@ class HundredsState extends State<Hundreds> {
 
   @override
   Widget build(BuildContext context) {
-    String hundredsStr = (hundreds % 100).toString().padLeft(2, '0');
+    String hundredsStr = (hundreds! % 100).toString().padLeft(2, '0');
     return new Text(hundredsStr, style: Theme.of(context).textTheme.headline4);
   }
 
   @override
   void dispose() {
-    dependencies.timerListeners.remove(onTick);
+    dependencies!.timerListeners.remove(onTick);
     super.dispose();
   }
 }
 
 class MinutesAndSeconds extends StatefulWidget {
   MinutesAndSeconds({this.dependencies});
-  final PufTimerDependencies dependencies;
+  final PufTimerDependencies? dependencies;
 
   MinutesAndSecondsState createState() =>
       new MinutesAndSecondsState(dependencies: dependencies);
@@ -108,13 +108,13 @@ class MinutesAndSeconds extends StatefulWidget {
 
 class MinutesAndSecondsState extends State<MinutesAndSeconds> {
   MinutesAndSecondsState({this.dependencies});
-  final PufTimerDependencies dependencies;
+  final PufTimerDependencies? dependencies;
 
-  int seconds = 0;
+  int? seconds = 0;
 
   @override
   void initState() {
-    dependencies.timerListeners.add(onTick);
+    dependencies!.timerListeners.add(onTick);
     super.initState();
   }
 
@@ -135,7 +135,7 @@ class MinutesAndSecondsState extends State<MinutesAndSeconds> {
 
   @override
   void dispose() {
-    dependencies.timerListeners.remove(onTick);
+    dependencies!.timerListeners.remove(onTick);
     super.dispose();
   }
 }

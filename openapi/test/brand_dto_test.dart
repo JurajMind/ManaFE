@@ -1,20 +1,12 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'package:openapi/api.dart';
 import 'package:test/test.dart';
+import 'package:openapi/openapi.dart';
 
 // tests for BrandDto
 void main() {
-  final instance = BrandDto();
+  final BrandDto? instance = /* BrandDto(...) */ null;
+  // TODO add properties to the entity
 
-  group('test BrandDto', () {
+  group(BrandDto, () {
     // String name
     test('to test the property `name`', () async {
       // TODO
@@ -60,17 +52,17 @@ void main() {
       // TODO
     });
 
-    // List<PipeAccesorySimpleDto> pipeAccessories (default value: const [])
+    // List<PipeAccesorySimpleDto> pipeAccessories
     test('to test the property `pipeAccessories`', () async {
       // TODO
     });
 
-    // List<SmartHookahModelsDbSocialMedia> socialMedias (default value: const [])
+    // List<SmartHookahModelsDbSocialMedia> socialMedias
     test('to test the property `socialMedias`', () async {
       // TODO
     });
 
-    // List<MediaDto> medias (default value: const [])
+    // List<MediaDto> medias
     test('to test the property `medias`', () async {
       // TODO
     });
@@ -80,7 +72,5 @@ void main() {
       // TODO
     });
 
-
   });
-
 }

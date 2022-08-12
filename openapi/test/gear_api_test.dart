@@ -1,21 +1,12 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'package:openapi/api.dart';
 import 'package:test/test.dart';
+import 'package:openapi/openapi.dart';
 
 
 /// tests for GearApi
 void main() {
-  final instance = GearApi();
+  final instance = Openapi().getGearApi();
 
-  group('tests for GearApi', () {
+  group(GearApi, () {
     //Future<PipeAccesorySimpleDto> gearAddGear(PipeAccesorySimpleDto accessory) async
     test('test gearAddGear', () async {
       // TODO
@@ -26,7 +17,7 @@ void main() {
       // TODO
     });
 
-    //Future<InlineResponse200> gearGetBrands() async
+    //Future<GearGetBrands200Response> gearGetBrands() async
     test('test gearGetBrands', () async {
       // TODO
     });

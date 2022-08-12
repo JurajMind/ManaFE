@@ -5,12 +5,12 @@ import 'package:app/pages/SmokeSession/Components/puff_timer.dart';
 import 'package:flutter/material.dart';
 
 class PufTimerDependencies {
-  StreamSubscription<int> subscription;
+  late StreamSubscription<int?> subscription;
   bool showTimer = false;
-  Timer timer;
+  late Timer timer;
   String alternativeText = '';
-  int milliseconds;
-  Stopwatch stopwatch;
+  int? milliseconds;
+  late Stopwatch stopwatch;
 
   PufTimerDependencies(SmokeSessionBloc smokeSessionBloc) {
     this.stopwatch = new Stopwatch();
@@ -34,7 +34,7 @@ class PufTimerDependencies {
     });
 
     smokeSessionBloc.smokeStatistic
-        .listen((data) => alternativeText = data.lastPuf.toStringAsFixed(2));
+        .listen((data) => alternativeText = data!.lastPuf.toStringAsFixed(2));
   }
 
   dispose() {
@@ -50,7 +50,7 @@ class PufTimerDependencies {
   void callback(Timer timer) {
     if (milliseconds != this.stopwatch.elapsedMilliseconds) {
       milliseconds = this.stopwatch.elapsedMilliseconds;
-      final int hundreds = (milliseconds / 10).truncate();
+      final int hundreds = (milliseconds! / 10).truncate();
       final int seconds = (hundreds / 100).truncate();
       final int minutes = (seconds / 60).truncate();
       final ElapsedTime elapsedTime = new ElapsedTime(

@@ -18,7 +18,7 @@ final homeScaffoldKey = GlobalKey<ScaffoldState>();
 final searchScaffoldKey = GlobalKey<ScaffoldState>();
 
 class _TestSearchState extends State<TestSearch> {
-  File _image;
+  File? _image;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +43,7 @@ class _TestSearchState extends State<TestSearch> {
                       SizedBox(height: 5),
                       _image == null
                           ? Text('No image selected.')
-                          : Image.file(_image),
+                          : Image.file(_image!),
                     ],
                   )),
               Expanded(
@@ -55,7 +55,7 @@ class _TestSearchState extends State<TestSearch> {
                           .getImage(source: ImageSource.gallery);
 
                       setState(() {
-                        _image = File(image.path);
+                        _image = File(image!.path);
                       });
                     },
                   )),
@@ -68,7 +68,7 @@ class _TestSearchState extends State<TestSearch> {
                           .getImage(source: ImageSource.camera);
 
                       setState(() {
-                        _image = File(image.path);
+                        _image = File(image!.path);
                       });
                     },
                   ))
@@ -76,7 +76,7 @@ class _TestSearchState extends State<TestSearch> {
           ),
           MaterialButton(
             onPressed: () {
-              App.http.uploadPlacePicture(1, _image);
+              App.http!.uploadPlacePicture(1, _image!);
             },
             child: Text('upload'),
           )

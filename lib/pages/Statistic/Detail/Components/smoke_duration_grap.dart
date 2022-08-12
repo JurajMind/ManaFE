@@ -8,22 +8,22 @@ import 'package:darq/darq.dart';
 import 'indicator.dart';
 
 class SmokeDurationGraph extends StatefulWidget {
-  final List<Duration> idleDurations;
-  final List<Duration> inDurations;
-  final List<Duration> outDurations;
+  final List<Duration>? idleDurations;
+  final List<Duration>? inDurations;
+  final List<Duration>? outDurations;
 
-  const SmokeDurationGraph({Key key, this.idleDurations, this.inDurations, this.outDurations}) : super(key: key);
+  const SmokeDurationGraph({Key? key, this.idleDurations, this.inDurations, this.outDurations}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _SmokeDurationGraphState();
 }
 
 class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
-  List<PieChartSectionData> pieChartRawSections;
-  List<PieChartSectionData> showingSections;
+  List<PieChartSectionData>? pieChartRawSections;
+  List<PieChartSectionData>? showingSections;
 
-  StreamController<PieTouchResponse> pieTouchedResultStreamController;
+  late StreamController<PieTouchResponse> pieTouchedResultStreamController;
 
-  int touchedIndex;
+  int? touchedIndex;
 
   @override
   void initState() {
@@ -80,13 +80,13 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
       setState(() {
         if (details is dynamic) {
           touchedIndex = -1;
-          showingSections = List.of(pieChartRawSections);
+          showingSections = List.of(pieChartRawSections!);
         } else {
-          showingSections = List.of(pieChartRawSections);
+          showingSections = List.of(pieChartRawSections!);
 
           if (touchedIndex != -1) {
-            final TextStyle style = showingSections[touchedIndex].titleStyle;
-            showingSections[touchedIndex] = showingSections[touchedIndex].copyWith(
+            final TextStyle style = showingSections![touchedIndex!].titleStyle!;
+            showingSections![touchedIndex!] = showingSections![touchedIndex!].copyWith(
               titleStyle: style.copyWith(
                 fontSize: 24,
               ),
@@ -199,7 +199,7 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
 }
 
 class SmokeDurationGraphShimer extends StatelessWidget {
-  const SmokeDurationGraphShimer({Key key}) : super(key: key);
+  const SmokeDurationGraphShimer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
