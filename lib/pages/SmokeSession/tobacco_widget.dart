@@ -27,7 +27,7 @@ class TobaccoSessionWidget extends StatelessWidget {
           new StreamBuilder<SmokeStatisticDataModel?>(
             stream: smokeSessionBloc!.smokeStatistic,
             builder: (context, snapShot) {
-              double percentage = ((snapShot?.data?.pufCount ?? 0) / 300) * 100;
+              double percentage = ((snapShot.data?.pufCount ?? 0) / 300) * 100;
 
               if (percentage > 100) {
                 percentage = 100;

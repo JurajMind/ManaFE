@@ -132,7 +132,7 @@ class _AddGearPageState extends State<AddGearPage> {
               uploading: uploading,
               label: AppTranslations.of(context)!.text('gear.save_and_use_new_gear'),
               onPressed: () {
-                if (selectedBrand == null || selectedType == "None" || newName == null) {
+                if (selectedBrand == null || selectedType == "None") {
                   return;
                 }
 

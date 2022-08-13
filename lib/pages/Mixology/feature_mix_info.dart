@@ -1,7 +1,6 @@
 import 'package:app/components/Socials/socials_widget.dart';
 import 'package:app/support/m_platform.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';

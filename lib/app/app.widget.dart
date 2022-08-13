@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:alice_lightweight/alice.dart';
 import 'package:app/app/app.dart';
 import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/module/person/person_bloc.dart';
 import 'package:app/pages/Start/start.page.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:app/services/authorization.dart';
@@ -13,7 +13,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:alice/alice.dart';
+//
 
 final navigatorKey = new GlobalKey<NavigatorState>();
 
@@ -24,8 +24,7 @@ class AppWidget extends StatefulWidget {
   }
 
   static restartApp(BuildContext context) async {
-    final _AppWidgetState state =
-        context.findAncestorStateOfType<_AppWidgetState>()!;
+    final _AppWidgetState state = context.findAncestorStateOfType<_AppWidgetState>()!;
     state.restartApp();
   }
 }
@@ -45,8 +44,7 @@ class _AppWidgetState extends State<AppWidget> {
   }
 
   void initDynamicLinks() async {
-    final PendingDynamicLinkData? data =
-        await FirebaseDynamicLinks.instance.getInitialLink();
+    final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
     final Uri? _deepLink = data?.link;
 
     if (_deepLink != null) {
@@ -105,9 +103,7 @@ class _AppWidgetState extends State<AppWidget> {
           title: 'Manapipes',
           navigatorObservers: [routeObserver],
 
-          home: DataProvider(
-              child: new HomePage(
-                  deeplink: deeplink, routeObserver: routeObserver)),
+          home: DataProvider(child: new HomePage(deeplink: deeplink, routeObserver: routeObserver)),
           // onGenerateRoute: App.router.generator,
           theme: MTheme.buildDarkTheme(theme),
         );

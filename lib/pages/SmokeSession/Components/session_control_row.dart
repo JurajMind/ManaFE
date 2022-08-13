@@ -1,7 +1,6 @@
 import 'package:app/const/theme.dart';
 import 'package:app/main.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/color_picker_page.dart';
 import 'package:app/utils/translations/app_translations.dart';
@@ -45,13 +44,13 @@ class SessionControllRow extends StatelessWidget {
           StreamBuilder<StandSettings?>(
               stream: smokeSessionBloc.standSettings,
               builder: (context, snapshot) {
-                var color = snapshot?.data?.idle?.color?.toColor() ??
+                var color = snapshot.data?.idle?.color?.toColor() ??
                     AppColors.colors[3];
                 return InkWell(
                   onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                       fullscreenDialog: true,
                       builder: (BuildContext context) {
-                        return new ColorPickerPage(initData: snapshot?.data);
+                        return new ColorPickerPage(initData: snapshot.data);
                       })),
                   child: Column(
                     children: <Widget>[

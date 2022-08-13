@@ -1,5 +1,4 @@
 import 'package:app/Helpers/helpers.dart';
-import 'package:app/app/app.widget.dart';
 import 'package:app/main.dart';
 import 'package:app/support/validators/email.validator.dart';
 import 'package:app/support/validators/max.validator.dart';
@@ -10,7 +9,6 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/services/authorization.dart';
-import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'external_auth_widget.dart';

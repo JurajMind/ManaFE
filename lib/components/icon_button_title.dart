@@ -6,7 +6,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 
 // Minimum logical pixel size of the IconButton.
@@ -77,11 +76,7 @@ class IconButtonTitle extends StatelessWidget {
     this.disabledColor,
     required this.onPressed,
     this.tooltip
-  }) : assert(iconSize != null),
-       assert(padding != null),
-       assert(alignment != null),
-       assert(icon != null),
-       super(key: key);
+  }) : super(key: key);
 
   /// The size of the icon inside the button.
   ///

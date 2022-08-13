@@ -3,7 +3,6 @@ import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/module/person/reservations_bloc.dart';
 import 'package:app/module/person/statistic_bloc.dart';
 import 'package:app/module/places/menu_bloc.dart';
-import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'general/app_bloc.dart';

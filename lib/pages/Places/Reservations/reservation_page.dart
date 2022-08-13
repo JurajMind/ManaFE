@@ -58,7 +58,7 @@ class _ReservationPageState extends State<ReservationPage> {
   PageController pageController = new PageController(initialPage: 0);
   TextEditingController? nameTextController;
   TextEditingController? noteTextController;
-  BehaviorSubject<List<ParsedTimes>> reservationInfo = new BehaviorSubject.seeded(new List<ParsedTimes>());
+  BehaviorSubject<List<ParsedTimes>> reservationInfo = new BehaviorSubject.seeded(<ParsedTimes>[]);
 
   List<ParsedTimes>? _disabledTimes;
 
@@ -69,7 +69,7 @@ class _ReservationPageState extends State<ReservationPage> {
     nameTextController = new TextEditingController();
     noteTextController = new TextEditingController();
     selectedDate = DateTime.now();
-    _disabledTimes = new List<ParsedTimes>();
+    _disabledTimes = <ParsedTimes>[];
     loadReservationInfo(selectedDate).then((data) {
       selectedTimeLabel = data[0].label;
       selectedTimeValue = data[0].timeSlot!.capacityLeft;
@@ -80,7 +80,7 @@ class _ReservationPageState extends State<ReservationPage> {
   Widget build(BuildContext context) {
     var reservationBloc = DataProvider.getData(context)!.reservationBloc;
     var personBloc = getIt.get<PersonBloc>();
-    nameTextController!.text = personBloc?.info?.value?.displayName ?? "";
+    nameTextController!.text = personBloc.info.value.displayName ?? "";
     return Scaffold(
       bottomNavigationBar: SizedBox(
         height: 55,
@@ -129,7 +129,7 @@ class _ReservationPageState extends State<ReservationPage> {
                                   highlightToday: true,
                                   showCalendarPickerIcon: false,
                                   onDateSelected: (date) async {
-                                    var dateCompare = compareDate(date, DateTime.now());
+                                    var dateCompare = compareDate(date!, DateTime.now());
 
                                     if (dateCompare >= 0) {
                                       await loadReservationInfo(date).then((data) {
@@ -152,11 +152,12 @@ class _ReservationPageState extends State<ReservationPage> {
                                   stream: reservationInfo,
                                   initialData: null,
                                   builder: (context, snapshot) {
-                                    if (snapshot.data != null && DateHelper.compareDate(selectedDate!, DateTime.now())) {
+                                    if (snapshot.data != null &&
+                                        DateHelper.compareDate(selectedDate!, DateTime.now())) {
                                       // selectedTime = 4;
                                     } else {}
                                     if (selectedTime == null && snapshot.data != null) {
-                                      selectTime(1, snapshot.data, new List<ParsedTimes>());
+                                      selectTime(1, snapshot.data, <ParsedTimes>[]);
                                     }
 
                                     return Column(
@@ -433,8 +434,8 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
   List<ParsedTimes>? disabledTimeDuration(DateTime? date, List<ParsedTimes>? times, int duration) {
-    if (times == null) return new List<ParsedTimes>();
-    List<ParsedTimes> result = new List<ParsedTimes>();
+    if (times == null) return <ParsedTimes>[];
+    List<ParsedTimes> result = <ParsedTimes>[];
 
     if (compareDate(date!, DateTime.now()) == 0) {
       for (var time in times) {
@@ -460,8 +461,8 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
   List<String?> confirmRequired(List<ReservationsTimeSlot> times, int duration) {
-    if (times == null) return new List<String>();
-    List<String?> result = new List<String?>();
+    if (times == null) return <String>[];
+    List<String?> result = <String>[];
     for (int i = 0; i < times.length; i++) {
       for (int j = 0; j < duration; j++) {
         if (i + j > times.length) {
@@ -482,7 +483,8 @@ class _ReservationPageState extends State<ReservationPage> {
     newReservation.duration = slotDurationString(selectedDuration + durations[0]);
     DateFormat df = new DateFormat('HH:mm');
     var time = df.parse(selectedTimeLabel!);
-    newReservation.time = new DateTime(selectedDate!.year, selectedDate!.month, selectedDate!.day, time.hour, time.minute);
+    newReservation.time =
+        new DateTime(selectedDate!.year, selectedDate!.month, selectedDate!.day, time.hour, time.minute);
 
     var result = await bloc.createReservation(newReservation);
     Navigator.of(context).pushReplacement(

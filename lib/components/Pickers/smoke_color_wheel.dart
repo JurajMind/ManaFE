@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:app/utils/color.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'dart:math' as math;

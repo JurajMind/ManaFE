@@ -12,7 +12,7 @@ class MixCardExpanded extends StatefulWidget {
   final int? highlightId;
   final Map<int?, Color>? multiHighlight;
   final bool noTitle;
-  final ValueChanged<TobaccoMixSimpleDto?>? onTap;
+  final ValueChanged<TobaccoMixSimpleDto>? onTap;
   final bool selected;
   MixCardExpanded(
       {this.tobaccoMix,
@@ -38,7 +38,7 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
       child: GestureDetector(
         onTap: () {
           if (widget.onTap != null) {
-            widget.onTap!(widget.tobaccoMix);
+            widget.onTap!(widget.tobaccoMix!);
           } else {
             Navigator.push(context, CupertinoPageRoute(builder: (context) => MixDetailPage(mix: widget.tobaccoMix)));
           }

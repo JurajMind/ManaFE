@@ -1,11 +1,9 @@
 import 'package:app/app/app.dart';
 import 'package:app/main.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/general/gear_bloc.dart';
 import 'package:app/module/person/person_bloc.dart';
 import 'package:app/pages/Gear/add_gear_page.dart';
 import 'package:app/utils/translations/app_translations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
@@ -34,7 +32,7 @@ class PipeAccesorySearch extends StatefulWidget {
 
 class PipeAccesorySearchState extends State<PipeAccesorySearch> {
   BehaviorSubject<List<PipeAccesorySimpleDto>> searchResult =
-      new BehaviorSubject<List<PipeAccesorySimpleDto>>.seeded(new List<PipeAccesorySimpleDto>());
+      new BehaviorSubject<List<PipeAccesorySimpleDto>>.seeded(<PipeAccesorySimpleDto>[]);
   final searchOnChange = new BehaviorSubject<String>();
   bool loading = false;
   String lastSearch = "";
@@ -44,7 +42,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
   @override
   void initState() {
     super.initState();
-    ownSimpleAccesories = widget.ownAccesories ?? new List<PipeAccesorySimpleDto>();
+    ownSimpleAccesories = widget.ownAccesories ?? <PipeAccesorySimpleDto>[];
     searchOnChange.debounceTime(Duration(milliseconds: 500)).listen((queryString) {
       if (queryString.length > 3) submitSearch(queryString);
     });
@@ -124,7 +122,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
       loading = true;
       lastSearch = text;
     });
-    this.searchResult.add(new List<PipeAccesorySimpleDto>());
+    this.searchResult.add(<PipeAccesorySimpleDto>[]);
     App.http!.searchGear(text, widget.searchType!.toLowerCase(), 0, 1000).then((value) {
       this.searchResult.add(value);
       setState(() {
@@ -136,7 +134,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
   StreamBuilder<List<PipeAccesorySimpleDto>> buildResult() {
     return StreamBuilder<List<PipeAccesorySimpleDto>>(
         stream: searchResult,
-        initialData: new List<PipeAccesorySimpleDto>(),
+        initialData: <PipeAccesorySimpleDto>[],
         builder: (context, snapshot) {
           if (snapshot.data!.length == 0) {
             if (loading) {
@@ -201,7 +199,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
 
           var data = getIt.get<PersonBloc>() ?? widget.personBloc!;
           return StreamBuilder<List<PipeAccesorySimpleDto>>(
-              stream: data?.myGear,
+              stream: data.myGear,
               builder: (context, ownSs) {
                 return new ListView.builder(
                     itemCount: snapshot.data!.length + 1,
@@ -267,7 +265,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
   }
 
   List<int> getIndexes(String text, String match) {
-    var result = new List<int>();
+    var result = <int>[];
     var index = text.indexOf(match);
 
     while (index != -1) {
@@ -286,7 +284,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
       fontWeight: FontWeight.w700,
       fontFamily: 'Montserrat',
     );
-    var result = new List<TextSpan>();
+    var result = <TextSpan>[];
     if (match == "") {
       return [new TextSpan(text: text, style: nonMatchStyle)];
     }

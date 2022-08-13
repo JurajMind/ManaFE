@@ -5,13 +5,11 @@ import 'package:app/components/Places/GooglePlaceAutocomplete/google_places.dart
 import 'package:app/components/Places/place_item.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/main.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:openapi/openapi.dart';
-import 'package:darq/darq.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 

@@ -5,7 +5,6 @@ import 'package:app/models/extensions.dart';
 import 'package:app/module/general/gear_bloc.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
-import 'package:darq/darq.dart';
 
 class BrandSelectPage extends StatefulWidget {
   final GearBloc? bloc;
@@ -244,7 +243,7 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
               stream: widget.bloc.getBrandsByType(widget.type),
               initialData: null,
               builder: (context, snapshot) {
-                if (snapshot?.data == null) return Container();
+                if (snapshot.data == null) return Container();
                 var data = snapshot.data;
                 if (data != null && this.searchString != "") {
                   var dataCollection = List.from(data);

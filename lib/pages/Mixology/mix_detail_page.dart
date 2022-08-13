@@ -52,10 +52,10 @@ class MixDetailPageState extends State<MixDetailPage> {
       });
     }
     this.editName = false;
-    this.nameController = new TextEditingController(text: widget?.mix?.name ?? "");
+    this.nameController = new TextEditingController(text: widget.mix?.name ?? "");
 
     Future.delayed(Duration.zero, () {
-      App.http!.getTobaccoInfo(widget?.mix?.id ?? widget.mixId).then((data) => this.information.add(data));
+      App.http!.getTobaccoInfo(widget.mix?.id ?? widget.mixId).then((data) => this.information.add(data));
     });
     super.initState();
   }

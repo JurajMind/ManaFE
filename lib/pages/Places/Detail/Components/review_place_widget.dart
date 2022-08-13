@@ -3,7 +3,6 @@ import 'package:app/components/Reviews/no_review.dart';
 import 'package:app/components/Reviews/review_view.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/main.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/mixology/mix_card_expanded_shimmer.dart';
 import 'package:app/module/module.dart';
 import 'package:app/pages/Places/place_review.dart';
@@ -37,7 +36,7 @@ class _ReviewPlaceWidgetState extends State<ReviewPlaceWidget> {
           return Center(child: Container(height: 60, width: 60, child: CircularProgressIndicator()));
         }
 
-        var itemCount = snapshot?.data?.length;
+        var itemCount = snapshot.data?.length;
         if (itemCount != null) {
           itemCount++;
         }
@@ -52,7 +51,7 @@ class _ReviewPlaceWidgetState extends State<ReviewPlaceWidget> {
             physics: const ClampingScrollPhysics(),
             itemCount: itemCount ?? 10,
             itemBuilder: (context, index) {
-              if ((snapshot?.data?.length ?? 0) == 0) {
+              if ((snapshot.data?.length ?? 0) == 0) {
                 return NoReview(
                   onAdd: () {
                     Navigator.of(context).push(MaterialPageRoute(
@@ -91,7 +90,7 @@ class _ReviewPlaceWidgetState extends State<ReviewPlaceWidget> {
                 );
               }
 
-              if (snapshot.data != null && snapshot.data![index - 1] != null) {
+              if (snapshot.data != null) {
                 var item = snapshot.data![index - 1];
                 return PlaceReviewItem(item);
               } else {

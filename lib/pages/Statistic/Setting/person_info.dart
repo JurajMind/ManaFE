@@ -1,5 +1,4 @@
 import 'package:app/main.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

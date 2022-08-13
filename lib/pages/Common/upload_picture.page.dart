@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';

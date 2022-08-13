@@ -35,7 +35,8 @@ class _ManageReservationPageState extends State<ManageReservationPage>
             return CircularProgressIndicator();
           }
 
-          var slots = snapshot.data!.endTime!.difference(snapshot.data!.startTime!).inMinutes / snapshot.data!.timeSlotSize!;
+          var slots =
+              snapshot.data!.endTime!.difference(snapshot.data!.startTime!).inMinutes / snapshot.data!.timeSlotSize!;
 
           slots++;
 
@@ -130,7 +131,7 @@ class ReservationRow extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var cellWidth = size.width / (slots + 1);
-    List<ColumnData> slotData = new List<ColumnData>();
+    List<ColumnData> slotData = <ColumnData>[];
 
     for (int i = 0; i < slots.toInt(); i++) {
       var time = start!.add(new Duration(minutes: slotSize! * i));

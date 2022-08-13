@@ -1,11 +1,10 @@
-import 'package:alice/alice.dart';
+import 'package:alice_lightweight/alice.dart';
 import 'package:app/app/app.dart';
 import 'package:app/module/module.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -42,13 +41,11 @@ Future<void> setup(GetIt getIt) async {
     ..registerAdapter(PipeAccesorySimpleDtoAdapter());
   getIt.registerLazySingleton<Alice>(() => Alice(
         darkTheme: true,
-        showNotification: false,
       ));
   getIt.registerLazySingleton<PlacesBloc>(() => PlacesBloc());
   getIt.registerLazySingleton<PlaceBloc>(() => PlaceBloc());
   getIt.registerLazySingleton<SmokeSessionBloc>(() => SmokeSessionBloc());
-  getIt.registerLazySingleton<AuthorizeRepository>(() =>
-      AuthorizeRepository(sharedPreferences: getIt.get<SharedPreferences>()));
-  getIt.registerLazySingleton<PersonBloc>(
-      () => PersonBloc(getIt.get<AuthorizeRepository>()));
+  getIt.registerLazySingleton<AuthorizeRepository>(
+      () => AuthorizeRepository(sharedPreferences: getIt.get<SharedPreferences>()));
+  getIt.registerLazySingleton<PersonBloc>(() => PersonBloc(getIt.get<AuthorizeRepository>()));
 }

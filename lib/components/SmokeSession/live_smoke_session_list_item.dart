@@ -1,6 +1,5 @@
 import 'package:app/components/Common/labeled_value.dart';
 import 'package:app/main.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/pages/Statistic/Detail/smoke_session_detail_page.dart';
@@ -30,9 +29,8 @@ class LiveSmokeSessionListItem extends StatelessWidget {
                     sessionId: session!.sessionId,
                   ));
             } else {
-              return Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
-                return SmokeSessioDetailPage(session: session);
-              }));
+              await Navigator.of(context)
+                  .push(new MaterialPageRoute(builder: (_) => SmokeSessioDetailPage(session: session)));
             }
           },
           child: Padding(

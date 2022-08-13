@@ -1,6 +1,5 @@
 import 'package:app/main.dart';
 import 'package:app/models/SmokeSession/timer_dependency.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +14,7 @@ class PuffTimeText extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Offstage(
-          offstage: dependencies.showTimer == null || !dependencies.showTimer,
+          offstage: !dependencies.showTimer,
           child: new Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

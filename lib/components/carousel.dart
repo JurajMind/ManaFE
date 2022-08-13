@@ -3,7 +3,6 @@ import 'package:app/components/Media/media.widget.dart';
 import 'package:app/components/Places/open_indicator.dart';
 import 'package:app/main.dart';
 import 'package:app/models/extensions.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/places_bloc.dart';
 // import 'package:app/pages/Places/add_place_page_backup';
 import 'package:app/support/m_platform.dart';

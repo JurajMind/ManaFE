@@ -52,7 +52,7 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
     }
 
     App.http!
-        .getGearSession(widget?.pipeAccesoryId ?? widget.pipeAccesory!.id, pageSize: 6)
+        .getGearSession(widget.pipeAccesoryId ?? widget.pipeAccesory!.id, pageSize: 6)
         .then((sessions) => this.smokeSessions.add(sessions));
     super.initState();
   }

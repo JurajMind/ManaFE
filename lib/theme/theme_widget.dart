@@ -17,8 +17,7 @@ class MTheme extends StatelessWidget {
     Key? key,
     required this.child,
     this.themeData,
-  })  : assert(child != null),
-        super(key: key);
+  })  : super(key: key);
 
   @override
   Widget build(BuildContext context) {

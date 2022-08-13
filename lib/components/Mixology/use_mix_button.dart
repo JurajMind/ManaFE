@@ -2,7 +2,6 @@ import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/main.dart';
 import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
@@ -18,7 +17,7 @@ class UseMixButton extends StatelessWidget {
     return StreamBuilder<SmokeSessionMetaDataDto?>(
         stream: bloc.smokeSessionMetaData,
         builder: (context, snapshot) {
-          if (snapshot?.data?.tobaccoMix?.id == mix!.id) {
+          if (snapshot.data?.tobaccoMix?.id == mix!.id) {
             return MButton(
               icon: Icons.delete,
               iconColor: Colors.red,
@@ -27,7 +26,7 @@ class UseMixButton extends StatelessWidget {
             );
           }
 
-          if (snapshot?.data?.id == null) {
+          if (snapshot.data?.id == null) {
             Container();
           }
 

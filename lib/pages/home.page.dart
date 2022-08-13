@@ -2,13 +2,11 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:app/app/app.dart';
-import 'package:app/app/app.widget.dart';
 import 'package:app/components/icon_button_title.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
-import 'package:app/module/person/person_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Statistic/statistic_page.dart';
 import 'package:app/pages/startSmokeSession.page.dart';
@@ -17,7 +15,6 @@ import 'package:app/services/signal_r.dart';
 import 'package:app/support/m_platform.dart';
 import 'package:app/support/mana_icons_icons.dart';
 import 'package:app/utils/translations/app_translations.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
@@ -520,6 +517,7 @@ class TabNavigator extends StatelessWidget {
         if (argument is SmokeSessionSimpleDto) {
           return new SmokeSessioDetailPage(session: argument);
         }
+        return null;
       }
     };
   }

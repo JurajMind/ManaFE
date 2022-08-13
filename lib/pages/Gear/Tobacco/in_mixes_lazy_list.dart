@@ -64,7 +64,7 @@ class _InMixesLazyListState extends State<InMixesLazyList> {
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
-          title: Text("${widget?.tobacco?.brand ?? ""} ${widget?.tobacco?.name ?? ""}", style: theme.appBarStyle)),
+          title: Text("${widget.tobacco?.brand ?? ""} ${widget.tobacco?.name ?? ""}", style: theme.appBarStyle)),
       body: Center(
         child: Container(
           constraints: BoxConstraints(maxWidth: theme.maxPageWidth),
@@ -76,7 +76,7 @@ class _InMixesLazyListState extends State<InMixesLazyList> {
                   onRefresh: () => loadMoreMixes(snapshot.data!, refresh: true),
                   onEndOfPage: () => loadMoreMixes(snapshot.data!),
                   child: ListView.builder(
-                      itemCount: (snapshot?.data?.length ?? 0) + 1,
+                      itemCount: (snapshot.data?.length ?? 0) + 1,
                       itemBuilder: (context, index) {
                         if (index >= snapshot.data!.length) {
                           return SizedBox(

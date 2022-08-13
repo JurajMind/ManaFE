@@ -1,11 +1,9 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 
 import 'package:app/app/app.dart';
 import 'package:app/app/app.widget.dart';
 import 'package:app/pages/home.page.dart';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:openapi/openapi.dart';
 

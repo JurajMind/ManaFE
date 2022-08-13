@@ -65,7 +65,7 @@ class DotPainter extends CustomPainter {
     for (int i = 0; i < dotCount; i++) {
       double cX = centerX + currentRadius1 * math.cos(i * degToRad(outerDotsPositionAngle));
       double cY = centerY + currentRadius1 * math.sin(i * degToRad(outerDotsPositionAngle));
-      canvas.drawCircle(Offset(cX, cY), currentDotSize1!, circlePaints[i % circlePaints.length]!);
+      canvas.drawCircle(Offset(cX, cY), currentDotSize1!, circlePaints[i % circlePaints.length]);
     }
   }
 
@@ -73,7 +73,7 @@ class DotPainter extends CustomPainter {
     for (int i = 0; i < dotCount; i++) {
       double cX = centerX + currentRadius2 * math.cos((i * degToRad(outerDotsPositionAngle - 10)));
       double cY = centerY + currentRadius2 * math.sin((i * degToRad(outerDotsPositionAngle - 10)));
-      canvas.drawCircle(Offset(cX, cY), currentDotSize2!, circlePaints[(i + 1) % circlePaints.length]!);
+      canvas.drawCircle(Offset(cX, cY), currentDotSize2!, circlePaints[(i + 1) % circlePaints.length]);
     }
   }
 

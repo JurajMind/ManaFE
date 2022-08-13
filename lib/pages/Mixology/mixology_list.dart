@@ -8,7 +8,6 @@ import 'package:app/module/mixology/mix_card_expanded_shimmer.dart';
 import 'package:app/module/mixology/mixology_bloc.dart';
 import 'package:app/pages/Mixology/mix_detail_page.dart';
 import 'package:app/pages/SmokeSession/tobacco_edit.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 
@@ -167,7 +166,7 @@ class _PaggingMixListViewState extends State<PaggingMixListView> {
             ));
           }
           var itemCount = 10;
-          if (snapshot?.data?.length != null) {
+          if (snapshot.data?.length != null) {
             itemCount = snapshot.data!.length + 1;
           }
 

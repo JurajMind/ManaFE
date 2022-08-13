@@ -1,18 +1,17 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 
+import 'package:alice_lightweight/alice.dart';
 import 'package:app/main.dart';
 import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/models/Stand/preset.dart';
-import 'package:app/services/authorization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 import 'package:openapi/openapi.dart';
-import 'package:alice/alice.dart';
+
 import 'auth_helpers/auth_token_inceptor.dart';
 import 'model_extensions.dart';
 
@@ -311,7 +310,7 @@ class ApiClient {
   Future<PlacesReservationsReservationManageDto> manageReservation(int? id, DateTime date) async {
     var url = Uri.https(baseUrl, '/api/Reservations/$id/Manage');
     var formatter = new DateFormat('yyyy-MM-dd');
-    String formatted = formatter.format(date ?? DateTime.now());
+    String formatted = formatter.format(date);
     return await _dio.get(url.toString(), queryParameters: {'date': formatted}).then((data) {
       return PlacesReservationsReservationManageDto.fromJson(data.data);
     });

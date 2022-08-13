@@ -171,7 +171,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                               child: StreamBuilder<PlacesReservationsReservationDetailDto>(
                                   stream: this.reservationDetail,
                                   builder: (context, snapshot) {
-                                    var simplePlace = toSimpePlace(snapshot?.data?.place);
+                                    var simplePlace = toSimpePlace(snapshot.data?.place);
                                     return simplePlace == null
                                         ? Container()
                                         : Container(

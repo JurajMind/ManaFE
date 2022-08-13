@@ -29,7 +29,7 @@ class UseGearButton extends StatelessWidget {
               );
             }
 
-            if (snapshot?.data?.id == null) {
+            if (snapshot.data?.id == null) {
               return Container();
             }
 
@@ -46,9 +46,9 @@ class UseGearButton extends StatelessWidget {
   }
 
   bool matchAccessory(AsyncSnapshot<SmokeSessionMetaDataDto?> snapshot) {
-    return snapshot?.data?.bowlId == gear!.id ||
-        snapshot?.data?.pipeId == gear!.id ||
-        snapshot?.data?.coalId == gear!.id ||
-        snapshot?.data?.heatManagementId == gear!.id;
+    return snapshot.data?.bowlId == gear!.id ||
+        snapshot.data?.pipeId == gear!.id ||
+        snapshot.data?.coalId == gear!.id ||
+        snapshot.data?.heatManagementId == gear!.id;
   }
 }

@@ -10,7 +10,6 @@ import 'package:app/components/Reservations/reservation_item.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/main.dart';
 import 'package:app/models/extensions.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
@@ -113,7 +112,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   }
 
   Future setView(Position position) async {
-    if (widget?.position != null || widget?.place?.address != null) return;
+    if (widget.position != null || widget.place?.address != null) return;
     if (position == null) return;
     var view = CameraPosition(
       target: LatLng(position.latitude, position.longitude),
@@ -401,9 +400,9 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
     var newPlaces = await App.http!.getNearbyPlaces(lat: position.latitude, lng: position.longitude);
 
     var oldPlaces = nearbyPlaces.value;
-    var merge = new List<PlaceSimpleDto>();
+    var merge = <PlaceSimpleDto>[];
     if (oldPlaces != null) merge.addAll(oldPlaces);
-    if (newPlaces != null) merge.addAll(newPlaces);
+ merge.addAll(newPlaces);
 
     var a = new List.from(merge).distinct(((element) => element) as Object Function(dynamic)?).toList();
     this.nearbyPlaces.add(a as List<PlaceSimpleDto>?);

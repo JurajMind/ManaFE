@@ -1,7 +1,6 @@
 import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/components/StarRating/m_star_ratting.dart';
 import 'package:app/main.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';

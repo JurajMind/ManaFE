@@ -1,7 +1,6 @@
 import 'package:app/components/Places/place_flag.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/main.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
 import 'package:app/support/mana_icons_icons.dart';
 import 'package:app/utils/translations/app_translations.dart';

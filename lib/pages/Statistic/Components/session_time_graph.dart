@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:app/const/theme.dart';
 import 'package:app/module/person/statistic_bloc.dart';
-import 'package:app/support/m_platform.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +94,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
         return;
       }
 
-      if (response?.spot == null) {
+      if (response.spot == null) {
         setState(() {
           touchedGroupIndex = -1;
           showingBarGroups = List.of(rawBarGroups!);

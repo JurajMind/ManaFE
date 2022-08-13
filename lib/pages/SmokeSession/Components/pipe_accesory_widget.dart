@@ -5,7 +5,6 @@ import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Gear/pipe_accesory_page.dart';
 import 'package:app/pages/SmokeSession/metadata_botom_sheet.dart';
 import 'package:app/utils/translations/app_translations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 

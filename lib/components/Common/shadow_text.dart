@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -22,7 +21,7 @@ class ShadowText extends StatelessWidget {
     this.overflow,
     this.textScaleFactor,
     this.maxLines,
-  }) : assert(data != null);
+  });
 
   Widget build(BuildContext context) {
     AlignmentDirectional _align;

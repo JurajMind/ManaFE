@@ -26,8 +26,8 @@ class DetailPageHelper {
     var start = new DateTime.fromMillisecondsSinceEpoch(
         pufCollection.min((a, b) => a.D.millisecondsSinceEpoch < b.D.millisecondsSinceEpoch));
     var end = start.add(new Duration(seconds: i));
-    var result = new List<List<SmartHookahModelsDbPuf>>();
-    var bucket = new List<SmartHookahModelsDbPuf>();
+    List<List<SmartHookahModelsDbPuf>> result = [[]];
+    var bucket = <SmartHookahModelsDbPuf>[];
     var orderpufs = pufCollection.orderBy((s) => s.D.millisecondsSinceEpoch).toList();
     for (int j = 0; j < orderpufs.length; j++) {
       var puf = orderpufs[j];
@@ -43,7 +43,7 @@ class DetailPageHelper {
         }
 
         result.add(bucket);
-        bucket = new List<SmartHookahModelsDbPuf>();
+        bucket = <SmartHookahModelsDbPuf>[];
         if (puf.T != 0) j--;
       }
     }

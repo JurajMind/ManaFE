@@ -102,9 +102,9 @@ class _MenuPageState extends State<MenuPage> {
     );
   }
 
-  Widget extraBuilder(BehaviorSubject<List<SmartHookahModelsOrderExtraDto>> accesorries) {
-    return StreamBuilder<List<SmartHookahModelsOrderExtraDto>>(
-        stream: accesorries,
+  Widget extraBuilder(BehaviorSubject<List<SmartHookahModelsOrderExtraDto>?> accesorries) {
+    return StreamBuilder<List<SmartHookahModelsOrderExtraDto>?>(
+        stream: accesorries.stream,
         initialData: null,
         builder: (context, snapshot) {
           return Padding(
@@ -133,7 +133,7 @@ class StreamAccessoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
+    return StreamBuilder<List<PipeAccesorySimpleDto>?>(
         stream: accesorries,
         initialData: null,
         builder: (context, snapshot) {
@@ -146,12 +146,12 @@ class StreamAccessoryList extends StatelessWidget {
                 )
               : ListView.builder(
                   itemBuilder: (context, index) {
-                    if (index >= snapshot.data.length) {
+                    if (index >= snapshot.data!.length) {
                       return SizedBox(height: 100);
                     }
-                    return PipeAccesoryListItem(pipeAccesory: snapshot.data[index]);
+                    return PipeAccesoryListItem(pipeAccesory: snapshot.data![index]);
                   },
-                  itemCount: snapshot.data == null ? 0 : snapshot.data.length + 1,
+                  itemCount: snapshot.data == null ? 0 : snapshot.data!.length + 1,
                 );
         });
   }

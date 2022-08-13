@@ -1,4 +1,3 @@
-import 'package:app/app/app.widget.dart';
 import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/main.dart';
 import 'package:app/support/validators/email.validator.dart';

@@ -4,9 +4,6 @@
 
 // Raw data for the animation demo.
 
-import 'package:app/module/general/gear_bloc.dart';
-import 'package:app/pages/Gear/devices.dart';
-import 'package:app/pages/Gear/pipe_accesory.dart';
 import 'package:app/utils/translations/app_translations.dart';
 
 import 'package:flutter/material.dart';

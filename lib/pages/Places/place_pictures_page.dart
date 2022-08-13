@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:app/app/app.dart';
 import 'package:app/components/Media/media.widget.dart';
 import 'package:app/pages/Common/upload_picture.page.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 

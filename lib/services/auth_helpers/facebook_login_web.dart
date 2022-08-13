@@ -14,7 +14,7 @@ class FacebookLoginHelper {
   Future facebookLogin(context) async {
     fbCallback = allowInterop((token) async {
       var auth = getIt.get<AuthorizeRepository>();
-      if (onAuthBegin != null) onAuthBegin(true);
+ onAuthBegin(true);
       var tokenResult = await auth.getLocalToken("Facebook", token);
       if (tokenResult) {
         AppWidget.restartApp(context);

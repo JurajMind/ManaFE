@@ -74,10 +74,10 @@ class PlacesAutocompleteFormField extends FormField<String> {
           builder: (FormFieldState<String> field) {
             final _TextFormFieldState state = field as _TextFormFieldState;
             final InputDecoration effectiveDecoration =
-                inputDecoration?.applyDefaults(Theme.of(state.context).inputDecorationTheme);
+                inputDecoration.applyDefaults(Theme.of(state.context).inputDecorationTheme);
             return PlacesAutocompleteField(
               key: key,
-              inputDecoration: effectiveDecoration?.copyWith(errorText: state.errorText),
+              inputDecoration: effectiveDecoration.copyWith(errorText: state.errorText),
               controller: state._effectiveController,
               apiKey: apiKey,
               leading: leading,

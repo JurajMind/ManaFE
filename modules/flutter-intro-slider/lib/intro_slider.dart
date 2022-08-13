@@ -454,10 +454,10 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
   TabController? tabController;
 
-  List<Widget>? tabs = new List();
-  List<Widget> dots = new List();
-  List<double?> sizeDots = new List();
-  List<double> opacityDots = new List();
+  List<Widget>? tabs = [];
+  List<Widget> dots = [];
+  List<double?> sizeDots = [];
+  List<double> opacityDots = [];
 
   // For DOT_MOVEMENT
   double marginLeftDotFocused = 0;

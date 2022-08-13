@@ -141,7 +141,7 @@ class MixologyBloc {
 
   Future loadCreatorMixes(String? creatorName, int page, {bool featured = false}) async {
     loadFakeCreatorMixes(creatorName, page);
-    var cacheKey = '${creatorName}_${page}';
+    var cacheKey = '${creatorName}_$page';
     loadMixesFromCache(cacheKey).then((value) {
       if (value != null) {
         this.mixCreatorMixes[creatorName]!.add(value);
@@ -195,8 +195,7 @@ class MixologyProvider extends InheritedWidget {
     Key? key,
     required MixologyBloc mixology,
     required Widget child,
-  })  : assert(mixology != null),
-        mixologyBloc = mixology,
+  })  : mixologyBloc = mixology,
         super(key: key, child: child);
 
   @override

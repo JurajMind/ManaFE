@@ -1,7 +1,6 @@
 import 'package:app/Helpers/place_helper.dart';
 import 'package:app/app/app.dart';
 import 'package:app/main.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
 import 'package:app/pages/Places/places_map_page.dart';
 import 'package:app/support/m_platform.dart';

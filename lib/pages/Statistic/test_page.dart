@@ -1,9 +1,8 @@
-import 'package:alice/alice.dart';
+import 'package:alice_lightweight/alice.dart';
 import 'package:app/app/app.dart';
 import 'package:app/app/app.widget.dart';
 import 'package:app/main.dart';
 import 'package:app/models/SignalR/signal_r_models.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
 import 'package:app/services/authorization.dart';
 import 'package:app/services/signal_r.dart';
@@ -36,7 +35,7 @@ class _TestPageState extends State<TestPage> {
               initialData: null,
               builder: (BuildContext context, snapshot) {
                 return Container(
-                  child: Text(snapshot.data?.latitude?.toString() ?? 'NO LOCATION'),
+                  child: Text(snapshot.data?.latitude.toString() ?? 'NO LOCATION'),
                 );
               },
             ),

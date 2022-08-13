@@ -26,7 +26,6 @@ import 'dart:math' as math;
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 import 'package:shimmer/shimmer.dart';
 
-import '../../components/Buttons/m_outlineButton.dart';
 import 'Components/gear_usage_stat.dart';
 import 'Components/session_time_graph.dart';
 import 'Components/week_day_graph.dart';
@@ -145,7 +144,7 @@ class _StatisticPageState extends State<StatisticPage> {
     super.initState();
     touchController = StreamController();
     touchController.stream.distinct().listen((LineTouchResponse response) {
-      print('response: ${response}');
+      print('response: $response');
     });
     selectedTime = new TimeModel.fromSelect(1);
     controller = new PageController(initialPage: 0, keepPage: true, viewportFraction: 0.9);
@@ -255,9 +254,9 @@ class _StatisticPageState extends State<StatisticPage> {
                     color: Theme.of(context).backgroundColor,
                     child: Stack(
                       children: <Widget>[
-                        buildPositioned(bloc, 1, (f) => f.pufCount.toDouble()),
-                        buildPositioned(bloc, 0, (f) => f.smokeSessions.toDouble()),
-                        buildPositioned(bloc, 2, (f) => f.activity.toDouble()),
+                        buildPositioned(bloc, 1, (f) => f.pufCount!.toDouble()),
+                        buildPositioned(bloc, 0, (f) => f.smokeSessions!.toDouble()),
+                        buildPositioned(bloc, 2, (f) => f.activity!.toDouble()),
                       ],
                     ),
                   ),
@@ -443,21 +442,21 @@ class _StatisticPageState extends State<StatisticPage> {
                   child: new StatisticRecapWidget(
                     label: AppTranslations.of(context)!.text("profile.puffs"),
                     ballColor: AppColors.colors[1],
-                    value: snapshot?.data?.pufCount?.toString(),
+                    value: snapshot.data?.pufCount?.toString(),
                   ),
                 ),
                 Expanded(
                   child: new StatisticRecapWidget(
                     label: AppTranslations.of(context)!.text("profile.smoking"),
                     ballColor: AppColors.colors[0],
-                    duration: snapshot?.data?.smokingTime,
+                    duration: snapshot.data?.smokingTime,
                   ),
                 ),
                 Expanded(
                   child: new StatisticRecapWidget(
                     label: AppTranslations.of(context)!.text("profile.activity"),
                     ballColor: AppColors.colors[2],
-                    duration: snapshot?.data?.activity,
+                    duration: snapshot.data?.activity,
                   ),
                 ),
               ],

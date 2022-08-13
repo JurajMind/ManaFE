@@ -45,7 +45,7 @@ class _DeviceUpdatePageState extends State<DeviceUpdatePage> {
             stream: updates,
             builder: (context, snapshot) {
               return ListView.builder(
-                itemCount: snapshot?.data?.length ?? 10,
+                itemCount: snapshot.data?.length ?? 10,
                 itemBuilder: (context, index) {
                   DeviceUpdateDto? update;
                   if (snapshot.data != null) {

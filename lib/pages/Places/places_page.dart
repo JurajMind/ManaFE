@@ -5,8 +5,6 @@ import 'package:app/components/Reservations/reservation_item.dart';
 import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
-import 'package:app/module/places/place_bloc.dart';
-import 'package:app/module/places/places_bloc.dart';
 import 'package:app/pages/Places/Reservations/reservations_page.dart';
 import 'package:app/pages/Places/places_map_page.dart';
 import 'package:app/pages/Places/places_search_page.dart';

@@ -2,7 +2,6 @@ import 'package:app/components/Media/media.widget.dart';
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/main.dart';
 import 'package:app/models/extensions.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/place_bloc.dart';
 import 'package:app/pages/Places/Reservations/reservation_page.dart';
 import 'package:app/pages/Places/menu.page.dart';
@@ -281,9 +280,7 @@ class IconUrlButton extends StatelessWidget {
     return IconButton(
       icon: Icon(icon, color: color, size: 40),
       onPressed: () {
-        if (url != null) {
-          launch(url);
-        }
+        launch(url);
       },
     );
   }

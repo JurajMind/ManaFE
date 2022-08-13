@@ -23,5 +23,5 @@ class _MapWebState extends State<MapWeb> {
 }
 
 class GoogleWebMapController {
-  Future<void> moveToLocation(dynamic position) {}
+  Future<void> moveToLocation(dynamic position) async {}
 }

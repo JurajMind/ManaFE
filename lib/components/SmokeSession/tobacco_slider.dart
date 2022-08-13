@@ -125,10 +125,7 @@ class FatSlider extends StatefulWidget {
     this.onChangeEnd,
     this.sliderColor,
     this.thumbColor,
-  })  : assert(value != null),
-        assert(min != null),
-        assert(max != null),
-        assert(min <= max),
+  })  : assert(min <= max),
         assert(value >= min && value <= max),
         super(key: key);
   @override
@@ -209,7 +206,6 @@ class _FatSliderState extends State<FatSlider> with SingleTickerProviderStateMix
   }
 
   void _handleChanged(double value) {
-    assert(widget.onChanged != null);
     final double lerpValue = _lerp(value);
     if (lerpValue != widget.value) {
       widget.onChanged(lerpValue);

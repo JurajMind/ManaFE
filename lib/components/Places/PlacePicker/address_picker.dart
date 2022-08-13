@@ -1,6 +1,5 @@
 import 'package:app/components/Places/PlacePicker/place_picker.dart';
 import 'package:app/main.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/places/places_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -41,9 +40,7 @@ class _AddressPickerState extends State<AddressPicker> {
   Widget build(BuildContext context) {
     var placesBloc = getIt.get<PlacesBloc>();
     LatLng? initPosition;
-    if (placesBloc.location.value != null) {
-      initPosition = LatLng(placesBloc.location.value.latitude, placesBloc.location.value.longitude);
-    }
+    initPosition = LatLng(placesBloc.location.value.latitude, placesBloc.location.value.longitude);
 
     return Container(
       child: Row(

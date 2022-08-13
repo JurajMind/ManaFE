@@ -97,7 +97,7 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
         stream: widget.smokeSessionBloc!.animations,
         initialData: <SmartHookahHelpersAnimation>[],
         builder: (context, snapshot) {
-          return snapshot?.data?.length == 0
+          return snapshot.data?.length == 0
               ? Container()
               : ClickableListWheelScrollView(
                   scrollController: scrollController!,
@@ -131,7 +131,7 @@ class AnimationStatePickerState extends State<AnimationStatePicker> {
                     ),
                   ));
 
-          return snapshot?.data?.length == 0
+          return snapshot.data?.length == 0
               ? Container()
               : ListWheelScrollView(
                   itemExtent: 70.0,

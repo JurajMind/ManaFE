@@ -66,7 +66,7 @@ class ReservationBloc extends SignalBloc {
   }
 
   loadReservationDetail(int id) async {
-    if (reservationDetail?.value?.reservation?.id != id) {
+    if (reservationDetail.value?.reservation?.id != id) {
       reservationDetail.add(null);
     }
 
@@ -76,11 +76,9 @@ class ReservationBloc extends SignalBloc {
 
   Future<PlacesReservationsReservationDto> createReservation(PlacesReservationsReservationDto newReservation) async {
     var createdReservation = await App.http!.createReservation(newReservation);
-    if (createdReservation != null) {
-      var oldReservations = this.reservations.value ?? <PlacesReservationsReservationDto>[];
-      oldReservations.add(createdReservation);
-      this.reservations.add(oldReservations);
-    }
+    var oldReservations = this.reservations.value ?? <PlacesReservationsReservationDto>[];
+    oldReservations.add(createdReservation);
+    this.reservations.add(oldReservations);
 
     return createdReservation;
   }

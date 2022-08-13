@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 
 import 'package:dartz/dartz.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -25,10 +24,7 @@ class WheelPicker extends StatelessWidget {
     this.itemExtent = DEFAULT_ITEM_EXTENT,
     this.listViewWidth = DEFAULT_LISTVIEW_WIDTH,
     this.step = 1,
-  })  : assert(initialValue != null),
-        assert(minValue != null),
-        assert(maxValue != null),
-        assert(maxValue > minValue),
+  })  : assert(maxValue > minValue),
         assert(initialValue >= minValue && initialValue <= maxValue),
         assert(step > 0),
         selectedIntValue = initialValue,
@@ -54,8 +50,7 @@ class WheelPicker extends StatelessWidget {
     this.listViewWidth = DEFAULT_LISTVIEW_WIDTH,
     this.disableItems,
     this.step = 1,
-  })  : assert(stringItems != null),
-        selectedIntValue = initialValue,
+  })  : selectedIntValue = initialValue,
         minValue = 0,
         selectedDecimalValue = -1,
         decimalPlaces = 0,
@@ -79,10 +74,7 @@ class WheelPicker extends StatelessWidget {
     this.decimalPlaces = 1,
     this.itemExtent = DEFAULT_ITEM_EXTENT,
     this.listViewWidth = DEFAULT_LISTVIEW_WIDTH,
-  })  : assert(initialValue != null),
-        assert(minValue != null),
-        assert(maxValue != null),
-        assert(decimalPlaces != null && decimalPlaces > 0),
+  })  : assert(decimalPlaces > 0),
         assert(maxValue > minValue),
         assert(initialValue >= minValue && initialValue <= maxValue),
         selectedIntValue = initialValue.floor(),

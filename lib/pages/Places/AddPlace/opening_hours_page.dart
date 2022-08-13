@@ -232,7 +232,7 @@ class TimeEdit extends StatelessWidget {
             var dt = new DateTime(1000, 1, 1, value!.hour, value.minute);
             this.onTimePicke!(dt);
           }
-        } as FutureOr<TimeOfDay> Function(TimeOfDay?));
+        } as Future<TimeOfDay> Function(TimeOfDay?));
       },
       child: Row(
         mainAxisSize: MainAxisSize.max,

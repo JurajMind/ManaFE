@@ -1,7 +1,6 @@
 import 'package:app/components/SmokeSession/session_review_view.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/main.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';

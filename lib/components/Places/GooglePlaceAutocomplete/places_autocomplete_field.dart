@@ -130,14 +130,12 @@ class PlacesAutocompleteField extends StatefulWidget {
   final ValueChanged<PlacesAutocompleteResponse>? onError;
 
   @override
-  _LocationAutocompleteFieldState createState() =>
-      _LocationAutocompleteFieldState();
+  _LocationAutocompleteFieldState createState() => _LocationAutocompleteFieldState();
 }
 
 class _LocationAutocompleteFieldState extends State<PlacesAutocompleteField> {
   TextEditingController? _controller;
-  TextEditingController? get _effectiveController =>
-      widget.controller ?? _controller;
+  TextEditingController? get _effectiveController => widget.controller ?? _controller;
 
   @override
   void initState() {
@@ -150,8 +148,7 @@ class _LocationAutocompleteFieldState extends State<PlacesAutocompleteField> {
     super.didUpdateWidget(oldWidget);
     if (widget.controller == null && oldWidget.controller != null)
       _controller = TextEditingController.fromValue(oldWidget.controller!.value);
-    else if (widget.controller != null && oldWidget.controller == null)
-      _controller = null;
+    else if (widget.controller != null && oldWidget.controller == null) _controller = null;
   }
 
   Future<Prediction?> _showAutocomplete() async => PlacesAutocomplete.show(
@@ -193,7 +190,7 @@ class _LocationAutocompleteFieldState extends State<PlacesAutocompleteField> {
             softWrap: true,
           )
         : Text(
-            widget.hint ?? '',
+            widget.hint,
             style: TextStyle(color: Colors.black38),
           );
 
@@ -220,12 +217,10 @@ class _LocationAutocompleteFieldState extends State<PlacesAutocompleteField> {
       ],
     );
 
-    if (widget.inputDecoration != null) {
-      child = InputDecorator(
-        decoration: widget.inputDecoration,
-        child: child,
-      );
-    }
+    child = InputDecorator(
+      decoration: widget.inputDecoration,
+      child: child,
+    );
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,

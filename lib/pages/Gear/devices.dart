@@ -1,6 +1,5 @@
 import 'package:app/main.dart';
 import 'package:app/models/extensions.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
 import 'package:app/pages/Device/add_device_page.dart';
 import 'package:app/pages/Device/device_detail_page.dart';
@@ -10,7 +9,6 @@ import 'package:app/support/m_platform.dart';
 import 'package:app/theme/theme_widget.dart';
 import 'package:app/utils/translations/app_translations.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 

@@ -3,7 +3,6 @@ import 'package:app/components/Places/place_detail.dart';
 import 'package:app/components/Places/place_map.dart';
 import 'package:app/components/Places/taxi_button.dart';
 import 'package:app/main.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';

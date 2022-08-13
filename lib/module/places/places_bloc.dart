@@ -6,7 +6,6 @@ import 'package:hive/hive.dart';
 import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'dart:convert';
 
 class PlacesBloc {
   late bool serviceEnabled;

@@ -10,7 +10,6 @@ import 'package:app/module/module.dart';
 import 'package:app/pages/Mixology/mix_search.page.dart';
 import 'package:app/pages/SmokeSession/accesory_search.dart';
 import 'package:app/utils/translations/app_translations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:shake/shake.dart';
@@ -51,7 +50,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
   @override
   void initState() {
     super.initState();
-    controller = new TextEditingController(text: widget?.mix?.name ?? null);
+    controller = new TextEditingController(text: widget.mix?.name ?? null);
     new Future.delayed(Duration.zero, () {
       var personBloc = getIt.get<PersonBloc>();
       var ownedTobacco = personBloc.myGear.value.where((s) => s.type == "Tobacco").toList();
@@ -62,14 +61,14 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
 
       detector.startListening();
     });
-    if (widget?.mix?.tobaccos != null) {
+    if (widget.mix?.tobaccos != null) {
       for (var tobacco in widget.mix!.tobaccos!) {
         this.addTobacco(PipeAccesoryFromTobacco.tobaccoToSimple(tobacco.tobacco!), tobacco.fraction!.toDouble());
       }
     }
 
-    selectedTobacco = new List<PipeAccesorySimpleDto>();
-    if (widget.tobacco?.id != null && ((widget?.mix?.tobaccos?.length ?? 0) != 0)) {
+    selectedTobacco = <PipeAccesorySimpleDto>[];
+    if (widget.tobacco?.id != null && ((widget.mix?.tobaccos?.length ?? 0) != 0)) {
       var weight = widget.tobaccoWeight!.toDouble();
       if (weight == 0) {
         weight = 15;
@@ -106,7 +105,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
     }
 
     TobaccoMixSimpleDto? mix = new TobaccoMixSimpleDto();
-    if (widget?.mix?.id != null) {
+    if (widget.mix?.id != null) {
       mix = widget.mix;
     }
 
@@ -343,7 +342,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
 
   void cleanTobacco() {
     setState(() {
-      tobaccoList = new List<PipeAccesorySimpleDto?>();
+      tobaccoList = <PipeAccesorySimpleDto?>[];
       tobaccoWeight = new Map<int?, double>();
       controller = new TextEditingController();
     });

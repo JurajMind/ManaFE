@@ -10,7 +10,6 @@ import 'package:app/services/share.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/openapi.dart';
-import 'package:darq/darq.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:share/share.dart';
 
@@ -118,7 +117,7 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage> with Tick
                                   elevation: 7,
                                   color: Colors.black.withOpacity(0.2),
                                   margin: EdgeInsets.all(4),
-                                  child: new SessionMetadataDetail(snapshot?.data?.metaData)),
+                                  child: new SessionMetadataDetail(snapshot.data?.metaData)),
                             );
                           },
                         ),

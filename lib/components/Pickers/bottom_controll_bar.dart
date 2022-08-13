@@ -2,7 +2,6 @@ import 'package:app/const/theme.dart';
 import 'package:app/main.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/Components/picker_slider.dart';
 import 'package:app/utils/translations/app_translations.dart';

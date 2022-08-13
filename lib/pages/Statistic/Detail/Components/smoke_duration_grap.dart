@@ -27,9 +27,9 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
 
   @override
   void initState() {
-    var inMilis = widget.inDurations?.sum<int>((s) => s.inMilliseconds)?.toInt() ?? 0;
-    var outMilis = widget.outDurations?.sum<int>((s) => s.inMilliseconds)?.toInt() ?? 0;
-    var idleMilis = widget.idleDurations?.sum<int>((s) => s.inMilliseconds)?.toInt() ?? 0;
+    var inMilis = widget.inDurations?.sum<int>((s) => s.inMilliseconds).toInt() ?? 0;
+    var outMilis = widget.outDurations?.sum<int>((s) => s.inMilliseconds).toInt() ?? 0;
+    var idleMilis = widget.idleDurations?.sum<int>((s) => s.inMilliseconds).toInt() ?? 0;
     var all = (inMilis + outMilis + idleMilis);
 
     final section1 = PieChartSectionData(

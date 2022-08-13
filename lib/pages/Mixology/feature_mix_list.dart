@@ -52,7 +52,7 @@ class _FeatureMixListViewState extends State<FeatureMixListView> {
             }
 
             var itemCount = 10;
-            if (snapshot?.data?.length != null) {
+            if (snapshot.data?.length != null) {
               itemCount = snapshot.data!.length + 2;
             }
             return LazyLoadScrollView(

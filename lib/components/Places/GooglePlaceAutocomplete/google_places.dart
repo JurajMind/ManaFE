@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:app/support/m_platform.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:http/http.dart';
@@ -211,7 +210,6 @@ class _PlacesAutocompleteResult extends State<PlacesAutocompleteResult> {
   @override
   Widget build(BuildContext context) {
     final state = PlacesAutocompleteWidget.of(context)!;
-    assert(state != null);
 
     if (state._queryTextController!.text.isEmpty ||
         state._response == null ||
@@ -241,7 +239,6 @@ class _AppBarPlacesAutoCompleteTextFieldState
   @override
   Widget build(BuildContext context) {
     final state = PlacesAutocompleteWidget.of(context)!;
-    assert(state != null);
 
     return Container(
         alignment: Alignment.topLeft,

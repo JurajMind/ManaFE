@@ -80,8 +80,8 @@ class _CarrousselState extends State<MapCarousel> {
   @override
   void didUpdateWidget(MapCarousel oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget?.selectedPlace?.id != this.widget?.selectedPlace?.id) {
-      selectPlaceId = widget?.selectedPlace?.id;
+    if (oldWidget.selectedPlace?.id != this.widget.selectedPlace?.id) {
+      selectPlaceId = widget.selectedPlace?.id;
       var pageIndex = this.widget.nearbyPlaces!.value!.indexOf(this.widget.selectedPlace);
       controller!.jumpToPage(pageIndex + 1);
       // controller.animateToPage(pageIndex + 1,

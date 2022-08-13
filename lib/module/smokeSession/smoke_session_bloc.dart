@@ -163,10 +163,8 @@ class SmokeSessionBloc {
   Future<SmokeSessionSimpleDto> endSession() async {
     var endedSession = await App.http!.endSession(this.activeSessionId);
 
-    if (endedSession != null) {
-      _leaveOldSession(activeSessionId);
-      this.activeSessionId = '';
-    }
+    _leaveOldSession(activeSessionId);
+    this.activeSessionId = '';
 
     return endedSession;
   }
@@ -413,7 +411,7 @@ class SmokeSessionBloc {
     var newReview = await App.http!.addSessionReview(review);
 
     var mediaDto = <MediaDto>[];
-    if (media != null && media.length > 0) {
+    if (media.length > 0) {
       media.forEach((f) async {
         try {
           mediaDto.add(await App.http!.uploadSessionReviewFile(newReview.id, f));

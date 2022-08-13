@@ -6,7 +6,6 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 // The over-scroll distance that moves the indicator to its maximum
 // displacement, as a percentage of the scrollable's container extent.
@@ -71,10 +70,7 @@ class LazyLoadScrollView extends StatefulWidget {
     this.onEndOfPage,
     this.scrollOffset = 100,
     this.isLoading = false,
-  })  : assert(child != null),
-        assert(onRefresh != null),
-        assert(notificationPredicate != null),
-        super(key: key);
+  })  : super(key: key);
 
   /// The widget below this widget in the tree.
   ///
@@ -220,7 +216,7 @@ class LazyLoadScrollViewState extends State<LazyLoadScrollView> with TickerProvi
     if (notification is ScrollUpdateNotification) {
       if (notification.metrics.maxScrollExtent > notification.metrics.pixels &&
           notification.metrics.maxScrollExtent - notification.metrics.pixels <= widget.scrollOffset) {
-        if (loadMoreStatus != null && loadMoreStatus == LoadingStatus.STABLE) {
+        if (loadMoreStatus == LoadingStatus.STABLE) {
           loadMoreStatus = LoadingStatus.LOADING;
           widget.onEndOfPage!();
         }
@@ -229,7 +225,7 @@ class LazyLoadScrollViewState extends State<LazyLoadScrollView> with TickerProvi
     }
     if (notification is OverscrollNotification) {
       if (notification.overscroll > 0) {
-        if (loadMoreStatus != null && loadMoreStatus == LoadingStatus.STABLE) {
+        if (loadMoreStatus == LoadingStatus.STABLE) {
           loadMoreStatus = LoadingStatus.LOADING;
           widget.onEndOfPage!();
         }
@@ -244,7 +240,10 @@ class LazyLoadScrollViewState extends State<LazyLoadScrollView> with TickerProvi
         if (notification.metrics.extentBefore > 0.0) {
           _dismiss(_RefreshIndicatorMode.canceled);
         } else {
-          _dragOffset -= notification.scrollDelta!;
+          if (_dragOffset != null && notification.scrollDelta != null) {
+            _dragOffset = _dragOffset! - notification.scrollDelta!;
+          }
+
           _checkDragOffset(notification.metrics.viewportDimension);
         }
       }
@@ -256,7 +255,10 @@ class LazyLoadScrollViewState extends State<LazyLoadScrollView> with TickerProvi
       }
     } else if (notification is OverscrollNotification) {
       if (_mode == _RefreshIndicatorMode.drag || _mode == _RefreshIndicatorMode.armed) {
-        _dragOffset -= notification.overscroll / 2.0;
+        if (_dragOffset != null) {
+          _dragOffset = _dragOffset! - notification.overscroll / 2.0;
+        }
+
         _checkDragOffset(notification.metrics.viewportDimension);
       }
     } else if (notification is ScrollEndNotification) {
@@ -278,7 +280,7 @@ class LazyLoadScrollViewState extends State<LazyLoadScrollView> with TickerProvi
   bool _handleGlowNotification(OverscrollIndicatorNotification notification) {
     if (notification.depth != 0 || !notification.leading) return false;
     if (_mode == _RefreshIndicatorMode.drag) {
-      notification.disallowGlow();
+      notification.disallowIndicator();
       return true;
     }
     return false;
@@ -354,7 +356,6 @@ class LazyLoadScrollViewState extends State<LazyLoadScrollView> with TickerProvi
         .animateTo(1.0 / _kDragSizeFactorLimit, duration: _kIndicatorSnapDuration)
         .then<void>((void value) {
       if (mounted && _mode == _RefreshIndicatorMode.snap) {
-        assert(widget.onRefresh != null);
         setState(() {
           // Show the indeterminate progress indicator.
           _mode = _RefreshIndicatorMode.refresh;

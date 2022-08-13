@@ -1,5 +1,4 @@
 import 'package:app/Helpers/type_helper.dart';
-import 'package:app/components/Places/navigate_button.dart';
 import 'package:app/components/Places/place_detail.dart';
 import 'package:app/components/Places/place_map.dart';
 import 'package:app/const/theme.dart';

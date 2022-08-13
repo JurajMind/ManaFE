@@ -46,7 +46,7 @@ class _ResultPageState extends State<ResultPage> {
               key: _refreshIndicatorKey,
               onRefresh: () => loadResult(),
               child: ListView.builder(
-                itemCount: snapshot?.data?.length ?? 0,
+                itemCount: snapshot.data?.length ?? 0,
                 itemBuilder: (context, index) {
                   var data = snapshot.data![index];
                   return ListTile(

@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui show PointMode;
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// Strategy used when filling the area of a sparkline.
@@ -86,18 +85,7 @@ class Sparkline extends StatelessWidget {
     this.labelPrefix = "\$",
     this.max,
     this.min,
-  })  : assert(data != null),
-        assert(lineWidth != null),
-        assert(lineColor != null),
-        assert(pointsMode != null),
-        assert(pointSize != null),
-        assert(pointColor != null),
-        assert(sharpCorners != null),
-        assert(fillMode != null),
-        assert(fillColor != null),
-        assert(fallbackHeight != null),
-        assert(fallbackWidth != null),
-        super(key: key);
+  })  : super(key: key);
 
   /// List of values to be represented by the sparkline.
   ///

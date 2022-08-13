@@ -29,7 +29,7 @@ class AddRemoveGearButton extends StatelessWidget {
             );
           }
 
-          if (snapshot?.data == null) {
+          if (snapshot.data == null) {
             return Container();
           }
 
@@ -45,6 +45,6 @@ class AddRemoveGearButton extends StatelessWidget {
   }
 
   bool matchAccessory(AsyncSnapshot<List<PipeAccesorySimpleDto>> snapshot) {
-    return (snapshot?.data?.indexWhere((a) => a.id == gear!.id) ?? 0) != -1;
+    return (snapshot.data?.indexWhere((a) => a.id == gear!.id) ?? 0) != -1;
   }
 }

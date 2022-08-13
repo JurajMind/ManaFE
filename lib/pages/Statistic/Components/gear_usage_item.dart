@@ -1,6 +1,5 @@
 import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/models/extensions.dart';
-import 'package:app/pages/Gear/pipe_accesory_page.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'dart:math' as math;

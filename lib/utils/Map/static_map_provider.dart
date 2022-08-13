@@ -80,7 +80,7 @@ class StaticMapProvider {
       String markersString = markers.join('|');
       finalUri.queryParameters = {
         'markers': markersString,
-        'size': '${width}x${height}',
+        'size': '${width}x$height',
         'maptype': _getMapTypeQueryParam(mapType)!,
         'key': googleMapsApiKey!,
       };

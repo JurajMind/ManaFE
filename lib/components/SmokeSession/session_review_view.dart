@@ -1,7 +1,6 @@
 import 'package:app/components/Media/media.widget.dart';
 import 'package:app/components/StarRating/m_star_ratting.dart';
 import 'package:app/main.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/person/person_bloc.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';

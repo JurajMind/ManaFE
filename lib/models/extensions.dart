@@ -15,7 +15,7 @@ class Extensions {
   }
 
   static String getFullPlaceImage(PlaceDto? place, MediaSize size) {
-    var image = place?.medias?.first?.path;
+    var image = place?.medias?.first.path;
     if (image == null) {
       return 'https://${App.baseUri}/Content/Placeholder/place.jpg';
     }

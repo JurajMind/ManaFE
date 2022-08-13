@@ -58,7 +58,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
               var filteredReservations = _selectedDay == null
                   ? snapshot.data
                   : snapshot.data!.where((d) => compareDate(d.time!, _selectedDay!) == 0).toList();
-              var childrens = new List<Widget>();
+              var childrens = <Widget>[];
               childrens.add(_buildTableCalendar(snapshot.data));
 
               childrens.add(Center(
@@ -66,7 +66,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
                   reservationFilter: reservationFilter,
                   onChanged: (index) => {
                     setState(() {
-                      reservationFilter = index;
+                      reservationFilter = index!;
                     })
                   },
                 ),
@@ -112,7 +112,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
         highlightToday: true,
         doubleClick: true,
         initialCalendarDateOverride: _selectedDay,
-        onDateSelected: (date) => changeDate(date),
+        onDateSelected: (date) => changeDate(date!),
         dateStyles: TextStyle(color: Colors.red));
   }
 
@@ -132,7 +132,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
 
   void changeDate(DateTime newDate) {
     print(newDate);
-    if (newDate != null && _selectedDay != null && _selectedDay!.month != newDate.month) {
+    if (_selectedDay != null && _selectedDay!.month != newDate.month) {
       loadReservation(newDate);
     }
     setState(() {

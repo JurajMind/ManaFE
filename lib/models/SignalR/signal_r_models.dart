@@ -73,7 +73,7 @@ class ClientCall {
 
     return ClientCall(
         MessageId: json['C'],
-        Data: data?.map((f) => ClientMethod.fromJson(f))?.toList(),
+        Data: data?.map((f) => ClientMethod.fromJson(f)).toList(),
         Init: json['S'],
         GroupToken: json['G']);
   }

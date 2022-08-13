@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:another_flushbar/flushbar.dart';
 import 'package:app/Helpers/date_utils.dart' as dateUtils;
 import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/m_outlineButton.dart';
@@ -23,7 +22,6 @@ import 'package:app/pages/Statistic/Detail/smoke_session_detail_page.dart';
 import 'package:app/pages/home.page.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:openapi/openapi.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

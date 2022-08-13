@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';

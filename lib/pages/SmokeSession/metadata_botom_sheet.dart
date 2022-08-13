@@ -42,7 +42,7 @@ class MetadataBottomSheet extends StatelessWidget {
                     searchType: 'Hookah',
                     ownedAccesory: personBloc.myGear.value != null
                         ? personBloc.myGear.value.where((a) => a.type == 'Hookah').toList()
-                        : new List<PipeAccesorySimpleDto>(),
+                        : <PipeAccesorySimpleDto>[],
                     selectFunction: (a) => a.pipe),
                 Divider(),
                 new StreamMetadataItem(
@@ -51,7 +51,7 @@ class MetadataBottomSheet extends StatelessWidget {
                     searchType: 'Bowl',
                     ownedAccesory: personBloc.myGear.value != null
                         ? personBloc.myGear.value.where((a) => a.type == 'Bowl').toList()
-                        : new List<PipeAccesorySimpleDto>(),
+                        : <PipeAccesorySimpleDto>[],
                     selectFunction: (a) => a.bowl),
                 Divider(),
                 new StreamMetadataItem(
@@ -60,7 +60,7 @@ class MetadataBottomSheet extends StatelessWidget {
                     searchType: 'heatmanagement',
                     ownedAccesory: personBloc.myGear.value != null
                         ? personBloc.myGear.value.where((a) => a.type == 'HeatManagement').toList()
-                        : new List<PipeAccesorySimpleDto>(),
+                        : <PipeAccesorySimpleDto>[],
                     selectFunction: (a) => a.heatManagement),
                 Divider(),
                 new StreamMetadataItem(
@@ -69,7 +69,7 @@ class MetadataBottomSheet extends StatelessWidget {
                     searchType: 'coal',
                     ownedAccesory: personBloc.myGear.value != null
                         ? personBloc.myGear.value.where((a) => a.type == 'Coal').toList()
-                        : new List<PipeAccesorySimpleDto>(),
+                        : <PipeAccesorySimpleDto>[],
                     selectFunction: (a) => a.coal),
                 Divider(),
                 /* buildCoalsCountItem(smokeSessionBloc),
@@ -139,7 +139,7 @@ class StreamMetadataItem extends StatelessWidget {
   final String type;
   final String searchType;
   final List<PipeAccesorySimpleDto> ownedAccesory;
-  final Function(SmokeSessionMetaDataDto?) selectFunction;
+  final Function(SmokeSessionMetaDataDto) selectFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +152,7 @@ class StreamMetadataItem extends StatelessWidget {
               bloc: bloc,
               type: type,
               searchType: searchType,
-              selectedAccesories: selectFunction(snapshot.data),
+              selectedAccesories: selectFunction(snapshot.data!),
               icon: Icons.refresh,
               pipeAccesories: ownedAccesory),
     );

@@ -1,7 +1,6 @@
 import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
 import 'package:app/main.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
@@ -215,12 +214,10 @@ class _AddDevicePageState extends State<AddDevicePage> {
                               var bloc = getIt.get<PersonBloc>();
                               var addedDevice = await bloc.addDevice(
                                   this.idController.text, this.codeController.text, this.nameController.text);
-                              if (addedDevice != null) {
-                                Navigator.of(context).pop();
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    settings: RouteSettings(),
-                                    builder: (context) => DeviceDetailPage(device: addedDevice)));
-                              }
+                              Navigator.of(context).pop();
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  settings: RouteSettings(),
+                                  builder: (context) => DeviceDetailPage(device: addedDevice)));
                             },
                           )
                   ],

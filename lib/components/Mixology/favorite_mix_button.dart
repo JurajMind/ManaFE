@@ -16,7 +16,7 @@ class FavoriteMixButton extends StatelessWidget {
     return StreamBuilder<List<TobaccoMixSimpleDto?>>(
         stream: bloc.mixCreatorMixes["favorite"],
         builder: (context, snapshot) {
-          if ((snapshot?.data?.indexWhere((test) => test?.id == mix?.id) ?? -1) >= 0) {
+          if ((snapshot.data?.indexWhere((test) => test?.id == mix?.id) ?? -1) >= 0) {
             return MButton(
                 onPressed: () => bloc.removeFromFavorite(mix!),
                 icon: Icons.remove,

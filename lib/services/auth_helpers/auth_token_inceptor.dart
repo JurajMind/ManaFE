@@ -15,7 +15,7 @@ class AuthTokenInceptor extends Interceptor {
         error.response?.statusCode == 403) {
       var token = _authorize.getToken();
       var tokenHeader = 'Bearer $token';
-      RequestOptions? options = error?.response?.requestOptions;
+      RequestOptions? options = error.response?.requestOptions;
       // If the token has been updated, repeat directly.
       if (token != null || options == null)
         return await _handleAuthError(tokenHeader, options!, token);
@@ -25,7 +25,7 @@ class AuthTokenInceptor extends Interceptor {
     } else {
       print(error.message);
       print(error.response);
-      print(error?.response?.requestOptions?.path);
+      print(error.response?.requestOptions.path);
       return handler.next(error);
     }
   }

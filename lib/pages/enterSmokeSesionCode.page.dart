@@ -6,7 +6,6 @@ import 'package:app/components/Common/circle_painter.dart';
 import 'package:app/components/SmokeSession/smoke_session_carousel.dart';
 import 'package:app/Helpers/helpers.dart';
 import 'package:app/main.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:app/module/module.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
@@ -15,7 +14,6 @@ import 'package:app/theme/theme_widget.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:logger/logger.dart';
 
 import 'SmokeSession/qr_code_reader_page.dart';
 
@@ -260,7 +258,7 @@ class UpperCaseTextFormatter extends TextInputFormatter {
     }
 
     return new TextEditingValue(
-      text: newValue.text?.toUpperCase() ?? '',
+      text: newValue.text.toUpperCase() ?? '',
       selection: newValue.selection,
     );
   }

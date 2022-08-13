@@ -3,7 +3,6 @@ import 'package:app/components/Common/big_select.dart';
 import 'package:app/components/PipeAccesory/pipe_accesory_list_item.dart';
 import 'package:app/models/App/Gear/gear_model.dart';
 import 'package:app/module/data_provider.dart';
-import 'package:app/pages/SmokeSession/accesory_search.dart';
 import 'package:flutter/material.dart';
 
 import '../pipe_accesory.dart';
