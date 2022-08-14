@@ -48,7 +48,8 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
   Set<Marker>? markers;
   Set<Marker>? originMarkers;
   bool loading = false;
-  BehaviorSubject<List<PlaceSimpleDto>?> nearbyPlaces = new BehaviorSubject<List<PlaceSimpleDto>?>.seeded(null);
+  BehaviorSubject<List<PlaceSimpleDto?>> nearbyPlaces =
+      new BehaviorSubject<List<PlaceSimpleDto?>>.seeded(<PlaceSimpleDto?>[]);
   late PlacesBloc bloc;
   BitmapDescriptor? _manaMarker;
   PlaceSimpleDto? _selectedPlace;
@@ -91,8 +92,8 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
         setView(newPosition);
       });
 
-      setMarkers(bloc.places.valueOrNull);
-      nearbyPlaces.add(bloc.places.valueOrNull);
+      setMarkers(bloc.places.value);
+      nearbyPlaces.add(bloc.places.value);
       bloc.places.listen((onData) {
         setMarkers(onData);
         nearbyPlaces.add(onData);
@@ -157,7 +158,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
         bottomNavigationBar: SizedBox(
           height: 55,
         ),
-        body: StreamBuilder<List<PlaceSimpleDto>?>(
+        body: StreamBuilder<List<PlaceSimpleDto?>>(
             stream: nearbyPlaces,
             builder: (context, snapshot) {
               return useTabletLayout || isLansdscape
@@ -293,7 +294,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
     );
   }
 
-  Expanded buildExpandedMap(AsyncSnapshot<List<PlaceSimpleDto>?> snapshot) {
+  Expanded buildExpandedMap(AsyncSnapshot<List<PlaceSimpleDto?>> snapshot) {
     return Expanded(
       child: MPlatform.isWeb
           ? RepaintBoundary(
@@ -379,7 +380,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
     if (result != null) {
       var controller = await _controller.future;
       var location = result as PlacesSearchResult;
-      nearbyPlaces.add(location.places);
+      nearbyPlaces.add(location.places!);
       this.searchLabel = location.label;
       controller
           .animateCamera(CameraUpdate.newCameraPosition(
@@ -400,24 +401,23 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
     var newPlaces = await App.http!.getNearbyPlaces(lat: position.latitude, lng: position.longitude);
 
     var oldPlaces = nearbyPlaces.value;
-    var merge = <PlaceSimpleDto>[];
+    var merge = <PlaceSimpleDto?>[];
     if (oldPlaces != null) merge.addAll(oldPlaces);
     merge.addAll(newPlaces);
 
-    var a = new List.from(merge).distinct(((element) => element) as Object Function(dynamic)?).toList();
-    this.nearbyPlaces.add(a as List<PlaceSimpleDto>?);
-    setMarkers(a as List<PlaceSimpleDto>?);
+    var a = List<PlaceSimpleDto?>.from(merge).distinct(((element) => element?.id ?? 0)).toList();
+    this.nearbyPlaces.add(a);
+    setMarkers(a);
 
     setState(() {
       loading = false;
     });
   }
 
-  void setMarkers(List<PlaceSimpleDto>? places) {
-    if (places == null) return;
-    var newMarkers = places.map((f) {
+  void setMarkers(List<PlaceSimpleDto?> places) {
+    var newMarkers = places.where((element) => element != null).map((f) {
       var marker = new Marker(
-          icon: f.haveMana! ? _manaMarker! : BitmapDescriptor.defaultMarker,
+          icon: f!.haveMana! ? _manaMarker! : BitmapDescriptor.defaultMarker,
           onTap: () async {
             if (_selectedPlace == f) {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => PlaceDetailPage(place: f)));

@@ -15,15 +15,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PlacesSearchResult {
   LatLng? position;
-  List<PlaceSimpleDto>? places;
+  List<PlaceSimpleDto?>? places;
   String? label;
 }
 
 class PlacesSearchPage extends StatefulWidget {
-  final List<PlaceSimpleDto>? places;
+  final List<PlaceSimpleDto?> places;
   final bool returnToMap;
   final String? searchLabel;
-  PlacesSearchPage({Key? key, this.places, this.returnToMap = false, this.searchLabel}) : super(key: key);
+  PlacesSearchPage({Key? key, required this.places, this.returnToMap = false, this.searchLabel}) : super(key: key);
 
   _PlacesSearchPageState createState() => _PlacesSearchPageState();
 }
@@ -31,7 +31,7 @@ class PlacesSearchPage extends StatefulWidget {
 // to get places detail (lat/lng)
 
 class _PlacesSearchPageState extends State<PlacesSearchPage> {
-  BehaviorSubject<List<PlaceSimpleDto>?>? places;
+  BehaviorSubject<List<PlaceSimpleDto?>>? places;
   PlacesBloc placesBloc = getIt.get<PlacesBloc>();
   GoogleMapsPlaces _places = GoogleMapsPlaces(baseUrl: "https://${App.baseUri}/api/Places/GoogleProxy");
   Mode _mode = Mode.overlay;
@@ -184,15 +184,16 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                 ),
                 Expanded(
                   flex: 11,
-                  child: StreamBuilder<List<PlaceSimpleDto>?>(
+                  child: StreamBuilder<List<PlaceSimpleDto?>>(
                       stream: this.places,
                       builder: (context, snapshot) {
                         var data = snapshot.data;
                         if (data != null && this.searchString != "") {
-                          var dataCollection = List.from(data);
+                          var dataCollection = List<PlaceSimpleDto?>.from(data);
                           data = dataCollection
-                              .where((a) => a.name.toUpperCase().contains(this.searchString.toUpperCase()))
-                              .toList() as List<PlaceSimpleDto>?;
+                              .where(
+                                  (a) => a != null && a.name!.toUpperCase().contains(this.searchString.toUpperCase()))
+                              .toList();
                         }
 
                         return snapshot.data == null
@@ -201,7 +202,7 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                                 itemCount: data!.length,
                                 itemBuilder: (context, index) {
                                   var place = data![index];
-                                  return new PlaceItem(place: place);
+                                  return new PlaceItem(place: place!);
                                 },
                               );
                       }),
