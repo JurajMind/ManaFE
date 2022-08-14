@@ -159,7 +159,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
     activeTabSub = DataProvider.getData(context)!.appBloc.activeTab.listen((index) {
       _setActiveTab(index);
     });
-    SystemChannels.lifecycle.setMessageHandler((msg) {
+    SystemChannels.lifecycle.setMessageHandler((msg) async {
       debugPrint('SystemChannels> $msg');
       if (msg == AppLifecycleState.paused.toString() || msg == AppLifecycleState.inactive.toString()) {
         var smokeSessionBloc = getIt.get<SmokeSessionBloc>();
@@ -170,7 +170,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
         var signal = new SignalR();
         signal.checkConection();
       }
-    } as Future<String?> Function(String?)?);
+    });
   }
 
   @override

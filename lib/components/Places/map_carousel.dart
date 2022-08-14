@@ -45,7 +45,7 @@ class _CarrousselState extends State<MapCarousel> {
   int clickedIndex = 1;
   int? selectPlaceId = 0;
   BehaviorSubject<List<PlaceSimpleDto?>?>? nearbyPlaces;
-  late StreamSubscription<List<PlaceSimpleDto?>?> subscription;
+  StreamSubscription<List<PlaceSimpleDto?>?>? subscription;
   @override
   initState() {
     super.initState();
@@ -73,7 +73,7 @@ class _CarrousselState extends State<MapCarousel> {
   @override
   dispose() {
     controller!.dispose();
-    subscription.cancel();
+    subscription?.cancel();
     super.dispose();
   }
 
@@ -239,8 +239,9 @@ class _CarrousselState extends State<MapCarousel> {
                   color: Colors.grey[300],
                   image: DecorationImage(
                       image: (MPlatform.isWeb
-                          ? NetworkImage(Extensions.getPlaceImage(place, MediaSize.Medium))
-                          : CachedNetworkImageProvider(Extensions.getPlaceImage(place, MediaSize.Medium))) as ImageProvider<Object>,
+                              ? NetworkImage(Extensions.getPlaceImage(place, MediaSize.Medium))
+                              : CachedNetworkImageProvider(Extensions.getPlaceImage(place, MediaSize.Medium)))
+                          as ImageProvider<Object>,
                       fit: BoxFit.cover)),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

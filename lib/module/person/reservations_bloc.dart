@@ -37,13 +37,14 @@ class ReservationBloc extends SignalBloc {
     }
 
     var result = await App.http!.getReservations(from, to);
-    var order = new List.from(result).orderBy((keySelector) => keySelector.time).toList();
+    var order =
+        new List<PlacesReservationsReservationDto>.from(result).orderBy((keySelector) => keySelector.time).toList();
 
     if (from.month == DateTime.now().month) {
-      this.reservations.add(order as List<PlacesReservationsReservationDto>?);
+      this.reservations.add(order);
     }
 
-    this.dynamicReservaions.add(order as List<PlacesReservationsReservationDto>);
+    this.dynamicReservaions.add(order);
     return;
   }
 

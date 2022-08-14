@@ -49,6 +49,9 @@ class GearUsageStat extends StatelessWidget {
       return null;
     }
 
-    return List.from(usage).where((f) => f.type == type).orderByDescending((o) => o.used).toList() as List<PipeAccessoryUsageDto>?;
+    return List<PipeAccessoryUsageDto>.from(usage)
+        .where((f) => f.type == type)
+        .orderByDescending((o) => o.used)
+        .toList() as List<PipeAccessoryUsageDto>?;
   }
 }

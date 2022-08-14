@@ -167,7 +167,7 @@ class _PlacesPageState extends State<PlacesPage> {
                 if (reservation == null) {
                   return Container();
                 }
-                return ReservationItem(reservation: reservation ?? null);
+                return ReservationItem(reservation: reservation);
               },
               childCount: snapshot.data == null
                   ? 0
@@ -186,7 +186,8 @@ class _PlacesPageState extends State<PlacesPage> {
           var markers = <Marker>[];
           if (snapshot.data != null) {
             markers = snapshot.data!
-                .map((f) => Marker(f.id.toString(), f.name, double.parse(f.address!.lat!), double.parse(f.address!.lng!)))
+                .map((f) =>
+                    Marker(f.id.toString(), f.name, double.parse(f.address!.lat!), double.parse(f.address!.lng!)))
                 .toList();
           }
 

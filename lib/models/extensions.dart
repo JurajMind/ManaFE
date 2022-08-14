@@ -28,7 +28,6 @@ class Extensions {
 
   static Widget accesoryPicture(PipeAccesorySimpleDto accesory) {
     if (accesory.picture != null) {
-      return defaultAccesoryPicture(accesory);
       return CachedNetworkImage(
           fit: BoxFit.fill,
           fadeOutDuration: Duration(milliseconds: 0),
@@ -119,8 +118,9 @@ class Extensions {
         return 'images/devices/black.jpg';
       case DeviceSimpleDtoTypeEnum.number10:
         return 'images/devices/white.jpg';
+      default:
+        return 'images/devices/prototype.jpg';
     }
-    return 'images/devices/prototype.jpg';
   }
 
   static List<Color> deviceAccentColor(DeviceSimpleDtoTypeEnum? type) {
@@ -145,12 +145,12 @@ class Extensions {
           Colors.transparent,
           Colors.indigoAccent,
         ];
+      default:
+        return [
+          Colors.transparent,
+          Colors.amber,
+        ];
     }
-
-    return [
-      Colors.transparent,
-      Colors.amber,
-    ];
   }
 }
 

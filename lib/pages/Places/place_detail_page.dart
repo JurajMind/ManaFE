@@ -143,8 +143,9 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                   tag: '${place!.friendlyUrl}_place',
                   child: new Image(
                     image: (MPlatform.isWeb
-                        ? NetworkImage(Extensions.getPlaceImage(place, MediaSize.Large))
-                        : new CachedNetworkImageProvider(Extensions.getPlaceImage(place, MediaSize.Large))) as ImageProvider<Object>,
+                            ? NetworkImage(Extensions.getPlaceImage(place, MediaSize.Large))
+                            : new CachedNetworkImageProvider(Extensions.getPlaceImage(place, MediaSize.Large)))
+                        as ImageProvider<Object>,
                     fit: BoxFit.cover,
                     height: _appBarHeight,
                   ),
@@ -258,7 +259,7 @@ class DisabledChip extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Chip(
-        backgroundColor: enable ?? false ? Colors.blue : Colors.grey,
+        backgroundColor: enable ? Colors.blue : Colors.grey,
         label: Icon(
           icon,
           color: Colors.grey[200],

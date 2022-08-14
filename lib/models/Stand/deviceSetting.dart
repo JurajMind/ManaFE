@@ -13,12 +13,9 @@ class StandSettings {
   }
 
   StandSettings.fromJson(Map<String, dynamic> json) {
-    this.blow =
-        StateSetting.fromJson(json['BlowSettings'] as Map<String, dynamic>);
-    this.idle =
-        StateSetting.fromJson(json['IdleSettings'] as Map<String, dynamic>);
-    this.puf =
-        StateSetting.fromJson(json['PuffSettings'] as Map<String, dynamic>);
+    this.blow = StateSetting.fromJson(json['BlowSettings'] as Map<String, dynamic>);
+    this.idle = StateSetting.fromJson(json['IdleSettings'] as Map<String, dynamic>);
+    this.puf = StateSetting.fromJson(json['PuffSettings'] as Map<String, dynamic>);
   }
 
   StateSetting? getStateSetting(SmokeState? state) {
@@ -29,6 +26,8 @@ class StandSettings {
         return this.idle;
       case SmokeState.puf:
         return this.puf;
+      default:
+        break;
     }
     return null;
   }
@@ -43,6 +42,8 @@ class StandSettings {
         break;
       case SmokeState.puf:
         this.puf = stateSetting;
+        break;
+      default:
         break;
     }
   }

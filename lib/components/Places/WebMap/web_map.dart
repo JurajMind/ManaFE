@@ -1,11 +1,10 @@
-import 'dart:html';
-
 import 'package:app/main.dart';
 import 'package:app/module/module.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps/google_maps.dart' hide Icon;
 import 'package:google_maps_flutter/google_maps_flutter.dart' as googleFlutter;
 import 'package:geolocator/geolocator.dart' as geo;
+import 'package:universal_html/html.dart';
 import './UiFake.dart' if (dart.library.html) 'dart:ui' as ui;
 
 class MapWeb extends StatefulWidget {

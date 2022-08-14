@@ -62,7 +62,7 @@ class _FeatureMixListViewState extends State<FeatureMixListView> {
                   mixologyBloc.loadCreatorMixesNextPage(widget.mixCreator!.id.toString(), true);
               },
               child: ListView.builder(
-                itemCount: itemCount ?? 10,
+                itemCount: itemCount,
                 itemBuilder: (context, index) {
                   if (index == 0) {
                     return FeatureMixInfo(

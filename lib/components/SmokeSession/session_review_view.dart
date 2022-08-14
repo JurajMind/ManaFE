@@ -53,7 +53,7 @@ class SessionReviewView extends StatelessWidget {
               rating: strength / 2,
               colorIndex: 0,
             ),
-            Padding(padding: const EdgeInsets.all(8.0), child: Text(text ?? '')),
+            Padding(padding: const EdgeInsets.all(8.0), child: Text(text)),
             if (placeSession) ...buildPlaceReview(context),
             SizedBox(
               height: 8,

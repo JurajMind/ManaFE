@@ -22,13 +22,13 @@ class MixologyBloc {
   final mixCreator = BehaviorSubject<List<FeatureMixCreatorSimpleDto>>();
 
   final Map<String?, BehaviorSubject<List<TobaccoMixSimpleDto?>>> mixCreatorMixes =
-      new Map<String?, BehaviorSubject<List<TobaccoMixSimpleDto>>>();
+      new Map<String?, BehaviorSubject<List<TobaccoMixSimpleDto?>>>();
 
   BehaviorSubject<List<TobaccoMixSimpleDto?>>? getCreatorMixes(String key) {
     var result = mixCreatorMixes[key];
     if (result != null) return result;
 
-    mixCreatorMixes[key] = new BehaviorSubject<List<TobaccoMixSimpleDto>>();
+    mixCreatorMixes[key] = new BehaviorSubject<List<TobaccoMixSimpleDto?>>();
     return mixCreatorMixes[key];
   }
 
@@ -70,7 +70,7 @@ class MixologyBloc {
     App.http!.voteMix(mix.id, -1);
     String favorite = "favorite";
     if (this.mixCreatorMixes[favorite] == null) {
-      this.mixCreatorMixes[favorite] = new BehaviorSubject<List<TobaccoMixSimpleDto>>();
+      this.mixCreatorMixes[favorite] = new BehaviorSubject<List<TobaccoMixSimpleDto?>>();
     }
 
     var old = this.mixCreatorMixes[favorite]!.value;
@@ -126,7 +126,7 @@ class MixologyBloc {
 
   Future loadFakeCreatorMixes(String? creatorName, int page) async {
     if (this.mixCreatorMixes[creatorName] == null) {
-      this.mixCreatorMixes[creatorName] = new BehaviorSubject<List<TobaccoMixSimpleDto>>();
+      this.mixCreatorMixes[creatorName] = new BehaviorSubject<List<TobaccoMixSimpleDto?>>();
     }
 
     //Data alredy loded
@@ -134,8 +134,8 @@ class MixologyBloc {
       return;
     }
 
-    var fakeMixes = this.mixCreatorMixes[creatorName]!.valueOrNull ?? <TobaccoMixSimpleDto>[];
-    fakeMixes.addAll(Iterable.generate(_mixPerPage, (_) => null));
+    List<TobaccoMixSimpleDto?> fakeMixes = this.mixCreatorMixes[creatorName]!.valueOrNull ?? <TobaccoMixSimpleDto?>[];
+    fakeMixes.addAll(Iterable<TobaccoMixSimpleDto?>.generate(_mixPerPage, (_) => null));
     this.mixCreatorMixes[creatorName]!.add(fakeMixes);
   }
 

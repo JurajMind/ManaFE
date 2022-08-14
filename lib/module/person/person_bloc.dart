@@ -122,10 +122,10 @@ class PersonBloc extends SignalBloc {
 
     var infoTask = App.http!.getPersonInfo();
     devices.add(init.devices);
-    var sessions = new List.from(init.activeSmokeSessions!);
-    sessions.orderBy((s) => s.device.isOnline ? 0 : 1).thenBy((s) => s.device.name);
-    smokeSessions.add(sessions.toList() as List<SmokeSessionSimpleDto>);
-    smokeSessionsCodes.add(sessions.toList() as List<SmokeSessionSimpleDto>);
+    var sessions = new List<SmokeSessionSimpleDto>.from(init.activeSmokeSessions!);
+    sessions.orderBy((s) => s.device?.isOnline ?? false ? 0 : 1).thenBy((s) => s.device?.name);
+    smokeSessions.add(sessions.toList());
+    smokeSessionsCodes.add(sessions.toList());
     myReservations.add(init.activeReservations);
     var info = await infoTask;
     this.info.add(info);
@@ -147,16 +147,16 @@ class PersonBloc extends SignalBloc {
       smokeSessionsCodes.add(loading);
     }
     var activeSmokeSessions = await App.http!.getPersonSessions();
-    var sessions = new List.from(activeSmokeSessions);
+    var sessions = new List<SmokeSessionSimpleDto>.from(activeSmokeSessions);
     sessions
         .orderBy(
-          (s) => s.device.isOnline ? 0 : 1,
+          (s) => s.device?.isOnline ?? false ? 0 : 1,
         )
-        .thenBy((s) => s.device.name)
+        .thenBy((s) => s.device?.name)
         .reverse();
 
-    this.smokeSessions.add(sessions.toList() as List<SmokeSessionSimpleDto>);
-    this.smokeSessionsCodes.add(sessions.toList() as List<SmokeSessionSimpleDto>);
+    this.smokeSessions.add(sessions.toList());
+    this.smokeSessionsCodes.add(sessions.toList());
     return;
   }
 

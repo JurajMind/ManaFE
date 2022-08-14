@@ -211,17 +211,17 @@ class _PaggingMixListViewState extends State<PaggingMixListView> {
       {ValueChanged<TobaccoMixSimpleDto>? onTap, int? selectedMixId}) {
     return ListView.builder(
       physics: ClampingScrollPhysics(),
-      itemCount: itemCount ?? 10,
+      itemCount: itemCount,
       itemBuilder: (context, index) {
         if (index == snapshot.data!.length) {
-          return SizedBox(height: 100);
+          return const SizedBox(height: 100);
         }
 
         if (snapshot.data != null && snapshot.data![index] != null) {
           var selectedMix = snapshot.data![index]!;
           return MixCardExpanded(
             tobaccoMix: selectedMix,
-            onTap: onTap!,
+            onTap: onTap,
             selected: selectedMix.id == selectedMixId,
           );
         } else {

@@ -507,15 +507,21 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
         marginRightDotFocused = initValueMarginRight;
         break;
       case dotSliderAnimation.SIZE_TRANSITION:
-        for (int i = 0; i < slides!.length; i++) {
-          if (i == 0) {
-            sizeDots.add(sizeDot! * 1.5);
-            opacityDots.add(1.0);
-          } else {
-            sizeDots.add(sizeDot);
-            opacityDots.add(0.5);
+        {
+          for (int i = 0; i < slides!.length; i++) {
+            if (i == 0) {
+              sizeDots.add(sizeDot! * 1.5);
+              opacityDots.add(1.0);
+            } else {
+              sizeDots.add(sizeDot);
+              opacityDots.add(0.5);
+            }
           }
+          break;
         }
+
+      default:
+        break;
     }
 
     tabController!.animation!.addListener(() {
@@ -557,6 +563,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                 opacityDots[currentTabIndex - 1] = 0.5 + diffValueAnimation / 2;
               }
             }
+            break;
+          default:
             break;
         }
       });

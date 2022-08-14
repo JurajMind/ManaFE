@@ -1,4 +1,5 @@
 import 'package:app/Helpers/helpers.dart';
+import 'package:app/app/app.widget.dart';
 import 'package:app/main.dart';
 import 'package:app/support/validators/email.validator.dart';
 import 'package:app/support/validators/max.validator.dart';
@@ -45,6 +46,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
         this._loading = true;
       });
       if (await _auth.authorize(data.email, data.password) != null) {
+        AppWidget.restartApp(context);
       } else {
         final snackBar = SnackBar(content: Text('Wrong email or password'));
 
@@ -80,8 +82,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
               ),
               Builder(builder: (BuildContext context) {
                 return new Container(
-                  padding:
-                      new EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  padding: new EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: new Form(
                     key: _formKey,
                     child: new Column(
@@ -92,38 +93,28 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                             keyboardType: TextInputType.emailAddress,
                             style: Theme.of(context).textTheme.bodyText2,
                             decoration: new InputDecoration(
-                                labelStyle:
-                                    Theme.of(context).textTheme.bodyText2,
+                                labelStyle: Theme.of(context).textTheme.bodyText2,
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(40.0)),
-                                  borderSide:
-                                      BorderSide(color: Colors.white, width: 2),
+                                  borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                                  borderSide: BorderSide(color: Colors.white, width: 2),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(40.0)),
+                                  borderRadius: BorderRadius.all(Radius.circular(40.0)),
                                   borderSide: BorderSide(color: Colors.white),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(40.0)),
+                                  borderRadius: BorderRadius.all(Radius.circular(40.0)),
                                   borderSide: BorderSide(color: Colors.red),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(40.0)),
+                                  borderRadius: BorderRadius.all(Radius.circular(40.0)),
                                   borderSide: BorderSide(color: Colors.red),
                                 ),
                                 hintText: 'your@email.com',
-                                labelText: AppTranslations.of(context)!
-                                    .text("login.email")),
+                                labelText: AppTranslations.of(context)!.text("login.email")),
                             validator: (String? value) {
-                              return validate(value, 'E-mail Address', [
-                                new RequiredValidator(),
-                                new EmailValidator(),
-                                new MaxValidator(63)
-                              ]);
+                              return validate(value, 'E-mail Address',
+                                  [new RequiredValidator(), new EmailValidator(), new MaxValidator(63)]);
                             },
                             onFieldSubmitted: (String textInput) {
                               // FocusScope.of(context).requestFocus(passwordFocusNode);
@@ -142,9 +133,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                             decoration: new InputDecoration(
                                 suffixIcon: IconButton(
                                   icon: Icon(
-                                    showPassword
-                                        ? FontAwesomeIcons.eyeSlash
-                                        : FontAwesomeIcons.eye,
+                                    showPassword ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
                                     color: Colors.white,
                                   ),
                                   onPressed: () {
@@ -153,37 +142,27 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                                     });
                                   },
                                 ),
-                                labelStyle:
-                                    Theme.of(context).textTheme.bodyText2,
+                                labelStyle: Theme.of(context).textTheme.bodyText2,
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(40.0)),
-                                  borderSide:
-                                      BorderSide(color: Colors.white, width: 2),
+                                  borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                                  borderSide: BorderSide(color: Colors.white, width: 2),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(40.0)),
+                                  borderRadius: BorderRadius.all(Radius.circular(40.0)),
                                   borderSide: BorderSide(color: Colors.white),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(40.0)),
+                                  borderRadius: BorderRadius.all(Radius.circular(40.0)),
                                   borderSide: BorderSide(color: Colors.red),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(40.0)),
+                                  borderRadius: BorderRadius.all(Radius.circular(40.0)),
                                   borderSide: BorderSide(color: Colors.red),
                                 ),
-                                labelText: AppTranslations.of(context)!
-                                    .text("login.password")),
+                                labelText: AppTranslations.of(context)!.text("login.password")),
                             validator: (String? value) {
-                              return validate(value, 'Password', [
-                                new RequiredValidator(),
-                                new StringValidator(),
-                                new MinValidator(6)
-                              ]);
+                              return validate(value, 'Password',
+                                  [new RequiredValidator(), new StringValidator(), new MinValidator(6)]);
                             },
                             onFieldSubmitted: (String value) {
                               this.submit(context);
@@ -195,9 +174,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                           width: screenSize.width,
                           child: new FlatButton(
                             child: new Text(
-                              AppTranslations.of(context)!
-                                      .text("login.forgot_password") +
-                                  " ?",
+                              AppTranslations.of(context)!.text("login.forgot_password") + " ?",
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
                             onPressed: () {
@@ -222,19 +199,12 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                                 )
                               : new MaterialButton(
                                   child: Text(
-                                    AppTranslations.of(context)!
-                                        .text("login.log_in")
-                                        .toUpperCase(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText2!
-                                        .apply(color: Colors.black),
+                                    AppTranslations.of(context)!.text("login.log_in").toUpperCase(),
+                                    style: Theme.of(context).textTheme.bodyText2!.apply(color: Colors.black),
                                   ),
                                   onPressed: () => this.submit(context),
                                   color: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          new BorderRadius.circular(24.0)),
+                                  shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(24.0)),
                                 ),
                           margin: new EdgeInsets.only(top: 20.0, bottom: 20),
                         ),

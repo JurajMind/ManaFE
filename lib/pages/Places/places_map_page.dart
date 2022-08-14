@@ -355,7 +355,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
                 if (reservation == null) {
                   return Container();
                 }
-                return ReservationItem(reservation: reservation ?? null);
+                return ReservationItem(reservation: reservation);
               },
               childCount: snapshot.data == null
                   ? 0
@@ -402,7 +402,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
     var oldPlaces = nearbyPlaces.value;
     var merge = <PlaceSimpleDto>[];
     if (oldPlaces != null) merge.addAll(oldPlaces);
- merge.addAll(newPlaces);
+    merge.addAll(newPlaces);
 
     var a = new List.from(merge).distinct(((element) => element) as Object Function(dynamic)?).toList();
     this.nearbyPlaces.add(a as List<PlaceSimpleDto>?);

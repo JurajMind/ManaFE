@@ -63,12 +63,12 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
     dataProvider = DataProvider.getData(context);
     super.didChangeDependencies();
 
-    SystemChannels.lifecycle.setMessageHandler((msg) {
+    SystemChannels.lifecycle.setMessageHandler((msg) async {
       debugPrint('SystemChannels> $msg');
       if (msg == AppLifecycleState.resumed.toString()) {
         getIt.get<SmokeSessionBloc>().loadSessionData();
       }
-    } as Future<String?> Function(String?)?);
+    });
   }
 
   @override

@@ -23,8 +23,10 @@ class DetailPageHelper {
 
   static List<List<SmartHookahModelsDbPuf>> createHistogram(List<SmartHookahModelsDbPuf> pufs, int i) {
     var pufCollection = new List.from(pufs);
-    var start = new DateTime.fromMillisecondsSinceEpoch(
-        pufCollection.min((a, b) => a.D.millisecondsSinceEpoch < b.D.millisecondsSinceEpoch));
+    var start = pufCollection.isEmpty
+        ? new DateTime.now()
+        : new DateTime.fromMillisecondsSinceEpoch(
+            pufCollection.min((a, b) => a.D.millisecondsSinceEpoch < b.D.millisecondsSinceEpoch));
     var end = start.add(new Duration(seconds: i));
     List<List<SmartHookahModelsDbPuf>> result = [[]];
     var bucket = <SmartHookahModelsDbPuf>[];

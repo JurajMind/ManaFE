@@ -79,10 +79,10 @@ class StatisticBloc {
 
   StatisticRecap getStatsRecap(List<SmokeSessionSimpleDto> sessions) {
     var sessionCollection = List.from(sessions);
-    var pufCount = sessionCollection.sum<int>((selector) => selector.statistic.pufCount) ?? 0;
-    var smokingTimeMilis = sessionCollection.sum<int>((selector) => selector.statistic.smokeDuration) ?? 0;
+    var pufCount = sessionCollection.sum<int>((selector) => selector.statistic.pufCount);
+    var smokingTimeMilis = sessionCollection.sum<int>((selector) => selector.statistic.smokeDuration);
 
-    var activityMilis = sessionCollection.sum<int>((selector) => selector.statistic.duration) ?? 0;
+    var activityMilis = sessionCollection.sum<int>((selector) => selector.statistic.duration);
 
     var smokingTime = new Duration(milliseconds: smokingTimeMilis);
     var activityTyme = new Duration(milliseconds: activityMilis);

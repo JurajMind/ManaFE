@@ -74,7 +74,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
         .values
         .toList();
 
-    var cItems = List.from(items);
+    var cItems = List<BarChartGroupData>.from(items);
 
     return cItems.orderBy((a) => a.x).toList() as List<BarChartGroupData>;
   }

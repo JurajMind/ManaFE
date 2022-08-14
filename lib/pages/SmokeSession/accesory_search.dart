@@ -197,7 +197,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
             ));
           }
 
-          var data = getIt.get<PersonBloc>() ?? widget.personBloc!;
+          var data = getIt.get<PersonBloc>();
           return StreamBuilder<List<PipeAccesorySimpleDto>>(
               stream: data.myGear,
               builder: (context, ownSs) {

@@ -312,7 +312,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
     setState(() {
       if (tobaccoList.where((t) => t!.id == tobacco!.id).length == 0) {
         tobaccoList.add(tobacco);
-        tobaccoWeight[tobacco!.id] = weight ?? 5;
+        tobaccoWeight[tobacco!.id] = weight;
       }
     });
   }

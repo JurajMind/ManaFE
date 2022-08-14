@@ -258,7 +258,7 @@ class UpperCaseTextFormatter extends TextInputFormatter {
     }
 
     return new TextEditingValue(
-      text: newValue.text.toUpperCase() ?? '',
+      text: newValue.text.toUpperCase(),
       selection: newValue.selection,
     );
   }
