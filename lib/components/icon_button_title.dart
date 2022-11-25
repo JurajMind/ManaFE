@@ -7,7 +7,6 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-
 // Minimum logical pixel size of the IconButton.
 // See: <https://material.io/guidelines/layout/metrics-keylines.html#metrics-keylines-touch-target-size>
 const double _kMinButtonSize = 48.0;
@@ -48,7 +47,7 @@ const double _kMinButtonSize = 48.0;
 ///    current platform's conventions.
 ///  * [CloseButton], an icon button for closing pages.
 ///  * [AppBar], to show a toolbar at the top of an application.
-///  * [RaisedButton] and [FlatButton], for buttons with text in them.
+///  * [RaisedButton] and [TextButton], for buttons with text in them.
 ///  * [InkResponse] and [InkWell], for the ink splash effect itself.
 class IconButtonTitle extends StatelessWidget {
   /// Creates an icon button.
@@ -63,20 +62,20 @@ class IconButtonTitle extends StatelessWidget {
   ///
   /// The [icon] argument must be specified, and is typically either an [Icon]
   /// or an [ImageIcon].
-  const IconButtonTitle({
-    Key? key,
-    this.iconSize: 24.0,
-    this.padding: const EdgeInsets.all(4.0),
-    this.alignment: Alignment.center,
-    required this.icon,
-    required this.text,
-    this.color,
-    this.highlightColor,
-    this.splashColor,
-    this.disabledColor,
-    required this.onPressed,
-    this.tooltip
-  }) : super(key: key);
+  const IconButtonTitle(
+      {Key? key,
+      this.iconSize: 24.0,
+      this.padding: const EdgeInsets.all(4.0),
+      this.alignment: Alignment.center,
+      required this.icon,
+      required this.text,
+      this.color,
+      this.highlightColor,
+      this.splashColor,
+      this.disabledColor,
+      required this.onPressed,
+      this.tooltip})
+      : super(key: key);
 
   /// The size of the icon inside the button.
   ///
@@ -121,6 +120,7 @@ class IconButtonTitle extends StatelessWidget {
   final Widget icon;
 
   final String text;
+
   /// The color to use for the icon inside the button, if the icon is enabled.
   /// Defaults to leaving this up to the [icon] widget.
   ///
@@ -176,7 +176,7 @@ class IconButtonTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      Color? currentColor;
+    Color? currentColor;
     if (onPressed != null)
       currentColor = color;
     else
@@ -188,37 +188,28 @@ class IconButtonTitle extends StatelessWidget {
       child: new ConstrainedBox(
         constraints: const BoxConstraints(minWidth: _kMinButtonSize, minHeight: _kMinButtonSize),
         child: new Padding(
-          padding: padding,
-          child: new Column(
-            children: <Widget>[
-              new SizedBox(
-            height: iconSize,
-            width: iconSize,
-            child: new Align(
-              alignment: alignment,
-              child: IconTheme.merge(
-                data: new IconThemeData(
-                  size: iconSize,
-                  color: currentColor
+            padding: padding,
+            child: new Column(
+              children: <Widget>[
+                new SizedBox(
+                  height: iconSize,
+                  width: iconSize,
+                  child: new Align(
+                    alignment: alignment,
+                    child: IconTheme.merge(data: new IconThemeData(size: iconSize, color: currentColor), child: icon),
+                  ),
                 ),
-                child: icon
-              ),
-            ),
-          ),
-          new Text(
-            text,
-            style: new TextStyle(color: currentColor),)
-            ],
-          )
-        ),
+                new Text(
+                  text,
+                  style: new TextStyle(color: currentColor),
+                )
+              ],
+            )),
       ),
     );
 
     if (tooltip != null) {
-      result = new Tooltip(
-        message: tooltip,
-        child: result
-      );
+      result = new Tooltip(message: tooltip, child: result);
     }
     return new InkResponse(
       onTap: onPressed,

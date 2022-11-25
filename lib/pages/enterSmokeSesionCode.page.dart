@@ -238,7 +238,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
         },
       ));
     } else {
-      _scaffoldKey.currentState!.showSnackBar(new SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
         content: new Text("Invalid session code"),
       ));
     }

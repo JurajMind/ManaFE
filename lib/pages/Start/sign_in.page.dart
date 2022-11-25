@@ -55,7 +55,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
         });
 
 // Find the Scaffold in the Widget tree and use it to show a SnackBar
-        Scaffold.of(context).showSnackBar(snackBar);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
     }
   }
@@ -172,7 +172,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                             }),
                         new Container(
                           width: screenSize.width,
-                          child: new FlatButton(
+                          child: new TextButton(
                             child: new Text(
                               AppTranslations.of(context)!.text("login.forgot_password") + " ?",
                               style: Theme.of(context).textTheme.bodyText2,

@@ -197,12 +197,12 @@ class _StateColorPickerState extends State<StateColorPicker> {
           title: Text(title),
           content: content,
           actions: [
-            FlatButton(
+            TextButton(
               child: Text('CANCEL'),
               textColor: Colors.red,
               onPressed: Navigator.of(context).pop,
             ),
-            FlatButton(
+            TextButton(
               child: Text('SUBMIT'),
               textColor: _tempMainColor,
               onPressed: () {

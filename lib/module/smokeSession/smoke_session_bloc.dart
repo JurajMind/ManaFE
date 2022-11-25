@@ -357,7 +357,7 @@ class SmokeSessionBloc {
     late Flushbar<Map<String, dynamic>> bar;
     bar = new Flushbar<Map<String, dynamic>>(
       message: '${data.deviceName} come online',
-      mainButton: FlatButton(
+      mainButton: TextButton(
         onPressed: () {
           var map = new Map<String, dynamic>();
           map['sessionId'] = data.sessionCode;

@@ -21,7 +21,7 @@ class TaxiButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return TextButton(
       child: Text(
         AppTranslations.of(context)!.text("place.go_with_taxi").toUpperCase(),
         style: TextStyle(color: Colors.black),

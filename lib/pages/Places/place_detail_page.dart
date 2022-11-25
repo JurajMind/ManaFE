@@ -229,7 +229,7 @@ class BookMenuWidget extends StatelessWidget {
         ),
         Expanded(
           flex: 1,
-          child: FlatButton(
+          child: TextButton(
             child: Text(
               AppTranslations.of(context)!.text("place.menu").toUpperCase(),
               style: TextStyle(color: Colors.black),
@@ -295,7 +295,7 @@ class BookButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (place!.haveReservation ?? false) {
-      return FlatButton(
+      return TextButton(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

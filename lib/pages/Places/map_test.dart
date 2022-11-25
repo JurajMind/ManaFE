@@ -64,7 +64,7 @@ class MapUiBodyState extends State<MapUiBody> {
   }
 
   Widget _compassToggler() {
-    return FlatButton(
+    return TextButton(
       child: Text('${_compassEnabled ? 'disable' : 'enable'} compass'),
       onPressed: () {
         setState(() {
@@ -75,7 +75,7 @@ class MapUiBodyState extends State<MapUiBody> {
   }
 
   Widget _mapToolbarToggler() {
-    return FlatButton(
+    return TextButton(
       child: Text('${_mapToolbarEnabled ? 'disable' : 'enable'} map toolbar'),
       onPressed: () {
         setState(() {
@@ -86,27 +86,22 @@ class MapUiBodyState extends State<MapUiBody> {
   }
 
   Widget _latLngBoundsToggler() {
-    return FlatButton(
+    return TextButton(
       child: Text(
-        _cameraTargetBounds.bounds == null
-            ? 'bound camera target'
-            : 'release camera target',
+        _cameraTargetBounds.bounds == null ? 'bound camera target' : 'release camera target',
       ),
       onPressed: () {
         setState(() {
-          _cameraTargetBounds = _cameraTargetBounds.bounds == null
-              ? CameraTargetBounds(sydneyBounds)
-              : CameraTargetBounds.unbounded;
+          _cameraTargetBounds =
+              _cameraTargetBounds.bounds == null ? CameraTargetBounds(sydneyBounds) : CameraTargetBounds.unbounded;
         });
       },
     );
   }
 
   Widget _zoomBoundsToggler() {
-    return FlatButton(
-      child: Text(_minMaxZoomPreference.minZoom == null
-          ? 'bound zoom'
-          : 'release zoom'),
+    return TextButton(
+      child: Text(_minMaxZoomPreference.minZoom == null ? 'bound zoom' : 'release zoom'),
       onPressed: () {
         setState(() {
           _minMaxZoomPreference = _minMaxZoomPreference.minZoom == null
@@ -118,9 +113,8 @@ class MapUiBodyState extends State<MapUiBody> {
   }
 
   Widget _mapTypeCycler() {
-    final MapType nextType =
-        MapType.values[(_mapType.index + 1) % MapType.values.length];
-    return FlatButton(
+    final MapType nextType = MapType.values[(_mapType.index + 1) % MapType.values.length];
+    return TextButton(
       child: Text('change map type to $nextType'),
       onPressed: () {
         setState(() {
@@ -131,7 +125,7 @@ class MapUiBodyState extends State<MapUiBody> {
   }
 
   Widget _rotateToggler() {
-    return FlatButton(
+    return TextButton(
       child: Text('${_rotateGesturesEnabled ? 'disable' : 'enable'} rotate'),
       onPressed: () {
         setState(() {
@@ -142,7 +136,7 @@ class MapUiBodyState extends State<MapUiBody> {
   }
 
   Widget _scrollToggler() {
-    return FlatButton(
+    return TextButton(
       child: Text('${_scrollGesturesEnabled ? 'disable' : 'enable'} scroll'),
       onPressed: () {
         setState(() {
@@ -153,7 +147,7 @@ class MapUiBodyState extends State<MapUiBody> {
   }
 
   Widget _tiltToggler() {
-    return FlatButton(
+    return TextButton(
       child: Text('${_tiltGesturesEnabled ? 'disable' : 'enable'} tilt'),
       onPressed: () {
         setState(() {
@@ -164,7 +158,7 @@ class MapUiBodyState extends State<MapUiBody> {
   }
 
   Widget _zoomToggler() {
-    return FlatButton(
+    return TextButton(
       child: Text('${_zoomGesturesEnabled ? 'disable' : 'enable'} zoom'),
       onPressed: () {
         setState(() {
@@ -175,7 +169,7 @@ class MapUiBodyState extends State<MapUiBody> {
   }
 
   Widget _indoorViewToggler() {
-    return FlatButton(
+    return TextButton(
       child: Text('${_indoorViewEnabled ? 'disable' : 'enable'} indoor'),
       onPressed: () {
         setState(() {
@@ -186,9 +180,8 @@ class MapUiBodyState extends State<MapUiBody> {
   }
 
   Widget _myLocationToggler() {
-    return FlatButton(
-      child: Text(
-          '${_myLocationButtonEnabled ? 'disable' : 'enable'} my location button'),
+    return TextButton(
+      child: Text('${_myLocationButtonEnabled ? 'disable' : 'enable'} my location button'),
       onPressed: () {
         setState(() {
           _myLocationEnabled = !_myLocationEnabled;
@@ -198,9 +191,8 @@ class MapUiBodyState extends State<MapUiBody> {
   }
 
   Widget _myLocationButtonToggler() {
-    return FlatButton(
-      child: Text(
-          '${_myLocationButtonEnabled ? 'disable' : 'enable'} my location button'),
+    return TextButton(
+      child: Text('${_myLocationButtonEnabled ? 'disable' : 'enable'} my location button'),
       onPressed: () {
         setState(() {
           _myLocationButtonEnabled = !_myLocationButtonEnabled;
@@ -224,7 +216,7 @@ class MapUiBodyState extends State<MapUiBody> {
     if (!_isMapCreated) {
       return null;
     }
-    return FlatButton(
+    return TextButton(
       child: Text('${_nightMode ? 'disable' : 'enable'} night mode'),
       onPressed: () {
         if (_nightMode) {
@@ -278,8 +270,7 @@ class MapUiBodyState extends State<MapUiBody> {
           child: ListView(
             children: <Widget>[
               Text('camera bearing: ${_position.bearing}'),
-              Text(
-                  'camera target: ${_position.target.latitude.toStringAsFixed(4)},'
+              Text('camera target: ${_position.target.latitude.toStringAsFixed(4)},'
                   '${_position.target.longitude.toStringAsFixed(4)}'),
               Text('camera zoom: ${_position.zoom}'),
               Text('camera tilt: ${_position.tilt}'),

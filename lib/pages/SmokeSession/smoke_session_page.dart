@@ -458,7 +458,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
           title: new Text("Restart device?"),
           content: new Text("Do you want restart this device ?"),
           actions: <Widget>[
-            new FlatButton(
+            new TextButton(
               child: new Text(
                 "Restart",
               ),
@@ -467,7 +467,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
               },
             ),
             // usually buttons at the bottom of the dialog
-            new FlatButton(
+            new TextButton(
               child: new Text("Close"),
               onPressed: () {
                 Navigator.of(context).pop(false);

@@ -7,9 +7,7 @@ class NumberDialog extends StatefulWidget {
   final int? step;
   final String? stepLabel;
 
-  const NumberDialog(
-      {Key? key, this.label, this.initCount, this.step, this.stepLabel})
-      : super(key: key);
+  const NumberDialog({Key? key, this.label, this.initCount, this.step, this.stepLabel}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _NumberDialogState();
@@ -42,11 +40,11 @@ class _NumberDialogState extends State<NumberDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                new FlatButton(
+                new TextButton(
                   child: Text('- $stepLabel'),
                   onPressed: () => setCount(widget.step! * -1),
                 ),
-                new FlatButton(
+                new TextButton(
                   child: Text('+ $stepLabel'),
                   onPressed: () => setCount(widget.step!),
                 )
@@ -56,14 +54,12 @@ class _NumberDialogState extends State<NumberDialog> {
         ),
       ),
       actions: <Widget>[
-        new FlatButton(
-          child: Text(
-              AppTranslations.of(context)!.text("common.save").toUpperCase()),
+        new TextButton(
+          child: Text(AppTranslations.of(context)!.text("common.save").toUpperCase()),
           onPressed: () => Navigator.of(context).pop(count),
         ),
-        new FlatButton(
-          child: Text(
-              AppTranslations.of(context)!.text("common.cancel").toUpperCase()),
+        new TextButton(
+          child: Text(AppTranslations.of(context)!.text("common.cancel").toUpperCase()),
           onPressed: () => Navigator.of(context).pop(-1),
         )
       ],

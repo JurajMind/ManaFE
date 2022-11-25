@@ -21,7 +21,7 @@ class NavigateButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return TextButton(
       child: Text(
         AppTranslations.of(context)!.text("place.navigate").toUpperCase(),
         style: TextStyle(color: Colors.black),

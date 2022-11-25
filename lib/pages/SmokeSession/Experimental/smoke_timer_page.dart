@@ -83,14 +83,14 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
               decoration: InputDecoration(hintText: "Name"),
             ),
             actions: <Widget>[
-              new FlatButton(
+              new TextButton(
                 child: new Text('CANCEL'),
                 textColor: Colors.red,
                 onPressed: () {
                   Navigator.of(context).pop(false);
                 },
               ),
-              new FlatButton(
+              new TextButton(
                 child: new Text(AppTranslations.of(context)!.text("common.save").toUpperCase()),
                 textColor: Colors.green,
                 onPressed: () {

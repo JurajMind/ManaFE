@@ -150,7 +150,7 @@ class MessageBox {
         return CupertinoAlertDialog(
           title: Text('$title'),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text('Ok'),
               onPressed: () {
                 Navigator.of(context).pop();

@@ -13,7 +13,14 @@ import 'services/authorization.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      apiKey: "AIzaSyB3dZXCM4sdnGZB4x4f5M6nXX-D9Xm-r5w",
+      appId: "1:652590711591:web:ce16d1bcf223abfe861f02",
+      messagingSenderId: "652590711591",
+      projectId: "manapipes",
+    ),
+  );
 
   getIt.registerLazySingletonAsync<SharedPreferences>(() async {
     return await SharedPreferences.getInstance();

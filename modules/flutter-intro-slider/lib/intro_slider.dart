@@ -738,7 +738,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     if (tabController!.index + 1 == slides!.length) {
       return Container(width: MediaQuery.of(context).size.width / 4);
     } else {
-      return FlatButton(
+      return TextButton(
         onPressed: onSkipPress as void Function()?,
         child: renderSkipBtn!,
         color: colorSkipBtn,
@@ -749,7 +749,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   }
 
   Widget buildDoneButton() {
-    return FlatButton(
+    return TextButton(
       onPressed: onDonePress as void Function()?,
       child: renderDoneBtn!,
       color: colorDoneBtn,
@@ -762,7 +762,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     if (tabController!.index == 0) {
       return Container(width: MediaQuery.of(context).size.width / 4);
     } else {
-      return FlatButton(
+      return TextButton(
         onPressed: () {
           if (!this.isAnimating(tabController!.animation!.value)) {
             tabController!.animateTo(tabController!.index - 1);
@@ -777,7 +777,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   }
 
   Widget buildNextButton() {
-    return FlatButton(
+    return TextButton(
       onPressed: () {
         if (!this.isAnimating(tabController!.animation!.value)) {
           tabController!.animateTo(tabController!.index + 1);
