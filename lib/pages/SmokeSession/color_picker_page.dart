@@ -1,3 +1,4 @@
+import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/components/Pickers/bottom_controll_bar.dart';
 import 'package:app/components/Pickers/smoke_color_wheel.dart';
 import 'package:app/main.dart';
@@ -197,14 +198,14 @@ class _StateColorPickerState extends State<StateColorPicker> {
           title: Text(title),
           content: content,
           actions: [
-            TextButton(
-              child: Text('CANCEL'),
-              textColor: Colors.red,
+            MButton(
+              label: 'CANCEL',
+              iconColor: Colors.red,
               onPressed: Navigator.of(context).pop,
             ),
-            TextButton(
-              child: Text('SUBMIT'),
-              textColor: _tempMainColor,
+            MButton(
+              label: 'SUBMIT',
+              iconColor: _tempMainColor!,
               onPressed: () {
                 setState(() => color = _tempMainColor);
                 var bloc = getIt.get<SmokeSessionBloc>();

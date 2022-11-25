@@ -741,9 +741,6 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
       return TextButton(
         onPressed: onSkipPress as void Function()?,
         child: renderSkipBtn!,
-        color: colorSkipBtn,
-        highlightColor: highlightColorSkipBtn,
-        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusSkipBtn!)),
       );
     }
   }
@@ -752,9 +749,6 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     return TextButton(
       onPressed: onDonePress as void Function()?,
       child: renderDoneBtn!,
-      color: colorDoneBtn,
-      highlightColor: highlightColorDoneBtn,
-      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusDoneBtn!)),
     );
   }
 
@@ -769,9 +763,6 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
           }
         },
         child: renderPrevBtn!,
-        color: colorPrevBtn,
-        highlightColor: highlightColorPrevBtn,
-        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusPrevBtn!)),
       );
     }
   }
@@ -784,9 +775,6 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
         }
       },
       child: renderNextBtn!,
-      color: colorDoneBtn,
-      highlightColor: highlightColorDoneBtn,
-      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusDoneBtn!)),
     );
   }
 
