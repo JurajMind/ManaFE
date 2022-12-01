@@ -428,9 +428,11 @@ packages:
   flare_flutter:
     dependency: "direct main"
     description:
-      name: flare_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: flare_flutter
+      ref: HEAD
+      resolved-ref: e90219f457602c61afee0b5f6cec2d66bd395e01
+      url: "https://github.com/tsinis/Flare-Flutter"
+    source: git
     version: "3.0.2"
   fluro:
     dependency: "direct main"

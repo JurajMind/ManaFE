@@ -75,10 +75,12 @@ dependencies:
   universal_html: ^2.0.8
   intro_slider:
     path: ./modules/flutter-intro-slider
-  flare_flutter: ^3.0.2
+  flare_flutter:
+    git:
+      url: https://github.com/tsinis/Flare-Flutter
+      path: flare_flutter/ 
   #qr_mobile_vision: ^1.0.0+3
   logger: ^1.1.0
-
   js: ^0.6.4
   google_sign_in: ^5.4.1
   google_sign_in_web: ^0.10.2
@@ -92,7 +94,11 @@ dependencies:
   darq: ^1.2.1
   collection: ^1.15.0-nullsafety.4
 
-  
+dependency_overrides:
+  flare_flutter:
+    git:
+      url: https://github.com/tsinis/Flare-Flutter
+      path: flare_flutter/  
   
 
 flutter_icons:
