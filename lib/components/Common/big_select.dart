@@ -17,7 +17,7 @@ class BigSelect extends StatelessWidget {
         children: <Widget>[
           Text(
             AppTranslations.of(context)!.text(labels![curentView!]),
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           Icon(
             Icons.arrow_drop_down,
@@ -62,7 +62,7 @@ class BigSelect extends StatelessWidget {
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 25.0),
-        child: Text(AppTranslations.of(context)!.text(labels![index]).toUpperCase(), style: Theme.of(context).textTheme.headline6),
+        child: Text(AppTranslations.of(context)!.text(labels![index]).toUpperCase(), style: Theme.of(context).textTheme.titleLarge),
       ),
     );
   }

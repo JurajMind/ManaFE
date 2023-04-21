@@ -51,7 +51,7 @@ class _AddGearPageState extends State<AddGearPage> {
                 children: <Widget>[
                   Text(
                     AppTranslations.of(context)!.text("gear.brand") + " :",
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   SizedBox(
                     width: 20,
@@ -59,7 +59,7 @@ class _AddGearPageState extends State<AddGearPage> {
                   InkWell(
                     child: Text(
                       selectedBrand == null ? 'select brand' : selectedBrand!.name!,
-                      style: Theme.of(context).textTheme.headline5,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     onTap: () {
                       selectBrand(context);
@@ -77,7 +77,7 @@ class _AddGearPageState extends State<AddGearPage> {
               children: <Widget>[
                 Text(
                   AppTranslations.of(context)!.text("gear.type") + " :",
-                  style: Theme.of(context).textTheme.headline5,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 SizedBox(
                   width: 20,
@@ -106,7 +106,7 @@ class _AddGearPageState extends State<AddGearPage> {
               children: <Widget>[
                 Text(
                   AppTranslations.of(context)!.text("gear.name") + " :",
-                  style: Theme.of(context).textTheme.headline5,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 SizedBox(
                   width: 20,

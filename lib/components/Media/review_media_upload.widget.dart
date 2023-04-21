@@ -28,7 +28,7 @@ class _ReviewMediaUploadState extends State<ReviewMediaUpload> {
         children: <Widget>[
           Text(
             'Media',
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(
             height: 8,

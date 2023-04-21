@@ -69,7 +69,7 @@ class _PlaceReviewState extends State<PlaceReview> {
                 decoration: new InputDecoration(
                     hintText: 'Place note',
                     labelText: 'Place note',
-                    labelStyle: Theme.of(context).textTheme.headline5,
+                    labelStyle: Theme.of(context).textTheme.headlineSmall,
                     enabledBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
                     focusedBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
                     icon: Icon(Icons.edit, color: Colors.white)),

@@ -45,12 +45,12 @@ class StatisticRecapWidget extends StatelessWidget {
       return Shimmer.fromColors(
         baseColor: Colors.grey[400]!,
         highlightColor: Colors.white,
-        child: Text(' Loading', style: Theme.of(context).textTheme.headline6),
+        child: Text(' Loading', style: Theme.of(context).textTheme.titleLarge),
       );
 
-    if (duration == null) return Text(' $value', style: Theme.of(context).textTheme.headline6);
+    if (duration == null) return Text(' $value', style: Theme.of(context).textTheme.titleLarge);
 
-    return Text(lines!.value1, style: Theme.of(context).textTheme.bodyText1);
+    return Text(lines!.value1, style: Theme.of(context).textTheme.bodyLarge);
   }
 
   Widget buildThirdLine(Tuple2<String, String>? lines, BuildContext context) {

@@ -402,7 +402,7 @@ class _PlacesMapPageState extends State<PlacesMapPage> {
 
     var oldPlaces = nearbyPlaces.value;
     var merge = <PlaceSimpleDto?>[];
-    if (oldPlaces != null) merge.addAll(oldPlaces);
+ merge.addAll(oldPlaces);
     merge.addAll(newPlaces);
 
     var a = List<PlaceSimpleDto?>.from(merge).distinct(((element) => element?.id ?? 0)).toList();

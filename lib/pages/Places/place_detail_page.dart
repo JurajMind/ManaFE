@@ -78,7 +78,7 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(Extensions.adress(place!.address), style: Theme.of(context).textTheme.headline5),
+                    Text(Extensions.adress(place!.address), style: Theme.of(context).textTheme.headlineSmall),
                     new StarRating(
                       size: 25.0,
                       rating: 2.0,
@@ -113,7 +113,7 @@ class _PlaceDetailState extends State<PlaceDetailPage> {
                 maxLines: 2,
                 overflow: TextOverflow.fade,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline6!.merge(TextStyle(
+                style: Theme.of(context).textTheme.titleLarge!.merge(TextStyle(
                       shadows: [
                         Shadow(
                             // bottomLeft

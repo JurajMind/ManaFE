@@ -143,7 +143,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                       })),
               Text(
                 item!.name ?? '',
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
               Text(' ' + item.brand!)
             ],
@@ -173,7 +173,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               AppTranslations.of(context)!.text('gear.suggestion'),
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
           Padding(
@@ -280,7 +280,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                   title: TextField(
                     decoration: InputDecoration(
                         labelText: 'Mix name',
-                        labelStyle: Theme.of(context).textTheme.headline5!.apply(color: Colors.grey)),
+                        labelStyle: Theme.of(context).textTheme.headlineSmall!.apply(color: Colors.grey)),
                     controller: controller,
                   ),
                   actions: <Widget>[

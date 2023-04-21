@@ -101,7 +101,7 @@ class ReservationRowHeader extends StatelessWidget {
               child: Text(
                 dateUtils.DateUtils.toStringShortTime(startTime!.add(new Duration(minutes: index * 30))),
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline1,
+                style: Theme.of(context).textTheme.displayLarge,
               ),
             ),
           );

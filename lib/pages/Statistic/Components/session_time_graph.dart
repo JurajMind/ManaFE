@@ -76,7 +76,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
 
     var cItems = List<BarChartGroupData>.from(items);
 
-    return cItems.orderBy((a) => a.x).toList() as List<BarChartGroupData>;
+    return cItems.orderBy((a) => a.x).toList();
   }
 
   @override
@@ -152,7 +152,7 @@ class SessionDayGraphState extends State<SessionDayGraph> {
                   ),
                   Text(
                     AppTranslations.of(context)!.text('profile.session_times'),
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ],
               ),

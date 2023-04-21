@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:app/app/app.dart';
 import 'package:app/components/Buttons/roundedButton.dart';
-import 'package:app/components/Common/circle_painter.dart';
 import 'package:app/components/SmokeSession/smoke_session_carousel.dart';
 import 'package:app/Helpers/helpers.dart';
 import 'package:app/main.dart';

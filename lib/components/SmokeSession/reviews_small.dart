@@ -22,7 +22,7 @@ class ReviewsSmall extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Text(AppTranslations.of(context)!.text('smoke_session.review'),
-                style: Theme.of(context).textTheme.headline6),
+                style: Theme.of(context).textTheme.titleLarge),
             IconButton(icon: Icon(Icons.add), onPressed: () => addSessionReview(context))
           ],
         ),

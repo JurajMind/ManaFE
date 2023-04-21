@@ -45,7 +45,7 @@ class ServerCall {
   String? M;
   List<String?>? A;
 
-  ServerCall({this.I: 0, this.H = "smokesessionhub", this.A, this.M});
+  ServerCall({this.I = 0, this.H = "smokesessionhub", this.A, this.M});
 
   String toJson() {
     var call = {};

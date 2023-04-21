@@ -34,7 +34,7 @@ class TobaccoReviewList extends StatelessWidget {
           if (label) ...{
             Text(
               AppTranslations.of(context)!.text('review.session_title'),
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
             )
           },
           NoReview(onAdd: () {}),
@@ -50,14 +50,14 @@ class TobaccoReviewList extends StatelessWidget {
               if (label) ...{
                 Text(
                   AppTranslations.of(context)!.text('review.session_title'),
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 )
               },
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text("Reviews :", style: Theme.of(context).textTheme.headline5),
+                  Text("Reviews :", style: Theme.of(context).textTheme.headlineSmall),
                   IconButton(
                     icon: Icon(Icons.add, size: 40),
                     onPressed: () {},

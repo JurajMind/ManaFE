@@ -35,7 +35,7 @@ class SessionReviewView extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 'Session:',
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
             MStarRating(
@@ -80,7 +80,7 @@ class SessionReviewView extends StatelessWidget {
                       Icon(Icons.delete),
                       Text(
                         "Remove review",
-                        style: Theme.of(context).textTheme.headline5,
+                        style: Theme.of(context).textTheme.headlineSmall,
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -105,7 +105,7 @@ class SessionReviewView extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Text(
           'Place:',
-          style: Theme.of(context).textTheme.headline5,
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
       MStarRating(
@@ -130,7 +130,7 @@ class SessionReviewView extends StatelessWidget {
         ),
         Text(
           'Media',
-          style: Theme.of(context).textTheme.headline5,
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
         SizedBox(
           height: 8,

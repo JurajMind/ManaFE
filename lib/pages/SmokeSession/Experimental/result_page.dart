@@ -50,20 +50,20 @@ class _ResultPageState extends State<ResultPage> {
                 itemBuilder: (context, index) {
                   var data = snapshot.data![index];
                   return ListTile(
-                      leading: Text((index + 1).toString(), style: Theme.of(context).textTheme.headline6),
+                      leading: Text((index + 1).toString(), style: Theme.of(context).textTheme.titleLarge),
                       title: Row(
                         children: <Widget>[
                           Expanded(
                               flex: 1,
                               child: Text(
                                 data.name!,
-                                style: Theme.of(context).textTheme.headline5,
+                                style: Theme.of(context).textTheme.headlineSmall,
                               )),
                           Expanded(
                               flex: 1,
                               child: Text(
                                 'Time:' + data.time!.toStringAsFixed(3),
-                                style: Theme.of(context).textTheme.headline5,
+                                style: Theme.of(context).textTheme.headlineSmall,
                               ))
                         ],
                       ));

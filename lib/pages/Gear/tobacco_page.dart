@@ -56,7 +56,7 @@ class _TobaccoPageState extends State<TobaccoPage> {
     }
     var theme = MTheme.of(context);
     return new Container(
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).colorScheme.background,
         child: Center(
           child: CustomScrollView(
             slivers: <Widget>[

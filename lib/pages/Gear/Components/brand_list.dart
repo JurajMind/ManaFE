@@ -43,7 +43,7 @@ class _BrandListState extends State<BrandList> {
         ),
         Text(
           widget.section!.title!,
-          style: Theme.of(context).textTheme.headline3,
+          style: Theme.of(context).textTheme.displaySmall,
         ),
         !searchMode
             ? Row(
@@ -89,7 +89,7 @@ class _BrandListState extends State<BrandList> {
                           this.searchString = data;
                         });
                       },
-                      decoration: InputDecoration(hintText: 'Search', border: InputBorder.none, labelStyle: Theme.of(context).textTheme.headline4),
+                      decoration: InputDecoration(hintText: 'Search', border: InputBorder.none, labelStyle: Theme.of(context).textTheme.headlineMedium),
                     ),
                   )),
                   Flexible(

@@ -38,7 +38,7 @@ class PuffTimeText extends StatelessWidget {
             child: SizedBox(
               height: 38.0,
               child: Text(dependencies.alternativeText,
-                  style: Theme.of(context).textTheme.headline4),
+                  style: Theme.of(context).textTheme.headlineMedium),
             ))
       ],
     );
@@ -87,7 +87,7 @@ class HundredsState extends State<Hundreds> {
   @override
   Widget build(BuildContext context) {
     String hundredsStr = (hundreds! % 100).toString().padLeft(2, '0');
-    return new Text(hundredsStr, style: Theme.of(context).textTheme.headline4);
+    return new Text(hundredsStr, style: Theme.of(context).textTheme.headlineMedium);
   }
 
   @override
@@ -129,7 +129,7 @@ class MinutesAndSecondsState extends State<MinutesAndSeconds> {
   Widget build(BuildContext context) {
     String secondsStr = (seconds).toString().padLeft(1, '0');
     return new Text('$secondsStr.',
-        style: Theme.of(context).textTheme.headline4);
+        style: Theme.of(context).textTheme.headlineMedium);
   }
 
   @override

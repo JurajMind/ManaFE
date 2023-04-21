@@ -102,7 +102,7 @@ class EmptyCell extends StatelessWidget {
       height: 100,
       child: Text(
         data!.size.toString(),
-        style: Theme.of(context).textTheme.headline1!.apply(color: Colors.red),
+        style: Theme.of(context).textTheme.displayLarge!.apply(color: Colors.red),
       ),
     );
   }

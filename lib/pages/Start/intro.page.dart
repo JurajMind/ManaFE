@@ -30,7 +30,7 @@ class _IntroPageState extends State<IntroPage> {
         new Slide(
           widgetTitle: Text(
             "Set your mood!",
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
           ),
           centerWidget: Container(
@@ -44,7 +44,7 @@ class _IntroPageState extends State<IntroPage> {
         new Slide(
           widgetTitle: Text(
             "Track smart!",
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
           ),
           centerWidget: Container(
@@ -58,7 +58,7 @@ class _IntroPageState extends State<IntroPage> {
         new Slide(
           widgetTitle: Text(
             "Challenge your friends!",
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
           ),
           centerWidget: Container(

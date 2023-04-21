@@ -46,7 +46,7 @@ class SessionList extends StatelessWidget {
                 children: <Widget>[
                   new Text(
                     'Sessions',
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(
                     width: 4,
@@ -59,7 +59,7 @@ class SessionList extends StatelessWidget {
           if (data.length == 0)
             Text(
               AppTranslations.of(context)!.text('smoke_session.no_smoke_session'),
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
           if (data.length > 0) ...{
             ...data.take(sc).map((s) => SmokeSessionListItem(session: s)),

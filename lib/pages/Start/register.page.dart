@@ -48,7 +48,7 @@ class _RegistryPageState extends State<RegisterPage> {
         elevation: 0.0,
         title: Text(
           'Sign up',
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
       body: Form(
@@ -231,7 +231,7 @@ class _RegistryPageState extends State<RegisterPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                         child: Text(
                           AppTranslations.of(context)!.text("Create account"),
-                          style: Theme.of(context).textTheme.headline6!.apply(color: Colors.black, fontSizeDelta: -7),
+                          style: Theme.of(context).textTheme.titleLarge!.apply(color: Colors.black, fontSizeDelta: -7),
                         ),
                       ),
                       onPressed: () => register(context),

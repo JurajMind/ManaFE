@@ -1,9 +1,7 @@
 import 'package:app/components/StarRating/star_ratting.dart';
 import 'package:app/const/theme.dart';
-import 'package:app/pages/Mixology/mix_detail_page.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 

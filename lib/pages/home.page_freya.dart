@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:app/app/app.dart';
-import 'package:app/components/icon_button_title.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
@@ -22,13 +21,11 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:openapi/openapi.dart';
 
 import '../components/Buttons/freya_circle_button.dart';
-import 'Gear/gear_scroll_cross.dart';
 import 'Mixology/mixology_list.dart';
 
 import 'SmokeSession/Components/gradiend_color_wheel_rotate.dart';
 import 'SmokeSession/smoke_session_page.dart';
 import 'Statistic/Detail/smoke_session_detail_page.dart';
-import 'startSmokeSession.page.dart';
 import 'startSmokeSession_freya.dart';
 
 typedef RouteWidgetBuilder = Widget? Function(BuildContext context, Object? argument);
@@ -171,6 +168,7 @@ class _FreyaHomePageState extends State<FreyaHomePage> with RouteAware {
         var signal = new SignalR();
         signal.checkConection();
       }
+      return null;
     });
   }
 

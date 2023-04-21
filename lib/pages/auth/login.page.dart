@@ -83,9 +83,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                         new TextFormField(
                             autofocus: true,
                             keyboardType: TextInputType.emailAddress,
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                             decoration: new InputDecoration(
-                                labelStyle: Theme.of(context).textTheme.headline6,
+                                labelStyle: Theme.of(context).textTheme.titleLarge,
                                 enabledBorder:
                                     new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
                                 focusedBorder:
@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                               data.email = value;
                             }),
                         new TextFormField(
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                             obscureText: !showPassword,
                             focusNode: passwordFocusNode,
                             decoration: new InputDecoration(
@@ -119,7 +119,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                     });
                                   },
                                 ),
-                                labelStyle: Theme.of(context).textTheme.headline6,
+                                labelStyle: Theme.of(context).textTheme.titleLarge,
                                 enabledBorder:
                                     new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
                                 focusedBorder:
@@ -167,7 +167,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                           child: new TextButton(
                             child: new Text(
                               AppTranslations.of(context)!.text("login.forgot_password") + " ?",
-                              style: Theme.of(context).textTheme.headline5,
+                              style: Theme.of(context).textTheme.headlineSmall,
                             ),
                             onPressed: () {
                               navigate(context, 'auth/forgotpassword');

@@ -45,7 +45,7 @@ class AboutPlaceWidget extends StatelessWidget {
                               child: Center(
                                 child: Text(
                                   snapshot.data!.shortDescriptions![lang] ?? 'No description',
-                                  style: Theme.of(context).textTheme.headline5!.apply(color: Colors.black),
+                                  style: Theme.of(context).textTheme.headlineSmall!.apply(color: Colors.black),
                                 ),
                               ),
                             ),

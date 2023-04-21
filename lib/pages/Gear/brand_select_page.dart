@@ -191,7 +191,7 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
                   ),
                   Text(
                     AppTranslations.of(context)!.text("gear.$display"),
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox(
                     width: 40,
@@ -222,7 +222,7 @@ class _BrandTypeSelectState extends State<BrandTypeSelect> {
                       decoration: InputDecoration(
                           hintText: 'Search',
                           border: InputBorder.none,
-                          labelStyle: Theme.of(context).textTheme.headline4),
+                          labelStyle: Theme.of(context).textTheme.headlineMedium),
                     ),
                   )),
                   Flexible(

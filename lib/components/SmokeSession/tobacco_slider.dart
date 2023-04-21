@@ -247,7 +247,7 @@ class _FatSliderState extends State<FatSlider> with SingleTickerProviderStateMix
 
   bool get _isInteractive => widget.onChanged != null;
 
-  Widget _buildBackgraund(BuildContext context, {double? value, Alignment? alignment, required EdgeInsets padding}) {
+  Widget _buildBackgraund(BuildContext context, {required EdgeInsets padding}) {
     return Padding(
       padding: padding,
       child: Container(),
@@ -255,7 +255,7 @@ class _FatSliderState extends State<FatSlider> with SingleTickerProviderStateMix
   }
 
   TextStyle _currentValTextStyle(BuildContext context) {
-    return widget.valueTextStyle ?? Theme.of(context).textTheme.subtitle1!.copyWith(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10.0);
+    return widget.valueTextStyle ?? Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10.0);
   }
 
   @override

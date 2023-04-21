@@ -29,7 +29,7 @@ class _AllGearPageState extends State<AllGearPage> {
                 height: 40,
                 width: 10,
               ),
-              Text(widget.label!, style: Theme.of(context).textTheme.headline6),
+              Text(widget.label!, style: Theme.of(context).textTheme.titleLarge),
             ],
           )),
       body: SingleChildScrollView(

@@ -112,11 +112,11 @@ class _MyDialogState extends State<_MyDialog> {
           const SizedBox(width: 15.0),
           Expanded(
             child: _progressDialogType == ProgressDialogType.Normal
-                ? Text(_dialogMessage!, textAlign: TextAlign.justify, style: Theme.of(context).textTheme.headline5)
+                ? Text(_dialogMessage!, textAlign: TextAlign.justify, style: Theme.of(context).textTheme.headlineSmall)
                 : Stack(
                     children: <Widget>[
                       Positioned(
-                        child: Text(_dialogMessage!, style: Theme.of(context).textTheme.headline5),
+                        child: Text(_dialogMessage!, style: Theme.of(context).textTheme.headlineSmall),
                         top: 35.0,
                       ),
                       Positioned(

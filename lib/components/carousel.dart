@@ -145,7 +145,7 @@ class _CarrousselState extends State<Carroussel> {
                     tag: 'add_new_place_label',
                     child: Text(
                       AppTranslations.of(context)!.text("reservations.add_new_place"),
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                       textAlign: TextAlign.center,
                     ),
                   )
@@ -190,7 +190,7 @@ class _CarrousselState extends State<Carroussel> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   new Text(place.name!,
-                      style: Theme.of(context).textTheme.headline6!.merge(
+                      style: Theme.of(context).textTheme.titleLarge!.merge(
                             TextStyle(
                               shadows: [
                                 Shadow(
@@ -213,7 +213,7 @@ class _CarrousselState extends State<Carroussel> {
                             ),
                           )),
                   new Text(Extensions.adress(place.address),
-                      style: Theme.of(context).textTheme.subtitle1!.merge(
+                      style: Theme.of(context).textTheme.titleMedium!.merge(
                             TextStyle(
                               shadows: [
                                 Shadow(

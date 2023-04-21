@@ -12,7 +12,7 @@ class UsageItemListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var style = Theme.of(context).textTheme.headline5;
+    var style = Theme.of(context).textTheme.headlineSmall;
     return InkWell(
       onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
         return new PipeAccesoryPage(pipeAccesoryId: item.id);

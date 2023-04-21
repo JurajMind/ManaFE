@@ -30,7 +30,7 @@ class PipeAccesoryListItem extends StatelessWidget {
             tag: '${pipeAccesory!.id}_name',
             child: SizedBox(height: 60.0, width: 60.0, child: Extensions.accesoryPicture(pipeAccesory!)),
           ),
-          title: Text(this.pipeAccesory!.name!, style: Theme.of(context).textTheme.headline5),
+          title: Text(this.pipeAccesory!.name!, style: Theme.of(context).textTheme.headlineSmall),
           subtitle: Text(pipeAccesory!.brand!, style: Theme.of(context).textTheme.bodyMedium),
         ),
       ),

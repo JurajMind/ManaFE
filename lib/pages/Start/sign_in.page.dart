@@ -1,5 +1,6 @@
 import 'package:app/Helpers/helpers.dart';
 import 'package:app/app/app.widget.dart';
+import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/main.dart';
 import 'package:app/support/validators/email.validator.dart';
 import 'package:app/support/validators/max.validator.dart';
@@ -68,7 +69,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
       appBar: new AppBar(
         title: new Text(
           AppTranslations.of(context)!.text("login.sign_in").toUpperCase(),
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
       body: Center(
@@ -197,14 +198,10 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                                     ],
                                   ),
                                 )
-                              : new MaterialButton(
-                                  child: Text(
-                                    AppTranslations.of(context)!.text("login.log_in").toUpperCase(),
-                                    style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.black),
-                                  ),
+                              : new MButton(
+                                  label: AppTranslations.of(context)!.text("login.log_in").toUpperCase(),
                                   onPressed: () => this.submit(context),
-                                  color: Colors.white,
-                                  shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(24.0)),
+                                  dark: false,
                                 ),
                           margin: new EdgeInsets.only(top: 20.0, bottom: 20),
                         ),

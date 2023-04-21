@@ -22,11 +22,11 @@ class CalendarTile extends StatelessWidget {
       this.dateStyles,
       this.dayOfWeek,
       this.dayOfWeekStyles,
-      this.isDayOfWeek: false,
-      this.isSelected: false,
+      this.isDayOfWeek = false,
+      this.isSelected = false,
       this.eventCount,
-      this.isTodayhighlighted: false,
-      this.doubleToNull: false});
+      this.isTodayhighlighted = false,
+      this.doubleToNull = false});
 
   BoxDecoration getDecorator(BuildContext context) {
     if (isSelected) {

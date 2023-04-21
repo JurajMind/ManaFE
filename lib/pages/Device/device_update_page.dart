@@ -119,7 +119,7 @@ class DeviceUpdateListItem extends StatelessWidget {
               'v ${Extensions.deviceVersion(update!.version!)}',
               style: Theme.of(context)
                   .textTheme
-                  .headline5!
+                  .headlineSmall!
                   .apply(color: device!.version! >= update!.version! ? Colors.white : Colors.green),
             ),
             title: Text(update!.releseNote!),

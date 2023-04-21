@@ -28,10 +28,10 @@ class Marker {
     this.title,
     this.latitude,
     this.longitude, {
-    this.rotation: 0.0,
+    this.rotation = 0.0,
     this.markerIcon,
-    this.color: _defaultColor,
-    this.draggable: false,
+    this.color = _defaultColor,
+    this.draggable = false,
   });
 
   @override

@@ -34,7 +34,7 @@ class GearUsageItem extends StatelessWidget {
                     height: 40,
                     width: 10,
                   ),
-                  Text(label!, style: Theme.of(context).textTheme.headline6),
+                  Text(label!, style: Theme.of(context).textTheme.titleLarge),
                 ],
               )),
             ),

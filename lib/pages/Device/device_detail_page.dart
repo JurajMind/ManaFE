@@ -56,7 +56,7 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
         return true;
       },
       child: Container(
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).colorScheme.background,
         child: CustomScrollView(
           controller: controller,
           slivers: <Widget>[
@@ -155,7 +155,7 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                       Expanded(
                         flex: 2,
                         child: Text(AppTranslations.of(context)!.text("device.device_picture") + ' : ',
-                            style: Theme.of(context).textTheme.headline5),
+                            style: Theme.of(context).textTheme.headlineSmall),
                       ),
                       Expanded(
                           flex: 1,
@@ -198,14 +198,14 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                         flex: 2,
                         child: Text(
                           AppTranslations.of(context)!.text("device.software_version") + ' : ',
-                          style: Theme.of(context).textTheme.headline5,
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
                       ),
                       Expanded(
                         flex: 1,
                         child: Text(
                           'v ${Extensions.deviceVersion(widget.device!.version!)}',
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ),
                       Expanded(
@@ -354,11 +354,11 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
         return AlertDialog(
           title: new Text(
             AppTranslations.of(context)!.text("device.remove_device"),
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
           content: new Text(
             AppTranslations.of(context)!.text("device.remove_device_dialog"),
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog

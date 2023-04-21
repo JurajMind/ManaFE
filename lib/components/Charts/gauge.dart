@@ -51,7 +51,7 @@ class GaugeChart extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 "$value/$maxValue",
-                style: Theme.of(context).textTheme.headline4,
+                style: Theme.of(context).textTheme.headlineMedium,
               )),
         ),
       ],

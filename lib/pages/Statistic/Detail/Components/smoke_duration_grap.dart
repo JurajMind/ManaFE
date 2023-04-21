@@ -131,7 +131,7 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
                     ),
                     Text(
                       "Distribution",
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],
                 ),
@@ -230,7 +230,7 @@ class SmokeDurationGraphShimer extends StatelessWidget {
                     ),
                     Text(
                       "Distribution",
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],
                 ),

@@ -306,7 +306,7 @@ class PlacePickerState extends State<PlacePicker> {
       ),
     );
 
-    Overlay.of(context)!.insert(this.overlayEntry!);
+    Overlay.of(context).insert(this.overlayEntry!);
 
     autoCompleteSearch(place);
   }
@@ -401,7 +401,7 @@ class PlacePickerState extends State<PlacePicker> {
       ),
     );
 
-    Overlay.of(context)!.insert(this.overlayEntry!);
+    Overlay.of(context).insert(this.overlayEntry!);
   }
 
   /// Utility function to get clean readable name of a location. First checks
@@ -654,11 +654,11 @@ class SearchInputState extends State<SearchInput> {
           ),
           Expanded(
             child: TextField(
-              style: Theme.of(context).textTheme.headline5!.apply(color: Colors.black),
+              style: Theme.of(context).textTheme.headlineSmall!.apply(color: Colors.black),
               decoration: InputDecoration(
                 hintText: "Search address",
                 fillColor: Colors.black,
-                hintStyle: Theme.of(context).textTheme.headline5!.apply(color: Colors.black),
+                hintStyle: Theme.of(context).textTheme.headlineSmall!.apply(color: Colors.black),
                 border: InputBorder.none,
               ),
               controller: this.editController,

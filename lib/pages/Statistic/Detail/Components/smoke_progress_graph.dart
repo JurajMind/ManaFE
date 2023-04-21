@@ -74,7 +74,7 @@ class SmokeProgressGraphState extends State<SmokeProgressGraph> {
                   ),
                   Text(
                     "Progress",
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ],
               ),
@@ -221,7 +221,7 @@ class SmokeProgressGraphShimer extends StatelessWidget {
                     ),
                     Text(
                       "Progress",
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],
                 ),

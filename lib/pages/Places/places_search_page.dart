@@ -133,7 +133,7 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                                               decoration: InputDecoration(
                                                   hintText: 'Search',
                                                   border: InputBorder.none,
-                                                  labelStyle: Theme.of(context).textTheme.headline4),
+                                                  labelStyle: Theme.of(context).textTheme.headlineMedium),
                                             ),
                                           )),
                                         ],
@@ -169,7 +169,7 @@ class _PlacesSearchPageState extends State<PlacesSearchPage> {
                                               child: Padding(
                                                 padding: const EdgeInsets.only(left: 4.0),
                                                 child: Text(this.currentLocation!,
-                                                    style: Theme.of(context).textTheme.headline5),
+                                                    style: Theme.of(context).textTheme.headlineSmall),
                                               ),
                                             )),
                                       ],

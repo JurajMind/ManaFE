@@ -64,7 +64,7 @@ class Devices extends StatelessWidget {
                         leading: Container(width: 60, child: Center(child: Icon(Icons.add))),
                         title: Text(
                           AppTranslations.of(context)!.text("device.add_device"),
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.titleLarge,
                         )),
                   );
                 }
@@ -83,7 +83,7 @@ class Devices extends StatelessWidget {
                     trailing: DeviceOnlineDot(device.isOnline),
                     title: Text(
                       device.name!,
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
                 );

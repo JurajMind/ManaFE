@@ -167,7 +167,7 @@ class MixDetailPageState extends State<MixDetailPage> {
                       width: 200,
                       child: TextField(
                         autofocus: true,
-                        style: Theme.of(context).textTheme.headline5,
+                        style: Theme.of(context).textTheme.headlineSmall,
                         controller: nameController,
                         decoration: InputDecoration(
                             border: InputBorder.none,
@@ -255,9 +255,9 @@ class MixDetailPageState extends State<MixDetailPage> {
                                         .push(new MaterialPageRoute(builder: (BuildContext context) {
                                       return TobaccoPage(tobacco: Convertor.getPipeAccesory(f.tobacco!));
                                     })),
-                                    title: Text(f.tobacco!.name!, style: Theme.of(context).textTheme.headline5),
+                                    title: Text(f.tobacco!.name!, style: Theme.of(context).textTheme.headlineSmall),
                                     trailing: Text(f.fraction.toString() + ' g',
-                                        style: Theme.of(context).textTheme.headline5),
+                                        style: Theme.of(context).textTheme.headlineSmall),
                                     subtitle: Text(f.tobacco!.brand!, style: Theme.of(context).textTheme.bodyMedium),
                                   ));
                             }).values,

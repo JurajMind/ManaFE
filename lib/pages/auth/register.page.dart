@@ -87,13 +87,13 @@ class _RegisterPageState extends State<RegisterPage> {
         children: <Widget>[
           ShadowText(
             AppTranslations.of(context)!.text("login.email").toUpperCase(),
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.titleLarge,
             textScaleFactor: 1.0,
             softWrap: true,
           ),
           SizedBox(height: 48.0),
           new TextFormField(
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.headlineSmall,
               autofocus: true,
               autovalidateMode: _emailAutoValidate,
               controller: emailController,
@@ -105,7 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: new InputDecoration(
                   hintText: AppTranslations.of(context)!.text("login.email"),
                   labelText: AppTranslations.of(context)!.text("login.email"),
-                  labelStyle: Theme.of(context).textTheme.headline4,
+                  labelStyle: Theme.of(context).textTheme.headlineMedium,
                   enabledBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
                   focusedBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
                   icon: Icon(Icons.email, color: Colors.white)),
@@ -168,11 +168,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   style: Theme.of(context)
                       .copyWith(
                           textTheme: TextTheme(
-                              headline5: TextStyle(
+                              headlineSmall: TextStyle(
                         fontSize: 16.0,
                       )))
                       .textTheme
-                      .headline5,
+                      .headlineSmall,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   textScaleFactor: 1.0,
@@ -231,7 +231,7 @@ class _RegisterPageState extends State<RegisterPage> {
         children: <Widget>[
           ShadowText(
             AppTranslations.of(context)!.text('login.name'),
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineSmall,
             textScaleFactor: 1.0,
             softWrap: true,
           ),
@@ -240,13 +240,13 @@ class _RegisterPageState extends State<RegisterPage> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: new TextFormField(
                 autofocus: false,
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.headlineSmall,
                 controller: nameController,
                 keyboardType: TextInputType.text,
                 decoration: new InputDecoration(
                     hintText: AppTranslations.of(context)!.text('login.name_hint'),
                     labelText: AppTranslations.of(context)!.text('login.name'),
-                    labelStyle: Theme.of(context).textTheme.headline4,
+                    labelStyle: Theme.of(context).textTheme.headlineMedium,
                     enabledBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
                     focusedBorder: new UnderlineInputBorder(borderSide: new BorderSide(color: Colors.white)),
                     icon: Icon(FontAwesomeIcons.userCircle, color: Colors.white)),
@@ -290,13 +290,13 @@ class _RegisterPageState extends State<RegisterPage> {
         children: <Widget>[
           ShadowText(
             AppTranslations.of(context)!.text("login.password").toUpperCase(),
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineSmall,
             textScaleFactor: 1.0,
             softWrap: true,
           ),
           SizedBox(height: 48.0),
           new TextFormField(
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.headlineSmall,
               autovalidateMode: _passwordAutoValidate,
               autofocus: true,
               controller: passwordController,
@@ -328,7 +328,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 data.password = value!;
               }),
           new TextFormField(
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.headlineSmall,
               autovalidateMode: _passwordAutoValidate,
               autofocus: true,
               controller: password2Controller,

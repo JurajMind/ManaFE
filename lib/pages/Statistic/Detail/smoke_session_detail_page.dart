@@ -80,9 +80,9 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage> with Tick
     }
 
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-          backgroundColor: Theme.of(context).backgroundColor.withAlpha(160),
+          backgroundColor: Theme.of(context).colorScheme.background.withAlpha(160),
           centerTitle: true,
           actions: <Widget>[
             IconButton(
@@ -220,7 +220,7 @@ class HrWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text('Heart rate monitor', style: Theme.of(context).textTheme.headline6),
+              Text('Heart rate monitor', style: Theme.of(context).textTheme.titleLarge),
               SizedBox(width: 8),
               Icon(FontAwesomeIcons.heartbeat)
             ],
@@ -232,11 +232,11 @@ class HrWidget extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     'Resting HR',
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   Text(
                     haveData ? '${60 + random.nextInt(12)} bpm' : '--- bpm',
-                    style: Theme.of(context).textTheme.headline5!.apply(color: Colors.red),
+                    style: Theme.of(context).textTheme.headlineSmall!.apply(color: Colors.red),
                   )
                 ],
               ),
@@ -244,11 +244,11 @@ class HrWidget extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     'Buzz HR',
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   Text(
                     haveData ? '${80 + random.nextInt(30)} bpm' : '--- bpm',
-                    style: Theme.of(context).textTheme.headline5!.apply(color: Colors.red),
+                    style: Theme.of(context).textTheme.headlineSmall!.apply(color: Colors.red),
                   )
                 ],
               )

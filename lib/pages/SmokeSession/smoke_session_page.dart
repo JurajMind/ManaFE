@@ -68,6 +68,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
       if (msg == AppLifecycleState.resumed.toString()) {
         getIt.get<SmokeSessionBloc>().loadSessionData();
       }
+      return null;
     });
   }
 
@@ -181,7 +182,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
           constraints: BoxConstraints(maxWidth: 800),
           decoration: BoxDecoration(
             borderRadius: new BorderRadius.circular(10.0),
-            color: Theme.of(context).backgroundColor.withAlpha(160),
+            color: Theme.of(context).colorScheme.background.withAlpha(160),
           ),
           child: asyncSnapshot.data != null
               ? Row(
@@ -211,7 +212,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                           SinceTimer(
                             start: start,
                             pufCount: asyncSnapshot.data!.pufCount,
-                            style: Theme.of(context).textTheme.headline4,
+                            style: Theme.of(context).textTheme.headlineMedium,
                           ),
                           Text(
                             durationString,
@@ -230,7 +231,7 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
     return Center(
       child: Container(
         constraints: BoxConstraints(maxWidth: 1200),
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).colorScheme.background,
         child: CustomScrollView(
           controller: scrollController,
           shrinkWrap: false,
@@ -255,8 +256,8 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
                               colors: [
-                                Theme.of(context).backgroundColor.withAlpha(160),
-                                Theme.of(context).backgroundColor
+                                Theme.of(context).colorScheme.background.withAlpha(160),
+                                Theme.of(context).colorScheme.background
                               ], // whitish to gray
                               tileMode: TileMode.repeated, // repeats the gradient over the canvas
                             ),
@@ -365,24 +366,24 @@ class _SmokeSessionPage extends State<SmokeSessionPage> {
                 new ListTile(
                   leading: new Icon(FontAwesomeIcons.vial),
                   title: new Text(AppTranslations.of(context)!.text("smoke_session.experiments"),
-                      style: Theme.of(context).textTheme.headline5),
+                      style: Theme.of(context).textTheme.headlineSmall),
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ExperimentalPage())),
                 ),
                 new ListTile(
                   leading: new Icon(Icons.refresh),
                   title: new Text(AppTranslations.of(context)!.text("device.restart"),
-                      style: Theme.of(context).textTheme.headline5),
+                      style: Theme.of(context).textTheme.headlineSmall),
                   onTap: () => _restartDialog(code),
                 ),
                 new ListTile(
                     leading: new Icon(FontAwesomeIcons.powerOff),
                     title: new Text(AppTranslations.of(context)!.text("smoke_session.end_session"),
-                        style: Theme.of(context).textTheme.headline5),
+                        style: Theme.of(context).textTheme.headlineSmall),
                     onTap: () => _endDialog(context)),
                 new ListTile(
                     leading: new Icon(FontAwesomeIcons.reply),
                     title: new Text(AppTranslations.of(context)!.text("smoke_session.leave_session"),
-                        style: Theme.of(context).textTheme.headline5),
+                        style: Theme.of(context).textTheme.headlineSmall),
                     onTap: () {
                       var bloc = getIt.get<SmokeSessionBloc>();
                       bloc.unAssignSession().then((data) {
@@ -497,7 +498,7 @@ class HeaderItem extends StatelessWidget {
           Text(label!, style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.grey)),
           Text(
             data!,
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
         ],
       ),

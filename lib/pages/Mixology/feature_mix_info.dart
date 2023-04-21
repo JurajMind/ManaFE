@@ -27,7 +27,7 @@ class FeatureMixInfo extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     AppBar(
-                      backgroundColor: Theme.of(context).backgroundColor,
+                      backgroundColor: Theme.of(context).colorScheme.background,
                       elevation: 20,
                       title: Hero(tag: "mix_brnad_${simple!.name}", child: Text(simple!.name!)),
                       centerTitle: true,

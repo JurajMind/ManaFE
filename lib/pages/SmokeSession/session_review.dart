@@ -57,12 +57,12 @@ class _SessionReviewState extends State<SessionReview> {
                     Text(
                       'Tobacco not filled, please fill tobacco metadata for precision data:',
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline5,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   },
                   Text(
                     'Session:',
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   MStarRating(
                     title: 'Taste',
@@ -95,7 +95,7 @@ class _SessionReviewState extends State<SessionReview> {
                       decoration: new InputDecoration(
                         hintText: 'Smoke note',
                         labelText: 'Add note',
-                        labelStyle: Theme.of(context).textTheme.headline5,
+                        labelStyle: Theme.of(context).textTheme.headlineSmall,
                         border: InputBorder.none,
                       ),
                     ),
@@ -169,7 +169,7 @@ class _SessionReviewState extends State<SessionReview> {
       ),
       Text(
         'Place:',
-        style: Theme.of(context).textTheme.headline5,
+        style: Theme.of(context).textTheme.headlineSmall,
       ),
       MStarRating(
         title: 'Ambience',
@@ -202,7 +202,7 @@ class _SessionReviewState extends State<SessionReview> {
             decoration: new InputDecoration(
               hintText: 'Place note',
               labelText: 'Place note',
-              labelStyle: Theme.of(context).textTheme.headline5,
+              labelStyle: Theme.of(context).textTheme.headlineSmall,
               border: InputBorder.none,
             )),
       ),

@@ -66,7 +66,7 @@ class _PipeAccesoryPageState extends State<PipeAccesoryPage> {
       );
     }
     return new Container(
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).colorScheme.background,
         child: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(

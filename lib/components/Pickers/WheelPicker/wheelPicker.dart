@@ -184,7 +184,7 @@ class WheelPicker extends StatelessWidget {
 
   Widget _stringListView(ThemeData themeData) {
     TextStyle? defaultStyle = themeData.textTheme.bodyMedium;
-    TextStyle selectedStyle = themeData.textTheme.headline6!.copyWith(color: themeData.colorScheme.secondary);
+    TextStyle selectedStyle = themeData.textTheme.titleLarge!.copyWith(color: themeData.colorScheme.secondary);
 
     int itemCount = stringItems!.length + 3;
 
@@ -229,7 +229,7 @@ class WheelPicker extends StatelessWidget {
 
   Widget _integerListView(ThemeData themeData) {
     TextStyle? defaultStyle = themeData.textTheme.bodyMedium;
-    TextStyle selectedStyle = themeData.textTheme.headline6!.copyWith(color: themeData.colorScheme.secondary);
+    TextStyle selectedStyle = themeData.textTheme.titleLarge!.copyWith(color: themeData.colorScheme.secondary);
 
     int itemCount = (maxValue - minValue) ~/ step + 3;
 

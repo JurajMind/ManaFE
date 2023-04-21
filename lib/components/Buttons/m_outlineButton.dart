@@ -1,8 +1,12 @@
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+
+import '../../app/app.dart';
 
 class MButton extends StatelessWidget {
   final IconData? icon;
+  final bool dark;
 
   final Color iconColor;
   final String? label;
@@ -19,10 +23,14 @@ class MButton extends StatelessWidget {
     this.uploading,
     this.width,
     this.maxWidth,
+    this.dark = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (App.appType == AppType.freya) {
+      return _buildFreyaButton(context);
+    }
     var shape = new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0));
     var side = BorderSide(color: onPressed != null ? Colors.white : Colors.grey, width: 2);
 
@@ -67,6 +75,27 @@ class MButton extends StatelessWidget {
           ),
         ),
         onPressed: onPressed,
+      ),
+    );
+  }
+
+  Widget _buildFreyaButton(BuildContext context) {
+    return NeumorphicButton(
+      style: NeumorphicStyle(
+          shape: NeumorphicShape.convex,
+          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(100)),
+          depth: 8,
+          lightSource: LightSource.topLeft,
+          color: dark ? Colors.black : Colors.white),
+      onPressed: onPressed,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          constraints: BoxConstraints(minWidth: width ?? 0, maxWidth: maxWidth ?? double.infinity),
+          child: Text(AppTranslations.of(context)!.text(label),
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: dark ? Colors.white : Colors.black)),
+        ),
       ),
     );
   }

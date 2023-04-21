@@ -64,9 +64,9 @@ class IconButtonTitle extends StatelessWidget {
   /// or an [ImageIcon].
   const IconButtonTitle(
       {Key? key,
-      this.iconSize: 24.0,
-      this.padding: const EdgeInsets.all(4.0),
-      this.alignment: Alignment.center,
+      this.iconSize = 24.0,
+      this.padding = const EdgeInsets.all(4.0),
+      this.alignment = Alignment.center,
       required this.icon,
       required this.text,
       this.color,

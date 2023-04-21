@@ -170,6 +170,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
         var signal = new SignalR();
         signal.checkConection();
       }
+      return null;
     });
   }
 
@@ -336,7 +337,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
             top: false,
             child: Stack(children: <Widget>[
               Material(
-                color: Theme.of(context).backgroundColor,
+                color: Theme.of(context).colorScheme.background,
                 child: new IndexedStack(
                   index: _currentIndex,
                   children: <Widget>[

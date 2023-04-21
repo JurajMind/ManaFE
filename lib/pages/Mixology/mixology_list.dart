@@ -145,7 +145,7 @@ class _PaggingMixListViewState extends State<PaggingMixListView> {
               children: <Widget>[
                 Text(
                   'Is empty here :(',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 SizedBox(
                   height: 8,
@@ -153,14 +153,14 @@ class _PaggingMixListViewState extends State<PaggingMixListView> {
                 if (widget.mixCreator == "me") ...{
                   Text(
                     'Try add new mix',
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   IconButton(icon: Icon(Icons.add), onPressed: () => widget.showTobaccoDialog!())
                 },
                 if (widget.mixCreator == "favorite")
                   Text(
                     'Try add your mix to favorite',
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   )
               ],
             ));

@@ -143,7 +143,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                           new ReservationStatusIcon(reservation: widget.reservation),
                                           Text(
                                             ReservationStatusIcon.stateToText(widget.reservation!.status, context),
-                                            style: Theme.of(context).textTheme.headline5,
+                                            style: Theme.of(context).textTheme.headlineSmall,
                                           )
                                         ],
                                       ),
@@ -181,12 +181,12 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                                                 Text(simplePlace.name!,
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .headline6!
+                                                        .titleLarge!
                                                         .merge(TextStyle(color: Colors.black))),
                                                 Text(Extensions.adress(simplePlace.address),
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .headline5!
+                                                        .headlineSmall!
                                                         .merge(TextStyle(color: Colors.black))),
                                                 new Row(
                                                   children: <Widget>[
@@ -225,7 +225,7 @@ class _ReservationDetailState extends State<ReservationDetailPage> {
                           title: Center(
                               child: Text(
                             '${AppTranslations.of(context)!.text("reservations.i_will_be_late")} ${(widget.reservation!.lateDuration != 0 && widget.reservation!.lateDuration != null) ? widget.reservation!.lateDuration.toString() + ' minutes' : ''}',
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                           )),
                           leading: !lateReservationLoading
                               ? Icon(Icons.watch_later, color: Colors.white)

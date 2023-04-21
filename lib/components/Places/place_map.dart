@@ -69,7 +69,7 @@ class PlaceMap extends StatelessWidget {
                       color: Colors.black,
                     ),
                     DistanceWidget(distance,
-                        textStyle: Theme.of(context).textTheme.headline5!.apply(color: Colors.black))
+                        textStyle: Theme.of(context).textTheme.headlineSmall!.apply(color: Colors.black))
                   ],
                 ),
               ),

@@ -18,7 +18,7 @@ class LabeledValue extends StatelessWidget {
             ? Container()
             : Text(
                 label ?? '',
-                style: Theme.of(context).copyWith(textTheme: TextTheme(headline4: TextStyle(fontWeight: FontWeight.w700, fontSize: 16))).textTheme.headline4,
+                style: Theme.of(context).copyWith(textTheme: TextTheme(headlineMedium: TextStyle(fontWeight: FontWeight.w700, fontSize: 16))).textTheme.headlineMedium,
               ),
         AutoSizeText(
           value ?? '',

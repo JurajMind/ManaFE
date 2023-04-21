@@ -67,7 +67,7 @@ class FeatureMixCreator extends StatelessWidget {
                 ),
                 title: Hero(
                   tag: "mix_brnad_${item.name}",
-                  child: Text(item.name!, style: Theme.of(context).textTheme.headline5),
+                  child: Text(item.name!, style: Theme.of(context).textTheme.headlineSmall),
                 ),
               );
             });

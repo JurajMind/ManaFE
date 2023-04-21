@@ -87,7 +87,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
                 child: Container(
                   constraints: BoxConstraints(maxWidth: 800),
                   child: TextField(
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Theme.of(context).textTheme.headlineSmall,
                     decoration: new InputDecoration(
                         hintText:
                             '${AppTranslations.of(context)!.text("common.search")} ${AppTranslations.of(context)!.text("gear." + widget.type!.toLowerCase())}'),
@@ -261,7 +261,7 @@ class PipeAccesorySearchState extends State<PipeAccesorySearch> {
               ),
         onTap: () => Navigator.pop(context, data),
         title: RichText(
-            text: TextSpan(style: Theme.of(context).textTheme.headline5, children: getChunks(text, controller.text))));
+            text: TextSpan(style: Theme.of(context).textTheme.headlineSmall, children: getChunks(text, controller.text))));
   }
 
   List<int> getIndexes(String text, String match) {

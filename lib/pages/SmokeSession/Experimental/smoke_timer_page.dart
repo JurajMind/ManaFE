@@ -178,7 +178,7 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
                       children: <Widget>[
                         Text(
                           "TOP: ${dateUtils.DateUtils.toSecondDuration(snapshot.data!.longestPuf)}",
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                         Expanded(
                           child: ListView.builder(
@@ -187,7 +187,7 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
                               return Center(
                                   child: Text(
                                 "${index + 1}. ${this.charts[index].toString()}.sec",
-                                style: Theme.of(context).textTheme.headline4,
+                                style: Theme.of(context).textTheme.headlineMedium,
                               ));
                             },
                           ),

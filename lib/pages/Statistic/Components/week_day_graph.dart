@@ -141,7 +141,7 @@ class WeekDayGraphState extends State<WeekDayGraph> {
                   ),
                   Text(
                     AppTranslations.of(context)!.text('profile.week_days'),
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ],
               ),

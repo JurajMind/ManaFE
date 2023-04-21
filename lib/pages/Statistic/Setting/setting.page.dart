@@ -40,7 +40,7 @@ class _SettingPageState extends State<SettingPage> {
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
                         'Language: ${AppTranslations.of(context)!.locale.languageCode}',
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ))),
                 onTap: () => Navigator.of(context).push(MaterialPageRoute(
@@ -67,7 +67,7 @@ class _SettingPageState extends State<SettingPage> {
                             width: 8,
                           ),
                           Text('Support',
-                              style: Theme.of(context).textTheme.headline6),
+                              style: Theme.of(context).textTheme.titleLarge),
                         ],
                       ),
                       ListTile(

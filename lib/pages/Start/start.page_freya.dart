@@ -1,59 +1,56 @@
 import 'package:app/Helpers/helpers.dart';
-
+import 'package:app/pages/Start/external_auth_widget.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 
-class FreyaStartPage extends StatefulWidget {
-  @override
-  FreyaStartPageState createState() {
-    return new FreyaStartPageState();
-  }
-}
+import '../../components/Buttons/m_outlineButton.dart';
 
-class FreyaStartPageState extends State<FreyaStartPage> with TickerProviderStateMixin {
-  bool facebookLoginLoading = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  dispose() {
-    super.dispose();
-  }
+class FreyaStartPage extends StatelessWidget {
+  const FreyaStartPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        body: new Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        MaterialButton(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
-            child: Text(
-              AppTranslations.of(context)!.text("Start").toUpperCase(),
-              style: Theme.of(context).textTheme.headlineMedium!.apply(color: Colors.black, fontSizeDelta: -7),
+    return Scaffold(
+      body: Container(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Flexible(
+              flex: 1,
+              child: Container(),
             ),
-          ),
-          onPressed: () => navigate(context, 'auth/intro'),
-          color: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(24.0)),
-          textColor: Colors.black,
+            Flexible(
+              flex: 3,
+              child: new Container(
+                child: Image.asset(
+                  'assets/dymka.png',
+                  fit: BoxFit.scaleDown,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            MButton(
+              label: AppTranslations.of(context)!.text("Sign up"),
+              onPressed: () => navigate(context, 'auth/register'),
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            MButton(
+              label: AppTranslations.of(context)!.text(" Log in "),
+              onPressed: () => navigate(context, 'auth/login'),
+              dark: false,
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Expanded(
+                flex: 1, child: Container(child: Align(alignment: Alignment.bottomCenter, child: ExternalAuthWidget())))
+          ],
         ),
-        new TextButton(
-          child: new Text(
-            AppTranslations.of(context)!.currentLanguage.toString().toUpperCase(),
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          onPressed: () {
-            navigate(context, 'auth/lang');
-          },
-        )
-      ],
-    ));
+      ),
+    );
   }
 }

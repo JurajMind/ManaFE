@@ -41,7 +41,7 @@ class ApiClient {
   }
 
   Future<List<TobaccoMixSimpleDto>> fetchtobacoMix(
-      {int page: 0, bool featured: false, int pageSize: 10, String? author}) async {
+      {int page = 0, bool featured = false, int pageSize = 10, String? author}) async {
     var mixUrl = '/api/Mixology/GetMixes';
     var featureUrl = 'api/FeatureMix/Mixes/$author';
     var params = Map<String, String>();
@@ -64,7 +64,7 @@ class ApiClient {
   }
 
   Future<List<TobaccoMixSimpleDto>> suggestMix(List<int?> ids,
-      {String? name, int page: 0, bool featured: false, int pageSize: 10, String? author}) async {
+      {String? name, int page = 0, bool featured = false, int pageSize = 10, String? author}) async {
     var mixUrl = '/api/Mixology/Search/Mix';
     var params = Map<String, String>();
     params['pageSize'] = pageSize.toString();

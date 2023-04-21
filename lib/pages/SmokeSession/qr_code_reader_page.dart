@@ -35,7 +35,7 @@ class _QrCodeReaderState extends State<QrCodeReader> {
                     children: [
                       Text(
                         'Double click controll button \n on stand to show qr code',
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.titleLarge,
                         maxLines: 2,
                         textAlign: TextAlign.center,
                       ),

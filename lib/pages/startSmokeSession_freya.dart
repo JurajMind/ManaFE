@@ -1,14 +1,11 @@
 import 'dart:async';
 
-import 'package:app/components/Common/circle_painter.dart';
-import 'package:app/components/carousel.dart';
 import 'package:app/Helpers/helpers.dart';
 import 'package:app/main.dart';
 
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
-import 'package:app/pages/enterSmokeSesionCode.page.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';

@@ -170,7 +170,7 @@ class DayEdit extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(getLongDayName(bh.id! + 1, context), style: Theme.of(context).textTheme.headline6),
+          Text(getLongDayName(bh.id! + 1, context), style: Theme.of(context).textTheme.titleLarge),
           SizedBox(
             height: 8,
           ),
@@ -237,7 +237,7 @@ class TimeEdit extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          Text(open ? 'Open: ' : 'Close: ', style: Theme.of(context).textTheme.headline5),
+          Text(open ? 'Open: ' : 'Close: ', style: Theme.of(context).textTheme.headlineSmall),
           Text(time != null ? EditablkeBusinessHour.of.format(time!) : 'Closed'),
           Icon(Icons.edit)
         ],

@@ -134,7 +134,7 @@ class _StatisticPageState extends State<StatisticPage> {
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 20.0),
-        child: Text(label.toUpperCase(), textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline6),
+        child: Text(label.toUpperCase(), textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleLarge),
       ),
     );
   }
@@ -163,7 +163,7 @@ class _StatisticPageState extends State<StatisticPage> {
     var shortestSide = MediaQuery.of(context).size.shortestSide;
     var useTabletLayout = shortestSide > 600;
     return new Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Center(
         child: Container(
           constraints: BoxConstraints(maxWidth: 1200),
@@ -251,7 +251,7 @@ class _StatisticPageState extends State<StatisticPage> {
                 primary: true,
                 flexibleSpace: new FlexibleSpaceBar(
                   background: Container(
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                     child: Stack(
                       children: <Widget>[
                         buildPositioned(bloc, 1, (f) => f.pufCount!.toDouble()),
@@ -340,12 +340,12 @@ class _StatisticPageState extends State<StatisticPage> {
                                               highlightColor: Colors.white,
                                               child: Text(
                                                 "??",
-                                                style: Theme.of(context).textTheme.headline4,
+                                                style: Theme.of(context).textTheme.headlineMedium,
                                               ),
                                             )
                                           : Text(
                                               snapshot.data!.sessionCount.toString(),
-                                              style: Theme.of(context).textTheme.headline4,
+                                              style: Theme.of(context).textTheme.headlineMedium,
                                             );
                                     }),
                                 const SizedBox(
@@ -366,7 +366,7 @@ class _StatisticPageState extends State<StatisticPage> {
                   children: <Widget>[
                     Text(
                       'STATS',
-                      style: Theme.of(context).textTheme.headline3,
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                     this.loading ? CircularProgressIndicator() : Container()
                   ],
@@ -548,7 +548,7 @@ class HealthWidget extends StatelessWidget {
                         child: Column(
                           children: <Widget>[
                             Text(AppTranslations.of(context)!.text('health.title'),
-                                style: Theme.of(context).textTheme.headline5),
+                                style: Theme.of(context).textTheme.headlineSmall),
                           ],
                         ),
                       ),
@@ -652,7 +652,7 @@ class TimeSelect extends StatelessWidget {
   const TimeSelect({
     Key? key,
     this.label,
-    this.selected: false,
+    this.selected = false,
     this.onTap,
   }) : super(key: key);
 

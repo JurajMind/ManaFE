@@ -62,7 +62,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
   Widget build(BuildContext context) {
     var theme = MTheme.of(context);
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       key: _scaffoldKey,
       bottomNavigationBar: SizedBox(
         height: 55,

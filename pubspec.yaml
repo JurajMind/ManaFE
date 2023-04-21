@@ -118,33 +118,6 @@ flutter_icons:
 
 dev_dependencies:
   build_runner: ^2.2.0
-  flutter_flavorizr: ^2.1.6
-
-flavorizr:
-  app:
-    android:
-      flavorDimensions: "flavor-type"
-    ios:
-
-  flavors:
-    fre]a:
-      app:
-        name: "Freya"
-
-      android:
-        applicationId: "com.example.apple"
-
-      ios:
-        bundleId: "com.fre].apple"
-
-    banana:
-      app:
-        name: "Banana App"
-
-      android:
-        applicationId: "com.example.banana"
-      ios:
-        bundleId: "com.example.banana"
 
 # The following section is specific to Flutter.
 flutter:

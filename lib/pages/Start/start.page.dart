@@ -42,7 +42,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
               padding: const EdgeInsets.only(top: 40),
               child: Text(
                 'Welcome to Manapipes',
-                style: Theme.of(context).textTheme.headline3,
+                style: Theme.of(context).textTheme.displaySmall,
                 textAlign: TextAlign.center,
                 maxLines: 2,
               ),
@@ -57,7 +57,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                     AppTranslations.of(context)!.text("Start").toUpperCase(),
                     style: Theme.of(context)
                         .textTheme
-                        .headline4!
+                        .headlineMedium!
                         .apply(color: Colors.black, fontSizeDelta: -7),
                   ),
                 ),
@@ -84,12 +84,12 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                       'Already have an account? ',
                       style: Theme.of(context)
                           .textTheme
-                          .headline5!
+                          .headlineSmall!
                           .apply(fontWeightDelta: 0),
                     ),
                     Text(
                       'SIGN IN',
-                      style: Theme.of(context).textTheme.headline5!.apply(
+                      style: Theme.of(context).textTheme.headlineSmall!.apply(
                           fontWeightDelta: 10,
                           color: AppColors.colors[3],
                           decoration: TextDecoration.underline),
@@ -107,7 +107,7 @@ class StartPageState extends State<StartPage> with TickerProviderStateMixin {
                       .currentLanguage
                       .toString()
                       .toUpperCase(),
-                  style: Theme.of(context).textTheme.headline5,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 onPressed: () {
                   navigate(context, 'auth/lang');

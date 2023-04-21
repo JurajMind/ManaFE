@@ -87,7 +87,7 @@ class SmokeSessionCarouselItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20.0),
                 border: new Border.all(color: const Color.fromRGBO(221, 221, 221, 1.0), width: 2.0),
               ),
-              child: Center(child: Text('Loading', style: Theme.of(context).textTheme.headline6)),
+              child: Center(child: Text('Loading', style: Theme.of(context).textTheme.titleLarge)),
             ),
             baseColor: Colors.grey[400]!,
             highlightColor: Colors.white),
@@ -119,7 +119,7 @@ class SmokeSessionCarouselItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(smokeSession!.device!.name!,
-                    style: Theme.of(context).textTheme.headline6!.apply(color: online ? Colors.green : Colors.white)),
+                    style: Theme.of(context).textTheme.titleLarge!.apply(color: online ? Colors.green : Colors.white)),
                 Text(smokeSession!.sessionId!),
               ],
             )),

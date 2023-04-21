@@ -39,7 +39,7 @@ class _AddDevicePageState extends State<AddDevicePage> {
               children: <Widget>[
                 Text(
                   AppTranslations.of(context)!.text("device.welcome"),
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 SizedBox(
                   height: 40,
@@ -49,7 +49,7 @@ class _AddDevicePageState extends State<AddDevicePage> {
                   child: Text(
                     AppTranslations.of(context)!.text("device.welcome_text"),
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
                 SizedBox(
@@ -69,7 +69,7 @@ class _AddDevicePageState extends State<AddDevicePage> {
                   children: <Widget>[
                     Text(
                       AppTranslations.of(context)!.text("device.where_is_code"),
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     SizedBox(
                       height: 40,
@@ -77,7 +77,7 @@ class _AddDevicePageState extends State<AddDevicePage> {
                     Text(
                       AppTranslations.of(context)!.text("device.where_is_code_text_1"),
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                     SizedBox(
                       height: 10,
@@ -85,7 +85,7 @@ class _AddDevicePageState extends State<AddDevicePage> {
                     Text(
                       AppTranslations.of(context)!.text("device.where_is_code_text_1_t"),
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline5,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     SizedBox(
                       height: 40,
@@ -93,7 +93,7 @@ class _AddDevicePageState extends State<AddDevicePage> {
                     Text(
                       AppTranslations.of(context)!.text("device.where_is_code_text_2"),
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                     SizedBox(
                       height: 10,
@@ -101,7 +101,7 @@ class _AddDevicePageState extends State<AddDevicePage> {
                     Text(
                       AppTranslations.of(context)!.text("device.where_is_code_text_2_t"),
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline5,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     SizedBox(
                       height: 40,
@@ -122,7 +122,7 @@ class _AddDevicePageState extends State<AddDevicePage> {
                   children: <Widget>[
                     Text(
                       AppTranslations.of(context)!.text("device.enter_device_codes"),
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     SizedBox(
                       height: 40,

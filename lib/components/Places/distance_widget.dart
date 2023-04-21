@@ -20,7 +20,7 @@ class DistanceWidget extends StatelessWidget {
     }
 
     return Container(
-      child: Text(text, style: textStyle ?? Theme.of(context).textTheme.headline5),
+      child: Text(text, style: textStyle ?? Theme.of(context).textTheme.headlineSmall),
     );
   }
 }

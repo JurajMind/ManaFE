@@ -41,7 +41,7 @@ class ExtraPlaceWidget extends StatelessWidget {
                               Expanded(
                                 child: Center(
                                   child: Text(snapshot.data!.description![lang] ?? 'No description',
-                                      style: Theme.of(context).textTheme.headline5),
+                                      style: Theme.of(context).textTheme.headlineSmall),
                                 ),
                               ),
                             ],
@@ -55,7 +55,7 @@ class ExtraPlaceWidget extends StatelessWidget {
           ),
           Text(
             'By manapipes:',
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
           StreamBuilder<PlaceDto?>(
               stream: placeBloc.placeInfo,
@@ -86,7 +86,7 @@ class ExtraPlaceWidget extends StatelessWidget {
                     ),
                     Text(
                       'By ${snapshot.data!.name}:',
-                      style: Theme.of(context).textTheme.headline5,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     Wrap(
                       children: snapshot.data!.flags!.map((f) => new PlaceFlag(f)).toList(),

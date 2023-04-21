@@ -80,11 +80,11 @@ class TobaccoWidget extends StatelessWidget {
             Container(padding: EdgeInsets.only(right: 4), height: 30, child: Extensions.defaultTypePicture('Tobacco')),
             Text(
               tobacco.name!,
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             Text(
               ' ' + tobacco.brand!,
-              style: Theme.of(context).textTheme.headline6!.merge(new TextStyle(fontWeight: FontWeight.normal)),
+              style: Theme.of(context).textTheme.titleLarge!.merge(new TextStyle(fontWeight: FontWeight.normal)),
             )
           ],
         ),

@@ -51,11 +51,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 children: <Widget>[
                   Text(
                     'Smoking hedgehog',
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   Text(
                     'Lvl: 4',
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   )
                 ],
               ),
@@ -72,11 +72,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   Row(
                     children: <Widget>[
                       Icon(Icons.star),
-                      Text('450/1000 exp', style: Theme.of(context).textTheme.headline5)
+                      Text('450/1000 exp', style: Theme.of(context).textTheme.headlineSmall)
                     ],
                   ),
                   Row(
-                    children: <Widget>[Icon(Icons.cloud), Text('120', style: Theme.of(context).textTheme.headline5)],
+                    children: <Widget>[Icon(Icons.cloud), Text('120', style: Theme.of(context).textTheme.headlineSmall)],
                   )
                 ],
               ),
@@ -87,7 +87,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 children: <Widget>[
                   Text(
                     'Achievments 5/200',
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox(
                     height: 10,

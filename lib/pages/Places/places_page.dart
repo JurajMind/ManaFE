@@ -98,7 +98,7 @@ class _PlacesPageState extends State<PlacesPage> {
                               children: <Widget>[
                                 Text(
                                   AppTranslations.of(context)!.text("reservations.upcoming_reservations"),
-                                  style: Theme.of(context).textTheme.headline5,
+                                  style: Theme.of(context).textTheme.headlineSmall,
                                 ),
                                 MButton(
                                   label: 'All reservations',

@@ -33,7 +33,7 @@ class CrossPage extends StatelessWidget {
               margin: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: Text(
                 "Bring a little magic into your smoking session",
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.headlineSmall,
                 textAlign: TextAlign.center,
                 maxLines: 3,
               ),
@@ -47,7 +47,7 @@ class CrossPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
                   child: Text(
                     AppTranslations.of(context)!.text("Sign up"),
-                    style: Theme.of(context).textTheme.headline4!.apply(color: Colors.black, fontSizeDelta: -15),
+                    style: Theme.of(context).textTheme.headlineMedium!.apply(color: Colors.black, fontSizeDelta: -15),
                   ),
                 ),
                 onPressed: () => navigate(context, 'auth/register'),

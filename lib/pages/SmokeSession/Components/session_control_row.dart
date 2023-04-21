@@ -35,7 +35,7 @@ class SessionControllRow extends StatelessWidget {
                   AppTranslations.of(context)!.text('smoke_session.animations'),
                   style: Theme.of(context)
                       .textTheme
-                      .headline6!
+                      .titleLarge!
                       .apply(color: AppColors.colors[1]),
                 )
               ],
@@ -63,7 +63,7 @@ class SessionControllRow extends StatelessWidget {
                                     .text('smoke_session.colors'),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline6!
+                                    .titleLarge!
                                     .apply(color: color));
                           })
                     ],

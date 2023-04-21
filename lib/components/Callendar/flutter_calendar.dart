@@ -28,16 +28,16 @@ class Calendar extends StatefulWidget {
   Calendar({
     this.onDateSelected,
     this.onSelectedRangeChange,
-    this.isExpandable: false,
+    this.isExpandable = false,
     this.dayBuilder,
-    this.showTodayAction: true,
-    this.showChevronsToChangeRange: true,
-    this.showCalendarPickerIcon: true,
+    this.showTodayAction = true,
+    this.showChevronsToChangeRange = true,
+    this.showCalendarPickerIcon = true,
     this.initialCalendarDateOverride,
     this.dateStyles,
     this.events,
-    this.highlightToday: false,
-    this.doubleClick: false,
+    this.highlightToday = false,
+    this.doubleClick = false,
   });
 
   @override

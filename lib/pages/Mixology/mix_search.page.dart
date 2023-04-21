@@ -74,7 +74,7 @@ class _MixSearchPageState extends State<MixSearchPage> {
                         decoration: InputDecoration(
                             hintText: 'Search by mix name',
                             border: InputBorder.none,
-                            labelStyle: Theme.of(context).textTheme.headline4),
+                            labelStyle: Theme.of(context).textTheme.headlineMedium),
                       ),
                       trailing: IconButton(
                         icon: Icon(Icons.cancel),
@@ -118,7 +118,7 @@ class _MixSearchPageState extends State<MixSearchPage> {
                     Center(
                       child: Text(
                         "Mixes",
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
                     if (loading) ...{
@@ -210,7 +210,7 @@ class TobaccoSearchItem extends StatelessWidget {
       ),
       title: Text(
         "${t!.brand} ${t!.name}",
-        style: Theme.of(context).textTheme.headline5,
+        style: Theme.of(context).textTheme.headlineSmall,
       ),
     );
   }

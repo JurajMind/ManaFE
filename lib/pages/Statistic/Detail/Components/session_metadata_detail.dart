@@ -21,7 +21,7 @@ class SessionMetadataDetail extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text('Metadata', style: Theme.of(context).textTheme.headline6),
+              Text('Metadata', style: Theme.of(context).textTheme.titleLarge),
               SizedBox(width: 8),
               Icon(FontAwesomeIcons.table),
             ],
