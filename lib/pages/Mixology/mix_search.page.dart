@@ -107,7 +107,7 @@ class _MixSearchPageState extends State<MixSearchPage> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text('Add item in mix', style: Theme.of(context).textTheme.bodyText2),
+                                  Text('Add item in mix', style: Theme.of(context).textTheme.bodyMedium),
                                   Icon(Icons.add)
                                 ],
                               ),

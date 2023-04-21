@@ -12,7 +12,13 @@ class MStarRating extends StatelessWidget {
   final int starSize;
   final TextStyle? textStyle;
   const MStarRating(
-      {Key? key, this.rating, this.title, this.colorIndex = 0, this.onRatingChanged, this.starSize = 30, this.textStyle})
+      {Key? key,
+      this.rating,
+      this.title,
+      this.colorIndex = 0,
+      this.onRatingChanged,
+      this.starSize = 30,
+      this.textStyle})
       : super(key: key);
 
   @override
@@ -29,7 +35,7 @@ class MStarRating extends StatelessWidget {
                 flex: 1,
                 child: Text(
                   "$title : ",
-                  style: textStyle ?? Theme.of(context).textTheme.bodyText2,
+                  style: textStyle ?? Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               SmoothStarRating(

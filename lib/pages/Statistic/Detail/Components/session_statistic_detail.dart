@@ -108,7 +108,7 @@ class SessionStatisticDetail extends StatelessWidget {
                 children: [
                   Text(
                     "Count",
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Text(this.inDurations.length.toString()),
                   Text(this.outDurations.length.toString()),
@@ -117,7 +117,7 @@ class SessionStatisticDetail extends StatelessWidget {
             TableRow(children: [
               Text(
                 "Duration",
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               Text(dateUtils.DateUtils.toStringDuration(
                   new Duration(milliseconds: this.inDurations.sum<int>((s) => s.inMilliseconds).toInt()))),
@@ -133,7 +133,7 @@ class SessionStatisticDetail extends StatelessWidget {
                 children: [
                   Text(
                     "Longest",
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Text(dateUtils.DateUtils.toSecondDuration(new Duration(
                       milliseconds: this.inDurations.isEmpty
@@ -160,7 +160,7 @@ class SessionStatisticDetail extends StatelessWidget {
             TableRow(children: [
               Text(
                 "Average",
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               Text(dateUtils.DateUtils.toSecondDuration(new Duration(
                   milliseconds:
@@ -179,7 +179,7 @@ class SessionStatisticDetail extends StatelessWidget {
                 children: [
                   Text(
                     "Median",
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Text(dateUtils.DateUtils.toSecondDuration(this.outDurations.length == 0
                       ? new Duration()

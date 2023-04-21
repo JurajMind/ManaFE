@@ -7,6 +7,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
+enum AppType { manapipes, freya }
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -35,16 +37,27 @@ class App {
 
   static const your_redirect_url = "https://www.facebook.com/connect/login_success.html";
 
+  static AppType appType = AppType.manapipes;
+
   // Create app.
-  App({String? environment, required String baseUri, String? clientId, String? googleApiKey}) {
+  App(
+      {String? environment,
+      required String baseUri,
+      required String clientId,
+      required String googleApiKey,
+      required String facebookClientId,
+      required AppType appType}) {
     App.environment = environment;
     App.clientId = clientId;
     App.baseUri = baseUri;
     App.googleApiKeys = googleApiKey;
+    App.facebookClientId = facebookClientId;
     // Create app http service.
     App.http = new ApiClient(baseUri);
     App.http!.init();
     App.cache = new Cache();
+    App.appType = appType;
+
     // Create a router.
     final FluroRouter router = new FluroRouter();
 
@@ -54,16 +67,10 @@ class App {
 
   // Let's init our routes.
   FluroRouter initializeRoutes(FluroRouter router) {
-    new AppRoutes(router);
+    new AppRoutes(router, App.appType);
     new AuthRoutes(router);
 
     return router;
-  }
-
-  // App run.
-  Future<void> run(runApp) async {
-    await Firebase.initializeApp();
-    runApp(new AppWidget());
   }
 
   static final List<String> supportedLanguagesCodes = ["en", "cs", "de"];

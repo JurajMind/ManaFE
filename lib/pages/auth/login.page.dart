@@ -51,7 +51,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         });
 
 // Find the Scaffold in the Widget tree and use it to show a SnackBar
-        Scaffold.of(context).showSnackBar(snackBar);
+
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
     }
   }

@@ -68,7 +68,7 @@ class _ReviewPlaceWidgetState extends State<ReviewPlaceWidget> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Text("Review:", style: Theme.of(context).textTheme.bodyText2),
+                    Text("Review:", style: Theme.of(context).textTheme.bodyMedium),
                     new StarRating(
                       size: 40.0,
                       rating: 2.5,

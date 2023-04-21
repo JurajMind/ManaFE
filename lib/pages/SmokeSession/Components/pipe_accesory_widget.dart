@@ -45,9 +45,9 @@ class PipeAccesoryWidget extends StatelessWidget {
                 }));
               },
               child: this.accesory?.id != null
-                  ? Text("${accesory!.brand} ${accesory!.name}", style: Theme.of(context).textTheme.bodyText2)
+                  ? Text("${accesory!.brand} ${accesory!.name}", style: Theme.of(context).textTheme.bodyMedium)
                   : Text(AppTranslations.of(context)!.text('smoke_session.no_data'),
-                      style: Theme.of(context).textTheme.bodyText2),
+                      style: Theme.of(context).textTheme.bodyMedium),
             ),
             flex: 2,
           ),

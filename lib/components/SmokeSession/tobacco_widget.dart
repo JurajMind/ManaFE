@@ -41,7 +41,7 @@ class TobaccoWidget extends StatelessWidget {
       return Center(
           child: Text(
         AppTranslations.of(context)!.text("smoke_session.no_data"),
-        style: Theme.of(context).textTheme.bodyText2,
+        style: Theme.of(context).textTheme.bodyMedium,
       ));
 
     return MixCardExpanded(
@@ -69,7 +69,7 @@ class TobaccoWidget extends StatelessWidget {
         child: Center(
             child: Text(
           AppTranslations.of(context)!.text("smoke_session.no_data"),
-          style: Theme.of(context).textTheme.bodyText2,
+          style: Theme.of(context).textTheme.bodyMedium,
         )),
       );
     } else {

@@ -22,11 +22,12 @@ ThemeData buildDarkTheme() {
         subtitle1: base.textTheme.subtitle1!.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
         subtitle2: base.textTheme.subtitle2!.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
         bodyText1: base.textTheme.bodyText1!.copyWith(color: AppColors.white, fontWeight: FontWeight.w500),
-        bodyText2: base.textTheme.bodyText2!.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
+        bodyMedium: base.textTheme.bodyMedium!.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
         button: base.textTheme.button!.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
         caption: base.textTheme.caption!.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
         overline: base.textTheme.overline!.copyWith(color: AppColors.white, fontWeight: FontWeight.w700),
-      ), colorScheme: ColorScheme.dark().copyWith(secondary: AppColors.colors[1]));
+      ),
+      colorScheme: ColorScheme.dark().copyWith(secondary: AppColors.colors[1]));
 }
 
 TextTheme _buildTextTheme(TextTheme base) {

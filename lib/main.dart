@@ -1,5 +1,6 @@
 import 'package:alice_lightweight/alice.dart';
 import 'package:app/app/app.dart';
+import 'package:app/app/app.widget.dart';
 import 'package:app/module/module.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,12 +21,14 @@ Future<void> main() async {
   GetIt.I.isReady<SharedPreferences>().then((_) async {
     await setup(getIt);
     var app = new App(
-      environment: 'local',
-      baseUri: 'smarthookah.azurewebsites.net',
-      clientId: 'test',
-      googleApiKey: '***REMOVED***',
-    );
-    app.run(runApp);
+        environment: 'local',
+        baseUri: 'smarthookah.azurewebsites.net',
+        clientId: 'test',
+        googleApiKey: '***REMOVED***',
+        facebookClientId: '1107199546054049',
+        appType: AppType.manapipes);
+    await Firebase.initializeApp();
+    runApp(AppWidget());
   });
 }
 

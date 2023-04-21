@@ -202,7 +202,7 @@ class _StatisticPageState extends State<StatisticPage> {
                             const SizedBox(
                               width: 4,
                             ),
-                            Text('Settings', style: Theme.of(context).textTheme.bodyText2),
+                            Text('Settings', style: Theme.of(context).textTheme.bodyMedium),
                           ],
                         ),
                       ),
@@ -214,7 +214,7 @@ class _StatisticPageState extends State<StatisticPage> {
                             const SizedBox(
                               width: 4,
                             ),
-                            Text('User profile', style: Theme.of(context).textTheme.bodyText2),
+                            Text('User profile', style: Theme.of(context).textTheme.bodyMedium),
                           ],
                         ),
                       ),
@@ -226,7 +226,7 @@ class _StatisticPageState extends State<StatisticPage> {
                             const SizedBox(
                               width: 4,
                             ),
-                            Text('Test page', style: Theme.of(context).textTheme.bodyText2),
+                            Text('Test page', style: Theme.of(context).textTheme.bodyMedium),
                           ],
                         ),
                       ),
@@ -238,7 +238,7 @@ class _StatisticPageState extends State<StatisticPage> {
                             const SizedBox(
                               width: 4,
                             ),
-                            Text('Sign out', style: Theme.of(context).textTheme.bodyText2),
+                            Text('Sign out', style: Theme.of(context).textTheme.bodyMedium),
                           ],
                         ),
                       ),
@@ -663,7 +663,7 @@ class TimeSelect extends StatelessWidget {
           borderWidth: 1,
           bottomMargin: 1,
           buttonColor: Colors.white,
-          child: Text(label!, style: Theme.of(context).textTheme.bodyText2!.apply(color: Colors.black)),
+          child: Text(label!, style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.black)),
           height: 40,
           width: 30,
           onTap: () {});
@@ -674,7 +674,7 @@ class TimeSelect extends StatelessWidget {
       buttonColor: Colors.black,
       child: Text(
         label!,
-        style: Theme.of(context).textTheme.bodyText2,
+        style: Theme.of(context).textTheme.bodyMedium,
       ),
       height: 40,
       width: 30,

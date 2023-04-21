@@ -13,6 +13,7 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 
+import '../app/app.dart';
 import 'Common/relese_notes.dart';
 
 class MyCustomRoute<T> extends MaterialPageRoute<T> {
@@ -68,6 +69,11 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> with Singl
   Future _openAddEntryDialog(BuildContext context, SmokeSessionBloc smokeSessionBloc) async {
     final sessionCode = await Navigator.of(context).push(new MyCustomRoute<String>(
         builder: (BuildContext context) {
+          if (App.appType == AppType.freya) {
+            return new EnterSmokeSessionCode(
+              callback: widget.callback,
+            );
+          }
           return new EnterSmokeSessionCode(
             callback: widget.callback,
           );
@@ -96,7 +102,7 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> with Singl
     final smokeSessionBloc = getIt.get<SmokeSessionBloc>();
 
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: new SafeArea(
         top: false,
         child: Stack(
@@ -132,7 +138,7 @@ class StartSmokeSessionPageState extends State<StartSmokeSessionPage> with Singl
                               children: <Widget>[
                                 new Text(
                                   AppTranslations.of(context)!.text('home.start'),
-                                  style: Theme.of(context).textTheme.headline3,
+                                  style: Theme.of(context).textTheme.displaySmall,
                                 ),
                                 new Icon(
                                   Icons.play_arrow,

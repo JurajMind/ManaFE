@@ -38,9 +38,12 @@ class BrandListItem extends StatelessWidget {
           }));
         },
         trailing: Icon(Icons.chevron_right),
-        leading: SizedBox(height: 60.0, width: 60.0, child: Hero(tag: '${brand!.name}_${brandType}_brand_picture', child: Extensions.brandPicture(brand!))),
+        leading: SizedBox(
+            height: 60.0,
+            width: 60.0,
+            child: Hero(tag: '${brand!.name}_${brandType}_brand_picture', child: Extensions.brandPicture(brand!))),
         title: Text(this.brand!.name!, style: Theme.of(context).textTheme.headline5),
-        subtitle: Text('Item count: ' + brand!.itemCount.toString(), style: Theme.of(context).textTheme.bodyText2),
+        subtitle: Text('Item count: ' + brand!.itemCount.toString(), style: Theme.of(context).textTheme.bodyMedium),
       ),
     );
   }
@@ -66,7 +69,8 @@ class BrandListItemShimmer extends StatelessWidget {
           title: Flex(
             direction: Axis.horizontal,
             children: <Widget>[
-              Expanded(flex: 1, child: Container(height: 16.0, width: 20.0, decoration: BoxDecoration(color: Colors.white))),
+              Expanded(
+                  flex: 1, child: Container(height: 16.0, width: 20.0, decoration: BoxDecoration(color: Colors.white))),
               Expanded(flex: 1, child: Container())
             ],
           ),

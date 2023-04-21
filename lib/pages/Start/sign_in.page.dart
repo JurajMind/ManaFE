@@ -91,9 +91,9 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                         new TextFormField(
                             autofocus: false,
                             keyboardType: TextInputType.emailAddress,
-                            style: Theme.of(context).textTheme.bodyText2,
+                            style: Theme.of(context).textTheme.bodyMedium,
                             decoration: new InputDecoration(
-                                labelStyle: Theme.of(context).textTheme.bodyText2,
+                                labelStyle: Theme.of(context).textTheme.bodyMedium,
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(Radius.circular(40.0)),
                                   borderSide: BorderSide(color: Colors.white, width: 2),
@@ -127,7 +127,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                         ),
                         new TextFormField(
                             autocorrect: false,
-                            style: Theme.of(context).textTheme.bodyText2,
+                            style: Theme.of(context).textTheme.bodyMedium,
                             obscureText: !showPassword,
                             //focusNode: passwordFocusNode,
                             decoration: new InputDecoration(
@@ -142,7 +142,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                                     });
                                   },
                                 ),
-                                labelStyle: Theme.of(context).textTheme.bodyText2,
+                                labelStyle: Theme.of(context).textTheme.bodyMedium,
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(Radius.circular(40.0)),
                                   borderSide: BorderSide(color: Colors.white, width: 2),
@@ -175,7 +175,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                           child: new TextButton(
                             child: new Text(
                               AppTranslations.of(context)!.text("login.forgot_password") + " ?",
-                              style: Theme.of(context).textTheme.bodyText2,
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             onPressed: () {
                               navigate(context, 'auth/forgotpassword');
@@ -200,7 +200,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                               : new MaterialButton(
                                   child: Text(
                                     AppTranslations.of(context)!.text("login.log_in").toUpperCase(),
-                                    style: Theme.of(context).textTheme.bodyText2!.apply(color: Colors.black),
+                                    style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.black),
                                   ),
                                   onPressed: () => this.submit(context),
                                   color: Colors.white,

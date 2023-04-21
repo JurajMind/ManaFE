@@ -100,3 +100,13 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+flavorDimensions "default"
+
+productFlavors {
+    freya {
+        dimension "default"
+        resValue "string", "app_name", "freya flavor example"
+        applicationIdSuffix ".freya"
+    }
+}

@@ -258,7 +258,7 @@ class MixDetailPageState extends State<MixDetailPage> {
                                     title: Text(f.tobacco!.name!, style: Theme.of(context).textTheme.headline5),
                                     trailing: Text(f.fraction.toString() + ' g',
                                         style: Theme.of(context).textTheme.headline5),
-                                    subtitle: Text(f.tobacco!.brand!, style: Theme.of(context).textTheme.bodyText2),
+                                    subtitle: Text(f.tobacco!.brand!, style: Theme.of(context).textTheme.bodyMedium),
                                   ));
                             }).values,
                             FavoriteMixButton(mix: mix),

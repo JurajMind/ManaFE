@@ -2,25 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>fb1107199546054049</string>
-      </array>
-      </dict>
-    </array>
-    <key>FacebookAppID</key>
-    <string>fb1107199546054049</string>
-    <key>FacebookClientToken</key>
-    <string>457d143ed883d07a2c9ead0f687cd1e9</string>
-    <key>FacebookDisplayName</key>
-    <string>manaPipes</string>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Manapipes</string>
+	<string>Freya</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -60,6 +47,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
 	<string>1107199546054049</string>
+	<key>FacebookClientToken</key>
+	<string>457d143ed883d07a2c9ead0f687cd1e9</string>
 	<key>FacebookDisplayName</key>
 	<string>manaPipes</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
@@ -97,6 +86,8 @@
 	<string>Photo Library Access Warning</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>You have to use the camera to scan a barcode, so we need permission</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -124,7 +115,5 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<string>YES</string>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
 </dict>
 </plist>

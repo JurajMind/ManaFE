@@ -7,7 +7,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 
-class MixCardExpanded extends StatefulWidget {
+import '../../Helpers/helpers.dart';
+
+class MixCardExpanded extends StatelessWidget {
   final TobaccoMixSimpleDto? tobaccoMix;
   final int? highlightId;
   final Map<int?, Color>? multiHighlight;
@@ -23,24 +25,18 @@ class MixCardExpanded extends StatefulWidget {
       this.multiHighlight});
 
   @override
-  _MixologyExpandedState createState() => new _MixologyExpandedState();
-}
-
-class _MixologyExpandedState extends State<MixCardExpanded> {
-  bool expanded = false;
-  @override
   Widget build(BuildContext context) {
-    if (widget.tobaccoMix!.tobaccos!.length == 0) {
+    if (tobaccoMix!.tobaccos!.length == 0) {
       return Container();
     }
     //timeDilation = 6;
     return SingleChildScrollView(
       child: GestureDetector(
         onTap: () {
-          if (widget.onTap != null) {
-            widget.onTap!(widget.tobaccoMix!);
+          if (onTap != null) {
+            onTap!(tobaccoMix!);
           } else {
-            Navigator.push(context, CupertinoPageRoute(builder: (context) => MixDetailPage(mix: widget.tobaccoMix)));
+            navigate(context, 'mix', params: tobaccoMix);
           }
         },
         child: Padding(
@@ -58,20 +54,20 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: Hero(
-                        tag: "mix_hero_${widget.tobaccoMix!.id}",
-                        child: widget.tobaccoMix!.name != null
+                        tag: "mix_hero_${tobaccoMix!.id}",
+                        child: tobaccoMix!.name != null
                             ? Text(
-                                widget.tobaccoMix!.name!,
-                                style: Theme.of(context).textTheme.subtitle2,
+                                tobaccoMix!.name!,
+                                style: Theme.of(context).textTheme.bodyMedium,
                               )
                             : Text(
                                 AppTranslations.of(context)!.text('gear.no_name'),
-                                style: Theme.of(context).textTheme.subtitle2,
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
                       ),
                     ),
                   ),
-                  widget.noTitle
+                  noTitle
                       ? Container()
                       : Expanded(
                           flex: 1,
@@ -88,12 +84,12 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.0),
                 ),
-                color: widget.selected ? AppColors.colors[1] : Colors.white,
+                color: selected ? AppColors.colors[1] : Colors.white,
                 child: Container(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                      ..._createTobaccoRow(widget.tobaccoMix!),
+                      ..._createTobaccoRow(tobaccoMix!),
                     ]),
                   ),
                 ),
@@ -131,10 +127,10 @@ class _MixologyExpandedState extends State<MixCardExpanded> {
   }
 
   Color getColor(TobaccoInMix item) {
-    if (widget.highlightId == item.tobacco!.id) return AppColors.colors[1];
+    if (highlightId == item.tobacco!.id) return AppColors.colors[1];
 
-    if (widget.multiHighlight != null) {
-      var color = widget.multiHighlight![item.tobacco!.id];
+    if (multiHighlight != null) {
+      var color = multiHighlight![item.tobacco!.id];
       if (color != null) return color;
     }
 

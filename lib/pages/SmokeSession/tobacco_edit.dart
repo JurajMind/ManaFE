@@ -150,7 +150,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
           ),
           FatSlider(
             sliderColor: AppColors.colors[tobaccoList.indexOf(item)],
-            valueTextStyle: Theme.of(context).textTheme.bodyText2!.apply(color: Colors.white),
+            valueTextStyle: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.white),
             value: tobaccoWeight[item.id]!,
             onChanged: (double newValue) {
               setState(() {
@@ -385,7 +385,7 @@ class SuggestedTobacco extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Text(tobacco!.name!,
-                          style: Theme.of(context).textTheme.bodyText2, maxLines: 1, overflow: TextOverflow.ellipsis),
+                          style: Theme.of(context).textTheme.bodyMedium, maxLines: 1, overflow: TextOverflow.ellipsis),
                     ),
                     Text(tobacco!.brand!)
                   ],

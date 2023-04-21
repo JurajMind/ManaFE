@@ -62,13 +62,13 @@ class _RegistryPageState extends State<RegisterPage> {
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
                         autofocus: false,
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: Theme.of(context).textTheme.bodyMedium,
                         controller: nameController,
                         keyboardType: TextInputType.text,
                         decoration: new InputDecoration(
                           hintText: AppTranslations.of(context)!.text('login.name_hint'),
                           labelText: AppTranslations.of(context)!.text('login.name'),
-                          labelStyle: Theme.of(context).textTheme.bodyText2,
+                          labelStyle: Theme.of(context).textTheme.bodyMedium,
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(40.0)),
                             borderSide: BorderSide(color: Colors.white, width: 2),
@@ -88,7 +88,7 @@ class _RegistryPageState extends State<RegisterPage> {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     child: new TextFormField(
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: Theme.of(context).textTheme.bodyMedium,
                         controller: emailController,
                         validator: (String? value) {
                           return validate(value, 'E-mail Address',
@@ -98,7 +98,7 @@ class _RegistryPageState extends State<RegisterPage> {
                         decoration: new InputDecoration(
                           hintText: AppTranslations.of(context)!.text("login.email"),
                           labelText: AppTranslations.of(context)!.text("login.email"),
-                          labelStyle: Theme.of(context).textTheme.bodyText2,
+                          labelStyle: Theme.of(context).textTheme.bodyMedium,
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(40.0)),
                             borderSide: BorderSide(color: Colors.white, width: 2),
@@ -129,7 +129,7 @@ class _RegistryPageState extends State<RegisterPage> {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     child: new TextFormField(
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: Theme.of(context).textTheme.bodyMedium,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         autofocus: false,
                         controller: passwordController,
@@ -149,7 +149,7 @@ class _RegistryPageState extends State<RegisterPage> {
                           ),
                           hintText: AppTranslations.of(context)!.text("login.password"),
                           labelText: AppTranslations.of(context)!.text("login.password"),
-                          labelStyle: Theme.of(context).textTheme.bodyText2,
+                          labelStyle: Theme.of(context).textTheme.bodyMedium,
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(40.0)),
                             borderSide: BorderSide(color: Colors.white, width: 2),
@@ -178,7 +178,7 @@ class _RegistryPageState extends State<RegisterPage> {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     child: new TextFormField(
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: Theme.of(context).textTheme.bodyMedium,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         autofocus: false,
                         controller: password2Controller,
@@ -198,7 +198,7 @@ class _RegistryPageState extends State<RegisterPage> {
                           ),
                           hintText: AppTranslations.of(context)!.text("login.confirm_password"),
                           labelText: AppTranslations.of(context)!.text("login.confirm_password"),
-                          labelStyle: Theme.of(context).textTheme.bodyText2,
+                          labelStyle: Theme.of(context).textTheme.bodyMedium,
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(40.0)),
                             borderSide: BorderSide(color: Colors.white, width: 2),

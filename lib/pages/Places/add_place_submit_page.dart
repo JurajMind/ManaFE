@@ -41,7 +41,7 @@ class _AddPlaceSubmitPageState extends State<AddPlaceSubmitPage> {
             ),
             Text(
               '${widget.createdPlace!.name} will be added to database after our review',
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             SizedBox(
               height: 50,

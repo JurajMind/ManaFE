@@ -59,7 +59,7 @@ class PlaceFlag extends StatelessWidget {
       default:
         return Text(
           flag,
-          style: Theme.of(context).textTheme.bodyText2!.apply(color: Colors.white),
+          style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.white),
         );
     }
   }

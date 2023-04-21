@@ -7,9 +7,9 @@ class MThemeData {
   /// Colors: meta
   // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
-  Color get primaryColor => const Color(0xFF141618);
+  Color get primaryColor => Colors.black;
 
-  Color get scaffoldColor => const Color(0xff05233F);
+  Color get scaffoldColor => Colors.black;
 
   List<Color> get colors => [
         const Color.fromARGB(255, 31, 3, 255),
@@ -114,8 +114,7 @@ class MThemeData {
   /// Size: Button
   // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
-  EdgeInsets get buttonContentPadding =>
-      const EdgeInsets.fromLTRB(12, 6, 12, 6);
+  EdgeInsets get buttonContentPadding => const EdgeInsets.fromLTRB(12, 6, 12, 6);
 
   //
   /// Colors: misc
@@ -158,8 +157,7 @@ class MThemeData {
         color: Color(0x1f000000),
       ));
 
-  Border get selectedFillTokenPreviewBorder =>
-      const Border.fromBorderSide(BorderSide(
+  Border get selectedFillTokenPreviewBorder => const Border.fromBorderSide(BorderSide(
         width: 1,
         color: Color(0xFFFFFFFF),
       ));
@@ -384,8 +382,7 @@ TextStyle baseStyle(TextStyle textStyle) {
 }
 
 class SNThemeHelper {
-  static InputBorder buildBorder(Color color, double width) =>
-      OutlineInputBorder(
+  static InputBorder buildBorder(Color color, double width) => OutlineInputBorder(
         borderSide: BorderSide(color: color, width: width),
         borderRadius: const BorderRadius.all(Radius.zero),
       );

@@ -91,7 +91,7 @@ class EnterSmokeSessionCodeState extends State<EnterSmokeSessionCode> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             new Text(AppTranslations.of(context)!.text('enter_code.enter_session_code'),
-                                textScaleFactor: 2.0, style: Theme.of(context).textTheme.bodyText2),
+                                textScaleFactor: 2.0, style: Theme.of(context).textTheme.bodyMedium),
                             new Form(
                               key: _formKey,
                               child: new Column(

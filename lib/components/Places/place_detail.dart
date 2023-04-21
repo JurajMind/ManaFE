@@ -50,7 +50,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                         icon: Icons.phone,
                         child: Text(
                           widget.place!.phoneNumber!,
-                          style: Theme.of(context).textTheme.bodyText2!.apply(color: Colors.black),
+                          style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.black),
                         ),
                       ),
                     )

@@ -6,7 +6,9 @@ import 'package:app/main.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/pages/Start/start.page.dart';
 import 'package:app/pages/home.page.dart';
+import 'package:app/pages/home.page_freya.dart';
 import 'package:app/services/authorization.dart';
+import 'package:app/theme/theme_data.dart';
 import 'package:app/theme/theme_widget.dart';
 import 'package:app/utils/translations/app_translations_delegate.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
@@ -20,19 +22,27 @@ final navigatorKey = new GlobalKey<NavigatorState>();
 class AppWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _AppWidgetState();
+    return new AppWidgetState();
   }
 
   static restartApp(BuildContext context) async {
-    final _AppWidgetState state = context.findAncestorStateOfType<_AppWidgetState>()!;
+    final AppWidgetState state = context.findAncestorStateOfType<AppWidgetState>()!;
     state.restartApp();
   }
 }
 
-class _AppWidgetState extends State<AppWidget> {
+class AppWidgetState extends State<AppWidget> {
   var globalNavKey = GlobalKey<NavigatorState>();
   AppTranslationsDelegate? _newLocaleDelegate;
   Uri? deeplink;
+
+  String get title => 'Manapipes';
+
+  ThemeData getTheme(MThemeData theme) {
+    return MTheme.buildDarkTheme(theme);
+  }
+
+  Widget get startPage => StartPage();
 
   @override
   void initState() {
@@ -82,10 +92,10 @@ class _AppWidgetState extends State<AppWidget> {
               GlobalWidgetsLocalizations.delegate,
             ],
             supportedLocales: App.supportedLocales(),
-            title: 'Manapipes',
-            home: StartPage(),
+            title: title,
+            home: startPage,
             // onGenerateRoute: App.router.generator,
-            theme: MTheme.buildDarkTheme(theme),
+            theme: getTheme(theme),
           );
         }
 
@@ -94,18 +104,19 @@ class _AppWidgetState extends State<AppWidget> {
           key: globalNavKey,
           localizationsDelegates: [
             _newLocaleDelegate!,
-            //provides localised strings
             GlobalMaterialLocalizations.delegate,
-            //provides RTL support
             GlobalWidgetsLocalizations.delegate,
           ],
           supportedLocales: App.supportedLocales(),
-          title: 'Manapipes',
+          title: title,
           navigatorObservers: [routeObserver],
 
-          home: DataProvider(child: new HomePage(deeplink: deeplink, routeObserver: routeObserver)),
+          home: DataProvider(
+              child: App.appType == AppType.manapipes
+                  ? new HomePage(deeplink: deeplink, routeObserver: routeObserver)
+                  : new FreyaHomePage(deeplink: deeplink, routeObserver: routeObserver)),
           // onGenerateRoute: App.router.generator,
-          theme: MTheme.buildDarkTheme(theme),
+          theme: getTheme(theme),
         );
       }),
     );
