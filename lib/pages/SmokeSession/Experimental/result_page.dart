@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../../const/theme.dart';
+
 class ResultPage extends StatefulWidget {
   ResultPage({Key? key}) : super(key: key);
 
@@ -29,7 +31,7 @@ class _ResultPageState extends State<ResultPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Results'),
-        backgroundColor: Colors.black,
+        backgroundColor: AppColors.freyaBlack,
         centerTitle: true,
       ),
       body: Container(

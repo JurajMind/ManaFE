@@ -114,7 +114,7 @@ class _SmokeTimerPageState extends State<SmokeTimerPage> {
       appBar: AppBar(
         title: Text('SMOKE TIMER'),
         centerTitle: true,
-        backgroundColor: Colors.black,
+        backgroundColor: AppColors.freyaBlack,
       ),
       body: Container(
         child: StreamBuilder<SmokeStatisticDataModel?>(

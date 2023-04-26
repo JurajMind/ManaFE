@@ -1,3 +1,4 @@
+import 'package:app/const/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,7 +10,7 @@ class MThemeData {
 
   Color get primaryColor => Colors.black;
 
-  Color get scaffoldColor => Colors.black;
+  Color get scaffoldColor => AppColors.freyaBlack;
 
   List<Color> get colors => [
         const Color.fromARGB(255, 31, 3, 255),

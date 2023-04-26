@@ -3,6 +3,8 @@ import 'package:app/models/SmokeSession/timer_dependency.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:flutter/material.dart';
 
+import '../../../app/app.dart';
+
 class PuffTimeText extends StatelessWidget {
   PuffTimeText({this.completeTime});
   final String? completeTime;
@@ -38,7 +40,10 @@ class PuffTimeText extends StatelessWidget {
             child: SizedBox(
               height: 38.0,
               child: Text(dependencies.alternativeText,
-                  style: Theme.of(context).textTheme.headlineMedium),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium!
+                      .copyWith(color: App.appType == AppType.freya ? Colors.white : Colors.grey)),
             ))
       ],
     );
@@ -101,8 +106,7 @@ class MinutesAndSeconds extends StatefulWidget {
   MinutesAndSeconds({this.dependencies});
   final PufTimerDependencies? dependencies;
 
-  MinutesAndSecondsState createState() =>
-      new MinutesAndSecondsState(dependencies: dependencies);
+  MinutesAndSecondsState createState() => new MinutesAndSecondsState(dependencies: dependencies);
 }
 
 class MinutesAndSecondsState extends State<MinutesAndSeconds> {
@@ -128,8 +132,7 @@ class MinutesAndSecondsState extends State<MinutesAndSeconds> {
   @override
   Widget build(BuildContext context) {
     String secondsStr = (seconds).toString().padLeft(1, '0');
-    return new Text('$secondsStr.',
-        style: Theme.of(context).textTheme.headlineMedium);
+    return new Text('$secondsStr.', style: Theme.of(context).textTheme.headlineMedium);
   }
 
   @override

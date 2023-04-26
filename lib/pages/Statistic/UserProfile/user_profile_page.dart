@@ -18,7 +18,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            backgroundColor: Colors.black,
+            backgroundColor: AppColors.freyaBlack,
             pinned: true,
             expandedHeight: 300.0,
             automaticallyImplyLeading: true,
@@ -76,7 +76,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     ],
                   ),
                   Row(
-                    children: <Widget>[Icon(Icons.cloud), Text('120', style: Theme.of(context).textTheme.headlineSmall)],
+                    children: <Widget>[
+                      Icon(Icons.cloud),
+                      Text('120', style: Theme.of(context).textTheme.headlineSmall)
+                    ],
                   )
                 ],
               ),

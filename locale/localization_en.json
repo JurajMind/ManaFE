@@ -83,6 +83,7 @@
         "more": "More",
         "experiments": "Experiments",
         "end_session": "End session",
+        "leave_session": "Leave session",
         "end_session_confirm": "Do you want to end this session?",
         "no_smoke_session": "No smoke sessions",
         "select_color": "Select color",

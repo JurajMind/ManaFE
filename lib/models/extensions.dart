@@ -62,6 +62,12 @@ class Extensions {
   }
 
   static Widget defaultTypePicture(String type) {
+    if (App.appType == AppType.freya) {
+      return Container(
+        width: 30,
+        height: 30,
+      );
+    }
     var imgPath = '';
     switch (type.toLowerCase()) {
       case 'bowl':

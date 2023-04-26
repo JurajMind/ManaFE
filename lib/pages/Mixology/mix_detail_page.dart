@@ -131,6 +131,7 @@ class MixDetailPageState extends State<MixDetailPage> {
 
     var theme = MTheme.of(context);
     return Scaffold(
+      backgroundColor: AppColors.freyaBlack,
       body: new CustomScrollView(
         slivers: <Widget>[
           new SliverAppBar(
@@ -289,9 +290,7 @@ class MixDetailPageState extends State<MixDetailPage> {
                                     sessionCount: 5,
                                   );
                                 }),
-                            SizedBox(
-                              height: 100,
-                            ),
+                            AppBarBottom(),
                           ],
                         ),
                       ),
@@ -301,6 +300,19 @@ class MixDetailPageState extends State<MixDetailPage> {
           )
         ],
       ),
+    );
+  }
+}
+
+class AppBarBottom extends StatelessWidget {
+  const AppBarBottom({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 200,
     );
   }
 }

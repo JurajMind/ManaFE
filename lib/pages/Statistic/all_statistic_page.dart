@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../const/theme.dart';
+
 class AllStatisticPage extends StatefulWidget {
   final List<SmokeSessionSimpleDto>? seed;
 
@@ -28,7 +30,7 @@ class _AllStatisticPageState extends State<AllStatisticPage> {
         height: 60,
       ),
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: AppColors.freyaBlack,
         title: Text('Sessions'),
         centerTitle: true,
       ),

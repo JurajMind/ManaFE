@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../const/theme.dart';
 import 'theme_data.dart';
 
 class MTheme extends StatelessWidget {
@@ -62,15 +63,15 @@ class MTheme extends StatelessWidget {
     final ThemeData base = ThemeData(fontFamily: 'Roboto', brightness: Brightness.dark);
 
     return base.copyWith(
-        primaryColor: theme.colors[0],
+        primaryColor: AppColors.freyaRed,
+        appBarTheme: AppBarTheme(color: AppColors.freyaBlack),
         indicatorColor: Colors.white,
-        canvasColor: const Color(0xFF202124),
-        scaffoldBackgroundColor: const Color(0xFF000d1a),
-        appBarTheme: AppBarTheme(color: theme.black),
+        canvasColor: AppColors.freyaBlack,
+        scaffoldBackgroundColor: AppColors.freyaBlack,
         primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
         colorScheme: ColorScheme.dark()
             .copyWith(secondary: theme.colors[1])
-            .copyWith(background: Colors.black)
+            .copyWith(background: Color(0xFF0e0f12))
             .copyWith(error: const Color(0xFFB00020)));
   }
 

@@ -1,3 +1,4 @@
+import 'package:app/const/theme.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 import '../../utils/translations/app_translations.dart';
@@ -14,7 +15,7 @@ class FreyaCircleButton extends StatelessWidget {
         style: NeumorphicStyle(
           boxShape: NeumorphicBoxShape.circle(),
           shape: NeumorphicShape.convex,
-          color: Colors.black54,
+          color: AppColors.freyaBlack,
           depth: 2,
           shadowDarkColor: Colors.black,
           border: NeumorphicBorder(isEnabled: true, width: 1, color: Colors.black87),

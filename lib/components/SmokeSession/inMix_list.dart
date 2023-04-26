@@ -51,9 +51,12 @@ class InMixList extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           if (mixes!.length > 0) ...{
-            ...mixes!.take(sc).map((s) => MixCardExpanded(
-                  tobaccoMix: s,
-                  highlightId: sourceTobacco,
+            ...mixes!.take(sc).map((s) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: MixCardExpanded(
+                    tobaccoMix: s,
+                    highlightId: sourceTobacco,
+                  ),
                 )),
           },
           if (mixes!.length > 0 && mixes!.length >= sc)

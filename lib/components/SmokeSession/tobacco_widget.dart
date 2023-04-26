@@ -3,7 +3,11 @@ import 'package:app/models/PipeAccesory/pipe_accesory_simple.dart';
 import 'package:app/models/extensions.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:openapi/openapi.dart';
+
+import '../../app/app.dart';
+import '../../pages/SmokeSession/Components/freya_container.dart';
 
 class TobaccoWidget extends StatelessWidget {
   final PipeAccesorySimpleDto? tobacco;
@@ -14,6 +18,31 @@ class TobaccoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (App.appType == AppType.freya) {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
+        child: FreyaContainer(
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                flex: 7,
+                child: this.tobaccoMix != null ? tobacoMixBody(context, tobaccoMix) : tobacoBody(context, tobacco),
+              ),
+              onPressed == null
+                  ? Container()
+                  : Expanded(
+                      child: Container(
+                        child: Align(
+                          child: IconButton(icon: NeumorphicIcon(Icons.add), onPressed: () => onPressed!(context)),
+                        ),
+                      ),
+                      flex: 1,
+                    )
+            ],
+          ),
+        ),
+      );
+    }
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
       child: Row(
@@ -47,6 +76,7 @@ class TobaccoWidget extends StatelessWidget {
     return MixCardExpanded(
       tobaccoMix: tobacoMix,
       noTitle: true,
+      isWraped: true,
     );
   }
 

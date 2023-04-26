@@ -2,12 +2,15 @@ import 'package:app/components/SmokeSession/tobacco_widget.dart';
 import 'package:app/models/SmokeSession/smoke_session_data.dart';
 import 'package:app/models/SmokeSession/tobacco_edit_model.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
+import 'package:app/pages/SmokeSession/Components/freya_container.dart';
 import 'package:app/pages/SmokeSession/tobacco_edit.dart';
 import 'package:app/utils/translations/app_translations.dart';
 
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+
+import '../../app/app.dart';
 
 class TobaccoSessionWidget extends StatelessWidget {
   final PipeAccesorySimpleDto? tobacco;
@@ -34,6 +37,40 @@ class TobaccoSessionWidget extends StatelessWidget {
               }
 
               percentage = 100 - percentage;
+              if (App.appType == AppType.freya) {
+                return Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          AppTranslations.of(context)!.text("gear.tobacco").toUpperCase(),
+                          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+                        ),
+                        Text(
+                          percentage.toStringAsFixed(2) + '%',
+                          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+                        )
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: FreyaContainer(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: LinearPercentIndicator(
+                            width: 200.0,
+                            lineHeight: 8.0,
+                            barRadius: Radius.circular(10),
+                            percent: percentage / 100,
+                            progressColor: Color(0xffb40002),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                );
+              }
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[

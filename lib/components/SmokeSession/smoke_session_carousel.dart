@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../app/app.dart';
+import '../../pages/SmokeSession/freya_smoke_session_page.dart';
+
 class SmokeSessionCarousel extends StatefulWidget {
   final GlobalKey<NavigatorState>? Function(int)? callback;
 
@@ -101,6 +104,12 @@ class SmokeSessionCarouselItem extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
           onTap: () => Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context) {
+            if (App.appType == AppType.freya) {
+              return new FreyaSmokeSessionPage(
+                sessionId: smokeSession!.sessionId,
+                callback: callback,
+              );
+            }
             return new SmokeSessionPage(
               sessionId: smokeSession!.sessionId,
               callback: callback,

@@ -83,6 +83,7 @@
         "more": "Více",
         "experiments": "Experimenty",
         "end_session": "Ukončit session",
+        "leave_session": "Opustit session",
         "end_session_confirm": "Chceš tuto session ukončit?",
         "no_smoke_session": "Žádná session",
         "select_color": "Vyberte barvu",

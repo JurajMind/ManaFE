@@ -8,6 +8,8 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 
+import '../../../app/app.dart';
+
 class PipeAccesoryWidget extends StatelessWidget {
   final PipeAccesorySimpleDto? accesory;
   final String? type;
@@ -26,8 +28,14 @@ class PipeAccesoryWidget extends StatelessWidget {
           Expanded(
             child: Row(
               children: <Widget>[
-                Container(
-                    padding: EdgeInsets.only(right: 4), height: 30, child: Extensions.defaultTypePicture(this.type!)),
+                App.appType == AppType.freya
+                    ? Container(
+                        width: 30,
+                      )
+                    : Container(
+                        padding: EdgeInsets.only(right: 4),
+                        height: 30,
+                        child: Extensions.defaultTypePicture(this.type!)),
                 Text(
                   AppTranslations.of(context)!.text("gear.${this.type}"),
                   style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),

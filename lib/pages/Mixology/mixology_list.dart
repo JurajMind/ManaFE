@@ -11,6 +11,7 @@ import 'package:app/pages/SmokeSession/tobacco_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 
+import '../../app/app.dart';
 import 'mix_search.page.dart';
 
 class MixologyList extends StatefulWidget {
@@ -219,6 +220,16 @@ class _PaggingMixListViewState extends State<PaggingMixListView> {
 
         if (snapshot.data != null && snapshot.data![index] != null) {
           var selectedMix = snapshot.data![index]!;
+          if (App.appType == AppType.freya) {
+            return Padding(
+              padding: const EdgeInsets.all(.0),
+              child: MixCardExpanded(
+                tobaccoMix: selectedMix,
+                onTap: onTap,
+                selected: selectedMix.id == selectedMixId,
+              ),
+            );
+          }
           return MixCardExpanded(
             tobaccoMix: selectedMix,
             onTap: onTap,

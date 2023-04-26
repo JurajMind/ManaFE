@@ -9,6 +9,8 @@ import 'dart:math' as math;
 
 import 'package:openapi/openapi.dart';
 
+import '../../SmokeSession/Components/freya_container.dart';
+
 class WeekDayGraph extends StatefulWidget {
   final Map<String, int>? graphData;
 
@@ -115,66 +117,53 @@ class WeekDayGraphState extends State<WeekDayGraph> {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1,
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(18)),
-            gradient: LinearGradient(
-              colors: [
-                Color(0xff2c274c),
-                Color(0xff46426c),
-              ],
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-            )),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Icon(Icons.calendar_today),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    AppTranslations.of(context)!.text('profile.week_days'),
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              SizedBox(
-                height: 38,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: BarChart(BarChartData(
-                    barTouchData: BarTouchData(
-                      touchTooltipData: BarTouchTooltipData(
-                        tooltipBgColor: Colors.blueGrey,
-                      ),
-                    ),
-                    titlesData: FlTitlesData(
-                      show: true,
-                    ),
-                    borderData: FlBorderData(
-                      show: false,
-                    ),
-                    barGroups: showingBarGroups as List<BarChartGroupData>?,
-                  )),
+      child: FreyaContainer(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Icon(Icons.calendar_today),
+                SizedBox(
+                  width: 8,
                 ),
+                Text(
+                  AppTranslations.of(context)!.text('profile.week_days'),
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 4,
+            ),
+            SizedBox(
+              height: 38,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: BarChart(BarChartData(
+                  barTouchData: BarTouchData(
+                    touchTooltipData: BarTouchTooltipData(
+                      tooltipBgColor: Colors.blueGrey,
+                    ),
+                  ),
+                  titlesData: FlTitlesData(
+                    show: true,
+                  ),
+                  borderData: FlBorderData(
+                    show: false,
+                  ),
+                  barGroups: showingBarGroups as List<BarChartGroupData>?,
+                )),
               ),
-              SizedBox(
-                height: 12,
-              ),
-            ],
-          ),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+          ],
         ),
       ),
     );

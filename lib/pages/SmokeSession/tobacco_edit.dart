@@ -264,7 +264,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
           tobaccoList.length <= 1
               ? AppBar(
                   elevation: 0,
-                  backgroundColor: Colors.black,
+                  backgroundColor: AppColors.freyaBlack,
                   actions: <Widget>[
                     this.tobaccoList.length == 0
                         ? IconButton(
@@ -275,7 +275,7 @@ class TobaccoEditWidgetState extends State<TobaccoEditWidget> {
                   ],
                 )
               : AppBar(
-                  backgroundColor: Colors.black,
+                  backgroundColor: AppColors.freyaBlack,
                   centerTitle: true,
                   title: TextField(
                     decoration: InputDecoration(

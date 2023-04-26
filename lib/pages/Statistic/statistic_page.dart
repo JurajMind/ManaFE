@@ -403,7 +403,7 @@ class _StatisticPageState extends State<StatisticPage> {
                   SizedBox(height: 10),
                   new SmokeSessionStat(bloc: bloc),
                   SizedBox(
-                    height: 70,
+                    height: 200,
                   )
                 ]),
               )

@@ -18,6 +18,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/openapi.dart';
 
 import '../components/Buttons/freya_circle_button.dart';
@@ -255,7 +256,7 @@ class _FreyaHomePageState extends State<FreyaHomePage> with RouteAware {
 
   Widget myBottomBar(context) => new Container(
         child: Material(
-          color: Colors.black,
+          color: AppColors.freyaBlack,
           child: Ink(
             height: 55.0,
             color: Colors.transparent,
@@ -269,9 +270,12 @@ class _FreyaHomePageState extends State<FreyaHomePage> with RouteAware {
                     flex: 1,
                     child: FreyaCircleButton(
                       tooltip: AppTranslations.of(context)!.text("tabs.mixology"),
-                      child: Icon(
-                        ManaIcons.leaf,
-                        size: 40,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          FontAwesomeIcons.leaf,
+                          size: 32,
+                        ),
                       ),
                       onPressed: () => _setActiveTab(0),
                     ),
@@ -281,9 +285,12 @@ class _FreyaHomePageState extends State<FreyaHomePage> with RouteAware {
                     flex: 1,
                     child: FreyaCircleButton(
                       tooltip: AppTranslations.of(context)!.text("tabs.mixology"),
-                      child: Icon(
-                        Icons.person,
-                        size: 40,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.person,
+                          size: 32,
+                        ),
                       ),
                       onPressed: () => _setActiveTab(2),
                     ),
@@ -401,21 +408,21 @@ class _FreyaHomePageState extends State<FreyaHomePage> with RouteAware {
               width: centerSize,
               child: _currentIndex == 1
                   ? InkWell(
-                      borderRadius: BorderRadius.circular(20.0),
                       onTap: () => _setActiveTab(1),
-                      child: GradientColorWheelRotate(
-                          size: new Size(centerSize, centerSize),
-                          defaultColors: [Colors.white, Colors.white],
-                          child: Icon(
-                            ManaIcons.manam,
-                            color: Colors.black,
-                          )),
-                    )
+                      child: FreyaCircleButton(
+                        onPressed: () {},
+                        child: Container(
+                          width: 50,
+                          decoration:
+                              BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 3)),
+                        ),
+                      ))
                   : FreyaCircleButton(
                       tooltip: AppTranslations.of(context)!.text("tabs.mixology"),
-                      child: Icon(
-                        ManaIcons.leaf,
-                        size: 40,
+                      child: Container(
+                        width: 50,
+                        decoration:
+                            BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 3)),
                       ),
                       onPressed: () => _setActiveTab(1),
                     ),

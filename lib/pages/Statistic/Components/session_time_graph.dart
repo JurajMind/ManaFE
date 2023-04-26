@@ -9,6 +9,8 @@ import 'package:openapi/openapi.dart';
 import 'package:darq/darq.dart';
 import 'dart:math' as math;
 
+import '../../SmokeSession/Components/freya_container.dart';
+
 class SessionDayGraph extends StatefulWidget {
   final Map<String, int>? graphData;
 
@@ -126,102 +128,89 @@ class SessionDayGraphState extends State<SessionDayGraph> {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1,
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(18)),
-            gradient: LinearGradient(
-              colors: [
-                Color(0xff2c274c),
-                Color(0xff46426c),
-              ],
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-            )),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Icon(Icons.timer),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    AppTranslations.of(context)!.text('profile.session_times'),
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              SizedBox(
-                height: 28,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: BarChart(BarChartData(
-                    titlesData: FlTitlesData(
-                      show: true,
-                      /* bottomTitles: SideTitles(
-                          showTitles: true,
-                        
-                          getTitles: (double value) {
-                            var intValue = value.toInt();
-                            if (intValue % 3 == 0) return intValue.toString();
-                            return '';
-                          }),
-                      leftTitles: SideTitles(
-                        showTitles: true,
-                        margin: 16,
-                        reservedSize: 10.0,
-                        getTitles: (value) {
-                          if (max == 5) {
-                            if (value % 10 == 0) return value.toStringAsFixed(0);
-                          }
-
-                          if (max < 5) {
-                            if (value % 2 == 0) return value.toStringAsFixed(0);
-                          }
-
-                          if (max < 20) {
-                            if (value % 5 == 0) return value.toStringAsFixed(0);
-                          }
-
-                          if (max < 50) {
-                            if (value % 10 == 0) return value.toStringAsFixed(0);
-                          }
-
-                          if (max < 100) {
-                            if (value % 20 == 0) return value.toStringAsFixed(0);
-                          }
-
-                          if (max < 1000) {
-                            if (value % 100 == 0) return value.toStringAsFixed(0);
-                          }
-
-                          return '';
-                        },
-                      ),
-                      */
-                    ),
-                    borderData: FlBorderData(
-                      show: false,
-                    ),
-                    barGroups: showingBarGroups,
-                  )),
+      child: FreyaContainer(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Icon(Icons.timer),
+                SizedBox(
+                  width: 8,
                 ),
+                Text(
+                  AppTranslations.of(context)!.text('profile.session_times'),
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 4,
+            ),
+            SizedBox(
+              height: 28,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: BarChart(BarChartData(
+                  titlesData: FlTitlesData(
+                    show: true,
+                    /* bottomTitles: SideTitles(
+                        showTitles: true,
+                      
+                        getTitles: (double value) {
+                          var intValue = value.toInt();
+                          if (intValue % 3 == 0) return intValue.toString();
+                          return '';
+                        }),
+                    leftTitles: SideTitles(
+                      showTitles: true,
+                      margin: 16,
+                      reservedSize: 10.0,
+                      getTitles: (value) {
+                        if (max == 5) {
+                          if (value % 10 == 0) return value.toStringAsFixed(0);
+                        }
+
+                        if (max < 5) {
+                          if (value % 2 == 0) return value.toStringAsFixed(0);
+                        }
+
+                        if (max < 20) {
+                          if (value % 5 == 0) return value.toStringAsFixed(0);
+                        }
+
+                        if (max < 50) {
+                          if (value % 10 == 0) return value.toStringAsFixed(0);
+                        }
+
+                        if (max < 100) {
+                          if (value % 20 == 0) return value.toStringAsFixed(0);
+                        }
+
+                        if (max < 1000) {
+                          if (value % 100 == 0) return value.toStringAsFixed(0);
+                        }
+
+                        return '';
+                      },
+                    ),
+                    */
+                  ),
+                  borderData: FlBorderData(
+                    show: false,
+                  ),
+                  barGroups: showingBarGroups,
+                )),
               ),
-              SizedBox(
-                height: 8,
-              ),
-            ],
-          ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+          ],
         ),
       ),
     );

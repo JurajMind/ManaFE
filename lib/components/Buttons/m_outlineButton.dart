@@ -80,21 +80,24 @@ class MButton extends StatelessWidget {
   }
 
   Widget _buildFreyaButton(BuildContext context) {
-    return NeumorphicButton(
-      style: NeumorphicStyle(
-          shape: NeumorphicShape.convex,
-          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(100)),
-          depth: 8,
-          lightSource: LightSource.topLeft,
-          color: dark ? Colors.black : Colors.white),
-      onPressed: onPressed,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          constraints: BoxConstraints(minWidth: width ?? 0, maxWidth: maxWidth ?? double.infinity),
-          child: Text(AppTranslations.of(context)!.text(label),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: dark ? Colors.white : Colors.black)),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: NeumorphicButton(
+        style: NeumorphicStyle(
+            shape: NeumorphicShape.convex,
+            boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(100)),
+            depth: 2,
+            lightSource: LightSource.topLeft,
+            color: dark ? Color(0xff0e0f12) : Colors.white),
+        onPressed: onPressed,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            constraints: BoxConstraints(minWidth: width ?? 0, maxWidth: maxWidth ?? double.infinity),
+            child: Text(AppTranslations.of(context)!.text(label),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: dark ? Colors.white : Colors.black)),
+          ),
         ),
       ),
     );

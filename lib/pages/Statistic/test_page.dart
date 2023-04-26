@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../../components/Buttons/m_outlineButton.dart';
+import '../../const/theme.dart';
 
 class TestPage extends StatefulWidget {
   @override
@@ -25,7 +26,7 @@ class _TestPageState extends State<TestPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Test'),
-        backgroundColor: Colors.black,
+        backgroundColor: AppColors.freyaBlack,
       ),
       body: Center(
         child: Column(

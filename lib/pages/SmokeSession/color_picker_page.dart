@@ -1,6 +1,7 @@
 import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/components/Pickers/bottom_controll_bar.dart';
 import 'package:app/components/Pickers/smoke_color_wheel.dart';
+import 'package:app/const/theme.dart';
 import 'package:app/main.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
@@ -48,7 +49,7 @@ class _ColorPickerPageState extends State<ColorPickerPage> {
           AppTranslations.of(context)!.text('smoke_session.select_color').toUpperCase(),
         ),
         centerTitle: true,
-        backgroundColor: Colors.black,
+        backgroundColor: AppColors.freyaBlack,
       ),
       body: SizedBox(
         height: size.height * 0.75,

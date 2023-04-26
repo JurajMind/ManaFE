@@ -12,6 +12,7 @@ import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:share/share.dart';
 
+import '../../const/theme.dart';
 import 'Tobacco/in_mixes_lazy_list.dart';
 
 class TobaccoPage extends StatefulWidget {
@@ -61,7 +62,7 @@ class _TobaccoPageState extends State<TobaccoPage> {
           child: CustomScrollView(
             slivers: <Widget>[
               SliverAppBar(
-                backgroundColor: Colors.black,
+                backgroundColor: AppColors.freyaBlack,
                 pinned: true,
                 flexibleSpace: Container(),
                 actions: <Widget>[

@@ -8,8 +8,10 @@ import 'package:app/pages/Places/place_detail_page.dart';
 import 'package:app/pages/SmokeSession/smoke_session_page.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:openapi/openapi.dart';
 
+import '../const/theme.dart';
 import 'Common/relese_notes.dart';
 import 'enterSmokeSesionCode_freya_page.dart';
 
@@ -89,7 +91,6 @@ class FreyaStartSmokeSessionPageState extends State<FreyaStartSmokeSessionPage> 
             Column(
               children: <Widget>[
                 ReleaseNotes(),
-                new Expanded(flex: 1, child: Container()),
                 new Expanded(
                   flex: 4,
                   child: Hero(
@@ -103,19 +104,50 @@ class FreyaStartSmokeSessionPageState extends State<FreyaStartSmokeSessionPage> 
                             _openAddEntryDialog(context, smokeSessionBloc);
                           },
                           child: new Container(
-                            child: new Row(
+                            child: new Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
+                                Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.white.withOpacity(0.2),
+                                        spreadRadius: 0.1,
+                                        blurRadius: 100,
+                                        offset: Offset(0, 3), // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  child: NeumorphicButton(
+                                    drawSurfaceAboveChild: true,
+                                    style: NeumorphicStyle(
+                                      boxShape: NeumorphicBoxShape.circle(),
+                                      color: AppColors.freyaBlack,
+                                      depth: 2,
+                                      shape: NeumorphicShape.convex,
+                                      border: NeumorphicBorder(
+                                        width: 5,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    child: new Icon(
+                                      Icons.play_arrow,
+                                      size: 160.0,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 20.0),
                                 new Text(
                                   AppTranslations.of(context)!.text('home.start'),
-                                  style: Theme.of(context).textTheme.displaySmall,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(color: AppColors.white, fontWeight: FontWeight.bold),
                                 ),
-                                new Icon(
-                                  Icons.play_arrow,
-                                  size: 60.0,
-                                  color: Colors.white,
-                                )
                               ],
                             ),
                           )),

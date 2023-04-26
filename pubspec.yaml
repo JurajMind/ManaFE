@@ -43,7 +43,7 @@ dependencies:
   shimmer: ^2.0.0
   date_format: ^2.0.6
   material_design_icons_flutter: ^6.0.7096
-  font_awesome_flutter: ^10.1.0
+  font_awesome_flutter: ^10.4.0
   uri: ^1.0.0
   google_maps_webservice: ^0.0.20-nullsafety.5
   charts_flutter:
