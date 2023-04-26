@@ -29,7 +29,7 @@ class _TestPageState extends State<TestPage> {
         backgroundColor: AppColors.freyaBlack,
       ),
       body: Center(
-        child: Column(
+        child: ListView(
           children: <Widget>[
             StreamBuilder<Position>(
               stream: place.location,
@@ -144,6 +144,7 @@ class _TestPageState extends State<TestPage> {
                   icon: Icon(Icons.add, size: 70),
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Placeholder()))),
             ),
+            SizedBox(height: 200),
           ],
         ),
       ),

@@ -70,6 +70,7 @@ class MTheme extends StatelessWidget {
         scaffoldBackgroundColor: AppColors.freyaBlack,
         primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
         colorScheme: ColorScheme.dark()
+            .copyWith(brightness: Brightness.dark)
             .copyWith(secondary: theme.colors[1])
             .copyWith(background: Color(0xFF0e0f12))
             .copyWith(error: const Color(0xFFB00020)));

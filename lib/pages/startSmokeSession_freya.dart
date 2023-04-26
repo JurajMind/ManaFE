@@ -122,6 +122,9 @@ class FreyaStartSmokeSessionPageState extends State<FreyaStartSmokeSessionPage> 
                                     ],
                                   ),
                                   child: NeumorphicButton(
+                                    onPressed: () {
+                                      _openAddEntryDialog(context, smokeSessionBloc);
+                                    },
                                     drawSurfaceAboveChild: true,
                                     style: NeumorphicStyle(
                                       boxShape: NeumorphicBoxShape.circle(),
