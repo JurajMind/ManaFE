@@ -190,7 +190,6 @@ class _FreyaSmokeSessionPage extends State<FreyaSmokeSessionPage> {
                     Expanded(
                       child: FreyaContainer(
                         child: SizedBox(
-                          height: 70,
                           child: new HeaderItem(
                             label: AppTranslations.of(context)!.text('smoke_session.puf_count'),
                             data: asyncSnapshot.data!.pufCount.toString(),
