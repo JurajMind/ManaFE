@@ -15,7 +15,7 @@ class MThemeData {
   List<Color> get colors => [
         const Color.fromARGB(255, 31, 3, 255),
         const Color.fromARGB(255, 25, 247, 173),
-        const Color.fromARGB(255, 244, 28, 244),
+        AppColors.freyaRed,
         const Color.fromARGB(255, 242, 160, 29),
       ];
 
@@ -31,7 +31,7 @@ class MThemeData {
 
   Color get quaternaryColor => const Color(0xFF363A3E);
 
-  Color get accentColor => this.colors[1];
+  Color get accentColor => AppColors.freyaRed;
 
   Color get dangerColor => const Color(0xFFD23031);
 

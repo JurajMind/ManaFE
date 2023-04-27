@@ -54,7 +54,7 @@ class MTheme extends StatelessWidget {
           labelSmall: base.textTheme.labelSmall!.copyWith(color: theme.white, fontWeight: FontWeight.w700),
         ),
         colorScheme: ColorScheme.dark()
-            .copyWith(secondary: theme.colors[1])
+            .copyWith(secondary: AppColors.freyaRed)
             .copyWith(background: const Color(0xFF000d1a))
             .copyWith(error: const Color(0xFFB00020)));
   }
@@ -71,9 +71,9 @@ class MTheme extends StatelessWidget {
         primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
         colorScheme: ColorScheme.dark()
             .copyWith(brightness: Brightness.dark)
-            .copyWith(secondary: theme.colors[1])
             .copyWith(background: Color(0xFF0e0f12))
-            .copyWith(error: const Color(0xFFB00020)));
+            .copyWith(error: const Color(0xFFB00020))
+            .copyWith(secondary: AppColors.freyaRed));
   }
 
   static TextTheme _buildTextTheme(TextTheme base) {

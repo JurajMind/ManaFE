@@ -8,9 +8,7 @@ class LeaveSessionButton extends StatelessWidget {
   final int? sessionId;
   final bool? assigned;
   final Function(bool isLike)? callback;
-  const LeaveSessionButton(
-      {Key? key, this.sessionId, this.assigned, this.callback})
-      : super(key: key);
+  const LeaveSessionButton({Key? key, this.sessionId, this.assigned, this.callback}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +19,7 @@ class LeaveSessionButton extends StatelessWidget {
                 iconColor: AppColors.colors[3],
                 label: 'Leave session',
                 onPressed: () async {
-                  var bloc = DataProvider.getData(context)!.statisticBloc;
-                  await bloc.unAssignSession(sessionId);
-                  if (callback != null) callback!(false);
+                  Navigator.of(context).pop();
                 },
               )
             : MButton(
@@ -31,9 +27,7 @@ class LeaveSessionButton extends StatelessWidget {
                 iconColor: AppColors.colors[1],
                 label: 'Assign session',
                 onPressed: () async {
-                  var bloc = DataProvider.getData(context)!.statisticBloc;
-                  await bloc.assignSession(sessionId);
-                  if (callback != null) callback!(true);
+                  Navigator.of(context).pop();
                 },
               ));
   }

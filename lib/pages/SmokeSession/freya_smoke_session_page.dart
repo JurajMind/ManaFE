@@ -411,11 +411,8 @@ class _FreyaSmokeSessionPage extends State<FreyaSmokeSessionPage> {
                     title: new Text(AppTranslations.of(context)!.text("smoke_session.leave_session"),
                         style: Theme.of(context).textTheme.headlineSmall),
                     onTap: () {
-                      var bloc = getIt.get<SmokeSessionBloc>();
-                      bloc.unAssignSession().then((data) {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pop();
-                      });
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
                     }),
               ],
             ),

@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 import '../../../components/Buttons/freya_circle_button.dart';
+import '../../../models/SmokeSession/smoke_session.dart';
 import '../animation_picker_page.dart';
+import 'speed_list.dart';
 
 class FreyaSessionControllRow extends StatelessWidget {
   const FreyaSessionControllRow({
@@ -75,13 +77,11 @@ class FreyaSessionControllRow extends StatelessWidget {
                       })),
                   child: FreyaCircleButton(
                     child: Icon(Icons.av_timer_sharp, color: AppColors.white, size: 50),
-                    onPressed: () => Navigator.of(context).push(
-                      new MaterialPageRoute(
-                          fullscreenDialog: true,
-                          builder: (BuildContext context) {
-                            return new ColorPickerPage(initData: snapshot.data);
-                          }),
-                    ),
+                    onPressed: () => Navigator.of(context).push(new MaterialPageRoute(
+                        fullscreenDialog: true,
+                        builder: (BuildContext context) {
+                          return new AnimationPickerPage();
+                        })),
                   ));
             })
       ]),
