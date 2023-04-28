@@ -189,19 +189,6 @@ class _FreyaSmokeSessionPage extends State<FreyaSmokeSessionPage> {
                     ),
                     Expanded(
                       child: FreyaContainer(
-                        child: SizedBox(
-                          child: new HeaderItem(
-                            label: AppTranslations.of(context)!.text('smoke_session.puf_count'),
-                            data: asyncSnapshot.data!.pufCount.toString(),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: FreyaContainer(
                         child: Column(
                           children: <Widget>[
                             Text(AppTranslations.of(context)!.text('smoke_session.last_puf'),
@@ -215,6 +202,10 @@ class _FreyaSmokeSessionPage extends State<FreyaSmokeSessionPage> {
                           ],
                         ),
                       ),
+                    ),
+                    new HeaderItem(
+                      label: AppTranslations.of(context)!.text('smoke_session.puf_count'),
+                      data: asyncSnapshot.data!.pufCount.toString(),
                     ),
                     SizedBox(
                       width: 10,
