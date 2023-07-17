@@ -48,10 +48,6 @@ dependencies:
   font_awesome_flutter: ^10.4.0
   uri: ^1.0.0
   google_maps_webservice: ^0.0.20-nullsafety.5
-  charts_flutter:
-    git:
-      url: https://github.com/google/charts.git
-      path: charts_flutter
   shake: ^2.1.0
   wave: ^0.2.2
   share: ^2.0.4
@@ -97,6 +93,7 @@ dependencies:
   darq: ^1.2.1
   collection: ^1.15.0-nullsafety.4
   flutter_neumorphic: ^3.2.0
+  health: ^7.0.1
 
 dependency_overrides:
   flare_flutter:

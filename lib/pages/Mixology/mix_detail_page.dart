@@ -14,8 +14,9 @@ import 'package:app/services/share.dart';
 import 'package:app/theme/theme_widget.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
@@ -95,25 +96,6 @@ class MixDetailPageState extends State<MixDetailPage> {
         );
       },
     );
-  }
-
-  List<charts.Series<TobaccoSimpleDto?, int?>> _createSampleData() {
-    return [
-      new charts.Series<TobaccoSimpleDto?, int?>(
-        strokeWidthPxFn: (d, _) => 100,
-        id: 'Tobacco mix',
-        colorFn: (t, i) {
-          var color = AppColors.colors[i!];
-          return charts.Color(a: color.alpha, b: color.blue, g: color.green, r: color.red);
-        },
-        domainFn: (TobaccoSimpleDto? sales, _) => sales!.id,
-        measureFn: (TobaccoSimpleDto? sales, _) =>
-            mix!.tobaccos!.firstWhere((t) => t.tobacco!.id == sales!.id).fraction,
-        data: mix!.tobaccos!.map((f) => f.tobacco).toList(),
-        // Set a label accessor to control the text of the arc label.
-        labelAccessorFn: (TobaccoSimpleDto? row, _) => '${row!.name}: ${row.brand}',
-      )
-    ];
   }
 
   changeName() async {
@@ -211,23 +193,19 @@ class MixDetailPageState extends State<MixDetailPage> {
                       ],
                     ),
               background: Container(
-                  child: SizedBox.expand(
-                      child: Center(
-                          child: new charts.PieChart(
-                _createSampleData(),
-                animate: false,
-                defaultRenderer: new charts.ArcRendererConfig(
-                  arcWidth: 60,
-                  startAngle: 20,
-                  strokeWidthPx: 2.0,
-                  arcRendererDecorators: [
-                    new charts.ArcLabelDecorator(
-                        labelPosition: charts.ArcLabelPosition.inside,
-                        insideLabelStyleSpec:
-                            new charts.TextStyleSpec(fontSize: 16, color: charts.Color.fromHex(code: "#FFFFFF")))
-                  ],
+                child: SizedBox.expand(
+                  child: Center(
+                      child: PieChart(PieChartData(
+                          startDegreeOffset: 20,
+                          sectionsSpace: 10,
+                          sections: this
+                              .mix
+                              ?.tobaccos
+                              ?.map((e) => PieChartSectionData(
+                                  value: e.fraction!.toDouble(), color: AppColors.colors[mix!.tobaccos!.indexOf(e)]))
+                              .toList()))),
                 ),
-              )))),
+              ),
             ),
           ),
           new SliverList(

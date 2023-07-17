@@ -22,31 +22,33 @@ class DetailPageHelper {
   }
 
   static List<List<SmartHookahModelsDbPuf>> createHistogram(List<SmartHookahModelsDbPuf> pufs, int i) {
-    var pufCollection = new List.from(pufs);
+    var pufCollection = new List<SmartHookahModelsDbPuf>.from(pufs);
     var start = pufCollection.isEmpty
         ? new DateTime.now()
-        : new DateTime.fromMillisecondsSinceEpoch(
-            pufCollection.min((a, b) => a.D.millisecondsSinceEpoch < b.D.millisecondsSinceEpoch));
+        : new DateTime.fromMillisecondsSinceEpoch(pufCollection
+            .min((a, b) => a.D!.millisecondsSinceEpoch.compareTo(b.D!.millisecondsSinceEpoch))
+            .D!
+            .millisecondsSinceEpoch);
     var end = start.add(new Duration(seconds: i));
     List<List<SmartHookahModelsDbPuf>> result = [[]];
     var bucket = <SmartHookahModelsDbPuf>[];
-    var orderpufs = pufCollection.orderBy((s) => s.D.millisecondsSinceEpoch).toList();
+    var orderpufs = pufCollection.orderBy((s) => s.D!.millisecondsSinceEpoch).toList();
     for (int j = 0; j < orderpufs.length; j++) {
       var puf = orderpufs[j];
-      if (puf.D.millisecondsSinceEpoch >= start.millisecondsSinceEpoch &&
-          puf.D.millisecondsSinceEpoch < end.millisecondsSinceEpoch) {
+      if (puf.D!.millisecondsSinceEpoch >= start.millisecondsSinceEpoch &&
+          puf.D!.millisecondsSinceEpoch < end.millisecondsSinceEpoch) {
         bucket.add(puf);
       } else {
         start = end;
         end = start.add(new Duration(seconds: i));
 
-        if (bucket.length > 0 && bucket.length % 2 == 0 && puf.T == 0) {
+        if (bucket.length > 0 && bucket.length % 2 == 0 && puf.T?.index == 0) {
           bucket.add(puf);
         }
 
         result.add(bucket);
         bucket = <SmartHookahModelsDbPuf>[];
-        if (puf.T != 0) j--;
+        if (puf.T?.index != 0) j--;
       }
     }
     return result;

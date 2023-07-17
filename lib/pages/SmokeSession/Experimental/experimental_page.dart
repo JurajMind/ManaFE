@@ -40,9 +40,15 @@ class ExperimentalPage extends StatelessWidget {
               pageWidget: ResultPage(),
             ),
             new ExperimentItem(
-              bgColor: AppColors.colors[2],
+              bgColor: AppColors.colors[3],
               text: 'AR ',
               icon: FontAwesomeIcons.glasses,
+              pageWidget: WidgetProjectionPage(),
+            ),
+            new ExperimentItem(
+              bgColor: AppColors.colors[1],
+              text: 'Health ',
+              icon: FontAwesomeIcons.heartCircleCheck,
               pageWidget: WidgetProjectionPage(),
             )
           ],

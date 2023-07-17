@@ -1,9 +1,6 @@
-import 'package:app/components/Charts/gauge.dart';
-import 'package:app/const/theme.dart';
 import 'package:app/utils/translations/app_translations.dart';
-import 'package:charts_flutter/flutter.dart';
+
 import 'package:flutter/material.dart';
-import 'package:charts_common/common.dart' as chart;
 
 class NicotineIntakeWidget extends StatelessWidget {
   const NicotineIntakeWidget({
@@ -28,37 +25,11 @@ class NicotineIntakeWidget extends StatelessWidget {
             Text(AppTranslations.of(context)!.text('health.nicotine_text')),
             Container(
               height: 200,
-              child: GaugeChart(_createSampleData(), minValue: 0, value: 3.6, maxValue: 10, handColor: AppColors.colors[0]),
+              child: Placeholder(),
             )
           ],
         ),
       ),
     );
-  }
-
-  List<Series<GaugeSegment, String>> _createSampleData() {
-    final data = [
-      new GaugeSegment('Low', 100),
-      new GaugeSegment('Acceptable', 75),
-      new GaugeSegment('High', 50),
-      new GaugeSegment('Highly Unusual', 25),
-    ];
-
-    final colors = [
-      chart.Color.fromHex(code: "#00CA43"),
-      chart.Color.fromHex(code: "#ECFF33"),
-      chart.Color.fromHex(code: "#FFBB33"),
-      chart.Color.fromHex(code: "#FF5733"),
-    ];
-
-    return [
-      new Series<GaugeSegment, String>(
-        id: 'Segments',
-        domainFn: (GaugeSegment segment, _) => segment.segment,
-        measureFn: (GaugeSegment segment, _) => segment.size,
-        colorFn: (GaugeSegment segment, index) => colors[index!],
-        data: data,
-      )
-    ];
   }
 }

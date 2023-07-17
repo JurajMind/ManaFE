@@ -113,8 +113,8 @@ class _SmokeDurationGraphState extends State<SmokeDurationGraph> {
               borderRadius: BorderRadius.all(Radius.circular(18)),
               gradient: LinearGradient(
                 colors: [
-                  Color(0xff2c274c),
-                  Color(0xff46426c),
+                  AppColors.bgBlack,
+                  Color.fromARGB(255, 0, 0, 0),
                 ],
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
@@ -210,8 +210,8 @@ class SmokeDurationGraphShimer extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(18)),
                 gradient: LinearGradient(
                   colors: [
-                    Color(0xff2c274c),
-                    Color(0xff46426c),
+                    AppColors.bgBlack,
+                    Color.fromARGB(255, 0, 0, 0),
                   ],
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,

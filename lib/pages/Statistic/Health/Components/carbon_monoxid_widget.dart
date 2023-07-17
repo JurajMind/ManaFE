@@ -1,10 +1,9 @@
-import 'package:app/components/Charts/gauge.dart';
 import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/utils/translations/app_translations.dart';
-import 'package:charts_flutter/flutter.dart';
+
 import 'package:flutter/material.dart';
-import 'package:charts_common/common.dart' as chart;
+
 import 'package:openapi/openapi.dart';
 
 class CarbonMonoxideWidget extends StatelessWidget {
@@ -48,44 +47,12 @@ class CarbonMonoxideWidget extends StatelessWidget {
                     var days = to!.difference(from!).inDays;
                     var hookah = snapshot.data!.length;
                     var value = num.parse((hookah / days).toStringAsFixed(1));
-                    return GaugeChart(
-                      _createSampleData(),
-                      minValue: 0,
-                      value: value as double?,
-                      maxValue: 10,
-                      handColor: AppColors.colors[0],
-                    );
+                    return Placeholder();
                   }),
             )
           ],
         ),
       ),
     );
-  }
-
-  List<Series<GaugeSegment, String>> _createSampleData() {
-    final data = [
-      new GaugeSegment('Low', 100),
-      new GaugeSegment('Acceptable', 75),
-      new GaugeSegment('High', 50),
-      new GaugeSegment('Highly Unusual', 25),
-    ];
-
-    final colors = [
-      chart.Color.fromHex(code: "#00CA43"),
-      chart.Color.fromHex(code: "#ECFF33"),
-      chart.Color.fromHex(code: "#FFBB33"),
-      chart.Color.fromHex(code: "#FF5733"),
-    ];
-
-    return [
-      new Series<GaugeSegment, String>(
-        id: 'Segments',
-        domainFn: (GaugeSegment segment, _) => segment.segment,
-        measureFn: (GaugeSegment segment, _) => segment.size,
-        colorFn: (GaugeSegment segment, index) => colors[index!],
-        data: data,
-      )
-    ];
   }
 }

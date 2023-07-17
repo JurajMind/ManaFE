@@ -55,9 +55,9 @@ class _SmokeSessioDetailPageState extends State<SmokeSessioDetailPage> with Tick
     if (widget.session != null) start = new DateTime.fromMillisecondsSinceEpoch(widget.session!.statistic!.start!);
     App.http!.getPufs(id).then((data) {
       this.pufs.add(data);
-      this.inDurations = DetailPageHelper.getDuration((p) => p.T == PufType.IN.index, data);
-      this.outDurations = DetailPageHelper.getDuration((p) => p.T == PufType.OUT.index, data);
-      this.idleDurations = DetailPageHelper.getDuration((p) => p.T == PufType.IDLE.index, data);
+      this.inDurations = DetailPageHelper.getDuration((p) => p.T?.index == PufType.IN.index, data);
+      this.outDurations = DetailPageHelper.getDuration((p) => p.T?.index == PufType.OUT.index, data);
+      this.idleDurations = DetailPageHelper.getDuration((p) => p.T?.index == PufType.IDLE.index, data);
     });
     App.http!.getFinishedData(id).then((data) {
       this.data.add(data);
@@ -222,7 +222,7 @@ class HrWidget extends StatelessWidget {
             children: <Widget>[
               Text('Heart rate monitor', style: Theme.of(context).textTheme.titleLarge),
               SizedBox(width: 8),
-              Icon(FontAwesomeIcons.heartbeat)
+              Icon(FontAwesomeIcons.heartPulse)
             ],
           ),
           Row(

@@ -189,47 +189,63 @@ class _FreyaSmokeSessionPage extends State<FreyaSmokeSessionPage> {
                     ),
                     Expanded(
                       child: FreyaContainer(
-                        child: Column(
-                          children: <Widget>[
-                            Text(AppTranslations.of(context)!.text('smoke_session.last_puf'),
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .apply(color: App.appType == AppType.freya ? Colors.white : Colors.grey)),
-                            new PuffTimeText(completeTime: asyncSnapshot.data.toString()),
-                            Text(longestString)
-                          ],
+                        child: SizedBox(
+                          height: 78,
+                          child: Column(
+                            children: <Widget>[
+                              Text(AppTranslations.of(context)!.text('smoke_session.last_puf'),
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .apply(color: App.appType == AppType.freya ? Colors.white : Colors.grey)),
+                              new PuffTimeText(completeTime: asyncSnapshot.data.toString()),
+                              Text(longestString)
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    new HeaderItem(
-                      label: AppTranslations.of(context)!.text('smoke_session.puf_count'),
-                      data: asyncSnapshot.data!.pufCount.toString(),
                     ),
                     SizedBox(
                       width: 10,
                     ),
                     Expanded(
                       child: FreyaContainer(
-                        child: Column(
-                          children: <Widget>[
-                            Text(AppTranslations.of(context)!.text('smoke_session.durations'),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .apply(color: App.appType == AppType.freya ? Colors.white : Colors.grey)),
-                            SinceTimer(
-                                start: start,
-                                pufCount: asyncSnapshot.data!.pufCount,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineMedium!
-                                    .apply(color: App.appType == AppType.freya ? Colors.white : Colors.grey)),
-                            Text(
-                              durationString,
-                            )
-                          ],
+                        child: SizedBox(
+                          height: 78,
+                          child: new HeaderItem(
+                            label: AppTranslations.of(context)!.text('smoke_session.puf_count'),
+                            data: asyncSnapshot.data!.pufCount.toString(),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: FreyaContainer(
+                        child: SizedBox(
+                          height: 78,
+                          child: Column(
+                            children: <Widget>[
+                              Text(AppTranslations.of(context)!.text('smoke_session.durations'),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .apply(color: App.appType == AppType.freya ? Colors.white : Colors.grey)),
+                              SinceTimer(
+                                  start: start,
+                                  pufCount: asyncSnapshot.data!.pufCount,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium!
+                                      .apply(color: App.appType == AppType.freya ? Colors.white : Colors.grey)),
+                              Text(
+                                durationString,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -255,6 +271,7 @@ class _FreyaSmokeSessionPage extends State<FreyaSmokeSessionPage> {
             new SliverAppBar(
               leading: Container(),
               expandedHeight: 200.0,
+              collapsedHeight: 100,
               backgroundColor: AppColors.freyaBlack,
               pinned: true,
               bottom: PreferredSize(
@@ -264,7 +281,7 @@ class _FreyaSmokeSessionPage extends State<FreyaSmokeSessionPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      Hero(tag: "${widget.sessionId}_session", child: statisticBuilder),
+                      statisticBuilder,
                       Container(
                           height: 18,
                           decoration: BoxDecoration(

@@ -32,8 +32,8 @@ class SmokeProgressGraphState extends State<SmokeProgressGraph> {
     inList = <FlSpot>[];
     outList = <FlSpot>[];
     for (int i = 0; i < processData.length; i++) {
-      var intakes = processData[i].where((test) => test.T == 1).length;
-      var outTakes = processData[i].where((test) => test.T == 2).length;
+      var intakes = processData[i].where((test) => test.T?.index == 1).length;
+      var outTakes = processData[i].where((test) => test.T?.index == 2).length;
       inList!.add(new FlSpot(i + 0.0, intakes + 0.0));
       outList!.add(new FlSpot(i + 0.0, outTakes + 0.0));
       var lm = math.max(intakes, outTakes);
@@ -52,8 +52,8 @@ class SmokeProgressGraphState extends State<SmokeProgressGraph> {
             borderRadius: BorderRadius.all(Radius.circular(18)),
             gradient: LinearGradient(
               colors: [
-                Color(0xff2c274c),
-                Color(0xff46426c),
+                AppColors.bgBlack,
+                Color.fromARGB(255, 0, 0, 0),
               ],
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter,

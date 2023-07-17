@@ -84,7 +84,7 @@ class SignalR {
       var uri = Uri.parse(url);
       _channel = new WebSocketChannel.connect(uri);
       _channel!.stream.listen((message) async {
-        logger.d('From signal ' + message);
+        // logger.d('From signal ' + message);
         if (message == "{}") {
           lastPing = DateTime.now();
           lastPingStream!.add(DateTime.now());
@@ -110,7 +110,6 @@ class SignalR {
   Future checkConection() async {
     if (lastPing.add(new Duration(seconds: connectionInfo.KeepAliveTimeout!.toInt())).microsecondsSinceEpoch >
         DateTime.now().microsecondsSinceEpoch) {
-      logger.d('not reconecting');
       return;
     }
 

@@ -14,9 +14,7 @@ class AppColors {
   static const List<Color> colors = [
     freyaRed,
     const Color.fromARGB(255, 31, 3, 255),
-    freyaRed,
     const Color.fromARGB(255, 25, 247, 173),
-    freyaRed,
     const Color.fromARGB(255, 242, 160, 29),
   ];
 }

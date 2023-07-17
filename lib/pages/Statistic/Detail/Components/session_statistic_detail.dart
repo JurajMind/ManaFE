@@ -1,4 +1,5 @@
 import 'package:app/Helpers/date_utils.dart' as dateUtils;
+import 'package:app/pages/SmokeSession/Components/freya_container.dart';
 import 'package:app/pages/Statistic/Detail/Components/smoke_duration_grap.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -78,13 +79,15 @@ class SessionStatisticDetail extends StatelessWidget {
                 ),
               );
             }),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
         new SmokeDurationGraph(
             idleDurations: this.idleDurations, inDurations: this.inDurations, outDurations: this.outDurations),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
+        const SizedBox(
+          height: 16,
+        ),
+        FreyaContainer(
           child: Table(children: [
             TableRow(children: [
               Container(),
