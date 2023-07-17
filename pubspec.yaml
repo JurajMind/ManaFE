@@ -13,7 +13,7 @@ dependencies:
   web_socket_channel: ^2.2.0
   fluro: ^2.0.3
   rxdart: ^0.27.5
-  intl: ^0.17.0
+  intl: ^0.18.0
   animated_background: ^2.0.0
   dartz: ^0.10.1
   percent_indicator: ^4.2.2
@@ -102,7 +102,8 @@ dependency_overrides:
   flare_flutter:
     git:
       url: https://github.com/tsinis/Flare-Flutter
-      path: flare_flutter/  
+      path: flare_flutter/
+  intl: ^0.18.0
   
 
 flutter_icons:
