@@ -18,6 +18,8 @@ dependencies:
   dartz: ^0.10.1
   percent_indicator: ^4.2.2
   dio: ^4.0.6
+  arkit_plugin: 
+     path: ./modules/arkit_flutter_plugin
   #flutter_webview_plugin: ^0.3.11
   firebase_core_platform_interface: 4.5.1
   firebase_auth: ^3.4.0
@@ -136,7 +138,7 @@ flutter:
     - images/gear/hookah.jpg
     - images/gear/tobacco.jpg
     - images/stats.png
-
+    - images/so_logo.jpg
     - images/devices/white.jpg
     - images/devices/black.jpg
     - images/devices/wood.jpg

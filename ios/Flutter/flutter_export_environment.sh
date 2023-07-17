@@ -1,6 +1,6 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/juraj.hamornik/fvm/versions/3.7.0"
+export "FLUTTER_ROOT=/Users/juraj.hamornik/fvm/versions/stable"
 export "FLUTTER_APPLICATION_PATH=/Users/juraj.hamornik/Dev/personal/manapipesFlutter"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=/Users/juraj.hamornik/Dev/personal/manapipesFlutter/lib/main_freya.dart"

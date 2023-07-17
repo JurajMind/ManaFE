@@ -65,6 +65,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.0"
+  arkit_plugin:
+    dependency: "direct main"
+    description:
+      path: "modules/arkit_flutter_plugin"
+      relative: true
+    source: path
+    version: "1.0.6"
   async:
     dependency: transitive
     description:
@@ -1830,5 +1837,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.19.0 <3.2.0"
+  dart: ">=2.19.0 <3.0.0"
   flutter: ">=3.3.0"

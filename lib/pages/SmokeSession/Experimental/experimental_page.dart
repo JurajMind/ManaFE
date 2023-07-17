@@ -4,6 +4,8 @@ import 'package:app/pages/SmokeSession/Experimental/smoke_timer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'ar_test.dart';
+
 class ExperimentalPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,12 @@ class ExperimentalPage extends StatelessWidget {
               text: 'Result',
               icon: FontAwesomeIcons.trophy,
               pageWidget: ResultPage(),
+            ),
+            new ExperimentItem(
+              bgColor: AppColors.colors[2],
+              text: 'AR ',
+              icon: FontAwesomeIcons.glasses,
+              pageWidget: WidgetProjectionPage(),
             )
           ],
         ));
@@ -60,7 +68,8 @@ class ExperimentItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: () => pageWidget == null ? {} : Navigator.of(context).push(MaterialPageRoute(builder: (context) => pageWidget!)),
+        onTap: () =>
+            pageWidget == null ? {} : Navigator.of(context).push(MaterialPageRoute(builder: (context) => pageWidget!)),
         child: Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(30.0), color: bgColor, boxShadow: [
             new BoxShadow(
