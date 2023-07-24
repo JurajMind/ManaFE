@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "652590711591-i8t2g5s1ep8bnp7vu4oeijglj9dgul5g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.manapipes.app",
+            "certificate_hash": "ecd324c83490fe76ec6934d79c2a546af525a606"
+          }
+        },
+        {
+          "client_id": "652590711591-mkm5g51l6671snsal6ilbv5oa4j9s0p5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.manapipes.app",
+            "certificate_hash": "094bc09e6fb0c9189f1d7e2afd9bbd6dd508ca80"
+          }
+        },
+        {
           "client_id": "652590711591-a56j88i2ml60bp9dtrv8471v1r51lugu.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -25,15 +41,21 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "652590711591-466859ahk4ujbm3ang2pj17342hcal8l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "652590711591-4st6tvvofv9fmomi4feh08pke4i1994t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.manapipes.ios",
+                "app_store_id": "123456789"
+              }
+            }
+          ]
         }
       }
     }

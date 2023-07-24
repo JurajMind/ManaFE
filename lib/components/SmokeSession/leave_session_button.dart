@@ -1,6 +1,5 @@
 import 'package:app/components/Buttons/m_outlineButton.dart';
 import 'package:app/const/theme.dart';
-import 'package:app/module/data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

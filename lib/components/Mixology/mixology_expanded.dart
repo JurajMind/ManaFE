@@ -3,7 +3,6 @@ import 'package:app/const/theme.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:collection/collection.dart';
-import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 

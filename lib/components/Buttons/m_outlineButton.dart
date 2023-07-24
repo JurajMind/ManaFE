@@ -1,5 +1,4 @@
 import 'package:app/utils/translations/app_translations.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 import '../../app/app.dart';

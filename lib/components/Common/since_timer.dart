@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app/Helpers/date_utils.dart' as dayHelper;
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class SinceTimer extends StatefulWidget {
@@ -34,7 +35,7 @@ class _SinceTimerState extends State<SinceTimer> {
   @override
   Widget build(BuildContext context) {
     if (widget.pufCount == 0) {
-      return new Text('0:0:0', style: widget.style);
+      return new AutoSizeText('0:0:0', style: widget.style);
     }
 
     return new Text(text, style: widget.style);

@@ -5,7 +5,6 @@ import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/Components/picker_slider.dart';
 import 'package:app/utils/translations/app_translations.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

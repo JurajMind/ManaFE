@@ -27,10 +27,8 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:openapi/openapi.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../const/theme.dart';
-import 'Components/color_gimick.dart';
 import 'Components/freya_container.dart';
 import 'Components/freya_session_control_row.dart';
-import 'Components/session_control_row.dart';
 import 'Components/stop_watches.dart';
 import 'freya_name.dart';
 
@@ -522,22 +520,19 @@ class HeaderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: new Column(
-        children: <Widget>[
-          Text(label!,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .apply(color: App.appType == AppType.freya ? Colors.white : Colors.grey)),
-          Text(data!,
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineMedium!
-                  .apply(color: App.appType == AppType.freya ? Colors.white : Colors.grey)),
-        ],
-      ),
-      flex: 1,
+    return new Column(
+      children: <Widget>[
+        Text(label!,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .apply(color: App.appType == AppType.freya ? Colors.white : Colors.grey)),
+        Text(data!,
+            style: Theme.of(context)
+                .textTheme
+                .headlineMedium!
+                .apply(color: App.appType == AppType.freya ? Colors.white : Colors.grey)),
+      ],
     );
   }
 }

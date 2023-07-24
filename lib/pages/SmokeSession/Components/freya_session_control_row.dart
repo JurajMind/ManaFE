@@ -4,13 +4,10 @@ import 'package:app/models/Stand/deviceSetting.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
 import 'package:app/pages/SmokeSession/color_picker_page.dart';
 import 'package:app/utils/translations/app_translations.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 import '../../../components/Buttons/freya_circle_button.dart';
-import '../../../models/SmokeSession/smoke_session.dart';
 import '../animation_picker_page.dart';
-import 'speed_list.dart';
 
 class FreyaSessionControllRow extends StatelessWidget {
   const FreyaSessionControllRow({

@@ -11,7 +11,6 @@ import 'package:app/pages/Statistic/statistic_page.dart';
 import 'package:app/services/share.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:app/support/m_platform.dart';
-import 'package:app/support/mana_icons_icons.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:another_flushbar/flushbar.dart';
@@ -24,7 +23,6 @@ import 'package:openapi/openapi.dart';
 import '../components/Buttons/freya_circle_button.dart';
 import 'Mixology/mixology_list.dart';
 
-import 'SmokeSession/Components/gradiend_color_wheel_rotate.dart';
 import 'SmokeSession/smoke_session_page.dart';
 import 'Statistic/Detail/smoke_session_detail_page.dart';
 import 'startSmokeSession_freya.dart';

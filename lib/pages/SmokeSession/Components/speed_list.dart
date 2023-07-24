@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:app/components/Pickers/animation_state_picker.dart';
 import 'package:app/main.dart';
 import 'package:app/models/SmokeSession/smoke_session.dart';
 import 'package:app/models/Stand/deviceSetting.dart';
@@ -10,8 +9,6 @@ import 'package:app/pages/SmokeSession/preset_picker.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:openapi/openapi.dart';
-import 'dart:math' as math;
 
 /// Gauge chart example, where the data does not cover a full revolution in the
 /// chart.

@@ -1,4 +1,3 @@
-import 'package:app/const/theme.dart';
 import 'package:app/module/data_provider.dart';
 import 'package:app/utils/translations/app_translations.dart';
 

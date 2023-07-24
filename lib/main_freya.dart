@@ -9,6 +9,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app/app.widget_freya.dart';
+import 'firebase_options.dart';
 import 'models/Hive/hive.dart';
 import 'services/authorization.dart';
 
@@ -28,7 +29,7 @@ Future<void> main() async {
         facebookClientId: '1107199546054049',
         appType: AppType.freya);
 
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
     runApp(FreyaAppWidget());
   });
 }
