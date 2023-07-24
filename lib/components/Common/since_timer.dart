@@ -35,10 +35,17 @@ class _SinceTimerState extends State<SinceTimer> {
   @override
   Widget build(BuildContext context) {
     if (widget.pufCount == 0) {
-      return new AutoSizeText('0:0:0', style: widget.style);
+      return new AutoSizeText(
+        '0:0:0',
+        style: widget.style,
+      );
     }
 
-    return new Text(text, style: widget.style);
+    return new AutoSizeText(
+      text,
+      style: widget.style,
+      maxLines: 1,
+    );
   }
 
   @override
