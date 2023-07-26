@@ -12,6 +12,7 @@ import 'package:app/services/share.dart';
 import 'package:app/services/signal_r.dart';
 import 'package:app/support/m_platform.dart';
 import 'package:app/utils/translations/app_translations.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
@@ -178,20 +179,17 @@ class _FreyaHomePageState extends State<FreyaHomePage> with RouteAware {
   }
 
   void initDynamicLinks() async {
-    /*
-    FirebaseDynamicLinks.instance.onLink(
-        onSuccess: (PendingDynamicLinkData dynamicLink) async {
-      final Uri deepLink = dynamicLink?.link;
+    FirebaseDynamicLinks.instance.onLink.listen((PendingDynamicLinkData dynamicLink) async {
+      final Uri? deepLink = dynamicLink.link;
       print(dynamicLink.toString());
 
       if (deepLink != null) {
         ShareService.deepLinkNavigation(_setActiveTab, deepLink.path, context);
       }
-    }, onError: (OnLinkErrorException e) async {
+    }, onError: (e) async {
       print('onLinkError');
       print(e.message);
     });
-    */
   }
 
   void firstDeepJump(BuildContext context) {

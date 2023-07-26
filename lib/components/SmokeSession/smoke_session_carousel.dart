@@ -48,6 +48,28 @@ class _SmokeSessionCarouselState extends State<SmokeSessionCarousel> {
       child: StreamBuilder<List<SmokeSessionSimpleDto>>(
         stream: personBloc.smokeSessionsCodes,
         builder: (context, snapshot) {
+          if (snapshot.data?.length == 1) {
+            return Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 150,
+                    child: Image.asset(
+                      'assets/dymka.png',
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: SmokeSessionCarouselItem(
+                      smokeSession: snapshot.data!.first,
+                      callback: widget.callback,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
           return ListView.builder(
             scrollDirection: Axis.horizontal,
             controller: _controller,

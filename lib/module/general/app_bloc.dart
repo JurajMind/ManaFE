@@ -7,7 +7,7 @@ class AppBloc {
 
   AppBloc._();
 
-  BehaviorSubject<int> activeTab = new BehaviorSubject<int>.seeded(2);
+  BehaviorSubject<int> activeTab = new BehaviorSubject<int>.seeded(1);
 
   changeActiveTab(int index) {
     this.activeTab.add(index);
