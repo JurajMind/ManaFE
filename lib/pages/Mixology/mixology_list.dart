@@ -219,8 +219,11 @@ class _PaggingMixListViewState extends State<PaggingMixListView> {
         }
 
         if (snapshot.data != null && snapshot.data![index] != null) {
-          var selectedMix = snapshot.data![index]!;
+          var selectedMix = snapshot.data![index];
           if (App.appType == AppType.freya) {
+            if (selectedMix == null) {
+              return MixCardExpandedShimmer();
+            }
             return Padding(
               padding: const EdgeInsets.all(.0),
               child: MixCardExpanded(
@@ -229,6 +232,9 @@ class _PaggingMixListViewState extends State<PaggingMixListView> {
                 selected: selectedMix.id == selectedMixId,
               ),
             );
+          }
+          if (selectedMix == null) {
+            return MixCardExpandedShimmer();
           }
           return MixCardExpanded(
             tobaccoMix: selectedMix,

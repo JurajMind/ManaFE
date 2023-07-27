@@ -40,7 +40,7 @@ class ApiClient {
     _dio.interceptors.add(getIt.get<Alice>().getDioInterceptor());
   }
 
-  Future<List<TobaccoMixSimpleDto>> fetchtobacoMix(
+  Future<List<TobaccoMixSimpleDto?>> fetchtobacoMix(
       {int page = 0, bool featured = false, int pageSize = 10, String? author}) async {
     var mixUrl = '/api/Mixology/GetMixes';
     var featureUrl = 'api/FeatureMix/Mixes/$author';
