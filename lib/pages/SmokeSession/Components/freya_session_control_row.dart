@@ -7,6 +7,7 @@ import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 import '../../../components/Buttons/freya_circle_button.dart';
+import '../../../models/SmokeSession/smoke_session.dart';
 import '../animation_picker_page.dart';
 
 class FreyaSessionControllRow extends StatelessWidget {
@@ -24,11 +25,13 @@ class FreyaSessionControllRow extends StatelessWidget {
           children: <Widget>[
             Container(
                 child: FreyaCircleButton(
-              child: Icon(Icons.remove_red_eye, color: AppColors.white, size: 50),
+              child: Icon(Icons.pause_outlined, color: AppColors.white, size: 50),
               onPressed: () => Navigator.of(context).push(new MaterialPageRoute(
                   fullscreenDialog: true,
                   builder: (BuildContext context) {
-                    return new AnimationPickerPage();
+                    return new AnimationPickerPage(
+                      actions: [SmokeState.idle],
+                    );
                   })),
             )),
           ],
@@ -73,11 +76,11 @@ class FreyaSessionControllRow extends StatelessWidget {
                         return new ColorPickerPage(initData: snapshot.data);
                       })),
                   child: FreyaCircleButton(
-                    child: Icon(Icons.av_timer_sharp, color: AppColors.white, size: 50),
+                    child: Icon(Icons.play_arrow_outlined, color: AppColors.white, size: 50),
                     onPressed: () => Navigator.of(context).push(new MaterialPageRoute(
                         fullscreenDialog: true,
                         builder: (BuildContext context) {
-                          return new AnimationPickerPage();
+                          return new AnimationPickerPage(actions: [SmokeState.puf, SmokeState.blow]);
                         })),
                   ));
             })

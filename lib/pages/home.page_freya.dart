@@ -271,6 +271,7 @@ class _FreyaHomePageState extends State<FreyaHomePage> with RouteAware {
                         child: Icon(
                           FontAwesomeIcons.leaf,
                           size: 32,
+                          color: _currentIndex == 0 ? AppColors.freyaRed : AppColors.white,
                         ),
                       ),
                       onPressed: () => _setActiveTab(0),
@@ -286,6 +287,7 @@ class _FreyaHomePageState extends State<FreyaHomePage> with RouteAware {
                         child: Icon(
                           Icons.person,
                           size: 32,
+                          color: _currentIndex == 2 ? AppColors.freyaRed : AppColors.white,
                         ),
                       ),
                       onPressed: () => _setActiveTab(2),
@@ -407,18 +409,17 @@ class _FreyaHomePageState extends State<FreyaHomePage> with RouteAware {
                       onTap: () => _setActiveTab(1),
                       child: FreyaCircleButton(
                         onPressed: () {},
-                        child: Container(
-                          width: 50,
-                          decoration:
-                              BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 3)),
+                        child: Icon(
+                          FontAwesomeIcons.house,
+                          size: 32,
+                          color: AppColors.freyaRed,
                         ),
                       ))
                   : FreyaCircleButton(
                       tooltip: AppTranslations.of(context)!.text("tabs.mixology"),
-                      child: Container(
-                        width: 50,
-                        decoration:
-                            BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 3)),
+                      child: Icon(
+                        FontAwesomeIcons.house,
+                        size: 32,
                       ),
                       onPressed: () => _setActiveTab(1),
                     ),

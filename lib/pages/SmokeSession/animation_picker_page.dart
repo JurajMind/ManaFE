@@ -1,27 +1,27 @@
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/SmokeSession/smoke_session.dart';
 import 'Components/animation_list.dart';
 
-class AnimationPickerPage extends StatefulWidget {
-  @override
-  _AnimationPickerPageState createState() => _AnimationPickerPageState();
-}
+class AnimationPickerPage extends StatelessWidget {
+  final List<SmokeState> actions;
 
-class _AnimationPickerPageState extends State<AnimationPickerPage> {
+  const AnimationPickerPage({Key? key, required this.actions}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppTranslations.of(context)!
-              .text("smoke_session.animation")
-              .toUpperCase(),
+          AppTranslations.of(context)!.text("smoke_session.animation").toUpperCase(),
         ),
         centerTitle: true,
       ),
       body: Container(
-        child: AnimationsPicker(),
+        child: AnimationsPicker(
+          actions: actions,
+        ),
       ),
     );
   }

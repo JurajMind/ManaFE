@@ -12,9 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 
 class AnimationsPicker extends StatefulWidget {
+  final List<SmokeState> actions;
   final Stream<List<SmartHookahHelpersAnimation>>? aminations;
 
-  const AnimationsPicker({Key? key, this.aminations}) : super(key: key);
+  const AnimationsPicker({Key? key, this.aminations, required this.actions}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -26,7 +27,7 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
   @override
   initState() {
     super.initState();
-    controller = new PageController(initialPage: 1);
+    controller = new PageController(initialPage: 0);
   }
 
   PageController? controller;
@@ -38,24 +39,38 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+
+    var items = [
+      //  devicePresetPickerBuilder(),
+      if (widget.actions.contains(SmokeState.idle))
+        animationStatePickerBuilder(smokeSessionBloc.standSettings, SmokeState.idle,
+            AppTranslations.of(context)!.text("smoke_session.idle"), false, false),
+      if (widget.actions.contains(SmokeState.puf))
+        animationStatePickerBuilder(smokeSessionBloc.standSettings, SmokeState.puf,
+            AppTranslations.of(context)!.text("smoke_session.inhale"), false, false),
+      if (widget.actions.contains(SmokeState.blow))
+        animationStatePickerBuilder(smokeSessionBloc.standSettings, SmokeState.blow,
+            AppTranslations.of(context)!.text("smoke_session.blow"), true, false),
+    ];
     return SizedBox(
       height: size.height * 0.75,
-      child: Stack(
-        children: <Widget>[
-          PageView(
-            controller: controller,
-            children: <Widget>[
-              //  devicePresetPickerBuilder(),
-              animationStatePickerBuilder(smokeSessionBloc.standSettings, SmokeState.idle,
-                  AppTranslations.of(context)!.text("smoke_session.idle"), false, true),
-              animationStatePickerBuilder(smokeSessionBloc.standSettings, SmokeState.puf,
-                  AppTranslations.of(context)!.text("smoke_session.inhale"), true, true),
-              animationStatePickerBuilder(smokeSessionBloc.standSettings, SmokeState.blow,
-                  AppTranslations.of(context)!.text("smoke_session.blow"), true, false),
-            ],
-          ),
-        ],
-      ),
+      child: items.length == 1
+          ? items[0]
+          : PageView(
+              controller: controller,
+              children: <Widget>[
+                //  devicePresetPickerBuilder(),
+                if (widget.actions.contains(SmokeState.idle))
+                  animationStatePickerBuilder(smokeSessionBloc.standSettings, SmokeState.idle,
+                      AppTranslations.of(context)!.text("smoke_session.idle"), false, true),
+                if (widget.actions.contains(SmokeState.puf))
+                  animationStatePickerBuilder(smokeSessionBloc.standSettings, SmokeState.puf,
+                      AppTranslations.of(context)!.text("smoke_session.inhale"), false, true),
+                if (widget.actions.contains(SmokeState.blow))
+                  animationStatePickerBuilder(smokeSessionBloc.standSettings, SmokeState.blow,
+                      AppTranslations.of(context)!.text("smoke_session.blow"), true, false),
+              ],
+            ),
     );
   }
 
@@ -72,8 +87,9 @@ class _AnimationsPickerState extends State<AnimationsPicker> {
               state: state,
               haveLeftChevron: left,
               haveRightChevron: right,
-              selectedIndex:
-                  snapshot.data!.getStateSetting(state) == null ? -1 : snapshot.data!.getStateSetting(state)!.animationId,
+              selectedIndex: snapshot.data!.getStateSetting(state) == null
+                  ? -1
+                  : snapshot.data!.getStateSetting(state)!.animationId,
               onChanged: (int index) {
                 smokeSessionBloc.setAnimation(index, state);
               },
