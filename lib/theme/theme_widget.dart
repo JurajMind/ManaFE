@@ -68,7 +68,11 @@ class MTheme extends StatelessWidget {
         indicatorColor: Colors.white,
         canvasColor: AppColors.freyaBlack,
         scaffoldBackgroundColor: AppColors.freyaBlack,
+        textSelectionTheme: base.textSelectionTheme.copyWith(
+          cursorColor: AppColors.freyaRed,
+        ),
         primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
+        progressIndicatorTheme: base.progressIndicatorTheme.copyWith(color: AppColors.freyaRed),
         colorScheme: ColorScheme.dark()
             .copyWith(brightness: Brightness.dark)
             .copyWith(background: Color(0xFF0e0f12))

@@ -23,7 +23,9 @@ import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:share/share.dart';
 
+import '../../components/AI/tobaco_expert.dart';
 import '../../components/Buttons/m_outlineButton.dart';
+import 'ai_mix_image.dart';
 
 class MixDetailPage extends StatefulWidget {
   final TobaccoMixSimpleDto? mix;
@@ -42,7 +44,7 @@ class MixDetailPageState extends State<MixDetailPage> {
   BehaviorSubject<TobaccoInformationDto> information = new BehaviorSubject<TobaccoInformationDto>();
   TextEditingController? nameController;
   TobaccoMixSimpleDto? mix;
-
+  Stream<String> mixInfo = Stream.empty();
   @override
   initState() {
     mix = widget.mix;
@@ -151,7 +153,7 @@ class MixDetailPageState extends State<MixDetailPage> {
                       width: 200,
                       child: TextField(
                         autofocus: true,
-                        style: Theme.of(context).textTheme.headlineSmall,
+                        style: Theme.of(context).textTheme.bodyLarge,
                         controller: nameController,
                         decoration: InputDecoration(
                             border: InputBorder.none,
@@ -196,15 +198,8 @@ class MixDetailPageState extends State<MixDetailPage> {
               background: Container(
                 child: SizedBox.expand(
                   child: Center(
-                      child: PieChart(PieChartData(
-                          startDegreeOffset: 20,
-                          sectionsSpace: 10,
-                          sections: this
-                              .mix
-                              ?.tobaccos
-                              ?.map((e) => PieChartSectionData(
-                                  value: e.fraction!.toDouble(), color: AppColors.colors[mix!.tobaccos!.indexOf(e)]))
-                              .toList()))),
+                    child: AIMixImageWidget(mix: widget.mix!),
+                  ),
                 ),
               ),
             ),
@@ -219,6 +214,9 @@ class MixDetailPageState extends State<MixDetailPage> {
                         constraints: BoxConstraints(maxWidth: theme.maxPageWidth),
                         child: Column(
                           children: [
+                            const SizedBox(
+                              height: 16,
+                            ),
                             ...mix!.tobaccos!.asMap().map((index, f) {
                               var owned = (snapshot.data?.indexWhere((a) => a.id == f.tobacco!.id) ?? -1) != -1;
 
@@ -241,20 +239,37 @@ class MixDetailPageState extends State<MixDetailPage> {
                                     subtitle: Text(f.tobacco!.brand!, style: Theme.of(context).textTheme.bodyMedium),
                                   ));
                             }).values,
-                            MButton(
-                              label: 'Test',
-                              onPressed: () async {
-                                final request = ChatCompleteText(messages: [
-                                  Messages(
-                                      role: Role.user,
-                                      content: "What is the weather like in Boston?",
-                                      name: "get_current_weather"),
-                                ], maxToken: 200, model: GptTurboChatModel());
-                                var openAi = getIt.get<OpenAI>();
-                                final response = await openAi.onChatCompletionSSE(request: request).listen((event) {
-                                  debugPrint(event.choices?.last.message?.content);
-                                });
-                              },
+                            SizedBox(
+                              height: 80,
+                              child: Center(
+                                child: PieChart(
+                                  PieChartData(
+                                    startDegreeOffset: 20,
+                                    sectionsSpace: 10,
+                                    sections: this
+                                        .mix
+                                        ?.tobaccos
+                                        ?.map((e) => PieChartSectionData(
+                                            value: e.fraction!.toDouble(),
+                                            showTitle: false,
+                                            color: AppColors.colors[mix!.tobaccos!.indexOf(e)]))
+                                        .toList(),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Divider(),
+                            TobacoExpertWidget(
+                              lengh: 400,
+                              prompt:
+                                  'As hookah expert , describe mix of tobaccos : ${widget.mix?.tobaccos?.map((e) => "${e.tobacco?.brand} ${e.tobacco?.name}")}, Write desciption of each tobacco flavor and desciption of mix. For each tobaco one line. For mix 3 lines',
+                            ),
+                            Divider(),
+                            SizedBox(
+                              height: 8,
                             ),
                             FavoriteMixButton(mix: mix),
                             UseMixButton(

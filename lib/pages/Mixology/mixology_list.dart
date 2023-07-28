@@ -27,7 +27,7 @@ class MixologyListState extends State<MixologyList> {
   static const Map<int, String> labels = {0: 'mix.my_mixes', 1: 'mix.featured_creators', 2: 'mix.favorite_mixes'};
 
   Future showTobaccoDialog({required BuildContext context, MixologyBloc? mixologyBloc}) async {
-    TobaccoEditModel tobacco = await (Navigator.of(context).push(new MaterialPageRoute<TobaccoEditModel>(
+    TobaccoEditModel? tobacco = await (Navigator.of(context).push(new MaterialPageRoute<TobaccoEditModel>(
         builder: (BuildContext context) {
           return new TobaccoEditWidget(
             tobaccoWeight: 0,
@@ -35,9 +35,9 @@ class MixologyListState extends State<MixologyList> {
             mix: null,
           );
         },
-        fullscreenDialog: true)) as Future<TobaccoEditModel>);
-    if (tobacco.mix != null && tobacco.mix!.tobaccos!.length > 0)
-      mixologyBloc!.saveMix(tobacco.mix).then((onValue) {
+        fullscreenDialog: true)));
+    if (tobacco?.mix != null && (tobacco?.mix?.tobaccos?.length ?? 0) > 0)
+      mixologyBloc!.saveMix(tobacco?.mix).then((onValue) {
         Navigator.push(context, MaterialPageRoute(builder: (context) => MixDetailPage(mix: onValue)));
       });
   }

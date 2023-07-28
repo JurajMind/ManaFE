@@ -314,14 +314,23 @@ class _StatisticPageState extends State<StatisticPage> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      const Icon(Icons.calendar_today),
+                                      const Icon(
+                                        Icons.calendar_today,
+                                        color: AppColors.freyaRed,
+                                      ),
                                       const SizedBox(
                                         width: 4,
                                       ),
                                       Expanded(
-                                          child: AutoSizeText(
-                                        selectedTime!.label!,
-                                        maxLines: 1,
+                                          child: Center(
+                                        child: AutoSizeText(
+                                          selectedTime!.label!,
+                                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                                color: AppColors.freyaRed,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                          maxLines: 1,
+                                        ),
                                       )),
                                     ],
                                   ),
@@ -350,7 +359,9 @@ class _StatisticPageState extends State<StatisticPage> {
                                             )
                                           : Text(
                                               snapshot.data!.sessionCount.toString(),
-                                              style: Theme.of(context).textTheme.headlineMedium,
+                                              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                                    color: AppColors.white,
+                                                  ),
                                             );
                                     }),
                                 const SizedBox(

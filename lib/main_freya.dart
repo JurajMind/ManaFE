@@ -55,6 +55,6 @@ Future<void> setup(GetIt getIt) async {
   getIt.registerLazySingleton<PersonBloc>(() => PersonBloc(getIt.get<AuthorizeRepository>()));
   getIt.registerLazySingleton<OpenAI>(() => OpenAI.instance.build(
       token: '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',
-      baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 5)),
+      baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 15)),
       enableLog: true));
 }

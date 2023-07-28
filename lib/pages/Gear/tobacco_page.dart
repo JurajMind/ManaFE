@@ -12,6 +12,7 @@ import 'package:openapi/openapi.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:share/share.dart';
 
+import '../../components/AI/tobaco_expert.dart';
 import '../../const/theme.dart';
 import 'Tobacco/in_mixes_lazy_list.dart';
 
@@ -122,6 +123,15 @@ class _TobaccoPageState extends State<TobaccoPage> {
                       }),
                   SizedBox(
                     height: 8,
+                  ),
+                  Divider(),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  TobacoExpertWidget(
+                    lengh: 200,
+                    prompt:
+                        'As hookah expert , describe this tobacco flavor : ${widget.tobacco?.brand} ${widget.tobacco?.name} in 3 lines',
                   ),
                   Divider(),
                   SizedBox(
