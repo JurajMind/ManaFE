@@ -21,18 +21,17 @@ import 'package:openapi/src/model/smart_hookah_models_parameter_objects_change_s
 import 'package:openapi/src/model/smoke_session_simple_dto.dart';
 
 class DeviceApi {
-
   final Dio _dio;
 
   const DeviceApi(this._dio);
 
   /// deviceAddDevice
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [code] 
-  /// * [newName] 
+  /// * [id]
+  /// * [code]
+  /// * [newName]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -42,7 +41,7 @@ class DeviceApi {
   ///
   /// Returns a [Future] containing a [Response] with a [DeviceSimpleDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<DeviceSimpleDto>> deviceAddDevice({ 
+  Future<Response<DeviceSimpleDto>> deviceAddDevice({
     required String id,
     required String code,
     required String newName,
@@ -83,14 +82,14 @@ class DeviceApi {
     DeviceSimpleDto _responseData;
 
     try {
-_responseData = deserialize<DeviceSimpleDto, DeviceSimpleDto>(_response.data!, 'DeviceSimpleDto', growable: true);
+      _responseData = deserialize<DeviceSimpleDto, DeviceSimpleDto>(_response.data!, 'DeviceSimpleDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<DeviceSimpleDto>(
@@ -106,11 +105,11 @@ _responseData = deserialize<DeviceSimpleDto, DeviceSimpleDto>(_response.data!, '
   }
 
   /// deviceChangeAnimation
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [model] 
+  /// * [id]
+  /// * [model]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -120,7 +119,7 @@ _responseData = deserialize<DeviceSimpleDto, DeviceSimpleDto>(_response.data!, '
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> deviceChangeAnimation({ 
+  Future<Response<Object>> deviceChangeAnimation({
     required String id,
     required SmartHookahModelsParameterObjectsChangeAnimation model,
     CancelToken? cancelToken,
@@ -147,16 +146,16 @@ _responseData = deserialize<DeviceSimpleDto, DeviceSimpleDto>(_response.data!, '
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(model);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(model);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -171,14 +170,14 @@ _bodyData=jsonEncode(model);
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -194,11 +193,11 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   }
 
   /// deviceChangeBrightness
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [model] 
+  /// * [id]
+  /// * [model]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -208,7 +207,7 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> deviceChangeBrightness({ 
+  Future<Response<Object>> deviceChangeBrightness({
     required String id,
     required SmartHookahModelsParameterObjectsChangeBrightness model,
     CancelToken? cancelToken,
@@ -235,16 +234,16 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(model);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(model);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -259,14 +258,14 @@ _bodyData=jsonEncode(model);
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -282,11 +281,11 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   }
 
   /// deviceChangeColor
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [model] 
+  /// * [id]
+  /// * [model]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -296,7 +295,7 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> deviceChangeColor({ 
+  Future<Response<Object>> deviceChangeColor({
     required String id,
     required SmartHookahModelsParameterObjectsChangeColor model,
     CancelToken? cancelToken,
@@ -323,16 +322,16 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(model);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(model);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -347,14 +346,14 @@ _bodyData=jsonEncode(model);
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -370,11 +369,11 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   }
 
   /// deviceChangeMode
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [mode] 
+  /// * [id]
+  /// * [mode]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -384,7 +383,7 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> deviceChangeMode({ 
+  Future<Response<Object>> deviceChangeMode({
     required String id,
     required int mode,
     CancelToken? cancelToken,
@@ -411,16 +410,16 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(mode);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(mode);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -435,14 +434,14 @@ _bodyData=jsonEncode(mode);
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -458,11 +457,11 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   }
 
   /// deviceChangeName
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [newName] 
+  /// * [id]
+  /// * [newName]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -472,7 +471,7 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   ///
   /// Returns a [Future] containing a [Response] with a [DeviceSimpleDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<DeviceSimpleDto>> deviceChangeName({ 
+  Future<Response<DeviceSimpleDto>> deviceChangeName({
     required String id,
     required String newName,
     CancelToken? cancelToken,
@@ -511,14 +510,14 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
     DeviceSimpleDto _responseData;
 
     try {
-_responseData = deserialize<DeviceSimpleDto, DeviceSimpleDto>(_response.data!, 'DeviceSimpleDto', growable: true);
+      _responseData = deserialize<DeviceSimpleDto, DeviceSimpleDto>(_response.data!, 'DeviceSimpleDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<DeviceSimpleDto>(
@@ -534,11 +533,11 @@ _responseData = deserialize<DeviceSimpleDto, DeviceSimpleDto>(_response.data!, '
   }
 
   /// deviceChangeSpeed
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [model] 
+  /// * [id]
+  /// * [model]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -548,7 +547,7 @@ _responseData = deserialize<DeviceSimpleDto, DeviceSimpleDto>(_response.data!, '
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> deviceChangeSpeed({ 
+  Future<Response<Object>> deviceChangeSpeed({
     required String id,
     required SmartHookahModelsParameterObjectsChangeSpeed model,
     CancelToken? cancelToken,
@@ -575,16 +574,16 @@ _responseData = deserialize<DeviceSimpleDto, DeviceSimpleDto>(_response.data!, '
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(model);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(model);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -599,14 +598,14 @@ _bodyData=jsonEncode(model);
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -622,12 +621,12 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   }
 
   /// deviceGetDeviceSessions
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [pageSize] 
-  /// * [page] 
+  /// * [id]
+  /// * [pageSize]
+  /// * [page]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -637,7 +636,7 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   ///
   /// Returns a [Future] containing a [Response] with a [List<SmokeSessionSimpleDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<SmokeSessionSimpleDto>>> deviceGetDeviceSessions({ 
+  Future<Response<List<SmokeSessionSimpleDto>>> deviceGetDeviceSessions({
     required int id,
     int? pageSize,
     int? page,
@@ -678,14 +677,16 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
     List<SmokeSessionSimpleDto> _responseData;
 
     try {
-_responseData = deserialize<List<SmokeSessionSimpleDto>, SmokeSessionSimpleDto>(_response.data!, 'List<SmokeSessionSimpleDto>', growable: true);
+      _responseData = deserialize<List<SmokeSessionSimpleDto>, SmokeSessionSimpleDto>(
+          _response.data!, 'List<SmokeSessionSimpleDto>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<SmokeSessionSimpleDto>>(
@@ -701,7 +702,7 @@ _responseData = deserialize<List<SmokeSessionSimpleDto>, SmokeSessionSimpleDto>(
   }
 
   /// deviceGetPictures
-  /// 
+  ///
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -713,7 +714,7 @@ _responseData = deserialize<List<SmokeSessionSimpleDto>, SmokeSessionSimpleDto>(
   ///
   /// Returns a [Future] containing a [Response] with a [List<DeviceDevicePictureDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<DeviceDevicePictureDto>>> deviceGetPictures({ 
+  Future<Response<List<DeviceDevicePictureDto>>> deviceGetPictures({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -745,14 +746,16 @@ _responseData = deserialize<List<SmokeSessionSimpleDto>, SmokeSessionSimpleDto>(
     List<DeviceDevicePictureDto> _responseData;
 
     try {
-_responseData = deserialize<List<DeviceDevicePictureDto>, DeviceDevicePictureDto>(_response.data!, 'List<DeviceDevicePictureDto>', growable: true);
+      _responseData = deserialize<List<DeviceDevicePictureDto>, DeviceDevicePictureDto>(
+          _response.data!, 'List<DeviceDevicePictureDto>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<DeviceDevicePictureDto>>(
@@ -768,10 +771,10 @@ _responseData = deserialize<List<DeviceDevicePictureDto>, DeviceDevicePictureDto
   }
 
   /// deviceGetSetting
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -781,7 +784,7 @@ _responseData = deserialize<List<DeviceDevicePictureDto>, DeviceDevicePictureDto
   ///
   /// Returns a [Future] containing a [Response] with a [DeviceSettingDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<DeviceSettingDto>> deviceGetSetting({ 
+  Future<Response<DeviceSettingDto>> deviceGetSetting({
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -814,14 +817,15 @@ _responseData = deserialize<List<DeviceDevicePictureDto>, DeviceDevicePictureDto
     DeviceSettingDto _responseData;
 
     try {
-_responseData = deserialize<DeviceSettingDto, DeviceSettingDto>(_response.data!, 'DeviceSettingDto', growable: true);
+      _responseData =
+          deserialize<DeviceSettingDto, DeviceSettingDto>(_response.data!, 'DeviceSettingDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<DeviceSettingDto>(
@@ -837,10 +841,10 @@ _responseData = deserialize<DeviceSettingDto, DeviceSettingDto>(_response.data!,
   }
 
   /// deviceInfo
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -850,7 +854,7 @@ _responseData = deserialize<DeviceSettingDto, DeviceSettingDto>(_response.data!,
   ///
   /// Returns a [Future] containing a [Response] with a [SmartHookahControllersApiDeviceInfoResponse] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<SmartHookahControllersApiDeviceInfoResponse>> deviceInfo({ 
+  Future<Response<SmartHookahControllersApiDeviceInfoResponse>> deviceInfo({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -883,14 +887,17 @@ _responseData = deserialize<DeviceSettingDto, DeviceSettingDto>(_response.data!,
     SmartHookahControllersApiDeviceInfoResponse _responseData;
 
     try {
-_responseData = deserialize<SmartHookahControllersApiDeviceInfoResponse, SmartHookahControllersApiDeviceInfoResponse>(_response.data!, 'SmartHookahControllersApiDeviceInfoResponse', growable: true);
+      _responseData =
+          deserialize<SmartHookahControllersApiDeviceInfoResponse, SmartHookahControllersApiDeviceInfoResponse>(
+              _response.data!, 'SmartHookahControllersApiDeviceInfoResponse',
+              growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<SmartHookahControllersApiDeviceInfoResponse>(
@@ -906,10 +913,10 @@ _responseData = deserialize<SmartHookahControllersApiDeviceInfoResponse, SmartHo
   }
 
   /// devicePing
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -919,7 +926,7 @@ _responseData = deserialize<SmartHookahControllersApiDeviceInfoResponse, SmartHo
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> devicePing({ 
+  Future<Response<Object>> devicePing({
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -952,14 +959,14 @@ _responseData = deserialize<SmartHookahControllersApiDeviceInfoResponse, SmartHo
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -975,11 +982,11 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   }
 
   /// devicePromptUpdate
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [updateId] 
+  /// * [id]
+  /// * [updateId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -989,7 +996,7 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   ///
   /// Returns a [Future] containing a [Response] with a [bool] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<bool>> devicePromptUpdate({ 
+  Future<Response<bool>> devicePromptUpdate({
     required int id,
     required int updateId,
     CancelToken? cancelToken,
@@ -999,7 +1006,9 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/api/Device/{id}/Update/{updateId}'.replaceAll('{' r'id' '}', id.toString()).replaceAll('{' r'updateId' '}', updateId.toString());
+    final _path = r'/api/Device/{id}/Update/{updateId}'
+        .replaceAll('{' r'id' '}', id.toString())
+        .replaceAll('{' r'updateId' '}', updateId.toString());
     final _options = Options(
       method: r'POST',
       headers: <String, dynamic>{
@@ -1023,14 +1032,14 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
     bool _responseData;
 
     try {
-_responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
+      _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<bool>(
@@ -1046,10 +1055,10 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
   }
 
   /// deviceRemoveDevice
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -1059,7 +1068,7 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
   ///
   /// Returns a [Future] containing a [Response] with a [DeviceSimpleDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<DeviceSimpleDto>> deviceRemoveDevice({ 
+  Future<Response<DeviceSimpleDto>> deviceRemoveDevice({
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -1092,14 +1101,14 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
     DeviceSimpleDto _responseData;
 
     try {
-_responseData = deserialize<DeviceSimpleDto, DeviceSimpleDto>(_response.data!, 'DeviceSimpleDto', growable: true);
+      _responseData = deserialize<DeviceSimpleDto, DeviceSimpleDto>(_response.data!, 'DeviceSimpleDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<DeviceSimpleDto>(
@@ -1115,10 +1124,10 @@ _responseData = deserialize<DeviceSimpleDto, DeviceSimpleDto>(_response.data!, '
   }
 
   /// deviceRestart
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -1128,7 +1137,7 @@ _responseData = deserialize<DeviceSimpleDto, DeviceSimpleDto>(_response.data!, '
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> deviceRestart({ 
+  Future<Response<Object>> deviceRestart({
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -1161,14 +1170,14 @@ _responseData = deserialize<DeviceSimpleDto, DeviceSimpleDto>(_response.data!, '
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -1184,11 +1193,11 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   }
 
   /// deviceSetPicture
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [pictureId] 
+  /// * [id]
+  /// * [pictureId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -1198,7 +1207,7 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   ///
   /// Returns a [Future] containing a [Response] with a [bool] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<bool>> deviceSetPicture({ 
+  Future<Response<bool>> deviceSetPicture({
     required int id,
     required int pictureId,
     CancelToken? cancelToken,
@@ -1225,16 +1234,16 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(pictureId);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(pictureId);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -1249,14 +1258,14 @@ _bodyData=jsonEncode(pictureId);
     bool _responseData;
 
     try {
-_responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
+      _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<bool>(
@@ -1272,10 +1281,10 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
   }
 
   /// deviceShowQrCode
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -1285,7 +1294,7 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> deviceShowQrCode({ 
+  Future<Response<Object>> deviceShowQrCode({
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -1318,14 +1327,14 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -1341,10 +1350,10 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   }
 
   /// deviceSleep
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -1354,7 +1363,7 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> deviceSleep({ 
+  Future<Response<Object>> deviceSleep({
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -1387,14 +1396,14 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -1410,7 +1419,7 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   }
 
   /// deviceUpdates
-  /// 
+  ///
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -1422,7 +1431,7 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   ///
   /// Returns a [Future] containing a [Response] with a [List<DeviceUpdateDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<DeviceUpdateDto>>> deviceUpdates({ 
+  Future<Response<List<DeviceUpdateDto>>> deviceUpdates({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -1454,14 +1463,15 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
     List<DeviceUpdateDto> _responseData;
 
     try {
-_responseData = deserialize<List<DeviceUpdateDto>, DeviceUpdateDto>(_response.data!, 'List<DeviceUpdateDto>', growable: true);
+      _responseData =
+          deserialize<List<DeviceUpdateDto>, DeviceUpdateDto>(_response.data!, 'List<DeviceUpdateDto>', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<DeviceUpdateDto>>(
@@ -1475,5 +1485,4 @@ _responseData = deserialize<List<DeviceUpdateDto>, DeviceUpdateDto>(_response.da
       extra: _response.extra,
     );
   }
-
 }

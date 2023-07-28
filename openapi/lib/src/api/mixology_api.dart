@@ -15,16 +15,15 @@ import 'package:openapi/src/model/tobacco_simple_dto.dart';
 import 'package:openapi/src/model/tobacco_taste_dto.dart';
 
 class MixologyApi {
-
   final Dio _dio;
 
   const MixologyApi(this._dio);
 
   /// mixologyAddToMix
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [newMix] 
+  /// * [newMix]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -34,7 +33,7 @@ class MixologyApi {
   ///
   /// Returns a [Future] containing a [Response] with a [TobaccoMixSimpleDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<TobaccoMixSimpleDto>> mixologyAddToMix({ 
+  Future<Response<TobaccoMixSimpleDto>> mixologyAddToMix({
     required TobaccoMixSimpleDto newMix,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -60,16 +59,16 @@ class MixologyApi {
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(newMix);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(newMix);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -84,14 +83,15 @@ _bodyData=jsonEncode(newMix);
     TobaccoMixSimpleDto _responseData;
 
     try {
-_responseData = deserialize<TobaccoMixSimpleDto, TobaccoMixSimpleDto>(_response.data!, 'TobaccoMixSimpleDto', growable: true);
+      _responseData =
+          deserialize<TobaccoMixSimpleDto, TobaccoMixSimpleDto>(_response.data!, 'TobaccoMixSimpleDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<TobaccoMixSimpleDto>(
@@ -107,13 +107,13 @@ _responseData = deserialize<TobaccoMixSimpleDto, TobaccoMixSimpleDto>(_response.
   }
 
   /// mixologyGetMiFromTobaccos
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [ids] 
-  /// * [pageSize] 
-  /// * [page] 
-  /// * [own] 
+  /// * [ids]
+  /// * [pageSize]
+  /// * [page]
+  /// * [own]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -123,7 +123,7 @@ _responseData = deserialize<TobaccoMixSimpleDto, TobaccoMixSimpleDto>(_response.
   ///
   /// Returns a [Future] containing a [Response] with a [List<TobaccoMixSimpleDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<TobaccoMixSimpleDto>>> mixologyGetMiFromTobaccos({ 
+  Future<Response<List<TobaccoMixSimpleDto>>> mixologyGetMiFromTobaccos({
     required List<int> ids,
     int? pageSize,
     int? page,
@@ -167,14 +167,16 @@ _responseData = deserialize<TobaccoMixSimpleDto, TobaccoMixSimpleDto>(_response.
     List<TobaccoMixSimpleDto> _responseData;
 
     try {
-_responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(_response.data!, 'List<TobaccoMixSimpleDto>', growable: true);
+      _responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(
+          _response.data!, 'List<TobaccoMixSimpleDto>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<TobaccoMixSimpleDto>>(
@@ -190,14 +192,14 @@ _responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(_res
   }
 
   /// mixologyGetMixes
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [page] 
-  /// * [pageSize] 
-  /// * [author] 
-  /// * [orderBy] 
-  /// * [order] 
+  /// * [page]
+  /// * [pageSize]
+  /// * [author]
+  /// * [orderBy]
+  /// * [order]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -207,7 +209,7 @@ _responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(_res
   ///
   /// Returns a [Future] containing a [Response] with a [List<TobaccoMixSimpleDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<TobaccoMixSimpleDto>>> mixologyGetMixes({ 
+  Future<Response<List<TobaccoMixSimpleDto>>> mixologyGetMixes({
     int? page,
     int? pageSize,
     String? author,
@@ -253,14 +255,16 @@ _responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(_res
     List<TobaccoMixSimpleDto> _responseData;
 
     try {
-_responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(_response.data!, 'List<TobaccoMixSimpleDto>', growable: true);
+      _responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(
+          _response.data!, 'List<TobaccoMixSimpleDto>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<TobaccoMixSimpleDto>>(
@@ -276,10 +280,10 @@ _responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(_res
   }
 
   /// mixologyGetTobaccoMix
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -289,7 +293,7 @@ _responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(_res
   ///
   /// Returns a [Future] containing a [Response] with a [TobaccoMixSimpleDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<TobaccoMixSimpleDto>> mixologyGetTobaccoMix({ 
+  Future<Response<TobaccoMixSimpleDto>> mixologyGetTobaccoMix({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -322,14 +326,15 @@ _responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(_res
     TobaccoMixSimpleDto _responseData;
 
     try {
-_responseData = deserialize<TobaccoMixSimpleDto, TobaccoMixSimpleDto>(_response.data!, 'TobaccoMixSimpleDto', growable: true);
+      _responseData =
+          deserialize<TobaccoMixSimpleDto, TobaccoMixSimpleDto>(_response.data!, 'TobaccoMixSimpleDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<TobaccoMixSimpleDto>(
@@ -345,10 +350,10 @@ _responseData = deserialize<TobaccoMixSimpleDto, TobaccoMixSimpleDto>(_response.
   }
 
   /// mixologyGetTobaccoMixTastes
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -358,7 +363,7 @@ _responseData = deserialize<TobaccoMixSimpleDto, TobaccoMixSimpleDto>(_response.
   ///
   /// Returns a [Future] containing a [Response] with a [Map<String, List<TobaccoTasteDto>>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Map<String, List<TobaccoTasteDto>>>> mixologyGetTobaccoMixTastes({ 
+  Future<Response<Map<String, List<TobaccoTasteDto>>>> mixologyGetTobaccoMixTastes({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -391,14 +396,16 @@ _responseData = deserialize<TobaccoMixSimpleDto, TobaccoMixSimpleDto>(_response.
     Map<String, List<TobaccoTasteDto>> _responseData;
 
     try {
-_responseData = deserialize<Map<String, List<TobaccoTasteDto>>, List>(_response.data!, 'Map<String, List<TobaccoTasteDto>>', growable: true);
+      _responseData = deserialize<Map<String, List<TobaccoTasteDto>>, List>(
+          _response.data!, 'Map<String, List<TobaccoTasteDto>>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Map<String, List<TobaccoTasteDto>>>(
@@ -414,10 +421,10 @@ _responseData = deserialize<Map<String, List<TobaccoTasteDto>>, List>(_response.
   }
 
   /// mixologyRemoveMix
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [mixId] 
+  /// * [mixId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -427,7 +434,7 @@ _responseData = deserialize<Map<String, List<TobaccoTasteDto>>, List>(_response.
   ///
   /// Returns a [Future] containing a [Response] with a [Dto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Dto>> mixologyRemoveMix({ 
+  Future<Response<Dto>> mixologyRemoveMix({
     required int mixId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -465,14 +472,14 @@ _responseData = deserialize<Map<String, List<TobaccoTasteDto>>, List>(_response.
     Dto _responseData;
 
     try {
-_responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
+      _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Dto>(
@@ -488,11 +495,11 @@ _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
   }
 
   /// mixologyRenameMix
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [newName] 
+  /// * [id]
+  /// * [newName]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -502,7 +509,7 @@ _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
   ///
   /// Returns a [Future] containing a [Response] with a [TobaccoMixSimpleDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<TobaccoMixSimpleDto>> mixologyRenameMix({ 
+  Future<Response<TobaccoMixSimpleDto>> mixologyRenameMix({
     required int id,
     required String newName,
     CancelToken? cancelToken,
@@ -541,14 +548,15 @@ _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
     TobaccoMixSimpleDto _responseData;
 
     try {
-_responseData = deserialize<TobaccoMixSimpleDto, TobaccoMixSimpleDto>(_response.data!, 'TobaccoMixSimpleDto', growable: true);
+      _responseData =
+          deserialize<TobaccoMixSimpleDto, TobaccoMixSimpleDto>(_response.data!, 'TobaccoMixSimpleDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<TobaccoMixSimpleDto>(
@@ -564,13 +572,13 @@ _responseData = deserialize<TobaccoMixSimpleDto, TobaccoMixSimpleDto>(_response.
   }
 
   /// mixologySuggestMixTobacco
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [ids] 
-  /// * [pageSize] 
-  /// * [page] 
-  /// * [own] 
+  /// * [ids]
+  /// * [pageSize]
+  /// * [page]
+  /// * [own]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -580,7 +588,7 @@ _responseData = deserialize<TobaccoMixSimpleDto, TobaccoMixSimpleDto>(_response.
   ///
   /// Returns a [Future] containing a [Response] with a [List<TobaccoSimpleDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<TobaccoSimpleDto>>> mixologySuggestMixTobacco({ 
+  Future<Response<List<TobaccoSimpleDto>>> mixologySuggestMixTobacco({
     required List<int> ids,
     int? pageSize,
     int? page,
@@ -624,14 +632,15 @@ _responseData = deserialize<TobaccoMixSimpleDto, TobaccoMixSimpleDto>(_response.
     List<TobaccoSimpleDto> _responseData;
 
     try {
-_responseData = deserialize<List<TobaccoSimpleDto>, TobaccoSimpleDto>(_response.data!, 'List<TobaccoSimpleDto>', growable: true);
+      _responseData = deserialize<List<TobaccoSimpleDto>, TobaccoSimpleDto>(_response.data!, 'List<TobaccoSimpleDto>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<TobaccoSimpleDto>>(
@@ -647,11 +656,11 @@ _responseData = deserialize<List<TobaccoSimpleDto>, TobaccoSimpleDto>(_response.
   }
 
   /// mixologyVote
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [value] 
+  /// * [id]
+  /// * [value]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -661,7 +670,7 @@ _responseData = deserialize<List<TobaccoSimpleDto>, TobaccoSimpleDto>(_response.
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> mixologyVote({ 
+  Future<Response<Object>> mixologyVote({
     required int id,
     required int value,
     CancelToken? cancelToken,
@@ -688,16 +697,16 @@ _responseData = deserialize<List<TobaccoSimpleDto>, TobaccoSimpleDto>(_response.
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(value);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(value);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -712,14 +721,14 @@ _bodyData=jsonEncode(value);
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -733,5 +742,4 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
       extra: _response.extra,
     );
   }
-
 }

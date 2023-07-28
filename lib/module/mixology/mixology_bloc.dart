@@ -104,13 +104,13 @@ class MixologyBloc {
     await this.loadCreatorMixes(creatorName, nextPage, featured: featured);
   }
 
-  Future<List<TobaccoMixSimpleDto>?> loadMixesFromCache(String key) async {
+  Future<List<TobaccoMixSimpleDto?>?> loadMixesFromCache(String key) async {
     try {
       var fromCache = (await cache)!.get(key);
       if (fromCache == null) {
         return null;
       }
-      if (fromCache is List<dynamic>) return fromCache.map((e) => e as TobaccoMixSimpleDto).toList();
+      if (fromCache is List<dynamic>) return fromCache.map((e) => e as TobaccoMixSimpleDto?).toList();
 
       return null;
     } catch (e) {
@@ -122,6 +122,13 @@ class MixologyBloc {
 
   Future<void> storeMixesToCache(String key, List<TobaccoMixSimpleDto?> mix) async {
     (await cache)!.put(key, mix);
+  }
+
+  Future<void> cleanMixesFromCache(
+    String key,
+  ) async {
+    var keys = (await cache)?.keys.where((e) => e is String && e.contains(key)) ?? [];
+    (await cache)!.deleteAll(keys);
   }
 
   Future loadFakeCreatorMixes(String? creatorName, int page) async {
@@ -142,14 +149,24 @@ class MixologyBloc {
     this.mixCreatorMixes[creatorName]!.add(fakeMixes);
   }
 
+  Future<void> refreshCreatorMixes(String? creatorName) async {
+    this.mixCreatorMixes[creatorName]?.add([]);
+    await this.cleanMixesFromCache(creatorName!);
+    this.mixCreatorMixesPages[creatorName] = 0;
+    await loadCreatorMixes(creatorName, 0);
+  }
+
   Future loadCreatorMixes(String? creatorName, int page, {bool featured = false}) async {
     loadFakeCreatorMixes(creatorName, page);
     var cacheKey = '${creatorName}_$page';
-    loadMixesFromCache(cacheKey).then((value) {
-      if (value != null) {
-        this.mixCreatorMixes[creatorName]!.add(value);
-      }
-    });
+    if (page == 0) {
+      var cacheKey = '${creatorName}_$page';
+      loadMixesFromCache(cacheKey).then((value) {
+        if (value != null) {
+          this.mixCreatorMixes[creatorName]!.add(value);
+        }
+      });
+    }
 
     this.mixCreatorMixesPages[creatorName] = page;
     final mixes =

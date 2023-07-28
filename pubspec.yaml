@@ -3,7 +3,7 @@ description: Manapipes app.
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.12.0 <3.2.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -17,7 +17,7 @@ dependencies:
   animated_background: ^2.0.0
   dartz: ^0.10.1
   percent_indicator: ^4.2.2
-  dio: ^4.0.6
+  dio: ^5.2.1+1
   arkit_plugin: 
      path: ./modules/arkit_flutter_plugin
   #flutter_webview_plugin: ^0.3.11
@@ -54,8 +54,7 @@ dependencies:
   avatar_glow: ^2.0.2
   auto_size_text: ^3.0.0
   another_flushbar: ^1.10.29
-  date_range_picker: 
-    git: https://github.com/tcd93/date_range_picker
+  custom_date_range_picker: ^1.0.10
   qr_code_scanner: ^1.0.0
   flutter_material_color_picker: ^1.1.0+2
   image_picker: ^0.8.5+3
@@ -92,8 +91,11 @@ dependencies:
   clickable_list_wheel_view: ^0.2.0
   darq: ^1.2.1
   collection: ^1.15.0-nullsafety.4
-  flutter_neumorphic: ^3.2.0
-  health: ^7.0.1
+  flutter_neumorphic: 
+    git:
+      url: https://github.com/den0206/Flutter-Neumorphic.git
+      ref: feature/remoce_accentcolor
+  chat_gpt_sdk: ^2.2.3
 
 dependency_overrides:
   flare_flutter:

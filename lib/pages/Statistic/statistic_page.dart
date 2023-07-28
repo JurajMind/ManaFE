@@ -23,7 +23,7 @@ import 'package:app/components/Charts/sparkline.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openapi/openapi.dart';
 import 'dart:math' as math;
-import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
+import 'package:custom_date_range_picker/custom_date_range_picker.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'Components/gear_usage_stat.dart';
@@ -283,20 +283,25 @@ class _StatisticPageState extends State<StatisticPage> {
                                     return;
                                   }
                                   if (value == 4) {
-                                    final List<DateTime>? picked = await DateRagePicker.showDatePicker(
-                                        context: context,
-                                        initialFirstDate: selectedTime!.from!,
-                                        initialLastDate: selectedTime!.to!,
-                                        firstDate: new DateTime(2017),
-                                        lastDate: new DateTime.now());
-                                    if (picked != null && picked.length == 2) {
-                                      print(picked);
-
-                                      setState(() {
-                                        selectedTime = new TimeModel.fromCustom(picked[0], picked[1]);
-                                      });
-                                      loadTime(bloc, selectedTime!);
-                                    }
+                                    showCustomDateRangePicker(
+                                      context,
+                                      dismissible: true,
+                                      minimumDate: DateTime.now().subtract(const Duration(days: 30)),
+                                      maximumDate: DateTime.now().add(const Duration(days: 30)),
+                                      endDate: selectedTime?.from,
+                                      startDate: selectedTime?.to,
+                                      backgroundColor: AppColors.freyaBlack,
+                                      primaryColor: AppColors.freyaRed,
+                                      onApplyClick: (start, end) {
+                                        setState(() {
+                                          selectedTime = new TimeModel.fromCustom(start, end);
+                                          loadTime(bloc, selectedTime!);
+                                        });
+                                      },
+                                      onCancelClick: () {
+                                        setState(() {});
+                                      },
+                                    );
                                   }
                                   setState(() {
                                     if (value >= 0 && value < 4) {

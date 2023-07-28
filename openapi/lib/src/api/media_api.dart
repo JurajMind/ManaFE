@@ -12,16 +12,15 @@ import 'package:dio/dio.dart';
 import 'package:openapi/src/model/media_dto.dart';
 
 class MediaApi {
-
   final Dio _dio;
 
   const MediaApi(this._dio);
 
   /// mediaAddGearPicture
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [file] - A file
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
@@ -32,7 +31,7 @@ class MediaApi {
   ///
   /// Returns a [Future] containing a [Response] with a [MediaDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<MediaDto>> mediaAddGearPicture({ 
+  Future<Response<MediaDto>> mediaAddGearPicture({
     required int id,
     required MultipartFile file,
     CancelToken? cancelToken,
@@ -58,17 +57,15 @@ class MediaApi {
 
     dynamic _bodyData;
 
-    try {
-
-    } catch(error, stackTrace) {
+    try {} catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -83,14 +80,14 @@ class MediaApi {
     MediaDto _responseData;
 
     try {
-_responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', growable: true);
+      _responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<MediaDto>(
@@ -106,10 +103,10 @@ _responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', gro
   }
 
   /// mediaAddPlacePicture
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [file] - A file
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
@@ -120,7 +117,7 @@ _responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', gro
   ///
   /// Returns a [Future] containing a [Response] with a [MediaDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<MediaDto>> mediaAddPlacePicture({ 
+  Future<Response<MediaDto>> mediaAddPlacePicture({
     required int id,
     required MultipartFile file,
     CancelToken? cancelToken,
@@ -146,17 +143,15 @@ _responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', gro
 
     dynamic _bodyData;
 
-    try {
-
-    } catch(error, stackTrace) {
+    try {} catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -171,14 +166,14 @@ _responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', gro
     MediaDto _responseData;
 
     try {
-_responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', growable: true);
+      _responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<MediaDto>(
@@ -194,10 +189,10 @@ _responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', gro
   }
 
   /// mediaAddPlaceReview
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [file] - A file
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
@@ -208,7 +203,7 @@ _responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', gro
   ///
   /// Returns a [Future] containing a [Response] with a [MediaDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<MediaDto>> mediaAddPlaceReview({ 
+  Future<Response<MediaDto>> mediaAddPlaceReview({
     required int id,
     required MultipartFile file,
     CancelToken? cancelToken,
@@ -234,17 +229,15 @@ _responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', gro
 
     dynamic _bodyData;
 
-    try {
-
-    } catch(error, stackTrace) {
+    try {} catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -259,14 +252,14 @@ _responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', gro
     MediaDto _responseData;
 
     try {
-_responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', growable: true);
+      _responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<MediaDto>(
@@ -282,10 +275,10 @@ _responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', gro
   }
 
   /// mediaAddSessionReview
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [file] - A file
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
@@ -296,7 +289,7 @@ _responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', gro
   ///
   /// Returns a [Future] containing a [Response] with a [MediaDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<MediaDto>> mediaAddSessionReview({ 
+  Future<Response<MediaDto>> mediaAddSessionReview({
     required int id,
     required MultipartFile file,
     CancelToken? cancelToken,
@@ -322,17 +315,15 @@ _responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', gro
 
     dynamic _bodyData;
 
-    try {
-
-    } catch(error, stackTrace) {
+    try {} catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -347,14 +338,14 @@ _responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', gro
     MediaDto _responseData;
 
     try {
-_responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', growable: true);
+      _responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<MediaDto>(
@@ -368,5 +359,4 @@ _responseData = deserialize<MediaDto, MediaDto>(_response.data!, 'MediaDto', gro
       extra: _response.extra,
     );
   }
-
 }

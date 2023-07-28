@@ -176,7 +176,7 @@ class _PaggingMixListViewState extends State<PaggingMixListView> {
 
           return LazyLoadScrollView(
             onRefresh: () =>
-                Future.delayed(Duration.zero, () => {widget.mixologyBloc.loadCreatorMixes(widget.mixCreator, 0)}),
+                Future.delayed(Duration.zero, () => {widget.mixologyBloc.refreshCreatorMixes(widget.mixCreator)}),
             onEndOfPage: () {
               if (!snapshot.data!.contains(null))
                 widget.mixologyBloc.loadCreatorMixesNextPage(widget.mixCreator, false);

@@ -12,17 +12,16 @@ import 'package:dio/dio.dart';
 import 'package:openapi/src/model/smart_hookah_models_redis_competition_entry.dart';
 
 class CompetitionApi {
-
   final Dio _dio;
 
   const CompetitionApi(this._dio);
 
   /// competitionAddEntry
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [name] 
-  /// * [time] 
+  /// * [name]
+  /// * [time]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -32,7 +31,7 @@ class CompetitionApi {
   ///
   /// Returns a [Future] containing a [Response] with a [bool] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<bool>> competitionAddEntry({ 
+  Future<Response<bool>> competitionAddEntry({
     required String name,
     required double time,
     CancelToken? cancelToken,
@@ -72,14 +71,14 @@ class CompetitionApi {
     bool _responseData;
 
     try {
-_responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
+      _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<bool>(
@@ -95,7 +94,7 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
   }
 
   /// competitionClean
-  /// 
+  ///
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -107,7 +106,7 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
   ///
   /// Returns a [Future] containing a [Response] with a [bool] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<bool>> competitionClean({ 
+  Future<Response<bool>> competitionClean({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -139,14 +138,14 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
     bool _responseData;
 
     try {
-_responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
+      _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<bool>(
@@ -162,7 +161,7 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
   }
 
   /// competitionGetResults
-  /// 
+  ///
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -174,7 +173,7 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
   ///
   /// Returns a [Future] containing a [Response] with a [List<SmartHookahModelsRedisCompetitionEntry>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<SmartHookahModelsRedisCompetitionEntry>>> competitionGetResults({ 
+  Future<Response<List<SmartHookahModelsRedisCompetitionEntry>>> competitionGetResults({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -206,14 +205,16 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
     List<SmartHookahModelsRedisCompetitionEntry> _responseData;
 
     try {
-_responseData = deserialize<List<SmartHookahModelsRedisCompetitionEntry>, SmartHookahModelsRedisCompetitionEntry>(_response.data!, 'List<SmartHookahModelsRedisCompetitionEntry>', growable: true);
+      _responseData = deserialize<List<SmartHookahModelsRedisCompetitionEntry>, SmartHookahModelsRedisCompetitionEntry>(
+          _response.data!, 'List<SmartHookahModelsRedisCompetitionEntry>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<SmartHookahModelsRedisCompetitionEntry>>(
@@ -227,5 +228,4 @@ _responseData = deserialize<List<SmartHookahModelsRedisCompetitionEntry>, SmartH
       extra: _response.extra,
     );
   }
-
 }

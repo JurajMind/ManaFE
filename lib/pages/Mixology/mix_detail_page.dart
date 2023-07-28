@@ -14,6 +14,7 @@ import 'package:app/services/share.dart';
 import 'package:app/theme/theme_widget.dart';
 import 'package:app/utils/translations/app_translations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -132,8 +133,8 @@ class MixDetailPageState extends State<MixDetailPage> {
                   ? IconButton(
                       icon: Icon(Icons.delete),
                       onPressed: () async {
-                        var delete = await (deleteConfirn() as Future<bool>);
-                        if (delete) {
+                        var delete = await deleteConfirn();
+                        if (delete ?? false) {
                           var bloc = DataProvider.getData(context)!.mixologyBloc;
                           bloc.deleteMix(mix!);
                           Navigator.of(context).pop();
@@ -228,7 +229,7 @@ class MixDetailPageState extends State<MixDetailPage> {
                                       height: 40,
                                       width: 30,
                                       decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.colors[index]),
-                                      child: owned ? Icon(Icons.check) : Icon(FontAwesomeIcons.times),
+                                      child: owned ? Icon(Icons.check) : Icon(FontAwesomeIcons.xmark),
                                     ),
                                     onTap: () => Navigator.of(context)
                                         .push(new MaterialPageRoute(builder: (BuildContext context) {
@@ -240,6 +241,21 @@ class MixDetailPageState extends State<MixDetailPage> {
                                     subtitle: Text(f.tobacco!.brand!, style: Theme.of(context).textTheme.bodyMedium),
                                   ));
                             }).values,
+                            MButton(
+                              label: 'Test',
+                              onPressed: () async {
+                                final request = ChatCompleteText(messages: [
+                                  Messages(
+                                      role: Role.user,
+                                      content: "What is the weather like in Boston?",
+                                      name: "get_current_weather"),
+                                ], maxToken: 200, model: GptTurboChatModel());
+                                var openAi = getIt.get<OpenAI>();
+                                final response = await openAi.onChatCompletionSSE(request: request).listen((event) {
+                                  debugPrint(event.choices?.last.message?.content);
+                                });
+                              },
+                            ),
                             FavoriteMixButton(mix: mix),
                             UseMixButton(
                               mix: mix,

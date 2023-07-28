@@ -21,11 +21,11 @@ class ApiClient {
   final String baseUrl;
 
   ApiClient(
-    url,
+    String url,
   )   : baseUrl = url,
         _dio = new Dio(new BaseOptions(
-          baseUrl: url,
-          connectTimeout: 20000,
+          baseUrl: "https://" + url,
+          connectTimeout: Duration(milliseconds: 20000),
         ));
 
   Future<dynamic> _getJson(Uri uri) async {

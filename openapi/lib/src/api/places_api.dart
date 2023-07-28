@@ -15,17 +15,16 @@ import 'package:openapi/src/model/place_menu_dto.dart';
 import 'package:openapi/src/model/places_place_dashboard_dto.dart';
 
 class PlacesApi {
-
   final Dio _dio;
 
   const PlacesApi(this._dio);
 
   /// placesAddFlags
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [placeId] 
-  /// * [flags] 
+  /// * [placeId]
+  /// * [flags]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -35,7 +34,7 @@ class PlacesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [PlaceDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PlaceDto>> placesAddFlags({ 
+  Future<Response<PlaceDto>> placesAddFlags({
     required int placeId,
     required List<String> flags,
     CancelToken? cancelToken,
@@ -62,16 +61,16 @@ class PlacesApi {
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(flags);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(flags);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -86,14 +85,14 @@ _bodyData=jsonEncode(flags);
     PlaceDto _responseData;
 
     try {
-_responseData = deserialize<PlaceDto, PlaceDto>(_response.data!, 'PlaceDto', growable: true);
+      _responseData = deserialize<PlaceDto, PlaceDto>(_response.data!, 'PlaceDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PlaceDto>(
@@ -109,10 +108,10 @@ _responseData = deserialize<PlaceDto, PlaceDto>(_response.data!, 'PlaceDto', gro
   }
 
   /// placesAddPlace
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [importedPlace] 
+  /// * [importedPlace]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -122,7 +121,7 @@ _responseData = deserialize<PlaceDto, PlaceDto>(_response.data!, 'PlaceDto', gro
   ///
   /// Returns a [Future] containing a [Response] with a [PlaceDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PlaceDto>> placesAddPlace({ 
+  Future<Response<PlaceDto>> placesAddPlace({
     required PlaceDto importedPlace,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -148,16 +147,16 @@ _responseData = deserialize<PlaceDto, PlaceDto>(_response.data!, 'PlaceDto', gro
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(importedPlace);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(importedPlace);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -172,14 +171,14 @@ _bodyData=jsonEncode(importedPlace);
     PlaceDto _responseData;
 
     try {
-_responseData = deserialize<PlaceDto, PlaceDto>(_response.data!, 'PlaceDto', growable: true);
+      _responseData = deserialize<PlaceDto, PlaceDto>(_response.data!, 'PlaceDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PlaceDto>(
@@ -195,7 +194,7 @@ _responseData = deserialize<PlaceDto, PlaceDto>(_response.data!, 'PlaceDto', gro
   }
 
   /// placesFixLocation
-  /// 
+  ///
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -207,7 +206,7 @@ _responseData = deserialize<PlaceDto, PlaceDto>(_response.data!, 'PlaceDto', gro
   ///
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> placesFixLocation({ 
+  Future<Response<void>> placesFixLocation({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -240,10 +239,10 @@ _responseData = deserialize<PlaceDto, PlaceDto>(_response.data!, 'PlaceDto', gro
   }
 
   /// placesGetDashboardData
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [placeId] 
+  /// * [placeId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -253,7 +252,7 @@ _responseData = deserialize<PlaceDto, PlaceDto>(_response.data!, 'PlaceDto', gro
   ///
   /// Returns a [Future] containing a [Response] with a [PlacesPlaceDashboardDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PlacesPlaceDashboardDto>> placesGetDashboardData({ 
+  Future<Response<PlacesPlaceDashboardDto>> placesGetDashboardData({
     required int placeId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -286,14 +285,16 @@ _responseData = deserialize<PlaceDto, PlaceDto>(_response.data!, 'PlaceDto', gro
     PlacesPlaceDashboardDto _responseData;
 
     try {
-_responseData = deserialize<PlacesPlaceDashboardDto, PlacesPlaceDashboardDto>(_response.data!, 'PlacesPlaceDashboardDto', growable: true);
+      _responseData = deserialize<PlacesPlaceDashboardDto, PlacesPlaceDashboardDto>(
+          _response.data!, 'PlacesPlaceDashboardDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PlacesPlaceDashboardDto>(
@@ -309,10 +310,10 @@ _responseData = deserialize<PlacesPlaceDashboardDto, PlacesPlaceDashboardDto>(_r
   }
 
   /// placesGetPlaceInfo
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -322,7 +323,7 @@ _responseData = deserialize<PlacesPlaceDashboardDto, PlacesPlaceDashboardDto>(_r
   ///
   /// Returns a [Future] containing a [Response] with a [PlaceDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PlaceDto>> placesGetPlaceInfo({ 
+  Future<Response<PlaceDto>> placesGetPlaceInfo({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -360,14 +361,14 @@ _responseData = deserialize<PlacesPlaceDashboardDto, PlacesPlaceDashboardDto>(_r
     PlaceDto _responseData;
 
     try {
-_responseData = deserialize<PlaceDto, PlaceDto>(_response.data!, 'PlaceDto', growable: true);
+      _responseData = deserialize<PlaceDto, PlaceDto>(_response.data!, 'PlaceDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PlaceDto>(
@@ -383,10 +384,10 @@ _responseData = deserialize<PlaceDto, PlaceDto>(_response.data!, 'PlaceDto', gro
   }
 
   /// placesGetPlaceMenu
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -396,7 +397,7 @@ _responseData = deserialize<PlaceDto, PlaceDto>(_response.data!, 'PlaceDto', gro
   ///
   /// Returns a [Future] containing a [Response] with a [PlaceMenuDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PlaceMenuDto>> placesGetPlaceMenu({ 
+  Future<Response<PlaceMenuDto>> placesGetPlaceMenu({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -429,14 +430,14 @@ _responseData = deserialize<PlaceDto, PlaceDto>(_response.data!, 'PlaceDto', gro
     PlaceMenuDto _responseData;
 
     try {
-_responseData = deserialize<PlaceMenuDto, PlaceMenuDto>(_response.data!, 'PlaceMenuDto', growable: true);
+      _responseData = deserialize<PlaceMenuDto, PlaceMenuDto>(_response.data!, 'PlaceMenuDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PlaceMenuDto>(
@@ -452,7 +453,7 @@ _responseData = deserialize<PlaceMenuDto, PlaceMenuDto>(_response.data!, 'PlaceM
   }
 
   /// placesImportPlaces
-  /// 
+  ///
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -464,7 +465,7 @@ _responseData = deserialize<PlaceMenuDto, PlaceMenuDto>(_response.data!, 'PlaceM
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> placesImportPlaces({ 
+  Future<Response<Object>> placesImportPlaces({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -496,14 +497,14 @@ _responseData = deserialize<PlaceMenuDto, PlaceMenuDto>(_response.data!, 'PlaceM
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -519,7 +520,7 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   }
 
   /// placesImportPlacesFromMap
-  /// 
+  ///
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -531,7 +532,7 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> placesImportPlacesFromMap({ 
+  Future<Response<Object>> placesImportPlacesFromMap({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -563,14 +564,14 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -586,14 +587,14 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   }
 
   /// placesSearchNearby
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [page] 
-  /// * [pageSize] 
-  /// * [lat] 
-  /// * [lng] 
-  /// * [radius] 
+  /// * [page]
+  /// * [pageSize]
+  /// * [lat]
+  /// * [lng]
+  /// * [radius]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -603,7 +604,7 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   ///
   /// Returns a [Future] containing a [Response] with a [NearbyPlacesDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<NearbyPlacesDto>> placesSearchNearby({ 
+  Future<Response<NearbyPlacesDto>> placesSearchNearby({
     int? page,
     int? pageSize,
     double? lat,
@@ -649,14 +650,14 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
     NearbyPlacesDto _responseData;
 
     try {
-_responseData = deserialize<NearbyPlacesDto, NearbyPlacesDto>(_response.data!, 'NearbyPlacesDto', growable: true);
+      _responseData = deserialize<NearbyPlacesDto, NearbyPlacesDto>(_response.data!, 'NearbyPlacesDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<NearbyPlacesDto>(
@@ -670,5 +671,4 @@ _responseData = deserialize<NearbyPlacesDto, NearbyPlacesDto>(_response.data!, '
       extra: _response.extra,
     );
   }
-
 }

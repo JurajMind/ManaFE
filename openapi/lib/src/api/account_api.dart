@@ -13,17 +13,16 @@ import 'package:openapi/src/model/smart_hookah_models_forgot_password_view_model
 import 'package:openapi/src/model/user_model.dart';
 
 class AccountApi {
-
   final Dio _dio;
 
   const AccountApi(this._dio);
 
   /// accountConfirmEmail
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [userId] 
-  /// * [code] 
+  /// * [userId]
+  /// * [code]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -33,7 +32,7 @@ class AccountApi {
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> accountConfirmEmail({ 
+  Future<Response<Object>> accountConfirmEmail({
     required String userId,
     required String code,
     CancelToken? cancelToken,
@@ -73,14 +72,14 @@ class AccountApi {
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -96,10 +95,10 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   }
 
   /// accountForgotPassword
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [model] 
+  /// * [model]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -109,7 +108,7 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> accountForgotPassword({ 
+  Future<Response<Object>> accountForgotPassword({
     required SmartHookahModelsForgotPasswordViewModel model,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -135,16 +134,16 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(model);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(model);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -159,14 +158,14 @@ _bodyData=jsonEncode(model);
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -182,10 +181,10 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   }
 
   /// accountRegister
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [userModel] 
+  /// * [userModel]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -195,7 +194,7 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> accountRegister({ 
+  Future<Response<Object>> accountRegister({
     required UserModel userModel,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -221,16 +220,16 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(userModel);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(userModel);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -245,14 +244,14 @@ _bodyData=jsonEncode(userModel);
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -268,11 +267,11 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   }
 
   /// accountResetPassword
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [userId] 
-  /// * [code] 
+  /// * [userId]
+  /// * [code]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -282,7 +281,7 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> accountResetPassword({ 
+  Future<Response<Object>> accountResetPassword({
     required String userId,
     required String code,
     CancelToken? cancelToken,
@@ -322,14 +321,14 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -343,5 +342,4 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
       extra: _response.extra,
     );
   }
-
 }

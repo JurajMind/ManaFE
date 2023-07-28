@@ -12,17 +12,16 @@ import 'package:dio/dio.dart';
 import 'package:openapi/src/model/person_statistics_overall_dto.dart';
 
 class StatisticsApi {
-
   final Dio _dio;
 
   const StatisticsApi(this._dio);
 
   /// statisticsGetStatistics
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [from] 
-  /// * [to] 
+  /// * [from]
+  /// * [to]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -32,7 +31,7 @@ class StatisticsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [PersonStatisticsOverallDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PersonStatisticsOverallDto>> statisticsGetStatistics({ 
+  Future<Response<PersonStatisticsOverallDto>> statisticsGetStatistics({
     required DateTime from,
     required DateTime to,
     CancelToken? cancelToken,
@@ -72,14 +71,16 @@ class StatisticsApi {
     PersonStatisticsOverallDto _responseData;
 
     try {
-_responseData = deserialize<PersonStatisticsOverallDto, PersonStatisticsOverallDto>(_response.data!, 'PersonStatisticsOverallDto', growable: true);
+      _responseData = deserialize<PersonStatisticsOverallDto, PersonStatisticsOverallDto>(
+          _response.data!, 'PersonStatisticsOverallDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PersonStatisticsOverallDto>(
@@ -93,5 +94,4 @@ _responseData = deserialize<PersonStatisticsOverallDto, PersonStatisticsOverallD
       extra: _response.extra,
     );
   }
-
 }

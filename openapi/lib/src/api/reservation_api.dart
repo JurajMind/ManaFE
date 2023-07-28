@@ -15,17 +15,16 @@ import 'package:openapi/src/model/places_reservations_reservation_manage_dto.dar
 import 'package:openapi/src/model/smart_hookah_services_place_reservation_usage_dto.dart';
 
 class ReservationApi {
-
   final Dio _dio;
 
   const ReservationApi(this._dio);
 
   /// reservationAddLateTime
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [time] 
+  /// * [id]
+  /// * [time]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -35,7 +34,7 @@ class ReservationApi {
   ///
   /// Returns a [Future] containing a [Response] with a [PlacesReservationsReservationDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PlacesReservationsReservationDto>> reservationAddLateTime({ 
+  Future<Response<PlacesReservationsReservationDto>> reservationAddLateTime({
     required int id,
     required int time,
     CancelToken? cancelToken,
@@ -62,16 +61,16 @@ class ReservationApi {
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(time);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(time);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -86,14 +85,16 @@ _bodyData=jsonEncode(time);
     PlacesReservationsReservationDto _responseData;
 
     try {
-_responseData = deserialize<PlacesReservationsReservationDto, PlacesReservationsReservationDto>(_response.data!, 'PlacesReservationsReservationDto', growable: true);
+      _responseData = deserialize<PlacesReservationsReservationDto, PlacesReservationsReservationDto>(
+          _response.data!, 'PlacesReservationsReservationDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PlacesReservationsReservationDto>(
@@ -109,11 +110,11 @@ _responseData = deserialize<PlacesReservationsReservationDto, PlacesReservations
   }
 
   /// reservationAddTable
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [tableId] 
+  /// * [id]
+  /// * [tableId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -123,7 +124,7 @@ _responseData = deserialize<PlacesReservationsReservationDto, PlacesReservations
   ///
   /// Returns a [Future] containing a [Response] with a [PlacesReservationsReservationDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PlacesReservationsReservationDto>> reservationAddTable({ 
+  Future<Response<PlacesReservationsReservationDto>> reservationAddTable({
     required int id,
     required int tableId,
     CancelToken? cancelToken,
@@ -150,16 +151,16 @@ _responseData = deserialize<PlacesReservationsReservationDto, PlacesReservations
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(tableId);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(tableId);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -174,14 +175,16 @@ _bodyData=jsonEncode(tableId);
     PlacesReservationsReservationDto _responseData;
 
     try {
-_responseData = deserialize<PlacesReservationsReservationDto, PlacesReservationsReservationDto>(_response.data!, 'PlacesReservationsReservationDto', growable: true);
+      _responseData = deserialize<PlacesReservationsReservationDto, PlacesReservationsReservationDto>(
+          _response.data!, 'PlacesReservationsReservationDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PlacesReservationsReservationDto>(
@@ -197,10 +200,10 @@ _responseData = deserialize<PlacesReservationsReservationDto, PlacesReservations
   }
 
   /// reservationCancelReservation
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -210,7 +213,7 @@ _responseData = deserialize<PlacesReservationsReservationDto, PlacesReservations
   ///
   /// Returns a [Future] containing a [Response] with a [bool] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<bool>> reservationCancelReservation({ 
+  Future<Response<bool>> reservationCancelReservation({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -243,14 +246,14 @@ _responseData = deserialize<PlacesReservationsReservationDto, PlacesReservations
     bool _responseData;
 
     try {
-_responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
+      _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<bool>(
@@ -266,10 +269,10 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
   }
 
   /// reservationCreate
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [reservation] 
+  /// * [reservation]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -279,7 +282,7 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
   ///
   /// Returns a [Future] containing a [Response] with a [PlacesReservationsReservationDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PlacesReservationsReservationDto>> reservationCreate({ 
+  Future<Response<PlacesReservationsReservationDto>> reservationCreate({
     required PlacesReservationsReservationDto reservation,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -305,16 +308,16 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(reservation);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(reservation);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -329,14 +332,16 @@ _bodyData=jsonEncode(reservation);
     PlacesReservationsReservationDto _responseData;
 
     try {
-_responseData = deserialize<PlacesReservationsReservationDto, PlacesReservationsReservationDto>(_response.data!, 'PlacesReservationsReservationDto', growable: true);
+      _responseData = deserialize<PlacesReservationsReservationDto, PlacesReservationsReservationDto>(
+          _response.data!, 'PlacesReservationsReservationDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PlacesReservationsReservationDto>(
@@ -352,11 +357,11 @@ _responseData = deserialize<PlacesReservationsReservationDto, PlacesReservations
   }
 
   /// reservationGetManagereservationsInfo
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [date] 
+  /// * [id]
+  /// * [date]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -366,7 +371,7 @@ _responseData = deserialize<PlacesReservationsReservationDto, PlacesReservations
   ///
   /// Returns a [Future] containing a [Response] with a [PlacesReservationsReservationManageDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PlacesReservationsReservationManageDto>> reservationGetManagereservationsInfo({ 
+  Future<Response<PlacesReservationsReservationManageDto>> reservationGetManagereservationsInfo({
     required int id,
     required DateTime date,
     CancelToken? cancelToken,
@@ -405,14 +410,16 @@ _responseData = deserialize<PlacesReservationsReservationDto, PlacesReservations
     PlacesReservationsReservationManageDto _responseData;
 
     try {
-_responseData = deserialize<PlacesReservationsReservationManageDto, PlacesReservationsReservationManageDto>(_response.data!, 'PlacesReservationsReservationManageDto', growable: true);
+      _responseData = deserialize<PlacesReservationsReservationManageDto, PlacesReservationsReservationManageDto>(
+          _response.data!, 'PlacesReservationsReservationManageDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PlacesReservationsReservationManageDto>(
@@ -428,7 +435,7 @@ _responseData = deserialize<PlacesReservationsReservationManageDto, PlacesReserv
   }
 
   /// reservationGetPersonReservations
-  /// 
+  ///
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -440,7 +447,7 @@ _responseData = deserialize<PlacesReservationsReservationManageDto, PlacesReserv
   ///
   /// Returns a [Future] containing a [Response] with a [List<PlacesReservationsReservationDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<PlacesReservationsReservationDto>>> reservationGetPersonReservations({ 
+  Future<Response<List<PlacesReservationsReservationDto>>> reservationGetPersonReservations({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -472,14 +479,16 @@ _responseData = deserialize<PlacesReservationsReservationManageDto, PlacesReserv
     List<PlacesReservationsReservationDto> _responseData;
 
     try {
-_responseData = deserialize<List<PlacesReservationsReservationDto>, PlacesReservationsReservationDto>(_response.data!, 'List<PlacesReservationsReservationDto>', growable: true);
+      _responseData = deserialize<List<PlacesReservationsReservationDto>, PlacesReservationsReservationDto>(
+          _response.data!, 'List<PlacesReservationsReservationDto>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<PlacesReservationsReservationDto>>(
@@ -495,10 +504,10 @@ _responseData = deserialize<List<PlacesReservationsReservationDto>, PlacesReserv
   }
 
   /// reservationGetReservationDetail
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -508,7 +517,7 @@ _responseData = deserialize<List<PlacesReservationsReservationDto>, PlacesReserv
   ///
   /// Returns a [Future] containing a [Response] with a [PlacesReservationsReservationDetailDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PlacesReservationsReservationDetailDto>> reservationGetReservationDetail({ 
+  Future<Response<PlacesReservationsReservationDetailDto>> reservationGetReservationDetail({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -541,14 +550,16 @@ _responseData = deserialize<List<PlacesReservationsReservationDto>, PlacesReserv
     PlacesReservationsReservationDetailDto _responseData;
 
     try {
-_responseData = deserialize<PlacesReservationsReservationDetailDto, PlacesReservationsReservationDetailDto>(_response.data!, 'PlacesReservationsReservationDetailDto', growable: true);
+      _responseData = deserialize<PlacesReservationsReservationDetailDto, PlacesReservationsReservationDetailDto>(
+          _response.data!, 'PlacesReservationsReservationDetailDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PlacesReservationsReservationDetailDto>(
@@ -564,11 +575,11 @@ _responseData = deserialize<PlacesReservationsReservationDetailDto, PlacesReserv
   }
 
   /// reservationGetReservationUsage
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [date] 
+  /// * [id]
+  /// * [date]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -578,7 +589,7 @@ _responseData = deserialize<PlacesReservationsReservationDetailDto, PlacesReserv
   ///
   /// Returns a [Future] containing a [Response] with a [SmartHookahServicesPlaceReservationUsageDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<SmartHookahServicesPlaceReservationUsageDto>> reservationGetReservationUsage({ 
+  Future<Response<SmartHookahServicesPlaceReservationUsageDto>> reservationGetReservationUsage({
     required int id,
     required DateTime date,
     CancelToken? cancelToken,
@@ -617,14 +628,17 @@ _responseData = deserialize<PlacesReservationsReservationDetailDto, PlacesReserv
     SmartHookahServicesPlaceReservationUsageDto _responseData;
 
     try {
-_responseData = deserialize<SmartHookahServicesPlaceReservationUsageDto, SmartHookahServicesPlaceReservationUsageDto>(_response.data!, 'SmartHookahServicesPlaceReservationUsageDto', growable: true);
+      _responseData =
+          deserialize<SmartHookahServicesPlaceReservationUsageDto, SmartHookahServicesPlaceReservationUsageDto>(
+              _response.data!, 'SmartHookahServicesPlaceReservationUsageDto',
+              growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<SmartHookahServicesPlaceReservationUsageDto>(
@@ -640,11 +654,11 @@ _responseData = deserialize<SmartHookahServicesPlaceReservationUsageDto, SmartHo
   }
 
   /// reservationGetReservations
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [from] 
-  /// * [to] 
+  /// * [from]
+  /// * [to]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -654,7 +668,7 @@ _responseData = deserialize<SmartHookahServicesPlaceReservationUsageDto, SmartHo
   ///
   /// Returns a [Future] containing a [Response] with a [List<PlacesReservationsReservationDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<PlacesReservationsReservationDto>>> reservationGetReservations({ 
+  Future<Response<List<PlacesReservationsReservationDto>>> reservationGetReservations({
     required DateTime from,
     required DateTime to,
     CancelToken? cancelToken,
@@ -694,14 +708,16 @@ _responseData = deserialize<SmartHookahServicesPlaceReservationUsageDto, SmartHo
     List<PlacesReservationsReservationDto> _responseData;
 
     try {
-_responseData = deserialize<List<PlacesReservationsReservationDto>, PlacesReservationsReservationDto>(_response.data!, 'List<PlacesReservationsReservationDto>', growable: true);
+      _responseData = deserialize<List<PlacesReservationsReservationDto>, PlacesReservationsReservationDto>(
+          _response.data!, 'List<PlacesReservationsReservationDto>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<PlacesReservationsReservationDto>>(
@@ -717,11 +733,11 @@ _responseData = deserialize<List<PlacesReservationsReservationDto>, PlacesReserv
   }
 
   /// reservationRemoveTable
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [tableId] 
+  /// * [id]
+  /// * [tableId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -731,7 +747,7 @@ _responseData = deserialize<List<PlacesReservationsReservationDto>, PlacesReserv
   ///
   /// Returns a [Future] containing a [Response] with a [PlacesReservationsReservationDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PlacesReservationsReservationDto>> reservationRemoveTable({ 
+  Future<Response<PlacesReservationsReservationDto>> reservationRemoveTable({
     required int id,
     required int tableId,
     CancelToken? cancelToken,
@@ -758,16 +774,16 @@ _responseData = deserialize<List<PlacesReservationsReservationDto>, PlacesReserv
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(tableId);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(tableId);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -782,14 +798,16 @@ _bodyData=jsonEncode(tableId);
     PlacesReservationsReservationDto _responseData;
 
     try {
-_responseData = deserialize<PlacesReservationsReservationDto, PlacesReservationsReservationDto>(_response.data!, 'PlacesReservationsReservationDto', growable: true);
+      _responseData = deserialize<PlacesReservationsReservationDto, PlacesReservationsReservationDto>(
+          _response.data!, 'PlacesReservationsReservationDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PlacesReservationsReservationDto>(
@@ -805,11 +823,11 @@ _responseData = deserialize<PlacesReservationsReservationDto, PlacesReservations
   }
 
   /// reservationUpdateReservationState
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [state] 
+  /// * [id]
+  /// * [state]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -819,7 +837,7 @@ _responseData = deserialize<PlacesReservationsReservationDto, PlacesReservations
   ///
   /// Returns a [Future] containing a [Response] with a [bool] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<bool>> reservationUpdateReservationState({ 
+  Future<Response<bool>> reservationUpdateReservationState({
     required int id,
     required String state,
     CancelToken? cancelToken,
@@ -846,16 +864,16 @@ _responseData = deserialize<PlacesReservationsReservationDto, PlacesReservations
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(state);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(state);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -870,14 +888,14 @@ _bodyData=jsonEncode(state);
     bool _responseData;
 
     try {
-_responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
+      _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<bool>(
@@ -891,5 +909,4 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
       extra: _response.extra,
     );
   }
-
 }

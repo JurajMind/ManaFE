@@ -15,17 +15,16 @@ import 'package:openapi/src/model/places_place_review_dto.dart';
 import 'package:openapi/src/model/smart_hookah_models_db_session_dto_session_review_dto.dart';
 
 class ReviewApi {
-
   final Dio _dio;
 
   const ReviewApi(this._dio);
 
   /// reviewAddPlaceReview
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [reviewDto] 
+  /// * [id]
+  /// * [reviewDto]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -35,7 +34,7 @@ class ReviewApi {
   ///
   /// Returns a [Future] containing a [Response] with a [PlacesPlaceReviewDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PlacesPlaceReviewDto>> reviewAddPlaceReview({ 
+  Future<Response<PlacesPlaceReviewDto>> reviewAddPlaceReview({
     required String id,
     required PlacesPlaceReviewDto reviewDto,
     CancelToken? cancelToken,
@@ -62,16 +61,16 @@ class ReviewApi {
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(reviewDto);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(reviewDto);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -86,14 +85,15 @@ _bodyData=jsonEncode(reviewDto);
     PlacesPlaceReviewDto _responseData;
 
     try {
-_responseData = deserialize<PlacesPlaceReviewDto, PlacesPlaceReviewDto>(_response.data!, 'PlacesPlaceReviewDto', growable: true);
+      _responseData = deserialize<PlacesPlaceReviewDto, PlacesPlaceReviewDto>(_response.data!, 'PlacesPlaceReviewDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PlacesPlaceReviewDto>(
@@ -109,11 +109,11 @@ _responseData = deserialize<PlacesPlaceReviewDto, PlacesPlaceReviewDto>(_respons
   }
 
   /// reviewAddSessionReview
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [reviewDto] 
+  /// * [id]
+  /// * [reviewDto]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -123,7 +123,7 @@ _responseData = deserialize<PlacesPlaceReviewDto, PlacesPlaceReviewDto>(_respons
   ///
   /// Returns a [Future] containing a [Response] with a [SmartHookahModelsDbSessionDtoSessionReviewDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<SmartHookahModelsDbSessionDtoSessionReviewDto>> reviewAddSessionReview({ 
+  Future<Response<SmartHookahModelsDbSessionDtoSessionReviewDto>> reviewAddSessionReview({
     required int id,
     required SmartHookahModelsDbSessionDtoSessionReviewDto reviewDto,
     CancelToken? cancelToken,
@@ -150,16 +150,16 @@ _responseData = deserialize<PlacesPlaceReviewDto, PlacesPlaceReviewDto>(_respons
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(reviewDto);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(reviewDto);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -174,14 +174,17 @@ _bodyData=jsonEncode(reviewDto);
     SmartHookahModelsDbSessionDtoSessionReviewDto _responseData;
 
     try {
-_responseData = deserialize<SmartHookahModelsDbSessionDtoSessionReviewDto, SmartHookahModelsDbSessionDtoSessionReviewDto>(_response.data!, 'SmartHookahModelsDbSessionDtoSessionReviewDto', growable: true);
+      _responseData =
+          deserialize<SmartHookahModelsDbSessionDtoSessionReviewDto, SmartHookahModelsDbSessionDtoSessionReviewDto>(
+              _response.data!, 'SmartHookahModelsDbSessionDtoSessionReviewDto',
+              growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<SmartHookahModelsDbSessionDtoSessionReviewDto>(
@@ -197,11 +200,11 @@ _responseData = deserialize<SmartHookahModelsDbSessionDtoSessionReviewDto, Smart
   }
 
   /// reviewAddTobaccoReview
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [reviewDto] 
+  /// * [id]
+  /// * [reviewDto]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -211,7 +214,7 @@ _responseData = deserialize<SmartHookahModelsDbSessionDtoSessionReviewDto, Smart
   ///
   /// Returns a [Future] containing a [Response] with a [GearTobaccoReviewDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<GearTobaccoReviewDto>> reviewAddTobaccoReview({ 
+  Future<Response<GearTobaccoReviewDto>> reviewAddTobaccoReview({
     required String id,
     required GearTobaccoReviewDto reviewDto,
     CancelToken? cancelToken,
@@ -238,16 +241,16 @@ _responseData = deserialize<SmartHookahModelsDbSessionDtoSessionReviewDto, Smart
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(reviewDto);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(reviewDto);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -262,14 +265,15 @@ _bodyData=jsonEncode(reviewDto);
     GearTobaccoReviewDto _responseData;
 
     try {
-_responseData = deserialize<GearTobaccoReviewDto, GearTobaccoReviewDto>(_response.data!, 'GearTobaccoReviewDto', growable: true);
+      _responseData = deserialize<GearTobaccoReviewDto, GearTobaccoReviewDto>(_response.data!, 'GearTobaccoReviewDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<GearTobaccoReviewDto>(
@@ -285,12 +289,12 @@ _responseData = deserialize<GearTobaccoReviewDto, GearTobaccoReviewDto>(_respons
   }
 
   /// reviewGetPlaceReviews
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [pageSize] 
-  /// * [page] 
+  /// * [id]
+  /// * [pageSize]
+  /// * [page]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -300,7 +304,7 @@ _responseData = deserialize<GearTobaccoReviewDto, GearTobaccoReviewDto>(_respons
   ///
   /// Returns a [Future] containing a [Response] with a [List<PlacesPlaceReviewDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<PlacesPlaceReviewDto>>> reviewGetPlaceReviews({ 
+  Future<Response<List<PlacesPlaceReviewDto>>> reviewGetPlaceReviews({
     required int id,
     int? pageSize,
     int? page,
@@ -341,14 +345,16 @@ _responseData = deserialize<GearTobaccoReviewDto, GearTobaccoReviewDto>(_respons
     List<PlacesPlaceReviewDto> _responseData;
 
     try {
-_responseData = deserialize<List<PlacesPlaceReviewDto>, PlacesPlaceReviewDto>(_response.data!, 'List<PlacesPlaceReviewDto>', growable: true);
+      _responseData = deserialize<List<PlacesPlaceReviewDto>, PlacesPlaceReviewDto>(
+          _response.data!, 'List<PlacesPlaceReviewDto>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<PlacesPlaceReviewDto>>(
@@ -364,12 +370,12 @@ _responseData = deserialize<List<PlacesPlaceReviewDto>, PlacesPlaceReviewDto>(_r
   }
 
   /// reviewGetSessionReview
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [pageSize] 
-  /// * [page] 
+  /// * [id]
+  /// * [pageSize]
+  /// * [page]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -379,7 +385,7 @@ _responseData = deserialize<List<PlacesPlaceReviewDto>, PlacesPlaceReviewDto>(_r
   ///
   /// Returns a [Future] containing a [Response] with a [List<SmartHookahModelsDbSessionDtoSessionReviewDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<SmartHookahModelsDbSessionDtoSessionReviewDto>>> reviewGetSessionReview({ 
+  Future<Response<List<SmartHookahModelsDbSessionDtoSessionReviewDto>>> reviewGetSessionReview({
     required int id,
     int? pageSize,
     int? page,
@@ -420,14 +426,17 @@ _responseData = deserialize<List<PlacesPlaceReviewDto>, PlacesPlaceReviewDto>(_r
     List<SmartHookahModelsDbSessionDtoSessionReviewDto> _responseData;
 
     try {
-_responseData = deserialize<List<SmartHookahModelsDbSessionDtoSessionReviewDto>, SmartHookahModelsDbSessionDtoSessionReviewDto>(_response.data!, 'List<SmartHookahModelsDbSessionDtoSessionReviewDto>', growable: true);
+      _responseData = deserialize<List<SmartHookahModelsDbSessionDtoSessionReviewDto>,
+              SmartHookahModelsDbSessionDtoSessionReviewDto>(
+          _response.data!, 'List<SmartHookahModelsDbSessionDtoSessionReviewDto>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<SmartHookahModelsDbSessionDtoSessionReviewDto>>(
@@ -443,12 +452,12 @@ _responseData = deserialize<List<SmartHookahModelsDbSessionDtoSessionReviewDto>,
   }
 
   /// reviewGetTobaccoReview
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [pageSize] 
-  /// * [page] 
+  /// * [id]
+  /// * [pageSize]
+  /// * [page]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -458,7 +467,7 @@ _responseData = deserialize<List<SmartHookahModelsDbSessionDtoSessionReviewDto>,
   ///
   /// Returns a [Future] containing a [Response] with a [List<GearTobaccoReviewDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<GearTobaccoReviewDto>>> reviewGetTobaccoReview({ 
+  Future<Response<List<GearTobaccoReviewDto>>> reviewGetTobaccoReview({
     required int id,
     int? pageSize,
     int? page,
@@ -499,14 +508,16 @@ _responseData = deserialize<List<SmartHookahModelsDbSessionDtoSessionReviewDto>,
     List<GearTobaccoReviewDto> _responseData;
 
     try {
-_responseData = deserialize<List<GearTobaccoReviewDto>, GearTobaccoReviewDto>(_response.data!, 'List<GearTobaccoReviewDto>', growable: true);
+      _responseData = deserialize<List<GearTobaccoReviewDto>, GearTobaccoReviewDto>(
+          _response.data!, 'List<GearTobaccoReviewDto>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<GearTobaccoReviewDto>>(
@@ -522,10 +533,10 @@ _responseData = deserialize<List<GearTobaccoReviewDto>, GearTobaccoReviewDto>(_r
   }
 
   /// reviewRemovePlaceReview
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -535,7 +546,7 @@ _responseData = deserialize<List<GearTobaccoReviewDto>, GearTobaccoReviewDto>(_r
   ///
   /// Returns a [Future] containing a [Response] with a [bool] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<bool>> reviewRemovePlaceReview({ 
+  Future<Response<bool>> reviewRemovePlaceReview({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -568,14 +579,14 @@ _responseData = deserialize<List<GearTobaccoReviewDto>, GearTobaccoReviewDto>(_r
     bool _responseData;
 
     try {
-_responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
+      _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<bool>(
@@ -591,10 +602,10 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
   }
 
   /// reviewRemoveSessionReview
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -604,7 +615,7 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
   ///
   /// Returns a [Future] containing a [Response] with a [bool] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<bool>> reviewRemoveSessionReview({ 
+  Future<Response<bool>> reviewRemoveSessionReview({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -637,14 +648,14 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
     bool _responseData;
 
     try {
-_responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
+      _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<bool>(
@@ -660,10 +671,10 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
   }
 
   /// reviewRemoveTobaccoReview
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -673,7 +684,7 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
   ///
   /// Returns a [Future] containing a [Response] with a [bool] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<bool>> reviewRemoveTobaccoReview({ 
+  Future<Response<bool>> reviewRemoveTobaccoReview({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -706,14 +717,14 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
     bool _responseData;
 
     try {
-_responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
+      _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<bool>(
@@ -729,10 +740,10 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
   }
 
   /// reviewTobaccoReviewDetail
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -742,7 +753,7 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
   ///
   /// Returns a [Future] containing a [Response] with a [GearTobaccoReviewDetailDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<GearTobaccoReviewDetailDto>> reviewTobaccoReviewDetail({ 
+  Future<Response<GearTobaccoReviewDetailDto>> reviewTobaccoReviewDetail({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -775,14 +786,16 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
     GearTobaccoReviewDetailDto _responseData;
 
     try {
-_responseData = deserialize<GearTobaccoReviewDetailDto, GearTobaccoReviewDetailDto>(_response.data!, 'GearTobaccoReviewDetailDto', growable: true);
+      _responseData = deserialize<GearTobaccoReviewDetailDto, GearTobaccoReviewDetailDto>(
+          _response.data!, 'GearTobaccoReviewDetailDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<GearTobaccoReviewDetailDto>(
@@ -796,5 +809,4 @@ _responseData = deserialize<GearTobaccoReviewDetailDto, GearTobaccoReviewDetailD
       extra: _response.extra,
     );
   }
-
 }

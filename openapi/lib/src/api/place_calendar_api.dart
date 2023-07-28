@@ -16,16 +16,15 @@ import 'package:openapi/src/model/place_event.dart';
 import 'package:openapi/src/model/place_event_collection.dart';
 
 class PlaceCalendarApi {
-
   final Dio _dio;
 
   const PlaceCalendarApi(this._dio);
 
   /// placeCalendarCreatePlaceEventFromFacebook
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [url] 
+  /// * [url]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -35,7 +34,7 @@ class PlaceCalendarApi {
   ///
   /// Returns a [Future] containing a [Response] with a [Dto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Dto>> placeCalendarCreatePlaceEventFromFacebook({ 
+  Future<Response<Dto>> placeCalendarCreatePlaceEventFromFacebook({
     required String url,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -73,14 +72,14 @@ class PlaceCalendarApi {
     Dto _responseData;
 
     try {
-_responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
+      _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Dto>(
@@ -96,10 +95,10 @@ _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
   }
 
   /// placeCalendarDeletePlaceDay
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [dayId] 
+  /// * [dayId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -109,7 +108,7 @@ _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
   ///
   /// Returns a [Future] containing a [Response] with a [Dto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Dto>> placeCalendarDeletePlaceDay({ 
+  Future<Response<Dto>> placeCalendarDeletePlaceDay({
     required int dayId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -147,14 +146,14 @@ _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
     Dto _responseData;
 
     try {
-_responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
+      _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Dto>(
@@ -170,10 +169,10 @@ _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
   }
 
   /// placeCalendarDeletePlaceEvent
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [eventId] 
+  /// * [eventId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -183,7 +182,7 @@ _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
   ///
   /// Returns a [Future] containing a [Response] with a [Dto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Dto>> placeCalendarDeletePlaceEvent({ 
+  Future<Response<Dto>> placeCalendarDeletePlaceEvent({
     required int eventId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -221,14 +220,14 @@ _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
     Dto _responseData;
 
     try {
-_responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
+      _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Dto>(
@@ -244,13 +243,13 @@ _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
   }
 
   /// placeCalendarFindEventsBy
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [placeId] 
-  /// * [startsAfter] 
-  /// * [endsBefore] 
-  /// * [privacyType] 
+  /// * [placeId]
+  /// * [startsAfter]
+  /// * [endsBefore]
+  /// * [privacyType]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -260,7 +259,7 @@ _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
   ///
   /// Returns a [Future] containing a [Response] with a [PlaceEventCollection] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PlaceEventCollection>> placeCalendarFindEventsBy({ 
+  Future<Response<PlaceEventCollection>> placeCalendarFindEventsBy({
     required int placeId,
     required DateTime startsAfter,
     required DateTime endsBefore,
@@ -304,14 +303,15 @@ _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
     PlaceEventCollection _responseData;
 
     try {
-_responseData = deserialize<PlaceEventCollection, PlaceEventCollection>(_response.data!, 'PlaceEventCollection', growable: true);
+      _responseData = deserialize<PlaceEventCollection, PlaceEventCollection>(_response.data!, 'PlaceEventCollection',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PlaceEventCollection>(
@@ -327,11 +327,11 @@ _responseData = deserialize<PlaceEventCollection, PlaceEventCollection>(_respons
   }
 
   /// placeCalendarGetPlaceCalendar
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [placeId] 
-  /// * [privacyType] 
+  /// * [placeId]
+  /// * [privacyType]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -341,7 +341,7 @@ _responseData = deserialize<PlaceEventCollection, PlaceEventCollection>(_respons
   ///
   /// Returns a [Future] containing a [Response] with a [PlaceCalendarDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PlaceCalendarDto>> placeCalendarGetPlaceCalendar({ 
+  Future<Response<PlaceCalendarDto>> placeCalendarGetPlaceCalendar({
     required int placeId,
     String? privacyType,
     CancelToken? cancelToken,
@@ -381,14 +381,15 @@ _responseData = deserialize<PlaceEventCollection, PlaceEventCollection>(_respons
     PlaceCalendarDto _responseData;
 
     try {
-_responseData = deserialize<PlaceCalendarDto, PlaceCalendarDto>(_response.data!, 'PlaceCalendarDto', growable: true);
+      _responseData =
+          deserialize<PlaceCalendarDto, PlaceCalendarDto>(_response.data!, 'PlaceCalendarDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PlaceCalendarDto>(
@@ -404,13 +405,13 @@ _responseData = deserialize<PlaceCalendarDto, PlaceCalendarDto>(_response.data!,
   }
 
   /// placeCalendarGetPlaceDay
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [placeId] 
-  /// * [dayId] 
-  /// * [dayDate] 
-  /// * [privacyType] 
+  /// * [placeId]
+  /// * [dayId]
+  /// * [dayDate]
+  /// * [privacyType]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -420,7 +421,7 @@ _responseData = deserialize<PlaceCalendarDto, PlaceCalendarDto>(_response.data!,
   ///
   /// Returns a [Future] containing a [Response] with a [PlaceDay] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PlaceDay>> placeCalendarGetPlaceDay({ 
+  Future<Response<PlaceDay>> placeCalendarGetPlaceDay({
     required int placeId,
     required int dayId,
     required DateTime dayDate,
@@ -464,14 +465,14 @@ _responseData = deserialize<PlaceCalendarDto, PlaceCalendarDto>(_response.data!,
     PlaceDay _responseData;
 
     try {
-_responseData = deserialize<PlaceDay, PlaceDay>(_response.data!, 'PlaceDay', growable: true);
+      _responseData = deserialize<PlaceDay, PlaceDay>(_response.data!, 'PlaceDay', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PlaceDay>(
@@ -487,10 +488,10 @@ _responseData = deserialize<PlaceDay, PlaceDay>(_response.data!, 'PlaceDay', gro
   }
 
   /// placeCalendarGetPlaceEvent
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [eventId] 
+  /// * [eventId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -500,7 +501,7 @@ _responseData = deserialize<PlaceDay, PlaceDay>(_response.data!, 'PlaceDay', gro
   ///
   /// Returns a [Future] containing a [Response] with a [PlaceEvent] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PlaceEvent>> placeCalendarGetPlaceEvent({ 
+  Future<Response<PlaceEvent>> placeCalendarGetPlaceEvent({
     required int eventId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -538,14 +539,14 @@ _responseData = deserialize<PlaceDay, PlaceDay>(_response.data!, 'PlaceDay', gro
     PlaceEvent _responseData;
 
     try {
-_responseData = deserialize<PlaceEvent, PlaceEvent>(_response.data!, 'PlaceEvent', growable: true);
+      _responseData = deserialize<PlaceEvent, PlaceEvent>(_response.data!, 'PlaceEvent', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PlaceEvent>(
@@ -561,10 +562,10 @@ _responseData = deserialize<PlaceEvent, PlaceEvent>(_response.data!, 'PlaceEvent
   }
 
   /// placeCalendarSavePlaceDay
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [placeDay] 
+  /// * [placeDay]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -574,7 +575,7 @@ _responseData = deserialize<PlaceEvent, PlaceEvent>(_response.data!, 'PlaceEvent
   ///
   /// Returns a [Future] containing a [Response] with a [Dto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Dto>> placeCalendarSavePlaceDay({ 
+  Future<Response<Dto>> placeCalendarSavePlaceDay({
     required PlaceDay placeDay,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -600,16 +601,16 @@ _responseData = deserialize<PlaceEvent, PlaceEvent>(_response.data!, 'PlaceEvent
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(placeDay);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(placeDay);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -624,14 +625,14 @@ _bodyData=jsonEncode(placeDay);
     Dto _responseData;
 
     try {
-_responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
+      _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Dto>(
@@ -647,10 +648,10 @@ _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
   }
 
   /// placeCalendarSavePlaceEvent
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [placeEvent] 
+  /// * [placeEvent]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -660,7 +661,7 @@ _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
   ///
   /// Returns a [Future] containing a [Response] with a [Dto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Dto>> placeCalendarSavePlaceEvent({ 
+  Future<Response<Dto>> placeCalendarSavePlaceEvent({
     required PlaceEvent placeEvent,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -686,16 +687,16 @@ _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(placeEvent);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(placeEvent);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -710,14 +711,14 @@ _bodyData=jsonEncode(placeEvent);
     Dto _responseData;
 
     try {
-_responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
+      _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Dto>(
@@ -731,5 +732,4 @@ _responseData = deserialize<Dto, Dto>(_response.data!, 'Dto', growable: true);
       extra: _response.extra,
     );
   }
-
 }

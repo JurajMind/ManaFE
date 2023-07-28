@@ -12,16 +12,15 @@ import 'package:dio/dio.dart';
 import 'package:openapi/src/model/device_preset_dto.dart';
 
 class DevicePresetApi {
-
   final Dio _dio;
 
   const DevicePresetApi(this._dio);
 
   /// devicePresetDeletePreset
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -31,7 +30,7 @@ class DevicePresetApi {
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> devicePresetDeletePreset({ 
+  Future<Response<Object>> devicePresetDeletePreset({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -64,14 +63,14 @@ class DevicePresetApi {
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -87,10 +86,10 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   }
 
   /// devicePresetGetPreset
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -100,7 +99,7 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   ///
   /// Returns a [Future] containing a [Response] with a [DevicePresetDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<DevicePresetDto>> devicePresetGetPreset({ 
+  Future<Response<DevicePresetDto>> devicePresetGetPreset({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -133,14 +132,14 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
     DevicePresetDto _responseData;
 
     try {
-_responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, 'DevicePresetDto', growable: true);
+      _responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, 'DevicePresetDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<DevicePresetDto>(
@@ -156,7 +155,7 @@ _responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, '
   }
 
   /// devicePresetGetUserPresets
-  /// 
+  ///
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -168,7 +167,7 @@ _responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, '
   ///
   /// Returns a [Future] containing a [Response] with a [List<DevicePresetDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<DevicePresetDto>>> devicePresetGetUserPresets({ 
+  Future<Response<List<DevicePresetDto>>> devicePresetGetUserPresets({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -200,14 +199,15 @@ _responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, '
     List<DevicePresetDto> _responseData;
 
     try {
-_responseData = deserialize<List<DevicePresetDto>, DevicePresetDto>(_response.data!, 'List<DevicePresetDto>', growable: true);
+      _responseData =
+          deserialize<List<DevicePresetDto>, DevicePresetDto>(_response.data!, 'List<DevicePresetDto>', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<DevicePresetDto>>(
@@ -223,13 +223,13 @@ _responseData = deserialize<List<DevicePresetDto>, DevicePresetDto>(_response.da
   }
 
   /// devicePresetSaveDevicePreset
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [deviceId] 
-  /// * [name] 
-  /// * [addToPerson] 
-  /// * [setDefault] 
+  /// * [deviceId]
+  /// * [name]
+  /// * [addToPerson]
+  /// * [setDefault]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -239,7 +239,7 @@ _responseData = deserialize<List<DevicePresetDto>, DevicePresetDto>(_response.da
   ///
   /// Returns a [Future] containing a [Response] with a [DevicePresetDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<DevicePresetDto>> devicePresetSaveDevicePreset({ 
+  Future<Response<DevicePresetDto>> devicePresetSaveDevicePreset({
     required String deviceId,
     required String name,
     bool? addToPerson,
@@ -251,7 +251,8 @@ _responseData = deserialize<List<DevicePresetDto>, DevicePresetDto>(_response.da
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/api/Device/Preset/SavePresetFromDevice/{deviceId}'.replaceAll('{' r'deviceId' '}', deviceId.toString());
+    final _path =
+        r'/api/Device/Preset/SavePresetFromDevice/{deviceId}'.replaceAll('{' r'deviceId' '}', deviceId.toString());
     final _options = Options(
       method: r'POST',
       headers: <String, dynamic>{
@@ -282,14 +283,14 @@ _responseData = deserialize<List<DevicePresetDto>, DevicePresetDto>(_response.da
     DevicePresetDto _responseData;
 
     try {
-_responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, 'DevicePresetDto', growable: true);
+      _responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, 'DevicePresetDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<DevicePresetDto>(
@@ -305,13 +306,13 @@ _responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, '
   }
 
   /// devicePresetSaveSessionPreset
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [sessionCode] 
-  /// * [name] 
-  /// * [addToPerson] 
-  /// * [setDefault] 
+  /// * [sessionCode]
+  /// * [name]
+  /// * [addToPerson]
+  /// * [setDefault]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -321,7 +322,7 @@ _responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, '
   ///
   /// Returns a [Future] containing a [Response] with a [DevicePresetDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<DevicePresetDto>> devicePresetSaveSessionPreset({ 
+  Future<Response<DevicePresetDto>> devicePresetSaveSessionPreset({
     required String sessionCode,
     required String name,
     bool? addToPerson,
@@ -333,7 +334,8 @@ _responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, '
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/api/Device/Preset/{sessionCode}/SavePresetFromSession'.replaceAll('{' r'sessionCode' '}', sessionCode.toString());
+    final _path = r'/api/Device/Preset/{sessionCode}/SavePresetFromSession'
+        .replaceAll('{' r'sessionCode' '}', sessionCode.toString());
     final _options = Options(
       method: r'POST',
       headers: <String, dynamic>{
@@ -364,14 +366,14 @@ _responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, '
     DevicePresetDto _responseData;
 
     try {
-_responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, 'DevicePresetDto', growable: true);
+      _responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, 'DevicePresetDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<DevicePresetDto>(
@@ -387,10 +389,10 @@ _responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, '
   }
 
   /// devicePresetSetDefault
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [presetId] 
+  /// * [presetId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -400,7 +402,7 @@ _responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, '
   ///
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> devicePresetSetDefault({ 
+  Future<Response<void>> devicePresetSetDefault({
     required int presetId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -434,10 +436,10 @@ _responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, '
   }
 
   /// devicePresetUseDefault
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [sessionId] 
+  /// * [sessionId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -447,7 +449,7 @@ _responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, '
   ///
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> devicePresetUseDefault({ 
+  Future<Response<void>> devicePresetUseDefault({
     required String sessionId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -481,11 +483,11 @@ _responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, '
   }
 
   /// devicePresetUsePreset
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [sessionId] 
-  /// * [presetId] 
+  /// * [sessionId]
+  /// * [presetId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -495,7 +497,7 @@ _responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, '
   ///
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> devicePresetUsePreset({ 
+  Future<Response<void>> devicePresetUsePreset({
     required String sessionId,
     required int presetId,
     CancelToken? cancelToken,
@@ -505,7 +507,9 @@ _responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, '
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/api/Device/Preset/{presetId}/Use/{sessionId}'.replaceAll('{' r'sessionId' '}', sessionId.toString()).replaceAll('{' r'presetId' '}', presetId.toString());
+    final _path = r'/api/Device/Preset/{presetId}/Use/{sessionId}'
+        .replaceAll('{' r'sessionId' '}', sessionId.toString())
+        .replaceAll('{' r'presetId' '}', presetId.toString());
     final _options = Options(
       method: r'POST',
       headers: <String, dynamic>{
@@ -528,5 +532,4 @@ _responseData = deserialize<DevicePresetDto, DevicePresetDto>(_response.data!, '
 
     return _response;
   }
-
 }

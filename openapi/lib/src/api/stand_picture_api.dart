@@ -9,18 +9,16 @@ import 'dart:convert';
 import 'package:openapi/src/deserialize.dart';
 import 'package:dio/dio.dart';
 
-
 class StandPictureApi {
-
   final Dio _dio;
 
   const StandPictureApi(this._dio);
 
   /// standPictureDefaultAction
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -30,7 +28,7 @@ class StandPictureApi {
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> standPictureDefaultAction({ 
+  Future<Response<Object>> standPictureDefaultAction({
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -63,14 +61,14 @@ class StandPictureApi {
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -84,5 +82,4 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
       extra: _response.extra,
     );
   }
-
 }

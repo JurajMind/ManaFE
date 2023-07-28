@@ -12,17 +12,16 @@ import 'package:dio/dio.dart';
 import 'package:openapi/src/model/place_simple_dto.dart';
 
 class PlaceAdminApi {
-
   final Dio _dio;
 
   const PlaceAdminApi(this._dio);
 
   /// placeAdminChangeState
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [newState] 
+  /// * [id]
+  /// * [newState]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -32,7 +31,7 @@ class PlaceAdminApi {
   ///
   /// Returns a [Future] containing a [Response] with a [PlaceSimpleDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PlaceSimpleDto>> placeAdminChangeState({ 
+  Future<Response<PlaceSimpleDto>> placeAdminChangeState({
     required int id,
     required int newState,
     CancelToken? cancelToken,
@@ -71,14 +70,14 @@ class PlaceAdminApi {
     PlaceSimpleDto _responseData;
 
     try {
-_responseData = deserialize<PlaceSimpleDto, PlaceSimpleDto>(_response.data!, 'PlaceSimpleDto', growable: true);
+      _responseData = deserialize<PlaceSimpleDto, PlaceSimpleDto>(_response.data!, 'PlaceSimpleDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PlaceSimpleDto>(
@@ -94,7 +93,7 @@ _responseData = deserialize<PlaceSimpleDto, PlaceSimpleDto>(_response.data!, 'Pl
   }
 
   /// placeAdminGetWaitingPlaces
-  /// 
+  ///
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -106,7 +105,7 @@ _responseData = deserialize<PlaceSimpleDto, PlaceSimpleDto>(_response.data!, 'Pl
   ///
   /// Returns a [Future] containing a [Response] with a [List<PlaceSimpleDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<PlaceSimpleDto>>> placeAdminGetWaitingPlaces({ 
+  Future<Response<List<PlaceSimpleDto>>> placeAdminGetWaitingPlaces({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -138,14 +137,15 @@ _responseData = deserialize<PlaceSimpleDto, PlaceSimpleDto>(_response.data!, 'Pl
     List<PlaceSimpleDto> _responseData;
 
     try {
-_responseData = deserialize<List<PlaceSimpleDto>, PlaceSimpleDto>(_response.data!, 'List<PlaceSimpleDto>', growable: true);
+      _responseData =
+          deserialize<List<PlaceSimpleDto>, PlaceSimpleDto>(_response.data!, 'List<PlaceSimpleDto>', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<PlaceSimpleDto>>(
@@ -159,5 +159,4 @@ _responseData = deserialize<List<PlaceSimpleDto>, PlaceSimpleDto>(_response.data
       extra: _response.extra,
     );
   }
-
 }

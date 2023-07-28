@@ -17,16 +17,15 @@ import 'package:openapi/src/model/smoke_session_simple_dto.dart';
 import 'package:openapi/src/model/validation.dart';
 
 class SmokeSessionApi {
-
   final Dio _dio;
 
   const SmokeSessionApi(this._dio);
 
   /// smokeSessionEndSmokeSession
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -36,7 +35,7 @@ class SmokeSessionApi {
   ///
   /// Returns a [Future] containing a [Response] with a [SmokeSessionSimpleDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<SmokeSessionSimpleDto>> smokeSessionEndSmokeSession({ 
+  Future<Response<SmokeSessionSimpleDto>> smokeSessionEndSmokeSession({
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -69,14 +68,16 @@ class SmokeSessionApi {
     SmokeSessionSimpleDto _responseData;
 
     try {
-_responseData = deserialize<SmokeSessionSimpleDto, SmokeSessionSimpleDto>(_response.data!, 'SmokeSessionSimpleDto', growable: true);
+      _responseData = deserialize<SmokeSessionSimpleDto, SmokeSessionSimpleDto>(
+          _response.data!, 'SmokeSessionSimpleDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<SmokeSessionSimpleDto>(
@@ -92,10 +93,10 @@ _responseData = deserialize<SmokeSessionSimpleDto, SmokeSessionSimpleDto>(_respo
   }
 
   /// smokeSessionGetFinishedData
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -105,7 +106,7 @@ _responseData = deserialize<SmokeSessionSimpleDto, SmokeSessionSimpleDto>(_respo
   ///
   /// Returns a [Future] containing a [Response] with a [FinishedSessionDataDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<FinishedSessionDataDto>> smokeSessionGetFinishedData({ 
+  Future<Response<FinishedSessionDataDto>> smokeSessionGetFinishedData({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -143,14 +144,16 @@ _responseData = deserialize<SmokeSessionSimpleDto, SmokeSessionSimpleDto>(_respo
     FinishedSessionDataDto _responseData;
 
     try {
-_responseData = deserialize<FinishedSessionDataDto, FinishedSessionDataDto>(_response.data!, 'FinishedSessionDataDto', growable: true);
+      _responseData = deserialize<FinishedSessionDataDto, FinishedSessionDataDto>(
+          _response.data!, 'FinishedSessionDataDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<FinishedSessionDataDto>(
@@ -166,10 +169,10 @@ _responseData = deserialize<FinishedSessionDataDto, FinishedSessionDataDto>(_res
   }
 
   /// smokeSessionGetMetaData
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -179,7 +182,7 @@ _responseData = deserialize<FinishedSessionDataDto, FinishedSessionDataDto>(_res
   ///
   /// Returns a [Future] containing a [Response] with a [SmokeSessionMetaDataDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<SmokeSessionMetaDataDto>> smokeSessionGetMetaData({ 
+  Future<Response<SmokeSessionMetaDataDto>> smokeSessionGetMetaData({
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -217,14 +220,16 @@ _responseData = deserialize<FinishedSessionDataDto, FinishedSessionDataDto>(_res
     SmokeSessionMetaDataDto _responseData;
 
     try {
-_responseData = deserialize<SmokeSessionMetaDataDto, SmokeSessionMetaDataDto>(_response.data!, 'SmokeSessionMetaDataDto', growable: true);
+      _responseData = deserialize<SmokeSessionMetaDataDto, SmokeSessionMetaDataDto>(
+          _response.data!, 'SmokeSessionMetaDataDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<SmokeSessionMetaDataDto>(
@@ -240,10 +245,10 @@ _responseData = deserialize<SmokeSessionMetaDataDto, SmokeSessionMetaDataDto>(_r
   }
 
   /// smokeSessionGetPufs
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -253,7 +258,7 @@ _responseData = deserialize<SmokeSessionMetaDataDto, SmokeSessionMetaDataDto>(_r
   ///
   /// Returns a [Future] containing a [Response] with a [List<SmartHookahModelsDbPuf>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<SmartHookahModelsDbPuf>>> smokeSessionGetPufs({ 
+  Future<Response<List<SmartHookahModelsDbPuf>>> smokeSessionGetPufs({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -291,14 +296,16 @@ _responseData = deserialize<SmokeSessionMetaDataDto, SmokeSessionMetaDataDto>(_r
     List<SmartHookahModelsDbPuf> _responseData;
 
     try {
-_responseData = deserialize<List<SmartHookahModelsDbPuf>, SmartHookahModelsDbPuf>(_response.data!, 'List<SmartHookahModelsDbPuf>', growable: true);
+      _responseData = deserialize<List<SmartHookahModelsDbPuf>, SmartHookahModelsDbPuf>(
+          _response.data!, 'List<SmartHookahModelsDbPuf>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<SmartHookahModelsDbPuf>>(
@@ -314,10 +321,10 @@ _responseData = deserialize<List<SmartHookahModelsDbPuf>, SmartHookahModelsDbPuf
   }
 
   /// smokeSessionGetSessionCode
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -327,7 +334,7 @@ _responseData = deserialize<List<SmartHookahModelsDbPuf>, SmartHookahModelsDbPuf
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> smokeSessionGetSessionCode({ 
+  Future<Response<Object>> smokeSessionGetSessionCode({
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -365,14 +372,14 @@ _responseData = deserialize<List<SmartHookahModelsDbPuf>, SmartHookahModelsDbPuf
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -388,10 +395,10 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   }
 
   /// smokeSessionInitData
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -401,7 +408,7 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
   ///
   /// Returns a [Future] containing a [Response] with a [InitDataDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<InitDataDto>> smokeSessionInitData({ 
+  Future<Response<InitDataDto>> smokeSessionInitData({
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -439,14 +446,14 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
     InitDataDto _responseData;
 
     try {
-_responseData = deserialize<InitDataDto, InitDataDto>(_response.data!, 'InitDataDto', growable: true);
+      _responseData = deserialize<InitDataDto, InitDataDto>(_response.data!, 'InitDataDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<InitDataDto>(
@@ -462,11 +469,11 @@ _responseData = deserialize<InitDataDto, InitDataDto>(_response.data!, 'InitData
   }
 
   /// smokeSessionSaveMetaData
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [model] 
+  /// * [id]
+  /// * [model]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -476,7 +483,7 @@ _responseData = deserialize<InitDataDto, InitDataDto>(_response.data!, 'InitData
   ///
   /// Returns a [Future] containing a [Response] with a [SmokeSessionMetaDataDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<SmokeSessionMetaDataDto>> smokeSessionSaveMetaData({ 
+  Future<Response<SmokeSessionMetaDataDto>> smokeSessionSaveMetaData({
     required String id,
     required SmokeSessionMetaDataDto model,
     CancelToken? cancelToken,
@@ -503,16 +510,16 @@ _responseData = deserialize<InitDataDto, InitDataDto>(_response.data!, 'InitData
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(model);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(model);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -527,14 +534,16 @@ _bodyData=jsonEncode(model);
     SmokeSessionMetaDataDto _responseData;
 
     try {
-_responseData = deserialize<SmokeSessionMetaDataDto, SmokeSessionMetaDataDto>(_response.data!, 'SmokeSessionMetaDataDto', growable: true);
+      _responseData = deserialize<SmokeSessionMetaDataDto, SmokeSessionMetaDataDto>(
+          _response.data!, 'SmokeSessionMetaDataDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<SmokeSessionMetaDataDto>(
@@ -550,10 +559,10 @@ _responseData = deserialize<SmokeSessionMetaDataDto, SmokeSessionMetaDataDto>(_r
   }
 
   /// smokeSessionValidate
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -563,7 +572,7 @@ _responseData = deserialize<SmokeSessionMetaDataDto, SmokeSessionMetaDataDto>(_r
   ///
   /// Returns a [Future] containing a [Response] with a [Validation] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Validation>> smokeSessionValidate({ 
+  Future<Response<Validation>> smokeSessionValidate({
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -601,14 +610,14 @@ _responseData = deserialize<SmokeSessionMetaDataDto, SmokeSessionMetaDataDto>(_r
     Validation _responseData;
 
     try {
-_responseData = deserialize<Validation, Validation>(_response.data!, 'Validation', growable: true);
+      _responseData = deserialize<Validation, Validation>(_response.data!, 'Validation', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Validation>(
@@ -622,5 +631,4 @@ _responseData = deserialize<Validation, Validation>(_response.data!, 'Validation
       extra: _response.extra,
     );
   }
-
 }

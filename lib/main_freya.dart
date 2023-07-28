@@ -2,6 +2,7 @@ import 'package:alice_lightweight/alice.dart';
 import 'package:app/app/app.dart';
 import 'package:app/module/module.dart';
 import 'package:app/module/smokeSession/smoke_session_bloc.dart';
+import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -52,4 +53,8 @@ Future<void> setup(GetIt getIt) async {
   getIt.registerLazySingleton<AuthorizeRepository>(
       () => AuthorizeRepository(sharedPreferences: getIt.get<SharedPreferences>()));
   getIt.registerLazySingleton<PersonBloc>(() => PersonBloc(getIt.get<AuthorizeRepository>()));
+  getIt.registerLazySingleton<OpenAI>(() => OpenAI.instance.build(
+      token: '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',
+      baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 5)),
+      enableLog: true));
 }

@@ -9,19 +9,17 @@ import 'dart:convert';
 import 'package:openapi/src/deserialize.dart';
 import 'package:dio/dio.dart';
 
-
 class PingApi {
-
   final Dio _dio;
 
   const PingApi(this._dio);
 
   /// pingDefaultAction
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [version] 
+  /// * [id]
+  /// * [version]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -31,7 +29,7 @@ class PingApi {
   ///
   /// Returns a [Future] containing a [Response] with a [bool] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<bool>> pingDefaultAction({ 
+  Future<Response<bool>> pingDefaultAction({
     required String id,
     String? version,
     CancelToken? cancelToken,
@@ -70,14 +68,14 @@ class PingApi {
     bool _responseData;
 
     try {
-_responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
+      _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<bool>(
@@ -91,5 +89,4 @@ _responseData = deserialize<bool, bool>(_response.data!, 'bool', growable: true)
       extra: _response.extra,
     );
   }
-
 }

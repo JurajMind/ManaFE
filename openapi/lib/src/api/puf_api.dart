@@ -9,18 +9,16 @@ import 'dart:convert';
 import 'package:openapi/src/deserialize.dart';
 import 'package:dio/dio.dart';
 
-
 class PufApi {
-
   final Dio _dio;
 
   const PufApi(this._dio);
 
   /// pufDefaultAction
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -30,7 +28,7 @@ class PufApi {
   ///
   /// Returns a [Future] containing a [Response] with a [String] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<String>> pufDefaultAction({ 
+  Future<Response<String>> pufDefaultAction({
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -63,14 +61,14 @@ class PufApi {
     String _responseData;
 
     try {
-_responseData = deserialize<String, String>(_response.data!, 'String', growable: true);
+      _responseData = deserialize<String, String>(_response.data!, 'String', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<String>(
@@ -86,10 +84,10 @@ _responseData = deserialize<String, String>(_response.data!, 'String', growable:
   }
 
   /// pufLag
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -99,7 +97,7 @@ _responseData = deserialize<String, String>(_response.data!, 'String', growable:
   ///
   /// Returns a [Future] containing a [Response] with a [String] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<String>> pufLag({ 
+  Future<Response<String>> pufLag({
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -132,14 +130,14 @@ _responseData = deserialize<String, String>(_response.data!, 'String', growable:
     String _responseData;
 
     try {
-_responseData = deserialize<String, String>(_response.data!, 'String', growable: true);
+      _responseData = deserialize<String, String>(_response.data!, 'String', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<String>(
@@ -153,5 +151,4 @@ _responseData = deserialize<String, String>(_response.data!, 'String', growable:
       extra: _response.extra,
     );
   }
-
 }

@@ -9,18 +9,16 @@ import 'dart:convert';
 import 'package:openapi/src/deserialize.dart';
 import 'package:dio/dio.dart';
 
-
 class AnimApi {
-
   final Dio _dio;
 
   const AnimApi(this._dio);
 
   /// animDefaultAction
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -30,7 +28,7 @@ class AnimApi {
   ///
   /// Returns a [Future] containing a [Response] with a [String] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<String>> animDefaultAction({ 
+  Future<Response<String>> animDefaultAction({
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -63,14 +61,14 @@ class AnimApi {
     String _responseData;
 
     try {
-_responseData = deserialize<String, String>(_response.data!, 'String', growable: true);
+      _responseData = deserialize<String, String>(_response.data!, 'String', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<String>(
@@ -84,5 +82,4 @@ _responseData = deserialize<String, String>(_response.data!, 'String', growable:
       extra: _response.extra,
     );
   }
-
 }

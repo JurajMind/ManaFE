@@ -14,16 +14,15 @@ import 'package:openapi/src/model/feature_mix_creator_simple_dto.dart';
 import 'package:openapi/src/model/tobacco_mix_simple_dto.dart';
 
 class FeatureMixApi {
-
   final Dio _dio;
 
   const FeatureMixApi(this._dio);
 
   /// featureMixAddFollow
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -33,7 +32,7 @@ class FeatureMixApi {
   ///
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> featureMixAddFollow({ 
+  Future<Response<void>> featureMixAddFollow({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -67,7 +66,7 @@ class FeatureMixApi {
   }
 
   /// featureMixFix
-  /// 
+  ///
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -79,7 +78,7 @@ class FeatureMixApi {
   ///
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> featureMixFix({ 
+  Future<Response<void>> featureMixFix({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -112,10 +111,10 @@ class FeatureMixApi {
   }
 
   /// featureMixGetFeatureMixCreator
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -125,7 +124,7 @@ class FeatureMixApi {
   ///
   /// Returns a [Future] containing a [Response] with a [FeatureMixCreatorDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<FeatureMixCreatorDto>> featureMixGetFeatureMixCreator({ 
+  Future<Response<FeatureMixCreatorDto>> featureMixGetFeatureMixCreator({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -158,14 +157,15 @@ class FeatureMixApi {
     FeatureMixCreatorDto _responseData;
 
     try {
-_responseData = deserialize<FeatureMixCreatorDto, FeatureMixCreatorDto>(_response.data!, 'FeatureMixCreatorDto', growable: true);
+      _responseData = deserialize<FeatureMixCreatorDto, FeatureMixCreatorDto>(_response.data!, 'FeatureMixCreatorDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<FeatureMixCreatorDto>(
@@ -181,13 +181,13 @@ _responseData = deserialize<FeatureMixCreatorDto, FeatureMixCreatorDto>(_respons
   }
 
   /// featureMixGetFeatureMixCreators
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [page] 
-  /// * [pageSize] 
-  /// * [orderBy] 
-  /// * [order] 
+  /// * [page]
+  /// * [pageSize]
+  /// * [orderBy]
+  /// * [order]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -197,7 +197,7 @@ _responseData = deserialize<FeatureMixCreatorDto, FeatureMixCreatorDto>(_respons
   ///
   /// Returns a [Future] containing a [Response] with a [List<FeatureMixCreatorSimpleDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<FeatureMixCreatorSimpleDto>>> featureMixGetFeatureMixCreators({ 
+  Future<Response<List<FeatureMixCreatorSimpleDto>>> featureMixGetFeatureMixCreators({
     int? page,
     int? pageSize,
     String? orderBy,
@@ -241,14 +241,16 @@ _responseData = deserialize<FeatureMixCreatorDto, FeatureMixCreatorDto>(_respons
     List<FeatureMixCreatorSimpleDto> _responseData;
 
     try {
-_responseData = deserialize<List<FeatureMixCreatorSimpleDto>, FeatureMixCreatorSimpleDto>(_response.data!, 'List<FeatureMixCreatorSimpleDto>', growable: true);
+      _responseData = deserialize<List<FeatureMixCreatorSimpleDto>, FeatureMixCreatorSimpleDto>(
+          _response.data!, 'List<FeatureMixCreatorSimpleDto>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<FeatureMixCreatorSimpleDto>>(
@@ -264,7 +266,7 @@ _responseData = deserialize<List<FeatureMixCreatorSimpleDto>, FeatureMixCreatorS
   }
 
   /// featureMixGetFollowedCreators
-  /// 
+  ///
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -276,7 +278,7 @@ _responseData = deserialize<List<FeatureMixCreatorSimpleDto>, FeatureMixCreatorS
   ///
   /// Returns a [Future] containing a [Response] with a [List<FeatureMixCreatorSimpleDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<FeatureMixCreatorSimpleDto>>> featureMixGetFollowedCreators({ 
+  Future<Response<List<FeatureMixCreatorSimpleDto>>> featureMixGetFollowedCreators({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -308,14 +310,16 @@ _responseData = deserialize<List<FeatureMixCreatorSimpleDto>, FeatureMixCreatorS
     List<FeatureMixCreatorSimpleDto> _responseData;
 
     try {
-_responseData = deserialize<List<FeatureMixCreatorSimpleDto>, FeatureMixCreatorSimpleDto>(_response.data!, 'List<FeatureMixCreatorSimpleDto>', growable: true);
+      _responseData = deserialize<List<FeatureMixCreatorSimpleDto>, FeatureMixCreatorSimpleDto>(
+          _response.data!, 'List<FeatureMixCreatorSimpleDto>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<FeatureMixCreatorSimpleDto>>(
@@ -331,14 +335,14 @@ _responseData = deserialize<List<FeatureMixCreatorSimpleDto>, FeatureMixCreatorS
   }
 
   /// featureMixGetMixes
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [page] 
-  /// * [pageSize] 
-  /// * [orderBy] 
-  /// * [order] 
+  /// * [id]
+  /// * [page]
+  /// * [pageSize]
+  /// * [orderBy]
+  /// * [order]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -348,7 +352,7 @@ _responseData = deserialize<List<FeatureMixCreatorSimpleDto>, FeatureMixCreatorS
   ///
   /// Returns a [Future] containing a [Response] with a [List<TobaccoMixSimpleDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<TobaccoMixSimpleDto>>> featureMixGetMixes({ 
+  Future<Response<List<TobaccoMixSimpleDto>>> featureMixGetMixes({
     required int id,
     required int page,
     required int pageSize,
@@ -393,14 +397,16 @@ _responseData = deserialize<List<FeatureMixCreatorSimpleDto>, FeatureMixCreatorS
     List<TobaccoMixSimpleDto> _responseData;
 
     try {
-_responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(_response.data!, 'List<TobaccoMixSimpleDto>', growable: true);
+      _responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(
+          _response.data!, 'List<TobaccoMixSimpleDto>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<TobaccoMixSimpleDto>>(
@@ -416,10 +422,10 @@ _responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(_res
   }
 
   /// featureMixRemoveFollow
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -429,7 +435,7 @@ _responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(_res
   ///
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> featureMixRemoveFollow({ 
+  Future<Response<void>> featureMixRemoveFollow({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -461,5 +467,4 @@ _responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(_res
 
     return _response;
   }
-
 }

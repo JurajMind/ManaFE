@@ -18,16 +18,15 @@ import 'package:openapi/src/model/tobacco_simple_dto.dart';
 import 'package:openapi/src/model/tobacco_taste_dto.dart';
 
 class TobaccoApi {
-
   final Dio _dio;
 
   const TobaccoApi(this._dio);
 
   /// tobaccoGetTobacco
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -37,7 +36,7 @@ class TobaccoApi {
   ///
   /// Returns a [Future] containing a [Response] with a [TobaccoSimpleDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<TobaccoSimpleDto>> tobaccoGetTobacco({ 
+  Future<Response<TobaccoSimpleDto>> tobaccoGetTobacco({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -70,14 +69,15 @@ class TobaccoApi {
     TobaccoSimpleDto _responseData;
 
     try {
-_responseData = deserialize<TobaccoSimpleDto, TobaccoSimpleDto>(_response.data!, 'TobaccoSimpleDto', growable: true);
+      _responseData =
+          deserialize<TobaccoSimpleDto, TobaccoSimpleDto>(_response.data!, 'TobaccoSimpleDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<TobaccoSimpleDto>(
@@ -93,12 +93,12 @@ _responseData = deserialize<TobaccoSimpleDto, TobaccoSimpleDto>(_response.data!,
   }
 
   /// tobaccoGetTobaccoInMixes
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [pageSize] 
-  /// * [page] 
+  /// * [id]
+  /// * [pageSize]
+  /// * [page]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -108,7 +108,7 @@ _responseData = deserialize<TobaccoSimpleDto, TobaccoSimpleDto>(_response.data!,
   ///
   /// Returns a [Future] containing a [Response] with a [List<TobaccoMixSimpleDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<TobaccoMixSimpleDto>>> tobaccoGetTobaccoInMixes({ 
+  Future<Response<List<TobaccoMixSimpleDto>>> tobaccoGetTobaccoInMixes({
     required int id,
     int? pageSize,
     int? page,
@@ -149,14 +149,16 @@ _responseData = deserialize<TobaccoSimpleDto, TobaccoSimpleDto>(_response.data!,
     List<TobaccoMixSimpleDto> _responseData;
 
     try {
-_responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(_response.data!, 'List<TobaccoMixSimpleDto>', growable: true);
+      _responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(
+          _response.data!, 'List<TobaccoMixSimpleDto>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<TobaccoMixSimpleDto>>(
@@ -172,10 +174,10 @@ _responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(_res
   }
 
   /// tobaccoGetTobaccoInfo
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -185,7 +187,7 @@ _responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(_res
   ///
   /// Returns a [Future] containing a [Response] with a [TobaccoInformationDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<TobaccoInformationDto>> tobaccoGetTobaccoInfo({ 
+  Future<Response<TobaccoInformationDto>> tobaccoGetTobaccoInfo({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -218,14 +220,16 @@ _responseData = deserialize<List<TobaccoMixSimpleDto>, TobaccoMixSimpleDto>(_res
     TobaccoInformationDto _responseData;
 
     try {
-_responseData = deserialize<TobaccoInformationDto, TobaccoInformationDto>(_response.data!, 'TobaccoInformationDto', growable: true);
+      _responseData = deserialize<TobaccoInformationDto, TobaccoInformationDto>(
+          _response.data!, 'TobaccoInformationDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<TobaccoInformationDto>(
@@ -241,10 +245,10 @@ _responseData = deserialize<TobaccoInformationDto, TobaccoInformationDto>(_respo
   }
 
   /// tobaccoGetTobaccoSatistics
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -254,7 +258,7 @@ _responseData = deserialize<TobaccoInformationDto, TobaccoInformationDto>(_respo
   ///
   /// Returns a [Future] containing a [Response] with a [PipeAccessoryStatisticsDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PipeAccessoryStatisticsDto>> tobaccoGetTobaccoSatistics({ 
+  Future<Response<PipeAccessoryStatisticsDto>> tobaccoGetTobaccoSatistics({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -287,14 +291,16 @@ _responseData = deserialize<TobaccoInformationDto, TobaccoInformationDto>(_respo
     PipeAccessoryStatisticsDto _responseData;
 
     try {
-_responseData = deserialize<PipeAccessoryStatisticsDto, PipeAccessoryStatisticsDto>(_response.data!, 'PipeAccessoryStatisticsDto', growable: true);
+      _responseData = deserialize<PipeAccessoryStatisticsDto, PipeAccessoryStatisticsDto>(
+          _response.data!, 'PipeAccessoryStatisticsDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PipeAccessoryStatisticsDto>(
@@ -310,12 +316,12 @@ _responseData = deserialize<PipeAccessoryStatisticsDto, PipeAccessoryStatisticsD
   }
 
   /// tobaccoGetTobaccoSessions
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [pageSize] 
-  /// * [page] 
+  /// * [id]
+  /// * [pageSize]
+  /// * [page]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -325,7 +331,7 @@ _responseData = deserialize<PipeAccessoryStatisticsDto, PipeAccessoryStatisticsD
   ///
   /// Returns a [Future] containing a [Response] with a [List<SmokeSessionSimpleDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<SmokeSessionSimpleDto>>> tobaccoGetTobaccoSessions({ 
+  Future<Response<List<SmokeSessionSimpleDto>>> tobaccoGetTobaccoSessions({
     required int id,
     int? pageSize,
     int? page,
@@ -366,14 +372,16 @@ _responseData = deserialize<PipeAccessoryStatisticsDto, PipeAccessoryStatisticsD
     List<SmokeSessionSimpleDto> _responseData;
 
     try {
-_responseData = deserialize<List<SmokeSessionSimpleDto>, SmokeSessionSimpleDto>(_response.data!, 'List<SmokeSessionSimpleDto>', growable: true);
+      _responseData = deserialize<List<SmokeSessionSimpleDto>, SmokeSessionSimpleDto>(
+          _response.data!, 'List<SmokeSessionSimpleDto>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<SmokeSessionSimpleDto>>(
@@ -389,10 +397,10 @@ _responseData = deserialize<List<SmokeSessionSimpleDto>, SmokeSessionSimpleDto>(
   }
 
   /// tobaccoGetTobaccoTaste
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -402,7 +410,7 @@ _responseData = deserialize<List<SmokeSessionSimpleDto>, SmokeSessionSimpleDto>(
   ///
   /// Returns a [Future] containing a [Response] with a [List<TobaccoTasteDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<TobaccoTasteDto>>> tobaccoGetTobaccoTaste({ 
+  Future<Response<List<TobaccoTasteDto>>> tobaccoGetTobaccoTaste({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -435,14 +443,15 @@ _responseData = deserialize<List<SmokeSessionSimpleDto>, SmokeSessionSimpleDto>(
     List<TobaccoTasteDto> _responseData;
 
     try {
-_responseData = deserialize<List<TobaccoTasteDto>, TobaccoTasteDto>(_response.data!, 'List<TobaccoTasteDto>', growable: true);
+      _responseData =
+          deserialize<List<TobaccoTasteDto>, TobaccoTasteDto>(_response.data!, 'List<TobaccoTasteDto>', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<TobaccoTasteDto>>(
@@ -458,17 +467,17 @@ _responseData = deserialize<List<TobaccoTasteDto>, TobaccoTasteDto>(_response.da
   }
 
   /// tobaccoSearch
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [page] 
-  /// * [pageSize] 
-  /// * [filterPeriodTastes] 
-  /// * [filterPeriodSortBy] 
-  /// * [filterPeriodBrand] 
-  /// * [filterPeriodOwned] 
-  /// * [filterPeriodSmoked] 
-  /// * [filterPeriodSortDirection] 
+  /// * [page]
+  /// * [pageSize]
+  /// * [filterPeriodTastes]
+  /// * [filterPeriodSortBy]
+  /// * [filterPeriodBrand]
+  /// * [filterPeriodOwned]
+  /// * [filterPeriodSmoked]
+  /// * [filterPeriodSortDirection]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -478,7 +487,7 @@ _responseData = deserialize<List<TobaccoTasteDto>, TobaccoTasteDto>(_response.da
   ///
   /// Returns a [Future] containing a [Response] with a [List<TobaccoDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<TobaccoDto>>> tobaccoSearch({ 
+  Future<Response<List<TobaccoDto>>> tobaccoSearch({
     required int page,
     required int pageSize,
     List<int>? filterPeriodTastes,
@@ -530,14 +539,14 @@ _responseData = deserialize<List<TobaccoTasteDto>, TobaccoTasteDto>(_response.da
     List<TobaccoDto> _responseData;
 
     try {
-_responseData = deserialize<List<TobaccoDto>, TobaccoDto>(_response.data!, 'List<TobaccoDto>', growable: true);
+      _responseData = deserialize<List<TobaccoDto>, TobaccoDto>(_response.data!, 'List<TobaccoDto>', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<TobaccoDto>>(
@@ -551,5 +560,4 @@ _responseData = deserialize<List<TobaccoDto>, TobaccoDto>(_response.data!, 'List
       extra: _response.extra,
     );
   }
-
 }

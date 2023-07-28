@@ -17,16 +17,15 @@ import 'package:openapi/src/model/search_pipe_accessory.dart';
 import 'package:openapi/src/model/smoke_session_simple_dto.dart';
 
 class GearApi {
-
   final Dio _dio;
 
   const GearApi(this._dio);
 
   /// gearAddGear
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [accessory] 
+  /// * [accessory]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -36,7 +35,7 @@ class GearApi {
   ///
   /// Returns a [Future] containing a [Response] with a [PipeAccesorySimpleDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PipeAccesorySimpleDto>> gearAddGear({ 
+  Future<Response<PipeAccesorySimpleDto>> gearAddGear({
     required PipeAccesorySimpleDto accessory,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -62,16 +61,16 @@ class GearApi {
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(accessory);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(accessory);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -86,14 +85,16 @@ _bodyData=jsonEncode(accessory);
     PipeAccesorySimpleDto _responseData;
 
     try {
-_responseData = deserialize<PipeAccesorySimpleDto, PipeAccesorySimpleDto>(_response.data!, 'PipeAccesorySimpleDto', growable: true);
+      _responseData = deserialize<PipeAccesorySimpleDto, PipeAccesorySimpleDto>(
+          _response.data!, 'PipeAccesorySimpleDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PipeAccesorySimpleDto>(
@@ -109,10 +110,10 @@ _responseData = deserialize<PipeAccesorySimpleDto, PipeAccesorySimpleDto>(_respo
   }
 
   /// gearGetBrand
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [brandName] 
+  /// * [brandName]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -122,7 +123,7 @@ _responseData = deserialize<PipeAccesorySimpleDto, PipeAccesorySimpleDto>(_respo
   ///
   /// Returns a [Future] containing a [Response] with a [BrandDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<BrandDto>> gearGetBrand({ 
+  Future<Response<BrandDto>> gearGetBrand({
     required String brandName,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -155,14 +156,14 @@ _responseData = deserialize<PipeAccesorySimpleDto, PipeAccesorySimpleDto>(_respo
     BrandDto _responseData;
 
     try {
-_responseData = deserialize<BrandDto, BrandDto>(_response.data!, 'BrandDto', growable: true);
+      _responseData = deserialize<BrandDto, BrandDto>(_response.data!, 'BrandDto', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<BrandDto>(
@@ -178,7 +179,7 @@ _responseData = deserialize<BrandDto, BrandDto>(_response.data!, 'BrandDto', gro
   }
 
   /// gearGetBrands
-  /// 
+  ///
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -190,7 +191,7 @@ _responseData = deserialize<BrandDto, BrandDto>(_response.data!, 'BrandDto', gro
   ///
   /// Returns a [Future] containing a [Response] with a [GearGetBrands200Response] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<GearGetBrands200Response>> gearGetBrands({ 
+  Future<Response<GearGetBrands200Response>> gearGetBrands({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -222,14 +223,16 @@ _responseData = deserialize<BrandDto, BrandDto>(_response.data!, 'BrandDto', gro
     GearGetBrands200Response _responseData;
 
     try {
-_responseData = deserialize<GearGetBrands200Response, GearGetBrands200Response>(_response.data!, 'GearGetBrands200Response', growable: true);
+      _responseData = deserialize<GearGetBrands200Response, GearGetBrands200Response>(
+          _response.data!, 'GearGetBrands200Response',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<GearGetBrands200Response>(
@@ -245,10 +248,10 @@ _responseData = deserialize<GearGetBrands200Response, GearGetBrands200Response>(
   }
 
   /// gearGetBrandsPrefix
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [prefix] 
+  /// * [prefix]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -258,7 +261,7 @@ _responseData = deserialize<GearGetBrands200Response, GearGetBrands200Response>(
   ///
   /// Returns a [Future] containing a [Response] with a [List<String>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<String>>> gearGetBrandsPrefix({ 
+  Future<Response<List<String>>> gearGetBrandsPrefix({
     required String prefix,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -291,14 +294,14 @@ _responseData = deserialize<GearGetBrands200Response, GearGetBrands200Response>(
     List<String> _responseData;
 
     try {
-_responseData = deserialize<List<String>, String>(_response.data!, 'List<String>', growable: true);
+      _responseData = deserialize<List<String>, String>(_response.data!, 'List<String>', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<String>>(
@@ -314,10 +317,10 @@ _responseData = deserialize<List<String>, String>(_response.data!, 'List<String>
   }
 
   /// gearGetDetails
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -327,7 +330,7 @@ _responseData = deserialize<List<String>, String>(_response.data!, 'List<String>
   ///
   /// Returns a [Future] containing a [Response] with a [PipeAccessoryDetailsDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PipeAccessoryDetailsDto>> gearGetDetails({ 
+  Future<Response<PipeAccessoryDetailsDto>> gearGetDetails({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -360,14 +363,16 @@ _responseData = deserialize<List<String>, String>(_response.data!, 'List<String>
     PipeAccessoryDetailsDto _responseData;
 
     try {
-_responseData = deserialize<PipeAccessoryDetailsDto, PipeAccessoryDetailsDto>(_response.data!, 'PipeAccessoryDetailsDto', growable: true);
+      _responseData = deserialize<PipeAccessoryDetailsDto, PipeAccessoryDetailsDto>(
+          _response.data!, 'PipeAccessoryDetailsDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PipeAccessoryDetailsDto>(
@@ -383,10 +388,10 @@ _responseData = deserialize<PipeAccessoryDetailsDto, PipeAccessoryDetailsDto>(_r
   }
 
   /// gearInfo
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [id]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -396,7 +401,7 @@ _responseData = deserialize<PipeAccessoryDetailsDto, PipeAccessoryDetailsDto>(_r
   ///
   /// Returns a [Future] containing a [Response] with a [PipeAccesorySimpleDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PipeAccesorySimpleDto>> gearInfo({ 
+  Future<Response<PipeAccesorySimpleDto>> gearInfo({
     required int id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -429,14 +434,16 @@ _responseData = deserialize<PipeAccessoryDetailsDto, PipeAccessoryDetailsDto>(_r
     PipeAccesorySimpleDto _responseData;
 
     try {
-_responseData = deserialize<PipeAccesorySimpleDto, PipeAccesorySimpleDto>(_response.data!, 'PipeAccesorySimpleDto', growable: true);
+      _responseData = deserialize<PipeAccesorySimpleDto, PipeAccesorySimpleDto>(
+          _response.data!, 'PipeAccesorySimpleDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PipeAccesorySimpleDto>(
@@ -452,11 +459,11 @@ _responseData = deserialize<PipeAccesorySimpleDto, PipeAccesorySimpleDto>(_respo
   }
 
   /// gearMerge
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [targetId] 
-  /// * [sourceId] 
+  /// * [targetId]
+  /// * [sourceId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -466,7 +473,7 @@ _responseData = deserialize<PipeAccesorySimpleDto, PipeAccesorySimpleDto>(_respo
   ///
   /// Returns a [Future] containing a [Response] with a [PipeAccesorySimpleDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PipeAccesorySimpleDto>> gearMerge({ 
+  Future<Response<PipeAccesorySimpleDto>> gearMerge({
     required int targetId,
     required int sourceId,
     CancelToken? cancelToken,
@@ -506,14 +513,16 @@ _responseData = deserialize<PipeAccesorySimpleDto, PipeAccesorySimpleDto>(_respo
     PipeAccesorySimpleDto _responseData;
 
     try {
-_responseData = deserialize<PipeAccesorySimpleDto, PipeAccesorySimpleDto>(_response.data!, 'PipeAccesorySimpleDto', growable: true);
+      _responseData = deserialize<PipeAccesorySimpleDto, PipeAccesorySimpleDto>(
+          _response.data!, 'PipeAccesorySimpleDto',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<PipeAccesorySimpleDto>(
@@ -529,14 +538,14 @@ _responseData = deserialize<PipeAccesorySimpleDto, PipeAccesorySimpleDto>(_respo
   }
 
   /// gearSearch
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [search] 
-  /// * [type] 
-  /// * [page] 
-  /// * [pageSize] 
-  /// * [searchType] 
+  /// * [search]
+  /// * [type]
+  /// * [page]
+  /// * [pageSize]
+  /// * [searchType]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -546,7 +555,7 @@ _responseData = deserialize<PipeAccesorySimpleDto, PipeAccesorySimpleDto>(_respo
   ///
   /// Returns a [Future] containing a [Response] with a [List<SearchPipeAccessory>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<SearchPipeAccessory>>> gearSearch({ 
+  Future<Response<List<SearchPipeAccessory>>> gearSearch({
     required String search,
     String? type,
     int? page,
@@ -591,14 +600,16 @@ _responseData = deserialize<PipeAccesorySimpleDto, PipeAccesorySimpleDto>(_respo
     List<SearchPipeAccessory> _responseData;
 
     try {
-_responseData = deserialize<List<SearchPipeAccessory>, SearchPipeAccessory>(_response.data!, 'List<SearchPipeAccessory>', growable: true);
+      _responseData = deserialize<List<SearchPipeAccessory>, SearchPipeAccessory>(
+          _response.data!, 'List<SearchPipeAccessory>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<SearchPipeAccessory>>(
@@ -614,12 +625,12 @@ _responseData = deserialize<List<SearchPipeAccessory>, SearchPipeAccessory>(_res
   }
 
   /// gearSessions
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [pageSize] 
-  /// * [page] 
+  /// * [id]
+  /// * [pageSize]
+  /// * [page]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -629,7 +640,7 @@ _responseData = deserialize<List<SearchPipeAccessory>, SearchPipeAccessory>(_res
   ///
   /// Returns a [Future] containing a [Response] with a [List<SmokeSessionSimpleDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<List<SmokeSessionSimpleDto>>> gearSessions({ 
+  Future<Response<List<SmokeSessionSimpleDto>>> gearSessions({
     required int id,
     int? pageSize,
     int? page,
@@ -670,14 +681,16 @@ _responseData = deserialize<List<SearchPipeAccessory>, SearchPipeAccessory>(_res
     List<SmokeSessionSimpleDto> _responseData;
 
     try {
-_responseData = deserialize<List<SmokeSessionSimpleDto>, SmokeSessionSimpleDto>(_response.data!, 'List<SmokeSessionSimpleDto>', growable: true);
+      _responseData = deserialize<List<SmokeSessionSimpleDto>, SmokeSessionSimpleDto>(
+          _response.data!, 'List<SmokeSessionSimpleDto>',
+          growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<List<SmokeSessionSimpleDto>>(
@@ -693,11 +706,11 @@ _responseData = deserialize<List<SmokeSessionSimpleDto>, SmokeSessionSimpleDto>(
   }
 
   /// gearVote
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [id] 
-  /// * [value] 
+  /// * [id]
+  /// * [value]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -707,7 +720,7 @@ _responseData = deserialize<List<SmokeSessionSimpleDto>, SmokeSessionSimpleDto>(
   ///
   /// Returns a [Future] containing a [Response] with a [Object] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Object>> gearVote({ 
+  Future<Response<Object>> gearVote({
     required int id,
     required int value,
     CancelToken? cancelToken,
@@ -734,16 +747,16 @@ _responseData = deserialize<List<SmokeSessionSimpleDto>, SmokeSessionSimpleDto>(
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(value);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(value);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     final _response = await _dio.request<Object>(
@@ -758,14 +771,14 @@ _bodyData=jsonEncode(value);
     Object _responseData;
 
     try {
-_responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
+      _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+      )..stackTrace;
     }
 
     return Response<Object>(
@@ -779,5 +792,4 @@ _responseData = deserialize<Object, Object>(_response.data!, 'Object', growable:
       extra: _response.extra,
     );
   }
-
 }
