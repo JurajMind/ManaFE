@@ -63,6 +63,7 @@ class MTheme extends StatelessWidget {
     final ThemeData base = ThemeData(fontFamily: 'Roboto', brightness: Brightness.dark);
 
     return base.copyWith(
+        platform: TargetPlatform.iOS,
         primaryColor: AppColors.freyaRed,
         appBarTheme: AppBarTheme(color: AppColors.freyaBlack),
         indicatorColor: Colors.white,

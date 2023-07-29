@@ -147,45 +147,46 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                 Container(
                   height: 20,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 2,
-                        child: Text(AppTranslations.of(context)!.text("device.device_picture") + ' : ',
-                            style: Theme.of(context).textTheme.headlineSmall),
-                      ),
-                      Expanded(
-                          flex: 1,
-                          child: Container(
-                              child:
-                                  Container(height: 64, width: 64, child: DevicePictureItem(picture?.inlinePicture)))),
-                      Expanded(
-                          flex: 1,
-                          child: IconButton(
-                            icon: Icon(FontAwesomeIcons.cog),
-                            onPressed: () => Navigator.of(context).push<DeviceDevicePictureDto>(new MaterialPageRoute(
-                              builder: (BuildContext context) {
-                                return new DeviceChangePicturePage(
-                                  slectedPictureId: picture?.id,
-                                );
-                              },
-                            )).then((newPicture) {
-                              if (newPicture == null) return;
+                if (App.appType != AppType.freya)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          flex: 2,
+                          child: Text(AppTranslations.of(context)!.text("device.device_picture") + ' : ',
+                              style: Theme.of(context).textTheme.headlineSmall),
+                        ),
+                        Expanded(
+                            flex: 1,
+                            child: Container(
+                                child: Container(
+                                    height: 64, width: 64, child: DevicePictureItem(picture?.inlinePicture)))),
+                        Expanded(
+                            flex: 1,
+                            child: IconButton(
+                              icon: Icon(FontAwesomeIcons.cog),
+                              onPressed: () => Navigator.of(context).push<DeviceDevicePictureDto>(new MaterialPageRoute(
+                                builder: (BuildContext context) {
+                                  return new DeviceChangePicturePage(
+                                    slectedPictureId: picture?.id,
+                                  );
+                                },
+                              )).then((newPicture) {
+                                if (newPicture == null) return;
 
-                              if (mounted) {
-                                setState(() {
-                                  picture = newPicture;
-                                });
-                              }
-                              App.http!.changeDevicePicture(widget.device!.id, newPicture.id);
-                            }),
-                          ))
-                    ],
+                                if (mounted) {
+                                  setState(() {
+                                    picture = newPicture;
+                                  });
+                                }
+                                App.http!.changeDevicePicture(widget.device!.id, newPicture.id);
+                              }),
+                            ))
+                      ],
+                    ),
                   ),
-                ),
                 Container(
                   height: 20,
                 ),

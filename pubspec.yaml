@@ -87,7 +87,7 @@ dependencies:
   flutter_chips_input: ^2.0.0
   google_fonts: ^4.0.3
   flutter_facebook_auth: ^5.0.8
-  alice_lightweight: ^3.1.0
+  alice_lightweight: ^3.4.0
   clickable_list_wheel_view: ^0.2.0
   darq: ^1.2.1
   collection: ^1.15.0-nullsafety.4

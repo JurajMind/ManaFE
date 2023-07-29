@@ -26,6 +26,7 @@ import 'dart:math' as math;
 import 'package:custom_date_range_picker/custom_date_range_picker.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../Gear/gear_scroll_cross.dart';
 import 'Components/gear_usage_stat.dart';
 import 'Components/session_time_graph.dart';
 import 'Components/week_day_graph.dart';
@@ -185,6 +186,10 @@ class _StatisticPageState extends State<StatisticPage> {
                         case 'test':
                           Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserProfilePage()));
                           break;
+                        case 'gear':
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) => GearScrollAlternativeCross()));
+                          break;
                         case 'testPage':
                           Navigator.of(context).push(MaterialPageRoute(builder: (context) => TestPage()));
                           break;
@@ -215,6 +220,18 @@ class _StatisticPageState extends State<StatisticPage> {
                               width: 4,
                             ),
                             Text('User profile', style: Theme.of(context).textTheme.bodyMedium),
+                          ],
+                        ),
+                      ),
+                      PopupMenuItem(
+                        value: "gear",
+                        child: Row(
+                          children: <Widget>[
+                            const Icon(FontAwesomeIcons.cog),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            Text('Gear', style: Theme.of(context).textTheme.bodyMedium),
                           ],
                         ),
                       ),

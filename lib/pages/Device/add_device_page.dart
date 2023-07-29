@@ -29,6 +29,7 @@ class _AddDevicePageState extends State<AddDevicePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: PageView(
         controller: controller,
         children: <Widget>[

@@ -115,6 +115,7 @@ class Extensions {
   }
 
   static String devicePicture(DeviceSimpleDtoTypeEnum? type) {
+    return 'assets/dymka.png';
     switch (type) {
       case DeviceSimpleDtoTypeEnum.number13:
         return 'images/devices/wood.jpg';

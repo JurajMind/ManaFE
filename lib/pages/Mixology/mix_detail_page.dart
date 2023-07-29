@@ -115,199 +115,207 @@ class MixDetailPageState extends State<MixDetailPage> {
     }
 
     var theme = MTheme.of(context);
-    return Scaffold(
-      backgroundColor: AppColors.freyaBlack,
-      body: new CustomScrollView(
-        slivers: <Widget>[
-          new SliverAppBar(
-            expandedHeight: _appBarHeight,
-            actions: <Widget>[
-              IconButton(
-                  icon: Icon(Icons.share),
-                  onPressed: () async {
-                    var url = await ShareService.mixShareLink(mix!);
-                    Share.share(
-                      url.toString(),
-                      subject: 'Mix ${mix!.name}',
-                    );
-                  }),
-              mix!.myMix!
-                  ? IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () async {
-                        var delete = await deleteConfirn();
-                        if (delete ?? false) {
-                          var bloc = DataProvider.getData(context)!.mixologyBloc;
-                          bloc.deleteMix(mix!);
-                          Navigator.of(context).pop();
-                        }
-                      },
-                    )
-                  : Container()
-            ],
-            backgroundColor: Colors.transparent,
-            flexibleSpace: new FlexibleSpaceBar(
-              centerTitle: true,
-              title: editName
-                  ? Container(
-                      width: 200,
-                      child: TextField(
-                        autofocus: true,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                        controller: nameController,
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            suffixIcon: IconButton(
-                              color: Colors.white,
-                              icon: Icon(Icons.save),
-                              onPressed: () => setState(() {
-                                editName = false;
-                                changeName();
-                              }),
-                            ),
-                            hintText: 'Please enter a mix name'),
-                      ),
-                    )
-                  : Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          width: 200,
-                          child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Hero(
-                              tag: widget.noHero ? UniqueKey().toString() : "mix_hero_${mix!.id}",
-                              child: Container(
-                                child: AutoSizeText(mix!.name ?? AppTranslations.of(context)!.text('gear.no_name'),
-                                    maxLines: 1, style: theme.appBarStyle),
+    return GestureDetector(
+      onPanUpdate: (details) {
+        if (details.delta.dx > 0) {
+          Navigator.of(context).pop();
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.freyaBlack,
+        body: new CustomScrollView(
+          slivers: <Widget>[
+            new SliverAppBar(
+              expandedHeight: _appBarHeight,
+              actions: <Widget>[
+                IconButton(
+                    icon: Icon(Icons.share),
+                    onPressed: () async {
+                      var url = await ShareService.mixShareLink(mix!);
+                      Share.share(
+                        url.toString(),
+                        subject: 'Mix ${mix!.name}',
+                      );
+                    }),
+                mix!.myMix!
+                    ? IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () async {
+                          var delete = await deleteConfirn();
+                          if (delete ?? false) {
+                            var bloc = DataProvider.getData(context)!.mixologyBloc;
+                            bloc.deleteMix(mix!);
+                            Navigator.of(context).pop();
+                          }
+                        },
+                      )
+                    : Container()
+              ],
+              backgroundColor: Colors.transparent,
+              flexibleSpace: new FlexibleSpaceBar(
+                centerTitle: true,
+                title: editName
+                    ? Container(
+                        width: 200,
+                        child: TextField(
+                          autofocus: true,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                          controller: nameController,
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              suffixIcon: IconButton(
+                                color: Colors.white,
+                                icon: Icon(Icons.save),
+                                onPressed: () => setState(() {
+                                  editName = false;
+                                  changeName();
+                                }),
+                              ),
+                              hintText: 'Please enter a mix name'),
+                        ),
+                      )
+                    : Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            width: 200,
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Hero(
+                                tag: widget.noHero ? UniqueKey().toString() : "mix_hero_${mix!.id}",
+                                child: Container(
+                                  child: AutoSizeText(mix!.name ?? AppTranslations.of(context)!.text('gear.no_name'),
+                                      maxLines: 1, style: theme.appBarStyle),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        mix!.myMix!
-                            ? IconButton(
-                                icon: Icon(Icons.edit),
-                                onPressed: () => setState(() {
-                                  editName = true;
-                                }),
-                              )
-                            : Container()
-                      ],
+                          mix!.myMix!
+                              ? IconButton(
+                                  icon: Icon(Icons.edit),
+                                  onPressed: () => setState(() {
+                                    editName = true;
+                                  }),
+                                )
+                              : Container()
+                        ],
+                      ),
+                background: Container(
+                  child: SizedBox.expand(
+                    child: Center(
+                      child: AIMixImageWidget(mix: widget.mix!),
                     ),
-              background: Container(
-                child: SizedBox.expand(
-                  child: Center(
-                    child: AIMixImageWidget(mix: widget.mix!),
                   ),
                 ),
               ),
             ),
-          ),
-          new SliverList(
-            delegate: new SliverChildListDelegate(<Widget>[
-              StreamBuilder<List<PipeAccesorySimpleDto>>(
-                  stream: bloc.myGear,
-                  builder: (context, snapshot) {
-                    return Center(
-                      child: Container(
-                        constraints: BoxConstraints(maxWidth: theme.maxPageWidth),
-                        child: Column(
-                          children: [
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            ...mix!.tobaccos!.asMap().map((index, f) {
-                              var owned = (snapshot.data?.indexWhere((a) => a.id == f.tobacco!.id) ?? -1) != -1;
+            new SliverList(
+              delegate: new SliverChildListDelegate(<Widget>[
+                StreamBuilder<List<PipeAccesorySimpleDto>>(
+                    stream: bloc.myGear,
+                    builder: (context, snapshot) {
+                      return Center(
+                        child: Container(
+                          constraints: BoxConstraints(maxWidth: theme.maxPageWidth),
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              ...mix!.tobaccos!.asMap().map((index, f) {
+                                var owned = (snapshot.data?.indexWhere((a) => a.id == f.tobacco!.id) ?? -1) != -1;
 
-                              return MapEntry(
-                                  index,
-                                  ListTile(
-                                    leading: Container(
-                                      height: 40,
-                                      width: 30,
-                                      decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.colors[index]),
-                                      child: owned ? Icon(Icons.check) : Icon(FontAwesomeIcons.xmark),
+                                return MapEntry(
+                                    index,
+                                    ListTile(
+                                      leading: Container(
+                                        height: 40,
+                                        width: 30,
+                                        decoration:
+                                            BoxDecoration(shape: BoxShape.circle, color: AppColors.colors[index]),
+                                        child: owned ? Icon(Icons.check) : Icon(FontAwesomeIcons.xmark),
+                                      ),
+                                      onTap: () => Navigator.of(context)
+                                          .push(new MaterialPageRoute(builder: (BuildContext context) {
+                                        return TobaccoPage(tobacco: Convertor.getPipeAccesory(f.tobacco!));
+                                      })),
+                                      title: Text(f.tobacco!.name!, style: Theme.of(context).textTheme.headlineSmall),
+                                      trailing: Text(f.fraction.toString() + ' g',
+                                          style: Theme.of(context).textTheme.headlineSmall),
+                                      subtitle: Text(f.tobacco!.brand!, style: Theme.of(context).textTheme.bodyMedium),
+                                    ));
+                              }).values,
+                              SizedBox(
+                                height: 80,
+                                child: Center(
+                                  child: PieChart(
+                                    PieChartData(
+                                      startDegreeOffset: 20,
+                                      sectionsSpace: 10,
+                                      sections: this
+                                          .mix
+                                          ?.tobaccos
+                                          ?.map((e) => PieChartSectionData(
+                                              value: e.fraction!.toDouble(),
+                                              showTitle: false,
+                                              color: AppColors.colors[mix!.tobaccos!.indexOf(e)]))
+                                          .toList(),
                                     ),
-                                    onTap: () => Navigator.of(context)
-                                        .push(new MaterialPageRoute(builder: (BuildContext context) {
-                                      return TobaccoPage(tobacco: Convertor.getPipeAccesory(f.tobacco!));
-                                    })),
-                                    title: Text(f.tobacco!.name!, style: Theme.of(context).textTheme.headlineSmall),
-                                    trailing: Text(f.fraction.toString() + ' g',
-                                        style: Theme.of(context).textTheme.headlineSmall),
-                                    subtitle: Text(f.tobacco!.brand!, style: Theme.of(context).textTheme.bodyMedium),
-                                  ));
-                            }).values,
-                            SizedBox(
-                              height: 80,
-                              child: Center(
-                                child: PieChart(
-                                  PieChartData(
-                                    startDegreeOffset: 20,
-                                    sectionsSpace: 10,
-                                    sections: this
-                                        .mix
-                                        ?.tobaccos
-                                        ?.map((e) => PieChartSectionData(
-                                            value: e.fraction!.toDouble(),
-                                            showTitle: false,
-                                            color: AppColors.colors[mix!.tobaccos!.indexOf(e)]))
-                                        .toList(),
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Divider(),
-                            TobacoExpertWidget(
-                              lengh: 400,
-                              prompt:
-                                  'As hookah expert , describe mix of tobaccos : ${widget.mix?.tobaccos?.map((e) => "${e.tobacco?.brand} ${e.tobacco?.name}")}, Write desciption of each tobacco flavor and desciption of mix. For each tobaco one line. For mix 3 lines',
-                            ),
-                            Divider(),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            FavoriteMixButton(mix: mix),
-                            UseMixButton(
-                              mix: mix,
-                            ),
-                            Divider(),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            StreamBuilder<TobaccoInformationDto>(
-                                stream: this.information,
-                                builder: (context, snapshot) {
-                                  return TobaccoReviewList(info: snapshot.data);
-                                }),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Divider(),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            StreamBuilder<TobaccoInformationDto>(
-                                stream: this.information,
-                                builder: (context, snapshot) {
-                                  return SessionList(
-                                    info: snapshot.data,
-                                    sessionCount: 5,
-                                  );
-                                }),
-                            AppBarBottom(),
-                          ],
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Divider(),
+                              TobacoExpertWidget(
+                                lengh: 400,
+                                prompt:
+                                    'As hookah expert , describe mix of tobaccos : ${widget.mix?.tobaccos?.map((e) => "${e.tobacco?.brand} ${e.tobacco?.name}")}, Write desciption of each tobacco flavor and desciption of mix. For each tobaco one line. For mix 3 lines',
+                              ),
+                              Divider(),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              FavoriteMixButton(mix: mix),
+                              UseMixButton(
+                                mix: mix,
+                              ),
+                              Divider(),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              StreamBuilder<TobaccoInformationDto>(
+                                  stream: this.information,
+                                  builder: (context, snapshot) {
+                                    return TobaccoReviewList(info: snapshot.data);
+                                  }),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Divider(),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              StreamBuilder<TobaccoInformationDto>(
+                                  stream: this.information,
+                                  builder: (context, snapshot) {
+                                    return SessionList(
+                                      info: snapshot.data,
+                                      sessionCount: 5,
+                                    );
+                                  }),
+                              AppBarBottom(),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  })
-            ]),
-          )
-        ],
+                      );
+                    })
+              ]),
+            )
+          ],
+        ),
       ),
     );
   }

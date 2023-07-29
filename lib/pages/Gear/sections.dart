@@ -8,6 +8,8 @@ import 'package:app/utils/translations/app_translations.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../app/app.dart';
+
 const Color _mariner = Color(0xFF3B5F8F);
 const Color _mediumPurple = Color(0xFF8266D4);
 const Color _tomato = Color(0xFFF95B57);
@@ -52,8 +54,7 @@ class Section {
   int get hashCode => title.hashCode;
 }
 
-List<Section> getAllSections(
-    int currentView, ValueChanged<int> onViewChanged, BuildContext context) {
+List<Section> getAllSections(int currentView, ValueChanged<int> onViewChanged, BuildContext context) {
   return <Section>[
     Section(
       title: AppTranslations.of(context)!.text('gear.devices').toUpperCase(),
@@ -69,13 +70,14 @@ List<Section> getAllSections(
       backgroundAsset: 'images/gear/tobacco.jpg',
       type: "Tobacco",
     ),
-    Section(
-      title: AppTranslations.of(context)!.text('gear.pipes').toUpperCase(),
-      leftColor: _mySin,
-      rightColor: _tomato,
-      backgroundAsset: 'images/gear/hookah.jpg',
-      type: "Hookah",
-    ),
+    if (App.appType != AppType.freya)
+      Section(
+        title: AppTranslations.of(context)!.text('gear.pipes').toUpperCase(),
+        leftColor: _mySin,
+        rightColor: _tomato,
+        backgroundAsset: 'images/gear/hookah.jpg',
+        type: "Hookah",
+      ),
     Section(
       title: AppTranslations.of(context)!.text('gear.bowls').toUpperCase(),
       leftColor: Colors.white,

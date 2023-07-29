@@ -65,31 +65,38 @@ class _GearScrollAlternativeCrossState extends State<GearScrollAlternativeCross>
       );
     }
 
-    return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          ...allSections
-              .asMap()
-              .map((index, value) => new MapEntry(
-                    index,
-                    Expanded(
-                      child: InkWell(
-                        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => GearScrollAlternative(
-                            allSections: allSections,
-                            sectionIndex: index,
-                          ),
-                        )),
-                        child: Container(child: new SectionCard(section: value)),
+    return GestureDetector(
+      onPanUpdate: (details) {
+        if (details.delta.dx > 0) {
+          Navigator.of(context).pop();
+        }
+      },
+      child: Scaffold(
+        body: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            ...allSections
+                .asMap()
+                .map((index, value) => new MapEntry(
+                      index,
+                      Expanded(
+                        child: InkWell(
+                          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => GearScrollAlternative(
+                              allSections: allSections,
+                              sectionIndex: index,
+                            ),
+                          )),
+                          child: Container(child: new SectionCard(section: value)),
+                        ),
                       ),
-                    ),
-                  ))
-              .values,
-          SizedBox(
-            height: 55,
-          )
-        ],
+                    ))
+                .values,
+            SizedBox(
+              height: 55,
+            )
+          ],
+        ),
       ),
     );
   }

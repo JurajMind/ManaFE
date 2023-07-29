@@ -14,6 +14,7 @@ import 'package:share/share.dart';
 
 import '../../components/AI/tobaco_expert.dart';
 import '../../const/theme.dart';
+import '../Mixology/ai_mix_image.dart';
 import 'Tobacco/in_mixes_lazy_list.dart';
 
 class TobaccoPage extends StatefulWidget {
@@ -30,7 +31,7 @@ class TobaccoPage extends StatefulWidget {
 class _TobaccoPageState extends State<TobaccoPage> {
   PipeAccesorySimpleDto? pipeAccesory;
   BehaviorSubject<TobaccoInformationDto> information = new BehaviorSubject<TobaccoInformationDto>();
-
+  final double _appBarHeight = 256.0;
   BehaviorSubject<List<TobaccoMixSimpleDto>> inMix = new BehaviorSubject<List<TobaccoMixSimpleDto>>();
   @override
   void initState() {
@@ -57,119 +58,138 @@ class _TobaccoPageState extends State<TobaccoPage> {
       );
     }
     var theme = MTheme.of(context);
-    return new Container(
-        color: Theme.of(context).colorScheme.background,
-        child: Center(
-          child: CustomScrollView(
-            slivers: <Widget>[
-              SliverAppBar(
-                backgroundColor: AppColors.freyaBlack,
-                pinned: true,
-                flexibleSpace: Container(),
-                actions: <Widget>[
-                  IconButton(
-                      icon: Icon(Icons.share),
-                      onPressed: () async {
-                        var url = await ShareService.tobaccoShareLink(this.pipeAccesory!);
-                        Share.share(url.toString());
-                      }),
-                ],
+    return GestureDetector(
+      onPanUpdate: (details) {
+        if (details.delta.dx > 0) {
+          Navigator.of(context).pop();
+        }
+      },
+      child: new Scaffold(
+          body: Center(
+        child: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              expandedHeight: _appBarHeight,
+              backgroundColor: AppColors.freyaBlack,
+              pinned: true,
+              flexibleSpace: FlexibleSpaceBar(
+                centerTitle: true,
                 title: Row(
                   children: <Widget>[
-                    Hero(
-                        tag: '${pipeAccesory!.id}_name',
-                        child: Container(width: 50, height: 50, child: Extensions.accesoryPicture(pipeAccesory!))),
                     SizedBox(
                       width: 16,
                     ),
                     Container(
-                        width: MediaQuery.of(context).size.width - 220,
-                        child: AutoSizeText(
-                          "${pipeAccesory!.brand} ${pipeAccesory!.name}",
-                          maxLines: 1,
-                          style: theme.appBarStyle,
-                          minFontSize: 8,
+                        width: MediaQuery.of(context).size.width - 200,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: AutoSizeText(
+                              "${pipeAccesory!.brand} ${pipeAccesory!.name}",
+                              maxLines: 1,
+                              style: theme.appBarStyle,
+                              minFontSize: 8,
+                            ),
+                          ),
                         ))
                   ],
                 ),
-                centerTitle: true,
-              ),
-              SliverList(
-                delegate: new SliverChildListDelegate(<Widget>[
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                background: Container(
+                  child: SizedBox.expand(
                     child: Center(
-                      child: Container(
-                        constraints: BoxConstraints(maxWidth: theme.maxPageWidth),
-                        child: AddRemoveGearButton(
-                          gear: pipeAccesory,
-                        ),
+                      child: AIMixImageWidget(tobacco: widget.tobacco),
+                    ),
+                  ),
+                ),
+              ),
+              actions: <Widget>[
+                IconButton(
+                    icon: Icon(Icons.share),
+                    onPressed: () async {
+                      var url = await ShareService.tobaccoShareLink(this.pipeAccesory!);
+                      Share.share(url.toString());
+                    }),
+              ],
+              centerTitle: true,
+            ),
+            SliverList(
+              delegate: new SliverChildListDelegate(<Widget>[
+                const SizedBox(
+                  height: 16,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Center(
+                    child: Container(
+                      constraints: BoxConstraints(maxWidth: theme.maxPageWidth),
+                      child: AddRemoveGearButton(
+                        gear: pipeAccesory,
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  StreamBuilder<TobaccoInformationDto>(
-                      stream: this.information,
-                      builder: (context, snapshot) {
-                        return TobaccoReviewList(
-                          info: snapshot.data,
-                          label: true,
-                        );
-                      }),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Divider(),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  TobacoExpertWidget(
-                    lengh: 200,
-                    prompt:
-                        'As hookah expert , describe this tobacco flavor : ${widget.tobacco?.brand} ${widget.tobacco?.name} in 3 lines',
-                  ),
-                  Divider(),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  StreamBuilder<TobaccoInformationDto>(
-                      stream: this.information,
-                      builder: (context, snapshot) {
-                        return SessionList(
-                          info: snapshot.data,
-                          sessionCount: 5,
-                        );
-                      }),
-                  Divider(color: Colors.white),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  StreamBuilder<List<TobaccoMixSimpleDto>>(
-                      stream: this.inMix,
-                      builder: (context, snapshot) {
-                        return InMixList(
-                            sourceTobacco: pipeAccesory!.id,
-                            mixes: snapshot.data,
-                            mixCount: 5,
-                            onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => InMixesLazyList(
-                                    initInMixes: snapshot.data,
-                                    tobacco: pipeAccesory,
-                                  ),
-                                )));
-                      }),
-                  SizedBox(
-                    height: 100,
-                  ),
-                ]),
-              )
-            ],
-          ),
-        ));
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                StreamBuilder<TobaccoInformationDto>(
+                    stream: this.information,
+                    builder: (context, snapshot) {
+                      return TobaccoReviewList(
+                        info: snapshot.data,
+                        label: true,
+                      );
+                    }),
+                SizedBox(
+                  height: 8,
+                ),
+                Divider(),
+                SizedBox(
+                  height: 8,
+                ),
+                TobacoExpertWidget(
+                  lengh: 200,
+                  prompt:
+                      'As hookah expert , describe this tobacco flavor : ${widget.tobacco?.brand} ${widget.tobacco?.name} in 3 lines',
+                ),
+                Divider(),
+                SizedBox(
+                  height: 8,
+                ),
+                StreamBuilder<TobaccoInformationDto>(
+                    stream: this.information,
+                    builder: (context, snapshot) {
+                      return SessionList(
+                        info: snapshot.data,
+                        sessionCount: 5,
+                      );
+                    }),
+                Divider(color: Colors.white),
+                SizedBox(
+                  height: 8,
+                ),
+                StreamBuilder<List<TobaccoMixSimpleDto>>(
+                    stream: this.inMix,
+                    builder: (context, snapshot) {
+                      return InMixList(
+                          sourceTobacco: pipeAccesory!.id,
+                          mixes: snapshot.data,
+                          mixCount: 5,
+                          onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => InMixesLazyList(
+                                  initInMixes: snapshot.data,
+                                  tobacco: pipeAccesory,
+                                ),
+                              )));
+                    }),
+                SizedBox(
+                  height: 100,
+                ),
+              ]),
+            )
+          ],
+        ),
+      )),
+    );
   }
 }
