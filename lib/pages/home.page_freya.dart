@@ -410,7 +410,7 @@ class _FreyaHomePageState extends State<FreyaHomePage> with RouteAware {
                       child: FreyaCircleButton(
                         onPressed: () {},
                         child: Icon(
-                          FontAwesomeIcons.house,
+                          FontAwesomeIcons.q,
                           size: 32,
                           color: AppColors.freyaRed,
                         ),
@@ -418,7 +418,7 @@ class _FreyaHomePageState extends State<FreyaHomePage> with RouteAware {
                   : FreyaCircleButton(
                       tooltip: AppTranslations.of(context)!.text("tabs.mixology"),
                       child: Icon(
-                        FontAwesomeIcons.house,
+                        FontAwesomeIcons.q,
                         size: 32,
                       ),
                       onPressed: () => _setActiveTab(1),
