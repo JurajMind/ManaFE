@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'ar_test.dart';
+import 'ar_test2.dart';
+import 'health_test.dart';
 
 class ExperimentalPage extends StatelessWidget {
   @override
@@ -43,13 +45,13 @@ class ExperimentalPage extends StatelessWidget {
               bgColor: AppColors.colors[3],
               text: 'AR ',
               icon: FontAwesomeIcons.glasses,
-              pageWidget: WidgetProjectionPage(),
+              pageWidget: PlaneDetectionPage(),
             ),
             new ExperimentItem(
               bgColor: AppColors.colors[1],
               text: 'Health ',
               icon: FontAwesomeIcons.heartCircleCheck,
-              pageWidget: WidgetProjectionPage(),
+              pageWidget: HealthTest(),
             )
           ],
         ));
