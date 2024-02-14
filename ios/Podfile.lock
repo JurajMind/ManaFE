@@ -285,7 +285,7 @@ SPEC CHECKSUMS:
   FirebaseDynamicLinks: 1a387da899779e5ef34f4d6f8bdba882f90d0e67
   FirebaseInstallations: 7b99ef103f013624444c614397038219c45f8e63
   FirebaseMessaging: bb2c4f6422a753038fe137d90ae7c1af57251316
-  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_facebook_auth: c69f4e643b1d9cc9063ec87c9411bd9ec268108f
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
@@ -317,4 +317,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 9a15c2f293d2c4c10dc957a09cdb4f397924f3dd
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1
